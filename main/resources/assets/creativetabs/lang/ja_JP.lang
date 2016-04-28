@@ -1,0 +1,16 @@
+#
+itemGroup.dqmTabWeapon=DQR.武器
+itemGroup.dqmTabArmor=DQR.防具
+itemGroup.dqmTabShield=DQR.盾
+itemGroup.dqmTabAcc=DQR.アクセサリー
+itemGroup.dqmTabMagic=DQR.魔法
+itemGroup.dqmTabMisc=DQR.道具
+itemGroup.dqmTabFood=DQR.食物
+itemGroup.dqmTabPlant=DQR.植物
+itemGroup.dqmTabBlock=DQR.ブロック
+itemGroup.dqmTabOre=DQR.鉱石
+itemGroup.dqmTabDecorate=DQR.装飾ブロック
+itemGroup.dqmTabBuilder=DQR.構造物設計書
+itemGroup.dqmTabMobFigure=DQR.フィギュア
+itemGroup.dqmTabMobObj=DQR.オブジェクト
+itemGroup.dqmTabBackPack=DQR.アイテム保管

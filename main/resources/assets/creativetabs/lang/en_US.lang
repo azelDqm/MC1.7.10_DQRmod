@@ -1,0 +1,16 @@
+#
+itemGroup.dqmTabWeapon=DQR.Weapons
+itemGroup.dqmTabShield=DQR.Shields
+itemGroup.dqmTabArmor=DQR.Armor
+itemGroup.dqmTabAcc=DQR.Accesorys
+itemGroup.dqmTabMagic=DQR.Magics
+itemGroup.dqmTabMisc=DQR.Misc
+itemGroup.dqmTabFood=DQR.Foods
+itemGroup.dqmTabPlant=DQR.Plants
+itemGroup.dqmTabBlock=DQR.Blocks
+itemGroup.dqmTabOre=DQR.Ore
+itemGroup.dqmTabDecorate=DQR.DecorateBlock
+itemGroup.dqmTabBuilder=DQR.BuilderPlan
+itemGroup.dqmTabMobFigure=DQR.MobFigure
+itemGroup.dqmTabMobObj=DQR.MobObject
+itemGroup.dqmTabBackPack=DQR.Backpacks

@@ -1,0 +1,395 @@
+{
+  "mob.death": {
+    "category":"player",
+    "sounds": [
+      {
+        "name": "mob/Death",
+        "stream": false,
+        "weight": 1,
+        "volume": 1,
+        "pitch": 1
+      }
+    ]
+  },
+  "mob.hit":{
+    "category":"hostile",
+    "sounds":[
+        "mob/Hit1",
+        "mob/Hit2",
+        "mob/Hit3",
+        "mob/Hit4"
+    ]
+  },
+  "mob.petmob": {
+    "category":"hostile",
+    "sounds": [
+      {
+        "name": "mob/Petmob",
+        "stream": false,
+        "weight": 1,
+        "volume": 1,
+        "pitch": 1
+      }
+    ]
+  },
+  "mob.fire": {
+    "category":"hostile",
+    "sounds": [
+      {
+        "name": "mob/Fire",
+        "stream": false,
+        "weight": 1,
+        "volume": 1,
+        "pitch": 1
+      }
+    ]
+  },
+  "mob.hyado": {
+    "category":"hostile",
+    "sounds": [
+      {
+        "name": "mob/Hyado",
+        "stream": false,
+        "weight": 1,
+        "volume": 1,
+        "pitch": 1
+      }
+    ]
+  },
+  "mob.bagi": {
+    "category":"hostile",
+    "sounds": [
+      {
+        "name": "mob/Bagi",
+        "stream": false,
+        "weight": 1,
+        "volume": 1,
+        "pitch": 1
+      }
+    ]
+  },
+  "mob.dragonfire": {
+    "category":"hostile",
+    "sounds": [
+      {
+        "name": "mob/Dragonfire",
+        "stream": false,
+        "weight": 1,
+        "volume": 1,
+        "pitch": 1
+      }
+    ]
+  },
+  "mob.doruma": {
+    "category":"hostile",
+    "sounds": [
+      {
+        "name": "mob/Doruma",
+        "stream": false,
+        "weight": 1,
+        "volume": 1,
+        "pitch": 1
+      }
+    ]
+  },
+  "mob.dokubari": {
+    "category":"hostile",
+    "sounds": [
+      {
+        "name": "mob/Dokubari",
+        "stream": false,
+        "weight": 1,
+        "volume": 1,
+        "pitch": 1
+      }
+    ]
+  },
+  "mob.poyo": {
+    "category":"hostile",
+    "sounds": [
+      {
+        "name": "mob/Poyo",
+        "stream": false,
+        "weight": 1,
+        "volume": 1,
+        "pitch": 1
+      }
+    ]
+  },
+  "mob.inoti": {
+    "category":"hostile",
+    "sounds": [
+      {
+        "name": "mob/Inoti",
+        "stream": false,
+        "weight": 1,
+        "volume": 1,
+        "pitch": 1
+      }
+    ]
+  },
+  "player.kaisin": {
+    "category":"player",
+    "sounds": [
+      {
+        "name": "player/Kaisin",
+        "stream": false,
+        "weight": 1,
+        "volume": 1,
+        "pitch": 1
+      }
+    ]
+  },
+  "player.levelup": {
+    "category":"player",
+    "sounds": [
+      {
+        "name": "player/LevelUp",
+        "stream": false,
+        "weight": 1,
+        "volume": 1,
+        "pitch": 1
+      }
+    ]
+  },
+  "player.skillup": {
+    "category":"player",
+    "sounds": [
+      {
+        "name": "player/SkillUp",
+        "stream": false,
+        "weight": 1,
+        "volume": 1,
+        "pitch": 1
+      }
+    ]
+  },
+  "player.mahokanta": {
+    "category":"player",
+    "sounds": [
+      {
+        "name": "player/Mahokanta",
+        "stream": false,
+        "weight": 1,
+        "volume": 1,
+        "pitch": 2
+      }
+    ]
+  },
+  "player.mira": {
+    "category":"player",
+    "sounds": [
+      {
+        "name": "player/Mira",
+        "stream": false,
+        "weight": 1,
+        "volume": 1,
+        "pitch": 1
+      }
+    ]
+  },
+  "player.pi": {
+    "category":"player",
+    "sounds": [
+      {
+        "name": "player/Pi",
+        "stream": false,
+        "weight": 1,
+        "volume": 1,
+        "pitch": 1
+      }
+    ]
+  },
+  "player.hoimi": {
+    "category":"player",
+    "sounds": [
+      {
+        "name": "player/Hoimi",
+        "stream": false,
+        "weight": 1,
+        "volume": 1,
+        "pitch": 1
+      }
+    ]
+  },
+  "player.pet": {
+    "category":"player",
+    "sounds": [
+      {
+        "name": "player/Pet",
+        "stream": false,
+        "weight": 1,
+        "volume": 1,
+        "pitch": 1
+      }
+    ]
+  },
+  "player.rura": {
+    "category":"player",
+    "sounds": [
+      {
+        "name": "player/Rura",
+        "stream": false,
+        "weight": 1,
+        "volume": 1,
+        "pitch": 1
+      }
+    ]
+  },
+  "player.down": {
+    "category":"player",
+    "sounds": [
+      {
+        "name": "player/Down",
+        "stream": false,
+        "weight": 1,
+        "volume": 1,
+        "pitch": 1
+      }
+    ]
+  },
+  "player.up": {
+    "category":"player",
+    "sounds": [
+      {
+        "name": "player/Up",
+        "stream": false,
+        "weight": 1,
+        "volume": 1,
+        "pitch": 1
+      }
+    ]
+  },
+  "player.okane": {
+    "category":"player",
+    "sounds": [
+      {
+        "name": "player/Okane",
+        "stream": false,
+        "weight": 1,
+        "volume": 1,
+        "pitch": 1
+      }
+    ]
+  },
+  "player.jumon": {
+    "category":"player",
+    "sounds": [
+      {
+        "name": "player/Jumon",
+        "stream": false,
+        "weight": 1,
+        "volume": 1,
+        "pitch": 1
+      }
+    ]
+  },
+  "player.medal": {
+    "category":"player",
+    "sounds": [
+      {
+        "name": "player/System48",
+        "stream": false,
+        "weight": 1,
+        "volume": 1,
+        "pitch": 1
+      }
+    ]
+  },
+  "player.yado": {
+    "category":"player",
+    "sounds": [
+      {
+        "name": "player/Yado",
+        "stream": false,
+        "weight": 1,
+        "volume": 1,
+        "pitch": 1
+      }
+    ]
+  },
+  "player.miss": {
+    "category":"player",
+    "sounds": [
+      {
+        "name": "player/Miss",
+        "stream": false,
+        "weight": 1,
+        "volume": 1,
+        "pitch": 1
+      }
+    ]
+  },
+  "player.dead": {
+    "category":"player",
+    "sounds": [
+      {
+        "name": "player/Dead",
+        "stream": false,
+        "weight": 1,
+        "volume": 1,
+        "pitch": 1
+      }
+    ]
+  },
+  "player.kaisinBagi": {
+    "category":"player",
+    "sounds": [
+      {
+        "name": "player/KaisinBagi",
+        "stream": false,
+        "weight": 1,
+        "volume": 1,
+        "pitch": 1
+      }
+    ]
+  },
+  "player.kaisinDoruma": {
+    "category":"player",
+    "sounds": [
+      {
+        "name": "player/KaisinDoruma",
+        "stream": false,
+        "weight": 1,
+        "volume": 1,
+        "pitch": 1
+      }
+    ]
+  },
+  "player.kaisinHyado": {
+    "category":"player",
+    "sounds": [
+      {
+        "name": "player/KaisinHyado",
+        "stream": false,
+        "weight": 1,
+        "volume": 1,
+        "pitch": 1
+      }
+    ]
+  },
+  "player.kaisinMera": {
+    "category":"player",
+    "sounds": [
+      {
+        "name": "player/KaisinMera",
+        "stream": false,
+        "weight": 1,
+        "volume": 1,
+        "pitch": 1
+      }
+    ]
+  },
+  "player.tensyoku": {
+    "category":"player",
+    "sounds": [
+      {
+        "name": "player/Sekaiju",
+        "stream": false,
+        "weight": 1,
+        "volume": 1,
+        "pitch": 1
+      }
+    ]
+  }
+}
