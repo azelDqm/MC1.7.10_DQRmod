@@ -305,10 +305,17 @@ public class DqmEntityNPCBukiya extends DqmNPCBase
     						}
     					}else
     					{
-		    				ep.addChatMessage(new ChatComponentTranslation("msg.Bukiya.messages.2.txt",new Object[] {tagItem.getDisplayName(),itemPrice }));
-		    				ep.addChatMessage(new ChatComponentTranslation("msg.Bukiya.messages.3.txt",new Object[] {}));
-		    				//ExtendedPlayerProperties.get(ep).setNpcTalk(3, 2);
-		    				ExtendedPlayerProperties.get(ep).setBukiyaItem(tagItem.getItem());
+    						//System.out.println("debug_log:" + tagItem.getUnlocalizedName());
+    						if(tagItem.getDisplayName() != null)
+    						{
+    							ep.addChatMessage(new ChatComponentTranslation("msg.Bukiya.messages.2.txt",new Object[] {tagItem.getDisplayName(),itemPrice }));
+    							ep.addChatMessage(new ChatComponentTranslation("msg.Bukiya.messages.3.txt",new Object[] {}));
+    							//ExtendedPlayerProperties.get(ep).setNpcTalk(3, 2);
+    						}
+							ExtendedPlayerProperties.get(ep).setBukiyaItem(tagItem.getItem());
+
+
+
     					}
 	    			}
     			//}

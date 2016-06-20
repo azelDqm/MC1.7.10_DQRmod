@@ -2,6 +2,7 @@ package dqr.items;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.potion.Potion;
 import cpw.mods.fml.common.registry.GameRegistry;
 import dqr.DQR;
@@ -11,11 +12,13 @@ import dqr.api.Items.DQArmors;
 import dqr.api.Items.DQBuilders;
 import dqr.api.Items.DQEmblems;
 import dqr.api.Items.DQIngots;
+import dqr.api.Items.DQInventorySlots;
 import dqr.api.Items.DQMagicTools;
 import dqr.api.Items.DQMagics;
 import dqr.api.Items.DQMiscs;
 import dqr.api.Items.DQMonsters;
 import dqr.api.Items.DQSeeds;
+import dqr.api.Items.DQSkillWs;
 import dqr.api.Items.DQWeapons;
 import dqr.api.enums.EnumDqmBuilder;
 import dqr.api.enums.EnumDqmJob;
@@ -35,21 +38,21 @@ import dqr.items.base.DqmItemIngotBase;
 import dqr.items.base.DqmItemMiscBase;
 import dqr.items.base.DqmItemMonster;
 import dqr.items.base.DqmItemSeedBase;
+import dqr.items.base.DqmItemSkillWBase;
 import dqr.items.base.DqmItemThrowBase;
 import dqr.items.base.DqmItemWeaponBase;
 import dqr.items.builder.DqmItemBuilderDama;
 import dqr.items.builder.DqmItemBuilderDamaS;
 import dqr.items.builder.DqmItemBuilderDamaW;
-<<<<<<< HEAD
 import dqr.items.builder.DqmItemBuilderIdoMedal;
 import dqr.items.fukuro.DqmItemFukuro;
-=======
->>>>>>> parent of 2aede75... ver0.8.7.8
 import dqr.items.magic.DqmItemMagicBagi;
 import dqr.items.magic.DqmItemMagicBehomara;
 import dqr.items.magic.DqmItemMagicBuff;
 import dqr.items.magic.DqmItemMagicDebuff;
 import dqr.items.magic.DqmItemMagicDoruma;
+import dqr.items.magic.DqmItemMagicDragonF;
+import dqr.items.magic.DqmItemMagicDragonS;
 import dqr.items.magic.DqmItemMagicGira;
 import dqr.items.magic.DqmItemMagicHoimi;
 import dqr.items.magic.DqmItemMagicHyado;
@@ -69,9 +72,11 @@ import dqr.items.magicTool.DqmItemMGTBreak1;
 import dqr.items.magicTool.DqmItemMGTBreak2;
 import dqr.items.magicTool.DqmItemMGTFarm1;
 import dqr.items.magicTool.DqmItemMGTFarm2;
+import dqr.items.magicTool.DqmItemMGTSet;
 import dqr.items.magicTool.DqmItemPetSuisyou;
 import dqr.items.miscs.DqmItemDyeWhite2;
 import dqr.items.miscs.DqmItemFarmerDiary;
+import dqr.items.miscs.DqmItemKenjanoisi;
 import dqr.items.miscs.DqmItemKimera;
 import dqr.items.miscs.DqmItemKimera2;
 import dqr.items.miscs.DqmItemKimeraC;
@@ -414,6 +419,7 @@ public class DqItem {
 		DQBuilders.itemBuilderDamaW8 = new DqmItemMiscBase().setCreativeTab(DQR.tabs.DqmTabBuilder).setUnlocalizedName("dqm.BuilderDamaW8").setTextureName("dqr:BuilderDama38");
 		DQBuilders.itemBuilderDamaW9 = new DqmItemMiscBase().setCreativeTab(DQR.tabs.DqmTabBuilder).setUnlocalizedName("dqm.BuilderDamaW9").setTextureName("dqr:BuilderDama39");
 
+		DQBuilders.itemBuilderIdoMedal = new DqmItemBuilderIdoMedal(EnumDqmBuilder.IDOMEDAL).setCreativeTab(DQR.tabs.DqmTabBuilder).setUnlocalizedName("dqm.BuilderIdoMedal").setMaxStackSize(1).setTextureName("dqr:BuilderIdoMedal");
 
 
 		//転職証
@@ -555,34 +561,34 @@ public class DqItem {
 		DQMagics.itemSukara = new DqmItemMagicBuff((DQR.dqmMaterial.DqmMagicSouryo) , 2.0F, 2000, EnumDqmMagic.Sukara, DQPotionPlus.buffSukara).setUnlocalizedName("dqm.itemSukara").setTextureName("dqr:Sukara").setCreativeTab(DQR.tabs.DqmTabMagic);
 		DQMagics.itemBaha = new DqmItemMagicBuff((DQR.dqmMaterial.DqmMagicSouryo) , 2.0F, 2000, EnumDqmMagic.Baha, DQPotionPlus.buffBaha).setUnlocalizedName("dqm.itemBaha").setTextureName("dqr:Baha").setCreativeTab(DQR.tabs.DqmTabMagic);
 		DQMagics.itemPiora = new DqmItemMagicBuff((DQR.dqmMaterial.DqmMagicSouryo) , 2.0F, 2000, EnumDqmMagic.Piora, DQPotionPlus.buffPiora).setUnlocalizedName("dqm.itemPiora").setTextureName("dqr:Piora").setCreativeTab(DQR.tabs.DqmTabMagic);
-		//itemMagicbaria = new DqmItemMagicBuff((DQR.dqmMaterial.DqmMagicParadin) , 2.0F, 2000, EnumDqmMagic.Magicbaria, DQPotionPlus.buffMagicBaria).setUnlocalizedName("dqm.itemMagicbaria").setTextureName("dqr:Magicbaria").setCreativeTab(DQR.tabs.DqmTabMagic);
-		DQMagics.itemMagicbaria = new DqmItemMagicNotImplemented(DQR.dqmMaterial.DqmMagicParadin , 2.0F, 2000, EnumDqmMagic.Magicbaria).setUnlocalizedName("dqm.itemMagicbaria").setTextureName("dqr:Magicbaria").setCreativeTab(DQR.tabs.DqmTabMagic);
+		DQMagics.itemMagicbaria = new DqmItemMagicBuff((DQR.dqmMaterial.DqmMagicParadin) , 2.0F, 2000, EnumDqmMagic.Magicbaria, DQPotionPlus.buffMagicBaria).setUnlocalizedName("dqm.itemMagicbaria").setTextureName("dqr:Magicbaria").setCreativeTab(DQR.tabs.DqmTabMagic);
+		//DQMagics.itemMagicbaria = new DqmItemMagicNotImplemented(DQR.dqmMaterial.DqmMagicParadin , 2.0F, 2000, EnumDqmMagic.Magicbaria).setUnlocalizedName("dqm.itemMagicbaria").setTextureName("dqr:Magicbaria").setCreativeTab(DQR.tabs.DqmTabMagic);
 		DQMagics.itemMahokanta = new DqmItemMagicBuff((DQR.dqmMaterial.DqmMagicMahouSensi) , 2.0F, 2000, EnumDqmMagic.Mahokanta, DQPotionPlus.buffMahokanta).setUnlocalizedName("dqm.itemMahokanta").setTextureName("dqr:Mahokanta").setCreativeTab(DQR.tabs.DqmTabMagic);
 		//itemMahokanta = new DqmItemMagicNotImplemented((DQR.dqmMaterial.DqmMagicMahouSensi) , 2.0F, 2000, EnumDqmMagic.Mahokanta).setUnlocalizedName("dqm.itemMahokanta").setTextureName("dqr:Mahokanta").setCreativeTab(DQR.tabs.DqmTabMagic);
 
 		DQMagics.itemRemira = new DqmItemMagicBuff((DQR.dqmMaterial.DqmMagicMahouTukai) , 2.0F, 2000, EnumDqmMagic.Remirama, Potion.nightVision).setUnlocalizedName("dqm.itemRemira").setTextureName("dqr:Remira").setCreativeTab(DQR.tabs.DqmTabMagic);
 
 		DQMagics.itemSukuruto = new DqmItemMagicBuff((DQR.dqmMaterial.DqmMagicSouryo) , 2.0F, 2000, EnumDqmMagic.Sukuruto, DQPotionPlus.buffSukara).setUnlocalizedName("dqm.itemSukuruto").setTextureName("dqr:Sukara").setCreativeTab(DQR.tabs.DqmTabMagic);
-		//itemFubaha = new DqmItemMagicBuff((DQR.dqmMaterial.DqmMagicSouryo) , 2.0F, 2000, EnumDqmMagic.Fubaha, DQPotionPlus.buffBaha).setUnlocalizedName("dqm.itemFubaha").setTextureName("dqr:Baha").setCreativeTab(DQR.tabs.DqmTabMagic);
-		DQMagics.itemFubaha = new DqmItemMagicNotImplemented((DQR.dqmMaterial.DqmMagicSouryo) , 2.0F, 2000, EnumDqmMagic.Fubaha).setUnlocalizedName("dqm.itemFubaha").setTextureName("dqr:Baha").setCreativeTab(DQR.tabs.DqmTabMagic);
+		DQMagics.itemFubaha = new DqmItemMagicBuff((DQR.dqmMaterial.DqmMagicSouryo) , 2.0F, 2000, EnumDqmMagic.Fubaha, DQPotionPlus.buffBaha).setUnlocalizedName("dqm.itemFubaha").setTextureName("dqr:Baha").setCreativeTab(DQR.tabs.DqmTabMagic);
+		//DQMagics.itemFubaha = new DqmItemMagicNotImplemented((DQR.dqmMaterial.DqmMagicSouryo) , 2.0F, 2000, EnumDqmMagic.Fubaha).setUnlocalizedName("dqm.itemFubaha").setTextureName("dqr:Baha").setCreativeTab(DQR.tabs.DqmTabMagic);
 		DQMagics.itemPiorimu = new DqmItemMagicBuff((DQR.dqmMaterial.DqmMagicSouryo) , 2.0F, 2000, EnumDqmMagic.Piorimu, DQPotionPlus.buffPiora).setUnlocalizedName("dqm.itemPiorimu").setTextureName("dqr:Piora").setCreativeTab(DQR.tabs.DqmTabMagic);
 
 		DQMagics.itemBomie = new DqmItemMagicDebuff((DQR.dqmMaterial.DqmMagicMahouTukai) , 2.0F, 2000, EnumDqmMagic.Bomie, DQPotionMinus.debuffBomie).setUnlocalizedName("dqm.itemBomie").setTextureName("dqr:Bomie").setCreativeTab(DQR.tabs.DqmTabMagic);
 		DQMagics.itemRariho = new DqmItemMagicDebuff((DQR.dqmMaterial.DqmMagicSouryo) , 2.0F, 2000, EnumDqmMagic.Rariho, DQPotionMinus.debuffRariho).setUnlocalizedName("dqm.itemRariho").setTextureName("dqr:Rariho").setCreativeTab(DQR.tabs.DqmTabMagic);
-		//itemManusa = new DqmItemMagicDebuff((DQR.dqmMaterial.DqmMagicMahouTukai) , 2.0F, 2000, EnumDqmMagic.Manusa, DQPotionMinus.debuffManusa).setUnlocalizedName("dqm.itemManusa").setTextureName("dqr:Manusa").setCreativeTab(DQR.tabs.DqmTabMagic);
-		DQMagics.itemManusa = new DqmItemMagicNotImplemented((DQR.dqmMaterial.DqmMagicMahouTukai) , 2.0F, 2000, EnumDqmMagic.Manusa).setUnlocalizedName("dqm.itemManusa").setTextureName("dqr:Manusa").setCreativeTab(DQR.tabs.DqmTabMagic);
+		DQMagics.itemManusa = new DqmItemMagicDebuff((DQR.dqmMaterial.DqmMagicMahouTukai) , 2.0F, 2000, EnumDqmMagic.Manusa, DQPotionMinus.debuffManusa).setUnlocalizedName("dqm.itemManusa").setTextureName("dqr:Manusa").setCreativeTab(DQR.tabs.DqmTabMagic);
+		//DQMagics.itemManusa = new DqmItemMagicNotImplemented((DQR.dqmMaterial.DqmMagicMahouTukai) , 2.0F, 2000, EnumDqmMagic.Manusa).setUnlocalizedName("dqm.itemManusa").setTextureName("dqr:Manusa").setCreativeTab(DQR.tabs.DqmTabMagic);
 		DQMagics.itemMahoton = new DqmItemMagicDebuff((DQR.dqmMaterial.DqmMagicMahouTukai) , 2.0F, 2000, EnumDqmMagic.Mahoton, DQPotionMinus.debuffMahoton).setUnlocalizedName("dqm.itemMahoton").setTextureName("dqr:Mahoton").setCreativeTab(DQR.tabs.DqmTabMagic);
 		DQMagics.itemRukani = new DqmItemMagicDebuff((DQR.dqmMaterial.DqmMagicMahouSensi) , 2.0F, 2000, EnumDqmMagic.Rukani, DQPotionMinus.debuffRukani).setUnlocalizedName("dqm.itemRukani").setTextureName("dqr:Rukani").setCreativeTab(DQR.tabs.DqmTabMagic);
-		//itemMedapani = new DqmItemMagicDebuff((DQR.dqmMaterial.DqmMagicMahouSensi) , 2.0F, 2000, EnumDqmMagic.Medapani, DQPotionMinus.debuffMedapani).setUnlocalizedName("dqm.itemMedapani").setTextureName("dqr:Medapani").setCreativeTab(DQR.tabs.DqmTabMagic);
-		DQMagics.itemMedapani = new DqmItemMagicNotImplemented((DQR.dqmMaterial.DqmMagicMahouSensi) , 2.0F, 2000, EnumDqmMagic.Medapani).setUnlocalizedName("dqm.itemMedapani").setTextureName("dqr:Medapani").setCreativeTab(DQR.tabs.DqmTabMagic);
+		DQMagics.itemMedapani = new DqmItemMagicDebuff((DQR.dqmMaterial.DqmMagicMahouSensi) , 2.0F, 2000, EnumDqmMagic.Medapani, DQPotionMinus.debuffMedapani).setUnlocalizedName("dqm.itemMedapani").setTextureName("dqr:Medapani").setCreativeTab(DQR.tabs.DqmTabMagic);
+		//DQMagics.itemMedapani = new DqmItemMagicNotImplemented((DQR.dqmMaterial.DqmMagicMahouSensi) , 2.0F, 2000, EnumDqmMagic.Medapani).setUnlocalizedName("dqm.itemMedapani").setTextureName("dqr:Medapani").setCreativeTab(DQR.tabs.DqmTabMagic);
 		DQMagics.itemHenatosu = new DqmItemMagicDebuff((DQR.dqmMaterial.DqmMagicMahouTukai) , 2.0F, 2000, EnumDqmMagic.Henatosu, DQPotionMinus.debuffHenatosu).setUnlocalizedName("dqm.itemHenatosu").setTextureName("dqr:Henatosu").setCreativeTab(DQR.tabs.DqmTabMagic);
-		//itemDivainsuperu = new DqmItemMagicDebuff((DQR.dqmMaterial.DqmMagicKenja) , 2.0F, 2000, EnumDqmMagic.Divainsuperu, DQPotionMinus.debuffDivainsuperu).setUnlocalizedName("dqm.itemDivainsuperu").setTextureName("dqr:Divainsuperu").setCreativeTab(DQR.tabs.DqmTabMagic);
-		DQMagics.itemDivainsuperu = new DqmItemMagicNotImplemented((DQR.dqmMaterial.DqmMagicKenja) , 2.0F, 2000, EnumDqmMagic.Divainsuperu).setUnlocalizedName("dqm.itemDivainsuperu").setTextureName("dqr:Divainsuperu").setCreativeTab(DQR.tabs.DqmTabMagic);
+		DQMagics.itemDivainsuperu = new DqmItemMagicDebuff((DQR.dqmMaterial.DqmMagicKenja) , 2.0F, 2000, EnumDqmMagic.Divainsuperu, DQPotionMinus.debuffDivainsuperu).setUnlocalizedName("dqm.itemDivainsuperu").setTextureName("dqr:Divainsuperu").setCreativeTab(DQR.tabs.DqmTabMagic);
+		//DQMagics.itemDivainsuperu = new DqmItemMagicNotImplemented((DQR.dqmMaterial.DqmMagicKenja) , 2.0F, 2000, EnumDqmMagic.Divainsuperu).setUnlocalizedName("dqm.itemDivainsuperu").setTextureName("dqr:Divainsuperu").setCreativeTab(DQR.tabs.DqmTabMagic);
 
-		//itemRukanan = new DqmItemMagicDebuff((DQR.dqmMaterial.DqmMagicMahouSensi) , 2.0F, 2000, EnumDqmMagic.Rukanan, DQPotionMinus.debuffRukani).setUnlocalizedName("dqm.itemRukanan").setTextureName("dqr:Rukani").setCreativeTab(DQR.tabs.DqmTabMagic);
-		DQMagics.itemRukanan = new DqmItemMagicNotImplemented((DQR.dqmMaterial.DqmMagicMahouSensi) , 2.0F, 2000, EnumDqmMagic.Rukanan).setUnlocalizedName("dqm.itemRukanan").setTextureName("dqr:Rukani").setCreativeTab(DQR.tabs.DqmTabMagic);
-		//itemRarihoma = new DqmItemMagicDebuff((DQR.dqmMaterial.DqmMagicSouryo) , 2.0F, 2000, EnumDqmMagic.Rarihoma, DQPotionMinus.debuffRariho).setUnlocalizedName("dqm.itemRarihoma").setTextureName("dqr:Rariho").setCreativeTab(DQR.tabs.DqmTabMagic);
-		DQMagics.itemRarihoma = new DqmItemMagicNotImplemented((DQR.dqmMaterial.DqmMagicSouryo) , 2.0F, 2000, EnumDqmMagic.Rarihoma).setUnlocalizedName("dqm.itemRarihoma").setTextureName("dqr:Rariho").setCreativeTab(DQR.tabs.DqmTabMagic);
+		DQMagics.itemRukanan = new DqmItemMagicDebuff((DQR.dqmMaterial.DqmMagicMahouSensi) , 2.0F, 2000, EnumDqmMagic.Rukanan, DQPotionMinus.debuffRukani).setUnlocalizedName("dqm.itemRukanan").setTextureName("dqr:Rukani").setCreativeTab(DQR.tabs.DqmTabMagic);
+		//DQMagics.itemRukanan = new DqmItemMagicNotImplemented((DQR.dqmMaterial.DqmMagicMahouSensi) , 2.0F, 2000, EnumDqmMagic.Rukanan).setUnlocalizedName("dqm.itemRukanan").setTextureName("dqr:Rukani").setCreativeTab(DQR.tabs.DqmTabMagic);
+		DQMagics.itemRarihoma = new DqmItemMagicDebuff((DQR.dqmMaterial.DqmMagicSouryo) , 2.0F, 2000, EnumDqmMagic.Rarihoma, DQPotionMinus.debuffRariho).setUnlocalizedName("dqm.itemRarihoma").setTextureName("dqr:Rariho").setCreativeTab(DQR.tabs.DqmTabMagic);
+		//DQMagics.itemRarihoma = new DqmItemMagicNotImplemented((DQR.dqmMaterial.DqmMagicSouryo) , 2.0F, 2000, EnumDqmMagic.Rarihoma).setUnlocalizedName("dqm.itemRarihoma").setTextureName("dqr:Rariho").setCreativeTab(DQR.tabs.DqmTabMagic);
 		DQMagics.itemBomiosu = new DqmItemMagicDebuff((DQR.dqmMaterial.DqmMagicMahouTukai) , 2.0F, 2000, EnumDqmMagic.Bomiosu, DQPotionMinus.debuffBomie).setUnlocalizedName("dqm.itemBomiosu").setTextureName("dqr:Bomie").setCreativeTab(DQR.tabs.DqmTabMagic);
 
 		DQMagics.itemUminarinotue = new DqmItemMagicBuff((DQR.dqmMaterial.DqmMagicSouryo) , 2.0F, 2000, EnumDqmMagic.Uminarinotue, DQPotionEtc.buffUminarinotue).setUnlocalizedName("dqm.itemUminarinotue").setTextureName("dqr:Uminarinotue").setCreativeTab(DQR.tabs.DqmTabMagic);
@@ -747,7 +753,7 @@ public class DqItem {
 		DQMiscs.itemTensinosoma = new DqmItemFoodMiscBase(4, 0.1F, false).setHealPoint(-1, -1, 100, 50).setCreativeTab(DQR.tabs.DqmTabMisc).setUnlocalizedName("dqm.itemTensinosoma").setTextureName("dqr:Tensinosoma");
 		DQMiscs.itemDoragonnonamida = new DqmItemMiscBase().setCreativeTab(DQR.tabs.DqmTabMisc).setUnlocalizedName("dqm.itemDoragonnonamida").setTextureName("dqr:Doragonnonamida");
 		DQMiscs.itemGenmaseki = new DqmItemMiscBase().setCreativeTab(DQR.tabs.DqmTabMisc).setUnlocalizedName("dqm.itemGenmaseki").setTextureName("dqr:Genmaseki");
-		DQMiscs.itemKenjanoisi = new DqmItemMiscBase().setCreativeTab(DQR.tabs.DqmTabMisc).setUnlocalizedName("dqm.itemKenjanoisi").setTextureName("dqr:Kenjanoisi");
+		DQMiscs.itemKenjanoisi = new DqmItemKenjanoisi().setCreativeTab(DQR.tabs.DqmTabMisc).setUnlocalizedName("dqm.itemKenjanoisi").setTextureName("dqr:Kenjanoisi");
 		DQMiscs.itemNijiirononunokire = new DqmItemMiscBase().setCreativeTab(DQR.tabs.DqmTabMisc).setUnlocalizedName("dqm.itemNijiirononunokire").setTextureName("dqr:Nijiirononunokire");
 		DQMiscs.itemRyuunohizake = new DqmItemFoodMiscBase(3, 0.3F, false).setCreativeTab(DQR.tabs.DqmTabMisc).setUnlocalizedName("dqm.itemRyuunohizake").setTextureName("dqr:Ryuunohizake");
 		DQMiscs.itemRyuunonamida = new DqmItemMiscBase().setCreativeTab(DQR.tabs.DqmTabMisc).setUnlocalizedName("dqm.itemRyuunonamida").setTextureName("dqr:Ryuunonamida");
@@ -1107,7 +1113,6 @@ public class DqItem {
 		DQMiscs.itemNiku4 = new DqmItemThrowBase().setCreativeTab(DQR.tabs.DqmTabMisc).setUnlocalizedName("dqm.itemNiku4").setTextureName("dqr:Niku4");
 
 		DQMagicTools.itemPetSuisyou = new DqmItemPetSuisyou().setCreativeTab(DQR.tabs.DqmTabMagic).setMaxStackSize(1).setUnlocalizedName("dqm.itemPetSuisyou").setTextureName("dqr:PetSuisyou");
-<<<<<<< HEAD
 
 		//スキルエンブレム
 		//DQSkillWs.itemPetSuisyou = new DqmItemPetSuisyou().setCreativeTab(DQR.tabs.DqmTabMagic).setMaxStackSize(1).setUnlocalizedName("dqm.itemPetSuisyou").setTextureName("dqr:PetSuisyou");
@@ -1148,7 +1153,30 @@ public class DqItem {
 
 		DQMagicTools.itemMagicToolBreak1 = new DqmItemMGTBreak1().setCreativeTab(DQR.tabs.DqmTabMagic).setMaxDamage(10000).setMaxStackSize(1).setUnlocalizedName("dqm.itemMagicToolBreak1").setTextureName("dqr:MagicToolBreak1");
 		DQMagicTools.itemMagicToolBreak2 = new DqmItemMGTBreak2().setCreativeTab(DQR.tabs.DqmTabMagic).setMaxDamage(10000).setMaxStackSize(1).setUnlocalizedName("dqm.itemMagicToolBreak2").setTextureName("dqr:MagicToolBreak2");
-=======
->>>>>>> parent of 2aede75... ver0.8.7.8
+
+		DQMagicTools.itemMagicToolSet = new DqmItemMGTSet().setCreativeTab(DQR.tabs.DqmTabMagic).setMaxDamage(10000).setMaxStackSize(1).setUnlocalizedName("dqm.itemMagicToolSet").setTextureName("dqr:MagicToolSet");
+
+
+		DQMagics.itemBreathF1 = new DqmItemMagicDragonF((DQR.dqmMaterial.DqmMagicDragon), 1.0F, 2000, EnumDqmMagic.Hinoiki).setUnlocalizedName("dqm.itemBreathF1").setTextureName("dqr:BreathF1").setCreativeTab(DQR.tabs.DqmTabMagic);
+		DQMagics.itemBreathF2 = new DqmItemMagicDragonF((DQR.dqmMaterial.DqmMagicDragon), 5.0F, 2000, EnumDqmMagic.Kaeniki).setUnlocalizedName("dqm.itemBreathF2").setTextureName("dqr:BreathF2").setCreativeTab(DQR.tabs.DqmTabMagic);
+		DQMagics.itemBreathF3 = new DqmItemMagicDragonF((DQR.dqmMaterial.DqmMagicDragon), 10.0F, 2000, EnumDqmMagic.HagesiiHonoo).setUnlocalizedName("dqm.itemBreathF3").setTextureName("dqr:BreathF3").setCreativeTab(DQR.tabs.DqmTabMagic);
+		DQMagics.itemBreathF4 = new DqmItemMagicDragonF((DQR.dqmMaterial.DqmMagicDragon), 15.0F, 2000, EnumDqmMagic.Syakunetu).setUnlocalizedName("dqm.itemBreathF4").setTextureName("dqr:BreathF4").setCreativeTab(DQR.tabs.DqmTabMagic);
+		DQMagics.itemBreathF5 = new DqmItemMagicDragonF((DQR.dqmMaterial.DqmMagicDragon), 25.0F, 2000, EnumDqmMagic.RengokuHonoo).setUnlocalizedName("dqm.itemBreathF5").setTextureName("dqr:BreathF5").setCreativeTab(DQR.tabs.DqmTabMagic);
+
+		DQMagics.itemBreathS1 = new DqmItemMagicDragonS((DQR.dqmMaterial.DqmMagicDragon), 1.0F, 2000, EnumDqmMagic.Tumetaiiki).setUnlocalizedName("dqm.itemBreathS1").setTextureName("dqr:BreathS1").setCreativeTab(DQR.tabs.DqmTabMagic);
+		DQMagics.itemBreathS2 = new DqmItemMagicDragonS((DQR.dqmMaterial.DqmMagicDragon), 7.5F, 2000, EnumDqmMagic.Koorinoiki).setUnlocalizedName("dqm.itemBreathS2").setTextureName("dqr:BreathS2").setCreativeTab(DQR.tabs.DqmTabMagic);
+		DQMagics.itemBreathS3 = new DqmItemMagicDragonS((DQR.dqmMaterial.DqmMagicDragon), 12.0F, 2000, EnumDqmMagic.Kogoeruhubuki).setUnlocalizedName("dqm.itemBreathS3").setTextureName("dqr:BreathS3").setCreativeTab(DQR.tabs.DqmTabMagic);
+		DQMagics.itemBreathS4 = new DqmItemMagicDragonS((DQR.dqmMaterial.DqmMagicDragon), 18.0F, 2000, EnumDqmMagic.Kagayakuiki).setUnlocalizedName("dqm.itemBreathS4").setTextureName("dqr:BreathS4").setCreativeTab(DQR.tabs.DqmTabMagic);
+		DQMagics.itemBreathS5 = new DqmItemMagicDragonS((DQR.dqmMaterial.DqmMagicDragon), 30.0F, 2000, EnumDqmMagic.Zettaireido).setUnlocalizedName("dqm.itemBreathS5").setTextureName("dqr:BreathS5").setCreativeTab(DQR.tabs.DqmTabMagic);
+
+		DQMiscs.itemDragonObuB = new DqmItemMiscBase().setCreativeTab(DQR.tabs.DqmTabMisc).setUnlocalizedName("dqm.itemDragonObuB").setTextureName("dqr:Breath0");
+
+		DQInventorySlots.itemSlotKubikazari = new Item().setUnlocalizedName("dqm.itemSlotKubikazari").setTextureName("dqr:slot_Kubikazari");
+		DQInventorySlots.itemSlotPiasu = new Item().setUnlocalizedName("dqm.itemSlotPiasu").setTextureName("dqr:slot_Piasu").setCreativeTab(DQR.tabs.DqmTabMisc);
+		DQInventorySlots.itemSlotShield = new Item().setUnlocalizedName("dqm.itemSlotShield").setTextureName("dqr:slot_Shield").setCreativeTab(DQR.tabs.DqmTabMisc);
+		DQInventorySlots.itemSlotSonota = new Item().setUnlocalizedName("dqm.itemSlotSonota").setTextureName("dqr:slot_Sonota").setCreativeTab(DQR.tabs.DqmTabMisc);
+		DQInventorySlots.itemSlotUdewa = new Item().setUnlocalizedName("dqm.itemSlotUdewa").setTextureName("dqr:slot_Udewa").setCreativeTab(DQR.tabs.DqmTabMisc);
+		DQInventorySlots.itemSlotYubiwa = new Item().setUnlocalizedName("dqm.itemSlotYubiwa").setTextureName("dqr:slot_Yubiwa").setCreativeTab(DQR.tabs.DqmTabMisc);
+		DQInventorySlots.itemSlotFukuro = new Item().setUnlocalizedName("dqm.itemSlotFukuro").setTextureName("dqr:slot_Fukuro").setCreativeTab(DQR.tabs.DqmTabMisc);
 	}
 }

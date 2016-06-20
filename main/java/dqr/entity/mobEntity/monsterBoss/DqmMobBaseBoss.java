@@ -10,6 +10,7 @@ public class DqmMobBaseBoss extends DqmMobBase
 	public DqmMobBaseBoss(World world, EnumDqmMonster Type)
 	{
 		super(world, Type);
+		this.isImmuneToFire = true;
 	}
 
 

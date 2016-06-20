@@ -48,6 +48,13 @@ public class DqmItemMagicBuff extends DqmItemMagicBase{
 
     }
 
+    public boolean onItemUse(ItemStack p_77648_1_, EntityPlayer p_77648_2_, World p_77648_3_, int p_77648_4_, int p_77648_5_, int p_77648_6_, int p_77648_7_, float p_77648_8_, float p_77648_9_, float p_77648_10_)
+    {
+    	this.onItemRightClick(p_77648_1_, p_77648_3_, p_77648_2_);
+    	//System.out.println("USE");
+    	return false;
+    }
+
     /**
      * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
      */
@@ -62,8 +69,8 @@ public class DqmItemMagicBuff extends DqmItemMagicBase{
 
 			return par1ItemStack;
 		}
-		pe = par3EntityPlayer.getActivePotionEffect(DQPotionMinus.debuffRariho);
-		if(pe != null && par3EntityPlayer.worldObj.isRemote)
+
+		if(DQR.func.isBind(par3EntityPlayer) && par3EntityPlayer.worldObj.isRemote)
 		{
 	  		par3EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.magic.rariho.txt",new Object[] {}));
     		par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.pi", 1.0F, 1.0F);

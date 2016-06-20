@@ -4,6 +4,7 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.world.World;
 import dqr.DQR;
 import dqr.api.Items.DQArmors;
+import dqr.api.Items.DQEmblems;
 import dqr.api.Items.DQMiscs;
 import dqr.api.enums.EnumDqmMonster;
 
@@ -160,6 +161,10 @@ public class DqmEntityAkairai extends DqmMobBaseEnd
         if (DQR.funcMob.getCalcDROP(3000, 1))
         {
             this.dropItem(DQArmors.itemSabitakutu, 1);
+        }
+        if (DQR.funcMob.getCalcDROP(3000, 1))
+        {
+        	this.dropItem(DQEmblems.itemEmbSage , 1);
         }
     }
 }

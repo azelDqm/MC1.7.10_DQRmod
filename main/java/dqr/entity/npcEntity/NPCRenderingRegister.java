@@ -3,6 +3,7 @@ package dqr.entity.npcEntity;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import dqr.entity.npcEntity.npc.DqmEntityNPCBank;
 import dqr.entity.npcEntity.npc.DqmEntityNPCBukiya;
+import dqr.entity.npcEntity.npc.DqmEntityNPCGuntai;
 import dqr.entity.npcEntity.npc.DqmEntityNPCKaitoriya;
 import dqr.entity.npcEntity.npc.DqmEntityNPCMedalking;
 import dqr.entity.npcEntity.npc.DqmEntityNPCSinkan;
@@ -27,6 +28,8 @@ public class NPCRenderingRegister {
 		RenderingRegistry.registerEntityRenderingHandler(DqmEntityNPCSinkan2.class, new DqmRenderNPCBiped());
 		RenderingRegistry.registerEntityRenderingHandler(DqmEntityNPCSinkan3.class, new DqmRenderNPCBiped());
 		RenderingRegistry.registerEntityRenderingHandler(DqmEntityNPCMedalking.class, new DqmRenderNPCBiped());
+
+		RenderingRegistry.registerEntityRenderingHandler(DqmEntityNPCGuntai.class, new DqmRenderNPC());
 
 	}
 }

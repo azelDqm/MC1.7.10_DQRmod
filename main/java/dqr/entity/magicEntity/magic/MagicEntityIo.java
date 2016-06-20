@@ -425,7 +425,7 @@ public class MagicEntityIo extends MagicEntity implements IProjectile{
                     			pe = elv2.getActivePotionEffect(DQPotionPlus.buffMahokanta);
                     		}
 
-                    		if(pe != null && this.shootingEntity != null && this.shootingEntity instanceof EntityLiving)
+                    		if(pe != null && this.shootingEntity != null && this.shootingEntity instanceof EntityLivingBase)
                     		{
                             	EntityLiving elv = (EntityLiving)this.shootingEntity;
                             	//村人以外なら、ダメージを与える処理を呼ぶ

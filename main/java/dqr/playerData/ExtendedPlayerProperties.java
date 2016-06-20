@@ -41,18 +41,23 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
 
     private int[] JukurenLv = new int[64];
     private int[] JukurenExp = new int[64];
+    private int[] JukurenWP = new int[64];
 
     private int Kougeki;
     private int Bougyo;
     private int Maryoku;
 
     private int Tikara;
-    private int Mikawasi;
     private int Kasikosa;
+
+    private int Mikawasi;
+    private int[] arrayMikawasi = new int[32];
 
     private int Kaisinritu;
     private int KaisinMax = 4;
     private int KaisinMin = 2;
+    private int[] arrayKaisinritu = new int[32];
+
 
     private int Gold;
     private int Medal;
@@ -83,7 +88,7 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
     private int[] MagicMode = new int[16];
 
     //NPC会話履歴
-    //0:修理屋 1:買取屋 2:銀行 3:武器屋
+    //0:修理屋 1:買取屋 2:銀行 3:武器屋 4:特技ダーマ
     private int[] npcTalk = new int[32];
     private Item bukiyaItem;
 
@@ -209,6 +214,11 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
         	nbt.setInteger("JukurenExp_" + cnt, JukurenExp[cnt]);
         }
 
+        for(int cnt = 0; cnt < 64; cnt++)
+        {
+        	nbt.setInteger("JukurenWP_" + cnt, JukurenWP[cnt]);
+        }
+
         for(int cnt = 0; cnt < 16; cnt++)
         {
         	nbt.setInteger("MagicMode_" + cnt, MagicMode[cnt]);
@@ -246,11 +256,20 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
 
         nbt.setInteger("Tikara", this.Tikara);
         nbt.setInteger("Mikawasi", this.Mikawasi);
+        for(int cnt = 0; cnt < 32; cnt++)
+        {
+        	nbt.setInteger("arrayMikawasi_" + cnt, arrayMikawasi[cnt]);
+        }
+
         nbt.setInteger("Kasikosa", this.Kasikosa);
 
         nbt.setInteger("Kaisinritu", this.Kaisinritu);
         nbt.setInteger("KaisinMin", this.KaisinMin);
         nbt.setInteger("KaisinMax", this.KaisinMax);
+        for(int cnt = 0; cnt < 32; cnt++)
+        {
+        	nbt.setInteger("arrayKaisinritu_" + cnt, arrayKaisinritu[cnt]);
+        }
 
         nbt.setInteger("Gold", this.Gold);
         nbt.setInteger("Medal", this.Medal);
@@ -399,6 +418,11 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
         	JukurenExp[cnt] = nbt.getInteger("JukurenExp_" + cnt);
         }
 
+        for(int cnt = 0; cnt < 64; cnt++)
+        {
+        	JukurenWP[cnt] = nbt.getInteger("JukurenWP_" + cnt);
+        }
+
         for(int cnt = 0; cnt < 16; cnt++)
         {
         	MagicMode[cnt] = nbt.getInteger("MagicMode_" + cnt);
@@ -436,11 +460,21 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
 
         this.Tikara = nbt.getInteger("Tikara");
         this.Mikawasi = nbt.getInteger("Mikawasi");
+        for(int cnt = 0; cnt < 32; cnt++)
+        {
+        	arrayMikawasi[cnt] = nbt.getInteger("arrayMikawasi_" + cnt);
+        }
+
+
         this.Kasikosa = nbt.getInteger("Kasikosa");
 
         this.Kaisinritu = nbt.getInteger("Kaisinritu");
         this.KaisinMin = nbt.getInteger("KaisinMin");
         this.KaisinMax = nbt.getInteger("KaisinMax");
+        for(int cnt = 0; cnt < 32; cnt++)
+        {
+        	arrayKaisinritu[cnt] = nbt.getInteger("arrayKaisinritu_" + cnt);
+        }
 
         this.Gold = nbt.getInteger("Gold");
         this.Medal = nbt.getInteger("Medal");
@@ -618,6 +652,47 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
     	if(JobKasikosa == null) JobKasikosa = new int[32];
         this.JobKasikosa[par1] = par2;
     }
+
+
+
+
+
+    public int[] getArrayMikawasiA() {
+    	if(arrayMikawasi == null) arrayMikawasi = new int[32];
+        return arrayMikawasi;
+    }
+    public void setArrayMikawasiA(int[] par1) {
+    	if(arrayMikawasi == null) arrayMikawasi = new int[32];
+        this.arrayMP = par1;
+    }
+    public int getArrayMikawasi(int par1) {
+    	if(arrayMikawasi == null) arrayMikawasi = new int[32];
+        return arrayMikawasi[par1];
+    }
+    public void setArrayMikawasi(int par1, int par2) {
+    	if(arrayMikawasi == null) arrayMikawasi = new int[32];
+        this.arrayMikawasi[par1] = par2;
+    }
+
+
+    public int[] getArrayKaisinrituA() {
+    	if(arrayKaisinritu == null) arrayKaisinritu = new int[32];
+        return arrayKaisinritu;
+    }
+    public void setArrayKaisinrituA(int[] par1) {
+    	if(arrayKaisinritu == null) arrayKaisinritu = new int[32];
+        this.arrayMP = par1;
+    }
+    public int getArrayKaisinritu(int par1) {
+    	if(arrayKaisinritu == null) arrayKaisinritu = new int[32];
+        return arrayKaisinritu[par1];
+    }
+    public void setArrayKaisinritu(int par1, int par2) {
+    	if(arrayKaisinritu == null) arrayKaisinritu = new int[32];
+        this.arrayKaisinritu[par1] = par2;
+    }
+
+
 
     public float[] getArrayHPA() {
     	if(arrayHP == null) arrayHP = new float[32];
@@ -839,6 +914,28 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
     	if(JukurenExp == null) JukurenExp = new int[64];
         this.JukurenExp[par1] = par2;
     }
+
+
+    public int[] getJukurenWPA() {
+    	if(JukurenWP == null) JukurenWP = new int[64];
+        return JukurenWP;
+    }
+    public void setJukurenWPA(int[] par1) {
+    	if(JukurenWP == null) JukurenWP = new int[64];
+        this.JukurenWP = par1;
+    }
+    public int getJukurenWP(int par1) {
+    	if(JukurenWP == null) JukurenWP = new int[64];
+        //System.out.println("VAL:" +par1 + "/" + JukurenWP[par1]);
+        return JukurenWP[par1];
+
+    }
+    public void setJukurenWP(int par1, int par2) {
+    	if(JukurenWP == null) JukurenWP = new int[64];
+        this.JukurenWP[par1] = par2;
+        //System.out.println("VAL:" +par1 + "/" + par2);
+    }
+
 
     public int[] getMagicModeA() {
     	if(MagicMode == null) MagicMode = new int[16];

@@ -1,3 +1,4 @@
+rd /s /q api
 rd /s /q java\dqr\blocks\decorate\model\
 rd /s /q java\dqr\entity\mobEntity\model
 rd /s /q java\dqr\entity\mobEntity\model2

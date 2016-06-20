@@ -67,7 +67,9 @@ public class MagicEntity extends Entity implements IProjectile{
         this.renderDistanceWeight = 10.0D;
         this.setSize(0.5F, 0.5F);
         this.damage = 0.0D;
+        //this.setDead();
     }
+
 
     /** 発射する弾を生成・初期パラメータの定義をする。
      * @param par1World :このワールド
@@ -106,6 +108,8 @@ public class MagicEntity extends Entity implements IProjectile{
                            MathHelper.cos(this.rotationPitch / 180.0F * (float)Math.PI));
         this.motionY = (double)(-MathHelper.sin(this.rotationPitch / 180.0F * (float)Math.PI));
         this.setThrowableHeading(this.motionX, this.motionY, this.motionZ, speed * 1.5F, speed2);
+
+        //this.setDead();
     }
 
     /*dataWatcherを利用したサーバ・クライアント間の同期処理だと思う*/
@@ -180,6 +184,10 @@ public class MagicEntity extends Entity implements IProjectile{
     public void onUpdate()
     {
         super.onUpdate();
+        if (this.worldObj.isRemote && this.motionX * this.motionX + this.motionZ * this.motionZ < 0.001D)
+        {
+        	this.setDead();
+        }
     }
 
 

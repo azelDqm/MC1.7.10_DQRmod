@@ -23,6 +23,7 @@ public class DqmRenderNPCBiped extends RenderLiving
 	private static final ResourceLocation DqmMobTextureSinkan2 = new ResourceLocation("dqr:textures/entity/npc/Sinkan2.png");
 	private static final ResourceLocation DqmMobTextureSinkan3 = new ResourceLocation("dqr:textures/entity/npc/Sinkan3.png");
 	private static final ResourceLocation DqmMobTextureMedalking = new ResourceLocation("dqr:textures/entity/npc/Medalking.png");
+
 	private float scale = 1.0F;
 
 	public DqmRenderNPCBiped()

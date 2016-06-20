@@ -81,12 +81,12 @@ public class FuncExpTable
         EnumDqmPet petType = mob.type;
         fixLv = Lv + (99 - petType.MaxLv);
 
-        retExp = getNextExpFromTable(fixLv) - getNextExpFromTable(fixLv - 1);
+        retExp = getNextExpFromTable(fixLv) - getNextExpFromTable(99 - petType.MaxLv - 1);
 
         return retExp;
     }
 
-<<<<<<< HEAD
+    /*
     public int getNextExpPet2(int Lv, DqmPetBase mob)
     {
         int retExp = 0;
@@ -101,9 +101,8 @@ public class FuncExpTable
 
         return retExp;
     }
+    */
 
-=======
->>>>>>> parent of 2aede75... ver0.8.7.8
     public int getNeedExpPet(int Lv, DqmPetBase mob)
     {
         int retExp = 0;
@@ -111,7 +110,7 @@ public class FuncExpTable
         EnumDqmPet petType = mob.type;
         int fixLv = Lv + (99 - petType.MaxLv);
 
-        retExp = getNeedExpFromTable(fixLv);
+        retExp = getNeedExpFromTable(fixLv) - getNeedExpFromTable(99 - petType.MaxLv - 1);
 
         return retExp;
     }

@@ -87,12 +87,12 @@ public class DqmItemMGTFarm1 extends DqmItemMagicToolBase{
 						//System.out.println("test2:");
 						for(int cntZ = (areaZ - 1) / 2 * -1; (areaZ - 1) / 2 >= cntZ; cntZ++)
 						{
-							System.out.println("test2:");
+							//System.out.println("test2:");
 							hoe.onItemUse(new ItemStack(Items.diamond_hoe, 1), ep, par3World,
 										  p_77648_4_ + cntX, p_77648_5_+ cntY, p_77648_6_ + cntZ, p_77648_7_,
 										  p_77648_8_ + cntX, p_77648_9_ + cntY, p_77648_10_ + cntZ);
 
-							System.out.println("test:" + (p_77648_4_ + cntX) + "/" +  (p_77648_5_+ cntY) + "/" + (p_77648_6_ + cntZ) + "/" + p_77648_7_ + "/" +
+							//System.out.println("test:" + (p_77648_4_ + cntX) + "/" +  (p_77648_5_+ cntY) + "/" + (p_77648_6_ + cntZ) + "/" + p_77648_7_ + "/" +
 									  (p_77648_8_ + cntX) + "/" + (p_77648_9_ + cntY) + "/" + (p_77648_10_ + cntZ));
 							//par3World.
 						}
@@ -297,7 +297,7 @@ public class DqmItemMGTFarm1 extends DqmItemMagicToolBase{
 							ep.addChatMessage(new ChatComponentTranslation("msg.magictool.farm.seedPlant.0.txt", new Object[] {iStack.getDisplayName(), val}));
 				    		ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
 						}
-
+//Block.getBlockFromName(p_149684_0_)
 						//System.out.println(selectSeed);
 					}
 				}
@@ -412,7 +412,7 @@ public class DqmItemMGTFarm1 extends DqmItemMagicToolBase{
         }
         catch (Exception exception)
         {
-            System.out.println("Couldn\'t send book info" + exception.getMessage());
+            //System.out.println("Couldn\'t send book info" + exception.getMessage());
         }
         finally
         {

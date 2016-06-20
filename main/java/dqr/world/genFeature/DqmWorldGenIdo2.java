@@ -7,6 +7,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
 import cpw.mods.fml.common.IWorldGenerator;
+import dqr.DQR;
 import dqr.api.Blocks.DQBlocks;
 import dqr.api.Blocks.DQDecorates;
 import dqr.entity.npcEntity.npc.DqmEntityNPCMedalking;
@@ -25,18 +26,24 @@ public class DqmWorldGenIdo2 implements IWorldGenerator
         int yyy = par3World.getHeightValue(xxx, zzz);
         int ran1 = rand.nextInt(10000);
         int ran2 = rand.nextInt(2);
-        int ran3 = rand.nextInt(2);
-        int ran4 = rand.nextInt(2);
-        int ran5 = rand.nextInt(3);
-        int ran6 = rand.nextInt(3);
-        int ran7 = rand.nextInt(2);
-        int ran8 = rand.nextInt(3);
-        int ran9 = rand.nextInt(4);
-        int ran10 = rand.nextInt(5);
-        int ran11 = rand.nextInt(3);
-        int ran12 = rand.nextInt(50);
+        //int ran3 = rand.nextInt(2);
+        //int ran4 = rand.nextInt(2);
+        //int ran5 = rand.nextInt(3);
+        //int ran6 = rand.nextInt(3);
+        //int ran7 = rand.nextInt(2);
+        //int ran8 = rand.nextInt(3);
+        //int ran9 = rand.nextInt(4);
+        //int ran10 = rand.nextInt(5);
+        //int ran11 = rand.nextInt(3);
+        //int ran12 = rand.nextInt(50);
 
+        /*
         if(par3World.provider.dimensionId != 0)
+        {
+        	return;
+        }
+        */
+        if(!DQR.conf.cfg_gen_Ido2_a.contains((int)par3World.provider.dimensionId))
         {
         	return;
         }
@@ -48,8 +55,10 @@ public class DqmWorldGenIdo2 implements IWorldGenerator
         }
 
         //if (ran1 >= 9950 && (par3World.getBlock(xxx, yyy - 1, zzz) == Blocks.grass || par3World.getBlock(xxx, yyy - 1, zzz) == Blocks.sand))
-        if (ran1 >= 9990 && (par3World.getBlock(xxx, yyy - 1, zzz) == Blocks.grass ||
+        if (ran1 >= 9970 && (par3World.getBlock(xxx, yyy - 1, zzz) == Blocks.grass ||
         					 par3World.getBlock(xxx, yyy - 1, zzz) == Blocks.sand  ||
+                			 par3World.getBlock(xxx, yyy - 1, zzz) == Blocks.netherrack ||
+                			 par3World.getBlock(xxx, yyy - 1, zzz) == Blocks.end_stone||
         					 (topBlock != Blocks.air && par3World.getBlock(xxx, yyy - 1, zzz) == topBlock)))
         {
         	//System.out.println("X" + xxx +  "/Y" + yyy +  "/Z" + zzz);

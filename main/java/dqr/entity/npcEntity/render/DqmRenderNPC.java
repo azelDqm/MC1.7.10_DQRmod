@@ -12,10 +12,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import dqr.entity.npcEntity.model.DqmModelNPC;
 import dqr.entity.npcEntity.npc.DqmEntityNPCBank;
 import dqr.entity.npcEntity.npc.DqmEntityNPCBukiya;
-<<<<<<< HEAD
 import dqr.entity.npcEntity.npc.DqmEntityNPCGuntai2;
-=======
->>>>>>> parent of 2aede75... ver0.8.7.8
 import dqr.entity.npcEntity.npc.DqmEntityNPCKaitoriya;
 import dqr.entity.npcEntity.npc.DqmEntityNPCSyuuri;
 
@@ -23,6 +20,7 @@ import dqr.entity.npcEntity.npc.DqmEntityNPCSyuuri;
 public class DqmRenderNPC extends RenderLiving
 {
 	private static final ResourceLocation DqmMobTexture = new ResourceLocation("dqr:textures/entity/npc/SteveB.png");
+	//private static final ResourceLocation DqmMobTextureBank = new ResourceLocation("dqr:textures/entity/npc/SteveG.png");
 	private static final ResourceLocation DqmMobTextureBank = new ResourceLocation("dqr:textures/entity/npc/SteveG.png");
 	private static final ResourceLocation DqmMobTextureBukiya = new ResourceLocation("dqr:textures/entity/npc/SteveB.png");
 	private static final ResourceLocation DqmMobTextureKaitori = new ResourceLocation("dqr:textures/entity/npc/SteveK.png");
@@ -56,13 +54,11 @@ public class DqmRenderNPC extends RenderLiving
 		}else if(par1EntityLiving instanceof DqmEntityNPCKaitoriya)
 		{
 			return this.DqmMobTextureKaitori;
-<<<<<<< HEAD
 		}else if(par1EntityLiving instanceof DqmEntityNPCGuntai2)
 		{
 			return this.DqmMobTextureBukiya;
-=======
->>>>>>> parent of 2aede75... ver0.8.7.8
 		}
+
 
 		return this.DqmMobTexture;
 	}

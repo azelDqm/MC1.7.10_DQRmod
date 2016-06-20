@@ -23,6 +23,12 @@ public class DqmWorldGenTaru implements IWorldGenerator
         int x = par1 * 16 + rand.nextInt(16);
         int z = par2 * 16 + rand.nextInt(16);
         int y;
+
+        if(!DQR.conf.cfg_gen_Taru_Map.containsKey((int)par3World.provider.dimensionId))
+        {
+        	return;
+        }
+
         if(par3World.provider.dimensionId == -1)
         {
 
@@ -59,8 +65,10 @@ public class DqmWorldGenTaru implements IWorldGenerator
         }
 
         if (ran >= 94  && (par3World.getBlock(x, y - 1, z) == Blocks.grass ||
+						   par3World.getBlock(x, y - 1, z) == Blocks.sand ||
         				   par3World.getBlock(x, y - 1, z) == Blocks.netherrack ||
         				   par3World.getBlock(x, y - 1, z) == Blocks.nether_wart ||
+        				   par3World.getBlock(x, y - 1, z) == Blocks.end_stone ||
         				   (topBlock != Blocks.air && par3World.getBlock(x, y - 1, z) == topBlock)))
         {
         	par3World.setBlock(x, y, z, DQDecorates.DqmBlockTaruMob, rand.nextInt(4), 2);

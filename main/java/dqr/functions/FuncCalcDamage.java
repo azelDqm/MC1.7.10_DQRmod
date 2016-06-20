@@ -1,16 +1,35 @@
 package dqr.functions;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.monster.EntityZombie;
+import net.minecraft.entity.passive.EntityHorse;
+import net.minecraft.entity.passive.EntityTameable;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.projectile.EntityArrow;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.DamageSource;
 import dqr.DQR;
+import dqr.api.enums.EnumDqmMessageConv;
+import dqr.api.enums.EnumDqmMobRoot;
 import dqr.api.enums.EnumDqmMonster;
 import dqr.api.enums.EnumDqmMonsterResist;
 import dqr.api.enums.EnumDqmPet;
+import dqr.api.enums.EnumDqmSkillW;
+import dqr.api.enums.EnumDqmWeapon;
+import dqr.api.potion.DQPotionMinus;
+import dqr.api.potion.DQPotionPlus;
 import dqr.entity.magicEntity.magic.MagicEntityBagi;
 import dqr.entity.magicEntity.magic.MagicEntityBegiragon;
 import dqr.entity.magicEntity.magic.MagicEntityBegirama;
@@ -24,8 +43,8 @@ import dqr.entity.magicEntity.magic.MagicEntityMeragaia;
 import dqr.entity.magicEntity.magic.MagicEntityMerami;
 import dqr.entity.magicEntity.magic.MagicEntityMerazoma;
 import dqr.entity.magicEntity.magic.MagicEntityRaidein;
+import dqr.entity.magicEntity.magic.MagicEntityZaki;
 import dqr.entity.mobEntity.DqmMobBase;
-<<<<<<< HEAD
 import dqr.entity.mobEntity.monsterDay.DqmEntityBigCrow;
 import dqr.entity.mobEntity.monsterDay.DqmEntityDucksbill;
 import dqr.entity.mobEntity.monsterDay.DqmEntityEbiruapple;
@@ -68,9 +87,10 @@ import dqr.entity.mobEntity.monsterTensei.DqmEntityMoonkimera;
 import dqr.entity.mobEntity.monsterTensei.DqmEntitySabotengold;
 import dqr.entity.mobEntity.monsterTensei.DqmEntityTaipug;
 import dqr.entity.npcEntity.npc.DqmEntityNPCGuntai;
-=======
->>>>>>> parent of 2aede75... ver0.8.7.8
 import dqr.entity.petEntity.DqmPetBase;
+import dqr.entity.throwingEntity.throwItem.ThrowItemEntityIshitubute;
+import dqr.playerData.ExtendedPlayerProperties;
+import dqr.playerData.ExtendedPlayerProperties3;
 
 public class FuncCalcDamage {
 
@@ -79,7 +99,6 @@ public class FuncCalcDamage {
 
 	}
 
-<<<<<<< HEAD
 	public float applyDamageBoost(float par1, EntityLivingBase evb, DamageSource source, float preDamage)
 	{
 		float ret = par1;
@@ -398,7 +417,8 @@ public class FuncCalcDamage {
 						if(weaponSkill == 0)
 						{
 							//ウィングブロウ
-							ret = ret + 30.0F + (rand.nextFloat() * 15);
+							//ret = ret + 30.0F + (rand.nextFloat() * 15);
+							evb.attackEntityFrom(DQR.damageSource.getPlayerSkillDamage(ep), (30.0F + (rand.nextFloat() * 15)));
 							hitFlg = true;
 						}else if(weaponSkill == 2)
 						{
@@ -668,7 +688,7 @@ public class FuncCalcDamage {
 
 							if(rand.nextInt(5) == 0)
 							{
-								evb.attackEntityFrom(DQR.damageSource.getPlayerSkillDamageDeath(ep), evb.getMaxHealth() + 100.0F);
+								evb.attackEntityFrom(DQR.damageSource.getPlayerSkillDamageDeath(ep), evb.getMaxHealth() + 10.0F);
 								ret = -1.0F;
 							}else
 							{
@@ -794,7 +814,8 @@ public class FuncCalcDamage {
 
 							if(rand.nextInt(5) == 0)
 							{
-								evb.attackEntityFrom(DQR.damageSource.getPlayerSkillDamageDeath(ep), evb.getMaxHealth() + 100.0F);
+								//System.out.println("TESTXXXXXXXXXXX");
+								evb.attackEntityFrom(DQR.damageSource.getPlayerSkillDamageDeath(ep).setDamageBypassesArmor(), evb.getMaxHealth() + 10.0F);
 								ret = -1.0F;
 							}else
 							{
@@ -956,6 +977,7 @@ public class FuncCalcDamage {
 							hitFlg = true;
 						}else if(weaponSkill == 3)
 						{
+							/*
 							//つまづいて転ぶ
 							ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
 
@@ -970,6 +992,7 @@ public class FuncCalcDamage {
 
 				            ret = -1.0F;
 				            hitFlg = false;
+				            */
 						}else if(weaponSkill == 5)
 						{
 				            int getGoldVal = ExtendedPlayerProperties.get(ep).getGold();
@@ -1199,7 +1222,10 @@ public class FuncCalcDamage {
 
 					if(hitFlg)
 					{
-						ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
+						if(!(ep.worldObj.isRemote))
+						{
+							ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
+						}
 					}
 				}
 			}
@@ -1222,9 +1248,86 @@ public class FuncCalcDamage {
 		return ret;
 	}
 
-=======
->>>>>>> parent of 2aede75... ver0.8.7.8
 	public float applyDamageResist(float par1, EntityLivingBase evb, DamageSource source)
+	{
+		float ret = par1;
+		String mobName = null;
+		boolean bypassFlg = false;
+
+		if(source.getEntity() instanceof EntityPlayer)
+		{
+			EntityPlayer ep = (EntityPlayer)source.getEntity();
+			int weapon = ExtendedPlayerProperties.get(ep).getWeapon();
+			int weaponSkill = ExtendedPlayerProperties3.get(ep).getWeaponSkillSet(weapon);
+			int skillPerm = ExtendedPlayerProperties3.get(ep).getWeaponSkillPermission(weapon, weaponSkill);
+
+			DqmMobBase monster = null;
+			if(evb instanceof DqmMobBase)
+			{
+				monster = (DqmMobBase)evb;
+				bypassFlg = monster.dqmBypassArmor;
+			}
+
+			/*
+			if(weapon == EnumDqmWeapon.DqmBraveSword.getId() && weaponSkill == 8 && skillPerm != 0)
+			{
+				//メタル斬り
+				if(monster != null && monster.MobRoot.getId() == EnumDqmMobRoot.METARU.getId())
+				{
+					EnumDqmSkillW skillW = DQR.enumGetter.getSkillW(weapon, weaponSkill);
+					ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
+					bypassFlg = true;
+				}
+			}
+			*/
+		}
+
+
+
+		if(!bypassFlg)
+		{
+			//System.out.println("test1");
+			if(evb instanceof DqmMobBase)
+			{
+				DqmMobBase mob = (DqmMobBase)evb;
+				EnumDqmMonster type = mob.monsterType;
+				mobName = type.getMobName();
+
+			}else if(evb instanceof DqmPetBase)
+			{
+				DqmPetBase mob = (DqmPetBase)evb;
+				EnumDqmPet type = mob.type;
+				mobName = type.PetName;
+			}
+
+			if(mobName != null)
+			{
+				//モンスター耐性処理
+				EnumDqmMonsterResist resist = DQR.enumGetter.getMonsterResistFromMobname(mobName);
+				//System.out.println("test2");
+				if(resist != null)
+				{
+					float resRate = 1.0F;
+					Entity ent = source.getEntity();
+					if(ent instanceof EntityArrow)
+					{
+						resRate =  resist.getArrow();
+					}else if(ent instanceof EntityPlayer)
+					{
+
+						resRate =  resist.getAttack();
+						//System.out.println("test3:" + resRate);
+					}
+
+					ret = ret * resRate;
+				}
+			}
+		}
+
+		return ret;
+	}
+
+	public float applyDamageResistMagic(float par1, EntityLivingBase evb, DamageSource source)
 	{
 		float ret = par1;
 		String mobName = null;
@@ -1244,11 +1347,12 @@ public class FuncCalcDamage {
 
 		if(mobName != null)
 		{
+			//モンスター耐性処理
 			EnumDqmMonsterResist resist = DQR.enumGetter.getMonsterResistFromMobname(mobName);
 
 			if(resist != null)
 			{
-				System.out.println("TEST" + resist.getClassname());
+				//System.out.println("TEST" + resist.getClassname());
 				//System.out.println("TEST" + source.getEntity().getCommandSenderName());
 				float resRate = 1.0F;
 				Entity ent = source.getEntity();
@@ -1297,7 +1401,16 @@ public class FuncCalcDamage {
 					{
 						evb.worldObj.playSoundAtEntity(evb, "dqr:player.kaisinDoruma", 0.5F, 1.0F);
 					}
+				}else if(ent instanceof MagicEntityZaki)
+				{
+					resRate = resist.getZaki();
+
+				}else if(source.getDamageType().equalsIgnoreCase(DQR.damageSource.DqmPlayerSkillDeath.getDamageType()))
+				{
+					resRate = resist.getKillSkill();
+					//source = DQR.damageSource.getPlayerSkillDamage(DQR.damageSource.DqmPlayerSkillDeath.getEntity());
 				}
+
 
 				if(resRate < 1.0F && resRate > 0.0F)
 				{
@@ -1391,7 +1504,6 @@ public class FuncCalcDamage {
         }
     }
     //////ダミー計算ここまで////////////////////
-<<<<<<< HEAD
 
     public boolean isWaterMob(Entity par1)
     {
@@ -1473,6 +1585,4 @@ public class FuncCalcDamage {
 
     	return false;
     }
-=======
->>>>>>> parent of 2aede75... ver0.8.7.8
 }

@@ -269,6 +269,8 @@ public class DqmBlockSeedBase extends Block implements IPlantable
 
     protected Item getSeedItem()
     {
+    	Random rand = new Random();
+
     	if(this == DQPlants.BlockYakusouSeed1){return DQSeeds.itemYakusouSeed;}
     	else if(this == DQPlants.BlockYakusouSeed2){return DQSeeds.itemYakusouSeed2;}
     	else if(this == DQPlants.BlockYakusouSeed3){return DQSeeds.itemYakusouSeed3;}
@@ -299,7 +301,8 @@ public class DqmBlockSeedBase extends Block implements IPlantable
     	else if(this == DQPlants.BlockOugonSeed1){return DQSeeds.itemOugonSeed;}
     	else if(this == DQPlants.BlockOugonSeed2){return DQSeeds.itemOugonSeed2;}
     	else if(this == DQPlants.BlockOugonSeed3){return DQSeeds.itemOugonSeed3;}
-    	else if(this == DQPlants.BlockOugonSeed4){return DQSeeds.itemOugonSeed4;}
+    	else if(this == DQPlants.BlockOugonSeed4){return  rand.nextInt(3) == 0 ? DQSeeds.itemOugonSeed4 : DQSeeds.itemOugonSeed3;} //IIFDQSeeds.itemOugonSeed4;}
+
 
     	return null;
     }

@@ -15,6 +15,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import dqr.DQR;
 import dqr.api.Blocks.DQDecorates;
+import dqr.api.enums.EnumDqmWorldType;
 import dqr.blocks.decorate.tileEntity.DqmTileEntityTue;
 import dqr.entity.mobEntity.DqmMobBase;
 
@@ -51,7 +52,7 @@ public class DqmBlockBlockTue extends BlockContainer
         int dim = par1World.provider.dimensionId;
 
 
-        if(dim == 0)
+        if(DQR.conf.cfg_gen_Tue_Map.get(dim) != null && DQR.conf.cfg_gen_Tue_Map.get(dim).equalsIgnoreCase(EnumDqmWorldType.OVERWORLD.getName()))
         {
         	if(rand.nextInt(3) == 0)
         	{
@@ -63,7 +64,7 @@ public class DqmBlockBlockTue extends BlockContainer
 
         	doropiItems = DQR.randomItem.getMagicRank1(1, 1);
 
-        }else if(dim == -1)
+        }if(DQR.conf.cfg_gen_Tue_Map.get(dim) != null && DQR.conf.cfg_gen_Tue_Map.get(dim).equalsIgnoreCase(EnumDqmWorldType.NETHER.getName()))
         {
         	if(rand.nextInt(3) == 0)
         	{
@@ -86,7 +87,7 @@ public class DqmBlockBlockTue extends BlockContainer
         			doropiItems = DQR.randomItem.getMagicRank1(1, 1);
         		}
         	}
-        }else
+        }if(DQR.conf.cfg_gen_Tue_Map.get(dim) != null && DQR.conf.cfg_gen_Tue_Map.get(dim).equalsIgnoreCase(EnumDqmWorldType.THEEND.getName()))
         {
         	if(rand.nextInt(3) == 0)
         	{

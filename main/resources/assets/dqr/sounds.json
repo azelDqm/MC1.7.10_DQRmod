@@ -20,6 +20,18 @@
         "mob/Hit4"
     ]
   },
+  "mob.hit2": {
+    "category":"hostile",
+    "sounds": [
+      {
+        "name": "mob/Hit2",
+        "stream": false,
+        "weight": 1,
+        "volume": 1,
+        "pitch": 1
+      }
+    ]
+  },
   "mob.petmob": {
     "category":"hostile",
     "sounds": [

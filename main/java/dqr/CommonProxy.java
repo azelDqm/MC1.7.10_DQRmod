@@ -60,4 +60,6 @@ public class CommonProxy implements IGuiHandler
     public void registersItemRender(){
 
     }
+    public void registerMCEconomy2Addon(){}
+
 }

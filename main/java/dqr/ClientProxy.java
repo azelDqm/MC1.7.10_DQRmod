@@ -7,8 +7,13 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.MinecraftForge;
+import tconstruct.client.tabs.InventoryTabVanilla;
+import tconstruct.client.tabs.TabRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.network.IGuiHandler;
+import dqr.addons.mceconomy2.DqrEntityNPCBankMP;
+import dqr.addons.mceconomy2.DqrRenderNPCBankMP;
 import dqr.api.Items.DQWeapons;
 import dqr.blocks.BlockRenderingRegister;
 import dqr.entity.magicEntity.MagicRegister;
@@ -33,6 +38,7 @@ import dqr.gui.playerHUD.GuiPlayerData;
 import dqr.gui.playerHUD.GuiPlayerStatus;
 import dqr.gui.playerHUD.GuiPlayerSubpoint;
 import dqr.gui.playerHUD.GuiPositionMode;
+import dqr.gui.subEquip.TabPlayerSubEquip;
 import dqr.handler.ChatReceivedEventHandler;
 import dqr.handler.RenderGameOverlayHandler;
 import dqr.handler.client.RenderEntityHandler;
@@ -116,6 +122,9 @@ public class ClientProxy extends CommonProxy implements IGuiHandler
 
     	//DQR.playerRenderHook = new FuncRenderPlayerHook();
     	//MinecraftForge.EVENT_BUS.register(new RenderPlayerHandler2());
+
+    	registerInventoryTabs();
+    	MinecraftForge.EVENT_BUS.register(new TabRegistry());
     }
 
 	public int getNewRenderType()
@@ -142,6 +151,24 @@ public class ClientProxy extends CommonProxy implements IGuiHandler
 		MinecraftForgeClient.registerItemRenderer(DQWeapons.itemSefiramunoyumi, new ItemRenderBow());
 		MinecraftForgeClient.registerItemRenderer(DQWeapons.itemSefiramunoyumi2, new ItemRenderBow());
 
+		//MinecraftForgeClient.registerItemRenderer(DQMagicTools.itemMagicToolSet, new ItemRenderMGToolSet());
+
 		//MinecraftForgeClient.registerItemRenderer(DQWeapons.itemSinken, new ItemRenderBow());
+    }
+
+	public void registerMCEconomy2Addon()
+	{
+		RenderingRegistry.registerEntityRenderingHandler(DqrEntityNPCBankMP.class, new DqrRenderNPCBankMP());
+	}
+
+
+    public static void registerInventoryTabs()
+    {
+        if (!Loader.isModLoaded("TConstruct") && TabRegistry.getTabList().size() < 1)
+        {
+            TabRegistry.registerTab(new InventoryTabVanilla());
+        }
+
+        TabRegistry.registerTab(new TabPlayerSubEquip());
     }
 }

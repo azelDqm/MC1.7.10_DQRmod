@@ -12,13 +12,18 @@ import dqr.entity.magicEntity.magic.MagicEntityGira;
 import dqr.entity.magicEntity.magic.MagicEntityGiragureido;
 import dqr.entity.magicEntity.magic.MagicEntityHoimi;
 import dqr.entity.magicEntity.magic.MagicEntityHyado;
+import dqr.entity.magicEntity.magic.MagicEntityHyadoB;
 import dqr.entity.magicEntity.magic.MagicEntityIo;
 import dqr.entity.magicEntity.magic.MagicEntityKiari;
 import dqr.entity.magicEntity.magic.MagicEntityMahoimi;
 import dqr.entity.magicEntity.magic.MagicEntityMera;
+import dqr.entity.magicEntity.magic.MagicEntityMeraB;
 import dqr.entity.magicEntity.magic.MagicEntityMeragaia;
+import dqr.entity.magicEntity.magic.MagicEntityMeragaiaB;
 import dqr.entity.magicEntity.magic.MagicEntityMerami;
+import dqr.entity.magicEntity.magic.MagicEntityMeramiB;
 import dqr.entity.magicEntity.magic.MagicEntityMerazoma;
+import dqr.entity.magicEntity.magic.MagicEntityMerazomaB;
 import dqr.entity.magicEntity.magic.MagicEntityRaidein;
 import dqr.entity.magicEntity.magic.MagicEntityZaki;
 import dqr.entity.magicEntity.magicDummy.MagicEntityBuffDummy;
@@ -39,13 +44,18 @@ import dqr.entity.magicEntity.render.MagicRenderGira;
 import dqr.entity.magicEntity.render.MagicRenderGiragureido;
 import dqr.entity.magicEntity.render.MagicRenderHoimi;
 import dqr.entity.magicEntity.render.MagicRenderHyado;
+import dqr.entity.magicEntity.render.MagicRenderHyadoB;
 import dqr.entity.magicEntity.render.MagicRenderIo;
 import dqr.entity.magicEntity.render.MagicRenderKiari;
 import dqr.entity.magicEntity.render.MagicRenderMahoimi;
 import dqr.entity.magicEntity.render.MagicRenderMera;
+import dqr.entity.magicEntity.render.MagicRenderMeraB;
 import dqr.entity.magicEntity.render.MagicRenderMeragaia;
+import dqr.entity.magicEntity.render.MagicRenderMeragaiaB;
 import dqr.entity.magicEntity.render.MagicRenderMerami;
+import dqr.entity.magicEntity.render.MagicRenderMeramiB;
 import dqr.entity.magicEntity.render.MagicRenderMerazoma;
+import dqr.entity.magicEntity.render.MagicRenderMerazomaB;
 import dqr.entity.magicEntity.render.MagicRenderRaidein;
 import dqr.entity.magicEntity.render.MagicRenderZaki;
 
@@ -83,5 +93,14 @@ public class MagicRenderingRegister {
 		RenderingRegistry.registerEntityRenderingHandler(MagicEntityHoimiDummy.class, new MagicRenderHoimi(new MagicEntityModel1()));
 		RenderingRegistry.registerEntityRenderingHandler(MagicEntityMahoimiDummy.class, new MagicRenderMahoimi(new MagicEntityModel1()));
 		RenderingRegistry.registerEntityRenderingHandler(MagicEntityBuffDummy.class, new MagicRenderBuffDummy(new MagicEntityModel1()));
+
+
+
+		RenderingRegistry.registerEntityRenderingHandler(MagicEntityMeraB.class, new MagicRenderMeraB(new MagicEntityModel2()));
+		RenderingRegistry.registerEntityRenderingHandler(MagicEntityMeramiB.class, new MagicRenderMeramiB(new MagicEntityModel2()));
+		RenderingRegistry.registerEntityRenderingHandler(MagicEntityMerazomaB.class, new MagicRenderMerazomaB(new MagicEntityModel3()));
+		RenderingRegistry.registerEntityRenderingHandler(MagicEntityMeragaiaB.class, new MagicRenderMeragaiaB(new MagicEntityModel3()));
+		RenderingRegistry.registerEntityRenderingHandler(MagicEntityHyadoB.class, new MagicRenderHyadoB(new MagicEntityModel1()));
+
 	}
 }

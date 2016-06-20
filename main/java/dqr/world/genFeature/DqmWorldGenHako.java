@@ -24,6 +24,11 @@ public class DqmWorldGenHako implements IWorldGenerator
         int z = par2 * 16 + rand.nextInt(16);
         int y = 0;
 
+        if(!DQR.conf.cfg_gen_Hako_Map.containsKey((int)par3World.provider.dimensionId))
+        {
+        	return;
+        }
+
         //System.out.println("RUN:" + y + "/" + x + "/" + z);
 
         if(par3World.provider.dimensionId == -1)
@@ -67,6 +72,7 @@ public class DqmWorldGenHako implements IWorldGenerator
         if (ran >= 94  && (par3World.getBlock(x, y - 1, z) == Blocks.grass ||
         				   par3World.getBlock(x, y - 1, z) == Blocks.sand ||
         				   par3World.getBlock(x, y - 1, z) == Blocks.netherrack ||
+        				   par3World.getBlock(x, y - 1, z) == Blocks.end_stone ||
         				   (topBlock != Blocks.air && par3World.getBlock(x, y - 1, z) == topBlock)))
         {
         	int rate = rand.nextInt(12);

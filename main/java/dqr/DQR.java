@@ -9,7 +9,9 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
+import dqr.addons.DqrAddon;
 import dqr.api.DQOreDictionary;
 import dqr.api.enums.EnumDqmGetter;
 import dqr.blocks.BlockTileEntityRegister;
@@ -17,6 +19,7 @@ import dqr.blocks.DqBlock;
 import dqr.blocks.DqBlockObj;
 import dqr.blocks.DqItemBlock;
 import dqr.blocks.DqmBlockRenderType;
+import dqr.command.DqrComDebug;
 import dqr.creativeTabs.DqmCreativeTabs;
 import dqr.dataTable.FuncArmorSetTable;
 import dqr.dataTable.FuncBiomeBlockTable;
@@ -37,6 +40,7 @@ import dqr.enums.DqmDamageSource;
 import dqr.enums.DqmEnumCreatureType;
 import dqr.enums.DqmEnumToolMaterial;
 import dqr.functions.FuncAddGrowthBlock;
+import dqr.functions.FuncAddWoodBlocks;
 import dqr.functions.FuncBugFix;
 import dqr.functions.FuncCalcDamage;
 import dqr.functions.FuncCalcMobParam;
@@ -53,7 +57,7 @@ import dqr.functions.FuncPetOperation;
 import dqr.gui.GuiHandler;
 import dqr.handler.ChunkEventHandler;
 import dqr.handler.CraftingEventHandler;
-import dqr.handler.DamagetHandler;
+import dqr.handler.DamageHandler;
 import dqr.handler.EntityEventHandler;
 import dqr.handler.LivingDeathHandler;
 import dqr.handler.LivingDropHandler;
@@ -62,10 +66,12 @@ import dqr.handler.LivingEventHandler;
 import dqr.handler.MagicEventHandler;
 import dqr.handler.PlayerEventHandler;
 import dqr.handler.RarihoEventHandler;
+import dqr.handler.WorldEventHandler;
 import dqr.handler.WorldHandler;
 import dqr.items.DqItem;
 import dqr.items.DqmItemRecipe;
 import dqr.items.DqmItemRecipeBuilder;
+import dqr.items.DqmItemRecipeEtc;
 import dqr.items.DqmItemRecipeMagic;
 import dqr.keyHandler.ClientKeyBindCore;
 import dqr.playerData.PlayerDataHandler;
@@ -73,11 +79,7 @@ import dqr.potion.DqmPotion;
 import dqr.world.DqmStructureRegister;
 import dqr.world.DqmVillageRegister;
 
-<<<<<<< HEAD
-@Mod(modid = "DQMIIINext", name = "DQRespect", version = "0.8.9", useMetadata = true, dependencies = "after:PotionExtension;after:SextiarySector")
-=======
-@Mod(modid = "DQMIIINext", name = "DQRespect", version = "0.8.6", useMetadata = true, dependencies = "after:PotionExtension;after:SextiarySector")
->>>>>>> parent of 2aede75... ver0.8.7.8
+@Mod(modid = "DQMIIINext", name = "DQRespect", version = "0.9.0_Latest1", useMetadata = true, dependencies = "after:PotionExtension")
 public class DQR {
 
 	@SidedProxy(clientSide = "dqr.ClientProxy", serverSide = "dqr.CommonProxy")
@@ -86,7 +88,7 @@ public class DQR {
 	@Instance("DQMIIINext")
 	public static DQR instance;
 	public static String modID = "DQMIIINext";
-	public static int debug = 1;
+	public static int debug = 0;
 
 	public static FuncCalcMobParam funcMob;
 	public static DQRconfigs conf;
@@ -94,6 +96,7 @@ public class DQR {
 	public static FuncCalcPlayerStatus calcPlayerStatus;
 	public static FuncCalcPetStatus calcPetStatus;
 	public static FuncAddGrowthBlock growth;
+	public static FuncAddWoodBlocks cuttingWood;
 	public static FuncDamageMessage damMessage;
 	public static FuncCalcDamage calcDamage;
 	public static FuncEnchantExtension enchaHook;
@@ -101,6 +104,8 @@ public class DQR {
 	public static FuncCheckBed checkBed;
 	public static FuncBiomeBlockTable BiomeBlock;
 	public static FuncCommon func;
+
+	public static DqrAddon addons;
 
 	public static FuncExpTable exp;
 	public static FuncArmorSetTable armorSetEffect;
@@ -202,6 +207,8 @@ public class DQR {
 
 		proxy.registersItemRender();
 		// villager = new DqmVillager();
+
+		addons = new DqrAddon();
 	}
 
 	@Mod.EventHandler
@@ -214,6 +221,7 @@ public class DQR {
 		calcPlayerStatus = new FuncCalcPlayerStatus();
 		calcPetStatus = new FuncCalcPetStatus();
 		growth = new FuncAddGrowthBlock();
+		cuttingWood = new FuncAddWoodBlocks();
 		exp = new FuncExpTable();
 		damMessage = new FuncDamageMessage();
 
@@ -256,8 +264,10 @@ public class DQR {
 		new DqmItemRecipe();
 		new DqmItemRecipeMagic();
 		new DqmItemRecipeBuilder();
+		new DqmItemRecipeEtc();
+
 		MinecraftForge.EVENT_BUS.register(new PlayerDataHandler());
-		MinecraftForge.EVENT_BUS.register(new DamagetHandler());
+		MinecraftForge.EVENT_BUS.register(new DamageHandler());
 		MinecraftForge.EVENT_BUS.register(new LivingEventHandler());
 		MinecraftForge.EVENT_BUS.register(new LivingDropHandler());
 		MinecraftForge.EVENT_BUS.register(new LivingEndoraHandler());
@@ -267,6 +277,7 @@ public class DQR {
 		MinecraftForge.EVENT_BUS.register(new EntityEventHandler());
 		MinecraftForge.EVENT_BUS.register(new ChunkEventHandler());
 		MinecraftForge.EVENT_BUS.register(new LivingDeathHandler());
+		MinecraftForge.EVENT_BUS.register(new WorldEventHandler());
 
 
 //		MinecraftForge.EVENT_BUS.register(new DeathInventoryHandler());
@@ -289,6 +300,18 @@ public class DQR {
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
 		proxy.registerGUI();
+
+		addons.setAddons();
+		//Loader.instance().activeModContainer().
+	}
+
+	@Mod.EventHandler
+	public void setver(FMLServerStartingEvent event)
+	{
+		if(debug != 0)
+		{
+			event.registerServerCommand(new DqrComDebug());
+		}
 	}
 
 }

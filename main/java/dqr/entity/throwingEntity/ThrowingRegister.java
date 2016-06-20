@@ -3,6 +3,7 @@ package dqr.entity.throwingEntity;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import dqr.DQR;
 import dqr.entity.throwingEntity.throwItem.ThrowItemEntityBakudanisi;
+import dqr.entity.throwingEntity.throwItem.ThrowItemEntityIshitubute;
 import dqr.entity.throwingEntity.throwItem.ThrowItemEntityNiku;
 import dqr.entity.throwingEntity.throwItem.ThrowItemEntitySeisui;
 import dqr.entity.throwingEntity.throwItem.ThrowItemEntitySinkanohiseki;
@@ -41,11 +42,8 @@ public class ThrowingRegister {
 		EntityRegistry.registerModEntity(ThrowItemEntityNiku.class, "dqr.ThrowItemEntityNiku", idxID + 12, DQR.instance, 128, 5, true);
 		EntityRegistry.registerModEntity(ThrowItemEntitySeisui.class, "dqr.ThrowItemEntitySeisui", idxID + 13, DQR.instance, 128, 5, true);
 		EntityRegistry.registerModEntity(ThrowItemEntitySinkanohiseki.class, "dqr.ThrowItemEntitySinkanohiseki", idxID + 14, DQR.instance, 128, 5, true);
-<<<<<<< HEAD
 		EntityRegistry.registerModEntity(ThrowItemEntityIshitubute.class, "dqr.ThrowItemEntityIshitubute", idxID + 15, DQR.instance, 128, 5, true);
 
 		EntityRegistry.registerModEntity(ThrowItemEntityIshitubute.class, "dqr.DqrArrow", idxID + 16, DQR.instance, 128, 5, true);
-=======
->>>>>>> parent of 2aede75... ver0.8.7.8
 	}
 }

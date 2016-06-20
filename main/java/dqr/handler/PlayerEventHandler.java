@@ -24,15 +24,16 @@ import dqr.playerData.ExtendedPlayerProperties2;
 import dqr.playerData.ExtendedPlayerProperties3;
 
 public class PlayerEventHandler {
+
 	@SubscribeEvent
 	public void ArrowLooseEventHandler(ArrowLooseEvent e)
 	{
 		/*
-		System.out.println("TEST1" + e.);
+		//System.out.println("TEST1" + e.);
 		if(e.entity instanceof EntityArrow)
 		{
 			EntityArrow arrow = (EntityArrow)e.entity;
-			System.out.println("Test2:" + arrow.getDamage());
+			//System.out.println("Test2:" + arrow.getDamage());
 		}
 		*/
 		Random rand = new Random();
@@ -42,7 +43,6 @@ public class PlayerEventHandler {
 
 		//entityarrow.rotationYaw = 25.0F;
 		//entityarrow2.rotationYaw = -25.0F;
-
 
 
 		int weapon = EnumDqmWeapon.DqmBow.getId();
@@ -64,7 +64,6 @@ public class PlayerEventHandler {
 					ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
 				}
 
-
 				float f = (float)e.charge / 20.0F;
 	            f = (f * f + f * 2.0F) / 3.0F;
 
@@ -78,13 +77,16 @@ public class PlayerEventHandler {
 	                f = 1.0F;
 	            }
 
-	            if(e.bow.getMaxItemUseDuration() - ep.getItemInUseCount() > 20)
-	            {
-	            	ExtendedPlayerProperties.get(ep).setMaxItemUserCnt(20);
-	            }else
-	            {
-	            	ExtendedPlayerProperties.get(ep).setMaxItemUserCnt(e.bow.getMaxItemUseDuration() - ep.getItemInUseCount());
-	            }
+				if(ep.worldObj.isRemote)
+				{
+		            if(e.bow.getMaxItemUseDuration() - ep.getItemInUseCount() > 20)
+		            {
+		            	ExtendedPlayerProperties.get(ep).setMaxItemUserCnt(20);
+		            }else
+		            {
+		            	ExtendedPlayerProperties.get(ep).setMaxItemUserCnt(e.bow.getMaxItemUseDuration() - ep.getItemInUseCount());
+		            }
+				}
 	            //System.out.println("TEST1:" + p_77615_3_.getItemInUseCount());
 	            //EntityArrow entityarrow = new EntityArrow(ep.worldObj, ep, f * 2.0F);
 				ThrowingEntityDqrArrow entityarrow = new ThrowingEntityDqrArrow(ep.worldObj, ep, f * 2.0F, 1.0F, 0.0F, 0.0F, 0.0F, 22.5F, 0.0F);

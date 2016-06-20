@@ -8,7 +8,7 @@ import net.minecraft.world.World;
 import dqr.DQR;
 import dqr.items.base.DqmItemFukuroBase;
 
-public class DqmItemFukuro extends DqmItemFukuroBase{
+public class DqmItemFukuro extends DqmItemFukuroBase {
 
     public DqmItemFukuro()
     {

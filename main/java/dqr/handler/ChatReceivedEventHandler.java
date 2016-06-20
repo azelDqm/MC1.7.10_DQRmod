@@ -5,6 +5,7 @@ import net.minecraft.util.ChatComponentTranslation;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import dqr.DQR;
+import dqr.api.enums.EnumColor;
 import dqr.api.enums.EnumDqmMessageConv;
 
 public class ChatReceivedEventHandler {
@@ -13,6 +14,8 @@ public class ChatReceivedEventHandler {
 
 		String chatMessage = "";
 
+
+		//System.out.println("TEST:" + event.message.getUnformattedText());
         if (event.message != null)
         {
         	if(event.message.getFormattedText().length() <= 8)
@@ -32,6 +35,9 @@ public class ChatReceivedEventHandler {
         		{
         			String mobName = chatMessage.substring(startPos, endPos + EnumDqmMessageConv.MonsterName.getEndLength());
         			//System.out.println(mobName);
+        			if(mobName.indexOf("entity.") >= 0) mobName.replace("entity.", "");
+        			if(mobName.indexOf(".name") >= 0) mobName.replace(".name", "");
+
         			String mobNameFix = I18n.format(("entity." + mobName + ".name")
         											 .replace(EnumDqmMessageConv.MonsterName.getStartS(),"")
         											 .replace(EnumDqmMessageConv.MonsterName.getEndS(), "")
@@ -40,6 +46,27 @@ public class ChatReceivedEventHandler {
         			//System.out.println(mobName + "/" + mobNameFix);
         		}
         	}
+
+        	//特技・スキル名置き換え
+        	if(chatMessage.indexOf(EnumDqmMessageConv.SkillName.getStartS()) >= 0)
+        	{
+
+        		int startPos = chatMessage.indexOf(EnumDqmMessageConv.SkillName.getStartS());
+        		int endPos = chatMessage.indexOf(EnumDqmMessageConv.SkillName.getEndS());
+        		//System.out.println(startPos + "/" + endPos);
+        		if(startPos < endPos)
+        		{
+        			String mobName = chatMessage.substring(startPos, endPos + EnumDqmMessageConv.SkillName.getEndLength());
+        			String mobNameFix = I18n.format(("dqm.skill." + mobName + ".name")
+        											 .replace(EnumDqmMessageConv.SkillName.getStartS(),"")
+        											 .replace(EnumDqmMessageConv.SkillName.getEndS(), "")
+        											);
+        			chatMessage = EnumColor.Yellow.getChatColor() + chatMessage.replace(mobName, mobNameFix);
+        			//System.out.println(mobName + "/" + mobNameFix);
+        		}
+        	}
+
+
         	if(chatMessage.indexOf(EnumDqmMessageConv.JobName.getStartS()) >= 0)
         	{
         		int startPos = chatMessage.indexOf(EnumDqmMessageConv.JobName.getStartS());
@@ -48,13 +75,13 @@ public class ChatReceivedEventHandler {
         		if(startPos < endPos)
         		{
         			String mobName = chatMessage.substring(startPos, endPos + EnumDqmMessageConv.JobName.getEndLength());
-//        			System.out.println(mobName);
+        			//System.out.println(mobName);
         			String mobNameFix = I18n.format(("main.job." + mobName)
         											 .replace(EnumDqmMessageConv.JobName.getStartS(),"")
         											 .replace(EnumDqmMessageConv.JobName.getEndS(), "")
         											);
         			chatMessage = chatMessage.replace(mobName, mobNameFix);
-//        			System.out.println(mobName + "/" + mobNameFix);
+        			//System.out.println(mobName + "/" + mobNameFix);
         		}
         	}
 

@@ -80,23 +80,23 @@ public class GuiPetStatusGuiContainer extends GuiContainer
             	TabManager.updateTabValues(cornerX, cornerY,this.buttonList, PetStatusTabs.tabPetStatus,false);
             }
         	/*
-            System.out.println("TEST1:" + this.ep.getUniqueID().toString());
-            System.out.println("TEST2:" + petData.getString("OwnerUUID"));
+            //System.out.println("TEST1:" + this.ep.getUniqueID().toString());
+            //System.out.println("TEST2:" + petData.getString("OwnerUUID"));
             //System.out.println("TEST2:" + pet.ownerUUID);
-            System.out.println("TEST3:" + this.mc.thePlayer.getUniqueID().toString());
-        	System.out.println(petData.getString("OwnerName"));
+            //System.out.println("TEST3:" + this.mc.thePlayer.getUniqueID().toString());
+        	//System.out.println(petData.getString("OwnerName"));
         	*/
         }
 
         /*
-        System.out.println("TEST1:" + this.ep.getUniqueID().toString());
-        System.out.println("TEST2:" + petData.getString("OwnerUUID"));
+        //System.out.println("TEST1:" + this.ep.getUniqueID().toString());
+        //System.out.println("TEST2:" + petData.getString("OwnerUUID"));
         //System.out.println("TEST2:" + pet.ownerUUID);
-        System.out.println("TEST3:" + this.mc.thePlayer.getUniqueID().toString());
+        //System.out.println("TEST3:" + this.mc.thePlayer.getUniqueID().toString());
         */
         //TabManager.updateTabValues(cornerX, cornerY,this.buttonList, PlayerTabs.ss,false);
         /*
-        System.out.println("TEST4:" + pet.getOwner().getUniqueID());
+        //System.out.println("TEST4:" + pet.getOwner().getUniqueID());
         */
         /*
         if(pet.ownerUUID == this.mc.thePlayer.getUniqueID().toString())
@@ -161,7 +161,13 @@ public class GuiPetStatusGuiContainer extends GuiContainer
 
             String sName = I18n.format("gui.pet.status.name", new Object[]{petName});
             String ownerName = I18n.format("gui.pet.status.owner", new Object[]{OwnerName});
-            String sEXP = I18n.format("gui.pet.status.EXP", new Object[]{petJobLv, petJobExp,DQR.exp.getNextExpPet2(petJobLv, pet)});
+            String sEXP = I18n.format("gui.pet.status.EXP", new Object[]{petJobLv, petJobExp,DQR.exp.getNextExpPet(petJobLv, pet)});
+
+            if(DQR.exp.getNextExpPet(petJobLv, pet) <= 0)
+            {
+            	 sEXP = I18n.format("gui.pet.status.EXPMAX", new Object[]{petJobLv});
+            }
+
             String sHP = I18n.format("gui.pet.status.HP", new Object[]{(int)(pet.getHealth()), (int)(pet.getMaxHealth())});
             String sMP = I18n.format("gui.pet.status.MP", new Object[]{petMP, petMaxMP});
             String sAttack = I18n.format("gui.pet.status.attack", new Object[]{petKougeki, petTikara});

@@ -482,7 +482,7 @@ public class DqmItemMGTFarm2 extends DqmItemMagicToolBase{
         }
         catch (Exception exception)
         {
-            System.out.println("Couldn\'t send book info" + exception.getMessage());
+            //System.out.println("Couldn\'t send book info" + exception.getMessage());
         }
         finally
         {

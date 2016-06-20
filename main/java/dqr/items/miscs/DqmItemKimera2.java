@@ -9,7 +9,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.world.World;
 import dqr.api.enums.EnumColor;
+import dqr.api.enums.EnumDqmMGToolMode;
 import dqr.api.enums.EnumDqmMagic;
+import dqr.api.enums.EnumDqmWeaponMode;
 import dqr.api.event.DqrRuraEvent;
 import dqr.items.base.DqmItemMiscBase;
 import dqr.playerData.ExtendedPlayerProperties;
@@ -65,26 +67,31 @@ public class DqmItemKimera2 extends DqmItemMiscBase{
     	        double setY = Math.floor(ExtendedPlayerProperties.get(par3EntityPlayer).getKimeraY(this.getEnumMagic().getType()));
     	        double setZ = Math.floor(ExtendedPlayerProperties.get(par3EntityPlayer).getKimeraZ(this.getEnumMagic().getType()));
 
-    	        //まずはペットを飛ばす(キメラの翼の場合は飛ばさない)
-                List list = par3EntityPlayer.worldObj.getEntitiesWithinAABBExcludingEntity(par3EntityPlayer,
-                		par3EntityPlayer.boundingBox.addCoord(par3EntityPlayer.motionX, par3EntityPlayer.motionY, par3EntityPlayer.motionZ).expand(10.0D, 5.0D, 10.0D));
+    	        int ruraMode = ExtendedPlayerProperties.get(par3EntityPlayer).getWeaponMode(EnumDqmWeaponMode.WEAPONMODE_KIMERA.getId());
 
-                if (list != null && !list.isEmpty())
-                {
-                	for (int n = 0 ; n < list.size() ; n++)
-                	{
-                		Entity target = (Entity)list.get(n);
+    	        if(ruraMode != EnumDqmMGToolMode.RURAMODE0.getId())
+    	        {
+	    	        //まずはペットを飛ばす(キメラの翼の場合は飛ばさない)
+	                List list = par3EntityPlayer.worldObj.getEntitiesWithinAABBExcludingEntity(par3EntityPlayer,
+	                		par3EntityPlayer.boundingBox.addCoord(par3EntityPlayer.motionX, par3EntityPlayer.motionY, par3EntityPlayer.motionZ).expand(10.0D, 5.0D, 10.0D));
 
-                		if (target != null)
-                		{
-							//外部からの干渉用
-			        		DqrRuraEvent event = new DqrRuraEvent(par3EntityPlayer,
-																  target,
-			        											  par1ItemStack,
-																  setX, setY, setZ);
-                		}
-                	}
-                }
+	                if (list != null && !list.isEmpty())
+	                {
+	                	for (int n = 0 ; n < list.size() ; n++)
+	                	{
+	                		Entity target = (Entity)list.get(n);
+
+	                		if (target != null)
+	                		{
+								//外部からの干渉用
+				        		DqrRuraEvent event = new DqrRuraEvent(par3EntityPlayer,
+																	  target,
+				        											  par1ItemStack,
+																	  setX, setY, setZ);
+	                		}
+	                	}
+	                }
+    	        }
 
     	        par3EntityPlayer.setPositionAndUpdate(setX, setY + 0.5D, setZ);
 	        	par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.rura", 1.0F, 1.0F);
@@ -112,5 +119,10 @@ public class DqmItemKimera2 extends DqmItemMiscBase{
     	{
     		p_77624_3_.add(EnumColor.Aqua.getChatColor() + addLine[cnt]);
     	}
+
+    	p_77624_3_.add("");
+
+    	message = I18n.format("dqm.magicinfo.rura_all.txt", new Object[]{});
+    	p_77624_3_.add(EnumColor.Aqua.getChatColor() + message);
     }
 }

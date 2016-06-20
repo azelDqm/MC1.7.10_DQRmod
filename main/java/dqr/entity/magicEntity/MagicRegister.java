@@ -13,13 +13,18 @@ import dqr.entity.magicEntity.magic.MagicEntityGira;
 import dqr.entity.magicEntity.magic.MagicEntityGiragureido;
 import dqr.entity.magicEntity.magic.MagicEntityHoimi;
 import dqr.entity.magicEntity.magic.MagicEntityHyado;
+import dqr.entity.magicEntity.magic.MagicEntityHyadoB;
 import dqr.entity.magicEntity.magic.MagicEntityIo;
 import dqr.entity.magicEntity.magic.MagicEntityKiari;
 import dqr.entity.magicEntity.magic.MagicEntityMahoimi;
 import dqr.entity.magicEntity.magic.MagicEntityMera;
+import dqr.entity.magicEntity.magic.MagicEntityMeraB;
 import dqr.entity.magicEntity.magic.MagicEntityMeragaia;
+import dqr.entity.magicEntity.magic.MagicEntityMeragaiaB;
 import dqr.entity.magicEntity.magic.MagicEntityMerami;
+import dqr.entity.magicEntity.magic.MagicEntityMeramiB;
 import dqr.entity.magicEntity.magic.MagicEntityMerazoma;
+import dqr.entity.magicEntity.magic.MagicEntityMerazomaB;
 import dqr.entity.magicEntity.magic.MagicEntityRaidein;
 import dqr.entity.magicEntity.magic.MagicEntityZaki;
 import dqr.entity.magicEntity.magicDummy.MagicEntityBuffDummy;
@@ -60,5 +65,13 @@ public class MagicRegister {
 		EntityRegistry.registerModEntity(MagicEntityBuffDummy.class, "dqm.MagicEntityBuffDummy", idxID + 19, DQR.instance, 128, 5, true);
 		EntityRegistry.registerModEntity(MagicEntityHoimiDummy.class, "dqm.MagicEntityHoimiDummy", idxID + 20, DQR.instance, 128, 5, true);
 		EntityRegistry.registerModEntity(MagicEntityMahoimiDummy.class, "dqm.MagicEntityMahoimiDummy", idxID + 21, DQR.instance, 128, 5, true);
+
+
+		EntityRegistry.registerModEntity(MagicEntityMeraB.class, "dqm.MagicEntityMeraB", idxID + 22, DQR.instance, 128, 5, true);
+		EntityRegistry.registerModEntity(MagicEntityMeramiB.class, "dqm.MagicEntityMeramiB", idxID + 23, DQR.instance, 128, 5, true);
+		EntityRegistry.registerModEntity(MagicEntityMerazomaB.class, "dqm.MagicEntityMerazomaB", idxID + 24, DQR.instance, 128, 5, true);
+		EntityRegistry.registerModEntity(MagicEntityMeragaiaB.class, "dqm.MagicEntityMeragaiaB", idxID + 25, DQR.instance, 128, 5, true);
+		EntityRegistry.registerModEntity(MagicEntityHyadoB.class, "dqm.MagicEntityHyadoB", idxID + 26, DQR.instance, 128, 5, true);
+
 	}
 }

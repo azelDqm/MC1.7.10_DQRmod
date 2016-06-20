@@ -1,10 +1,14 @@
 package dqr;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import net.minecraftforge.common.config.Configuration;
+
+import org.apache.commons.lang3.math.NumberUtils;
+
 import dqr.api.enums.EnumDqmMagic;
 
 public class DQRconfigs {
@@ -57,21 +61,20 @@ public class DQRconfigs {
 	public static int GuiID_MKMisc = 7;
 	public static int GuiID_MKMedal = 8;
 	public static int GuiID_PetBook = 9;
-<<<<<<< HEAD
 	public static int GuiID_SkillWeapon = 10;
 	public static int GuiID_PetStatus = 11;
 	public static int GuiID_PetInventory = 12;
 	public static int GuiID_DqrEnderchest = 13;
 	public static int GuiID_ItemBag = 14;
-=======
->>>>>>> parent of 2aede75... ver0.8.7.8
+	public static int GuiID_SubEquip = 20;
 
-	public static int CLGuiLogWindowOff = 0;
+	public static int CLGuiLogWindowOff = 1;
 
 	public static int PotionIDidx = 40;
 	public static int MonsterIDidx = 1000;
 	public static int PetMonsterIDidx = 3000;
 	public static int NPCIDidx = 2000;
+	//public int mce2NPCBankMPId = 5001;
 	public static int MagicIDidx = 2500;
 	public static int ThrowingIDidx = 2600;
 
@@ -100,6 +103,7 @@ public class DQRconfigs {
     public static Configuration cfg_magic;
     public static Configuration cfg_option;
     public static Configuration cfg_magictool;
+    public static Configuration cfg_Structure;
 
 
     public static int magicSpMegante = 1;
@@ -122,31 +126,65 @@ public class DQRconfigs {
     public static int recalcMP1 = 1;
 
     public static int cfg_gen_Genkotu = 1;
+    public static String[] cfg_gen_Genkotu_type = new String[]{"0"};
+    public static ArrayList<Integer> cfg_gen_Genkotu_a = new ArrayList<Integer>();
+
     public static int cfg_gen_Tue = 1;
+    public static String[] cfg_gen_Tue_type = new String[]{"0:OVERWORLD", "-1:NETHER", "1:THEEND"};
+    public static Map<Integer, String> cfg_gen_Tue_Map = new HashMap<>();
+
     public static int cfg_gen_Tubo = 1;
+    public static String[] cfg_gen_Tubo_type = new String[]{"0:OVERWORLD", "-1:NETHER"};
+    public static Map<Integer, String> cfg_gen_Tubo_Map = new HashMap<>();
+
     public static int cfg_gen_Taru = 1;
+    public static String[] cfg_gen_Taru_type = new String[]{"0:OVERWORLD", "-1:NETHER"};
+    public static Map<Integer, String> cfg_gen_Taru_Map = new HashMap<>();
+
     public static int cfg_gen_Sword = 1;
+    public static String[] cfg_gen_Sword_type = new String[]{"0:OVERWORLD", "-1:NETHER", "1:THEEND"};
+    public static Map<Integer, String> cfg_gen_Sword_Map = new HashMap<>();
+
     public static int cfg_gen_Sword2 = 1;
+    public static String[] cfg_gen_Sword2_type = new String[]{"0:OVERWORLD", "-1:NETHER", "1:THEEND"};
+    public static Map<Integer, String> cfg_gen_Sword2_Map = new HashMap<>();
+
     public static int cfg_gen_Sikabane = 1;
+    public static String[] cfg_gen_Sikabane_type = new String[]{"0:OVERWORLD", "-1:NETHER", "1:THEEND"};
+    public static Map<Integer, String> cfg_gen_Sikabane_Map = new HashMap<>();
+
     public static int cfg_gen_Hako = 1;
+    public static String[] cfg_gen_Hako_type = new String[]{"0:OVERWORLD", "-1:NETHER"};
+    public static Map<Integer, String> cfg_gen_Hako_Map = new HashMap<>();
+
     public static int cfg_gen_Ido = 1;
+    public static String[] cfg_gen_Ido_type = new String[]{"0"};
+    public static ArrayList<Integer> cfg_gen_Ido_a = new ArrayList<Integer>();
+
     public static int cfg_gen_Ido2 = 1;
+    public static String[] cfg_gen_Ido2_type = new String[]{"0"};
+    public static ArrayList<Integer> cfg_gen_Ido2_a = new ArrayList<Integer>();
+
     public static int cfg_build_sleep = 250;
 
     public static int cfg_generateOreDimType = 0;
     public static int[] cfg_generateOreDimId = new int[]{0, -5, -6};
     public static String[] cfg_generateOreDimFolder = new String[]{".", "DIM-5", "DIM-6"};
+    public static String[] cfg_generateOreDimName = new String[]{"Overworld", "", ""};
     public static String[] cfg_generateOreBlockName = new String[]{"stone","stone","stone"};
     public static Map<Integer, String> cfg_generateOre = new HashMap<>();
     public static Map<String, String> cfg_generateOreS = new HashMap<>();
+    public static Map<String, String> cfg_generateOreN = new HashMap<>();
 
 
     public static int cfg_generateOreDimType2 = 0;
     public static int[] cfg_generateOreDimId2 = new int[]{-1, -6};
     public static String[] cfg_generateOreDimFolder2 = new String[]{"DIM-1", "DIM-6"};
+    public static String[] cfg_generateOreDimName2 = new String[]{"Nether", ""};
     public static String[] cfg_generateOreBlockName2 = new String[]{"netherrack","stone"};;
     public static Map<Integer, String> cfg_generateOre2 = new HashMap<>();
     public static Map<String, String> cfg_generateOre2S = new HashMap<>();
+    public static Map<String, String> cfg_generateOre2N = new HashMap<>();
 
 
     public static int cfg_generateOverSpawnDimType = 0;
@@ -171,9 +209,11 @@ public class DQRconfigs {
     public static int permBuilder1 = 2;
     public static int permBuilder2 = 2;
     public static int permBuilder3 = 2;
+    public static int permBuilder4 = 2;
     public static int needBuilderFrame1 = 1;
     public static int needBuilderFrame2 = 1;
     public static int needBuilderFrame3 = 1;
+    public static int needBuilderFrame4 = 1;
 
     public static float figureMagni = 5;
 
@@ -183,11 +223,13 @@ public class DQRconfigs {
     public static int[] MGFarm_Area_Z = new int[]{1, 3, 5, 7, 9, 10, 10, 10, 30, 30, 30};
 
     public static int MGBreak1_enable = 3;
+    public static int MGBreak1_SmoothBreak = 1;
     public static int[] MGBreak1_Area_X = new int[]{1, 3, 5, 7, 9, 1, 3, 3, 1, 3, 1};
     public static int[] MGBreak1_Area_Y = new int[]{1, 3, 5, 7, 9, 3, 3, 3, 3, 3, 1};
     public static int[] MGBreak1_Area_Z = new int[]{1, 3, 5, 7, 9, 3, 5, 10, 20, 30, 100};
 
     public static int MGBreak2_enable = 3;
+    public static int MGBreak2_SmoothBreak = 1;
     public static int[] MGBreak2_Area_X = new int[]{1, 3, 5, 7, 9, 1, 3, 3, 1, 3, 1};
     public static int[] MGBreak2_Area_Y = new int[]{1, 3, 5, 7, 9, 3, 3, 3, 3, 3, 1};
     public static int[] MGBreak2_Area_Z = new int[]{1, 3, 5, 7, 9, 3, 5, 10, 20, 30, 100};
@@ -196,6 +238,13 @@ public class DQRconfigs {
     public static int[] MGSet_Area_X = new int[]{1, 3, 3, 5, 5, 9, 11, 13, 15, 17, 1};
     public static int[] MGSet_Area_Y = new int[]{1, 3, 3, 5, 10, 9, 11, 13, 15, 17, 1};
     public static int[] MGSet_Area_Z = new int[]{1, 3, 10, 5, 5, 9, 11, 13, 15, 17, 100};
+
+    public static int MGSet_rejectTileEntity = 1;
+    public static String[] cfg_MGSetRejectBlocks = new String[]
+    		{
+    			"minecraft:netherrack",
+    			"minecraft:end_stone"
+    		};
 
     public static int[] cfg_biomeBlock_biomeId = new int[]{8, 9, 113, 114, 115, 116, 117};
     public static String[] cfg_biomeBlock_blockName = new String[]
@@ -254,8 +303,58 @@ public class DQRconfigs {
 		    	"DCsAppleMilk:defeatedcrow.cropMint/3"
     		};
 
+
+    public static int CuttingWoodRadius = 5;
+    public static int CuttingLeaveRadius = 5;
+    public static int CuttingWoodHeight = 25;
+    public static int CuttingLeaveHeight = 25;
+    public static int CuttingWoodUnder = 1;
+    public static int CuttingLeaveUnder = 1;
+
+    public static int CuttingSmoothBreak = 1;
+
+    public static String[] CuttingWood = new String[]
+    		{
+		    	"mod_ecru_MapleTree:ecru_BlockMapleWood",
+		    	"mod_ecru_MapleTree:ecru_BlockMapleWoodSyrup",
+		    	"mod_ecru_MapleTree:PersimmonWood",
+		    	"mod_ecru_MapleTree:AllspiceWood",
+		    	"mod_ecru_MapleTree:CloveWood",
+		    	"mod_ecru_MapleTree:CinnamonWood",
+		    	"mod_ecru_MapleTree:Star_aniseWood",
+		    	"mod_ecru_MapleTree:NutmegWood",
+		    	"DCsAppleMilk:defeatedcrow.logYuzu",
+		    	"BambooMod:sakuraLog",
+		    	"BiomesOPlenty:logs1",
+		    	"BiomesOPlenty:logs2",
+		    	"BiomesOPlenty:logs3",
+		    	"BiomesOPlenty:logs4"
+    		};
+
+    public static String[] CuttingLeave = new String[]
+    		{
+		    	"BiomesOPlenty:appleLeaves",
+		    	"BiomesOPlenty:persimmonLeaves",
+		    	"BiomesOPlenty:leaves1",
+		    	"BiomesOPlenty:leaves2",
+		    	"BiomesOPlenty:leaves3",
+		    	"BiomesOPlenty:leaves4",
+		    	"BiomesOPlenty:colorizedLeaves1",
+		    	"BiomesOPlenty:colorizedLeaves2",
+		    	"mod_ecru_MapleTree:ecru_BlockMapleLeaves",
+		    	"mod_ecru_MapleTree:PersimmonLeaves",
+		    	"mod_ecru_MapleTree:AllSpiceLeaves",
+		    	"mod_ecru_MapleTree:CloveLeaves",
+		    	"mod_ecru_MapleTree:CinnamonLeaves",
+		    	"mod_ecru_MapleTree:Star_aniseLeaves",
+		    	"mod_ecru_MapleTree:NutmegLeaves",
+		    	"BambooMod:sakuraLeaves",
+		    	"DCsAppleMilk:defeatedcrow.leavesYuzu"
+    		};
+
     public static int petLimit = 20;
     public static int petLimitPlayer = 0;
+    public static double petChanceFix = 1.0;
 
     public static int petPermGivePlantFoods = 1;
     public static int petPermGiveETCFoods = 1;
@@ -275,6 +374,9 @@ public class DQRconfigs {
     public static int offDeadPetSound = 0;
     public static int offMobNotEnoughMP = 0;
 
+    public static String cfgVersion = "1.0.0";
+    public static boolean readFlg1 = false;
+
     public DQRconfigs()
 	{
         cfg_core = new Configuration(new File(DQR.proxy.getDir(), "config/DQMIIINext_Core.cfg"));
@@ -284,6 +386,7 @@ public class DQRconfigs {
         cfg_id = new Configuration(new File(DQR.proxy.getDir(), "config/DQMIIINext/DQMIIINext_ID.cfg"));
         cfg_option = new Configuration(new File(DQR.proxy.getDir(), "config/DQMIIINext/DQMIIINext_Option.cfg"));
         cfg_magictool = new Configuration(new File(DQR.proxy.getDir(), "config/DQMIIINext/DQMIIINext_MagicTool.cfg"));
+        cfg_Structure = new Configuration(new File(DQR.proxy.getDir(), "config/DQMIIINext/DQMIIINext_Structure.cfg"));
         //cfg_Dim = new Configuration(new File(DQR.proxy.getDir(), "config/DQRⅢNext/DQRⅢNext_Dimension.cfg"));
 
         getConfigCore(cfg_core);
@@ -293,7 +396,133 @@ public class DQRconfigs {
         getConfigMagic(cfg_magic);
         getConfigOption(cfg_option);
         getConfigMagicTool(cfg_magictool);
+        getConfigStructure(cfg_Structure);
 
+	}
+
+	public void getConfigStructure(Configuration config)
+	{
+		config.load();
+
+		config.setCategoryComment("World gen objects", "this setting is object generate at field settings.");
+
+		cfg_gen_Genkotu = config.get("World gen objects","generate GENKOTUDAKE", cfg_gen_Genkotu , "0:disable 1:enable").getInt();
+		cfg_gen_Genkotu_type = config.get("World gen objects","generate GENKOTUDAKE_Prop", cfg_gen_Genkotu_type , "Generate dimensionID").getStringList();
+		for(int cnt = 0; cnt < cfg_gen_Genkotu_type.length; cnt++)
+		{
+			if(NumberUtils.isNumber(cfg_gen_Genkotu_type[cnt]))
+			{
+				cfg_gen_Genkotu_a.add(Integer.parseInt(cfg_gen_Genkotu_type[cnt]));
+			}
+		}
+		//nbrtbjru
+
+		cfg_gen_Tue = config.get("World gen objects","generate TUEobject", cfg_gen_Tue , "0:disable 1:enable").getInt();
+		cfg_gen_Tue_type = config.get("World gen objects","generate TUEobject_Prop", cfg_gen_Tue_type , "Generate dimension and Type set( <dimensionID>:<TYPE> ). type is'OVERWORLD','NETHER','THEEND'").getStringList();
+		for(int cnt = 0; cnt < cfg_gen_Tue_type.length; cnt++)
+		{
+			String[] divType = cfg_gen_Tue_type[cnt].replace(" ", "").split(":");
+
+			if(NumberUtils.isNumber(divType[0]) && divType.length > 1)
+			{
+				cfg_gen_Tue_Map.put(Integer.parseInt(divType[0]), divType[1]);
+			}
+		}
+
+		cfg_gen_Tubo = config.get("World gen objects","generate TUBOobject", cfg_gen_Tubo , "0:disable 1:enable").getInt();
+		cfg_gen_Tubo_type = config.get("World gen objects","generate TUBOobject_Prop", cfg_gen_Tubo_type , "Generate dimension and Type set( <dimensionID>:<TYPE> ). type is'OVERWORLD','NETHER','THEEND'").getStringList();
+		for(int cnt = 0; cnt < cfg_gen_Tubo_type.length; cnt++)
+		{
+			String[] divType = cfg_gen_Tubo_type[cnt].replace(" ", "").split(":");
+
+			if(NumberUtils.isNumber(divType[0]) && divType.length > 1)
+			{
+				cfg_gen_Tubo_Map.put(Integer.parseInt(divType[0]), divType[1]);
+			}
+		}
+
+		cfg_gen_Taru = config.get("World gen objects","generate TARUobject", cfg_gen_Taru , "0:disable 1:enable").getInt();
+		cfg_gen_Taru_type = config.get("World gen objects","generate TARUobject_Prop", cfg_gen_Taru_type , "Generate dimension and Type set( <dimensionID>:<TYPE> ). type is'OVERWORLD','NETHER','THEEND'").getStringList();
+		for(int cnt = 0; cnt < cfg_gen_Taru_type.length; cnt++)
+		{
+			String[] divType = cfg_gen_Taru_type[cnt].replace(" ", "").split(":");
+
+			if(NumberUtils.isNumber(divType[0]) && divType.length > 1)
+			{
+				cfg_gen_Taru_Map.put(Integer.parseInt(divType[0]), divType[1]);
+			}
+		}
+
+		cfg_gen_Sword = config.get("World gen objects","generate SWORDobject", cfg_gen_Sword , "0:disable 1:enable").getInt();
+		cfg_gen_Sword_type = config.get("World gen objects","generate SWORDobject_Prop", cfg_gen_Tubo_type , "Generate dimension and Type set( <dimensionID>:<TYPE> ). type is'OVERWORLD','NETHER','THEEND'").getStringList();
+		for(int cnt = 0; cnt < cfg_gen_Sword_type.length; cnt++)
+		{
+			String[] divType = cfg_gen_Sword_type[cnt].replace(" ", "").split(":");
+
+			if(NumberUtils.isNumber(divType[0]) && divType.length > 1)
+			{
+				cfg_gen_Sword_Map.put(Integer.parseInt(divType[0]), divType[1]);
+			}
+		}
+
+		cfg_gen_Sword2 = config.get("World gen objects","generate SWORD2object", cfg_gen_Sword2 , "0:disable 1:enable").getInt();
+		cfg_gen_Sword2_type = config.get("World gen objects","generate SWORD2object_Prop", cfg_gen_Sword2_type , "Generate dimension and Type set( <dimensionID>:<TYPE> ). type is'OVERWORLD','NETHER','THEEND'").getStringList();
+		for(int cnt = 0; cnt < cfg_gen_Sword2_type.length; cnt++)
+		{
+			String[] divType = cfg_gen_Sword2_type[cnt].replace(" ", "").split(":");
+
+			if(NumberUtils.isNumber(divType[0]) && divType.length > 1)
+			{
+				cfg_gen_Sword2_Map.put(Integer.parseInt(divType[0]), divType[1]);
+			}
+		}
+
+		cfg_gen_Sikabane = config.get("World gen objects","generate SIKABANEobject", cfg_gen_Sikabane , "0:disable 1:enable").getInt();
+		cfg_gen_Sikabane_type = config.get("World gen objects","generate SIKABANEobject_Prop", cfg_gen_Sikabane_type , "Generate dimension and Type set( <dimensionID>:<TYPE> ). type is'OVERWORLD','NETHER','THEEND'").getStringList();
+		for(int cnt = 0; cnt < cfg_gen_Sikabane_type.length; cnt++)
+		{
+			String[] divType = cfg_gen_Sikabane_type[cnt].replace(" ", "").split(":");
+
+			if(NumberUtils.isNumber(divType[0]) && divType.length > 1)
+			{
+				cfg_gen_Sikabane_Map.put(Integer.parseInt(divType[0]), divType[1]);
+			}
+		}
+
+		cfg_gen_Hako = config.get("World gen objects","generate HAKOobject", cfg_gen_Hako , "0:disable 1:enable").getInt();
+		cfg_gen_Hako_type = config.get("World gen objects","generate HAKOobject_Prop", cfg_gen_Hako_type , "Generate dimension and Type set( <dimensionID>:<TYPE> ). type is'OVERWORLD','NETHER','THEEND'").getStringList();
+		for(int cnt = 0; cnt < cfg_gen_Hako_type.length; cnt++)
+		{
+			String[] divType = cfg_gen_Hako_type[cnt].replace(" ", "").split(":");
+
+			if(NumberUtils.isNumber(divType[0]) && divType.length > 1)
+			{
+				cfg_gen_Hako_Map.put(Integer.parseInt(divType[0]), divType[1]);
+			}
+		}
+
+		cfg_gen_Ido = config.get("World gen objects","generate IDOobject", cfg_gen_Ido , "0:disable 1:enable").getInt();
+		cfg_gen_Ido_type = config.get("World gen objects","generate IDOobject_Prop", cfg_gen_Ido_type , "Generate dimensionID").getStringList();
+		for(int cnt = 0; cnt < cfg_gen_Ido_type.length; cnt++)
+		{
+			if(NumberUtils.isNumber(cfg_gen_Ido_type[cnt]))
+			{
+				cfg_gen_Ido_a.add(Integer.parseInt(cfg_gen_Ido_type[cnt]));
+			}
+		}
+
+		cfg_gen_Ido2 = config.get("World gen objects","generate HOME of MEDAL KING and entrance", cfg_gen_Ido2 , "0:disable 1:enable").getInt();
+		cfg_gen_Ido2_type = config.get("World gen objects","generate HOME of MEDAL KING and entrance_Prop", cfg_gen_Ido2_type , "Generate dimensionID").getStringList();
+		for(int cnt = 0; cnt < cfg_gen_Ido2_type.length; cnt++)
+		{
+			if(NumberUtils.isNumber(cfg_gen_Ido2_type[cnt]))
+			{
+				cfg_gen_Ido2_a.add(Integer.parseInt(cfg_gen_Ido2_type[cnt]));
+			}
+		}
+		config.save();
+
+		//config.setCategoryComment("MagicTool_Farm settings", "");
 	}
 
 	public void getConfigMagicTool(Configuration config)
@@ -310,12 +539,14 @@ public class DQRconfigs {
 
 		config.setCategoryComment("MagicTool_Break1 settings", "");
 		MGBreak1_enable = config.get("MagicTool_Break1 settings","item enable", MGBreak1_enable , "0:disable 1:BreakOnly 2:DeleteOnly 3:Both").getInt();
+		MGBreak1_SmoothBreak = config.get("MagicTool_Break1 settings","Smooth break", MGBreak1_SmoothBreak , "0:disable 1:enable").getInt();
 		MGBreak1_Area_X = config.get("MagicTool_Break1 settings","Function area X", MGBreak1_Area_X , "Any function area X pattern").getIntList();
 		MGBreak1_Area_Y = config.get("MagicTool_Break1 settings","Function area Y", MGBreak1_Area_Y , "Any function area Y pattern").getIntList();
 		MGBreak1_Area_Z = config.get("MagicTool_Break1 settings","Function area Z", MGBreak1_Area_Z , "Any function area Z pattern").getIntList();
 
 		config.setCategoryComment("MagicTool_Break2 settings", "");
 		MGBreak2_enable = config.get("MagicTool_Break2 settings","item enable", MGBreak2_enable , "0:disable 1:BreakOnly 2:DeleteOnly 3:Both").getInt();
+		MGBreak2_SmoothBreak = config.get("MagicTool_Break2 settings","Smooth break", MGBreak2_SmoothBreak , "0:disable 1:enable").getInt();
 		MGBreak2_Area_X = config.get("MagicTool_Break2 settings","Function area X", MGBreak2_Area_X , "Any function area X pattern").getIntList();
 		MGBreak2_Area_Y = config.get("MagicTool_Break2 settings","Function area Y", MGBreak2_Area_Y , "Any function area Y pattern").getIntList();
 		MGBreak2_Area_Z = config.get("MagicTool_Break2 settings","Function area Z", MGBreak2_Area_Z , "Any function area Z pattern").getIntList();
@@ -326,13 +557,26 @@ public class DQRconfigs {
 		MGSet_Area_Y = config.get("MagicTool_Set settings","Function area Y", MGSet_Area_Y , "Any function area Y pattern").getIntList();
 		MGSet_Area_Z = config.get("MagicTool_Set settings","Function area Z", MGSet_Area_Z , "Any function area Z pattern").getIntList();
 
+		config.setCategoryComment("Destruction of woods settings for DqrAxe", "");
+		CuttingWood  = config.get("Destruction of woods settings for DqrAxe","Add woods", CuttingWood , "add woods (write format  modName:woodblockname(1line 1item)   ex.  hogehoget:hogelog1)").getStringList();
+		CuttingLeave  = config.get("Destruction of woods settings for DqrAxe","Add leaves", CuttingLeave , "add leaves (write format  modName:leaveblockname(1line 1item)   ex.  hogehoget:hogeleave1)").getStringList();
+
+		CuttingWoodRadius = config.get("Destruction of woods settings for DqrAxe","Radius setting of Scanning woods", CuttingWoodRadius).getInt();
+		CuttingLeaveRadius = config.get("Destruction of woods settings for DqrAxe","Radius setting of Scanning leaves", CuttingLeaveRadius).getInt();
+
+		CuttingWoodHeight = config.get("Destruction of woods settings for DqrAxe","Height setting of Scanning woods", CuttingWoodHeight).getInt();
+		CuttingLeaveHeight = config.get("Destruction of woods settings for DqrAxe","Height setting of Scanning leaves", CuttingLeaveHeight).getInt();
+
+		CuttingWoodUnder = config.get("Destruction of woods settings for DqrAxe","Plant roots(under) setting of Scanning woods", CuttingWoodUnder).getInt();
+		CuttingLeaveUnder = config.get("Destruction of woods settings for DqrAxe","Plant roots(under) setting of Scanning leaves", CuttingLeaveUnder).getInt();
+
+		CuttingSmoothBreak = config.get("Destruction of woods settings for DqrAxe","Smooth break", CuttingSmoothBreak , "0:disable 1:enable").getInt();
 		config.save();
 	}
 
 	public void getConfigOption(Configuration config)
 	{
 		config.load();
-
 
 		config.setCategoryComment("Silent settings", "this setting is stop the sound");
 		offDeadPetSound = config.get("Silent settings","Dead pet sound(0:sound OFF 1:sound ON)", offDeadPetSound).getInt();
@@ -341,6 +585,7 @@ public class DQRconfigs {
 		config.setCategoryComment("Monstar taming limit settings", "this setting is Max number of taming pets");
 		petLimit = config.get("Monstar taming limit settings","Max number of taming pets limit", petLimit).getInt();
 		petLimitPlayer = config.get("Monstar taming limit settings","Limit players", petLimitPlayer, "limit target Players (0:prohibit 1:limit without OP 2:limit for all players)").getInt();
+		petChanceFix = config.get("Monstar taming limit settings","Taming chance Modifier", petChanceFix, "Taming chance minus magnification(0.0:Taming disable or 1.0-unlimited  [DefaultChance% / value])").getDouble();
 
 		config.setCategoryComment("Monstar taming permission settings", "this setting is permissions of taming pets operation");
 		petPermGivePlantFoods = config.get("Monstar taming permission settings","Give plant foods (0:allow only owner 1:allow for all player 2:allow owner and OP)", petPermGivePlantFoods).getInt();
@@ -357,6 +602,7 @@ public class DQRconfigs {
 		permBuilder1 = config.get("Item use permission","BuilderDama", permBuilder1, "allow use BuilderDama (0:prohibit 1:allow only OP 2:allow for all player)").getInt();
 		permBuilder2 = config.get("Item use permission","BuilderDamaS", permBuilder2, "allow use BuilderDamaS (0:prohibit 1:allow only OP 2:allow for all player)").getInt();
 		permBuilder3 = config.get("Item use permission","BuilderDamaW", permBuilder3, "allow use BuilderDamaW (0:prohibit 1:allow only OP 2:allow for all player)").getInt();
+		permBuilder4 = config.get("Item use permission","BuilderIdoMedal", permBuilder4, "allow use BuilderIdoMedal (0:prohibit 1:allow only OP 2:allow for all player)").getInt();
 
 		permUseBakudanisi = config.get("Item use permission","Bakudanisi", permUseBakudanisi, "allow use Bakudanisi (0:prohibit 1:allow only OP 2:allow for all player)").getInt();
 		permUseShinkanoHiseki = config.get("Item use permission","ShinkanoHiseki", permUseShinkanoHiseki, "allow use ShinkanoHiseki (0:prohibit 1:allow only OP 2:allow for all player)").getInt();
@@ -364,6 +610,7 @@ public class DQRconfigs {
 		needBuilderFrame1 = config.get("BuilderDama use condition","BuilderDama", needBuilderFrame1, "Use BuilderDama required builder frame(0:false 1:true)").getInt();
 		needBuilderFrame2 = config.get("BuilderDama use condition","BuilderDamaS", needBuilderFrame2, "Use BuilderDamaS required builder frame(0:false 1:true)").getInt();
 		needBuilderFrame3 = config.get("BuilderDama use condition","BuilderDamaW", needBuilderFrame3, "Use BuilderDamaW required builder frame(0:false 1:true)").getInt();
+		needBuilderFrame4 = config.get("BuilderDama use condition","BuilderIdoMedal", needBuilderFrame4, "Use BuilderIdoMedal required builder frame(0:false 1:true)").getInt();
 
 		config.setCategoryComment("Model render size", "this setting is Model render magnification");
 		figureMagni = (float)(config.get("Model render size","figure size", 3, "figure size = objSize / thisVal").getInt());
@@ -373,6 +620,15 @@ public class DQRconfigs {
 	public void getConfigCore(Configuration config)
 	{
 		config.load();
+
+		cfgVersion = config.get("_Configure version", "version", cfgVersion).getString();
+		if(cfgVersion.equalsIgnoreCase("1.0.0"))
+		{
+			cfgVersion = "1.1.0";
+			readFlg1 = true;
+			config.get("_Configure version", "version", cfgVersion).set(cfgVersion);
+		}
+
 		config.setCategoryComment("Core Settings", "this setting is Game main settings");
 		DqmDifficulty = config.get("Core Settings","Difficulty", DqmDifficulty ,"0:UltraEasy 1:VeryEasy 2:Easy 3:Normal 4:Hard 5:VeryHard 6:UltraHard").getInt();
 		DqmEndoraDifficulty = config.get("Core Settings","EndoraDifficulty", DqmEndoraDifficulty ,"set difficulty for EnderDragon(0-6). if set -1 then same as Core Settings.Difficulty").getInt();
@@ -407,18 +663,6 @@ public class DQRconfigs {
 		recalcLvStatus1 = config.get("Status recaluc","cause over Lv99", recalcLvStatus1 , "0:disable 1:enable").getInt();
 		recalcMP1 = config.get("Status recaluc","cause MP reset bug v0.8.0", recalcMP1 , "0:disable 1:enable").getInt();
 
-		config.setCategoryComment("World gen objects", "this setting is object generate at field settings");
-		cfg_gen_Genkotu = config.get("World gen objects","generate GENKOTUDAKE", cfg_gen_Genkotu , "0:disable 1:enable").getInt();
-		cfg_gen_Tue = config.get("World gen objects","generate TUE object", cfg_gen_Tue , "0:disable 1:enable").getInt();
-		cfg_gen_Tubo = config.get("World gen objects","generate TUBO object", cfg_gen_Tubo , "0:disable 1:enable").getInt();
-		cfg_gen_Taru = config.get("World gen objects","generate TARU object", cfg_gen_Taru , "0:disable 1:enable").getInt();
-		cfg_gen_Sword = config.get("World gen objects","generate SWORD object", cfg_gen_Sword , "0:disable 1:enable").getInt();
-		cfg_gen_Sword2 = config.get("World gen objects","generate SWORD2 object", cfg_gen_Sword2 , "0:disable 1:enable").getInt();
-		cfg_gen_Sikabane = config.get("World gen objects","generate SIKABANE object", cfg_gen_Sikabane , "0:disable 1:enable").getInt();
-		cfg_gen_Hako = config.get("World gen objects","generate HAKO object", cfg_gen_Hako , "0:disable 1:enable").getInt();
-		cfg_gen_Ido = config.get("World gen objects","generate IDO object", cfg_gen_Ido , "0:disable 1:enable").getInt();
-		cfg_gen_Ido2 = config.get("World gen objects","generate HOME of MEDAL KING and entrance", cfg_gen_Ido2 , "0:disable 1:enable").getInt();
-
 
 
 		config.setCategoryComment("Biome base blocks", "this setting is Blockname for BiomeId. BiomeID and Blockname to PAIR");
@@ -427,8 +671,9 @@ public class DQRconfigs {
 
 
 		config.setCategoryComment("World gen Ores1", "this setting is generate normal ores. (DimensionID or WorldFolderName) and Blockname have to PAIR");
-		cfg_generateOreDimType = config.get("World gen Ores1","DimensionGetType", cfg_generateOreDimType, "Dimension get type (0:DimensionID 1:WorldFolderName)").getInt();
+		cfg_generateOreDimType = config.get("World gen Ores1","DimensionGetType", cfg_generateOreDimType, "Dimension get type (0:DimensionID 1:WorldFolderName 2:DimensionName)").getInt();
 		cfg_generateOreDimFolder = config.get("World gen Ores1","WorldFolderName", cfg_generateOreDimFolder, "This setting use DimensionGetType=1").getStringList();
+		cfg_generateOreDimName = config.get("World gen Ores1","WorldDimensionName", cfg_generateOreDimName, "This setting use DimensionGetType=2").getStringList();
 		cfg_generateOreDimId = config.get("World gen Ores1","DimensionID", cfg_generateOreDimId, "This setting use DimensionGetType=0").getIntList();
 		cfg_generateOreBlockName = config.get("World gen Ores1","BlockName", cfg_generateOreBlockName ).getStringList();
 
@@ -464,11 +709,29 @@ public class DQRconfigs {
 					cfg_generateOreS.put(folderName, "stone");
 				}
 			}
+		}else if(cfg_generateOreDimType == 2)
+		{
+			for(int cnt = 0; cnt < cfg_generateOreDimName.length; cnt++)
+			{
+				String DimName = cfg_generateOreDimName[cnt].equalsIgnoreCase(".") ? null : cfg_generateOreDimName[cnt];
+
+				if(cfg_generateOreBlockName != null &&
+				   cfg_generateOreBlockName.length >= cnt &&
+				   cfg_generateOreBlockName[cnt] != null &&
+				   !cfg_generateOreBlockName[cnt].equalsIgnoreCase(""))
+				{
+					cfg_generateOreS.put(DimName, cfg_generateOreBlockName[cnt]);
+				}else
+				{
+					cfg_generateOreS.put(DimName, "stone");
+				}
+			}
 		}
 
 		config.setCategoryComment("World gen Ores2", "this setting is generate HighClass ores. (DimensionID or WorldFolderName) and Blockname have to PAIR");
-		cfg_generateOreDimType2 = config.get("World gen Ores2","DimensionGetType", cfg_generateOreDimType2, "Dimension get type (0:DimensionID 1:WorldFolderName)").getInt();
+		cfg_generateOreDimType2 = config.get("World gen Ores2","DimensionGetType", cfg_generateOreDimType2, "Dimension get type (0:DimensionID 1:WorldFolderName 2:DimensionName)").getInt();
 		cfg_generateOreDimFolder2 = config.get("World gen Ores2","WorldFolderName", cfg_generateOreDimFolder2, "This setting use DimensionGetType=1").getStringList();
+		cfg_generateOreDimName2 = config.get("World gen Ores2","WorldDimensionName", cfg_generateOreDimName2, "This setting use DimensionGetType=2").getStringList();
 		cfg_generateOreDimId2 = config.get("World gen Ores2","DimensionID", cfg_generateOreDimId2, "This setting use DimensionGetType=0").getIntList();
 		cfg_generateOreBlockName2 = config.get("World gen Ores2","BlockName", cfg_generateOreBlockName2 ).getStringList();
 
@@ -503,6 +766,24 @@ public class DQRconfigs {
 				}else
 				{
 					cfg_generateOre2S.put(folderName, "stone");
+				}
+			}
+		}else if(cfg_generateOreDimType2 == 2)
+		{
+			for(int cnt = 0; cnt < cfg_generateOreDimName2.length; cnt++)
+			{
+				String dimName = cfg_generateOreDimName2[cnt].equalsIgnoreCase(".") ? null : cfg_generateOreDimName2[cnt];
+
+				if(cfg_generateOreBlockName2 != null &&
+				   cfg_generateOreBlockName2.length >= cnt &&
+				   cfg_generateOreBlockName2[cnt] != null &&
+				   !cfg_generateOreBlockName2[cnt].equalsIgnoreCase(""))
+				{
+
+					cfg_generateOre2S.put(dimName, cfg_generateOreBlockName2[cnt]);
+				}else
+				{
+					cfg_generateOre2S.put(dimName, "stone");
 				}
 			}
 		}
@@ -604,6 +885,19 @@ public class DQRconfigs {
 		}
 
 		config.save();
+
+		config.setCategoryComment("World gen objects", "this setting is object generate at field settings");
+		cfg_gen_Genkotu = config.get("World gen objects","generate GENKOTUDAKE", cfg_gen_Genkotu , "0:disable 1:enable").getInt();
+		cfg_gen_Tue = config.get("World gen objects","generate TUE object", cfg_gen_Tue , "0:disable 1:enable").getInt();
+		cfg_gen_Tubo = config.get("World gen objects","generate TUBO object", cfg_gen_Tubo , "0:disable 1:enable").getInt();
+		cfg_gen_Taru = config.get("World gen objects","generate TARU object", cfg_gen_Taru , "0:disable 1:enable").getInt();
+		cfg_gen_Sword = config.get("World gen objects","generate SWORD object", cfg_gen_Sword , "0:disable 1:enable").getInt();
+		cfg_gen_Sword2 = config.get("World gen objects","generate SWORD2 object", cfg_gen_Sword2 , "0:disable 1:enable").getInt();
+		cfg_gen_Sikabane = config.get("World gen objects","generate SIKABANE object", cfg_gen_Sikabane , "0:disable 1:enable").getInt();
+		cfg_gen_Hako = config.get("World gen objects","generate HAKO object", cfg_gen_Hako , "0:disable 1:enable").getInt();
+		cfg_gen_Ido = config.get("World gen objects","generate IDO object", cfg_gen_Ido , "0:disable 1:enable").getInt();
+		cfg_gen_Ido2 = config.get("World gen objects","generate HOME of MEDAL KING and entrance", cfg_gen_Ido2 , "0:disable 1:enable").getInt();
+
 	}
 
 	public void getConfigGui(Configuration config)
@@ -676,14 +970,12 @@ public class DQRconfigs {
 		GuiID_MKMisc =  config.get("GUI ID","MedalKingGUI(Misc)", GuiID_MKMisc).getInt();
 		GuiID_MKMedal =  config.get("GUI ID","MedalKingGUI(Medal)", GuiID_MKMedal).getInt();
 		GuiID_PetBook =  config.get("GUI ID","PetBook", GuiID_PetBook).getInt();
-<<<<<<< HEAD
 		GuiID_SkillWeapon =  config.get("GUI ID","SkillWeapon", GuiID_SkillWeapon).getInt();
 		GuiID_PetStatus =  config.get("GUI ID","PetStatus", GuiID_PetStatus).getInt();
 		GuiID_PetInventory =  config.get("GUI ID","PetInventory", GuiID_PetInventory).getInt();
 		GuiID_DqrEnderchest =  config.get("GUI ID","DQR EnderChest", GuiID_DqrEnderchest).getInt();
 		GuiID_ItemBag =  config.get("GUI ID","ItemBag", GuiID_ItemBag).getInt();
-=======
->>>>>>> parent of 2aede75... ver0.8.7.8
+		GuiID_SubEquip =  config.get("GUI ID","MainInventory SubEquip", GuiID_SubEquip).getInt();
 		config.save();
 
 	}

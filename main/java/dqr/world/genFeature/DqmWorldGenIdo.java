@@ -38,10 +38,17 @@ public class DqmWorldGenIdo implements IWorldGenerator
         int ran11 = rand.nextInt(3);
         int ran12 = rand.nextInt(50);
 
+        if(!DQR.conf.cfg_gen_Ido_a.contains((int)par3World.provider.dimensionId))
+        {
+        	return;
+        }
+
+        /*
         if(par3World.provider.dimensionId != 0)
         {
         	return;
         }
+        */
 
         Block topBlock = par3World.getBiomeGenForCoords(xxx, zzz).topBlock;
         if(topBlock.getMaterial().isLiquid())
@@ -51,6 +58,8 @@ public class DqmWorldGenIdo implements IWorldGenerator
 
         if (ran1 >= 9950 && (par3World.getBlock(xxx, yyy - 1, zzz) == Blocks.grass ||
         					 par3World.getBlock(xxx, yyy - 1, zzz) == Blocks.sand  ||
+        					 par3World.getBlock(xxx, yyy - 1, zzz) == Blocks.netherrack ||
+        					 par3World.getBlock(xxx, yyy - 1, zzz) == Blocks.end_stone||
         					 (topBlock != Blocks.air && par3World.getBlock(xxx, yyy - 1, zzz) == topBlock)))
         {
         	//System.out.println("X" + xxx +  "/Y" + yyy +  "/Z" + zzz);

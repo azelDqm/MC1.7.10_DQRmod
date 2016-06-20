@@ -21,6 +21,15 @@ public class ThreadLvUpPet extends Thread{
 
 	public void run()
 	{
+
+		if(this.pet.getOnLevelThread())
+		{
+			return;
+		}else
+		{
+			this.pet.setOnLevelThread(true);
+		}
+
 		boolean flg = true;
 		int epLv = pet.getJobLv(pet.getJob());
 		int epEXP = pet.getJobExp(pet.getJob());
@@ -47,8 +56,8 @@ public class ThreadLvUpPet extends Thread{
 		for (int i = 0; i < 100; i++)
 		{
 			flg = true;
-			//System.out.println("DEBUG" + "/" + epLv + "/" + epEXP);
-			if(epLv < 99 && epEXP >= DQR.exp.getNextExp(epLv))
+			//System.out.println("DEBUG" + "/" + DQR.exp.getNeedExpPet(epLv, pet) + "/" + DQR.exp.getNextExpPet(epLv, pet) + "/" + epEXP);
+			if(epLv < 99 && epEXP >= DQR.exp.getNextExpPet(epLv, pet) && DQR.exp.getNextExpPet(epLv, pet) > 0)
 			{
 				epLv = epLv + 1;
 				pet.setJobLv(pet.getJob(), epLv);
@@ -62,7 +71,11 @@ public class ThreadLvUpPet extends Thread{
 					{
 						petName = this.pet.getCommandSenderName();
 					}
-					player.addChatMessage(new ChatComponentTranslation("msg.lvUpPet.txt",new Object[] {petName ,epLv}));
+
+					if(!player.worldObj.isRemote)
+					{
+						player.addChatMessage(new ChatComponentTranslation("msg.lvUpPet.txt",new Object[] {petName ,epLv}));
+					}
 				}
 
 				lvUpProcess(epLv);
@@ -93,6 +106,8 @@ public class ThreadLvUpPet extends Thread{
 				break;
 			}
 		}
+
+		this.pet.setOnLevelThread(false);
 	}
 
 	public void lvUpProcess(int lv)

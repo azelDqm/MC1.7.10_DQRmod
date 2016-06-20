@@ -30,13 +30,13 @@ public class CraftingEventHandler  {
 		/*
 		if(event.craftMatrix.getStackInSlot(0) != null)
 		{
-			System.out.println(event.craftMatrix.getStackInSlot(0).getDisplayName());
-			System.out.println(event.craftMatrix.getStackInSlot(0).stackSize);
+			//System.out.println(event.craftMatrix.getStackInSlot(0).getDisplayName());
+			//System.out.println(event.craftMatrix.getStackInSlot(0).stackSize);
 		}
 
 		if(event.crafting != null)
 		{
-			System.out.println(event.crafting.getDisplayName());
+			//System.out.println(event.crafting.getDisplayName());
 		}
 		*/
 
@@ -111,7 +111,7 @@ public class CraftingEventHandler  {
 		/*
 		if(event.player.worldObj.isRemote && event.craftMatrix.getStackInSlotOnClosing(0) != null)
 		{
-			System.out.println(event.craftMatrix.getStackInSlotOnClosing(0));
+			//System.out.println(event.craftMatrix.getStackInSlotOnClosing(0));
 		}
 		*/
 
@@ -211,7 +211,7 @@ public class CraftingEventHandler  {
 	        }
 	        catch (Exception exception)
 	        {
-	            System.out.println("Couldn\'t send book info" + exception.getMessage());
+	            //System.out.println("Couldn\'t send book info" + exception.getMessage());
 	        }
 	        finally
 	        {

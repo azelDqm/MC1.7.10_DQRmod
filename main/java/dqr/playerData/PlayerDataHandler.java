@@ -73,7 +73,7 @@ public class PlayerDataHandler {
                     ((ExtendedPlayerProperties3)(event.entity.getExtendedProperties(ExtendedPlayerProperties3.EXT_PROP_NAME))).loadProxyData((EntityPlayer)event.entity);
         	//PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties(ep), (EntityPlayerMP)ep);
         		/*
-	        	System.out.println("CCCC");
+	        	//System.out.println("CCCC");
 	            NBTTagCompound playerData = getEntityData(event.entity.getCommandSenderName());
 	            if (playerData != null) {
 	            	//System.out.println("XCCC");

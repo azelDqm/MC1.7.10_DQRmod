@@ -12,6 +12,7 @@ public class DqmMobBaseMetaru extends DqmMobBase
 		//this(world);
 		super(world, Type);
 		//System.out.println("DEBUG1" + Type.getMobClassName());
+		this.isImmuneToFire = true;
 	}
 
     @Override

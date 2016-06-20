@@ -4,6 +4,7 @@ import net.minecraft.client.renderer.entity.RenderArrow;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import dqr.entity.throwingEntity.render.ThrowingRenderBumeran;
 import dqr.entity.throwingEntity.throwItem.ThrowItemEntityBakudanisi;
+import dqr.entity.throwingEntity.throwItem.ThrowItemEntityIshitubute;
 import dqr.entity.throwingEntity.throwItem.ThrowItemEntityNiku;
 import dqr.entity.throwingEntity.throwItem.ThrowItemEntitySeisui;
 import dqr.entity.throwingEntity.throwItem.ThrowItemEntitySinkanohiseki;
@@ -43,11 +44,8 @@ public class ThrowingRenderingRegister {
 		RenderingRegistry.registerEntityRenderingHandler(ThrowItemEntityNiku.class, new ThrowingRenderBumeran(134));
 		RenderingRegistry.registerEntityRenderingHandler(ThrowItemEntitySeisui.class, new ThrowingRenderBumeran(131));
 		RenderingRegistry.registerEntityRenderingHandler(ThrowItemEntitySinkanohiseki.class, new ThrowingRenderBumeran(135));
-<<<<<<< HEAD
 		RenderingRegistry.registerEntityRenderingHandler(ThrowItemEntityIshitubute.class, new ThrowingRenderBumeran(136));
 
 		RenderingRegistry.registerEntityRenderingHandler(ThrowingEntityDqrArrow.class, new RenderArrow());
-=======
->>>>>>> parent of 2aede75... ver0.8.7.8
 	}
 }

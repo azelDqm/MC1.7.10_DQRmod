@@ -137,4 +137,17 @@ public class DQMagics {
     public static Item itemMahoimi;
     public static Item itemMahoriku;
     public static Item itemMahoizun;
+    
+    //ブレス系
+    public static Item itemBreathF1;
+    public static Item itemBreathF2;
+    public static Item itemBreathF3;
+    public static Item itemBreathF4;
+    public static Item itemBreathF5;
+    
+    public static Item itemBreathS1;
+    public static Item itemBreathS2;
+    public static Item itemBreathS3;
+    public static Item itemBreathS4;
+    public static Item itemBreathS5;
 }

@@ -15,6 +15,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import dqr.DQR;
 import dqr.api.Blocks.DQDecorates;
+import dqr.api.enums.EnumDqmWorldType;
 import dqr.blocks.decorate.tileEntity.DqmTileEntitySikabaneMob;
 import dqr.entity.mobEntity.DqmMobBase;
 import dqr.entity.mobEntity.monsterDay.DqmEntityGaikotu;
@@ -61,7 +62,7 @@ public class DqmBlockMainSikabaneMob extends BlockContainer
         int dim = par1World.provider.dimensionId;
 
 
-        if(dim == 0)
+        if(DQR.conf.cfg_gen_Sikabane_Map.get(dim) != null && DQR.conf.cfg_gen_Sikabane_Map.get(dim).equalsIgnoreCase(EnumDqmWorldType.OVERWORLD.getName()))
         {
         	rateMob = rand.nextInt(8);
 
@@ -138,7 +139,7 @@ public class DqmBlockMainSikabaneMob extends BlockContainer
         		}
         	}
 
-        }else if(dim == -1)
+        }else if(DQR.conf.cfg_gen_Sikabane_Map.get(dim) != null && DQR.conf.cfg_gen_Sikabane_Map.get(dim).equalsIgnoreCase(EnumDqmWorldType.NETHER.getName()))
         {
         	if(rand.nextInt(5) == 0)
         	{
@@ -211,7 +212,7 @@ public class DqmBlockMainSikabaneMob extends BlockContainer
         			}
         		}
         	}
-        }else
+        }else if(DQR.conf.cfg_gen_Sikabane_Map.get(dim) != null && DQR.conf.cfg_gen_Sikabane_Map.get(dim).equalsIgnoreCase(EnumDqmWorldType.THEEND.getName()))
         {
         	spawnMob = new DqmEntityKagenokisi(par1World);
 

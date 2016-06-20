@@ -16,6 +16,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import dqr.DQR;
 import dqr.api.Blocks.DQDecorates;
+import dqr.api.enums.EnumDqmWorldType;
 import dqr.blocks.decorate.tileEntity.DqmTileEntityAkumanotubo;
 import dqr.entity.mobEntity.DqmMobBase;
 import dqr.entity.mobEntity.monsterHell.DqmEntityTubokku;
@@ -58,125 +59,372 @@ public class DqmBlockAkumanotubo2 extends BlockContainer
         int dim = par1World.provider.dimensionId;
 
         rateItem = rand.nextInt(10);
-        if(rateItem == 0)
+        if(DQR.conf.cfg_gen_Tubo_Map.get(dim) != null && DQR.conf.cfg_gen_Tubo_Map.get(dim).equalsIgnoreCase(EnumDqmWorldType.OVERWORLD.getName()))
         {
-        	if (!par1World.isRemote)
-        	{
-	        	if(dim == 0)
+	        if(rateItem == 0)
+	        {
+	        	if (!par1World.isRemote)
 	        	{
-	        		par1World.setBlock(par2, par3, par4, Blocks.flowing_water, 0, 2);
-	        	}else
+		        	if(dim == 0)
+		        	{
+		        		par1World.setBlock(par2, par3, par4, Blocks.flowing_water, 0, 2);
+		        	}else
+		        	{
+		        		par1World.setBlock(par2, par3, par4, Blocks.flowing_lava, 0, 2);
+		        	}
+	        	}
+	        }else if(rateItem == 1)
+	        {
+	        	if (!par1World.isRemote)
 	        	{
 	        		par1World.setBlock(par2, par3, par4, Blocks.flowing_lava, 0, 2);
 	        	}
-        	}
-        }else if(rateItem == 1)
+	        }else
+	        {
+	        	if(dim == 0)
+	        	{
+	        		spawnMob = new DqmEntityAkumanotubo(par1World);
+
+	            	rateItem = rand.nextInt(50);
+
+	            	if(rateItem < 2)
+	            	{
+	            		doropiItems = DQR.randomItem.getEmblemRank1(1, 1);
+	            	}else if(rateItem < 5)
+	            	{
+	            		doropiItems = DQR.randomItem.getFoodRank2(1, 1);
+	            	}else if(rateItem < 10)
+	            	{
+	            		doropiItems = DQR.randomItem.getFoodRank1(1, 1);
+	            	}else if(rateItem < 20)
+	            	{
+	            		doropiItems = DQR.randomItem.getMiscsRank2(1, 1);
+	            	}else
+	            	{
+	            		doropiItems = DQR.randomItem.getMiscsRank1(1, 1);
+	            	}
+	        	}else
+	        	{
+	        		if(rand.nextInt(5) != 0)
+	        		{
+	        			spawnMob = new DqmEntityAkumanotubo(par1World);
+
+	                	rateItem = rand.nextInt(50);
+
+	                	if(rateItem < 3)
+	                	{
+	                		if(rand.nextInt(4) == 0)
+	                		{
+	                			doropiItems = DQR.randomItem.getEmblemRank2(1, 1);
+	                		}else
+	                		{
+	                			doropiItems = DQR.randomItem.getEmblemRank1(1, 1);
+	                		}
+	                	}else if(rateItem < 20)
+	                	{
+	                		doropiItems = DQR.randomItem.getFoodRank2(1, 1);
+	                	}else if(rateItem < 35)
+	                	{
+	                		doropiItems = DQR.randomItem.getMiscsRank2(1, 1);
+	                	}else if(rateItem < 40)
+	                	{
+	                		doropiItems = DQR.randomItem.getFoodRank1(1, 1);
+	                	}else if(rateItem < 43)
+	                	{
+	                		doropiItems = DQR.randomItem.getMiscsRank3(1, 1);
+	                	}else
+	                	{
+	                		doropiItems = DQR.randomItem.getMiscsRank1(1, 1);
+	                	}
+	        		}else
+	        		{
+	        			spawnMob = new DqmEntityTubokku(par1World);
+
+	                	rateItem = rand.nextInt(50);
+
+	                	if(rateItem < 5)
+	                	{
+	                		if(rand.nextInt(5) < 3)
+	                		{
+	                			doropiItems = DQR.randomItem.getEmblemRank2(1, 1);
+	                		}else
+	                		{
+	                			doropiItems = DQR.randomItem.getEmblemRank1(1, 1);
+	                		}
+	                	}else if(rateItem < 25)
+	                	{
+	                		doropiItems = DQR.randomItem.getFoodRank2(1, 1);
+	                	}else if(rateItem < 40)
+	                	{
+	                		doropiItems = DQR.randomItem.getMiscsRank2(1, 1);
+	                	}else if(rateItem < 45)
+	                	{
+	                		doropiItems = DQR.randomItem.getFoodRank1(1, 1);
+	                	}else if(rateItem < 48)
+	                	{
+	                		doropiItems = DQR.randomItem.getMiscsRank3(1, 1);
+	                	}else
+	                	{
+	                		doropiItems = DQR.randomItem.getMiscsRank1(1, 1);
+	                	}
+	        		}
+
+	        	}
+
+	            if(rand.nextInt(8) == 0)
+	            {
+	            	spawnMob = null;
+	            }
+
+	            if(spawnMob == null && rand.nextInt(2) == 0)
+	            {
+	            	doropiItems = new ItemStack(DQDecorates.DqmBlockAkumanotubo, 1);
+	            }
+	        }
+        }else if(DQR.conf.cfg_gen_Tubo_Map.get(dim) != null && DQR.conf.cfg_gen_Tubo_Map.get(dim).equalsIgnoreCase(EnumDqmWorldType.NETHER.getName()))
         {
-        	if (!par1World.isRemote)
-        	{
-        		par1World.setBlock(par2, par3, par4, Blocks.flowing_lava, 0, 2);
-        	}
-        }else
+            if(rateItem == 0)
+	        {
+	        	if (!par1World.isRemote)
+	        	{
+		        	if(dim == 0)
+		        	{
+		        		par1World.setBlock(par2, par3, par4, Blocks.flowing_water, 0, 2);
+		        	}else
+		        	{
+		        		par1World.setBlock(par2, par3, par4, Blocks.flowing_lava, 0, 2);
+		        	}
+	        	}
+	        }else if(rateItem == 1)
+	        {
+	        	if (!par1World.isRemote)
+	        	{
+	        		par1World.setBlock(par2, par3, par4, Blocks.flowing_lava, 0, 2);
+	        	}
+	        }else
+	        {
+	        	if(dim == 0)
+	        	{
+	        		spawnMob = new DqmEntityAkumanotubo(par1World);
+
+	            	rateItem = rand.nextInt(50);
+
+	            	if(rateItem < 2)
+	            	{
+	            		doropiItems = DQR.randomItem.getEmblemRank1(1, 1);
+	            	}else if(rateItem < 5)
+	            	{
+	            		doropiItems = DQR.randomItem.getFoodRank2(1, 1);
+	            	}else if(rateItem < 10)
+	            	{
+	            		doropiItems = DQR.randomItem.getFoodRank1(1, 1);
+	            	}else if(rateItem < 20)
+	            	{
+	            		doropiItems = DQR.randomItem.getMiscsRank2(1, 1);
+	            	}else
+	            	{
+	            		doropiItems = DQR.randomItem.getMiscsRank1(1, 1);
+	            	}
+	        	}else
+	        	{
+	        		if(rand.nextInt(5) != 0)
+	        		{
+	        			spawnMob = new DqmEntityAkumanotubo(par1World);
+
+	                	rateItem = rand.nextInt(50);
+
+	                	if(rateItem < 3)
+	                	{
+	                		if(rand.nextInt(4) == 0)
+	                		{
+	                			doropiItems = DQR.randomItem.getEmblemRank2(1, 1);
+	                		}else
+	                		{
+	                			doropiItems = DQR.randomItem.getEmblemRank1(1, 1);
+	                		}
+	                	}else if(rateItem < 20)
+	                	{
+	                		doropiItems = DQR.randomItem.getFoodRank2(1, 1);
+	                	}else if(rateItem < 35)
+	                	{
+	                		doropiItems = DQR.randomItem.getMiscsRank2(1, 1);
+	                	}else if(rateItem < 40)
+	                	{
+	                		doropiItems = DQR.randomItem.getFoodRank1(1, 1);
+	                	}else if(rateItem < 43)
+	                	{
+	                		doropiItems = DQR.randomItem.getMiscsRank3(1, 1);
+	                	}else
+	                	{
+	                		doropiItems = DQR.randomItem.getMiscsRank1(1, 1);
+	                	}
+	        		}else
+	        		{
+	        			spawnMob = new DqmEntityTubokku(par1World);
+
+	                	rateItem = rand.nextInt(50);
+
+	                	if(rateItem < 5)
+	                	{
+	                		if(rand.nextInt(5) < 3)
+	                		{
+	                			doropiItems = DQR.randomItem.getEmblemRank2(1, 1);
+	                		}else
+	                		{
+	                			doropiItems = DQR.randomItem.getEmblemRank1(1, 1);
+	                		}
+	                	}else if(rateItem < 25)
+	                	{
+	                		doropiItems = DQR.randomItem.getFoodRank2(1, 1);
+	                	}else if(rateItem < 40)
+	                	{
+	                		doropiItems = DQR.randomItem.getMiscsRank2(1, 1);
+	                	}else if(rateItem < 45)
+	                	{
+	                		doropiItems = DQR.randomItem.getFoodRank1(1, 1);
+	                	}else if(rateItem < 48)
+	                	{
+	                		doropiItems = DQR.randomItem.getMiscsRank3(1, 1);
+	                	}else
+	                	{
+	                		doropiItems = DQR.randomItem.getMiscsRank1(1, 1);
+	                	}
+	        		}
+
+	        	}
+
+	            if(rand.nextInt(8) == 0)
+	            {
+	            	spawnMob = null;
+	            }
+
+	            if(spawnMob == null && rand.nextInt(2) == 0)
+	            {
+	            	doropiItems = new ItemStack(DQDecorates.DqmBlockAkumanotubo, 1);
+	            }
+	        }
+        }else if(DQR.conf.cfg_gen_Tubo_Map.get(dim) != null && DQR.conf.cfg_gen_Tubo_Map.get(dim).equalsIgnoreCase(EnumDqmWorldType.THEEND.getName()))
         {
-        	if(dim == 0)
-        	{
-        		spawnMob = new DqmEntityAkumanotubo(par1World);
+            if(rateItem == 0)
+	        {
+	        	if (!par1World.isRemote)
+	        	{
+		        	if(dim == 0)
+		        	{
+		        		par1World.setBlock(par2, par3, par4, Blocks.flowing_water, 0, 2);
+		        	}else
+		        	{
+		        		par1World.setBlock(par2, par3, par4, Blocks.flowing_lava, 0, 2);
+		        	}
+	        	}
+	        }else if(rateItem == 1)
+	        {
+	        	if (!par1World.isRemote)
+	        	{
+	        		par1World.setBlock(par2, par3, par4, Blocks.flowing_lava, 0, 2);
+	        	}
+	        }else
+	        {
+	        	if(dim == 0)
+	        	{
+	        		spawnMob = new DqmEntityAkumanotubo(par1World);
 
-            	rateItem = rand.nextInt(50);
+	            	rateItem = rand.nextInt(50);
 
-            	if(rateItem < 2)
-            	{
-            		doropiItems = DQR.randomItem.getEmblemRank1(1, 1);
-            	}else if(rateItem < 5)
-            	{
-            		doropiItems = DQR.randomItem.getFoodRank2(1, 1);
-            	}else if(rateItem < 10)
-            	{
-            		doropiItems = DQR.randomItem.getFoodRank1(1, 1);
-            	}else if(rateItem < 20)
-            	{
-            		doropiItems = DQR.randomItem.getMiscsRank2(1, 1);
-            	}else
-            	{
-            		doropiItems = DQR.randomItem.getMiscsRank1(1, 1);
-            	}
-        	}else
-        	{
-        		if(rand.nextInt(5) != 0)
-        		{
-        			spawnMob = new DqmEntityAkumanotubo(par1World);
+	            	if(rateItem < 2)
+	            	{
+	            		doropiItems = DQR.randomItem.getEmblemRank1(1, 1);
+	            	}else if(rateItem < 5)
+	            	{
+	            		doropiItems = DQR.randomItem.getFoodRank2(1, 1);
+	            	}else if(rateItem < 10)
+	            	{
+	            		doropiItems = DQR.randomItem.getFoodRank1(1, 1);
+	            	}else if(rateItem < 20)
+	            	{
+	            		doropiItems = DQR.randomItem.getMiscsRank2(1, 1);
+	            	}else
+	            	{
+	            		doropiItems = DQR.randomItem.getMiscsRank1(1, 1);
+	            	}
+	        	}else
+	        	{
+	        		if(rand.nextInt(5) != 0)
+	        		{
+	        			spawnMob = new DqmEntityAkumanotubo(par1World);
 
-                	rateItem = rand.nextInt(50);
+	                	rateItem = rand.nextInt(50);
 
-                	if(rateItem < 3)
-                	{
-                		if(rand.nextInt(4) == 0)
-                		{
-                			doropiItems = DQR.randomItem.getEmblemRank2(1, 1);
-                		}else
-                		{
-                			doropiItems = DQR.randomItem.getEmblemRank1(1, 1);
-                		}
-                	}else if(rateItem < 20)
-                	{
-                		doropiItems = DQR.randomItem.getFoodRank2(1, 1);
-                	}else if(rateItem < 35)
-                	{
-                		doropiItems = DQR.randomItem.getMiscsRank2(1, 1);
-                	}else if(rateItem < 40)
-                	{
-                		doropiItems = DQR.randomItem.getFoodRank1(1, 1);
-                	}else if(rateItem < 43)
-                	{
-                		doropiItems = DQR.randomItem.getMiscsRank3(1, 1);
-                	}else
-                	{
-                		doropiItems = DQR.randomItem.getMiscsRank1(1, 1);
-                	}
-        		}else
-        		{
-        			spawnMob = new DqmEntityTubokku(par1World);
+	                	if(rateItem < 3)
+	                	{
+	                		if(rand.nextInt(4) == 0)
+	                		{
+	                			doropiItems = DQR.randomItem.getEmblemRank2(1, 1);
+	                		}else
+	                		{
+	                			doropiItems = DQR.randomItem.getEmblemRank1(1, 1);
+	                		}
+	                	}else if(rateItem < 20)
+	                	{
+	                		doropiItems = DQR.randomItem.getFoodRank2(1, 1);
+	                	}else if(rateItem < 35)
+	                	{
+	                		doropiItems = DQR.randomItem.getMiscsRank2(1, 1);
+	                	}else if(rateItem < 40)
+	                	{
+	                		doropiItems = DQR.randomItem.getFoodRank1(1, 1);
+	                	}else if(rateItem < 43)
+	                	{
+	                		doropiItems = DQR.randomItem.getMiscsRank3(1, 1);
+	                	}else
+	                	{
+	                		doropiItems = DQR.randomItem.getMiscsRank1(1, 1);
+	                	}
+	        		}else
+	        		{
+	        			spawnMob = new DqmEntityTubokku(par1World);
 
-                	rateItem = rand.nextInt(50);
+	                	rateItem = rand.nextInt(50);
 
-                	if(rateItem < 5)
-                	{
-                		if(rand.nextInt(5) < 3)
-                		{
-                			doropiItems = DQR.randomItem.getEmblemRank2(1, 1);
-                		}else
-                		{
-                			doropiItems = DQR.randomItem.getEmblemRank1(1, 1);
-                		}
-                	}else if(rateItem < 25)
-                	{
-                		doropiItems = DQR.randomItem.getFoodRank2(1, 1);
-                	}else if(rateItem < 40)
-                	{
-                		doropiItems = DQR.randomItem.getMiscsRank2(1, 1);
-                	}else if(rateItem < 45)
-                	{
-                		doropiItems = DQR.randomItem.getFoodRank1(1, 1);
-                	}else if(rateItem < 48)
-                	{
-                		doropiItems = DQR.randomItem.getMiscsRank3(1, 1);
-                	}else
-                	{
-                		doropiItems = DQR.randomItem.getMiscsRank1(1, 1);
-                	}
-        		}
+	                	if(rateItem < 5)
+	                	{
+	                		if(rand.nextInt(5) < 3)
+	                		{
+	                			doropiItems = DQR.randomItem.getEmblemRank2(1, 1);
+	                		}else
+	                		{
+	                			doropiItems = DQR.randomItem.getEmblemRank1(1, 1);
+	                		}
+	                	}else if(rateItem < 25)
+	                	{
+	                		doropiItems = DQR.randomItem.getFoodRank2(1, 1);
+	                	}else if(rateItem < 40)
+	                	{
+	                		doropiItems = DQR.randomItem.getMiscsRank2(1, 1);
+	                	}else if(rateItem < 45)
+	                	{
+	                		doropiItems = DQR.randomItem.getFoodRank1(1, 1);
+	                	}else if(rateItem < 48)
+	                	{
+	                		doropiItems = DQR.randomItem.getMiscsRank3(1, 1);
+	                	}else
+	                	{
+	                		doropiItems = DQR.randomItem.getMiscsRank1(1, 1);
+	                	}
+	        		}
 
-        	}
+	        	}
 
-            if(rand.nextInt(8) == 0)
-            {
-            	spawnMob = null;
-            }
+	            if(rand.nextInt(8) == 0)
+	            {
+	            	spawnMob = null;
+	            }
 
-            if(spawnMob == null && rand.nextInt(2) == 0)
-            {
-            	doropiItems = new ItemStack(DQDecorates.DqmBlockAkumanotubo, 1);
-            }
+	            if(spawnMob == null && rand.nextInt(2) == 0)
+	            {
+	            	doropiItems = new ItemStack(DQDecorates.DqmBlockAkumanotubo, 1);
+	            }
+	        }
         }
 
 

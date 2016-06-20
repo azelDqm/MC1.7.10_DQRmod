@@ -168,12 +168,27 @@ public class FuncDamageMessage {
 
 			}else
 			{
-				if (DQR.conf.damageDigits == 1)
+				//ChatComponentTranslation test = new ChatComponentTranslation("msg.fromDamage2.", new Object[] {});
+				//test.getUnformattedText()
+
+				if(DQR.func.hasChatKey("msg.fromDamage." + p_94547_1_.getDamageType() + ".txt"))
 				{
-					ep.addChatMessage(new ChatComponentTranslation("msg.fromDamage2." + p_94547_1_.getDamageType() + ".txt",new Object[] {damageVal}));
+					if (DQR.conf.damageDigits == 1)
+					{
+						ep.addChatMessage(new ChatComponentTranslation("msg.fromDamage2." + p_94547_1_.getDamageType() + ".txt",new Object[] {damageVal}));
+					}else
+					{
+						ep.addChatMessage(new ChatComponentTranslation("msg.fromDamage." + p_94547_1_.getDamageType() + ".txt",new Object[] {(int)damageVal}));
+					}
 				}else
 				{
-					ep.addChatMessage(new ChatComponentTranslation("msg.fromDamage." + p_94547_1_.getDamageType() + ".txt",new Object[] {(int)damageVal}));
+					if (DQR.conf.damageDigits == 1)
+					{
+						ep.addChatMessage(new ChatComponentTranslation("msg.fromDamageNo2.txt",new Object[] {p_94547_1_.getDamageType(), damageVal}));
+					}else
+					{
+						ep.addChatMessage(new ChatComponentTranslation("msg.fromDamageNo.txt",new Object[] {p_94547_1_.getDamageType(), (int)damageVal}));
+					}
 				}
 				//ep.addChatMessage(new ChatComponentTranslation("msg.fromDamage." + p_94547_1_.getDamageType() + ".txt",new Object[] {damageVal}));
 			}

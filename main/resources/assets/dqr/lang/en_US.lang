@@ -28,6 +28,7 @@ msg.toDamage3.txt=kill %s!
 msg.toSkillHit.txt=Skill:[%s]§e
 msg.epCritical.txt=SuperCriticalHit to %s
 msg.mobCritical.txt=SuperCriticalHit from %s
+msg.fromDamageNo.txt=%2ddamage from %1s
 msg.fromDamage.txt=%2ddamage from %1s
 msg.fromDamage.isFire.txt=%d damage from Fire
 msg.fromDamage.onFire.txt=%d damage from Fire
@@ -54,6 +55,7 @@ msg.fromDamage.PlayerSkillCri.txt=%d damage cause Player Skill
 msg.fromDamage.DqmDamageBlock.txt=%d damage from DamageTile;
 
 death.attack.DqmDamageBlock=Dead on DamageTile
+msg.fromDamageNo2.txt=%2ddamage from %1s
 msg.fromDamage2.txt=%2ddamage from %1s
 msg.fromDamage2.isFire.txt=%d damage from Fire
 msg.fromDamage2.onFire.txt=%d damage from Fire
@@ -81,6 +83,7 @@ msg.ingameInfo.missKey.txt=The key doesn't fit the lock
 
 msg.petTame.maxnumber.txt=Your pet number is MAX!!
 msg.pet.status1.txt=!player.%1$s(Owner:%2$s) Lv.%3$d(%4$d/%5$d)  HP:%6$d/%7$d  MP:%8$d/%9$d
+msg.pet.status1MAX.txt=!player.%1$s(Owner:%2$s) Lv.%3$d(MAX/MAX)  HP:%6$d/%7$d  MP:%8$d/%9$d
 msg.pet.status2.txt=!player.ATK:%1$d DEF:%2$d(%3$d) MAG:%4$d STR:%5$d AGI:%6$d INT:%7$d
 msg.pet.taming1.txt=%s wake up!!
 msg.pet.taming2.txt=and look you. He want to be your pet!! 
@@ -124,7 +127,8 @@ amplider.level.14=XIV
 amplider.level.15=XV
 
 gui.pet.status.name=%s 
-gui.pet.status.EXP=Lv.%d  EXP %1$d / %2$d
+gui.pet.status.EXP=Lv.%1$d  EXP %2$d / %3$d
+gui.pet.status.EXPMAX=Lv.%1$d  EXP MAX / MAX
 gui.pet.status.HP=HP %d / %d
 gui.pet.status.MP=MP %d / %d
 gui.pet.status.attack=ATK %1$4d      STR %2$4d
@@ -211,6 +215,10 @@ gui.weapon.20=Magic(PAR)
 gui.weapon.21=Magic(AKK)
 gui.weapon.24=Abacus 
 gui.weapon.25=Fan
+gui.weapon.26=Monster
+gui.weapon.27=Globe
+gui.weapon.28=Scythe
+gui.weapon.29=Breath
 
 key.setting.ModeChange=GuiPositionChange
 key.setting.ChangeSpeed=GuiPositionChangeSpeed
@@ -869,6 +877,20 @@ item.dqm.itemMahoimi.name=Mahoimi
 item.dqm.itemMahoriku.name=Mahoriku
 item.dqm.itemMahoizun.name=Mahoizun
 
+item.dqm.itemBreathF1.name=DagonFireBreath Lv.1
+item.dqm.itemBreathF2.name=DagonFireBreath Lv.2
+item.dqm.itemBreathF3.name=DagonFireBreath Lv.3
+item.dqm.itemBreathF4.name=DagonFireBreath Lv.4
+item.dqm.itemBreathF5.name=DagonFireBreath Lv.5
+
+item.dqm.itemBreathS1.name=DagonFrozenBreath Lv.1
+item.dqm.itemBreathS2.name=DagonFrozenBreath Lv.2
+item.dqm.itemBreathS3.name=DagonFrozenBreath Lv.3
+item.dqm.itemBreathS4.name=DagonFrozenBreath Lv.4
+item.dqm.itemBreathS5.name=DagonFrozenBreath Lv.5
+
+item.dqm.itemDragonObuB.name=DragonObu(Power lost)
+
 item.dqm.itemZaoraru.name=Zaoraru
 item.dqm.itemZaoriku.name=Zaoriku
 item.dqm.itemHaigou.name=Haigou
@@ -1197,7 +1219,6 @@ dqm.potion.poison=Poison
 dqm.potion.poisonX=SuperPoison
 dqm.potion.Suffocation=Suffocation
 
-<<<<<<< HEAD
 dqm.skill.WSkill_2_0.name=WSkill_2_0
 dqm.skill.WSkill_2_1.name=WSkill_2_1
 dqm.skill.WSkill_2_2.name=WSkill_2_2
@@ -1498,8 +1519,6 @@ dqm.skill.info.func.3=[COMMAND]
 dqm.skill.info.setSkill.0=
 dqm.skill.info.setSkill.1=[EQUIPING]
 
-=======
->>>>>>> parent of 2aede75... ver0.8.7.8
 dqm.jobSkill.touzokuSpeed=SPEED UP(Theif)
 dqm.potion.baikiruto=Baikiruto
 dqm.potion.sukara=Sukara
@@ -1519,6 +1538,7 @@ dqm.potion.medapani=Medapani
 dqm.potion.henatosu=Henatosu
 dqm.potion.divainsuperu=DivineSpell
 dqm.potion.heavyfire=HeavyFire
+dqm.potion.stop=STOP
 
 dqm.iteminfo.megaminoinori1=§fIf you will use this item for pet
 dqm.iteminfo.megaminoinori2=§fthen pet will get EXP §d%d§fpt
@@ -1530,6 +1550,7 @@ dqm.iteminfo.petLocation0=no data
 
 dqm.iteminfo.caneat=§6can eating
 dqm.iteminfo.hpheal=§fHPheal:%1d-%2d
+dqm.iteminfo.randombreak=random break
 dqm.iteminfo.mpheal=§fMPheal:%1d-%2d
 dqm.iteminfo.attackdamage=§9+%d Attack Damage
 dqm.iteminfo.deffence=§9DeffencePoint +%d
@@ -1772,6 +1793,27 @@ msg.FarmBookshelf.messages.getParts.txt=!player.You get parts of knowledge!
 msg.FarmBookshelf.messages.complete.txt=!player.You get new knowledge!
 msg.FarmBookshelf.messages.completeYet.txt=!player.knowledge of this seed is complete!
 
+
+msg.BankMP.messages.0.txt=!player.Want you exchange MP(MCEconomy2) and Gold?
+msg.BankMP.messages.1.txt=!player.How use this?
+msg.BankMP.messages.2.txt=!player........
+msg.BankMP.messages.3.txt=!player.It's cool!?
+msg.BankMP.messages.4.txt=!player.You want MP to Gold checkItem, 
+msg.BankMP.messages.5.txt=!player.at first sneaking talk and select value 
+msg.BankMP.messages.6.txt=!player.next touch me with empty hands.
+msg.BankMP.messages.7.txt=!player.if you will give me Gold checkItem
+msg.BankMP.messages.8.txt=!player.then i will give you MP.
+msg.BankMP.messages.9.txt=!player.sneaking talk and select your order.
+
+msg.BankMP.messages.1000.txt=!player.[%1$,3dMP to 1,000G checkItem]
+msg.BankMP.messages.10000.txt=!player.[%1$,3dMP to 10,000G checkItem]
+msg.BankMP.messages.100000.txt=!player.[%1$,3dMP to 100,000G checkItem]
+msg.BankMP.messages.1000000.txt=!player.[%1$,3dMP to 1,000,000G checkItem]
+
+msg.BankMP.messages.100.txt=!player.you get %1$,3dMP.
+msg.BankMP.messages.101.txt=!player.you get %1$,3dGold.
+
+
 msg.Bank.messages.0.txt=!player.I can cash your money to check.
 msg.Bank.messages.1.txt=!player.this item use?
 msg.Bank.messages.2.txt=!player.Check is out of death penalty and
@@ -1779,7 +1821,7 @@ msg.Bank.messages.3.txt=!player.trade for your friends.
 msg.Bank.messages.4.txt=!player.if you have coins then i can cash it.
 msg.Bank.messages.5.txt=!player.first, sneaking talk and select your oeder.
 msg.Bank.messages.6.txt=!player.subsequent talk me. I will trade for you.
-msg.Bank.messages.7.txt=!player.sneaking talk and select your oeder.。
+msg.Bank.messages.7.txt=!player.sneaking talk and select your order.
 msg.Bank.messages.10.txt=!player.[Change your 1,000Gold to checkItem]
 msg.Bank.messages.11.txt=!player.[Change your 10,000Gold to checkItem]
 msg.Bank.messages.12.txt=!player.[Change your 100,000Gold to checkItem]
@@ -1879,6 +1921,8 @@ msg.magictool.farm.mode.3.txt=!player.Mode : Seed storeing
 
 msg.weapon.modeInfo.1.-1.txt=!player.Axe mode : false
 msg.weapon.modeInfo.1.0.txt=!player.Axe mode : true
+msg.weapon.modeInfo.1.1.txt=!player.Logs Destroy mode : true
+msg.weapon.modeInfo.1.2.txt=!player.Logs and Leaves Destroy mode : true
 msg.weapon.modeInfo.2.-1.txt=!player.PickAce mode : false
 msg.weapon.modeInfo.2.0.txt=!player.PickAce mode : true
 msg.weapon.modeInfo.3.-1.txt=!player.Shovel mode : false
@@ -1889,6 +1933,15 @@ msg.magictool.farm.seedIn.0.txt=!player.Everytime seed store : false
 msg.magictool.farm.seedInAct.0.txt=!player.Storede all seeds
 msg.magictool.farm.seedInAct.1.txt=!player.Stored %s (Total :%d)
 msg.magictool.farm.seedInAct.2.txt=!player.You don't have seed items.
+
+msg.magictool.set.blockInAct.0.txt=!player.Storede all blocks
+msg.magictool.set.blockInAct.2.txt=!player.You don't have block items.
+msg.magictool.set.settingBlock.1.txt=!player.not selected
+msg.magictool.set.settingBlock.2.txt=!player.selected %s(least %d)
+
+msg.magictool.set.mode.0.txt=!player.Mode : Block Set
+msg.magictool.set.mode.1.txt=!player.Mode : Block storeing
+msg.magictool.set.areaset.txt=!player.SetArea : %d * %d * %d (need blocks : %d)
 
 msg.magictool.farm.areaset.txt=!player.SetArea : %d * %d * %d (ItemDamage : %d/10000)
 

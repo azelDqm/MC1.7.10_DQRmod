@@ -87,6 +87,7 @@ import dqr.blocks.decorate.DqmBlockYajirusiue;
 import dqr.blocks.decorate.DqmFarmBookshelf;
 import dqr.blocks.mobSpawner.DqmBlockMobSpawner;
 import dqr.blocks.standard.DqmBlockBuildFrame;
+import dqr.blocks.standard.DqmGansekiBlock;
 import dqr.blocks.standard.DqmGenkotuBlock;
 import dqr.blocks.standard.DqmHakoBlock;
 import dqr.blocks.standard.DqmHakoBlock11;
@@ -407,6 +408,7 @@ public class DqBlock {
     	DQBlocks.DqmBlockGenkotu = new DqmGenkotuBlock().setBlockName("dqm.blockGenkotu").setHardness(0.5F).setResistance(2.0F).setStepSound(Block.soundTypeGrass).setCreativeTab(DQR.tabs.DqmTabPlant).setBlockTextureName("dqr:DqmGenkotuBlock");
 
 
+    	DQBlocks.DqmBlockGanseki = new DqmGansekiBlock(Material.rock).setBlockName("dqm.blockGanseki").setHardness(1.5F).setResistance(10.0F).setStepSound(Block.soundTypePiston).setCreativeTab(DQR.tabs.DqmTabBlock).setBlockTextureName("stone");
 
     	DQChests.DqmEnderChest1 = new DqmBlockEnderChest(1).setBlockName("dqm.blockEnderChest1").setHardness(30.0F).setResistance(10.0F).setStepSound(Block.soundTypePiston).setCreativeTab(DQR.tabs.DqmTabBackPack).setBlockTextureName("dqr:Ender1");
     	DQChests.DqmEnderChest2 = new DqmBlockEnderChest(2).setBlockName("dqm.blockEnderChest2").setHardness(30.0F).setResistance(10.0F).setStepSound(Block.soundTypePiston).setCreativeTab(DQR.tabs.DqmTabBackPack).setBlockTextureName("dqr:Ender2");

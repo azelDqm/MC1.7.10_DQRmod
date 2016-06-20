@@ -1,6 +1,7 @@
 package dqr.functions;
 
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.UUID;
 
 import net.minecraft.enchantment.Enchantment;
@@ -22,6 +23,8 @@ import com.google.common.collect.Maps;
 
 import dqr.DQR;
 import dqr.api.enums.EnumDqmJob;
+import dqr.api.enums.EnumDqmSkillW;
+import dqr.api.enums.EnumDqmStatus;
 import dqr.api.enums.EnumStatATK;
 import dqr.api.enums.EnumStatDEF;
 import dqr.api.enums.EnumStatHP;
@@ -35,10 +38,77 @@ import dqr.items.base.DqmItemBowBase;
 import dqr.items.base.DqmItemMagicBase;
 import dqr.items.base.DqmItemWeaponBase;
 import dqr.playerData.ExtendedPlayerProperties;
+import dqr.playerData.ExtendedPlayerProperties3;
 
 public class FuncCalcPlayerStatus {
 
 	public FuncCalcPlayerStatus(){}
+
+
+	public int calcKaisin(EntityPlayer ep)
+	{
+		int kaisin = 0;
+
+
+		int[] kaisinArray = ExtendedPlayerProperties.get(ep).getArrayKaisinrituA();
+		for(int cnt = 0; cnt < kaisinArray.length; cnt++)
+		{
+			kaisin = kaisin + kaisinArray[cnt];
+		}
+
+		if(ep.getCurrentEquippedItem() != null)
+		{
+
+			//武器スキル
+			int apti = DQR.aptitudeTable.getWAptitude(ExtendedPlayerProperties.get(ep).getJob(),
+													  ExtendedPlayerProperties.get(ep).getWeapon(),
+													  ep);
+			if(apti == 0)
+			{
+				kaisin = kaisin + (getSwkillWPoint(ep, EnumDqmStatus.CRI.getId()) / 2);
+			}else if(apti > 0)
+			{
+				kaisin = kaisin + getSwkillWPoint(ep, EnumDqmStatus.CRI.getId());
+			}
+		}
+
+		return kaisin;
+	}
+
+	public int calcMikawasi(EntityPlayer ep)
+	{
+		int Mikawasi = 0;
+
+
+		int[] MikawasiArray = ExtendedPlayerProperties.get(ep).getArrayMikawasiA();
+		for(int cnt = 0; cnt < MikawasiArray.length; cnt++)
+		{
+			Mikawasi = Mikawasi + MikawasiArray[cnt];
+		}
+
+		int[] SubayasaArray = ExtendedPlayerProperties.get(ep).getArraySubayasaA();
+		for(int cnt = 0; cnt < MikawasiArray.length; cnt++)
+		{
+			Mikawasi = Mikawasi + MikawasiArray[cnt];
+		}
+
+		if(ep.getCurrentEquippedItem() != null)
+		{
+			//武器スキル
+			int apti = DQR.aptitudeTable.getWAptitude(ExtendedPlayerProperties.get(ep).getJob(),
+													  ExtendedPlayerProperties.get(ep).getWeapon(),
+													  ep);
+			if(apti == 0)
+			{
+				Mikawasi = Mikawasi + (getSwkillWPoint(ep, EnumDqmStatus.MISS.getId()) / 2);
+			}else if(apti > 0)
+			{
+				Mikawasi = Mikawasi + getSwkillWPoint(ep, EnumDqmStatus.MISS.getId());
+			}
+		}
+
+		return Mikawasi;
+	}
 
 	public int calcMaryoku(EntityPlayer ep)
 	{
@@ -64,7 +134,20 @@ public class FuncCalcPlayerStatus {
 
 				matk = matk + resDam;
 			}
+
+			//武器スキル
+			int apti = DQR.aptitudeTable.getWAptitude(ExtendedPlayerProperties.get(ep).getJob(),
+													  ExtendedPlayerProperties.get(ep).getWeapon(),
+													  ep);
+			if(apti == 0)
+			{
+				matk = matk + (getSwkillWPoint(ep, EnumDqmStatus.MAG.getId()) / 2);
+			}else if(apti > 0)
+			{
+				matk = matk + getSwkillWPoint(ep, EnumDqmStatus.MAG.getId());
+			}
 		}
+
 
 
 		return matk;
@@ -113,7 +196,7 @@ public class FuncCalcPlayerStatus {
 
 		    	//System.out.println("DEBUGLINE:" + maxDam + "/" + calDam + "/" + perDam);
 
-		    	int aptitude = DQR.aptitudeTable.getWAptitude(playerJob, playerWeapon);
+		    	int aptitude = DQR.aptitudeTable.getWAptitude(playerJob, playerWeapon, ep);
 
 		    	if(aptitude >= 0)
 		    	{
@@ -143,6 +226,18 @@ public class FuncCalcPlayerStatus {
 		    		atk = atk + (int)(dqmSword.func_150931_i());
 		    	}
 
+				//武器スキル
+				int apti = DQR.aptitudeTable.getWAptitude(ExtendedPlayerProperties.get(ep).getJob(),
+														  ExtendedPlayerProperties.get(ep).getWeapon(),
+														  ep);
+				if(apti == 0)
+				{
+					atk = atk + (getSwkillWPoint(ep, EnumDqmStatus.ATK.getId()) / 2);
+				}else if(apti > 0)
+				{
+					atk = atk + getSwkillWPoint(ep, EnumDqmStatus.ATK.getId());
+				}
+
 		        //Multimap multimap = HashMultimap.create();
 
 		        //multimap.remove(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(UUID.fromString("CB3F55D3-645C-4F38-A497-9C13A33DB5CA"), "Weapon modifier", (double)atk, 0));
@@ -159,7 +254,7 @@ public class FuncCalcPlayerStatus {
 		    	int maxDam = dqmSword.getMaxDamage();
 		    	int calDam = maxDam - ep.getCurrentEquippedItem().getItemDamage();
 		    	int perDam = calDam * 1000 / maxDam;
-		    	int aptitude = DQR.aptitudeTable.getWAptitude(playerJob, playerWeapon);
+		    	int aptitude = DQR.aptitudeTable.getWAptitude(playerJob, playerWeapon, ep);
 		    	float fixAptitude = 1.0F;
 
 		    	if(aptitude >= 0)
@@ -207,6 +302,17 @@ public class FuncCalcPlayerStatus {
 
 		    	atk = atk + (int)(dqmSword.func_150931_i() * fixAptitude * (perDam + 100) / 1000);
 
+				//武器スキル
+				int apti = DQR.aptitudeTable.getWAptitude(ExtendedPlayerProperties.get(ep).getJob(),
+														  ExtendedPlayerProperties.get(ep).getWeapon(),
+														  ep);
+				if(apti == 0)
+				{
+					atk = atk + (getSwkillWPoint(ep, EnumDqmStatus.ATK.getId()) / 2);
+				}else if(apti > 0)
+				{
+					atk = atk + getSwkillWPoint(ep, EnumDqmStatus.ATK.getId());
+				}
 		        //Multimap multimap = HashMultimap.create();
 		        //multimap.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(UUID.fromString("CB3F55D3-645C-4F38-A497-9C13A33DB5CF"), "Weapon modifier", (double)atk, 0));
 		        //ep.getAttributeMap().applyAttributeModifiers(multimap);
@@ -231,6 +337,18 @@ public class FuncCalcPlayerStatus {
 				}else if(sword.getToolMaterialName().equalsIgnoreCase(ToolMaterial.GOLD.toString()))
 				{
 					//atk = atk + 4;
+				}
+
+				//武器スキル
+				int apti = DQR.aptitudeTable.getWAptitude(ExtendedPlayerProperties.get(ep).getJob(),
+														  ExtendedPlayerProperties.get(ep).getWeapon(),
+														  ep);
+				if(apti == 0)
+				{
+					atk = atk + (getSwkillWPoint(ep, EnumDqmStatus.ATK.getId()) / 2);
+				}else if(apti > 0)
+				{
+					atk = atk + getSwkillWPoint(ep, EnumDqmStatus.ATK.getId());
 				}
 
 				//とりあえず力を攻撃力にそのまま加算
@@ -309,6 +427,18 @@ public class FuncCalcPlayerStatus {
 			}
 		}
 
+		//武器スキル
+		int apti = DQR.aptitudeTable.getWAptitude(ExtendedPlayerProperties.get(ep).getJob(),
+												  ExtendedPlayerProperties.get(ep).getWeapon(),
+												  ep);
+		if(apti == 0)
+		{
+			HP = HP + (getSwkillWPoint(ep, EnumDqmStatus.HP.getId()) / 2);
+		}else if(apti > 0)
+		{
+			HP = HP + getSwkillWPoint(ep, EnumDqmStatus.HP.getId());
+		}
+
 		return HP;
 	}
 
@@ -339,6 +469,17 @@ public class FuncCalcPlayerStatus {
 			}
 		}
 
+		//武器スキル
+		int apti = DQR.aptitudeTable.getWAptitude(ExtendedPlayerProperties.get(ep).getJob(),
+												  ExtendedPlayerProperties.get(ep).getWeapon(),
+												  ep);
+		if(apti == 0)
+		{
+			MP = MP + (getSwkillWPoint(ep, EnumDqmStatus.MP.getId()) / 2);
+		}else if(apti > 0)
+		{
+			MP = MP + getSwkillWPoint(ep, EnumDqmStatus.MP.getId());
+		}
 
 		return MP;
 	}
@@ -356,6 +497,18 @@ public class FuncCalcPlayerStatus {
 			//String uid = "91AEAA56-376B-4498-935B-2F7F68" + cnt;
 			subayasa = subayasa + subayasaArray[cnt];
 			//func_111184_a(SharedMonsterAttributes.movementSpeed, uid, 0.80000000298023224D, 2);
+		}
+
+		//武器スキル
+		int apti = DQR.aptitudeTable.getWAptitude(ExtendedPlayerProperties.get(ep).getJob(),
+												  ExtendedPlayerProperties.get(ep).getWeapon(),
+												  ep);
+		if(apti == 0)
+		{
+			subayasa = subayasa + (getSwkillWPoint(ep, EnumDqmStatus.AGI.getId()) / 2);
+		}else if(apti > 0)
+		{
+			subayasa = subayasa + getSwkillWPoint(ep, EnumDqmStatus.AGI.getId());
 		}
 
 		return subayasa;
@@ -386,6 +539,18 @@ public class FuncCalcPlayerStatus {
 			{
 				tikara = tikara + (JobTikara[cnt] / 2);
 			}
+		}
+
+		//武器スキル
+		int apti = DQR.aptitudeTable.getWAptitude(ExtendedPlayerProperties.get(ep).getJob(),
+												  ExtendedPlayerProperties.get(ep).getWeapon(),
+												  ep);
+		if(apti == 0)
+		{
+			tikara = tikara + (getSwkillWPoint(ep, EnumDqmStatus.STR.getId()) / 2);
+		}else if(apti > 0)
+		{
+			tikara = tikara + getSwkillWPoint(ep, EnumDqmStatus.STR.getId());
 		}
 
 		return tikara;
@@ -423,6 +588,18 @@ public class FuncCalcPlayerStatus {
 			kasikosa = kasikosa + JobKasikosa[cnt];
 		}
 		*/
+
+		//武器スキル
+		int apti = DQR.aptitudeTable.getWAptitude(ExtendedPlayerProperties.get(ep).getJob(),
+												  ExtendedPlayerProperties.get(ep).getWeapon(),
+												  ep);
+		if(apti == 0)
+		{
+			kasikosa = kasikosa + (getSwkillWPoint(ep, EnumDqmStatus.INT.getId()) / 2);
+		}else if(apti > 0)
+		{
+			kasikosa = kasikosa + getSwkillWPoint(ep, EnumDqmStatus.INT.getId());
+		}
 
 		return kasikosa;
 	}
@@ -510,6 +687,18 @@ public class FuncCalcPlayerStatus {
 		if(pe != null)
 		{
 			def = def +  (def * ((pe.getAmplifier() + 1) / 2));
+		}
+
+		//武器スキル
+		int apti = DQR.aptitudeTable.getWAptitude(ExtendedPlayerProperties.get(ep).getJob(),
+												  ExtendedPlayerProperties.get(ep).getWeapon(),
+												  ep);
+		if(apti == 0)
+		{
+			def = def + (getSwkillWPoint(ep, EnumDqmStatus.DEF.getId()) / 2);
+		}else if(apti > 0)
+		{
+			def = def + getSwkillWPoint(ep, EnumDqmStatus.DEF.getId());
 		}
 
 		return def;
@@ -856,5 +1045,26 @@ public class FuncCalcPlayerStatus {
     	}
     	return gold;
 
+    }
+
+    //武器特技値取得
+    public int getSwkillWPoint(EntityPlayer ep, int StatusID)
+    {
+    	int ret = 0;
+    	int weaponID = ExtendedPlayerProperties.get(ep).getWeapon();
+    	TreeMap<Integer, EnumDqmSkillW> skillset = DQR.enumGetter.getSkillW(weaponID);
+    	int[] skillPerm = ExtendedPlayerProperties3.get(ep).getWeaponSkillPermissionC(weaponID);
+
+		for (int key : skillset.keySet())
+		{
+			if(skillPerm[key] == 1)
+			{
+				EnumDqmSkillW skillEnum = skillset.get(key);
+
+				ret = ret + skillEnum.getParam(StatusID);
+			}
+		}
+
+    	return ret;
     }
 }

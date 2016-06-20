@@ -11,6 +11,7 @@ public class DqmMobBaseHell extends DqmMobBase
 	{
 		//this(world);
 		super(world, Type);
+		this.isImmuneToFire = true;
 	}
 
 	@Override

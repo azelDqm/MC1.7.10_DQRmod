@@ -10,6 +10,7 @@ public class DqmMobBaseSP extends DqmMobBase
 	{
 		//this(world);
 		super(world, Type);
+		this.isImmuneToFire = true;
 	}
 
 

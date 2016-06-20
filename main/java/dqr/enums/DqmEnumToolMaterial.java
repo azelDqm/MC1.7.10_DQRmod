@@ -51,7 +51,7 @@ public class DqmEnumToolMaterial {
 	public static final Item.ToolMaterial DqmMagicAsobinin = EnumHelper.addToolMaterial("DqmMagicAsobinin", 0, 150, 1.0F, 10.0F, 30);
 	public static final Item.ToolMaterial DqmMagicALL = EnumHelper.addToolMaterial("DqmMagicALL", 0, 150, 1.0F, 10.0F, 30);
 	public static final Item.ToolMaterial DqmMagicMamonotukai = EnumHelper.addToolMaterial("DqmMagicMamonotukai", 0, 150, 1.0F, 10.0F, 30);
-
+	public static final Item.ToolMaterial DqmMagicDragon = EnumHelper.addToolMaterial("DqmMagicDragon", 0, 150, 1.0F, 10.0F, 30);
 
     //50
 	public static final ArmorMaterial armorDansa = EnumHelper.addArmorMaterial("armorDansa", 150, new int[] {1, 1, 1, 1}, 10);

@@ -15,7 +15,15 @@ public enum EnumDqmMGToolMode {
 	MGFARM2_STORE(3, "ModeStore"),
 
 	MGBREAK_BREAK(0, "ModeBreak"),
-	MGBREAK_DELETE(1, "ModeDelete");
+	MGBREAK_DELETE(1, "ModeDelete"),
+
+	MGSET_SET(0, "ModeSet"),
+	MGSET_STORE(1, "ModeStore"),
+
+	RURAMODE0(0, "RuraMode0"),
+	RURAMODE10(1, "RuraMode10"),
+	RURAMODE25(2, "RuraMode25"),
+	RURAMODE40(3, "RuraMode40");
 
 
 

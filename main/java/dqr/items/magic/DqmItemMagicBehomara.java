@@ -16,6 +16,7 @@ import dqr.DQR;
 import dqr.api.enums.EnumDqmMagic;
 import dqr.api.potion.DQPotionMinus;
 import dqr.api.potion.DQPotionPlus;
+import dqr.entity.petEntity.DqmPetBase;
 import dqr.items.base.DqmItemMagicBase;
 import dqr.playerData.ExtendedPlayerProperties;
 
@@ -54,8 +55,7 @@ public class DqmItemMagicBehomara extends DqmItemMagicBase{
 
 			return par1ItemStack;
 		}
-		pe = par3EntityPlayer.getActivePotionEffect(DQPotionMinus.debuffRariho);
-		if(pe != null && par3EntityPlayer.worldObj.isRemote)
+		if(DQR.func.isBind(par3EntityPlayer) && par3EntityPlayer.worldObj.isRemote)
 		{
 	  		par3EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.magic.rariho.txt",new Object[] {}));
     		par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.pi", 1.0F, 1.0F);
@@ -160,14 +160,21 @@ public class DqmItemMagicBehomara extends DqmItemMagicBase{
                 		}
                 		else
                 		{
-	                    	if(elb.getHealth() + attackDam > elb.getMaxHealth())
-	                    	{
-	                    		elb.setHealth(elb.getMaxHealth());
-	                    	}else
-	                    	{
-	                    		elb.setHealth(elb.getHealth() + (float)attackDam);
-	                    	}
-	                    	elb.worldObj.playSoundAtEntity(elb, "dqr:player.hoimi", 1.0F, 1.0F);
+                			if(elb instanceof DqmPetBase && elb.getHealth() <= 0.1F)
+                			{
+                				;
+                			}else
+                			{
+
+		                    	if(elb.getHealth() + attackDam > elb.getMaxHealth())
+		                    	{
+		                    		elb.setHealth(elb.getMaxHealth());
+		                    	}else
+		                    	{
+		                    		elb.setHealth(elb.getHealth() + (float)attackDam);
+		                    	}
+		                    	elb.worldObj.playSoundAtEntity(elb, "dqr:player.hoimi", 1.0F, 1.0F);
+                			}
                 		}
 
 

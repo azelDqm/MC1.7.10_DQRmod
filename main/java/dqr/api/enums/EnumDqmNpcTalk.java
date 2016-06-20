@@ -7,7 +7,9 @@ public enum EnumDqmNpcTalk {
 	BUKIYA(3, "Bukiya"),
 	FARMBOOK(4, "FarmBook"),
 	SINKAN(5, "SINKAN"),
-	MEDALKING(6, "MedalKing");
+	MEDALKING(6, "MedalKing"),
+	SINKAN3(7, "SINKAN3"),
+	BANKMP(8, "BankMP");
 
 	private int id;
 	private String name;

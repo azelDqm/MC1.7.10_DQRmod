@@ -16,7 +16,9 @@ import net.minecraft.world.World;
 import dqr.DQR;
 import dqr.DqrWorldData;
 import dqr.api.enums.EnumColor;
+import dqr.api.enums.EnumDqmMGToolMode;
 import dqr.api.enums.EnumDqmMagic;
+import dqr.api.enums.EnumDqmWeaponMode;
 import dqr.api.event.DqrRuraEvent;
 import dqr.api.potion.DQPotionMinus;
 import dqr.entity.petEntity.DqmPetBase;
@@ -47,8 +49,8 @@ public class DqmItemMagicRura extends DqmItemMagicBase{
 
 			return par1ItemStack;
 		}
-		pe = par3EntityPlayer.getActivePotionEffect(DQPotionMinus.debuffRariho);
-		if(pe != null && par3EntityPlayer.worldObj.isRemote)
+
+		if(DQR.func.isBind(par3EntityPlayer) && par3EntityPlayer.worldObj.isRemote)
 		{
 	  		par3EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.magic.rariho.txt",new Object[] {}));
     		par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.pi", 1.0F, 1.0F);
@@ -96,6 +98,7 @@ public class DqmItemMagicRura extends DqmItemMagicBase{
 	        			}else
 	        			{
 	        				int epMP = ExtendedPlayerProperties.get(par3EntityPlayer).getMP();
+	        				int ruraMode = ExtendedPlayerProperties.get(par3EntityPlayer).getWeaponMode(EnumDqmWeaponMode.WEAPONMODE_RURA.getId());
 
 			    			if(epMP >= this.getEnumMagic().getMP() || DQR.debug > 0)
 			    			{
@@ -134,74 +137,77 @@ public class DqmItemMagicRura extends DqmItemMagicBase{
 	    		    	        //System.out.println(setX + "/" + setY + "/" + setZ);
 	    		    	        //par3EntityPlayer.moveEntity(setX, setY, setZ);
 
-	    		    	        //まずはペットを飛ばす
-	    		                List list = par3EntityPlayer.worldObj.getEntitiesWithinAABBExcludingEntity(par3EntityPlayer,
-	    		                		par3EntityPlayer.boundingBox.addCoord(par3EntityPlayer.motionX, par3EntityPlayer.motionY, par3EntityPlayer.motionZ).expand(10.0D, 5.0D, 10.0D));
+	    		    	        if(ruraMode != EnumDqmMGToolMode.RURAMODE0.getId())
+	    		    	        {
+		    		    	        //まずはペットを飛ばす
+		    		                List list = par3EntityPlayer.worldObj.getEntitiesWithinAABBExcludingEntity(par3EntityPlayer,
+		    		                		par3EntityPlayer.boundingBox.addCoord(par3EntityPlayer.motionX, par3EntityPlayer.motionY, par3EntityPlayer.motionZ).expand(10.0D, 5.0D, 10.0D));
 
-	    		                if (list != null && !list.isEmpty())
-	    		                {
-	    		                	for (int n = 0 ; n < list.size() ; n++)
-	    		                	{
-	    		                		Entity target = (Entity)list.get(n);
+		    		                if (list != null && !list.isEmpty())
+		    		                {
+		    		                	for (int n = 0 ; n < list.size() ; n++)
+		    		                	{
+		    		                		Entity target = (Entity)list.get(n);
 
-	    		                		if (target != null)
-	    		                		{
-	    		                			//boolean petFlg = false;
-	    		                			String epUuid = par3EntityPlayer.getUniqueID().toString();
+		    		                		if (target != null)
+		    		                		{
+		    		                			//boolean petFlg = false;
+		    		                			String epUuid = par3EntityPlayer.getUniqueID().toString();
 
-	    		                			if(target instanceof EntityHorse)
-	    		                			{
-	    		                				EntityHorse horse = (EntityHorse)target;
+		    		                			if(target instanceof EntityHorse)
+		    		                			{
+		    		                				EntityHorse horse = (EntityHorse)target;
 
-	    		                				if(epUuid.equalsIgnoreCase(horse.func_152119_ch()))
-	    		                				{
-	    		                					horse.setPositionAndUpdate(setX, setY + 0.5D, setZ);
-	    		                					//petFlg = true;
-	    		                				}
-
-	    		                			}else if(target instanceof EntityTameable)
-		                					{
-	    		                				EntityTameable tame = (EntityTameable)target;
-	    		                				EntityLivingBase tameE = tame.getOwner();
-
-	    		                				if(tameE != null)
-	    		                				{
-	    		                					String tameUuid = tameE.getUniqueID().toString();
-
-		    		                				if(epUuid.equalsIgnoreCase(tameUuid))
+		    		                				if(epUuid.equalsIgnoreCase(horse.func_152119_ch()))
 		    		                				{
-		    		                					tame.setPositionAndUpdate(setX, setY + 0.5D, setZ);
+		    		                					horse.setPositionAndUpdate(setX, setY + 0.5D, setZ);
 		    		                					//petFlg = true;
 		    		                				}
-	    		                				}
 
-		                					}else if(target instanceof DqmPetBase)
-		                					{
-		                						DqmPetBase petMob = (DqmPetBase)target;
-	    		                				EntityLivingBase petMobE = petMob.getOwner();
+		    		                			}else if(target instanceof EntityTameable)
+			                					{
+		    		                				EntityTameable tame = (EntityTameable)target;
+		    		                				EntityLivingBase tameE = tame.getOwner();
 
-	    		                				if(petMobE != null)
-	    		                				{
-	    		                					String tameUuid = petMobE.getUniqueID().toString();
-
-		    		                				if(epUuid.equalsIgnoreCase(tameUuid))
+		    		                				if(tameE != null)
 		    		                				{
-		    		                					petMob.setPositionAndUpdate(setX, setY + 0.5D, setZ);
-		    		                					//petFlg = true;
+		    		                					String tameUuid = tameE.getUniqueID().toString();
+
+			    		                				if(epUuid.equalsIgnoreCase(tameUuid))
+			    		                				{
+			    		                					tame.setPositionAndUpdate(setX, setY + 0.5D, setZ);
+			    		                					//petFlg = true;
+			    		                				}
 		    		                				}
-	    		                				}
-		                					}
+
+			                					}else if(target instanceof DqmPetBase)
+			                					{
+			                						DqmPetBase petMob = (DqmPetBase)target;
+		    		                				EntityLivingBase petMobE = petMob.getOwner();
+
+		    		                				if(petMobE != null)
+		    		                				{
+		    		                					String tameUuid = petMobE.getUniqueID().toString();
+
+			    		                				if(epUuid.equalsIgnoreCase(tameUuid))
+			    		                				{
+			    		                					petMob.setPositionAndUpdate(setX, setY + 0.5D, setZ);
+			    		                					//petFlg = true;
+			    		                				}
+		    		                				}
+			                					}
 
 
-				    						//外部からの干渉用
-		    		                		DqrRuraEvent event = new DqrRuraEvent(par3EntityPlayer,
-				    															  target,
-		    		                											  par1ItemStack,
-				    															  setX, setY, setZ);
-	    		                		}
-	    		                	}
+					    						//外部からの干渉用
+			    		                		DqrRuraEvent event = new DqrRuraEvent(par3EntityPlayer,
+					    															  target,
+			    		                											  par1ItemStack,
+					    															  setX, setY, setZ);
+		    		                		}
+		    		                	}
 
-	    		                }
+		    		                }
+	    		    	        }
 
 	    		    	        par3EntityPlayer.setPositionAndUpdate(setX, setY + 0.5D, setZ);
     		    	        	par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.rura", 1.0F, 1.0F);
@@ -227,7 +233,7 @@ public class DqmItemMagicRura extends DqmItemMagicBase{
 		    	        	wd = new DqrWorldData(DQR.modID);
 		    	        }
 
-		    	        System.out.println(wd.getRuraDim(0) + "/" + wd.getRuraX(0) + "/" + wd.getRuraY(0) + "/" + wd.getRuraZ(0));
+		    	        //System.out.println(wd.getRuraDim(0) + "/" + wd.getRuraX(0) + "/" + wd.getRuraY(0) + "/" + wd.getRuraZ(0));
 		    	        */
 	    			}
 	        	}else
@@ -254,5 +260,9 @@ public class DqmItemMagicRura extends DqmItemMagicBase{
     	{
     		p_77624_3_.add(EnumColor.Aqua.getChatColor() + addLine[cnt]);
     	}
+    	p_77624_3_.add("");
+
+    	message = I18n.format("dqm.magicinfo.rura_all.txt", new Object[]{});
+    	p_77624_3_.add(EnumColor.Aqua.getChatColor() + message);
     }
 }

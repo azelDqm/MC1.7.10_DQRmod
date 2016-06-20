@@ -35,4 +35,6 @@ public class DQBuilders {
 	public static Item itemBuilderDamaW7;
 	public static Item itemBuilderDamaW8;
 	public static Item itemBuilderDamaW9;
+
+	public static Item itemBuilderIdoMedal;
 }

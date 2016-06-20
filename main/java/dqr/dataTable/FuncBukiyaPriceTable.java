@@ -3,6 +3,7 @@ package dqr.dataTable;
 import net.minecraft.item.Item;
 import dqr.api.Items.DQArmors;
 import dqr.api.Items.DQMiscs;
+import dqr.api.Items.DQSeeds;
 import dqr.api.Items.DQWeapons;
 
 public class FuncBukiyaPriceTable {
@@ -984,6 +985,10 @@ public class FuncBukiyaPriceTable {
             return 5000 * 2;
         }
 
+        if (randomNum >= 60)
+        {
+            return 500;
+        }
 
     	return 0;
     }
@@ -1237,6 +1242,10 @@ public class FuncBukiyaPriceTable {
             return DQMiscs.itemTouzokunokagi;
         }
 
+        if (randomNum >= 60)
+        {
+            return DQSeeds.itemJouyakusou;
+        }
     	return null;
     }
 

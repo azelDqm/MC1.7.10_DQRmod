@@ -81,7 +81,7 @@ public class DqmItemBuilderDama extends DqmItemBuilderBase{
 
     	if(!par2EntityPlayer.isSneaking())
     	{
-    		DQR.func.debugString("Root3");
+    		//DQR.func.debugString("Root3");
     		NBTTagCompound nbt = par1ItemStack.getTagCompound();
 
     		//フレーム設置処理クラスをここでCALL
@@ -124,7 +124,7 @@ public class DqmItemBuilderDama extends DqmItemBuilderBase{
     		*/
         	if(nbt == null || nbt.getInteger("buildReady") == -1 )
         	{
-        		DQR.func.debugString("Root4");
+        		//DQR.func.debugString("Root4");
 
             	nbt = new NBTTagCompound();
             	nbt.setInteger("settingX", par4);

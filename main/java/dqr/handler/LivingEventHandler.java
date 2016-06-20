@@ -27,6 +27,7 @@ import dqr.api.enums.EnumDqmEndoraParam;
 import dqr.api.enums.EnumDqmJob;
 import dqr.api.enums.EnumDqmMessageConv;
 import dqr.api.enums.EnumDqmMonster;
+import dqr.api.enums.EnumDqmSkillW;
 import dqr.api.enums.EnumDqmWeapon;
 import dqr.api.enums.EnumStatDEF;
 import dqr.api.enums.EnumStatKasikosa;
@@ -43,6 +44,7 @@ import dqr.items.base.DqmItemBowBase;
 import dqr.items.base.DqmItemMagicBase;
 import dqr.items.base.DqmItemWeaponBase;
 import dqr.playerData.ExtendedPlayerProperties;
+import dqr.playerData.ExtendedPlayerProperties3;
 import dqr.playerData.MessagePlayerProperties;
 import dqr.thread.ThreadJukurenUp;
 import dqr.thread.ThreadLvUp;
@@ -80,7 +82,6 @@ public class LivingEventHandler {
 					event.target.addPotionEffect(new PotionEffect(DQPotionMinus.debuffHeavyFire.id, 60, mob.mobAI.getHeavyFire()));
 				}
 			}
-<<<<<<< HEAD
 
 			//武器特技
 			if(event.target instanceof EntityPlayer)
@@ -95,7 +96,7 @@ public class LivingEventHandler {
     			EnumDqmSkillW skillW = DQR.enumGetter.getSkillW(weapon, weaponSkill);
 				if(skillW != null && skillW.getFunc() == 1 && skillW.getRATE() > rand.nextInt(100))
 				{
-	    			if(weapon == EnumDqmWeapon.DqmLance.getId() && weaponSkill == 0 && skillPerm != 0)
+	    			if(mob.isFirstAttack && weapon == EnumDqmWeapon.DqmLance.getId() && weaponSkill == 0 && skillPerm != 0)
 	    			{
 	    				//しっぷう突き
 						ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
@@ -105,8 +106,9 @@ public class LivingEventHandler {
 	    			}
 				}
 			}
-=======
->>>>>>> parent of 2aede75... ver0.8.7.8
+
+
+			mob.isFirstAttack = false;
 		}
 	}
 
@@ -190,7 +192,7 @@ public class LivingEventHandler {
 		/*
 		if(event.source != null && event.source.getEntity() != null)
 		{
-			System.out.println("XXX:" + event.source.getEntity().getCommandSenderName());
+			//System.out.println("XXX:" + event.source.getEntity().getCommandSenderName());
 		}
 		*/
 
@@ -202,13 +204,25 @@ public class LivingEventHandler {
 				EntityPlayer killer = (EntityPlayer)event.source.getSourceOfDamage();
 
 				if(DQR.aptitudeTable.getWAptitude(ExtendedPlayerProperties.get(killer).getJob(),
-						EnumDqmWeapon.DqmThrow.getId()) > -1)
+						EnumDqmWeapon.DqmThrow.getId(), killer) > -1)
 				{
+					int prevJukurenExp = ExtendedPlayerProperties.get(killer).getJukurenExp(EnumDqmWeapon.DqmThrow.getId());
 					int getJukurenExp = 1 + ExtendedPlayerProperties.get(killer).getJukurenExp(EnumDqmWeapon.DqmThrow.getId());
 					ExtendedPlayerProperties.get(killer).setJukurenExp(EnumDqmWeapon.DqmThrow.getId(), getJukurenExp);
 
+					if((prevJukurenExp%100) > (getJukurenExp%100))
+					{
+						int jukurenWP = ExtendedPlayerProperties.get(killer).getJukurenWP(EnumDqmWeapon.DqmThrow.getId());
+						if(jukurenWP < 500)
+						{
+							ExtendedPlayerProperties.get(killer).setJukurenWP(EnumDqmWeapon.DqmThrow.getId(), jukurenWP + 1);
+						}
+					}
+
 		            ThreadJukurenUp jukurenUp = new ThreadJukurenUp(killer);
 		            jukurenUp.start();
+
+
 				}
 			}
 		}else
@@ -227,7 +241,8 @@ public class LivingEventHandler {
 			{
 				//DQR.func.debugString("Line2");
 	        	int getJukurenLv;
-	        	int getJukurenExp;
+	        	int getJukurenExp = 0;
+	        	int prevJukurenExp = ExtendedPlayerProperties.get(killer).getJukurenExp(EnumDqmWeapon.DqmThrow.getId());
 	            ItemStack handItem = null;
 
 	            if(killer.inventory.getCurrentItem() != null)
@@ -236,13 +251,13 @@ public class LivingEventHandler {
 	            }
 
 	        	if(DQR.aptitudeTable.getWAptitude(ExtendedPlayerProperties.get(killer).getJob(),
-						  ExtendedPlayerProperties.get(killer).getWeapon()) > -1)
+						  ExtendedPlayerProperties.get(killer).getWeapon(), killer) > -1)
 				{
 					getJukurenExp = 1 + ExtendedPlayerProperties.get(killer).getJukurenExp(ExtendedPlayerProperties.get(killer).getWeapon());
 					ExtendedPlayerProperties.get(killer).setJukurenExp(ExtendedPlayerProperties.get(killer).getWeapon(), getJukurenExp);
 				}else if((handItem != null && (handItem.getItem() instanceof ItemSword || handItem.getItem() instanceof ItemBow)) &&
 					 DQR.aptitudeTable.getWAptitude(ExtendedPlayerProperties.get(killer).getJob(),
-					 EnumDqmWeapon.DqmVanillaS.getId()) > -1)
+					 EnumDqmWeapon.DqmVanillaS.getId(), killer) > -1)
 				{
 					getJukurenExp = 1 + ExtendedPlayerProperties.get(killer).getJukurenExp(EnumDqmWeapon.DqmVanillaS.getId());
 					ExtendedPlayerProperties.get(killer).setJukurenExp(EnumDqmWeapon.DqmVanillaS.getId(), getJukurenExp);
@@ -257,10 +272,19 @@ public class LivingEventHandler {
 				}else
 				{
 					if(DQR.aptitudeTable.getWAptitude(ExtendedPlayerProperties.get(killer).getJob(),
-							EnumDqmWeapon.DqmNoHand.getId()) > -1)
+							EnumDqmWeapon.DqmNoHand.getId(), killer) > -1)
 					{
 						getJukurenExp = 1 + ExtendedPlayerProperties.get(killer).getJukurenExp(EnumDqmWeapon.DqmNoHand.getId());
 						ExtendedPlayerProperties.get(killer).setJukurenExp(EnumDqmWeapon.DqmNoHand.getId(), getJukurenExp);
+					}
+				}
+
+				if((prevJukurenExp%100) > (getJukurenExp%100) && getJukurenExp != 0)
+				{
+					int jukurenWP = ExtendedPlayerProperties.get(killer).getJukurenWP(EnumDqmWeapon.DqmThrow.getId());
+					if(jukurenWP < 500)
+					{
+						ExtendedPlayerProperties.get(killer).setJukurenWP(EnumDqmWeapon.DqmThrow.getId(), jukurenWP + 1);
 					}
 				}
 
@@ -287,71 +311,77 @@ public class LivingEventHandler {
 
 				EntityPlayer killer = null;
 
-				//肉使用確認
-				PotionEffect pe = mb.getActivePotionEffect(DQPotionEtc.buffMonsterNiku);
-				if(pe != null)
+				int chanceFix = (int)(DQR.conf.petChanceFix * 10);
+
+				if(chanceFix > 0 && rand.nextInt(chanceFix) < 10)
 				{
-					petChance = petChance / ((pe.getAmplifier() + 1) *  2);
-				}
 
-				//職業補正
-				if(event.source.getSourceOfDamage() instanceof EntityPlayer)
-				{
-					killer = (EntityPlayer)event.source.getSourceOfDamage();
-
-					int killerJob = ExtendedPlayerProperties.get(killer).getJob();
-
-					if(killerJob == EnumDqmJob.Densetsu.getId() || killerJob == EnumDqmJob.MASTERDRAGON.getId())
+					//肉使用確認
+					PotionEffect pe = mb.getActivePotionEffect(DQPotionEtc.buffMonsterNiku);
+					if(pe != null)
 					{
-						petChance = petChance / 2;
-						fixChance = fixChance + 1;
-					}else if(killerJob == EnumDqmJob.Yuusha.getId())
-					{
-						fixChance = fixChance + 1;
-					}else if(killerJob == EnumDqmJob.Mamonotukai.getId())
-					{
-						petChance = petChance / 2;
-					}else if(killerJob == EnumDqmJob.Dragon.getId() || killerJob == EnumDqmJob.Haguremetal.getId())
-					{
-						fixChance = fixChance + 1;
+						petChance = petChance / ((pe.getAmplifier() + 1) *  2);
 					}
-				}
 
-
-				//実際にペットになる処理
-				petChance = petChance <= 1 ? 1 : petChance;
-				fixChance = fixChance >= petChance ? petChance - 1 : fixChance;
-
-				//System.out.println("TEST" + fixChance + " / " + petChance);
-
-				//System.out.println("PET: " + petChance + " / " + fixChance );
-				if(rand.nextInt(petChance) <= fixChance || DQR.debug == 3)
-				{
-					mb.worldObj.playSoundAtEntity(mb, "dqr:mob.petmob", 1.0F, 1.5F);
-					if(!mb.worldObj.isRemote)
+					//職業補正
+					if(event.source.getSourceOfDamage() instanceof EntityPlayer)
 					{
-						EnumDqmMonster monsterType = mb.monsterType;
+						killer = (EntityPlayer)event.source.getSourceOfDamage();
 
-						if(killer != null)
+						int killerJob = ExtendedPlayerProperties.get(killer).getJob();
+
+						if(killerJob == EnumDqmJob.Densetsu.getId() || killerJob == EnumDqmJob.MASTERDRAGON.getId())
 						{
-							killer.addChatMessage(new ChatComponentTranslation("msg.pet.taming1.txt",new Object[] { event.entityLiving.getCommandSenderName()}));
-							killer.addChatMessage(new ChatComponentTranslation("msg.pet.taming2.txt",new Object[] {}));
-							killer.addChatMessage(new ChatComponentTranslation("msg.pet.taming3.txt",new Object[] {}));
-							killer.addChatMessage(new ChatComponentTranslation("msg.pet.taming4.txt",new Object[] {}));
+							petChance = petChance / 2;
+							fixChance = fixChance + 1;
+						}else if(killerJob == EnumDqmJob.Yuusha.getId())
+						{
+							fixChance = fixChance + 1;
+						}else if(killerJob == EnumDqmJob.Mamonotukai.getId())
+						{
+							petChance = petChance / 2;
+						}else if(killerJob == EnumDqmJob.Dragon.getId() || killerJob == EnumDqmJob.Haguremetal.getId())
+						{
+							fixChance = fixChance + 1;
 						}
+					}
 
-						petFlg = true;
 
-						String petName = monsterType.getPetClassName();
-						//SystemOutPrint
-						Entity entity = EntityList.createEntityByName(DQR.modID + "." + petName, mb.worldObj);
-						if(entity != null)
+					//実際にペットになる処理
+					petChance = petChance <= 1 ? 1 : petChance;
+					fixChance = fixChance >= petChance ? petChance - 1 : fixChance;
+
+					//System.out.println("TEST" + fixChance + " / " + petChance);
+
+					//System.out.println("PET: " + petChance + " / " + fixChance );
+					if(rand.nextInt(petChance) <= fixChance || DQR.debug == 3)
+					{
+						mb.worldObj.playSoundAtEntity(mb, "dqr:mob.petmob", 1.0F, 1.5F);
+						if(!mb.worldObj.isRemote)
 						{
-							entity.setLocationAndAngles((double)mb.posX + 0.5D, (double)mb.posY + 1.0D, (double)mb.posZ + 0.5D, 0.0F, 0.0F);
-							mb.worldObj.spawnEntityInWorld(entity);
-						}else
-						{
-							System.out.println("Taming process Error: " + mb.getCommandSenderName() + " / " + DQR.modID + "." + petName);
+							EnumDqmMonster monsterType = mb.monsterType;
+
+							if(killer != null)
+							{
+								killer.addChatMessage(new ChatComponentTranslation("msg.pet.taming1.txt",new Object[] { event.entityLiving.getCommandSenderName()}));
+								killer.addChatMessage(new ChatComponentTranslation("msg.pet.taming2.txt",new Object[] {}));
+								killer.addChatMessage(new ChatComponentTranslation("msg.pet.taming3.txt",new Object[] {}));
+								killer.addChatMessage(new ChatComponentTranslation("msg.pet.taming4.txt",new Object[] {}));
+							}
+
+							petFlg = true;
+
+							String petName = monsterType.getPetClassName();
+							//SystemOutPrint
+							Entity entity = EntityList.createEntityByName(DQR.modID + "." + petName, mb.worldObj);
+							if(entity != null)
+							{
+								entity.setLocationAndAngles((double)mb.posX + 0.5D, (double)mb.posY + 1.0D, (double)mb.posZ + 0.5D, 0.0F, 0.0F);
+								mb.worldObj.spawnEntityInWorld(entity);
+							}else
+							{
+								System.out.println("Taming process Error: " + mb.getCommandSenderName() + " / " + DQR.modID + "." + petName);
+							}
 						}
 					}
 				}
@@ -561,6 +591,9 @@ public class LivingEventHandler {
     			ExtendedPlayerProperties.get(ep).setMaryoku(DQR.calcPlayerStatus.calcMaryoku(ep));
     			ExtendedPlayerProperties.get(ep).setMaxHP(DQR.calcPlayerStatus.calcHP(ep));
     			ExtendedPlayerProperties.get(ep).setMaxMP(DQR.calcPlayerStatus.calcMP(ep));
+    			ExtendedPlayerProperties.get(ep).setKaisinritu(DQR.calcPlayerStatus.calcKaisin(ep));
+    			ExtendedPlayerProperties.get(ep).setMikawasi(DQR.calcPlayerStatus.calcMikawasi(ep));
+
     			//ExtendedPlayerProperties.get(ep).setMedal(ExtendedPlayerProperties.get(ep).getMedal());
     			ep.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(ExtendedPlayerProperties.get(ep).getMaxHP());
     			if(ep.getCurrentEquippedItem()!= null)
@@ -647,7 +680,13 @@ public class LivingEventHandler {
     			pet.setMaxHP(DQR.calcPetStatus.calcHP(pet));
     			pet.setMaxMP(DQR.calcPetStatus.calcMP(pet));
     			//ExtendedPlayerProperties.get(ep).setMedal(ExtendedPlayerProperties.get(ep).getMedal());
-    			pet.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(pet.getMaxHP());
+    			if(pet.getMaxHP() < pet.type.HPDEF && pet.isTamed())
+    			{
+    				pet.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(pet.type.HPDEF);
+    			}else
+    			{
+    				pet.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(pet.getMaxHP());
+    			}
     			/*
     			if(ep.getCurrentEquippedItem()!= null)
     			{
@@ -897,6 +936,352 @@ public class LivingEventHandler {
 				ExtendedPlayerProperties.get(ep).setArrayKasikosa(EnumStatKasikosa.ougon.getId(), 0);
 				ExtendedPlayerProperties.get(ep).setArrayTikara(EnumStatTikara.ougon.getId(), 0);
 			}
+    	}else if(event.entityLiving instanceof DqmPetBase)
+    	{
+    		DqmPetBase ep = (DqmPetBase)event.entityLiving;
+
+
+    		PotionEffect pe = ep.getActivePotionEffect(DQPotionPlus.potionDokukesisou);
+    		if(pe != null)
+    		{
+    			switch(pe.getAmplifier())
+    			{
+    				case 0: ep.removePotionEffect(DQPotionMinus.potionPoison.id); ep.removePotionEffect(Potion.poison.id); break;
+    				case 1: ep.removePotionEffect(DQPotionMinus.potionPoison.id); ep.removePotionEffect(Potion.wither.id); ep.removePotionEffect(Potion.poison.id); break;
+    				case 2: ep.removePotionEffect(DQPotionMinus.potionPoison.id);ep.removePotionEffect(DQPotionMinus.potionPoisonX.id); break;
+    				default: ep.removePotionEffect(DQPotionMinus.potionPoison.id);ep.removePotionEffect(DQPotionMinus.potionPoisonX.id);
+    			}
+    		}
+
+    		pe = ep.getActivePotionEffect(DQPotionPlus.potionMahounomi);
+    		if(pe != null && ep.getHealth() > 0 && !ep.isDead)
+    		{
+    			int mp = ep.getMP();
+    			if(ep.getMaxMP() < mp + (1 + (pe.getAmplifier() * 2)))
+    			{
+    				ep.setMP(ep.getMaxMP());
+    			}else
+    			{
+
+    				ep.setMP(mp + (1 + (pe.getAmplifier() * 2)));
+    			}
+    			//ep.setHealth(1.0F + (pe.getAmplifier() * 2));
+    		}
+
+    		pe = ep.getActivePotionEffect(DQPotionMinus.potionPoison);
+    		if(pe != null)
+    		{
+    			if(ep.worldObj.getWorldTime() % 20 == 0)
+    			{
+    				if((ep.getHealth() - ((pe.getAmplifier() + 1) * 2)) > 0)
+    				{
+    					ep.attackEntityFrom(DQR.damageSource.DqmPoison, ((pe.getAmplifier() + 1) * 2));
+    					//ep.setHealth(ep.getHealth() - ((pe.getAmplifier() + 1) * 2));
+    				}
+    			}
+    		}
+    		pe = ep.getActivePotionEffect(DQPotionMinus.potionPoisonX);
+    		if(pe != null)
+    		{
+    			if(ep.worldObj.getWorldTime() % 10 == 0)
+    			{
+    				if((ep.getHealth() - ((pe.getAmplifier() + 1) * 2)) > 0)
+    				{
+    					ep.attackEntityFrom(DQR.damageSource.DqmPoisonX, ((pe.getAmplifier() + 1) * 2));
+    					//ep.setHealth(ep.getHealth() - ((pe.getAmplifier() + 1) * 2));
+    				}
+    			}
+    		}
+
+    		pe = ep.getActivePotionEffect(DQPotionPlus.potionIyasinomi);
+    		if(pe != null && ep.getHealth() > 0 && !ep.isDead)
+    		{
+    			if(ep.worldObj.getWorldTime() % 10 == 0)
+    			{
+    				if(ep.getMaxHealth() < ep.getHealth() + 1.0F + (pe.getAmplifier() * 2))
+    				{
+    					ep.setHealth(ep.getMaxHealth());
+    				}else
+    				{
+    					ep.setHealth(ep.getHealth() + 1.0F + (pe.getAmplifier() * 2));
+    				}
+    			}
+    		}
+
+
+    		pe = ep.getActivePotionEffect(DQPotionPlus.potionMamorinotane);
+    		if(pe != null)
+			{
+    			ep.setArrayMamori(EnumStatDEF.seed.getId(), (pe.getAmplifier() + 1) * 5);
+			}else
+			{
+				ep.setArrayMamori(EnumStatDEF.seed.getId(), 0);
+			}
+
+    		pe = ep.getActivePotionEffect(DQPotionPlus.potionTikaranotane);
+    		if(pe != null){
+    			ep.setArrayTikara(EnumStatTikara.seed.getId(), (pe.getAmplifier() + 1) * 5);
+    		}else
+    		{
+    			ep.setArrayTikara(EnumStatTikara.seed.getId(), 0);
+    		}
+
+
+    		pe = ep.getActivePotionEffect(DQPotionPlus.potionSubayasanotane);
+    		if(pe != null){
+    			ep.setArraySubayasa(EnumStatSubayasa.seed.getId(), pe.getAmplifier() + 1);
+    		}else
+    		{
+    			ep.setArraySubayasa(EnumStatSubayasa.seed.getId(),0);
+    		}
+
+    		pe = ep.getActivePotionEffect(DQPotionPlus.buffPiora);
+    		if(pe != null){
+    			ep.setArraySubayasa(EnumStatSubayasa.buffPiora.getId(), pe.getAmplifier() + 1);
+    		}else
+    		{
+    			ep.setArraySubayasa(EnumStatSubayasa.buffPiora.getId(),0);
+    		}
+
+
+
+    		pe = ep.getActivePotionEffect(DQPotionMinus.debuffBomie);
+    		if(pe != null){
+    			ep.setArraySubayasa(EnumStatSubayasa.debuffBomie.getId(), (pe.getAmplifier() + 1) * - 1);
+    		}else
+    		{
+    			ep.setArraySubayasa(EnumStatSubayasa.debuffBomie.getId(),0);
+    		}
+
+    		pe = ep.getActivePotionEffect(DQPotionPlus.potionMaryokunotane);
+    		if(pe != null){
+    			ep.setArrayKasikosa(EnumStatKasikosa.seed.getId(), (pe.getAmplifier() + 1) * 5);
+    		}else
+    		{
+    			ep.setArrayKasikosa(EnumStatKasikosa.seed.getId(), 0);
+    		}
+
+    		pe = ep.getActivePotionEffect(DQPotionPlus.potionOugonnomi);
+    		if(pe != null)
+			{
+    			if(pe.getAmplifier() < 3)
+    			{
+    				ep.setArrayMamori(EnumStatMamori.ougon.getId(), (pe.getAmplifier() + 1) * 3);
+    				ep.setArrayTikara(EnumStatTikara.ougon.getId(), (pe.getAmplifier() + 1) * 3);
+    				ep.setArrayKasikosa(EnumStatKasikosa.ougon.getId(), (pe.getAmplifier() + 1) * 3);
+    				//ExtendedPlayerProperties.get(ep).setArrayTikara(EnumStatTikara.ougon.getId(), pe.getAmplifier());
+    			}else
+    			{
+    				ep.setArrayMamori(EnumStatMamori.ougon.getId(), (pe.getAmplifier() + 1) * 3);
+    				ep.setArrayTikara(EnumStatTikara.ougon.getId(), (pe.getAmplifier() + 1) * 3);
+    				ep.setArrayKasikosa(EnumStatKasikosa.ougon.getId(), (pe.getAmplifier() + 1) * 3);
+    				//ExtendedPlayerProperties.get(ep).setArrayTikara(EnumStatTikara.ougon.getId(), pe.getAmplifier());
+
+    	    		if(ep.getHealth() > 0 && !ep.isDead)
+    	    		{
+    	    			if(ep.worldObj.getWorldTime() % 10 == 0 && ep.getHealth() > 0 && !ep.isDead)
+    	    			{
+    	    				if(ep.getMaxHealth() < ep.getHealth() + (pe.getAmplifier() * 10))
+    	    				{
+    	    					ep.setHealth(ep.getMaxHealth());
+    	    				}else
+    	    				{
+    	    					ep.setHealth(ep.getHealth() + (pe.getAmplifier() * 10));
+    	    				}
+    	    			}
+    	    		}
+
+        			int mp = ep.getMP();
+        			if(ep.getHealth() > 0 && !ep.isDead)
+        			{
+	        			if(ep.getMaxMP() < mp + (1 + (pe.getAmplifier() * 5)))
+	        			{
+	        				ep.setMP(ep.getMaxMP());
+	        			}else
+	        			{
+
+	        				ep.setMP(mp + (1 + (pe.getAmplifier() * 5)));
+	        			}
+        			}
+    			}
+			}else
+			{
+				ep.setArrayMamori(EnumStatMamori.ougon.getId(), 0);
+				ep.setArrayTikara(EnumStatTikara.ougon.getId(), 0);
+				ep.setArrayKasikosa(EnumStatKasikosa.ougon.getId(), 0);
+				ep.setArrayTikara(EnumStatTikara.ougon.getId(), 0);
+			}
+    	}else if(event.entityLiving instanceof DqmMobBase)
+    	{
+    		DqmMobBase ep = (DqmMobBase)event.entityLiving;
+
+
+    		PotionEffect pe = ep.getActivePotionEffect(DQPotionPlus.potionDokukesisou);
+    		if(pe != null)
+    		{
+    			switch(pe.getAmplifier())
+    			{
+    				case 0: ep.removePotionEffect(DQPotionMinus.potionPoison.id); ep.removePotionEffect(Potion.poison.id); break;
+    				case 1: ep.removePotionEffect(DQPotionMinus.potionPoison.id); ep.removePotionEffect(Potion.wither.id); ep.removePotionEffect(Potion.poison.id); break;
+    				case 2: ep.removePotionEffect(DQPotionMinus.potionPoison.id);ep.removePotionEffect(DQPotionMinus.potionPoisonX.id); break;
+    				default: ep.removePotionEffect(DQPotionMinus.potionPoison.id);ep.removePotionEffect(DQPotionMinus.potionPoisonX.id);
+    			}
+    		}
+
+    		pe = ep.getActivePotionEffect(DQPotionPlus.potionMahounomi);
+    		if(pe != null && ep.getHealth() > 0 && !ep.isDead)
+    		{
+    			int mp = ep.DqmMobMP;
+    			ep.DqmMobMP = (mp + (1 + (pe.getAmplifier() * 2)));
+
+    			//ep.setHealth(1.0F + (pe.getAmplifier() * 2));
+    		}
+
+    		pe = ep.getActivePotionEffect(DQPotionMinus.potionPoison);
+    		if(pe != null)
+    		{
+    			if(ep.worldObj.getWorldTime() % 20 == 0)
+    			{
+    				if((ep.getHealth() - ((pe.getAmplifier() + 1) * 2)) > 0)
+    				{
+    					ep.attackEntityFrom(DQR.damageSource.DqmPoison, ((pe.getAmplifier() + 1) * 2));
+    					//ep.setHealth(ep.getHealth() - ((pe.getAmplifier() + 1) * 2));
+    				}
+    			}
+    		}
+    		pe = ep.getActivePotionEffect(DQPotionMinus.potionPoisonX);
+    		if(pe != null)
+    		{
+    			if(ep.worldObj.getWorldTime() % 10 == 0)
+    			{
+    				if((ep.getHealth() - ((pe.getAmplifier() + 1) * 2)) > 0)
+    				{
+    					ep.attackEntityFrom(DQR.damageSource.DqmPoisonX, ((pe.getAmplifier() + 1) * 2));
+    					//ep.setHealth(ep.getHealth() - ((pe.getAmplifier() + 1) * 2));
+    				}
+    			}
+    		}
+
+    		pe = ep.getActivePotionEffect(DQPotionPlus.potionIyasinomi);
+    		if(pe != null && ep.getHealth() > 0 && !ep.isDead)
+    		{
+    			if(ep.worldObj.getWorldTime() % 10 == 0)
+    			{
+    				if(ep.getMaxHealth() < ep.getHealth() + 1.0F + (pe.getAmplifier() * 2))
+    				{
+    					ep.setHealth(ep.getMaxHealth());
+    				}else
+    				{
+    					ep.setHealth(ep.getHealth() + 1.0F + (pe.getAmplifier() * 2));
+    				}
+    			}
+    		}
+
+    		/*
+    		pe = ep.getActivePotionEffect(DQPotionPlus.potionMamorinotane);
+    		if(pe != null)
+			{
+    			ep.setArrayMamori(EnumStatDEF.seed.getId(), (pe.getAmplifier() + 1) * 5);
+			}else
+			{
+				ep.setArrayMamori(EnumStatDEF.seed.getId(), 0);
+			}
+
+    		pe = ep.getActivePotionEffect(DQPotionPlus.potionTikaranotane);
+    		if(pe != null){
+    			ep.setArrayTikara(EnumStatTikara.seed.getId(), (pe.getAmplifier() + 1) * 5);
+    		}else
+    		{
+    			ep.setArrayTikara(EnumStatTikara.seed.getId(), 0);
+    		}
+
+
+    		pe = ep.getActivePotionEffect(DQPotionPlus.potionSubayasanotane);
+    		if(pe != null){
+    			ep.setArraySubayasa(EnumStatSubayasa.seed.getId(), pe.getAmplifier() + 1);
+    		}else
+    		{
+    			ep.setArraySubayasa(EnumStatSubayasa.seed.getId(),0);
+    		}
+
+
+    		pe = ep.getActivePotionEffect(DQPotionPlus.buffPiora);
+    		if(pe != null){
+    			ep.setArraySubayasa(EnumStatSubayasa.buffPiora.getId(), pe.getAmplifier() + 1);
+    		}else
+    		{
+    			ep.setArraySubayasa(EnumStatSubayasa.buffPiora.getId(),0);
+    		}
+
+
+    		pe = ep.getActivePotionEffect(DQPotionMinus.debuffBomie);
+    		if(pe != null){
+    			ep.setArraySubayasa(EnumStatSubayasa.debuffBomie.getId(), (pe.getAmplifier() + 1) * - 1);
+    		}else
+    		{
+    			ep.setArraySubayasa(EnumStatSubayasa.debuffBomie.getId(),0);
+    		}
+
+
+    		pe = ep.getActivePotionEffect(DQPotionPlus.potionMaryokunotane);
+    		if(pe != null){
+    			ep.setArrayKasikosa(EnumStatKasikosa.seed.getId(), (pe.getAmplifier() + 1) * 5);
+    		}else
+    		{
+    			ep.setArrayKasikosa(EnumStatKasikosa.seed.getId(), 0);
+    		}
+
+    		pe = ep.getActivePotionEffect(DQPotionPlus.potionOugonnomi);
+    		if(pe != null)
+			{
+    			if(pe.getAmplifier() < 3)
+    			{
+    				ep.setArrayMamori(EnumStatMamori.ougon.getId(), (pe.getAmplifier() + 1) * 3);
+    				ep.setArrayTikara(EnumStatTikara.ougon.getId(), (pe.getAmplifier() + 1) * 3);
+    				ep.setArrayKasikosa(EnumStatKasikosa.ougon.getId(), (pe.getAmplifier() + 1) * 3);
+    				//ExtendedPlayerProperties.get(ep).setArrayTikara(EnumStatTikara.ougon.getId(), pe.getAmplifier());
+    			}else
+    			{
+    				ep.setArrayMamori(EnumStatMamori.ougon.getId(), (pe.getAmplifier() + 1) * 3);
+    				ep.setArrayTikara(EnumStatTikara.ougon.getId(), (pe.getAmplifier() + 1) * 3);
+    				ep.setArrayKasikosa(EnumStatKasikosa.ougon.getId(), (pe.getAmplifier() + 1) * 3);
+    				//ExtendedPlayerProperties.get(ep).setArrayTikara(EnumStatTikara.ougon.getId(), pe.getAmplifier());
+
+    	    		if(ep.getHealth() > 0 && !ep.isDead)
+    	    		{
+    	    			if(ep.worldObj.getWorldTime() % 10 == 0 && ep.getHealth() > 0 && !ep.isDead)
+    	    			{
+    	    				if(ep.getMaxHealth() < ep.getHealth() + (pe.getAmplifier() * 10))
+    	    				{
+    	    					ep.setHealth(ep.getMaxHealth());
+    	    				}else
+    	    				{
+    	    					ep.setHealth(ep.getHealth() + (pe.getAmplifier() * 10));
+    	    				}
+    	    			}
+    	    		}
+
+        			int mp = ep.getMP();
+        			if(ep.getHealth() > 0 && !ep.isDead)
+        			{
+	        			if(ep.getMaxMP() < mp + (1 + (pe.getAmplifier() * 5)))
+	        			{
+	        				ep.setMP(ep.getMaxMP());
+	        			}else
+	        			{
+
+	        				ep.setMP(mp + (1 + (pe.getAmplifier() * 5)));
+	        			}
+        			}
+    			}
+			}else
+			{
+				ep.setArrayMamori(EnumStatMamori.ougon.getId(), 0);
+				ep.setArrayTikara(EnumStatTikara.ougon.getId(), 0);
+				ep.setArrayKasikosa(EnumStatKasikosa.ougon.getId(), 0);
+				ep.setArrayTikara(EnumStatTikara.ougon.getId(), 0);
+			}
+			*/
     	}
 
 	}

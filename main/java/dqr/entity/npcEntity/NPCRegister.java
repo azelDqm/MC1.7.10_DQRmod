@@ -4,6 +4,7 @@ import cpw.mods.fml.common.registry.EntityRegistry;
 import dqr.DQR;
 import dqr.entity.npcEntity.npc.DqmEntityNPCBank;
 import dqr.entity.npcEntity.npc.DqmEntityNPCBukiya;
+import dqr.entity.npcEntity.npc.DqmEntityNPCGuntai;
 import dqr.entity.npcEntity.npc.DqmEntityNPCKaitoriya;
 import dqr.entity.npcEntity.npc.DqmEntityNPCMedalking;
 import dqr.entity.npcEntity.npc.DqmEntityNPCSinkan;
@@ -33,5 +34,6 @@ public class NPCRegister {
 		EntityRegistry.registerModEntity(DqmEntityNPCSinkan3.class, "NPCSinkan3", idxID + 6, DQR.instance, 250, 1, false);
 		EntityRegistry.registerModEntity(DqmEntityNPCMedalking.class, "NPCMedalking", idxID + 7, DQR.instance, 250, 1, false);
 
+		EntityRegistry.registerModEntity(DqmEntityNPCGuntai.class, "NPCGuntai", idxID + 8, DQR.instance, 250, 1, false);
 	}
 }

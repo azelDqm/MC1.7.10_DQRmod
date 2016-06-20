@@ -10,8 +10,16 @@ import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import dqr.DQR;
 import dqr.api.Items.DQMagicTools;
+import dqr.api.enums.EnumDqmJob;
 import dqr.api.enums.EnumDqmMGToolMode;
+import dqr.api.enums.EnumDqmWeaponMode;
 import dqr.items.base.DqmItemWeaponBase;
+import dqr.items.magic.DqmItemMagicRura;
+import dqr.items.magic.DqmItemMagicRura2;
+import dqr.items.magic.DqmItemMagicRuraC;
+import dqr.items.miscs.DqmItemKimera;
+import dqr.items.miscs.DqmItemKimera2;
+import dqr.items.miscs.DqmItemKimeraC;
 import dqr.playerData.ExtendedPlayerProperties;
 import dqr.playerData.ExtendedPlayerProperties2;
 
@@ -161,38 +169,161 @@ public class MessageServerMGToolModeHandler implements IMessageHandler<MessageSe
         		}
 
         		ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
-        	}else if(its.getItem() instanceof DqmItemWeaponBase)
+        	}else if(its.getItem() instanceof DqmItemMagicRura ||
+        			 its.getItem() instanceof DqmItemMagicRura2 ||
+        			 its.getItem() instanceof DqmItemMagicRuraC)
+        	{
+        		//ルーラの制御切り替え
+
+        		int itemMode = ExtendedPlayerProperties.get(ep).getWeaponMode(EnumDqmWeaponMode.WEAPONMODE_RURA.getId());
+        		int jobLvMag = ExtendedPlayerProperties.get(ep).getJobLv(EnumDqmJob.Mahoutukai.getId());
+        		int jobLvSag = ExtendedPlayerProperties.get(ep).getJobLv(EnumDqmJob.Kenja.getId());
+        		int setIdx = 0;
+        		itemMode = itemMode + 1;
+
+        		if(itemMode == EnumDqmMGToolMode.RURAMODE10.getId())
+        		{
+        			setIdx = EnumDqmMGToolMode.RURAMODE10.getId();
+        		}else
+        		{
+        			setIdx = EnumDqmMGToolMode.RURAMODE0.getId();
+        		}
+        			/*
+        		}else if(itemMode == EnumDqmMGToolMode.RURAMODE25.getId())
+        		{
+        			if(jobLvMag >= 25 || jobLvSag >= 25)
+        			{
+        				setIdx = EnumDqmMGToolMode.RURAMODE25.getId();
+        			}else
+        			{
+        				setIdx = EnumDqmMGToolMode.RURAMODE0.getId();
+        			}
+        		}else if(itemMode == EnumDqmMGToolMode.RURAMODE40.getId())
+        		{
+        			if(jobLvMag >= 40 || jobLvSag >= 40)
+        			{
+        				setIdx = EnumDqmMGToolMode.RURAMODE40.getId();
+        			}else
+        			{
+        				setIdx = EnumDqmMGToolMode.RURAMODE0.getId();
+        			}
+        		}else
+        		{
+        			setIdx = EnumDqmMGToolMode.RURAMODE0.getId();
+        		}
+        		*/
+
+        		ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
+        		ep.addChatMessage(new ChatComponentTranslation("msg.rura.modeInfo." + setIdx + ".txt", new Object[] {}));
+        		ExtendedPlayerProperties.get(ep).setWeaponMode(EnumDqmWeaponMode.WEAPONMODE_RURA.getId(), setIdx);
+        	}else if(its.getItem() instanceof DqmItemKimera ||
+       			 its.getItem() instanceof DqmItemKimera2 ||
+       			 its.getItem() instanceof DqmItemKimeraC)
+	       	{
+	       		//キメラの制御切り替え
+
+	       		int itemMode = ExtendedPlayerProperties.get(ep).getWeaponMode(EnumDqmWeaponMode.WEAPONMODE_KIMERA.getId());
+	       		int setIdx = 0;
+	       		itemMode = itemMode + 1;
+
+	       		if(itemMode == EnumDqmMGToolMode.RURAMODE10.getId())
+	       		{
+	       			setIdx = EnumDqmMGToolMode.RURAMODE10.getId();
+	       		}else
+	       		{
+	       			setIdx = EnumDqmMGToolMode.RURAMODE0.getId();
+	       		}
+	       			/*
+	       		}else if(itemMode == EnumDqmMGToolMode.RURAMODE25.getId())
+	       		{
+	       			if(jobLvMag >= 25 || jobLvSag >= 25)
+	       			{
+	       				setIdx = EnumDqmMGToolMode.RURAMODE25.getId();
+	       			}else
+	       			{
+	       				setIdx = EnumDqmMGToolMode.RURAMODE0.getId();
+	       			}
+	       		}else if(itemMode == EnumDqmMGToolMode.RURAMODE40.getId())
+	       		{
+	       			if(jobLvMag >= 40 || jobLvSag >= 40)
+	       			{
+	       				setIdx = EnumDqmMGToolMode.RURAMODE40.getId();
+	       			}else
+	       			{
+	       				setIdx = EnumDqmMGToolMode.RURAMODE0.getId();
+	       			}
+	       		}else
+	       		{
+	       			setIdx = EnumDqmMGToolMode.RURAMODE0.getId();
+	       		}
+	       		*/
+
+	       		ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
+	       		ep.addChatMessage(new ChatComponentTranslation("msg.rura.modeInfo." + setIdx + ".txt", new Object[] {}));
+	       		ExtendedPlayerProperties.get(ep).setWeaponMode(EnumDqmWeaponMode.WEAPONMODE_KIMERA.getId(), setIdx);
+	       	}
+        	else if(its.getItem() instanceof DqmItemWeaponBase)
         	{
         		DqmItemWeaponBase weapon = (DqmItemWeaponBase) its.getItem();
 
     			int idx = 0;
     			if(weapon.getMaterial() == DQR.dqmMaterial.DqmAxe)
     			{
-    				idx = 1;
+    				idx = EnumDqmWeaponMode.WEAPONMODE_AXE.getId();
     			}else if(weapon.getMaterial() == DQR.dqmMaterial.DqmHammer0 || weapon.getMaterial() == DQR.dqmMaterial.DqmHammer1 || weapon.getMaterial() == DQR.dqmMaterial.DqmHammer2 || weapon.getMaterial() == DQR.dqmMaterial.DqmHammer3)
     			{
-    				idx = 2;
+    				idx = EnumDqmWeaponMode.WEAPONMODE_HAMMER.getId();
     			}else if(weapon.getMaterial() == DQR.dqmMaterial.DqmClaw)
     			{
-    				idx = 3;
+    				idx = EnumDqmWeaponMode.WEAPONMODE_CLAW.getId();
     			}
 
     			if(idx != 0)
     			{
 	    			int itemMode = ExtendedPlayerProperties.get(ep).getWeaponMode(idx);
 
-	    			if(itemMode == 0)
+	    			if(idx == EnumDqmWeaponMode.WEAPONMODE_AXE.getId())
 	    			{
-	    				ExtendedPlayerProperties.get(ep).setWeaponMode(idx, -1);
-	    				ep.addChatMessage(new ChatComponentTranslation("msg.weapon.modeInfo." + idx + ".-1.txt", new Object[] {}));
+		    			if(itemMode == 2)
+		    			{
+		    				ExtendedPlayerProperties.get(ep).setWeaponMode(idx, -1);
+		    				ep.addChatMessage(new ChatComponentTranslation("msg.weapon.modeInfo." + idx + ".-1.txt", new Object[] {}));
+		    			}else
+		    			{
+		    				ExtendedPlayerProperties.get(ep).setWeaponMode(idx, itemMode + 1);
+		    				ep.addChatMessage(new ChatComponentTranslation("msg.weapon.modeInfo." + idx + "." + (itemMode + 1) +".txt", new Object[] {}));
+		    			}
 	    			}else
 	    			{
-	    				ExtendedPlayerProperties.get(ep).setWeaponMode(idx, 0);
-	    				ep.addChatMessage(new ChatComponentTranslation("msg.weapon.modeInfo." + idx + ".0.txt", new Object[] {}));
+		    			if(itemMode == 0)
+		    			{
+		    				ExtendedPlayerProperties.get(ep).setWeaponMode(idx, -1);
+		    				ep.addChatMessage(new ChatComponentTranslation("msg.weapon.modeInfo." + idx + ".-1.txt", new Object[] {}));
+		    			}else
+		    			{
+		    				ExtendedPlayerProperties.get(ep).setWeaponMode(idx, 0);
+		    				ep.addChatMessage(new ChatComponentTranslation("msg.weapon.modeInfo." + idx + ".0.txt", new Object[] {}));
+		    			}
 	    			}
 
 	    			ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
     			}
+        	}else if(its.getItem() == DQMagicTools.itemMagicToolSet)
+        	{
+        		int mode = ExtendedPlayerProperties2.get(ep).getBlockSetMode();
+        		//String seedMode = "";
+
+        		if(mode == EnumDqmMGToolMode.MGSET_SET.getId())
+        		{
+        			ExtendedPlayerProperties2.get(ep).setBlockSetMode(EnumDqmMGToolMode.MGSET_STORE.getId());
+
+        		}else if(mode == EnumDqmMGToolMode.MGSET_STORE.getId())
+        		{
+        			ExtendedPlayerProperties2.get(ep).setBlockSetMode(EnumDqmMGToolMode.MGSET_SET.getId());
+        		}
+
+        		ep.addChatMessage(new ChatComponentTranslation("msg.magictool.set.mode." + ExtendedPlayerProperties2.get(ep).getBlockSetMode() + ".txt"));
+        		ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
         	}else if(its.getItem() == DQMagicTools.itemMagicToolBreak1)
         	{
         		int mode = ExtendedPlayerProperties2.get(ep).getToolBreak1mode();

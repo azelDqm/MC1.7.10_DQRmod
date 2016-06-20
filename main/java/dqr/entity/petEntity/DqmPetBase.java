@@ -132,7 +132,7 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
     public String ownerName;
     public EnumDqmPet type;
 
-
+    private boolean onLevelThread = false;
 
     private EntityAIOwnerHurtByTarget aiOwnerHurtByTarget =  new EntityAIOwnerHurtByTarget(this);
     private EntityAIOwnerHurtTarget aiOwnerHurtTarget =  new EntityAIOwnerHurtTarget(this);
@@ -145,6 +145,7 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 	public DqmPetBase(World par1, EnumDqmPet type) {
         super(par1);
         this.type = type;
+        this.MaxHP = type.getHpdef();
         this.setSize(0.6F, 1.8F);
         this.getNavigator().setAvoidsWater(true);
         this.sampleItemStack = new ItemStack(Items.wooden_sword, 1);
@@ -160,6 +161,9 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
         if(this.getHealth() > 0.5F && this.isTamed() && !this.isSitting())
         {
         	this.setCombatTasks();
+        }else
+        {
+        	this.tasks.addTask(2, this.aiSit);
         }
 	}
 
@@ -182,18 +186,21 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 
     public void clearTasks()
     {
-//    	System.out.println("戦闘モードを解除しました");
+//    	//System.out.println("戦闘モードを解除しました");
     	for(int cnt = 0; cnt < this.tasks.taskEntries.size(); cnt++)
     	{
             EntityAITasks.EntityAITaskEntry entityaitaskentry = (EntityAITasks.EntityAITaskEntry)this.tasks.taskEntries.get(cnt);
             EntityAIBase entityaibase1 = entityaitaskentry.action;
     		this.tasks.removeTask(entityaibase1);
     	}
+
+    	this.setAttackTarget((EntityLivingBase)null);
+    	this.tasks.addTask(2, this.aiSit);
     }
 
     public void setCombatTasks()
     {
-//    	System.out.println("戦闘モードに切り替えました");
+    	//System.out.println("戦闘モードに切り替えました");
         this.tasks.addTask(1, new EntityAISwimming(this));
         this.tasks.addTask(2, this.aiSit);
         this.tasks.addTask(3, new EntityAILeapAtTarget(this, 0.4F));
@@ -510,8 +517,19 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
             p_70665_2_ = this.applyArmorCalculations(p_70665_1_, p_70665_2_);
             p_70665_2_ = this.applyPotionDamageCalculations(p_70665_1_, p_70665_2_);
 
+
+
+            //ダメージ0の場合にランダムで補正
+            if(p_70665_2_ < 0.5F)
+            {
+            	if(rand.nextInt(5) == 0)
+            	{
+            		p_70665_2_ = rand.nextFloat() * 2;
+            	}
+            }
+
             //耐性計算
-            p_70665_2_ = DQR.calcDamage.applyDamageResist(p_70665_2_, this, p_70665_1_);
+            p_70665_2_ = DQR.calcDamage.applyDamageResistMagic(p_70665_2_, this, p_70665_1_);
 
             float f1 = p_70665_2_;
             p_70665_2_ = Math.max(p_70665_2_ - this.getAbsorptionAmount(), 0.0F);
@@ -545,14 +563,21 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 
     public void setTamed(boolean p_70903_1_)
     {
-//        System.out.println("TEST1" + this.getHealth());
+//        //System.out.println("TEST1" + this.getHealth());
 
 
         if (p_70903_1_)
         {
             //this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(20.0D);
         	//System.out.println("CAAAA:" + this.getMaxHP() + " / " + this.getMaxHealth());
-        	this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(this.getMaxHP());
+        	if(this.getMaxHP() < type.HPDEF)
+        	{
+        		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(type.HPDEF);
+        		this.setMaxHP(type.HPDEF);
+        	}else
+        	{
+        		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(this.getMaxHP());
+        	}
         	this.setHealth(this.getMaxHP());
         }
         else
@@ -562,8 +587,17 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
         	{
         		//System.out.println("LINE1");
         		//System.out.println("BAAAA:" + this.getMaxHP() + " / " + this.getMaxHealth());
-        		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(this.getMaxHP());
-        		this.setHealth(this.getMaxHP());
+        		//this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(this.getMaxHP());
+        		//this.setHealth(this.getMaxHP());
+            	if(this.getMaxHP() < type.HPDEF)
+            	{
+            		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(type.HPDEF);
+            		this.setMaxHP(type.HPDEF);
+            	}else
+            	{
+            		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(this.getMaxHP());
+            	}
+            	this.setHealth(this.getMaxHP());
         	}else
         	{
         		//System.out.println("AAAAA:" + this.getMaxHP() + " / " + this.getMaxHealth());
@@ -652,8 +686,9 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 
 	            			return false;
 	            		}
-	            		pe = ep.getActivePotionEffect(DQPotionMinus.debuffRariho);
-	            		if(pe != null && ep.worldObj.isRemote)
+	            		//pe = this.getActivePotionEffect(DQPotionMinus.debuffRariho);
+	            		//if(pe != null && this.worldObj.isRemote)
+	            		if(DQR.func.isBind(this))
 	            		{
 	            			ep.addChatMessage(new ChatComponentTranslation("msg.magic.rariho.txt",new Object[] {}));
 	            			ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
@@ -840,17 +875,20 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 	                        }
 
 	                        //vrtyhuvbjeytg
-	                        if(chestOn)
+	                        if(!ep.worldObj.isRemote)
 	                        {
-		                        InventoryPetInventory inventory = new InventoryPetInventory(this);
-		                        inventory.openInventory();
-
-		                        for(int cnt = 0; cnt < inventory.getSizeInventory(); cnt++)
+		                        if(chestOn)
 		                        {
-		                        	if(inventory.getStackInSlot(cnt) != null)
-		                        	{
-		                        		this.entityDropItem(inventory.getStackInSlot(cnt), 0.0F);
-		                        	}
+			                        InventoryPetInventory inventory = new InventoryPetInventory(this);
+			                        inventory.openInventory();
+
+			                        for(int cnt = 0; cnt < inventory.getSizeInventory(); cnt++)
+			                        {
+			                        	if(inventory.getStackInSlot(cnt) != null)
+			                        	{
+			                        		this.entityDropItem(inventory.getStackInSlot(cnt), 0.0F);
+			                        	}
+			                        }
 		                        }
 	                        }
 
@@ -906,11 +944,21 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 	                        		this.setHealth(this.getMaxHealth());
 	                        	}
 
-	    	        	  		ep.addChatMessage(new ChatComponentTranslation("msg.pet.status1.txt",new Object[] {petName, ownerName,
-	    								  this.getJobLv(this.getJob()),
-	    								  this.getJobExp(this.getJob()),DQR.exp.getNeedExpPet(this.getJob(), this),
-	    								  (int)(this.getHealth()), (int)(this.getMaxHealth()),
-	    								  this.getMP(), this.getMaxMP()}));
+	                        	if(DQR.exp.getNextExpPet(this.getJobLv(this.getJob()), this) <= 0)
+	                        	{
+		    	        	  		ep.addChatMessage(new ChatComponentTranslation("msg.pet.status1MAX.txt",new Object[] {petName, ownerName,
+		    								  this.getJobLv(this.getJob()),
+		    								  this.getJobExp(this.getJob()),DQR.exp.getNextExpPet(this.getJob(), this),
+		    								  (int)(this.getHealth()), (int)(this.getMaxHealth()),
+		    								  this.getMP(), this.getMaxMP()}));
+	                        	}else
+	                        	{
+		    	        	  		ep.addChatMessage(new ChatComponentTranslation("msg.pet.status1.txt",new Object[] {petName, ownerName,
+		    								  this.getJobLv(this.getJob()),
+		    								  this.getJobExp(this.getJob()),DQR.exp.getNextExpPet(this.getJob(), this),
+		    								  (int)(this.getHealth()), (int)(this.getMaxHealth()),
+		    								  this.getMP(), this.getMaxMP()}));
+	                        	}
 
 	    	        	  		ep.addChatMessage(new ChatComponentTranslation("msg.pet.status2.txt",new Object[] {this.getKougeki(),
 	    								  this.getBougyo(), this.getTotalArmorValue(),
@@ -953,12 +1001,21 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 	                        	{
 	                        		this.setHealth(this.getMaxHealth());
 	                        	}
-
-	    	        	  		ep.addChatMessage(new ChatComponentTranslation("msg.pet.status1.txt",new Object[] {petName, ownerName,
-	    								  this.getJobLv(this.getJob()),
-	    								  this.getJobExp(this.getJob()),DQR.exp.getNeedExpPet(this.getJob(), this),
-	    								  (int)(this.getHealth()), (int)(this.getMaxHealth()),
-	    								  this.getMP(), this.getMaxMP()}));
+	                        	if(DQR.exp.getNextExpPet(this.getJobLv(this.getJob()), this) <= 0)
+	                        	{
+		    	        	  		ep.addChatMessage(new ChatComponentTranslation("msg.pet.status1MAX.txt",new Object[] {petName, ownerName,
+		    								  this.getJobLv(this.getJob()),
+		    								  this.getJobExp(this.getJob()),DQR.exp.getNextExpPet(this.getJob(), this),
+		    								  (int)(this.getHealth()), (int)(this.getMaxHealth()),
+		    								  this.getMP(), this.getMaxMP()}));
+	                        	}else
+	                        	{
+		    	        	  		ep.addChatMessage(new ChatComponentTranslation("msg.pet.status1MAX.txt",new Object[] {petName, ownerName,
+		    								  this.getJobLv(this.getJob()),
+		    								  this.getJobExp(this.getJob()),DQR.exp.getNextExpPet(this.getJob(), this),
+		    								  (int)(this.getHealth()), (int)(this.getMaxHealth()),
+		    								  this.getMP(), this.getMaxMP()}));
+	                        	}
 
 	    	        	  		ep.addChatMessage(new ChatComponentTranslation("msg.pet.status2.txt",new Object[] {this.getKougeki(),
 	    								  this.getBougyo(), this.getTotalArmorValue(),
@@ -1009,16 +1066,16 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 
 	                        if(petData != null)
 	                        {
-	                        	System.out.println("TEST1:NOTNULL:" + petData.hasNoTags());
+	                        	//System.out.println("TEST1:NOTNULL:" + petData.hasNoTags());
 	                	        Object[] type = petData.func_150296_c().toArray();
 
 	                	        for(int cnt = 0; cnt < type.length; cnt++)
 	                	        {
-	                	            System.out.println("TEST:" + (String)type[cnt]);
+	                	            //System.out.println("TEST:" + (String)type[cnt]);
 	                	        }
 	                        }else
 	                        {
-	                        	System.out.println("TEST1:NULLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL");
+	                        	//System.out.println("TEST1:NULLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL");
 	                        }
 							*/
 	                		//System.out.println("TEST1:XXXXXXXXXXXXXXXXXXXXXX");
@@ -1037,15 +1094,24 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 
                 	}else
                 	{
-<<<<<<< HEAD
                     	if(!ep.worldObj.isRemote)
                     	{
-    	        	  		ep.addChatMessage(new ChatComponentTranslation("msg.pet.status1.txt",new Object[] {petName, ownerName,
+                    		if(DQR.exp.getNextExpPet(this.getJobLv(this.getJob()), this) <= 0)
+                    		{
+    	        	  		ep.addChatMessage(new ChatComponentTranslation("msg.pet.status1MAX.txt",new Object[] {petName, ownerName,
     	        	  																						  this.getJobLv(this.getJob()),
-    	        	  																						  this.getJobExp(this.getJob()),DQR.exp.getNextExpPet2(this.getJobLv(this.getJob()), this),
+    	        	  																						  this.getJobExp(this.getJob()),DQR.exp.getNextExpPet(this.getJobLv(this.getJob()), this),
     	        	  																						  (int)(this.getHealth()), (int)(this.getMaxHealth()),
     	        	  																						  this.getMP(), this.getMaxMP()}));
+                    		}else
+                    		{
+        	        	  		ep.addChatMessage(new ChatComponentTranslation("msg.pet.status1.txt",new Object[] {petName, ownerName,
+        	        	  																						   this.getJobLv(this.getJob()),
+        	        	  																						   this.getJobExp(this.getJob()),DQR.exp.getNextExpPet(this.getJobLv(this.getJob()), this),
+        	        	  																						   (int)(this.getHealth()), (int)(this.getMaxHealth()),
+        	        	  																						   this.getMP(), this.getMaxMP()}));
 
+                    		}
     	        	  		ep.addChatMessage(new ChatComponentTranslation("msg.pet.status2.txt",new Object[] {this.getKougeki(),
     																										  this.getBougyo(), this.getTotalArmorValue(),
     																										  this.getMaryoku(),
@@ -1056,28 +1122,12 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
     	            		ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
 
                     	}
-=======
-	        	  		ep.addChatMessage(new ChatComponentTranslation("msg.pet.status1.txt",new Object[] {petName, ownerName,
-	        	  																						  this.getJobLv(this.getJob()),
-	        	  																						  this.getJobExp(this.getJob()),DQR.exp.getNextExpPet(this.getJobLv(this.getJob()), this),
-	        	  																						  (int)(this.getHealth()), (int)(this.getMaxHealth()),
-	        	  																						  this.getMP(), this.getMaxMP()}));
-
-	        	  		ep.addChatMessage(new ChatComponentTranslation("msg.pet.status2.txt",new Object[] {this.getKougeki(),
-																										  this.getBougyo(), this.getTotalArmorValue(),
-																										  this.getMaryoku(),
-																										  this.getTikara(),
-																										  this.getMikawasi(),
-																										  this.getKasikosa()}));
-
-	            		ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
->>>>>>> parent of 2aede75... ver0.8.7.8
                 	}
                 }
                 /*
                 else if(itemstack.getItem() == DQMiscs.itemAkaisango)
                 {
-                	System.out.println("HP:" + this.getHealth());
+                	//System.out.println("HP:" + this.getHealth());
                 }
                 */
             }
@@ -1157,7 +1207,7 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 	            }
 
 	            /*
-	            System.out.println("TEST3");
+	            //System.out.println("TEST3");
                 this.openGUI(p_70085_1_);
                 return true;
                 */
@@ -1231,7 +1281,7 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 //System.out.println("TEST1");
 		                    String s = PreYggdrasilConverter.func_152719_a(this.ownerName);
 		                    this.ownerUUID = s;
-//		                    System.out.println("HP????" + type.HPDEF);
+		                    //System.out.println("HP????" + type.HPDEF);
 		                    this.setMaxHP(type.HPDEF);
 		                    this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(type.HPDEF);
 		                    this.setMaxMP(type.MPDEF);
@@ -1243,6 +1293,7 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 		                    //this.func_110226_cD();
 		                    this.setPathToEntity((PathEntity)null);
 		                    this.setAttackTarget((EntityLivingBase)null);
+		                    this.tasks.addTask(2, this.aiSit);
 		                    this.aiSit.setSitting(true);
 		                    this.setHealth(20.0F);
 		                    this.func_152115_b(ep.getUniqueID().toString());
@@ -1283,7 +1334,16 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
         {
             //this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(20.0D);
         	//System.out.println("DAAAA:" + this.getMaxHP() + " / " + this.getMaxHealth());
-        	this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(this.getMaxHP());
+        	//this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(this.getMaxHP());
+        	if(this.getMaxHP() < type.HPDEF)
+        	{
+        		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(type.HPDEF);
+        		this.setMaxHP(type.HPDEF);
+        	}else
+        	{
+        		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(this.getMaxHP());
+        	}
+        	this.setHealth(this.getMaxHP());
         }
         else
         {
@@ -1291,7 +1351,16 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
         	if(this.getMaxHP() > 0)
         	{
         		//System.out.println("EAAAA:" + this.getMaxHP() + " / " + this.getMaxHealth());
-        		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(this.getMaxHP());
+        		//this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(this.getMaxHP());
+            	if(this.getMaxHP() < type.HPDEF)
+            	{
+            		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(type.HPDEF);
+            		this.setMaxHP(type.HPDEF);
+            	}else
+            	{
+            		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(this.getMaxHP());
+            	}
+            	this.setHealth(this.getMaxHP());
         	}else
         	{
         		//System.out.println("FAAAA:" + this.getMaxHP() + " / " + this.getMaxHealth());
@@ -1940,7 +2009,7 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
     {
         if (!this.worldObj.isRemote)
         {
-        	System.out.println("TEST2");
+        	//System.out.println("TEST2");
             this.horseChest.func_110133_a(this.getCommandSenderName());
             p_110199_1_.displayGUIHorse(new EntityHorse(p_110199_1_.worldObj), this.horseChest);
         }
@@ -2421,6 +2490,12 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
         this.weapon = par1;
     }
 
+    public boolean getOnLevelThread() {
+        return onLevelThread;
+    }
+    public void setOnLevelThread(boolean par1) {
+        this.onLevelThread = par1;
+    }
 
     public double[] getRarihoLoc() {
         return rarihoLoc;

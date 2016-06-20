@@ -23,6 +23,13 @@ public class DqmWorldGenSword implements IWorldGenerator
         int x = par1 * 16 + rand.nextInt(16);
         int z = par2 * 16 + rand.nextInt(16);
         int y;
+
+        if(!DQR.conf.cfg_gen_Sword_Map.containsKey((int)par3World.provider.dimensionId))
+        {
+        	return;
+        }
+
+
         if(par3World.provider.dimensionId == -1)
         {
         	if(rand.nextInt(2) == 0)

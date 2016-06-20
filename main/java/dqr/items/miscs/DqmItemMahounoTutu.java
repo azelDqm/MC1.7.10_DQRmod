@@ -11,7 +11,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.pathfinding.PathEntity;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.management.PreYggdrasilConverter;
+import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -65,54 +67,70 @@ public class DqmItemMahounoTutu extends DqmItemMiscBase{
 		   par3World.isAirBlock(p_77648_4_, p_77648_5_ + 2, p_77648_6_))
 		{
 
-			Random rand = new Random();
-			--par1ItemStack.stackSize;
-			if(rand.nextInt(4) == 0)
-			{
-				ep.inventory.mainInventory[ep.inventory.currentItem] = new ItemStack(DQMiscs.ItemMahounoTutu01B, 1);
-			}else
-			{
-				ep.inventory.mainInventory[ep.inventory.currentItem] = new ItemStack(DQMiscs.ItemMahounoTutu01, 1);
-			}
-			//ep.inventory.currentItem
+        	int petCount = ExtendedPlayerProperties3.get(ep).getPetCount();
 
-			par3World.playSoundAtEntity(ep, "dqr:mob.inoti", 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
+        	boolean flg = false;
+        	if(!par3World.isRemote)
+        	{
+        		flg = MinecraftServer.getServer().getConfigurationManager().func_152596_g(ep.getGameProfile());
+        	}
 
-			NBTTagCompound nbt = par1ItemStack.getTagCompound();
+        	if(DQR.conf.petLimitPlayer == 0 || petCount < DQR.conf.petLimit || (flg && DQR.conf.petLimitPlayer == 1))
+        	{
+				Random rand = new Random();
+				--par1ItemStack.stackSize;
+				if(rand.nextInt(4) == 0)
+				{
+					ep.inventory.mainInventory[ep.inventory.currentItem] = new ItemStack(DQMiscs.ItemMahounoTutu01B, 1);
+				}else
+				{
+					ep.inventory.mainInventory[ep.inventory.currentItem] = new ItemStack(DQMiscs.ItemMahounoTutu01, 1);
+				}
+				//ep.inventory.currentItem
 
-			if(nbt != null)
-			{
-				String mobBaseName = nbt.getString("PetBaseName");
-				nbt.setString("OwnerUUID", ep.getUniqueID().toString());
+				par3World.playSoundAtEntity(ep, "dqr:mob.inoti", 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
 
-				DqmPetBase entityPet = (DqmPetBase)EntityList.createEntityByName(mobBaseName, par3World);
-				//entityPet.writeToNBT(nbt);
-				entityPet = setNBT(nbt, entityPet, ep);
+				NBTTagCompound nbt = par1ItemStack.getTagCompound();
 
-				entityPet.setTamed(true);
-				entityPet.ownerName = ep.getCommandSenderName();
+				if(nbt != null)
+				{
+					String mobBaseName = nbt.getString("PetBaseName");
+					nbt.setString("OwnerUUID", ep.getUniqueID().toString());
 
-                String s = null;
+					DqmPetBase entityPet = (DqmPetBase)EntityList.createEntityByName(mobBaseName, par3World);
 
-                if(!ep.worldObj.isRemote)
-                {
-                	s = PreYggdrasilConverter.func_152719_a(ep.getCommandSenderName());
-		            if(s == null || s.equalsIgnoreCase("") || s.length() == 0)
-		            {
-		            	entityPet.ownerUUID = s;
-		            }
-                }
+					//entityPet.writeToNBT(nbt);
+					entityPet = setNBT(nbt, entityPet, ep);
 
-                if(!ep.worldObj.isRemote)
-                {
-                	entityPet.setLocationAndAngles((double)p_77648_4_ + 0.5D, (double)p_77648_5_ + 1.5D, (double)p_77648_6_ + 0.5D, 0.0F, 0.0F);
-                	par3World.spawnEntityInWorld(entityPet);
+					entityPet.setTamed(true);
+					entityPet.ownerName = ep.getCommandSenderName();
 
-                    ExtendedPlayerProperties3.get(ep).plusPetCount(1);
-                    DQR.petFunc.setNewPetdata(entityPet);
-                }
+	                String s = null;
 
-			}
+	                if(!ep.worldObj.isRemote)
+	                {
+	                	s = PreYggdrasilConverter.func_152719_a(ep.getCommandSenderName());
+			            if(s == null || s.equalsIgnoreCase("") || s.length() == 0)
+			            {
+			            	entityPet.ownerUUID = s;
+			            }
+	                }
+
+	                if(!ep.worldObj.isRemote)
+	                {
+	                	entityPet.setLocationAndAngles((double)p_77648_4_ + 0.5D, (double)p_77648_5_ + 1.5D, (double)p_77648_6_ + 0.5D, 0.0F, 0.0F);
+	                	par3World.spawnEntityInWorld(entityPet);
+
+	                    ExtendedPlayerProperties3.get(ep).plusPetCount(1);
+	                    DQR.petFunc.setNewPetdata(entityPet);
+	                }
+
+				}
+        	}else
+        	{
+        		ep.addChatMessage(new ChatComponentTranslation("msg.petTame.maxnumber.txt",new Object[] {}));
+        		ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
+        	}
 
 			return true;
 

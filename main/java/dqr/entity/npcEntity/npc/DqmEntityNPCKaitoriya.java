@@ -241,7 +241,7 @@ public class DqmEntityNPCKaitoriya extends DqmNPCBase
     			ExtendedPlayerProperties.get(ep).setNpcTalk(EnumDqmNpcTalk.KAITORI.getId(), 1);
     		}else if(flg == 1)
     		{
-//    			System.out.println(ep.inventory.getCurrentItem().getDisplayName());
+    			//System.out.println(ep.inventory.getCurrentItem().getDisplayName());
     			ItemStack its = ep.inventory.getCurrentItem();
     			int syuuriPrice = DQR.kaitoriPrice.Gold(its);
     			if(syuuriPrice >= 0)

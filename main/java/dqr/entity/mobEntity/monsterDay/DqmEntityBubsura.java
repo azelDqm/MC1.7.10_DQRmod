@@ -41,7 +41,6 @@ public class DqmEntityBubsura extends DqmMobBaseDay
 
 		this.experienceValue = this.monsterType.getXPS();
 		*/
-
 	}
 
 	/*

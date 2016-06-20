@@ -267,7 +267,7 @@ public class DqmBlockBed3 extends BlockContainer
                     {
                         if (p_149977_4_ <= 0)
                         {
-                        	System.out.println(l2 + "/" + p_149977_2_ + "/" + i3);
+                        	//System.out.println(l2 + "/" + p_149977_2_ + "/" + i3);
                             return new ChunkCoordinates(l2, p_149977_2_, i3);
                         }
 

@@ -82,12 +82,12 @@ public class GuiPetInventoryContainer extends Container
                 }
             }
             //シフトクリック時に、このアイテムだったら動かさない。
-            /*
-            else if(slot.getStack() != null && slot.getStack().getItem() == InventoryItemCore.instance.inventoryItem)
-            {
-                return null;
-            }
-            */
+            //
+            //else if(slot.getStack() != null && slot.getStack().getItem() == InventoryItemCore.instance.inventoryItem)
+            //{
+            //    return null;
+            //}
+
             else if (!this.mergeItemStack(itemstack1, 0, this.inventory.getSizeInventory(), false))
             {
                 return null;

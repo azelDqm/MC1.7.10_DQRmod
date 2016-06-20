@@ -6,16 +6,17 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.world.World;
 import dqr.DQR;
 import dqr.api.enums.EnumColor;
+import dqr.api.enums.EnumDqmMGToolMode;
 import dqr.api.enums.EnumDqmMagic;
+import dqr.api.enums.EnumDqmWeaponMode;
 import dqr.api.event.DqrRuraEvent;
-import dqr.api.potion.DQPotionMinus;
 import dqr.items.base.DqmItemMiscBase;
+import dqr.playerData.ExtendedPlayerProperties;
 
 public class DqmItemKimeraC extends DqmItemMiscBase{
 
@@ -32,9 +33,7 @@ public class DqmItemKimeraC extends DqmItemMiscBase{
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
 
-		PotionEffect pe;
-		pe = par3EntityPlayer.getActivePotionEffect(DQPotionMinus.debuffRariho);
-		if(pe != null && par3EntityPlayer.worldObj.isRemote)
+    	if(DQR.func.isBind(par3EntityPlayer) && par3EntityPlayer.worldObj.isRemote)
 		{
 	  		par3EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.magic.rariho.txt",new Object[] {}));
     		par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.pi", 1.0F, 1.0F);
@@ -83,26 +82,31 @@ public class DqmItemKimeraC extends DqmItemMiscBase{
     				return par1ItemStack;
     	        }
 
-    	        //まずはペットを飛ばす(キメラの翼の場合は飛ばさない)
-                List list = par3EntityPlayer.worldObj.getEntitiesWithinAABBExcludingEntity(par3EntityPlayer,
-                		par3EntityPlayer.boundingBox.addCoord(par3EntityPlayer.motionX, par3EntityPlayer.motionY, par3EntityPlayer.motionZ).expand(10.0D, 5.0D, 10.0D));
+    	        int ruraMode = ExtendedPlayerProperties.get(par3EntityPlayer).getWeaponMode(EnumDqmWeaponMode.WEAPONMODE_KIMERA.getId());
 
-                if (list != null && !list.isEmpty())
-                {
-                	for (int n = 0 ; n < list.size() ; n++)
-                	{
-                		Entity target = (Entity)list.get(n);
+    	        if(ruraMode != EnumDqmMGToolMode.RURAMODE0.getId())
+    	        {
+	    	        //まずはペットを飛ばす(キメラの翼の場合は飛ばさない)
+	                List list = par3EntityPlayer.worldObj.getEntitiesWithinAABBExcludingEntity(par3EntityPlayer,
+	                		par3EntityPlayer.boundingBox.addCoord(par3EntityPlayer.motionX, par3EntityPlayer.motionY, par3EntityPlayer.motionZ).expand(10.0D, 5.0D, 10.0D));
 
-                		if (target != null)
-                		{
-							//外部からの干渉用
-			        		DqrRuraEvent event = new DqrRuraEvent(par3EntityPlayer,
-																  target,
-			        											  par1ItemStack,
-																  setX, setY, setZ);
-                		}
-                	}
-                }
+	                if (list != null && !list.isEmpty())
+	                {
+	                	for (int n = 0 ; n < list.size() ; n++)
+	                	{
+	                		Entity target = (Entity)list.get(n);
+
+	                		if (target != null)
+	                		{
+								//外部からの干渉用
+				        		DqrRuraEvent event = new DqrRuraEvent(par3EntityPlayer,
+																	  target,
+				        											  par1ItemStack,
+																	  setX, setY, setZ);
+	                		}
+	                	}
+	                }
+    	        }
 
     	        par3EntityPlayer.setPositionAndUpdate(setX, setY + 0.5D, setZ);
 	        	par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.rura", 1.0F, 1.0F);
@@ -124,5 +128,10 @@ public class DqmItemKimeraC extends DqmItemMiscBase{
     	{
     		p_77624_3_.add(EnumColor.Aqua.getChatColor() + addLine[cnt]);
     	}
+
+    	p_77624_3_.add("");
+
+    	message = I18n.format("dqm.magicinfo.rura_all.txt", new Object[]{});
+    	p_77624_3_.add(EnumColor.Aqua.getChatColor() + message);
     }
 }

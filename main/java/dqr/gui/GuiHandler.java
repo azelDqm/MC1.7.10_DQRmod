@@ -6,13 +6,10 @@ import cpw.mods.fml.common.network.IGuiHandler;
 import dqr.DQR;
 import dqr.gui.dama.GuiJobChangeContainer;
 import dqr.gui.dama.GuiJobChangeGuiContainer;
-<<<<<<< HEAD
 import dqr.gui.dama.GuiSkillWeaponContainer;
 import dqr.gui.dama.GuiSkillWeaponGuiContainer;
 import dqr.gui.dqrEnderChest.GuiDqrEnderChestContainer;
 import dqr.gui.dqrEnderChest.GuiDqrEnderChestGuiContainer;
-=======
->>>>>>> parent of 2aede75... ver0.8.7.8
 import dqr.gui.farmBook.GuiFarmBookContainer;
 import dqr.gui.farmBook.GuiFarmBookGuiContainer;
 import dqr.gui.itemBag.GuiItemBagContainer;
@@ -31,6 +28,8 @@ import dqr.gui.petStatus.GuiPetInventoryContainer;
 import dqr.gui.petStatus.GuiPetInventoryGuiContainer;
 import dqr.gui.petStatus.GuiPetStatusContainer;
 import dqr.gui.petStatus.GuiPetStatusGuiContainer;
+import dqr.gui.subEquip.GuiSubEquipContainer;
+import dqr.gui.subEquip.GuiSubEquipGuiContainer;
 
 public class GuiHandler implements IGuiHandler {
 
@@ -56,7 +55,6 @@ public class GuiHandler implements IGuiHandler {
             return new GuiMedalkingContainer(player.inventory, DQR.conf.GuiID_MKMedal);
         }else if (ID == DQR.conf.GuiID_PetBook) {
             return new GuiPetBookContainer(player);
-<<<<<<< HEAD
         }else if (ID == DQR.conf.GuiID_SkillWeapon){
         	return new GuiSkillWeaponContainer(player);
         }else if (ID == DQR.conf.GuiID_PetStatus){
@@ -67,8 +65,8 @@ public class GuiHandler implements IGuiHandler {
         	return new GuiDqrEnderChestContainer(player);
         }else if (ID == DQR.conf.GuiID_ItemBag){
         	return new GuiItemBagContainer(player.inventory);
-=======
->>>>>>> parent of 2aede75... ver0.8.7.8
+        }else if (ID == DQR.conf.GuiID_SubEquip){
+        	return new GuiSubEquipContainer(player.inventory, player);
         }
 
         return null;
@@ -95,7 +93,6 @@ public class GuiHandler implements IGuiHandler {
             return new GuiMedalkingGuiMedal(player);
         }else if (ID == DQR.conf.GuiID_PetBook) {
             return new GuiPetBookGuiContainer(player);
-<<<<<<< HEAD
         }else if (ID == DQR.conf.GuiID_SkillWeapon) {
             return new GuiSkillWeaponGuiContainer(player);
         }else if (ID == DQR.conf.GuiID_PetStatus) {
@@ -106,8 +103,8 @@ public class GuiHandler implements IGuiHandler {
             return new GuiDqrEnderChestGuiContainer(player);
         }else if (ID == DQR.conf.GuiID_ItemBag) {
             return new GuiItemBagGuiContainer(player.inventory);
-=======
->>>>>>> parent of 2aede75... ver0.8.7.8
+        }else if (ID == DQR.conf.GuiID_SubEquip){
+        	return new GuiSubEquipGuiContainer(player);
         }
 
 

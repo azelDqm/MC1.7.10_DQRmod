@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import dqr.DQR;
 import dqr.api.Blocks.DQBlocks;
+import dqr.api.enums.EnumDqmWorldType;
 import dqr.entity.mobEntity.DqmMobBase;
 import dqr.entity.mobEntity.monsterEnd.DqmEntityPandorabox;
 import dqr.entity.mobEntity.monsterEtc.DqmEntityHitokuibako;
@@ -62,7 +63,7 @@ public class DqmHakoBlock11 extends Block
         int rateItem = 0;
         int dim = par1World.provider.dimensionId;
 
-        if(dim == 0)
+        if(DQR.conf.cfg_gen_Hako_Map.get(dim) != null && DQR.conf.cfg_gen_Hako_Map.get(dim).equalsIgnoreCase(EnumDqmWorldType.OVERWORLD.getName()))
         {
         	if(rand.nextInt(15) == 0)
         	{
@@ -106,7 +107,7 @@ public class DqmHakoBlock11 extends Block
         			doropiItems =DQR.randomItem.getMiscsRank1(1, 1);
         		}
         	}
-        }else if(dim == -1)
+        }else if(DQR.conf.cfg_gen_Hako_Map.get(dim) != null && DQR.conf.cfg_gen_Hako_Map.get(dim).equalsIgnoreCase(EnumDqmWorldType.NETHER.getName()))
         {
         	if(rand.nextInt(5) == 0)
         	{
@@ -150,7 +151,7 @@ public class DqmHakoBlock11 extends Block
         			doropiItems =DQR.randomItem.getMiscsRank1(1, 1);
         		}
         	}
-        }else
+        }else if(DQR.conf.cfg_gen_Hako_Map.get(dim) != null && DQR.conf.cfg_gen_Hako_Map.get(dim).equalsIgnoreCase(EnumDqmWorldType.THEEND.getName()))
         {
         	if(rand.nextInt(5) == 0)
         	{

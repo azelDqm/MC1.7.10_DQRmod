@@ -130,10 +130,16 @@ public class InventoryItemBag implements IInventory
         }
         NBTTagList tags = (NBTTagList)currentItem.getTagCompound().getTag("Items");
 
+        if(tags == null)
+        {
+        	currentItem.getTagCompound().setTag("Items", new NBTTagList());
+        	tags = (NBTTagList)currentItem.getTagCompound().getTag("Items");
+        }
+
         for(int i = 0; i < tags.tagCount(); i++)
         {
             NBTTagCompound tagCompound = tags.getCompoundTagAt(i);
-            int slot = tagCompound.getByte("Slot");
+            int slot = tagCompound.getInteger("Slot");
             if(slot >= 0 && slot < items.length)
             {
                 items[slot] = ItemStack.loadItemStackFromNBT(tagCompound);
@@ -154,13 +160,19 @@ public class InventoryItemBag implements IInventory
             if(items[i] != null)
             {
                 NBTTagCompound compound = new NBTTagCompound();
-                compound.setByte("Slot", (byte)i);
+                compound.setInteger("Slot", i);
                 items[i].writeToNBT(compound);
                 tagList.appendTag(compound);
             }
         }
         ItemStack result = new ItemStack(currentItem.getItem(), 1);
-        result.setTagCompound(new NBTTagCompound());
+        if(currentItem.hasTagCompound())
+        {
+        	result.setTagCompound(currentItem.getTagCompound());
+        }else
+        {
+        	result.setTagCompound(new NBTTagCompound());
+        }
         result.getTagCompound().setTag("Items", tagList);
 
         //ItemStackをセットする。NBTは右クリック等のタイミングでしか保存されないため再セットで保存している。

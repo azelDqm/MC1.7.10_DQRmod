@@ -12,4 +12,6 @@ public class DQMagicTools {
 	public static Item itemMagicToolBreak1;
 	public static Item itemMagicToolBreak2;
 
+	public static Item itemMagicToolSet;
+
 }

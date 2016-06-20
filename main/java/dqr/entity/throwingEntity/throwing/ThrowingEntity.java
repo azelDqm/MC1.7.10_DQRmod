@@ -242,7 +242,10 @@ public class ThrowingEntity extends Entity implements IProjectile{
                 {
                 	if(!this.worldObj.isRemote)
                 	{
-                		this.entityDropItem(this.thisItem, 1.0F);
+                		if(this.thisItem != null)
+                		{
+                			this.entityDropItem(this.thisItem, 1.0F);
+                		}
                 	}
                     this.setDead();
                 	//ThrowingEntityBumeran bumeran = new ThrowingEntityBumeran(this.worldObj, this, 1.0F, 1.0F, 0.0F, 0.0F, 0, -0.0F, 180.0F, posSet, rotateSet, this.shootingPlayer);
@@ -293,10 +296,10 @@ public class ThrowingEntity extends Entity implements IProjectile{
             	/*
             	if(this.worldObj == null)
             	{
-            		System.out.println("TESTTEST:AAA");
+            		//System.out.println("TESTTEST:AAA");
             	}else if(this.shootingEntity == null)
             	{
-            		System.out.println("TESTTEST:BBB");
+            		//System.out.println("TESTTEST:BBB");
             	}
             	*/
 
@@ -367,7 +370,10 @@ public class ThrowingEntity extends Entity implements IProjectile{
                 	{
                 		//System.out.println("TESTTEST");
                 		//this.dropItem(DQWeapons.itemBumeran, 1);
-                		this.entityDropItem(this.thisItem, 0.0F);
+                		if(this.thisItem != null)
+                		{
+                			this.entityDropItem(this.thisItem, 0.0F);
+                		}
                 	}
         		}
             	this.setDead();
@@ -471,7 +477,10 @@ public class ThrowingEntity extends Entity implements IProjectile{
 			                            	this.setDead();
 		                        		}else
 		                        		{
-		                            		this.entityDropItem(this.thisItem, 0.0F);
+		                        			if(this.thisItem != null)
+		                        			{
+		                        				this.entityDropItem(this.thisItem, 0.0F);
+		                        			}
 		                            		this.setDead();
 		                        		}
 	                            	}

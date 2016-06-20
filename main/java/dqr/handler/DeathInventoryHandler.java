@@ -22,7 +22,7 @@ public class DeathInventoryHandler {
     {
     	if(event.entityLiving instanceof EntityPlayer)
     	{
-        	System.out.println("debug1");
+        	//System.out.println("debug1");
 
     		EntityPlayer ep = (EntityPlayer)event.entityLiving;
     		InventoryPlayer inv = new InventoryPlayer(ep);
@@ -40,7 +40,7 @@ public class DeathInventoryHandler {
     			}
     		}
 
-    		System.out.println("debug2");
+    		//System.out.println("debug2");
     		keepInveontoryMap.put(ep.getCommandSenderName(), inv);
     	}
     }
@@ -52,7 +52,7 @@ public class DeathInventoryHandler {
     	//System.out.println("debug3");
     	if(keepInveontoryMap.containsKey(event.player.getCommandSenderName()))
     	{
-    		System.out.println("debug4");
+    		//System.out.println("debug4");
     		InventoryPlayer invRev = keepInveontoryMap.get(event.player.getCommandSenderName());
 
     		for(int cnt = 0; cnt < invRev.getSizeInventory(); cnt++)
@@ -72,7 +72,7 @@ public class DeathInventoryHandler {
         	EntityPlayer ep = (EntityPlayer)event.entity;
         	if(keepInveontoryMap.containsKey(ep.getCommandSenderName()))
         	{
-        		System.out.println("debug4");
+        		//System.out.println("debug4");
         		InventoryPlayer invRev = keepInveontoryMap.get(ep.getCommandSenderName());
 
         		for(int cnt = 0; cnt < invRev.getSizeInventory(); cnt++)

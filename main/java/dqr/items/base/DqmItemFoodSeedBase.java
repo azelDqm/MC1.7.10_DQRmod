@@ -84,7 +84,7 @@ public class DqmItemFoodSeedBase extends ItemFood{
 				//healHP = 20.0F + (float)rand.nextInt(10);
 			}else if(this.getUnlocalizedName().equalsIgnoreCase(DQSeeds.itemTikaranotane.getUnlocalizedName()))
 			{
-//				System.out.println("DEBUGLINE:" + this.getUnlocalizedName());
+				//System.out.println("DEBUGLINE:" + this.getUnlocalizedName());
 				ep.addPotionEffect(new PotionEffect(DQPotionPlus.potionTikaranotane.id, 600, 0));
 			}else if(this.getUnlocalizedName().equalsIgnoreCase(DQSeeds.itemTikaranotane2.getUnlocalizedName()))
 			{

@@ -25,15 +25,13 @@ main.job.21=マスタードラゴン
 death.attack.DqmDamageBlock=ダメージ床により力尽きた
 msg.toDamage.txt=%sに%dダメージを与えた
 msg.toDamage2.txt=%sに%.3fダメージを与えた
-<<<<<<< HEAD
 msg.toDamage3.txt=%sの息の根を止めた！
 msg.toDamageP.txt=%sが%sに%dダメージを与えた
 msg.toDamage2P.txt=%sが%sに%.3fダメージを与えた
 msg.toSkillHit.txt=%s§e発動！
-=======
->>>>>>> parent of 2aede75... ver0.8.7.8
 msg.epCritical.txt=%sに会心の一撃
 msg.mobCritical.txt=%sの痛恨の一撃
+msg.fromDamageNo.txt=%sにより%dダメージを受けた
 msg.fromDamage.txt=%sから%dダメージを受けた
 msg.fromDamage.isFire.txt=炎により%dダメージを受けた
 msg.fromDamage.onFire.txt=炎により%dダメージを受けた
@@ -55,13 +53,11 @@ msg.fromDamage.Poison.txt=毒により%dダメージを受けた
 msg.fromDamage.PoisonX.txt=猛毒により%dダメージを受けた
 msg.fromDamage.HeavyFire.txt=高熱により%dダメージを受けた
 msg.fromDamage.Suffocation.txt=窒息により%dダメージを受けた
-<<<<<<< HEAD
 msg.fromDamage.DqmDamageBlock.txt=ダメージ床により%dダメージを受けた
 msg.fromDamage.PlayerSkill.txt=プレイヤースキルにより%dダメージを受けた
 msg.fromDamage.PlayerSkillCri.txt=プレイヤースキルにより%dダメージを受けた
-=======
->>>>>>> parent of 2aede75... ver0.8.7.8
 
+msg.fromDamageNo2.txt=%sにより%dダメージを受けた
 msg.fromDamage2.txt=%sから%dダメージを受けた
 msg.fromDamage2.isFire.txt=炎により%.3dダメージを受けた
 msg.fromDamage2.onFire.txt=炎により%.3dダメージを受けた
@@ -86,6 +82,7 @@ msg.fromDamage2.Suffocation.txt=窒息により%.3dダメージを受けた
 
 msg.petTame.maxnumber.txt=これ以上ペットを増やすことができないようだ。
 msg.pet.status1.txt=!player.%1$s(飼主:%2$s) Lv.%3$d(%4$d/%5$d)  HP:%6$d/%7$d  MP:%8$d/%9$d
+msg.pet.status1MAX.txt=!player.%1$s(飼主:%2$s) Lv.%3$d(MAX/MAX)  HP:%6$d/%7$d  MP:%8$d/%9$d
 msg.pet.status2.txt=!player.攻:%1$d 防:%2$d(%3$d) 魔:%4$d 力:%5$d 身:%6$d 賢:%7$d
 msg.pet.taming1.txt=なんと %sが おきあがり
 msg.pet.taming2.txt=なかまに なりたそうに こちらをみている
@@ -104,7 +101,7 @@ msg.magic.callcloud.rain=!player.%sで雨になるようにセットしました
 msg.magic.callcloud.thunder=!player.%sで雷雨になるようにセットしました。
 msg.magic.ranaluta=!player.%sで%d時間ずつ時間をすすめるようにセットしました。
 msg.magic.mahoton.txt=!player.魔法を封じられているため使用できない
-msg.magic.rariho.txt=!player.眠っているため使用できない
+msg.magic.rariho.txt=!player.行動不能状態のため使用できない
 
 msg.defeatMob.txt=%sを倒した
 msg.lvUp.txt=レベルが%dに上がった
@@ -131,7 +128,8 @@ amplider.level.14=XIV
 amplider.level.15=XV
 
 gui.pet.status.name=%s 
-gui.pet.status.EXP=Lv.%d  EXP %1$d / %2$d
+gui.pet.status.EXP=Lv.%1$d  EXP %2$d / %3$d
+gui.pet.status.EXPMAX=Lv.%1$d  EXP MAX / MAX
 gui.pet.status.HP=HP %d / %d
 gui.pet.status.MP=MP %d / %d
 gui.pet.status.attack=攻 %1$4d      力 %2$4d
@@ -148,7 +146,7 @@ gui.status.gurd=防 %1$4d      身 %2$4d
 gui.status.magic=魔 %1$4d      賢 %2$4d
 gui.status.ability=熟練度 %1d / %2d
 gui.status.abilityMax=熟練度 MAX / MAX
-gui.status.skill=%s Lv.%d
+gui.status.skill=%s Lv.%d (WP%d)
 gui.status.gold=ゴールド: %dG
 gui.status.medal=メダル: %d枚
 gui.status.coin=コイン: %d枚
@@ -218,7 +216,10 @@ gui.weapon.20=魔法(パラディン)
 gui.weapon.21=魔法(全職業)
 gui.weapon.24=算盤
 gui.weapon.25=扇
-
+gui.weapon.26=モンスター
+gui.weapon.27=グローブ
+gui.weapon.28=鎌
+gui.weapon.29=ブレス
 key.setting.ModeChange=GUI位置調整
 key.setting.ChangeSpeed=GUI位置調整速度変更
 key.setting.GuiUP=GUI位置 UP
@@ -637,7 +638,7 @@ item.dqm.itemAmatuyunoito.name=あまつゆの糸
 item.dqm.itemTensinosoma.name=てんしのソーマ
 item.dqm.itemDoragonnonamida.name=ドラゴンのなみだ
 item.dqm.itemGenmaseki.name=幻魔石
-item.dqm.itemKenjanoisi.name=けんじゃの石
+item.dqm.itemKenjanoisi.name=賢者の石
 item.dqm.itemNijiirononunokire.name=にじいろの布きれ
 item.dqm.itemRyuunohizake.name=竜の火酒
 item.dqm.itemRyuunonamida.name=竜のなみだ
@@ -1033,6 +1034,8 @@ item.dqm.itemMagicToolFarm2.name=超マジックツール(農業用)
 item.dqm.itemMagicToolBreak1.name=マジックツール(指定ブロック破壊)
 item.dqm.itemMagicToolBreak2.name=マジックツール(全ブロック破壊)
 
+item.dqm.itemMagicToolSet.name=マジックツール(ブロック設置)
+
 item.dqm.itemMera.name=メラの杖
 item.dqm.itemMerami.name=メラミの杖
 item.dqm.itemMerazoma.name=メラゾーマの杖
@@ -1116,6 +1119,20 @@ item.dqm.itemMahoimi.name=マホイミ
 item.dqm.itemMahoriku.name=マホリク
 item.dqm.itemMahoizun.name=マホイズン
 
+item.dqm.itemBreathF1.name=ドラゴンオーブ(火の息)
+item.dqm.itemBreathF2.name=ドラゴンオーブ(火炎息)
+item.dqm.itemBreathF3.name=ドラゴンオーブ(激しい炎)
+item.dqm.itemBreathF4.name=ドラゴンオーブ(灼熱)
+item.dqm.itemBreathF5.name=ドラゴンオーブ(煉獄の炎)
+
+item.dqm.itemBreathS1.name=ドラゴンオーブ(冷たい息)
+item.dqm.itemBreathS2.name=ドラゴンオーブ(氷の息)
+item.dqm.itemBreathS3.name=ドラゴンオーブ(凍える吹雪)
+item.dqm.itemBreathS4.name=ドラゴンオーブ(輝く息)
+item.dqm.itemBreathS5.name=ドラゴンオーブ(絶対零度)
+
+item.dqm.itemDragonObuB.name=力を失ったドラゴンオーブ
+
 item.dqm.itemZaoraru.name=ザオラルの杖
 item.dqm.itemZaoriku.name=ザオリクの杖
 item.dqm.itemHaigou.name=配合の杖
@@ -1171,6 +1188,8 @@ item.dqm.BuilderDamaW7.name=武器特技ダーマ神殿設計図の切れ端
 item.dqm.BuilderDamaW8.name=武器特技ダーマ神殿設計図の切れ端
 item.dqm.BuilderDamaW9.name=武器特技ダーマ神殿設計図の切れ端
 
+item.dqm.BuilderIdoMedal.name=謎の井戸計図
+
 item.dqm.mahounoTutu_1.name=魔法の筒
 item.dqm.mahounoTutu_3.name=魔法の筒X(仮)
 item.dqm.mahounoTutu_5.name=禁断の魔法の筒(仮)
@@ -1181,6 +1200,8 @@ item.dqm.mahounoTutu_1B.name=魔力を失った魔法の筒
 item.dqm.mahounoTutu_3B.name=魔力を失った魔法の筒X(仮)
 item.dqm.mahounoTutu_5B.name=魔力を失った禁断の魔法の筒(仮)
 item.dqm.MahounoTutu2.name=魔法の筒(%s)
+
+
 
 dqm.potion.dokukesisou=毒消し草
 dqm.potion.tikaranotane=力の種
@@ -1195,7 +1216,6 @@ dqm.potion.poison=毒
 dqm.potion.poisonX=猛毒
 dqm.potion.Suffocation=窒息
 
-<<<<<<< HEAD
 dqm.skill.WSkill_2_0.name=ドラゴン斬り
 dqm.skill.WSkill_2_1.name=こうげき力+5
 dqm.skill.WSkill_2_2.name=メタル斬り
@@ -1496,8 +1516,6 @@ dqm.skill.info.func.3=[COMMAND]
 dqm.skill.info.setSkill.0=
 dqm.skill.info.setSkill.1=[装備中]
 
-=======
->>>>>>> parent of 2aede75... ver0.8.7.8
 dqm.jobSkill.touzokuSpeed=移動速度上昇(盗賊)
 dqm.potion.baikiruto=バイキルト
 dqm.potion.sukara=スカラ
@@ -1517,6 +1535,7 @@ dqm.potion.medapani=メダパニ
 dqm.potion.henatosu=ヘナトス
 dqm.potion.divainsuperu=ディバインスペル
 dqm.potion.heavyfire=炎
+dqm.potion.stop=行動不能
 
 dqm.iteminfo.megaminoinori1=§fペットに使用すると
 dqm.iteminfo.megaminoinori2=§fペットの経験値が§d%d§f上昇する。
@@ -1528,6 +1547,7 @@ dqm.iteminfo.petLocation0=取得失敗
 
 dqm.iteminfo.caneat=§6[食用]
 dqm.iteminfo.hpheal=§fHP回復量:%1d-%2d
+dqm.iteminfo.randombreak=使用時一定確率で壊れる
 dqm.iteminfo.mpheal=§fMP回復量:%1d-%2d
 dqm.iteminfo.attackdamage=§9攻撃力 +%d
 dqm.iteminfo.deffence=§9防御力 +%d
@@ -1674,6 +1694,8 @@ dqm.magicinfo.needNo=特に無し
 dqm.magicinfo.rura.txt=座標登録：スニーク+魔法使用＄※設定はサーバー内共通
 dqm.magicinfo.rura2.txt=座標登録：スニーク+魔法使用＄※設定は個人専用
 dqm.magicinfo.ruraC.txt=座標登録：スニーク+魔法使用(OP権限者のみ)＄設定はconfig依存
+dqm.magicinfo.rura_all.txt=アイテム モード切替キーで効果対象を変更できます。
+
 dqm.magicinfo.kiari.txt=LV6～:毒のみ＄Lv25～:毒＋バニラ状態異常＄Lv60～:かなりの状態異常
 dqm.magicinfo.bagi.txt=スニーク+魔法使用で木の葉破壊
 dqm.magicinfo.io.txt=スニーク+魔法使用で地形破壊
@@ -1754,6 +1776,28 @@ msg.shopKaitori.messages.1.txt=!player.悪いが、そいつは買取してね�
 msg.shopKaitori.messages.2.txt=!player.%dG受け取った。またきな。
 msg.shopKaitori.messages.3.txt=!player.そうだな、そいつの買取なら %dGになるがどうする？
 msg.shopKaitori.messages.4.txt=!player.売りたいならスニーク状態で、もう一度そいつを持って話しかけるんだな。
+
+msg.BankMP.messages.0.txt=!player.ゴールド袋とMP(MCEconomy2)を交換してやろうか？
+msg.BankMP.messages.1.txt=!player.それで何に使うかって・・？
+msg.BankMP.messages.2.txt=!player.それぞれのmodでしかできない経済活動を
+msg.BankMP.messages.3.txt=!player.相互間で融合させて行うことができるようになるぞ。
+msg.BankMP.messages.4.txt=!player.MPをゴールド袋にしたい場合は、まずスニーク＆右クリックで
+msg.BankMP.messages.5.txt=!player.どの金額と交換するかを選んでくれ。
+msg.BankMP.messages.6.txt=!player.その後、素手で右クリックすれば交換するぞ。
+msg.BankMP.messages.7.txt=!player.ゴールド袋をMPと交換したい場合は、ゴールド袋を渡してくれれば
+msg.BankMP.messages.8.txt=!player.すぐにMPと交換してやるぞ。
+msg.BankMP.messages.9.txt=!player.それでは希望の金額をスニーク＆右クリックで選んでくれ。
+
+msg.BankMP.messages.1000.txt=!player.[%sMPを1,000Gの袋と交換する]
+msg.BankMP.messages.10000.txt=!player.[%sMPを10,000Gの袋と交換する]
+msg.BankMP.messages.100000.txt=!player.[%sMPを100,000Gの袋と交換する]
+msg.BankMP.messages.1000000.txt=!player.[%sMPを1,000,000Gの袋と交換する]
+msg.BankMP.messages.10000000.txt=!player.[%sMPを1,000,000Gの袋と交換する]
+
+msg.BankMP.messages.100.txt=!player.%sMPを受け取った。
+msg.BankMP.messages.101.txt=!player.%sGの袋を受け取った。
+msg.BankMP.messages.24.txt=!player.MPが足らないようだ・・・。
+
 msg.Bank.messages.0.txt=!player.所持金を袋に詰めてやろうか？
 msg.Bank.messages.1.txt=!player.それで何に使うかって・・？
 msg.Bank.messages.2.txt=!player.死んだ時にお金が減らないようにするためと
@@ -1811,6 +1855,24 @@ msg.Dama1.messages.25.txt=!player.この職業に転職するには、お主に�
 msg.Dama2.messages.-1.txt=!player.すまないのぉ、まだ準備中なんじゃよ。(未実装)
 msg.Dama3.messages.-1.txt=!player.すまないのぉ、まだ準備中なんじゃよ。(未実装)
 
+
+msg.Dama3.messages.0.txt=!player.よくぞ参った、ここは武器特技習得を願うものが集うダーマ神殿じゃ。
+msg.Dama3.messages.1.txt=!player.そなた特技というものを知っておるか？
+msg.Dama3.messages.2.txt=!player.特技とはWPを消費することによって習得できる各武器に応じた技や様々な能力の上昇じゃ。
+msg.Dama3.messages.3.txt=!player.WPとはそれぞれの武器ごとに振られており、熟練度を上げることによって増えていくのじゃ。
+msg.Dama3.messages.4.txt=!player.さらにLvが上がれば上がるほど覚えられる特技の種類も増えていくからの。焦りは禁物じゃぞ。
+msg.Dama3.messages.5.txt=!player.何を望むかはそなたしだいじゃ、じゃが１つ注意しておくことがある・・
+msg.Dama3.messages.6.txt=!player.WPには限りがある。決して振りなおすことはできぬ。
+msg.Dama3.messages.7.txt=!player.貯めるのも1つの手じゃが、貯めているだけでは強くなれんからの。難しいところじゃな。
+msg.Dama3.messages.8.txt=!player.さて、これで特技の説明は終わりじゃ。では、習得したい特技を選ぶがよい。
+
+msg.Dama3.messages.10.txt=!player.ここは武器特技習得を願うものが集うダーマ神殿じゃ。
+msg.Dama3.messages.11.txt=!player.習得したい特技を選ぶがよい。
+msg.Dama3.messages.20.txt=!player.%sを習得した！！
+msg.Dama3.messages.40.txt=!player.スキルポイントが足らぬようじゃの・・・。
+msg.Dama3.messages.41.txt=!player.習得したい特技の武器を持って話かけるのじゃ。
+msg.Dama3.messages.42.txt=!player.熟練度が足りぬようじゃの・・・。
+
 msg.yadoya.messages.0.txt=!player.回復するためには%sG必要です。
 msg.yadoya.messages.1.txt=!player.回復する場合は、スニーク&右クリックをして下さい。
 msg.yadoya.messages.3.txt=!player.回復するためのゴールドが足りません。
@@ -1819,6 +1881,8 @@ msg.Builder.messages.1.txt=!player.この範囲に建築して良い場合はス
 msg.Builder.messages.2.txt=!player.もう一度右クリックで指定範囲を解除します。
 msg.Builder.messages.need.txt=!player.まずはガイドフレームを生成して下さい。
 msg.Builder.messages.perm.txt=!player.建築するための権限がありません。
+msg.Builder.messages.lowHeight.txt=!player.建築するための高度が不足しています。
+msg.Builder.messages.notDim.txt=!player.この世界には生成することができません。
 
 msg.medalking.item.txt=§e[%d枚]
 msg.medalking.talk.1.txt=!player.わしは世界中のちいさなメダルをあつめておる。
@@ -1826,10 +1890,17 @@ msg.medalking.talk.2.txt=!player.メダルを見つけてきた者には褒美�
 msg.medalking.talk.3.txt=!player.ほほうメダルを持ってきたな。望みの褒美はあるかね？
 msg.medalking.talk.4.txt=うーむ……。もっとメダルを集めなくてはそれはやれんのう。
 msg.medalking.talk.5.txt=!player.またいつでも来るがよい！
-msg.medalking.talk.6.txt=!player.もちものが　いっぱいではないか！
+msg.medalking.talk.6.txt=!player.もちものがいっぱいではないか！
+
+msg.rura.modeInfo.0.txt=!player.移動対象：自分のみ
+msg.rura.modeInfo.1.txt=!player.移動対象：自分 + ペット
+msg.rura.modeInfo.2.txt=!player.移動対象：自分 + ペット + 動物
+msg.rura.modeInfo.3.txt=!player.移動対象：自分 + ペット + 動物 + 村人
 
 msg.weapon.modeInfo.1.-1.txt=!player.斧モードを解除した
 msg.weapon.modeInfo.1.0.txt=!player.斧モードに切り替えた
+msg.weapon.modeInfo.1.1.txt=!player.原木破壊モードに切り替えた
+msg.weapon.modeInfo.1.2.txt=!player.木葉破壊モードに切り替えた
 msg.weapon.modeInfo.2.-1.txt=!player.ピッケルモードを解除した
 msg.weapon.modeInfo.2.0.txt=!player.ピッケルモードに切り替えた
 msg.weapon.modeInfo.3.-1.txt=!player.シャベルモードを解除した
@@ -1859,6 +1930,16 @@ msg.magictool.farm.seedPlant.1.txt=!player.『%s』(残り : %d個)
 msg.magictool.farm.seedPlant.2.txt=!player.『%s』が選択されています(現在 : %d個)
 
 msg.magictool.farm.areaset.txt=!player.範囲:%d * %d * %d を選択しました。消費量(%d/10000)
+
+msg.magictool.set.blockInAct.0.txt=!player.手持ちのブロックを格納しました
+msg.magictool.set.blockInAct.2.txt=!player.格納できるブロックを持っていません
+msg.magictool.set.settingBlock.1.txt=!player.ブロックが選択されていません
+msg.magictool.set.settingBlock.2.txt=!player.『%s』が選択されています(現在 : %d個)
+msg.magictool.set.mode.0.txt=!player.ブロック設置モードに切り替えた
+msg.magictool.set.mode.1.txt=!player.ブロック格納モードに切り替えた
+msg.magictool.set.areaset.txt=!player.範囲:%d * %d * %d を選択しました。  ブロック消費量(%d個)
+msg.magictool.set.selectBlock.0.txt=!player.設置ブロックが選択されていません
+msg.magictool.set.selectBlock.1.txt=!player.『%s』(残り : %d個)
 
 msg.magictool.farm.info.zero.0.txt=%sにスニーク+使用で
 msg.magictool.farm.info.zero.1.txt=%sを

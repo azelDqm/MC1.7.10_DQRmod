@@ -23,7 +23,6 @@ import cpw.mods.fml.relauncher.SideOnly;
 import dqr.DQR;
 import dqr.api.enums.EnumDqmMagic;
 import dqr.api.enums.EnumDqmMagicCateg;
-import dqr.entity.magicEntity.magic.MagicEntity;
 
 public class DqmItemMagicBase extends Item{
 	protected float efficiencyOnProperMaterial = 4.0F;
@@ -197,6 +196,13 @@ public class DqmItemMagicBase extends Item{
     /**
      * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
      */
+
+    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
+    {
+    	return par1ItemStack;
+    }
+
+    /*
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
     	//par4は右クリックの押下時間。
@@ -240,6 +246,7 @@ public class DqmItemMagicBase extends Item{
         //p_77659_3_.setItemInUse(p_77659_1_, this.getMaxItemUseDuration(p_77659_1_));
         return par1ItemStack;
     }
+	*/
 
     public boolean func_150897_b(Block p_150897_1_)
     {

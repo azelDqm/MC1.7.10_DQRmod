@@ -3,13 +3,17 @@ package dqr.items.base;
 import java.util.List;
 
 import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.World;
 import dqr.api.enums.EnumDqmMagic;
+import dqr.api.enums.EnumDqmSubEquipType;
+import dqr.items.interfaceBase.ISubEquip;
 
-public class DqmItemFukuroBase extends Item{
+public class DqmItemFukuroBase extends Item implements ISubEquip{
     private EnumDqmMagic enumMagic;
 
 	public DqmItemFukuroBase()
@@ -50,4 +54,37 @@ public class DqmItemFukuroBase extends Item{
 
 
 	 }
+
+	@Override
+	public boolean canTakeStack(EnumDqmSubEquipType equipment, ItemStack stack,
+			EntityPlayer player) {
+		// TODO 自動生成されたメソッド・スタブ
+		return equipment.getId() == EnumDqmSubEquipType.Fukuro.getId();
+	}
+
+	@Override
+	public boolean isItemValid(EnumDqmSubEquipType equipment, ItemStack stack) {
+		// TODO 自動生成されたメソッド・スタブ
+		return equipment.getId() == EnumDqmSubEquipType.Fukuro.getId();
+	}
+
+	@Override
+	public void onUpdate(EnumDqmSubEquipType equipment, ItemStack stack,
+			World world, Entity player, int slot) {
+		// TODO 自動生成されたメソッド・スタブ
+
+	}
+
+	@Override
+	public boolean canDrop(EnumDqmSubEquipType equipment, ItemStack stack,
+			EntityPlayer player) {
+		// TODO 自動生成されたメソッド・スタブ
+		return true;
+	}
+
+	@Override
+	public EnumDqmSubEquipType getSubEquipType() {
+		// TODO 自動生成されたメソッド・スタブ
+		return EnumDqmSubEquipType.Fukuro;
+	}
 }

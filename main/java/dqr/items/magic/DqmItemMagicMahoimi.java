@@ -43,8 +43,8 @@ public class DqmItemMagicMahoimi extends DqmItemMagicBase{
 
 			return par1ItemStack;
 		}
-		pe = par3EntityPlayer.getActivePotionEffect(DQPotionMinus.debuffRariho);
-		if(pe != null && par3EntityPlayer.worldObj.isRemote)
+
+		if(DQR.func.isBind(par3EntityPlayer) && par3EntityPlayer.worldObj.isRemote)
 		{
 	  		par3EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.magic.rariho.txt",new Object[] {}));
     		par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.pi", 1.0F, 1.0F);
@@ -80,9 +80,13 @@ public class DqmItemMagicMahoimi extends DqmItemMagicBase{
 		    						        / par1ItemStack.getMaxDamage() * this.getEnumMagic().getAttack() / 100;
 		    				attackDam = DQR.magicTable.getReasonableDamage(this, par3EntityPlayer, attackDam);
 		    				*/
-		    				int matk = ExtendedPlayerProperties.get(par3EntityPlayer).getMaryoku();
+		    				int matk = (par1ItemStack.getMaxDamage() - par1ItemStack.getItemDamage())* 100
+    						        / par1ItemStack.getMaxDamage() * this.getEnumMagic().getAttack() / 100;
+		    				/*
 		    				int attackDam = (par1ItemStack.getMaxDamage() - par1ItemStack.getItemDamage())* 100
 							        / par1ItemStack.getMaxDamage() *  matk / 100;
+							*/
+		    				int attackDam = matk;
 		    				magic.setDamage(attackDam);
 
 		    				if(this.getEnumMagic().getDamage() + par1ItemStack.getItemDamage() < par1ItemStack.getMaxDamage() )

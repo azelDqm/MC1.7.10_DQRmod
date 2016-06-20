@@ -50,11 +50,20 @@ public class InventoryPetBook implements IInventory
         {
         	if(cnt + (54 * par1) < countMax)
         	{
-	        	items[cnt] = new ItemStack(DQMonsters.itemMonsterSuraimu, 1);
-	        	NBTTagCompound petData = playerPet.getCompoundTag((String)tagArray[cnt + (54 * par1)]);
+        		try
+        		{
+        			items[cnt] = new ItemStack(DQMonsters.itemMonsterSuraimu, 1);
+        			NBTTagCompound petData = playerPet.getCompoundTag((String)tagArray[cnt + (54 * par1)]);
 
-	        	items[cnt].setTagCompound(petData);
-	        	items[cnt].setStackDisplayName(petData.getString("PetName"));
+        			if(petData != null)
+        			{
+        				items[cnt].setTagCompound(petData);
+        				items[cnt].setStackDisplayName(petData.getString("PetName"));
+        			}
+        		}catch(Exception e)
+        		{
+
+        		}
         	}else
         	{
         		items[cnt] = null;

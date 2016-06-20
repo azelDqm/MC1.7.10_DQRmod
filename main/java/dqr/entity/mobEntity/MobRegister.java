@@ -94,6 +94,7 @@ import dqr.entity.mobEntity.monsterEnd.DqmEntityPandorabox;
 import dqr.entity.mobEntity.monsterEnd.DqmEntityRyuiso;
 import dqr.entity.mobEntity.monsterEnd.DqmEntityTororubonba;
 import dqr.entity.mobEntity.monsterEtc.DqmEntityFurosutogizumo;
+import dqr.entity.mobEntity.monsterEtc.DqmEntityGanseki;
 import dqr.entity.mobEntity.monsterEtc.DqmEntityGizumo;
 import dqr.entity.mobEntity.monsterEtc.DqmEntityHiitogizumo;
 import dqr.entity.mobEntity.monsterEtc.DqmEntityHitokuibako;
@@ -621,6 +622,8 @@ public class MobRegister {
 		EntityRegistry.registerModEntity(DqmEntityEriminator.class, "Eriminator", idxID + 560, DQR.instance, 250, 1, false);
 		EntityRegistry.registerModEntity(DqmEntityDesusutoka.class, "Desusutoka", idxID + 561, DQR.instance, 250, 1, false);
 		//EntityRegistry.registerModEntity(DqmEntityKandata.class, "Gorotuki", idxID + 559, DQR.instance, 250, 1, false);
+
+		EntityRegistry.registerModEntity(DqmEntityGanseki.class, "GansekiOtoshi", idxID + 562, DQR.instance, 250, 1, false);
 
 	}
 }

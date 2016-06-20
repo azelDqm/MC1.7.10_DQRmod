@@ -83,4 +83,5 @@ public class DQBlocks {
     public static Block DqmBlockKowarenaiDoor3;
 
     public static Block DqmBlockBuilderFrame;
+    public static Block DqmBlockGanseki;
 }

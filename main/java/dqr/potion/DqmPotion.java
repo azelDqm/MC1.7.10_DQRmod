@@ -8,7 +8,7 @@ import dqr.api.potion.DQPotionPlus;
 public class DqmPotion {
 
 	//現在使用している最大ポーションIDメモ用
-	private int tempNum = 40;
+	private int tempNum = 43;
 
 	public DqmPotion(int idx)
 	{
@@ -53,12 +53,9 @@ public class DqmPotion {
 		DQPotionMinus.debuffSuffocation = new DqmPotionNoEffect(idx + 38, true, 0xFFFFFF).setIconIndex2(7, 5).setIconIndex(0, 2).setPotionName("dqm.potion.suffocation");
 		DQPotionEtc.buffMonsterNiku = new DqmPotionNoEffect(idx + 39, false, 0xFFAAAA).setIconIndex2(0, 11).setIconIndex(0, 7).setPotionName("dqm.potion.monsterNiku");
 		DQPotionEtc.buffShinkanoHiseki = new DqmPotionNoEffect(idx + 40, false, 0x000000).setIconIndex2(1, 11).setIconIndex(1, 7).setPotionName("dqm.potion.shinkanoHiseki");
-<<<<<<< HEAD
 
 		DQPotionMinus.debuffStop = new DqmPotionNoEffect(idx + 41, true, 0x000000).setIconIndex2(7, 1).setIconIndex(3, 2).setPotionName("dqm.potion.stop");
 		DQPotionPlus.buffKaihiUp = new DqmPotionNoEffect(idx + 42, false, 0x000000).setIconIndex2(3, 1).setIconIndex(0, 0).setPotionName("dqm.potion.kaihiUp");
 		DQPotionPlus.buffBreathReflect = new DqmPotionNoEffect(idx + 43, false, 0x000000).setIconIndex2(2, 6).setIconIndex(7, 1).setPotionName("dqm.potion.kaihiUp");
-=======
->>>>>>> parent of 2aede75... ver0.8.7.8
 	}
 }

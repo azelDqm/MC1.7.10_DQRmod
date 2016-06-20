@@ -111,7 +111,7 @@ public class FuncMGFarmSeedTable {
 				{
 					if((Item)rnI.getObject(DQR.conf.MGFarm_addSeeds[cnt].trim()) != null)
 					{
-						System.out.println("A:" + DQR.conf.MGFarm_addSeeds[cnt].trim());
+						//System.out.println("A:" + DQR.conf.MGFarm_addSeeds[cnt].trim());
 						MGSeedALL.put(DQR.conf.MGFarm_addSeeds[cnt].trim(), 7);
 						MGSeedLvETC.put(DQR.conf.MGFarm_addSeeds[cnt].trim(), 7);
 					}else if((Block)rnB.getObject(DQR.conf.MGFarm_addSeeds[cnt].trim()) != null)

@@ -27,6 +27,7 @@ import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import dqr.api.potion.DQPotionPlus;
+import dqr.entity.petEntity.DqmPetBase;
 
 /*
  * 発射されるエンティティのクラス。
@@ -366,7 +367,7 @@ public class MagicEntityHoimi extends MagicEntity implements IProjectile{
                 			pe = elv2.getActivePotionEffect(DQPotionPlus.buffMahokanta);
                 		}
 
-                		if(pe != null && this.shootingEntity != null && this.shootingEntity instanceof EntityLiving)
+                		if(pe != null && this.shootingEntity != null && this.shootingEntity instanceof EntityLivingBase)
                 		{
                         	//EntityLiving elv = (EntityLiving)this.shootingEntity;
 
@@ -407,20 +408,26 @@ public class MagicEntityHoimi extends MagicEntity implements IProjectile{
 	                        {
 	                        	EntityLivingBase eb = (EntityLivingBase)target.entityHit;
 
-	                        	if(eb.getHealth() + this.damage > eb.getMaxHealth())
+	                        	if(eb instanceof DqmPetBase && eb.getHealth() <= 0.1F)
 	                        	{
-	                        		eb.setHealth(eb.getMaxHealth());
+	                        		;
 	                        	}else
 	                        	{
-	                        		eb.setHealth(eb.getHealth() + (float)this.damage);
-	                        	}
+		                        	if(eb.getHealth() + this.damage > eb.getMaxHealth())
+		                        	{
+		                        		eb.setHealth(eb.getMaxHealth());
+		                        	}else
+		                        	{
+		                        		eb.setHealth(eb.getHealth() + (float)this.damage);
+		                        	}
 
-	                            //マルチプレイ時に、両者がプレイヤーだった時のパケット送信処理
-	                            if (this.shootingEntity != null && target.entityHit != this.shootingEntity &&
-	                                    target.entityHit instanceof EntityPlayer && this.shootingEntity instanceof EntityPlayerMP)
-	                            {
-	                                ((EntityPlayerMP)this.shootingEntity).playerNetServerHandler.sendPacket(new S2BPacketChangeGameState(6, 0.0F));
-	                            }
+		                            //マルチプレイ時に、両者がプレイヤーだった時のパケット送信処理
+		                            if (this.shootingEntity != null && target.entityHit != this.shootingEntity &&
+		                                    target.entityHit instanceof EntityPlayer && this.shootingEntity instanceof EntityPlayerMP)
+		                            {
+		                                ((EntityPlayerMP)this.shootingEntity).playerNetServerHandler.sendPacket(new S2BPacketChangeGameState(6, 0.0F));
+		                            }
+	                        	}
 	                        }
 
 	                        //ここでヒット時の効果音がなる

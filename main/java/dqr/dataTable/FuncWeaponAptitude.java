@@ -1,5 +1,6 @@
 package dqr.dataTable;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.Item.ToolMaterial;
 import dqr.DQR;
@@ -7,6 +8,7 @@ import dqr.api.enums.EnumDqmJob;
 import dqr.api.enums.EnumDqmWeapon;
 import dqr.items.base.DqmItemBowBase;
 import dqr.items.base.DqmItemWeaponBase;
+import dqr.playerData.ExtendedPlayerProperties3;
 
 public class FuncWeaponAptitude {
 
@@ -266,7 +268,7 @@ public class FuncWeaponAptitude {
 
     }
 
-    public int getWAptitude(int jobId, int weaponType)
+    public int getWAptitude(int jobId, int weaponType, EntityPlayer ep)
     {
     	int[] table = WAptitudeNull;
     	if(weaponType == EnumDqmWeapon.DqmNoHand.getId()){
@@ -315,7 +317,16 @@ public class FuncWeaponAptitude {
     		table= WAptitudeScythe;
     	}
 
-    	return table[jobId];
+    	//全職使用可能スキルがある場合
+    	int allPerm = ExtendedPlayerProperties3.get(ep).getWeaponSkillPermission(weaponType, 9);
+
+    	if(allPerm != 0 && allPerm >  table[jobId])
+    	{
+    		return allPerm;
+    	}else
+    	{
+    		return table[jobId];
+    	}
     }
 
     public int[] getWAptitudeTable(Item item)

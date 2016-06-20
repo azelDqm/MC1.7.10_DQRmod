@@ -25,16 +25,19 @@ public class DqmItemBuilderDamaS extends DqmItemBuilderBase{
     public boolean onItemUse(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int par4, int par5, int par6, int par7, float par8, float par9, float par10)
     {
 
-		boolean flg = MinecraftServer.getServer().getConfigurationManager().func_152596_g(par2EntityPlayer.getGameProfile());
-		if(DQR.conf.permBuilder2 == 2 || (DQR.conf.permBuilder2 == 1 && flg))
-		{
-			;
-		}else
-		{
-			par2EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.Builder.messages.perm.txt",new Object[] {}));
-			par2EntityPlayer.worldObj.playSoundAtEntity(par2EntityPlayer, "dqr:player.pi", 1.0F, 1.0F);
-			return false;
-		}
+    	if(!par3World.isRemote)
+    	{
+			boolean flg = MinecraftServer.getServer().getConfigurationManager().func_152596_g(par2EntityPlayer.getGameProfile());
+			if(DQR.conf.permBuilder2 == 2 || (DQR.conf.permBuilder2 == 1 && flg))
+			{
+				;
+			}else
+			{
+				par2EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.Builder.messages.perm.txt",new Object[] {}));
+				par2EntityPlayer.worldObj.playSoundAtEntity(par2EntityPlayer, "dqr:player.pi", 1.0F, 1.0F);
+				return false;
+			}
+    	}
 
         if (par7 == 0)
         {

@@ -1,8 +1,14 @@
 package dqr.items.magicTool;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
+
 import net.minecraft.block.Block;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.MathHelper;
@@ -65,11 +71,13 @@ public class DqmItemMGTBreak1 extends DqmItemMagicToolBase{
 
 			int itemDam = areaX * areaY * areaZ * 10;
 
+
 			//System.out.println("test:" + areaX + "/" + areaY + "/" + areaZ);
 			//System.out.println("test2:" + (areaZ - 1) / 2 * -1 + "/" + (areaZ - 1) / 2);
 			ExtendedPlayerProperties2.get(ep).setItemUseFlg(itemDam);
         	if(!par3World.isRemote)
         	{
+    			Map<Item, int[]> dropItemSet = new HashMap<>();
         		//String seedName = ExtendedPlayerProperties2.get(ep).getSelectSeed();
         		//int seedVal = ExtendedPlayerProperties2.get(ep).getSeedVal(seedName);
 
@@ -109,15 +117,23 @@ public class DqmItemMGTBreak1 extends DqmItemMagicToolBase{
         		//Item hoe = Items.diamond_hoe;
 
         		Block touchBlock = par3World.getBlock(par4, par5, par6);
+        		int touchMeta = par3World.getBlockMetadata(par4, par5, par6);
+
+        		if(touchBlock.hasTileEntity(touchMeta) || touchBlock == Blocks.bed)
+        		{
+        			return false;
+        		}
 
         		int l = MathHelper.floor_double((double)(ep.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
 
         		//System.out.println("DEBUG" + l);
 
         		int loopCnt = 0;
+        		boolean soundFlg = false;
 
         		if(l == 1)
         		{
+
         			//System.out.println("DEBUG;" + areaZ + "/" + areaX);
         			for(int cntY =0; cntY < areaY; cntY++)
         			{
@@ -127,13 +143,45 @@ public class DqmItemMGTBreak1 extends DqmItemMagicToolBase{
         					{
 
         						Block targetBlock = par3World.getBlock(par4 + cntZ, par5+ cntY + fixY, par6 + cntX);
+        						int targetMeta = par3World.getBlockMetadata(par4 + cntZ, par5+ cntY + fixY, par6 + cntX);
         						float blockHardness = targetBlock == null ? -1.0F : targetBlock.getBlockHardness(par3World, par4 + cntZ, par5+ cntY + fixY, par6 + cntX);
 
-        						if(blockHardness >= 0.0F && targetBlock != null && targetBlock != Blocks.air && touchBlock.getUnlocalizedName().equalsIgnoreCase(targetBlock.getUnlocalizedName()))
+        						if(blockHardness >= 0.0F && targetBlock != null && targetBlock != Blocks.air && touchMeta == targetMeta  && touchBlock.getUnlocalizedName().equalsIgnoreCase(targetBlock.getUnlocalizedName()))
         						{
         							if(mode == EnumDqmMGToolMode.MGBREAK_BREAK.getId())
         							{
-        								par3World.func_147480_a(par4 + cntZ, par5+ cntY + fixY, par6 + cntX, true);
+        								Random rand = new Random();
+        								if(DQR.conf.MGBreak1_SmoothBreak == 0)
+        								{
+        									par3World.func_147480_a(par4 + cntZ, par5+ cntY + fixY, par6 + cntX, true);
+        								}else
+        								{
+        									par3World.setBlockToAir(par4 + cntZ, par5+ cntY + fixY, par6 + cntX);
+
+	        								if(!soundFlg)
+	        								{
+	        									ep.worldObj.playSoundAtEntity(ep, "dig.stone", 1.0F, 1.0F);
+	        									soundFlg = true;
+	        								}
+	        								Item blockKey = targetBlock.getItemDropped(targetMeta, rand, 0);
+	        								if(dropItemSet.containsKey(blockKey))
+	        								{
+	        									//int itemVal = dropItemSet.get(blockKey);
+	        									int[] valInt = dropItemSet.get(blockKey);
+	        									valInt[targetMeta] = valInt[targetMeta] + targetBlock.quantityDropped(targetMeta, 0, rand);
+	        									dropItemSet.put(blockKey, valInt);
+	        									//dropItemSet.put(blockKey, itemVal + targetBlock.quantityDropped(targetMeta, 0, rand));
+	        								}else
+	        								{
+	        									//System.out.println(" new key!!!!!!!!!!!!!!!!!!!!!");
+	        									int[] valInt = new int[16];
+	        									valInt[targetMeta] = targetBlock.quantityDropped(targetMeta, 0, rand);
+	        									dropItemSet.put(blockKey, valInt);
+	        									//Block.getIdFromBlock(p_149682_0_)
+	        								}
+        								}
+        								//EntityItem itemX = new EntityItem(par3World, par4 + cntZ, par5+ cntY + fixY, par6 + cntX, new ItemStack(targetBlock, 1, targetMeta));
+        								//par3World.spawnEntityInWorld(itemX);
         							}else
         							{
         								par3World.setBlockToAir(par4 + cntZ, par5+ cntY + fixY, par6 + cntX);
@@ -143,6 +191,7 @@ public class DqmItemMGTBreak1 extends DqmItemMagicToolBase{
         					}
         				}
         			}
+
 
         			//par3World.markBlockRangeForRenderUpdate(par4, par5, par6 + ((areaX - 1) / 2 * -1), par4 + ((areaZ - 1) * -1), par5 + areaY, par6 + ((areaX - 1) / 2));
         		}else if(l == 2)
@@ -154,13 +203,45 @@ public class DqmItemMGTBreak1 extends DqmItemMagicToolBase{
         					for(int cntZ = 0; (areaZ - 1) * -1 <= cntZ; cntZ--)
         					{
         						Block targetBlock = par3World.getBlock(par4 + cntX, par5+ cntY + fixY, par6 + cntZ);
+        						int targetMeta = par3World.getBlockMetadata(par4 + cntX, par5+ cntY + fixY, par6 + cntZ);
         						float blockHardness = targetBlock == null? 0.0F : targetBlock.getBlockHardness(par3World, par4 + cntX, par5+ cntY + fixY, par6 + cntZ);
 
-        						if(blockHardness >= 0.0F && targetBlock != null && targetBlock != Blocks.air && touchBlock.getUnlocalizedName().equalsIgnoreCase(targetBlock.getUnlocalizedName()))
+        						if(blockHardness >= 0.0F && targetBlock != null && targetBlock != Blocks.air && touchMeta == targetMeta && touchBlock.getUnlocalizedName().equalsIgnoreCase(targetBlock.getUnlocalizedName()))
         						{
         							if(mode == EnumDqmMGToolMode.MGBREAK_BREAK.getId())
         							{
-        								par3World.func_147480_a(par4 + cntX, par5+ cntY + fixY, par6 + cntZ, true);
+        								//par3World.func_147480_a(par4 + cntX, par5+ cntY + fixY, par6 + cntZ, true);
+
+        								Random rand = new Random();
+        								if(DQR.conf.MGBreak1_SmoothBreak == 0)
+        								{
+        									par3World.func_147480_a(par4 + cntX, par5+ cntY + fixY, par6 + cntZ, true);
+        								}else
+        								{
+        									par3World.setBlockToAir(par4 + cntX, par5+ cntY + fixY, par6 + cntZ);
+
+	        								if(!soundFlg)
+	        								{
+	        									ep.worldObj.playSoundAtEntity(ep, "dig.stone", 1.0F, 1.0F);
+	        									soundFlg = true;
+	        								}
+	        								Item blockKey = targetBlock.getItemDropped(targetMeta, rand, 0);
+	        								if(dropItemSet.containsKey(blockKey))
+	        								{
+	        									//int itemVal = dropItemSet.get(blockKey);
+	        									int[] valInt = dropItemSet.get(blockKey);
+	        									valInt[targetMeta] = valInt[targetMeta] + targetBlock.quantityDropped(targetMeta, 0, rand);
+	        									dropItemSet.put(blockKey, valInt);
+	        									//dropItemSet.put(blockKey, itemVal + targetBlock.quantityDropped(targetMeta, 0, rand));
+	        								}else
+	        								{
+	        									//System.out.println(" new key!!!!!!!!!!!!!!!!!!!!!");
+	        									int[] valInt = new int[16];
+	        									valInt[targetMeta] = targetBlock.quantityDropped(targetMeta, 0, rand);
+	        									dropItemSet.put(blockKey, valInt);
+	        									//Block.getIdFromBlock(p_149682_0_)
+	        								}
+        								}
         							}else
         							{
         								par3World.setBlockToAir(par4 + cntX, par5+ cntY + fixY, par6 + cntZ);
@@ -181,13 +262,44 @@ public class DqmItemMGTBreak1 extends DqmItemMagicToolBase{
         					for(int cntZ = 0; (areaZ - 1) >= cntZ; cntZ++)
         					{
         						Block targetBlock = par3World.getBlock(par4 + cntZ, par5+ cntY + fixY, par6 + cntX);
+        						int targetMeta = par3World.getBlockMetadata(par4 + cntZ, par5+ cntY + fixY, par6 + cntX);
         						float blockHardness = targetBlock == null? 0.0F : targetBlock.getBlockHardness(par3World, par4 + cntZ, par5+ cntY + fixY, par6 + cntX);
 
-        						if(blockHardness >= 0.0F && targetBlock != null && targetBlock != Blocks.air && touchBlock.getUnlocalizedName().equalsIgnoreCase(targetBlock.getUnlocalizedName()))
+        						if(blockHardness >= 0.0F && targetBlock != null && targetBlock != Blocks.air && touchMeta == targetMeta && touchBlock.getUnlocalizedName().equalsIgnoreCase(targetBlock.getUnlocalizedName()))
         						{
         							if(mode == EnumDqmMGToolMode.MGBREAK_BREAK.getId())
         							{
-        								par3World.func_147480_a(par4 + cntZ, par5+ cntY + fixY, par6 + cntX, true);
+        								//par3World.func_147480_a(par4 + cntZ, par5+ cntY + fixY, par6 + cntX, true);
+        								Random rand = new Random();
+        								if(DQR.conf.MGBreak1_SmoothBreak == 0)
+        								{
+        									par3World.func_147480_a(par4 + cntZ, par5+ cntY + fixY, par6 + cntX, true);
+        								}else
+        								{
+        									par3World.setBlockToAir(par4 + cntZ, par5+ cntY + fixY, par6 + cntX);
+
+	        								if(!soundFlg)
+	        								{
+	        									ep.worldObj.playSoundAtEntity(ep, "dig.stone", 1.0F, 1.0F);
+	        									soundFlg = true;
+	        								}
+	        								Item blockKey = targetBlock.getItemDropped(targetMeta, rand, 0);
+	        								if(dropItemSet.containsKey(blockKey))
+	        								{
+	        									//int itemVal = dropItemSet.get(blockKey);
+	        									int[] valInt = dropItemSet.get(blockKey);
+	        									valInt[targetMeta] = valInt[targetMeta] + targetBlock.quantityDropped(targetMeta, 0, rand);
+	        									dropItemSet.put(blockKey, valInt);
+	        									//dropItemSet.put(blockKey, itemVal + targetBlock.quantityDropped(targetMeta, 0, rand));
+	        								}else
+	        								{
+	        									//System.out.println(" new key!!!!!!!!!!!!!!!!!!!!!");
+	        									int[] valInt = new int[16];
+	        									valInt[targetMeta] = targetBlock.quantityDropped(targetMeta, 0, rand);
+	        									dropItemSet.put(blockKey, valInt);
+	        									//Block.getIdFromBlock(p_149682_0_)
+	        								}
+        								}
         							}else
         							{
         								par3World.setBlockToAir(par4 + cntZ, par5+ cntY + fixY, par6 + cntX);
@@ -208,13 +320,44 @@ public class DqmItemMGTBreak1 extends DqmItemMagicToolBase{
         					for(int cntZ = 0; (areaZ - 1) >= cntZ; cntZ++)
         					{
         						Block targetBlock = par3World.getBlock(par4 + cntX, par5+ cntY + fixY, par6 + cntZ);
+        						int targetMeta = par3World.getBlockMetadata(par4 + cntX, par5+ cntY + fixY, par6 + cntZ);
         						float blockHardness = targetBlock == null? 0.0F : targetBlock.getBlockHardness(par3World, par4 + cntX, par5+ cntY + fixY, par6 + cntZ);
 
-        						if(blockHardness >= 0.0F && targetBlock != null && targetBlock != Blocks.air && touchBlock.getUnlocalizedName().equalsIgnoreCase(targetBlock.getUnlocalizedName()))
+        						if(blockHardness >= 0.0F && targetBlock != null && targetBlock != Blocks.air && touchMeta == targetMeta && touchBlock.getUnlocalizedName().equalsIgnoreCase(targetBlock.getUnlocalizedName()))
         						{
         							if(mode == EnumDqmMGToolMode.MGBREAK_BREAK.getId())
         							{
-        								par3World.func_147480_a(par4 + cntX, par5+ cntY + fixY, par6 + cntZ, true);
+        								//par3World.func_147480_a(par4 + cntX, par5+ cntY + fixY, par6 + cntZ, true);
+        								Random rand = new Random();
+        								if(DQR.conf.MGBreak1_SmoothBreak == 0)
+        								{
+        									par3World.func_147480_a(par4 + cntX, par5+ cntY + fixY, par6 + cntZ, true);
+        								}else
+        								{
+        									par3World.setBlockToAir(par4 + cntX, par5+ cntY + fixY, par6 + cntZ);
+
+	        								if(!soundFlg)
+	        								{
+	        									ep.worldObj.playSoundAtEntity(ep, "dig.stone", 1.0F, 1.0F);
+	        									soundFlg = true;
+	        								}
+	        								Item blockKey = targetBlock.getItemDropped(targetMeta, rand, 0);
+	        								if(dropItemSet.containsKey(blockKey))
+	        								{
+	        									//int itemVal = dropItemSet.get(blockKey);
+	        									int[] valInt = dropItemSet.get(blockKey);
+	        									valInt[targetMeta] = valInt[targetMeta] + targetBlock.quantityDropped(targetMeta, 0, rand);
+	        									dropItemSet.put(blockKey, valInt);
+	        									//dropItemSet.put(blockKey, itemVal + targetBlock.quantityDropped(targetMeta, 0, rand));
+	        								}else
+	        								{
+	        									//System.out.println(" new key!!!!!!!!!!!!!!!!!!!!!");
+	        									int[] valInt = new int[16];
+	        									valInt[targetMeta] = targetBlock.quantityDropped(targetMeta, 0, rand);
+	        									dropItemSet.put(blockKey, valInt);
+	        									//Block.getIdFromBlock(p_149682_0_)
+	        								}
+        								}
         							}else
         							{
         								par3World.setBlockToAir(par4 + cntX, par5+ cntY + fixY, par6 + cntZ);
@@ -227,6 +370,32 @@ public class DqmItemMGTBreak1 extends DqmItemMagicToolBase{
         			//par3World.markBlockRangeForRenderUpdate(par4 + ((areaX - 1) / 2 * -1), par5, par6, par4 + ((areaX - 1) / 2), par5 + areaY, par6 + ((areaZ - 1)));
         		}
 
+        		//スムース破壊の場合のアイテムドロップ
+    			for (Item key : dropItemSet.keySet())
+    			{
+    			    //System.out.println(key + " => " + dropItemSet.get(key));
+    				int[] valInt = dropItemSet.get(key);
+
+    				for(int cnt = 0; cnt < valInt.length; cnt++)
+    				{
+    					if(valInt[cnt] > 0)
+    					{
+    						for(int cntR = 0; cntR <= valInt[cnt] / 64; cntR++)
+    						{
+    							ItemStack dropStack = null;
+    							if(valInt[cnt] - 64 * cntR > 64)
+    							{
+    								dropStack = new ItemStack(key, 64, cnt);
+    							}else
+    							{
+    								dropStack = new ItemStack(key, valInt[cnt] - 64 * cntR, cnt);
+    							}
+								EntityItem itemX = new EntityItem(par3World, par4, par5, par6, dropStack);
+								par3World.spawnEntityInWorld(itemX);
+    						}
+    					}
+    				}
+    			}
         	}
 			/*
 			if(mode == EnumDqmMGToolMode.MGFARM1_HOE.getId())
@@ -251,12 +420,12 @@ public class DqmItemMGTBreak1 extends DqmItemMagicToolBase{
 						//System.out.println("test2:");
 						for(int cntZ = (areaZ - 1) / 2 * -1; (areaZ - 1) / 2 >= cntZ; cntZ++)
 						{
-							System.out.println("test2:");
+							//System.out.println("test2:");
 							hoe.onItemUse(new ItemStack(Items.diamond_hoe, 1), ep, par3World,
 										  p_77648_4_ + cntX, p_77648_5_+ cntY, p_77648_6_ + cntZ, p_77648_7_,
 										  p_77648_8_ + cntX, p_77648_9_ + cntY, p_77648_10_ + cntZ);
 
-							System.out.println("test:" + (p_77648_4_ + cntX) + "/" +  (p_77648_5_+ cntY) + "/" + (p_77648_6_ + cntZ) + "/" + p_77648_7_ + "/" +
+							//System.out.println("test:" + (p_77648_4_ + cntX) + "/" +  (p_77648_5_+ cntY) + "/" + (p_77648_6_ + cntZ) + "/" + p_77648_7_ + "/" +
 									  (p_77648_8_ + cntX) + "/" + (p_77648_9_ + cntY) + "/" + (p_77648_10_ + cntZ));
 							//par3World.
 						}

@@ -30,7 +30,7 @@ public class MessageClientPetEntityDataHandler implements IMessageHandler<Messag
 
 	        for(int cnt = 0; cnt < type.length; cnt++)
 	        {
-	            System.out.println("TEST:" + (String)type[cnt]);
+	            //System.out.println("TEST:" + (String)type[cnt]);
 	        }
         }
         */

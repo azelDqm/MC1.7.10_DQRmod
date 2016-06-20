@@ -221,4 +221,6 @@ public class DQMiscs {
     public static Item itemOokinaFukuroG;
     public static Item itemOokinaFukuroB;
     public static Item itemOokinaFukuroY;
+
+    public static Item itemDragonObuB;
 }

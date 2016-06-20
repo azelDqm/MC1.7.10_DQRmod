@@ -48,7 +48,12 @@ public class DqmItemThrowBase extends Item  {
         p_77659_2_.playSoundAtEntity(p_77659_3_, "random.bow", 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
 
         ThrowItemEntity throwEntity = null;
-        boolean flg = MinecraftServer.getServer().getConfigurationManager().func_152596_g(p_77659_3_.getGameProfile());
+        boolean flg = false;
+
+        if(!p_77659_2_.isRemote)
+        {
+        	flg = MinecraftServer.getServer().getConfigurationManager().func_152596_g(p_77659_3_.getGameProfile());
+        }
 
         if(this == DQIngots.itemBakudanisi)
         {
@@ -60,6 +65,7 @@ public class DqmItemThrowBase extends Item  {
         }else if(this == DQMiscs.itemSeisui)
         {
         	throwEntity = new ThrowItemEntitySeisui(p_77659_2_, p_77659_3_);
+        	//throwEntity = new ThrowItemEntityIshitubute(p_77659_2_, p_77659_3_);
         }else if(this == DQMiscs.itemNiku1)
         {
         	throwEntity = new ThrowItemEntityNiku(p_77659_2_, p_77659_3_, 1);

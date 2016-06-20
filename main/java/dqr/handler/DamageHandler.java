@@ -12,6 +12,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.util.DamageSource;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import scala.util.Random;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -22,12 +23,14 @@ import dqr.api.enums.EnumDqmMobRoot;
 import dqr.api.enums.EnumDqmSkillW;
 import dqr.api.enums.EnumDqmWeapon;
 import dqr.api.potion.DQPotionMinus;
+import dqr.api.potion.DQPotionPlus;
 import dqr.entity.mobEntity.DqmMobBase;
 import dqr.entity.throwingEntity.throwing.ThrowingEntity;
 import dqr.items.base.DqmItemBowBase;
 import dqr.items.base.DqmItemWeaponBase;
 import dqr.playerData.ExtendedPlayerProperties;
 import dqr.playerData.ExtendedPlayerProperties3;
+
 
 public class DamageHandler {
 
@@ -46,6 +49,119 @@ public class DamageHandler {
 
 			//System.out.println("TEST:" + event.source.getSourceOfDamage().getCommandSenderName());
 			//System.out.println("TEST:" + event.source.getEntity().getCommandSenderName());
+
+
+			//ルカニのダメージ加算
+			if(!(event.source.getEntity() instanceof EntityPlayer) && event.source.getEntity() instanceof EntityLivingBase)
+			{
+				EntityLivingBase elv = (EntityLivingBase)event.source.getEntity();
+				if(event.source.getDamageType().equalsIgnoreCase(DamageSource.generic.getDamageType()) ||
+				   DQR.damageSource.isDqmSkillDamage(event.source))
+				{
+					PotionEffect pe = elv.getActivePotionEffect(DQPotionMinus.debuffRukani);
+					if(pe != null)
+					{
+						event.ammount = event.ammount +  (event.ammount / (2 - pe.getAmplifier()));
+					}
+				}
+			}
+
+			//スカラのダメージ計算
+			if(!(event.source.getEntity() instanceof EntityPlayer) && event.source.getEntity() instanceof EntityLivingBase)
+			{
+				EntityLivingBase elv = (EntityLivingBase)event.source.getEntity();
+				if(event.source.getDamageType().equalsIgnoreCase(DamageSource.generic.getDamageType()) ||
+				   DQR.damageSource.isDqmSkillDamage(event.source))
+				{
+					PotionEffect pe = elv.getActivePotionEffect(DQPotionPlus.buffSukara);
+					if(pe != null)
+					{
+						event.ammount = event.ammount -  (event.ammount / (4 - (pe.getAmplifier() * 2)));
+					}
+				}
+			}
+
+
+			//ディバインスペル
+			if(event.source.getEntity() instanceof EntityLivingBase)
+			{
+				EntityLivingBase elv = (EntityLivingBase)event.source.getEntity();
+				PotionEffect pe = elv.getActivePotionEffect(DQPotionMinus.debuffDivainsuperu);
+
+				if(DQR.damageSource.isDqmMagicDamage(event.source))
+				{
+
+					if(pe != null)
+					{
+						event.ammount = event.ammount +  (event.ammount / (2 - pe.getAmplifier()));
+					}
+				}
+			}
+
+			//マジックバリアのダメージ計算
+			if(event.source.getEntity() instanceof EntityLivingBase)
+			{
+				EntityLivingBase elv = (EntityLivingBase)event.source.getEntity();
+				PotionEffect pe = elv.getActivePotionEffect(DQPotionPlus.buffMagicBaria);
+
+				if(DQR.damageSource.isDqmMagicDamage(event.source))
+				{
+
+					if(pe != null)
+					{
+						event.ammount = event.ammount -  (event.ammount / (4 - (pe.getAmplifier() * 2)));
+					}
+				}
+			}
+
+
+
+			//バーハのダメージ計算
+			if(event.source.getEntity() instanceof EntityLivingBase)
+			{
+				EntityLivingBase elv = (EntityLivingBase)event.source.getEntity();
+				PotionEffect pe = elv.getActivePotionEffect(DQPotionPlus.buffBaha);
+
+				if(pe != null)
+				{
+					if(event.source == DamageSource.onFire ||
+					   event.source == DamageSource.inFire ||
+					   event.source == DamageSource.lava ||
+					   event.source.getDamageType().equalsIgnoreCase(DQR.damageSource.DqmHeavyFire.getDamageType()))
+					{
+						event.ammount = 0;
+						event.setCanceled(true);
+						return;
+					}else if(DQR.damageSource.isDqmBreathDamage(event.source))
+					{
+						event.ammount = event.ammount -  (event.ammount / (4 - (pe.getAmplifier() * 2)));
+					}
+				}
+			}
+
+			//火草
+			if(event.source.getEntity() instanceof EntityLivingBase)
+			{
+				EntityLivingBase elv = (EntityLivingBase)event.source.getEntity();
+				PotionEffect pe = elv.getActivePotionEffect(DQPotionPlus.potionHonoonomi);
+
+				if(pe != null)
+				{
+					if(event.source == DamageSource.onFire ||
+					   event.source == DamageSource.inFire ||
+					   event.source == DamageSource.lava ||
+					   event.source.getDamageType().equalsIgnoreCase(DQR.damageSource.DqmHeavyFire.getDamageType()))
+					{
+						event.ammount = 0;
+						event.setCanceled(true);
+						return;
+					}else if(DQR.damageSource.isDqmBreathDamage(event.source))
+					{
+						event.ammount = event.ammount -  (event.ammount / (4 - (pe.getAmplifier() * 2)));
+					}
+				}
+			}
+
 
 			if(event.source.getEntity() instanceof EntityDragon)
 			{
@@ -278,15 +394,15 @@ public class DamageHandler {
 						            		if(list.get(n) instanceof DqmMobBase)
 						            		{
 						            			DqmMobBase target = (DqmMobBase)list.get(n);
-						            			
+
 												if(target != null && monster.MobRoot.getId() == EnumDqmMobRoot.METARU.getId())
 												{
 													event.ammount = (float)(rand.nextInt(2)) + 1.0F;
 													hitFlg = true;
 												}
 						            		}
-						            		
-						            		
+
+
 						            		/*
 						            		Entity target = (Entity)list.get(n);
 
@@ -379,6 +495,26 @@ public class DamageHandler {
 					criticalFlg = true;
 					event.ammount = event.ammount * (rand.nextInt(mob.DqmMobKaisinMax) + mob.DqmMobKaisinMin);
 				}
+
+				if(!event.source.getDamageType().equalsIgnoreCase(DQR.damageSource.DqmPlayerSkillDeath.getDamageType()) &&
+					!criticalFlg)
+				{
+					if(event.source.getDamageType().equalsIgnoreCase(DamageSource.generic.getDamageType()) ||
+					   DQR.damageSource.isDqmSkillDamage(event.source))
+					{
+						if(rand.nextInt(1000) < DQR.func.getMikawasi(event.entityLiving))
+						{
+							if(!event.entityLiving.worldObj.isRemote)
+							{
+								event.entityLiving.worldObj.playSoundAtEntity(event.entityLiving, "dqr:player.miss", 1.0F, 1.0F);
+							}
+
+							event.ammount = -1;
+							event.setCanceled(true);
+							return;
+						}
+					}
+				}
 			}else if(event.source.getEntity() instanceof EntityPlayer)
 			{
 				EntityPlayer epr = (EntityPlayer)event.source.getEntity();
@@ -421,6 +557,28 @@ public class DamageHandler {
 
 				//DQR.func.debugString("DAMTEST_E:" + event.ammount);
 
+
+				//回避チェック
+				if(!event.source.getDamageType().equalsIgnoreCase(DQR.damageSource.DqmPlayerSkillDeath.getDamageType()) &&
+				   !criticalFlg)
+				{
+					if(event.source.getDamageType().equalsIgnoreCase(DamageSource.generic.getDamageType()) ||
+					   DQR.damageSource.isDqmSkillDamage(event.source))
+					{
+						if(rand.nextInt(1000) < DQR.func.getMikawasi(event.entityLiving))
+						{
+							if(!event.entityLiving.worldObj.isRemote)
+							{
+								event.entityLiving.worldObj.playSoundAtEntity(event.entityLiving, "dqr:player.miss", 1.0F, 1.0F);
+							}
+							event.ammount = -1;
+							event.setCanceled(true);
+							return;
+						}
+					}
+				}
+
+
 				if(!(event.entityLiving instanceof DqmMobBase))
 				{
 					if(!epr.worldObj.isRemote)
@@ -444,6 +602,27 @@ public class DamageHandler {
 				}
 
 				//DQR.func.debugString("DAMTEST_F:" + event.ammount);
+			}else
+			{
+				//回避チェック
+				if(!event.source.getDamageType().equalsIgnoreCase(DQR.damageSource.DqmPlayerSkillDeath.getDamageType()) &&
+				   !criticalFlg)
+				{
+					if(event.source.getDamageType().equalsIgnoreCase(DamageSource.generic.getDamageType()) ||
+					   DQR.damageSource.isDqmSkillDamage(event.source))
+					{
+						if(rand.nextInt(1000) < DQR.func.getMikawasi(event.entityLiving))
+						{
+							if(!event.entityLiving.worldObj.isRemote)
+							{
+								event.entityLiving.worldObj.playSoundAtEntity(event.entityLiving, "dqr:player.miss", 1.0F, 1.0F);
+							}
+							event.ammount = -1;
+							event.setCanceled(true);
+							return;
+						}
+					}
+				}
 			}
 
 			if(event.entityLiving instanceof EntityPlayer)

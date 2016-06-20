@@ -13,12 +13,14 @@ import dqr.api.Items.DQArmors;
 import dqr.api.Items.DQBuilders;
 import dqr.api.Items.DQEmblems;
 import dqr.api.Items.DQIngots;
+import dqr.api.Items.DQInventorySlots;
 import dqr.api.Items.DQItemBlocks;
 import dqr.api.Items.DQMagicTools;
 import dqr.api.Items.DQMagics;
 import dqr.api.Items.DQMiscs;
 import dqr.api.Items.DQMonsters;
 import dqr.api.Items.DQSeeds;
+import dqr.api.Items.DQSkillWs;
 import dqr.api.Items.DQWeapons;
 import dqr.blocks.DqmBlockWithMeta;
 
@@ -27,6 +29,7 @@ public class DqrItemRegister {
 
 	public DqrItemRegister()
 	{
+
 		//StandardBlock
     	GameRegistry.registerBlock(DQBlocks.DqmBlockHako, "DqmBlockHako");
     	GameRegistry.registerBlock(DQBlocks.DqmBlockHako11, "DqmBlockHako11");
@@ -1878,7 +1881,6 @@ public class DqrItemRegister {
 		GameRegistry.registerItem(DQMiscs.itemNiku3, "ItemNiku3");
 		GameRegistry.registerItem(DQMiscs.itemNiku4, "ItemNiku4");
 		GameRegistry.registerItem(DQMagicTools.itemPetSuisyou, "ItemPetSuisyou");
-<<<<<<< HEAD
 
 
 		GameRegistry.registerItem(DQSkillWs.itemSkillW_20, "ItemSkillW_20");
@@ -1930,8 +1932,30 @@ public class DqrItemRegister {
 
 		GameRegistry.registerItem(DQMagicTools.itemMagicToolBreak1, "ItemMagicToolBreak1");
 		GameRegistry.registerItem(DQMagicTools.itemMagicToolBreak2, "ItemMagicToolBreak2");
-=======
->>>>>>> parent of 2aede75... ver0.8.7.8
+
+		GameRegistry.registerItem(DQMagicTools.itemMagicToolSet, "ItemMagicToolSet");
+
+		GameRegistry.registerItem(DQMagics.itemBreathF1, "ItemBreathF1");
+		GameRegistry.registerItem(DQMagics.itemBreathF2, "ItemBreathF2");
+		GameRegistry.registerItem(DQMagics.itemBreathF3, "ItemBreathF3");
+		GameRegistry.registerItem(DQMagics.itemBreathF4, "ItemBreathF4");
+		GameRegistry.registerItem(DQMagics.itemBreathF5, "ItemBreathF5");
+
+		GameRegistry.registerItem(DQMagics.itemBreathS1, "ItemBreathS1");
+		GameRegistry.registerItem(DQMagics.itemBreathS2, "ItemBreathS2");
+		GameRegistry.registerItem(DQMagics.itemBreathS3, "ItemBreathS3");
+		GameRegistry.registerItem(DQMagics.itemBreathS4, "ItemBreathS4");
+		GameRegistry.registerItem(DQMagics.itemBreathS5, "ItemBreathS5");
+
+		GameRegistry.registerItem(DQMiscs.itemDragonObuB, "ItemDragonObuB");
+
+		GameRegistry.registerItem(DQInventorySlots.itemSlotPiasu, "ItemSlotPiasu");
+		GameRegistry.registerItem(DQInventorySlots.itemSlotShield, "ItemSlotShield");
+		GameRegistry.registerItem(DQInventorySlots.itemSlotKubikazari, "ItemSlotKubikazari");
+		GameRegistry.registerItem(DQInventorySlots.itemSlotSonota, "ItemSlotSonota");
+		GameRegistry.registerItem(DQInventorySlots.itemSlotUdewa, "ItemSlotUdewa");
+		GameRegistry.registerItem(DQInventorySlots.itemSlotYubiwa, "ItemSlotYubiwa");
+		GameRegistry.registerItem(DQInventorySlots.itemSlotFukuro, "ItemSlotFukuro");
 	}
 }
 

@@ -10,6 +10,32 @@ public class FuncBugFix {
 
 	public FuncBugFix(){}
 
+	public void doSkillWPRecalc(EntityPlayer ep)
+	{
+
+		int[] JukurenLvA = ExtendedPlayerProperties.get(ep).getJukurenLvA();
+		for(int cnt = 0; cnt < JukurenLvA.length; cnt++)
+		{
+			int setWP = 0;
+
+			switch(JukurenLvA[cnt])
+			{
+				case 2: setWP = 15; break;
+				case 3: setWP = 40; break;
+				case 4: setWP = 75; break;
+				case 5: setWP = 120; break;
+				case 6: setWP = 175; break;
+				case 7: setWP = 240; break;
+				case 8: setWP = 315; break;
+				case 9: setWP = 400; break;
+				case 10: setWP = 500; break;
+			}
+
+			ExtendedPlayerProperties.get(ep).setJukurenWP(cnt, setWP);
+		}
+
+	}
+
 	public void doPetListReconstruct(EntityPlayer ep)
 	{
 		DQR.petFunc.clearPetdata(ep);

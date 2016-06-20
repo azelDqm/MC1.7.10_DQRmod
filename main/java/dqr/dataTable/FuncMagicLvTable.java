@@ -645,6 +645,57 @@ public class FuncMagicLvTable {
 										 -1, -1, -1, -1, -1, -1, -1, -1,
 										 -1, -1, -1, -1, -1, -1, -1, -1};
 
+	public static int[] BreathF1JobLv = {-1, -1, -1, -1, -1, -1, -1, -1,
+										 -1, -1, -1, -1, -1, 100, -1, -1,
+										 -1, 3, -1, -1, -1, 100, -1, -1,
+										 -1, -1, -1, -1, -1, -1, -1, -1};
+
+	public static int[] BreathF2JobLv = {-1, -1, -1, -1, -1, -1, -1, -1,
+										 -1, -1, -1, -1, -1, 100, -1, -1,
+										 -1, 15, -1, -1, -1, 100, -1, -1,
+										 -1, -1, -1, -1, -1, -1, -1, -1};
+
+	public static int[] BreathF3JobLv = {-1, -1, -1, -1, -1, -1, -1, -1,
+										 -1, -1, -1, -1, -1, 100, -1, -1,
+										 -1, 29, -1, -1, -1, 100, -1, -1,
+										 -1, -1, -1, -1, -1, -1, -1, -1};
+
+	public static int[] BreathF4JobLv = {-1, -1, -1, -1, -1, -1, -1, -1,
+										 -1, -1, -1, -1, -1, 100, -1, -1,
+										 -1, 55, -1, -1, -1, 100, -1, -1,
+										 -1, -1, -1, -1, -1, -1, -1, -1};
+
+	public static int[] BreathF5JobLv = {-1, -1, -1, -1, -1, -1, -1, -1,
+										 -1, -1, -1, -1, -1, 100, -1, -1,
+										 -1, 80, -1, -1, -1, 100, -1, -1,
+										 -1, -1, -1, -1, -1, -1, -1, -1};
+
+	public static int[] BreathS1JobLv = {-1, -1, -1, -1, -1, -1, -1, -1,
+										 -1, -1, -1, -1, -1, 100, -1, -1,
+										 -1, 5, -1, -1, -1, 100, -1, -1,
+										 -1, -1, -1, -1, -1, -1, -1, -1};
+
+	public static int[] BreathS2JobLv = {-1, -1, -1, -1, -1, -1, -1, -1,
+										 -1, -1, -1, -1, -1, 100, -1, -1,
+										 -1, 18, -1, -1, -1, 100, -1, -1,
+										 -1, -1, -1, -1, -1, -1, -1, -1};
+
+	public static int[] BreathS3JobLv = {-1, -1, -1, -1, -1, -1, -1, -1,
+										 -1, -1, -1, -1, -1, 100, -1, -1,
+										 -1, 34, -1, -1, -1, 100, -1, -1,
+										 -1, -1, -1, -1, -1, -1, -1, -1};
+
+	public static int[] BreathS4JobLv = {-1, -1, -1, -1, -1, -1, -1, -1,
+										 -1, -1, -1, -1, -1, 100, -1, -1,
+										 -1, 63, -1, -1, -1, 100, -1, -1,
+										 -1, -1, -1, -1, -1, -1, -1, -1};
+
+	public static int[] BreathS5JobLv = {-1, -1, -1, -1, -1, -1, -1, -1,
+										 -1, -1, -1, -1, -1, 100, -1, -1,
+										 -1, 85, -1, -1, -1, 100, -1, -1,
+										 -1, -1, -1, -1, -1, -1, -1, -1};
+
+
     public FuncMagicLvTable(){}
 
     public boolean magicEnable(EntityPlayer ep, Item itm)
@@ -853,6 +904,26 @@ public class FuncMagicLvTable {
 	    	lvTable = MahoizunJobLv;
 	    }else if(itm == DQMagics.itemZarakima){
 	    	lvTable = ZarakimaJobLv;
+	    }else if(itm == DQMagics.itemBreathF1){
+	    	lvTable = BreathF1JobLv;
+	    }else if(itm == DQMagics.itemBreathF2){
+	    	lvTable = BreathF2JobLv;
+	    }else if(itm == DQMagics.itemBreathF3){
+	    	lvTable = BreathF3JobLv;
+	    }else if(itm == DQMagics.itemBreathF4){
+	    	lvTable = BreathF4JobLv;
+	    }else if(itm == DQMagics.itemBreathF5){
+	    	lvTable = BreathF5JobLv;
+	    }else if(itm == DQMagics.itemBreathS1){
+	    	lvTable = BreathS1JobLv;
+	    }else if(itm == DQMagics.itemBreathS2){
+	    	lvTable = BreathS2JobLv;
+	    }else if(itm == DQMagics.itemBreathS3){
+	    	lvTable = BreathS3JobLv;
+	    }else if(itm == DQMagics.itemBreathS4){
+	    	lvTable = BreathS4JobLv;
+	    }else if(itm == DQMagics.itemBreathS5){
+	    	lvTable = BreathS5JobLv;
 	    }
 
 	    //System.out.println("test1" + lvTable);
@@ -1270,6 +1341,26 @@ public class FuncMagicLvTable {
 	    	lvTable = MahoizunJobLv;
 	    }else if(itm == DQMagics.itemZarakima){
 	    	lvTable = ZarakimaJobLv;
+	    }else if(itm == DQMagics.itemBreathF1){
+	    	lvTable = BreathF1JobLv;
+	    }else if(itm == DQMagics.itemBreathF2){
+	    	lvTable = BreathF2JobLv;
+	    }else if(itm == DQMagics.itemBreathF3){
+	    	lvTable = BreathF3JobLv;
+	    }else if(itm == DQMagics.itemBreathF4){
+	    	lvTable = BreathF4JobLv;
+	    }else if(itm == DQMagics.itemBreathF5){
+	    	lvTable = BreathF5JobLv;
+	    }else if(itm == DQMagics.itemBreathS1){
+	    	lvTable = BreathS1JobLv;
+	    }else if(itm == DQMagics.itemBreathS2){
+	    	lvTable = BreathS2JobLv;
+	    }else if(itm == DQMagics.itemBreathS3){
+	    	lvTable = BreathS3JobLv;
+	    }else if(itm == DQMagics.itemBreathS4){
+	    	lvTable = BreathS4JobLv;
+	    }else if(itm == DQMagics.itemBreathS5){
+	    	lvTable = BreathS5JobLv;
 	    }
 
     	return lvTable;
@@ -1300,6 +1391,9 @@ public class FuncMagicLvTable {
     	if(jobId == EnumDqmJob.Densetsu.getId())
     	{
     		return dam + (dam / 5);
+    	}else if(jobId == EnumDqmJob.Densetsu.getId())
+    	{
+    		return ((dam * 2) + (dam / 2));
     	}else
     	{
 	    	if(tagLv == -1)

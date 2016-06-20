@@ -191,9 +191,10 @@ public class GuiPlayerStatus extends Gui
           int COIN = ExtendedPlayerProperties.get(ep).getCoin();
           int Jukuren = ExtendedPlayerProperties.get(ep).getJukurenLv(Weapon);
           int JukurenEXP = ExtendedPlayerProperties.get(ep).getJukurenExp(Weapon);
+          int JukurenWP = ExtendedPlayerProperties.get(ep).getJukurenWP(Weapon);
 
           String weaponName = I18n.format("gui.weapon." + Weapon);
-          String sJukuren1 = I18n.format("gui.status.skill", new Object[]{weaponName, Jukuren});
+          String sJukuren1 = I18n.format("gui.status.skill", new Object[]{weaponName, Jukuren, JukurenWP});
           String sJukuren2;
           String sKougeki = I18n.format("gui.status.attack", new Object[]{ATK, STR});
           String sMamori = I18n.format("gui.status.gurd", new Object[]{DEF, AGI});

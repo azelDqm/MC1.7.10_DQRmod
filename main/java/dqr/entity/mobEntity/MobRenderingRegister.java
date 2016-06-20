@@ -93,6 +93,7 @@ import dqr.entity.mobEntity.monsterEnd.DqmEntityPandorabox;
 import dqr.entity.mobEntity.monsterEnd.DqmEntityRyuiso;
 import dqr.entity.mobEntity.monsterEnd.DqmEntityTororubonba;
 import dqr.entity.mobEntity.monsterEtc.DqmEntityFurosutogizumo;
+import dqr.entity.mobEntity.monsterEtc.DqmEntityGanseki;
 import dqr.entity.mobEntity.monsterEtc.DqmEntityGizumo;
 import dqr.entity.mobEntity.monsterEtc.DqmEntityHiitogizumo;
 import dqr.entity.mobEntity.monsterEtc.DqmEntityHitokuibako;
@@ -360,6 +361,7 @@ import dqr.entity.mobEntity.render2.DqmRenderTororubonba;
 import dqr.entity.mobEntity.render2.DqmRenderTororuking;
 import dqr.entity.mobEntity.render2.DqmRenderTumurinmama;
 import dqr.entity.mobEntity.render2.DqmRenderUragirikozou;
+import dqr.entity.mobEntity.render3.DqmRenderGansekiOtoshi;
 
 public class MobRenderingRegister {
 
@@ -678,5 +680,6 @@ public class MobRenderingRegister {
 		RenderingRegistry.registerEntityRenderingHandler(DqmEntityEriminator.class, new DqmRenderEriminator());
 		RenderingRegistry.registerEntityRenderingHandler(DqmEntityDesusutoka.class, new DqmRenderDesusutoka());
 
+		RenderingRegistry.registerEntityRenderingHandler(DqmEntityGanseki.class, new DqmRenderGansekiOtoshi());
 	}
 }

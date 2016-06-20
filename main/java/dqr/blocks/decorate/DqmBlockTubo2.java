@@ -16,6 +16,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import dqr.DQR;
 import dqr.api.Blocks.DQDecorates;
+import dqr.api.enums.EnumDqmWorldType;
 import dqr.blocks.decorate.tileEntity.DqmTileEntityTubo;
 import dqr.entity.mobEntity.DqmMobBase;
 
@@ -49,35 +50,102 @@ public class DqmBlockTubo2 extends BlockContainer
         int rateItem = 0;
         int dim = par1World.provider.dimensionId;
 
-        if(rand.nextInt(5) == 0)
+        if(DQR.conf.cfg_gen_Tubo_Map.get(dim) != null && DQR.conf.cfg_gen_Tubo_Map.get(dim).equalsIgnoreCase(EnumDqmWorldType.OVERWORLD.getName()))
         {
-        	if (!par1World.isRemote)
-        	{
-	        	if(dim == 0)
+	        if(rand.nextInt(5) == 0)
+	        {
+	        	if (!par1World.isRemote)
 	        	{
-	        		par1World.setBlock(par2, par3, par4, Blocks.flowing_water, 0, 2);
+		        	if(dim == 0)
+		        	{
+		        		par1World.setBlock(par2, par3, par4, Blocks.flowing_water, 0, 2);
+		        	}else
+		        	{
+		        		par1World.setBlock(par2, par3, par4, Blocks.flowing_lava, 0, 2);
+		        	}
+	        	}
+	        }else
+	        {
+	        	rateItem = rand.nextInt(50);
+
+	        	if(rateItem == 0)
+	        	{
+	        		doropiItems = DQR.randomItem.getEmblemRank1(1, 1);
+	        	}else if(rateItem < 10)
+	        	{
+	        		doropiItems = DQR.randomItem.getFoodRank1(1, 1);
+	        	}else if(rateItem < 15)
+	        	{
+	        		doropiItems = DQR.randomItem.getMiscsRank2(1, 1);
 	        	}else
 	        	{
-	        		par1World.setBlock(par2, par3, par4, Blocks.flowing_lava, 0, 2);
+	        		doropiItems = DQR.randomItem.getMiscsRank1(1, 1);
 	        	}
-        	}
-        }else
+	        }
+        }else if(DQR.conf.cfg_gen_Tubo_Map.get(dim) != null && DQR.conf.cfg_gen_Tubo_Map.get(dim).equalsIgnoreCase(EnumDqmWorldType.NETHER.getName()))
         {
-        	rateItem = rand.nextInt(50);
+	        if(rand.nextInt(5) == 0)
+	        {
+	        	if (!par1World.isRemote)
+	        	{
+		        	if(dim == 0)
+		        	{
+		        		par1World.setBlock(par2, par3, par4, Blocks.flowing_water, 0, 2);
+		        	}else
+		        	{
+		        		par1World.setBlock(par2, par3, par4, Blocks.flowing_lava, 0, 2);
+		        	}
+	        	}
+	        }else
+	        {
+	        	rateItem = rand.nextInt(50);
 
-        	if(rateItem == 0)
-        	{
-        		doropiItems = DQR.randomItem.getEmblemRank1(1, 1);
-        	}else if(rateItem < 10)
-        	{
-        		doropiItems = DQR.randomItem.getFoodRank1(1, 1);
-        	}else if(rateItem < 15)
-        	{
-        		doropiItems = DQR.randomItem.getMiscsRank2(1, 1);
-        	}else
-        	{
-        		doropiItems = DQR.randomItem.getMiscsRank1(1, 1);
-        	}
+	        	if(rateItem == 0)
+	        	{
+	        		doropiItems = DQR.randomItem.getEmblemRank1(1, 1);
+	        	}else if(rateItem < 10)
+	        	{
+	        		doropiItems = DQR.randomItem.getFoodRank1(1, 1);
+	        	}else if(rateItem < 15)
+	        	{
+	        		doropiItems = DQR.randomItem.getMiscsRank2(1, 1);
+	        	}else
+	        	{
+	        		doropiItems = DQR.randomItem.getMiscsRank1(1, 1);
+	        	}
+	        }
+        }else if(DQR.conf.cfg_gen_Tubo_Map.get(dim) != null && DQR.conf.cfg_gen_Tubo_Map.get(dim).equalsIgnoreCase(EnumDqmWorldType.THEEND.getName()))
+        {
+	        if(rand.nextInt(5) == 0)
+	        {
+	        	if (!par1World.isRemote)
+	        	{
+		        	if(dim == 0)
+		        	{
+		        		par1World.setBlock(par2, par3, par4, Blocks.flowing_water, 0, 2);
+		        	}else
+		        	{
+		        		par1World.setBlock(par2, par3, par4, Blocks.flowing_lava, 0, 2);
+		        	}
+	        	}
+	        }else
+	        {
+	        	rateItem = rand.nextInt(50);
+
+	        	if(rateItem == 0)
+	        	{
+	        		doropiItems = DQR.randomItem.getEmblemRank1(1, 1);
+	        	}else if(rateItem < 10)
+	        	{
+	        		doropiItems = DQR.randomItem.getFoodRank1(1, 1);
+	        	}else if(rateItem < 15)
+	        	{
+	        		doropiItems = DQR.randomItem.getMiscsRank2(1, 1);
+	        	}else
+	        	{
+	        		doropiItems = DQR.randomItem.getMiscsRank1(1, 1);
+	        	}
+	        }
         }
 
         if(doropiItems != null && rand.nextInt(5) == 0)

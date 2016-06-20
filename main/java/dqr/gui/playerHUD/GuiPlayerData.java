@@ -206,7 +206,7 @@ public class GuiPlayerData extends Gui
           int SP = ExtendedPlayerProperties.get(ep).getJobSp(JOB);
           int EXP = ExtendedPlayerProperties.get(ep).getJobExp(JOB);
 
-          String sJob = I18n.format("gui.job." + JOB) + " " + I18n.format("gui.status.LV") + Lv + " " + I18n.format("gui.status.SP") + SP;
+          String sJob = I18n.format("gui.job." + JOB) + " " + I18n.format("gui.status.LV") + Lv + " (" + I18n.format("gui.status.SP") + SP + ")";
          // String sHP =  I18n.format("gui.status.HP") + " " + HP + "/" + MaxHP;
           String sHP = I18n.format("gui.status.HP",new Object[]{HP, MaxHP});
           String sMP = I18n.format("gui.status.MP",new Object[]{MP, MaxMP});

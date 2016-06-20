@@ -11,7 +11,14 @@ public class DqmMobBaseTensei extends DqmMobBase
 	{
 		//this(world);
 		super(world, Type);
+		this.isImmuneToFire = true;
 	}
 
+	@Override
+    public boolean getCanSpawnHere()
+    {
 
+		//System.out.println("!!!!!!!!!!!!!!!!!!!" + this.getCommandSenderName());
+        return super.getCanSpawnHere();
+    }
 }

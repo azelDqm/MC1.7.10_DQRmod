@@ -352,7 +352,7 @@ public class DqmEntityNPCSinkan extends DqmNPCBase
     		int flg = ExtendedPlayerProperties.get(ep).getNpcTalk(EnumDqmNpcTalk.BANK.getId());
     		int epMoney = ExtendedPlayerProperties.get(ep).getGold();
 
-    		System.out.println("DEBUG_LINE : " + flg);
+    		//System.out.println("DEBUG_LINE : " + flg);
     		if(flg > 7)
     		{
     			if(ep.isSneaking())

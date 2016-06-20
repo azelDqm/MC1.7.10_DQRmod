@@ -12,6 +12,7 @@ import dqr.api.Blocks.DQMobFigures;
 import dqr.api.Blocks.DQMobObjects;
 import dqr.api.Items.DQEmblems;
 import dqr.api.Items.DQMiscs;
+import dqr.api.enums.EnumDqmMobRoot;
 import dqr.entity.mobEntity.DqmMobBase;
 import dqr.entity.mobEntity.monsterBoss.DqmEntityDesupisaro1;
 import dqr.entity.mobEntity.monsterBoss.DqmEntityDesupisaro2;
@@ -339,9 +340,18 @@ public class LivingDropHandler {
 		if(event.entityLiving instanceof DqmMobBase && rand.nextInt(1000) == 0)
 		{
 			DqmMobBase mob = (DqmMobBase)event.entityLiving;
-			if(mob.MobRoot.equalsIgnoreCase("DRAGON"))
+			if(mob.MobRoot.getId() == EnumDqmMobRoot.DRAGON.getId())
 			{
 				event.entityLiving.dropItem(DQEmblems.itemEmbDragon, 1);
+			}
+		}
+		
+		if(event.entityLiving instanceof DqmMobBase && rand.nextInt(3000) == 0)
+		{
+			DqmMobBase mob = (DqmMobBase)event.entityLiving;
+			if(mob.MobRoot.getId() == EnumDqmMobRoot.DRAGON.getId())
+			{
+				event.entityLiving.dropItem(DQMiscs.itemDragonObuB, 1);
 			}
 		}
 

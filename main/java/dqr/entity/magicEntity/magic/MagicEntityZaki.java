@@ -463,7 +463,7 @@ public class MagicEntityZaki extends MagicEntity implements IProjectile{
                     			pe = elv2.getActivePotionEffect(DQPotionPlus.buffMahokanta);
                     		}
 
-                    		if(pe != null && this.shootingEntity != null && this.shootingEntity instanceof EntityLiving)
+                    		if(pe != null && this.shootingEntity != null && this.shootingEntity instanceof EntityLivingBase)
                     		{
                             	EntityLiving elv = (EntityLiving)this.shootingEntity;
 
@@ -471,7 +471,23 @@ public class MagicEntityZaki extends MagicEntity implements IProjectile{
 	                            {
 	                            	//村人以外なら、ダメージを与える処理を呼ぶ
 	                            	i1 = (int)elv.getMaxHealth() + 10;
-	                            	if (elv.attackEntityFrom(damagesource, (float)i1))
+
+	                            	DamageSource ds = damagesource;
+
+	                            	if(this.shootingEntity instanceof EntityPlayer)
+	                            	{
+	                            		ds = DQR.damageSource.getPlayerSkillDamage((EntityPlayer)this.shootingEntity);
+	                            	}else if(damagesource.getEntity() instanceof EntityPlayer)
+	                            	{
+	                            		ds = DQR.damageSource.getPlayerSkillDamage((EntityPlayer)damagesource.getEntity());
+	                            	}else if(damagesource.getSourceOfDamage() instanceof EntityPlayer)
+	                            	{
+	                            		ds = DQR.damageSource.getPlayerSkillDamage((EntityPlayer)damagesource.getSourceOfDamage());
+	                            	}
+
+	                            	//DQR.damageSource.getPlayerSkillDamage(ep)
+	                            	//if (elv.attackEntityFrom(damagesource, (float)i1))
+	                            	if (elv.attackEntityFrom(ds, (float)i1))
 	                                {
 	                            		//ダメージを与えることに成功したら以下の処理を行う
 	                                    if (elv instanceof EntityLivingBase)

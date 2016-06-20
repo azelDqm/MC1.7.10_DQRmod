@@ -254,7 +254,7 @@ public class MagicEntityDoruma extends MagicEntity implements IProjectile{
         		                    }
                      			}
 
-                     			if(epTarget == null)
+                     			if(!(target2 instanceof EntityPlayer) || (target2 instanceof EntityPlayer && epTarget != null))
                      			{
 	                     			EntityLivingBase ebl2 = (EntityLivingBase)target2;
 	                     			int i1 = (int)this.damage;
@@ -264,6 +264,7 @@ public class MagicEntityDoruma extends MagicEntity implements IProjectile{
 
 	                     			if (ebl2.attackEntityFrom(damagesource2, (float)i1))
 	 	                            {
+	                     				//System.out.println("TESTEST");
 	 	                        		//ダメージを与えることに成功したら以下の処理を行う
 	 	                                if (ebl2 instanceof EntityLivingBase)
 	 	                                {
@@ -512,12 +513,13 @@ public class MagicEntityDoruma extends MagicEntity implements IProjectile{
 		                            		*/
 		                                	pe = ebl2.getActivePotionEffect(DQPotionPlus.buffMahokanta);
 
-		                            		if(pe != null && this.shootingEntity != null && this.shootingEntity instanceof EntityLiving)
+		                            		if(pe != null && this.shootingEntity != null && this.shootingEntity instanceof EntityLivingBase)
 		                            		{
 		                            			EntityLiving elv = (EntityLiving)this.shootingEntity;
 
 			                          			if (elv.attackEntityFrom(damagesource2, (float)i1))
 			      	                            {
+			                          				//System.out.println("TESTEST2");
 			      	                        		//ダメージを与えることに成功したら以下の処理を行う
 			      	                                if (elv instanceof EntityLivingBase)
 			      	                                {
@@ -555,6 +557,7 @@ public class MagicEntityDoruma extends MagicEntity implements IProjectile{
 		                            		{
 			                          			if (ebl2.attackEntityFrom(damagesource2, (float)i1))
 			      	                            {
+			                          				//System.out.println("TESTEST3");
 			      	                        		//ダメージを与えることに成功したら以下の処理を行う
 			      	                                if (ebl2 instanceof EntityLivingBase)
 			      	                                {

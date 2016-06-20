@@ -79,7 +79,7 @@ public class DqmGenerateSurfaceOre implements IWorldGenerator
 
     	if(baseBlock == null)
     	{
-//    		System.out.println("BLOCKNAME:");
+    		//System.out.println("BLOCKNAME:");
     		return;
     	}
 

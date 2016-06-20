@@ -11,9 +11,12 @@ import net.minecraft.world.World;
 import dqr.DQR;
 import dqr.DqrWorldData;
 import dqr.api.enums.EnumColor;
+import dqr.api.enums.EnumDqmMGToolMode;
 import dqr.api.enums.EnumDqmMagic;
+import dqr.api.enums.EnumDqmWeaponMode;
 import dqr.api.event.DqrRuraEvent;
 import dqr.items.base.DqmItemMiscBase;
+import dqr.playerData.ExtendedPlayerProperties;
 
 public class DqmItemKimera extends DqmItemMiscBase{
 
@@ -83,33 +86,37 @@ public class DqmItemKimera extends DqmItemMiscBase{
     	        double setX = Math.floor(wd.getKimeraX(this.getEnumMagic().getType()));
     	        double setY = Math.floor(wd.getKimeraY(this.getEnumMagic().getType()));
     	        double setZ = Math.floor(wd.getKimeraZ(this.getEnumMagic().getType()));
+
+    	        int ruraMode = ExtendedPlayerProperties.get(par3EntityPlayer).getWeaponMode(EnumDqmWeaponMode.WEAPONMODE_KIMERA.getId());
 	        	//par3EntityPlayer.setPosition(Math.floor(wd.getRuraX(this.getEnumMagic().getType())), Math.floor(wd.getRuraY(this.getEnumMagic().getType())), Math.floor(wd.getRuraZ(this.getEnumMagic().getType())));
     	        //par3EntityPlayer.moveEntity(0, 2, 0);
     	        //System.out.println(setX + "/" + setY + "/" + setZ);
     	        //par3EntityPlayer.moveEntity(setX, setY, setZ);
 
 
-
+    	        if(ruraMode != EnumDqmMGToolMode.RURAMODE0.getId())
+    	        {
     	        //まずはペットを飛ばす(キメラの翼の場合は飛ばさない)
-                List list = par3EntityPlayer.worldObj.getEntitiesWithinAABBExcludingEntity(par3EntityPlayer,
-                		par3EntityPlayer.boundingBox.addCoord(par3EntityPlayer.motionX, par3EntityPlayer.motionY, par3EntityPlayer.motionZ).expand(10.0D, 5.0D, 10.0D));
+	                List list = par3EntityPlayer.worldObj.getEntitiesWithinAABBExcludingEntity(par3EntityPlayer,
+	                		par3EntityPlayer.boundingBox.addCoord(par3EntityPlayer.motionX, par3EntityPlayer.motionY, par3EntityPlayer.motionZ).expand(10.0D, 5.0D, 10.0D));
 
-                if (list != null && !list.isEmpty())
-                {
-                	for (int n = 0 ; n < list.size() ; n++)
-                	{
-                		Entity target = (Entity)list.get(n);
+	                if (list != null && !list.isEmpty())
+	                {
+	                	for (int n = 0 ; n < list.size() ; n++)
+	                	{
+	                		Entity target = (Entity)list.get(n);
 
-                		if (target != null)
-                		{
-							//外部からの干渉用
-			        		DqrRuraEvent event = new DqrRuraEvent(par3EntityPlayer,
-																  target,
-			        											  par1ItemStack,
-																  setX, setY, setZ);
-                		}
-                	}
-                }
+	                		if (target != null)
+	                		{
+								//外部からの干渉用
+				        		DqrRuraEvent event = new DqrRuraEvent(par3EntityPlayer,
+																	  target,
+				        											  par1ItemStack,
+																	  setX, setY, setZ);
+	                		}
+	                	}
+	                }
+    	        }
 
 
     	        par3EntityPlayer.setPositionAndUpdate(setX, setY + 0.5D, setZ);
@@ -134,5 +141,10 @@ public class DqmItemKimera extends DqmItemMiscBase{
     	{
     		p_77624_3_.add(EnumColor.Aqua.getChatColor() + addLine[cnt]);
     	}
+
+    	p_77624_3_.add("");
+
+    	message = I18n.format("dqm.magicinfo.rura_all.txt", new Object[]{});
+    	p_77624_3_.add(EnumColor.Aqua.getChatColor() + message);
     }
 }

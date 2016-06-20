@@ -33,6 +33,23 @@ public class ThreadJukurenUp extends Thread{
 				//String weaponName = I18n.format("gui.weapon." + ExtendedPlayerProperties.get(this.ep).getWeapon());
 				epLv = epLv + 1;
 				ExtendedPlayerProperties.get(this.ep).setJukurenLv(ExtendedPlayerProperties.get(this.ep).getWeapon(), epLv);
+
+				int jukurenWP = ExtendedPlayerProperties.get(this.ep).getJukurenWP(ExtendedPlayerProperties.get(this.ep).getWeapon());
+
+				switch(epLv)
+				{
+					case 2: jukurenWP = jukurenWP + 15; break;
+					case 3: jukurenWP = jukurenWP + 25; break;
+					case 4: jukurenWP = jukurenWP + 35; break;
+					case 5: jukurenWP = jukurenWP + 45;  break;
+					case 6: jukurenWP = jukurenWP + 55; break;
+					case 7: jukurenWP = jukurenWP + 65; break;
+					case 8: jukurenWP = jukurenWP + 75; break;
+					case 9: jukurenWP = jukurenWP + 85; break;
+					case 10: jukurenWP = jukurenWP + 100; break;
+				}
+
+				ExtendedPlayerProperties.get(this.ep).setJukurenWP(ExtendedPlayerProperties.get(this.ep).getWeapon(), jukurenWP);
 				//ep.addChatMessage(new ChatComponentTranslation("msg.jukurenUp.txt",new Object[] {weaponName, epLv}));
 				ep.addChatMessage(new ChatComponentTranslation("msg.jukurenUp.txt",new Object[] {
 						new ChatComponentTranslation("gui.weapon." + ExtendedPlayerProperties.get(this.ep).getWeapon()), epLv}));

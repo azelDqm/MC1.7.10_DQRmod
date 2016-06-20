@@ -64,6 +64,8 @@ public class MagicEntityBagi extends MagicEntity implements IProjectile{
 
     protected boolean worldFlg = false;
 
+    protected DamageSource damSource = null;
+
     public MagicEntityBagi(World par1World)
     {
         super(par1World);
@@ -461,7 +463,7 @@ public class MagicEntityBagi extends MagicEntity implements IProjectile{
                     			pe = elv2.getActivePotionEffect(DQPotionPlus.buffMahokanta);
                     		}
 
-                    		if(pe != null && this.shootingEntity != null && this.shootingEntity instanceof EntityLiving)
+                    		if(pe != null && this.shootingEntity != null && this.shootingEntity instanceof EntityLivingBase)
                     		{
                     			EntityLiving elv = (EntityLiving)this.shootingEntity;
                             	//村人以外なら、ダメージを与える処理を呼ぶ
@@ -773,6 +775,10 @@ public class MagicEntityBagi extends MagicEntity implements IProjectile{
     /* ダメージソースのタイプ */
     public DamageSource thisDamageSource(Entity entity)
     {
+    	if(this.damSource != null)
+    	{
+    		return this.damSource;
+    	}
         //発射元のEntityがnullだった場合の対策を含む。
     	return entity != null ? EntityDamageSource.causeIndirectMagicDamage(entity, this) : DamageSource.magic;
     }
@@ -803,5 +809,10 @@ public class MagicEntityBagi extends MagicEntity implements IProjectile{
     public void setWorldFlg(boolean par1)
     {
     	this.worldFlg = par1;
+    }
+
+    public void setDamSource(DamageSource par1)
+    {
+    	this.damSource = par1;
     }
 }

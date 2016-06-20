@@ -75,7 +75,7 @@ public class InventoryMedalking implements IInventory
 
 	        			for(int cntE=0; cntE < test2.length; cntE++)
 	        			{
-	        				System.out.println("TEST:" + (String)test2[cntE]);
+	        				//System.out.println("TEST:" + (String)test2[cntE]);
 	        			}
 	        		}
 

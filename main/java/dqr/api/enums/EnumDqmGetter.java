@@ -1,5 +1,7 @@
 package dqr.api.enums;
 
+import java.util.TreeMap;
+
 public class EnumDqmGetter {
 
 	public EnumDqmGetter(){}
@@ -62,6 +64,41 @@ public class EnumDqmGetter {
     	for(int cnt = 0; cnt < data.length; cnt++)
     	{
     		if(data[cnt].getMobname().equalsIgnoreCase(par1))
+    		{
+    			return data[cnt];
+    		}
+    	}
+
+    	return null;
+    }
+
+    public TreeMap getSkillW(int wId)
+    {
+    	//wId : weaponID
+
+    	TreeMap<Integer, EnumDqmSkillW> ret = new TreeMap<Integer, EnumDqmSkillW>();
+
+    	EnumDqmSkillW[] data = EnumDqmSkillW.values();
+
+    	for(int cnt = 0; cnt < data.length; cnt++)
+    	{
+    		if(data[cnt].getWeaponId() == wId)
+    		{
+    			ret.put(data[cnt].getCategCode(), data[cnt]);
+    		}
+    	}
+
+    	return ret;
+    }
+
+    public EnumDqmSkillW getSkillW(int wId, int categId)
+    {
+
+    	EnumDqmSkillW[] data = EnumDqmSkillW.values();
+
+    	for(int cnt = 0; cnt < data.length; cnt++)
+    	{
+    		if(data[cnt].getWeaponId() == wId && data[cnt].getCategCode() == categId)
     		{
     			return data[cnt];
     		}

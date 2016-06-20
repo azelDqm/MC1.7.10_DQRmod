@@ -82,6 +82,8 @@ public class GuiPetStatusContainer extends Container
     @Override
     public ItemStack transferStackInSlot(EntityPlayer p_82846_1_, int p_82846_2_)
     {
+
+    	/*
         ItemStack itemstack = null;
         Slot slot = (Slot)this.inventorySlots.get(p_82846_2_);
 
@@ -90,25 +92,25 @@ public class GuiPetStatusContainer extends Container
             ItemStack itemstack1 = slot.getStack();
             itemstack = itemstack1.copy();
 
-            /*
-            if (p_82846_2_ < this.inventory.getSizeInventory())
-            {
-                if (!this.mergeItemStack(itemstack1, this.inventory.getSizeInventory(), this.inventorySlots.size(), true))
-                {
-                    return null;
-                }
-            }
+
+            //if (p_82846_2_ < this.inventory.getSizeInventory())
+            //{
+            //    if (!this.mergeItemStack(itemstack1, this.inventory.getSizeInventory(), this.inventorySlots.size(), true))
+            //    {
+            //        return null;
+            //    }
+            //}
 
             //シフトクリック時に、このアイテムだったら動かさない。
             //else if(slot.getStack() != null && slot.getStack().getItem() == DQR.instance.InventoryItemJobChange)
             //{
             //    return null;
             //}
-            else if (!this.mergeItemStack(itemstack1, 0, this.inventory.getSizeInventory(), false))
-            {
-                return null;
-            }
-            */
+            //else if (!this.mergeItemStack(itemstack1, 0, this.inventory.getSizeInventory(), false))
+            //{
+            //    return null;
+            //}
+
 
 
             if (itemstack1.stackSize == 0)
@@ -120,8 +122,9 @@ public class GuiPetStatusContainer extends Container
                 slot.onSlotChanged();
             }
         }
+        */
 
-        return itemstack;
+        return null;
     }
 
     /*
@@ -146,6 +149,7 @@ public class GuiPetStatusContainer extends Container
 
     	//System.out.println("TEST:" + par1);
 
-    	return super.slotClick(par1, par2, par3, ep);
+    	//return super.slotClick(par1, par2, par3, ep);
+    	return null;
     }
 }

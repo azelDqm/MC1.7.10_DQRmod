@@ -1115,7 +1115,7 @@ public class FuncItemRandom {
 		Item item = null;
 
 
-		switch(rand.nextInt(9))
+		switch(rand.nextInt(10))
 		{
 			case 0: item = DQBuilders.itemBuilderDamaS1; break;
 			case 1: item = DQBuilders.itemBuilderDamaS2; break;
@@ -1126,6 +1126,7 @@ public class FuncItemRandom {
 			case 6: item = DQBuilders.itemBuilderDamaS7; break;
 			case 7: item = DQBuilders.itemBuilderDamaS8; break;
 			case 8: item = DQBuilders.itemBuilderDamaS9; break;
+			case 9: item = DQBuilders.itemBuilderIdoMedal; break;
 		}
 
 		if(item != null)
@@ -1147,7 +1148,7 @@ public class FuncItemRandom {
 		Item item = null;
 
 
-		switch(rand.nextInt(9))
+		switch(rand.nextInt(10))
 		{
 			case 0: item = DQBuilders.itemBuilderDamaW1; break;
 			case 1: item = DQBuilders.itemBuilderDamaW2; break;
@@ -1158,6 +1159,7 @@ public class FuncItemRandom {
 			case 6: item = DQBuilders.itemBuilderDamaW7; break;
 			case 7: item = DQBuilders.itemBuilderDamaW8; break;
 			case 8: item = DQBuilders.itemBuilderDamaW9; break;
+			case 9: item = DQBuilders.itemBuilderIdoMedal; break;
 		}
 
 		if(item != null)

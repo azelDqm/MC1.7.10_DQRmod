@@ -15,6 +15,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import dqr.DQR;
 import dqr.api.Blocks.DQDecorates;
+import dqr.api.enums.EnumDqmWorldType;
 import dqr.blocks.decorate.tileEntity.DqmTileEntitySword2Mob;
 import dqr.entity.mobEntity.DqmMobBase;
 
@@ -55,7 +56,7 @@ public class DqmBlockBlockSword2Mob extends BlockContainer
         int dim = par1World.provider.dimensionId;
 
 
-        if(dim == 0)
+        if(DQR.conf.cfg_gen_Sword2_Map.get(dim) != null && DQR.conf.cfg_gen_Sword2_Map.get(dim).equalsIgnoreCase(EnumDqmWorldType.OVERWORLD.getName()))
         {
         	if(rand.nextInt(4) != 0)
         	{
@@ -72,7 +73,7 @@ public class DqmBlockBlockSword2Mob extends BlockContainer
         		spawnMob = DQR.randomMob.getRandomNether(par1World);
         		doropiItems = DQR.randomItem.getWeaponRank3(1, 1);
         	}
-        }else if(dim == -1)
+        }else if(DQR.conf.cfg_gen_Sword2_Map.get(dim) != null && DQR.conf.cfg_gen_Sword2_Map.get(dim).equalsIgnoreCase(EnumDqmWorldType.NETHER.getName()))
         {
         	rateMob = rand.nextInt(10);
         	if(rateMob == 0)
@@ -94,7 +95,7 @@ public class DqmBlockBlockSword2Mob extends BlockContainer
         		spawnMob = DQR.randomMob.getRandomNether(par1World);
         		doropiItems = DQR.randomItem.getWeaponRank3(1, 1);
         	}
-        }else
+        }else if(DQR.conf.cfg_gen_Sword2_Map.get(dim) != null && DQR.conf.cfg_gen_Sword2_Map.get(dim).equalsIgnoreCase(EnumDqmWorldType.THEEND.getName()))
         {
         	if(rand.nextInt(6) == 1)
         	{

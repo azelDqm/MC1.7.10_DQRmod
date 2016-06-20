@@ -1,19 +1,43 @@
 package dqr.handler;
 
+import java.util.Random;
+
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.MathHelper;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.EntityInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import dqr.DQR;
 import dqr.api.potion.DQPotionMinus;
+import dqr.entity.mobEntity.DqmMobBase;
 import dqr.playerData.ExtendedPlayerProperties;
 
 public class RarihoEventHandler {
+	@SubscribeEvent(priority = EventPriority.HIGHEST)
+    public void onRarihoLivingSetAttackTarget(LivingSetAttackTargetEvent event) {
+		/*
+		if(DQR.func.isBind(event.entityLiving))
+		{
+			if(event.target != null)
+			{
+				event.
+				//System.out.println("TAG1:" + event.target.getCommandSenderName());
+			}
+			//System.out.println("TAG2:" + event.entity.getCommandSenderName());
+			//System.out.println("TAG2:" + event.entityLiving.getCommandSenderName());
+			//event.setCanceled(true);
+		}
+		*/
+	}
+
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onRarihoLivingUpdate(LivingUpdateEvent event) {
     	if(event.entityLiving instanceof EntityPlayer)
@@ -21,8 +45,7 @@ public class RarihoEventHandler {
     		PotionEffect pe;
     		EntityPlayer ep = (EntityPlayer)event.entityLiving;
 
-    		pe = ep.getActivePotionEffect(DQPotionMinus.debuffRariho);
-    		if(pe != null)
+    		if(DQR.func.isBind(ep))
     		{
     			double[] loc = new double[4];
     			double[] locOld;
@@ -53,17 +76,42 @@ public class RarihoEventHandler {
     			}
 
     		}
+    	}else if(event.entityLiving instanceof EntityLivingBase && !(event.entityLiving instanceof DqmMobBase))
+    	{
+
+    		if(DQR.func.isBind(event.entityLiving))
+    		{
+    			event.setCanceled(true);
+    		}
+
     	}
 	}
+
+	@SubscribeEvent(priority = EventPriority.HIGHEST)
+    public void checkRarihoCancel(LivingHurtEvent event)
+    {
+		PotionEffect pe = null;
+
+		pe = event.entityLiving.getActivePotionEffect(DQPotionMinus.debuffRariho);
+		if(pe != null && pe.getDuration() > 0)
+		{
+			if(event.source.getEntity() != null)
+			{
+				Random rand = new Random();
+				if(rand.nextInt(3) == 0)
+				{
+					event.entityLiving.removePotionEffect(DQPotionMinus.debuffRariho.id);
+				}
+			}
+		}
+    }
 
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onRarihoAttackUpdate(AttackEntityEvent event)
 	{
 		EntityPlayer ep = event.entityPlayer;
-    	PotionEffect pe;
 
-		pe = ep.getActivePotionEffect(DQPotionMinus.debuffRariho);
-		if(pe != null)
+		if(DQR.func.isBind(ep))
 		{
 			event.setCanceled(true);
 		}
@@ -75,10 +123,7 @@ public class RarihoEventHandler {
     	if(event.entityLiving instanceof EntityPlayer)
     	{
     		EntityPlayer ep = event.entityPlayer;
-    		PotionEffect pe;
-
-			pe = ep.getActivePotionEffect(DQPotionMinus.debuffRariho);
-			if(pe != null)
+    		if(DQR.func.isBind(ep))
 			{
 				event.setCanceled(true);
 			}
@@ -89,10 +134,7 @@ public class RarihoEventHandler {
     public void onRarihoPlayerInteract(PlayerInteractEvent event)
 	{
 		EntityPlayer ep = event.entityPlayer;
-    	PotionEffect pe;
-
-		pe = ep.getActivePotionEffect(DQPotionMinus.debuffRariho);
-		if(pe != null)
+		if(DQR.func.isBind(ep))
 		{
 			event.setCanceled(true);
 		}
@@ -102,11 +144,9 @@ public class RarihoEventHandler {
     public void onRarihoLivingJumpEvent(LivingEvent.LivingJumpEvent event) {
     	if(event.entityLiving instanceof EntityPlayer)
     	{
-    		PotionEffect pe;
     		EntityPlayer ep = (EntityPlayer)event.entityLiving;
 
-    		pe = ep.getActivePotionEffect(DQPotionMinus.debuffRariho);
-    		if(pe != null)
+    		if(DQR.func.isBind(ep))
     		{
     		}
     	}

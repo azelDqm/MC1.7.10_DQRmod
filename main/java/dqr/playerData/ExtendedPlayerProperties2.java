@@ -38,6 +38,11 @@ public class ExtendedPlayerProperties2 implements IExtendedEntityProperties {
     private int ToolBreak1Area = 0;
     private int ToolBreak2Area = 0;
     private int BreakBlockMode = 0;
+    private int BlockSetMode = 0;
+    private int BlockSetArea = 0;
+
+    private String selectSetBlock = "";
+    private int selectSetBlockMeta = 0;
 
     private NBTTagList enderChestTagList1 = new NBTTagList();
     private NBTTagList enderChestTagList2 = new NBTTagList();
@@ -46,6 +51,8 @@ public class ExtendedPlayerProperties2 implements IExtendedEntityProperties {
     private NBTTagList enderChestTagList5 = new NBTTagList();
     private int setlectEnderChestID = 0;
     private DqmTileEntityEnderChest enderChestEntity = null;
+
+    private NBTTagCompound ToolSetInBlocks = new NBTTagCompound();
 
     private static String getSaveKey(EntityPlayer player) {
         return player.getCommandSenderName() + ":" + EXT_PROP_NAME;
@@ -98,8 +105,8 @@ public class ExtendedPlayerProperties2 implements IExtendedEntityProperties {
 
         nbt.setInteger("ToolBreak1mode", ToolBreak1mode);
         nbt.setInteger("ToolBreak2mode", ToolBreak2mode);
-        nbt.setInteger("ToolBreakArea1", ToolBreak1Area);
-        nbt.setInteger("ToolBreakArea2", ToolBreak2Area);
+        nbt.setInteger("ToolBreak1Area", ToolBreak1Area);
+        nbt.setInteger("ToolBreak2Area", ToolBreak2Area);
         nbt.setInteger("BreakBlockMode", BreakBlockMode);
 
         nbt.setString("PlayerName", PlayerName);
@@ -109,6 +116,13 @@ public class ExtendedPlayerProperties2 implements IExtendedEntityProperties {
         nbt.setTag("enderChestTagList3", enderChestTagList3);
         nbt.setTag("enderChestTagList4", enderChestTagList4);
         nbt.setTag("enderChestTagList5", enderChestTagList5);
+
+        nbt.setTag("ToolSetInBlocks", this.ToolSetInBlocks);
+
+        nbt.setInteger("SelectSetBlockMeta", selectSetBlockMeta);
+        nbt.setString("SelectSetBlock", selectSetBlock);
+        nbt.setInteger("BlockSetMode", BlockSetMode);
+        nbt.setInteger("BlockSetArea", BlockSetArea);
 
         compound.setTag(EXT_PROP_NAME, nbt);
 	}
@@ -157,7 +171,6 @@ public class ExtendedPlayerProperties2 implements IExtendedEntityProperties {
         ToolBreak2Area = nbt.getInteger("ToolBreak2Area");
         BreakBlockMode = nbt.getInteger("BreakBlockMode");
 
-
         if(nbt.getTag("enderChestTagList1") != null)
         {
         	enderChestTagList1 = (NBTTagList)nbt.getTag("enderChestTagList1");
@@ -197,6 +210,19 @@ public class ExtendedPlayerProperties2 implements IExtendedEntityProperties {
         {
         	enderChestTagList5 = new NBTTagList();
         }
+
+        if(nbt.getTag("ToolSetInBlocks") != null)
+        {
+        	ToolSetInBlocks = nbt.getCompoundTag("ToolSetInBlocks");
+        }else
+        {
+        	ToolSetInBlocks = new NBTTagCompound();
+        }
+
+        selectSetBlockMeta = nbt.getInteger("SelectSetBlockMeta");
+        selectSetBlock = nbt.getString("SelectSetBlock");
+        BlockSetMode = nbt.getInteger("BlockSetMode");
+        BlockSetArea = nbt.getInteger("BlockSetArea");
 	}
 
     public int[] getFarmRecipeA() {
@@ -427,5 +453,56 @@ public class ExtendedPlayerProperties2 implements IExtendedEntityProperties {
     public int getBreakBlockMode()
     {
     	return BreakBlockMode ;
+    }
+
+    public void setToolSetInBlocks(NBTTagCompound par1)
+    {
+    	ToolSetInBlocks = par1;
+    }
+
+    public NBTTagCompound getToolSetInBlocks()
+    {
+    	return ToolSetInBlocks ;
+    }
+
+    public void setSelectSetBlock(String par1)
+    {
+    	selectSetBlock = par1;
+    }
+
+    public String getSelectSetBlock()
+    {
+    	return selectSetBlock ;
+    }
+
+    public void setSelectSetBlockMeta(int par1)
+    {
+    	selectSetBlockMeta = par1;
+    }
+
+    public int getSelectSetBlockMeta()
+    {
+    	return selectSetBlockMeta;
+    }
+
+
+    public void setBlockSetMode(int par1)
+    {
+    	BlockSetMode = par1;
+    }
+
+    public int getBlockSetMode()
+    {
+    	return BlockSetMode ;
+    }
+
+    public void setBlockSetArea(int par1)
+    {
+    	BlockSetArea = par1;
+    }
+
+    public int getBlockSetArea()
+    {
+    	return BlockSetArea;
     }
 }

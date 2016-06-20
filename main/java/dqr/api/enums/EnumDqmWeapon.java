@@ -34,7 +34,8 @@ public enum EnumDqmWeapon {
 	DqmOugi(25, "DqmOugi"),
 	DqmMonsterWeapon(26, "DqmMonsterWeapon"),
 	DqmGlobe(27, "DqmGlobe"),
-	DqmScythe(28, "DqmScythe");
+	DqmScythe(28, "DqmScythe"),
+	DqmMagicDragon(29, "DqmMagicDragon");
 
 	private int id;
     private String name;

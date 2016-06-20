@@ -15,6 +15,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import dqr.DQR;
 import dqr.api.Blocks.DQDecorates;
+import dqr.api.enums.EnumDqmWorldType;
 import dqr.blocks.decorate.tileEntity.DqmTileEntityTaruMob;
 import dqr.entity.mobEntity.DqmMobBase;
 
@@ -52,7 +53,7 @@ public class DqmBlockTaruMob extends BlockContainer
         rateItem = rand.nextInt(10);
 
 
-        if(dim == 0)
+        if(DQR.conf.cfg_gen_Taru_Map.get(dim) != null && DQR.conf.cfg_gen_Taru_Map.get(dim).equalsIgnoreCase(EnumDqmWorldType.OVERWORLD.getName()))
         {
     		if(rand.nextInt(5) != 0)
     		{
@@ -91,7 +92,66 @@ public class DqmBlockTaruMob extends BlockContainer
     				doropiItems = DQR.randomItem.getEmblemRank2(1, 1);
     			}
     		}
-        }else
+        }else if(DQR.conf.cfg_gen_Taru_Map.get(dim) != null && DQR.conf.cfg_gen_Taru_Map.get(dim).equalsIgnoreCase(EnumDqmWorldType.NETHER.getName()))
+        {
+        	if(rand.nextInt(4) == 0)
+        	{
+        		if(!par1World.isRemote)
+        		{
+        			par1World.createExplosion(null, par2, par3, par4, 5.0F, true);
+        		}
+        	}else
+        	{
+        		if(rand.nextInt(5) == 0)
+        		{
+        			spawnMob = DQR.randomMob.getRandomEnd(par1World);
+
+        			rateItem = rand.nextInt(20);
+        			if(rateItem < 10)
+        			{
+        				doropiItems = DQR.randomItem.getMiscsRank4(1, 1);
+        			}else if(rateItem < 15)
+        			{
+        				doropiItems = DQR.randomItem.getMiscsRank3(1, 1);
+        			}else if(rateItem < 18)
+        			{
+        				doropiItems = DQR.randomItem.getEmblemRank1(1, 1);
+        			}else
+        			{
+        				doropiItems = DQR.randomItem.getEmblemRank2(1, 1);
+        			}
+        		}else
+        		{
+        			spawnMob = DQR.randomMob.getRandomNether(par1World);
+
+        			rateItem = rand.nextInt(25);
+        			if(rateItem < 10)
+        			{
+        				doropiItems = DQR.randomItem.getMiscsRank4(1, 1);
+        			}else if(rateItem < 20)
+        			{
+        				doropiItems = DQR.randomItem.getMiscsRank3(1, 1);
+        			}else if(rateItem < 24)
+        			{
+        				doropiItems = DQR.randomItem.getEmblemRank1(1, 1);
+        			}else
+        			{
+        				doropiItems = DQR.randomItem.getEmblemRank2(1, 1);
+        			}
+        		}
+
+        	}
+
+            if(rand.nextInt(5) == 0)
+            {
+            	spawnMob = null;
+            }
+
+            if(spawnMob == null && rand.nextInt(2) == 0)
+            {
+            	doropiItems = new ItemStack(DQDecorates.DqmBlockTaruK, 1);
+            }
+        }else if(DQR.conf.cfg_gen_Taru_Map.get(dim) != null && DQR.conf.cfg_gen_Taru_Map.get(dim).equalsIgnoreCase(EnumDqmWorldType.THEEND.getName()))
         {
         	if(rand.nextInt(4) == 0)
         	{

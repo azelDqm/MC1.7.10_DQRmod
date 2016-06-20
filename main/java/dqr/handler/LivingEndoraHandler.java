@@ -42,10 +42,10 @@ public class LivingEndoraHandler {
 		/*
 		if(event.entityLiving.worldObj.isRemote)
 		{
-			System.out.println("TEST1");
+			//System.out.println("TEST1");
 		}else
 		{
-			System.out.println("TEST2");
+			//System.out.println("TEST2");
 		}
 		*/
 
@@ -80,7 +80,7 @@ public class LivingEndoraHandler {
 			int month = cal.get(Calendar.MONTH);
 			int day = cal.get(Calendar.DATE);
 
-			System.out.println(month + "月" + day + "日");
+			//System.out.println(month + "月" + day + "日");
 			//cal.add(Calendar.DATE, -31);
 			month = cal.get(Calendar.MONTH);
 			day = cal.get(Calendar.DATE);
@@ -516,7 +516,7 @@ public class LivingEndoraHandler {
 		int month = cal.get(Calendar.MONTH);
 		int day = cal.get(Calendar.DATE);
 
-		System.out.println(month + "月" + day + "日");
+		//System.out.println(month + "月" + day + "日");
 		//cal.add(Calendar.DATE, -31);
 		month = cal.get(Calendar.MONTH);
 		day = cal.get(Calendar.DATE);

@@ -103,7 +103,7 @@ public enum EnumDqmMagic {
 	RuraYC(EnumDqmMagicCateg.Telepo, EnumDqmMagicType.RuraY.getId(), 8, 500, 0, 0, 0),
 	Behomara(EnumDqmMagicCateg.HPheal, EnumDqmMagicType.Hoimi.getId(), 16, 1000, 100, 0, 0),
 	Behomazun(EnumDqmMagicCateg.HPheal, EnumDqmMagicType.Hoimi.getId(), 128, 1900, 99999, 0, 0),
-	Mahoimi(EnumDqmMagicCateg.MPheal, EnumDqmMagicType.Mahoimi.getId(), 10, 100, 15, 0, 0),
+	Mahoimi(EnumDqmMagicCateg.MPheal, EnumDqmMagicType.Mahoimi.getId(), 15, 100, 10, 0, 0),
 	Mahoriku(EnumDqmMagicCateg.MPheal, EnumDqmMagicType.Mahoimi.getId(), 40, 500, 30, 0, 0),
 	Mahoizun(EnumDqmMagicCateg.MPheal, EnumDqmMagicType.Mahoimi.getId(), 100, 1000, 80, 0, 0),
 	Hinoiki(EnumDqmMagicCateg.Attack, EnumDqmMagicType.Honoo.getId(), 0, 1500, 20, 0, 0),

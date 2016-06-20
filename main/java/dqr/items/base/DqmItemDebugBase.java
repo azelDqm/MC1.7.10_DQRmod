@@ -4,7 +4,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import dqr.DQR;
 
 public class DqmItemDebugBase extends Item{
 
@@ -22,7 +21,7 @@ public class DqmItemDebugBase extends Item{
     				if(ls.get(i) instanceof DqmPetBase)
     				{
     					DqmPetBase pet = (DqmPetBase)ls.get(i);
-    					System.out.println("TEST" + pet.getUniqueID());
+    					//System.out.println("TEST" + pet.getUniqueID());
     				}
     			}
     		}
@@ -32,7 +31,6 @@ public class DqmItemDebugBase extends Item{
     	}
     	*/
 
-<<<<<<< HEAD
     	if(!world.isRemote)
     	{
     		//player.curePotionEffects(new ItemStack(Items.milk_bucket, 1));
@@ -59,19 +57,16 @@ public class DqmItemDebugBase extends Item{
 	    	*/
     	}
 
-=======
->>>>>>> parent of 2aede75... ver0.8.7.8
         /*
             GUIを開く。インスタンス, GUIのID, World, X, Y, Z
          */
     	//player.addChatMessage(new ChatComponentTranslation("TEST"));
     	//System.out.println("" + player.worldObj.isRemote);
 
-<<<<<<< HEAD
 /*
     	if(!world.isRemote)
     	{
-    		System.out.println("TEST");
+    		//System.out.println("TEST");
     		ThrowItemEntityIshitubute et = new ThrowItemEntityIshitubute(world, player, 1.5F, 1.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
     		et.setMaxTicksRange(2);
     		//et.setPosition(player.posX, player.posY, player.posZ);
@@ -92,10 +87,8 @@ public class DqmItemDebugBase extends Item{
     	//System.out.println(test.translateKey("main.job.17"));
     	//System.out.println(StatCollector.translateToLocal("main.job.17"));
     	//StatCollector.translateToLocal(p_74838_0_)
-=======
-        player.openGui(DQR.instance, DQR.conf.GuiID_PetBook, world, (int)player.posX, (int)player.posY, (int)player.posZ);
->>>>>>> parent of 2aede75... ver0.8.7.8
 
+    	//itemStack.setStackDisplayName("main.job.17");
 
     	/*
     	RegistryNamespaced rn = Item.itemRegistry;
@@ -111,7 +104,7 @@ public class DqmItemDebugBase extends Item{
     			player.inventory.addItemStackToInventory(new ItemStack((Item)rn.getObject("DQMIIINext:hogehoge"), 1));
     		}else
     		{
-    			System.out.println("TESTTEST");
+    			//System.out.println("TESTTEST");
     		}
 
     	}

@@ -16,6 +16,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import dqr.DQR;
 import dqr.api.Blocks.DQDecorates;
+import dqr.api.enums.EnumDqmWorldType;
 import dqr.blocks.decorate.tileEntity.DqmTileEntityTubokku;
 import dqr.entity.mobEntity.DqmMobBase;
 import dqr.entity.mobEntity.monsterHell.DqmEntityTubokku;
@@ -77,7 +78,7 @@ public class DqmBlockTubokku2 extends BlockContainer
         	}
         }else
         {
-        	if(dim == 0)
+        	if(DQR.conf.cfg_gen_Tubo_Map.get(dim) != null && DQR.conf.cfg_gen_Tubo_Map.get(dim).equalsIgnoreCase(EnumDqmWorldType.OVERWORLD.getName()))
         	{
         		spawnMob = new DqmEntityTubokku(par1World);
 
@@ -102,7 +103,38 @@ public class DqmBlockTubokku2 extends BlockContainer
             	{
             		doropiItems = DQR.randomItem.getMiscsRank1(1, 1);
             	}
-        	}else
+        	}else if(DQR.conf.cfg_gen_Tubo_Map.get(dim) != null && DQR.conf.cfg_gen_Tubo_Map.get(dim).equalsIgnoreCase(EnumDqmWorldType.NETHER.getName()))
+        	{
+    			spawnMob = new DqmEntityTubokku(par1World);
+
+            	rateItem = rand.nextInt(50);
+
+            	if(rateItem < 5)
+            	{
+            		if(rand.nextInt(5) == 0)
+            		{
+            			doropiItems = DQR.randomItem.getEmblemRank2(1, 1);
+            		}else
+            		{
+            			doropiItems = DQR.randomItem.getEmblemRank1(1, 1);
+            		}
+            	}else if(rateItem < 10)
+            	{
+            		doropiItems = DQR.randomItem.getFoodRank2(1, 1);
+            	}else if(rateItem < 20)
+            	{
+            		doropiItems = DQR.randomItem.getMiscsRank2(1, 1);
+            	}else if(rateItem < 30)
+            	{
+            		doropiItems = DQR.randomItem.getFoodRank1(1, 1);
+            	}else if(rateItem < 40)
+            	{
+            		doropiItems = DQR.randomItem.getMiscsRank3(1, 1);
+            	}else
+            	{
+            		doropiItems = DQR.randomItem.getMiscsRank1(1, 1);
+            	}
+        	}else if(DQR.conf.cfg_gen_Tubo_Map.get(dim) != null && DQR.conf.cfg_gen_Tubo_Map.get(dim).equalsIgnoreCase(EnumDqmWorldType.THEEND.getName()))
         	{
     			spawnMob = new DqmEntityTubokku(par1World);
 

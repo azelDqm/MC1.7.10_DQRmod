@@ -22,6 +22,13 @@ public class DqmWorldGenTubo implements IWorldGenerator
         int x = par1 * 16 + rand.nextInt(16);
         int z = par2 * 16 + rand.nextInt(16);
         int y;
+
+        if(!DQR.conf.cfg_gen_Tubo_Map.containsKey((int)par3World.provider.dimensionId))
+        {
+        	return;
+        }
+
+
         if(par3World.provider.dimensionId == -1)
         {
         	if(rand.nextInt(2) == 0)
@@ -52,6 +59,7 @@ public class DqmWorldGenTubo implements IWorldGenerator
         if (ran >= 90  && (par3World.getBlock(x, y - 1, z) == Blocks.grass ||
         				   par3World.getBlock(x, y - 1, z) == Blocks.sand ||
         				   par3World.getBlock(x, y - 1, z) == Blocks.netherrack ||
+               			   par3World.getBlock(x, y - 1, z) == Blocks.end_stone ||
         				   (topBlock != Blocks.air && par3World.getBlock(x, y - 1, z) == topBlock)))
         {
         	Block tuboBlock;

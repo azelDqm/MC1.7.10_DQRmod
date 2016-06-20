@@ -2905,7 +2905,7 @@ ver1.20ADD-<*/
         });*/
         GameRegistry.addRecipe(new ItemStack(DQMiscs.itemSinkanohiseki , 1),
                                new Object[] { "YYY", "YXY", "YYY",
-                                              'X', DQMiscs.itemSeireiseki,
+                                              'X', DQMiscs.itemMetaloubu,
                                               'Y', DQIngots.itemYougansekinokakera,
                                             });
         GameRegistry.addRecipe(new ItemStack(DQIngots.itemTekkouseki , 1),
@@ -4017,9 +4017,9 @@ ver1.20ADD-<*/
 
         GameRegistry.addRecipe(new ItemStack(DQMiscs.itemSinkanohiseki, 1), new Object[]
         {
-            "AAA",
+            " A ",
             "ABA",
-            "AAA",
+            " A ",
             'A', DQIngots.itemHikarinoisi, 'B', DQMiscs.itemMegaminoinori0
         });
 
@@ -4032,7 +4032,6 @@ ver1.20ADD-<*/
         GameRegistry.addShapelessRecipe(new ItemStack(DQMiscs.itemNiku2, 1), new Object[] {new ItemStack(DQMiscs.itemNiku1, 1), new ItemStack(DQMiscs.itemAyakasisou, 1), new ItemStack(DQMiscs.itemAyakasisou, 1)});
         GameRegistry.addShapelessRecipe(new ItemStack(DQMiscs.itemNiku3, 1), new Object[] {new ItemStack(DQMiscs.itemNiku2, 1), new ItemStack(DQMiscs.itemUruwasikinoko, 1), new ItemStack(DQMiscs.itemUruwasikinoko, 1)});
 
-<<<<<<< HEAD
         GameRegistry.addRecipe(new ItemStack(DQMagicTools.itemPetSuisyou, 1), new Object[]
         {
             "AAA",
@@ -4077,8 +4076,15 @@ ver1.20ADD-<*/
         GameRegistry.addShapelessRecipe(new ItemStack(DQChests.DqmEnderChest5, 1), new Object[] {new ItemStack(Blocks.ender_chest, 1), new ItemStack(DQMobFigures.BlockFigureGaikotukensi, 1)});
         GameRegistry.addShapelessRecipe(new ItemStack(DQChests.DqmEnderChest5, 1), new Object[] {new ItemStack(Blocks.ender_chest, 1), new ItemStack(DQMobObjects.BlockObjGaikotukensi, 1)});
 
+        GameRegistry.addRecipe(new ItemStack(DQMiscs.itemDragonObuB), new Object[]
+        {
+            "ADA",
+            "BEB",
+            "CFC",
+            'A', DQIngots.itemOriharukon2, 'B', DQIngots.itemMisriru2, 'C', DQIngots.itemPuratina2,
+            'D', DQMiscs.itemRyuunonamida, 'E', DQMiscs.itemPisaronotamasii, 'F', DQMiscs.itemDoragonnonamida,
+        });
 
-=======
->>>>>>> parent of 2aede75... ver0.8.7.8
+        GameRegistry.addShapelessRecipe(new ItemStack(Items.gold_ingot, 4), new Object[] {new ItemStack(DQMiscs.itemKinkai, 1)});
 	}
 }

@@ -17,6 +17,8 @@ import dqr.packetMessage.MessageServerJobChange;
 import dqr.packetMessage.MessageServerJobChangeHandler;
 import dqr.packetMessage.MessageServerMGToolMode;
 import dqr.packetMessage.MessageServerMGToolModeHandler;
+import dqr.packetMessage.MessageServerSkillWeapon;
+import dqr.packetMessage.MessageServerSkillWeaponHandler;
 import dqr.playerData.MessagePlayerProperties;
 import dqr.playerData.MessagePlayerProperties2;
 import dqr.playerData.MessagePlayerProperties3;
@@ -45,11 +47,8 @@ public class PacketHandler {
         INSTANCE.registerMessage(MessageServerMGToolModeHandler.class, MessageServerMGToolMode.class, 6, Side.SERVER);
         INSTANCE.registerMessage(MessageClientCleatSlotItemHandler.class, MessageClientCleatSlotItem.class, 7, Side.CLIENT);
         INSTANCE.registerMessage(MessageServerBookWriteHandler.class, MessageServerBookWrite.class, 8, Side.SERVER);
-<<<<<<< HEAD
 
         INSTANCE.registerMessage(MessageServerSkillWeaponHandler.class, MessageServerSkillWeapon.class, 9, Side.SERVER);
         INSTANCE.registerMessage(MessageClientPetEntityDataHandler.class, MessageClientPetEntityData.class, 10, Side.CLIENT);
-=======
->>>>>>> parent of 2aede75... ver0.8.7.8
     }
 }

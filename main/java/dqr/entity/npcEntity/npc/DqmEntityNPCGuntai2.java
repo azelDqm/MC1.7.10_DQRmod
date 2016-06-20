@@ -96,7 +96,7 @@ public class DqmEntityNPCGuntai2 extends EntityTameable
 
         if(this.getEntityAttribute(SharedMonsterAttributes.maxHealth) == null)
         {
-        	System.out.println("NULL!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        	//System.out.println("NULL!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         }
         //if(SharedMonsterAttributes.attackDamage == null) System.out.println("TEST1");
         //if(attackDam == null) System.out.println("TEST2");

@@ -41,6 +41,16 @@ public class EntityEventHandler {
         		ExtendedPlayerProperties2.get(ep).setBugFixFlg(EnumDqmBugFix.Fix085PET.getId(), 1);
         	}
         }
+
+        if (!event.player.worldObj.isRemote && event.player instanceof EntityPlayer)
+        {
+        	EntityPlayer ep = (EntityPlayer)event.player;
+        	if(ExtendedPlayerProperties2.get(ep).getBugFixFlg(EnumDqmBugFix.Fix087SKILLW.getId()) < 1)
+        	{
+        		DQR.bugFix.doSkillWPRecalc(ep);
+        		ExtendedPlayerProperties2.get(ep).setBugFixFlg(EnumDqmBugFix.Fix087SKILLW.getId(), 1);
+        	}
+        }
     }
 
 	@SubscribeEvent
