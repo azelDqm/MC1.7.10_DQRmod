@@ -1,6 +1,7 @@
 package dqr.functions;
 
 import java.util.Map;
+import java.util.Random;
 import java.util.TreeMap;
 import java.util.UUID;
 
@@ -17,22 +18,22 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.FoodStats;
 import net.minecraftforge.common.MinecraftForge;
 
 import com.google.common.collect.Maps;
 
 import dqr.DQR;
+import dqr.api.Items.DQAccessories;
+import dqr.api.enums.EnumDqmAccessory;
 import dqr.api.enums.EnumDqmJob;
 import dqr.api.enums.EnumDqmSkillW;
 import dqr.api.enums.EnumDqmStatus;
-import dqr.api.enums.EnumStatATK;
-import dqr.api.enums.EnumStatDEF;
-import dqr.api.enums.EnumStatHP;
-import dqr.api.enums.EnumStatMAG;
-import dqr.api.enums.EnumStatMP;
+import dqr.api.enums.EnumStat;
 import dqr.api.event.DqrArmorSetEvent;
 import dqr.api.potion.DQPotionMinus;
 import dqr.api.potion.DQPotionPlus;
+import dqr.gui.subEquip.InventorySubEquip;
 import dqr.items.base.DqmItemArmorBase;
 import dqr.items.base.DqmItemBowBase;
 import dqr.items.base.DqmItemMagicBase;
@@ -966,11 +967,11 @@ public class FuncCalcPlayerStatus {
 		MinecraftForge.EVENT_BUS.post(event);
 
 
-		ExtendedPlayerProperties.get(ep).setArrayHP(EnumStatHP.armorSet.getId(), setEffect[4]);
-		ExtendedPlayerProperties.get(ep).setArrayMP(EnumStatMP.armorSet.getId(), setEffect[5]);
-		ExtendedPlayerProperties.get(ep).setArrayATK(EnumStatATK.armorSet.getId(), setEffect[1]);
-		ExtendedPlayerProperties.get(ep).setArrayMAG(EnumStatMAG.armorSet.getId(), setEffect[3]);
-		ExtendedPlayerProperties.get(ep).setArrayDEF(EnumStatDEF.armorSet.getId(), setEffect[2]);
+		ExtendedPlayerProperties.get(ep).setArrayHP(EnumStat.armorSet.getId(), setEffect[4]);
+		ExtendedPlayerProperties.get(ep).setArrayMP(EnumStat.armorSet.getId(), setEffect[5]);
+		ExtendedPlayerProperties.get(ep).setArrayATK(EnumStat.armorSet.getId(), setEffect[1]);
+		ExtendedPlayerProperties.get(ep).setArrayMAG(EnumStat.armorSet.getId(), setEffect[3]);
+		ExtendedPlayerProperties.get(ep).setArrayDEF(EnumStat.armorSet.getId(), setEffect[2]);
 
 		/*
 		for(int cnt = 0; cnt < enableSetCnt; cnt++)
@@ -1039,12 +1040,14 @@ public class FuncCalcPlayerStatus {
     public int calcShoninGold(int par1, EntityPlayer ep)
     {
     	int gold = par1;
-    	if(ExtendedPlayerProperties.get(ep).getJob() == EnumDqmJob.Syounin.getId())
+    	if(par1 > 0)
     	{
-    		gold = gold * 3 / 4;
+    		if(ExtendedPlayerProperties.get(ep).getJob() == EnumDqmJob.Syounin.getId())
+    		{
+    			gold = gold * 3 / 4;
+    		}
     	}
-    	return gold;
-
+		return gold;
     }
 
     //武器特技値取得
@@ -1066,5 +1069,182 @@ public class FuncCalcPlayerStatus {
 		}
 
     	return ret;
+    }
+
+    public void calcAccessory(EntityPlayer ep)
+    {
+    	Random rand = new Random();
+    	int ATK = 0;
+    	int MAG = 0;
+    	int DEF = 0;
+    	int STR = 0;
+    	int INT = 0;
+    	int HP = 0;
+    	int MP = 0;
+    	int MISS = 0;
+    	int CRI = 0;
+
+    	InventorySubEquip equipment = new InventorySubEquip(ep);
+        equipment.openInventory();
+
+        for(int cnt = 0; cnt < equipment.getSizeInventory(); cnt++)
+        {
+        	if(equipment.getStackInSlot(cnt) != null && DQR.enumGetter.getAccessoryParam(equipment.getStackInSlot(cnt).getItem()) != null)
+        	{
+        		EnumDqmAccessory accParam = DQR.enumGetter.getAccessoryParam(equipment.getStackInSlot(cnt).getItem());
+
+        		ATK = ATK + accParam.getATK();
+        		MAG = MAG + accParam.getMAG();
+        		DEF = DEF + accParam.getDEF();
+        		STR = STR + accParam.getSTR();
+        		INT = INT + accParam.getINT();
+        		HP = HP + accParam.getHP();
+        		MP = MP + accParam.getMP();
+        		MISS = MISS + accParam.getMISS();
+        		CRI = CRI + accParam.getCRI();
+
+        	}
+        }
+
+        ExtendedPlayerProperties.get(ep).setArrayATK(EnumStat.accessory.getId(), ATK);
+        ExtendedPlayerProperties.get(ep).setArrayMAG(EnumStat.accessory.getId(), MAG);
+        ExtendedPlayerProperties.get(ep).setArrayDEF(EnumStat.accessory.getId(), DEF);
+        ExtendedPlayerProperties.get(ep).setArrayTikara(EnumStat.accessory.getId(), STR);
+        ExtendedPlayerProperties.get(ep).setArrayKasikosa(EnumStat.accessory.getId(), INT);
+        ExtendedPlayerProperties.get(ep).setArrayHP(EnumStat.accessory.getId(), HP);
+        ExtendedPlayerProperties.get(ep).setArrayMP(EnumStat.accessory.getId(), MP);
+        ExtendedPlayerProperties.get(ep).setArrayMikawasi(EnumStat.accessory.getId(), MISS);
+        ExtendedPlayerProperties.get(ep).setArrayKaisinritu(EnumStat.accessory.getId(), CRI);
+
+        //アクセサリエフェクト
+        int hoshihuri = -1;
+        int hpRegeneration = -1;
+        int mpRegeneration = -1;
+
+        //ハラヘラズ・ハラモチの指輪
+		FoodStats foodstats = ep.getFoodStats();
+		if(ExtendedPlayerProperties.get(ep).getPreFoodLevel() == -1)
+		{
+			ExtendedPlayerProperties.get(ep).setPreFoodLevel(foodstats.getFoodLevel());
+		}else
+		{
+			if(ExtendedPlayerProperties.get(ep).getPreFoodLevel() > foodstats.getFoodLevel())
+			{
+				if(equipment.hasYubiwa(DQAccessories.itemHaraherazuYubiwa) != -1 ||
+				   (equipment.hasYubiwa(DQAccessories.itemHaramotiYubiwa) != -1 && rand.nextInt(2) == 0))
+				{
+						//foodstats.setFoodLevel(ExtendedPlayerProperties.get(ep).getPreFoodLevel());
+					foodstats.addStats(ExtendedPlayerProperties.get(ep).getPreFoodLevel(), 0);
+					//System.out.println("TEST1");
+				}
+				//System.out.println("TEST2");
+			}
+			ExtendedPlayerProperties.get(ep).setPreFoodLevel(foodstats.getFoodLevel());
+		}
+
+		//星降りピアス
+		if(equipment.hasPiasu(DQAccessories.itemHosifurupiasu) != -1)
+		{
+			hoshihuri = hoshihuri + DQR.conf.hoshihuri1;
+		}
+		if(equipment.hasPiasu(DQAccessories.itemHosifurupiasu2) != -1)
+		{
+			hoshihuri = hoshihuri + DQR.conf.hoshihuri2;
+		}
+
+		//星降る腕輪
+		if(equipment.hasUdewa(DQAccessories.itemHosifuru) != -1)
+		{
+			hoshihuri = hoshihuri + 3;
+		}
+
+		//癒しの腕輪
+		/*
+		if(equipment.hasUdewa(DQAccessories.itemIyasinoudewa) != -1)
+		{
+			hpRegeneration = hpRegeneration + 1;
+		}
+		*/
+
+		//疾風指輪
+		if(equipment.hasYubiwa(DQAccessories.itemHayatenoring) != -1)
+		{
+			hoshihuri = hoshihuri + 2;
+		}
+		/*
+		//命の指輪
+		if(equipment.hasYubiwa(DQAccessories.itemInotinoyubiwa))
+		{
+			hpRegeneration = hpRegeneration + 2;
+		}
+		*/
+
+		if(equipment.hasYubiwa(DQAccessories.itemHagennoring) != -1)
+		{
+			ep.removePotionEffect(DQPotionMinus.debuffManusa.id);
+			//ep.removePotionEffect(Potion.confusion.id);
+		}
+		if(equipment.hasYubiwa(DQAccessories.itemHagennoring2) != -1)
+		{
+			ep.removePotionEffect(DQPotionMinus.debuffManusa.id);
+			ep.removePotionEffect(DQPotionMinus.debuffRariho.id);
+			ep.removePotionEffect(Potion.confusion.id);
+		}
+		if(equipment.hasYubiwa(DQAccessories.itemHadokunoring) != -1)
+		{
+			ep.removePotionEffect(DQPotionMinus.potionPoison.id);
+			ep.removePotionEffect(Potion.poison.id);
+		}
+		if(equipment.hasYubiwa(DQAccessories.itemHadokunoring2) != -1)
+		{
+			ep.removePotionEffect(DQPotionMinus.potionPoisonX.id);
+			ep.removePotionEffect(DQPotionMinus.potionPoison.id);
+			ep.removePotionEffect(Potion.poison.id);
+		}
+		if(equipment.hasYubiwa(DQAccessories.itemMangetunoring) != -1)
+		{
+			ep.removePotionEffect(Potion.moveSlowdown.id);
+			ep.removePotionEffect(DQPotionMinus.debuffBomie.id);
+		}
+		if(equipment.hasYubiwa(DQAccessories.itemMangetunoring2) != -1)
+		{
+			ep.removePotionEffect(Potion.moveSlowdown.id);
+			ep.removePotionEffect(DQPotionMinus.debuffBomie.id);
+			ep.removePotionEffect(DQPotionMinus.debuffMahoton.id);
+		}
+		if(equipment.hasYubiwa(DQAccessories.itemRiseinoring) != -1)
+		{
+			ep.removePotionEffect(Potion.confusion.id);
+			//ep.removePotionEffect(DQPotionMinus.debuffBomie.id);
+		}
+		if(equipment.hasYubiwa(DQAccessories.itemRiseinoring2) != -1)
+		{
+			ep.removePotionEffect(Potion.confusion.id);
+			ep.removePotionEffect(DQPotionMinus.debuffMedapani.id);
+		}
+
+		if(hpRegeneration >= 0)
+		{
+			ep.addPotionEffect(new PotionEffect(DQPotionPlus.buffHPRegeneration.id, 200, hpRegeneration));
+		}else
+		{
+			ep.removePotionEffect(DQPotionPlus.buffHPRegeneration.id);
+		}
+
+		if(mpRegeneration >= 0)
+		{
+			ep.addPotionEffect(new PotionEffect(DQPotionPlus.buffMPRegeneration.id, 200, mpRegeneration));
+		}else
+		{
+			ep.removePotionEffect(DQPotionPlus.buffMPRegeneration.id);
+		}
+
+		if(hoshihuri >= 0)
+		{
+			ep.addPotionEffect(new PotionEffect(DQPotionPlus.buffHoshihuru.id, 200, hoshihuri));
+		}else
+		{
+			ep.removePotionEffect(DQPotionPlus.buffHoshihuru.id);
+		}
     }
 }

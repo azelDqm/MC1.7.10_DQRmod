@@ -1956,6 +1956,33 @@ public class DqrItemRegister {
 		GameRegistry.registerItem(DQInventorySlots.itemSlotUdewa, "ItemSlotUdewa");
 		GameRegistry.registerItem(DQInventorySlots.itemSlotYubiwa, "ItemSlotYubiwa");
 		GameRegistry.registerItem(DQInventorySlots.itemSlotFukuro, "ItemSlotFukuro");
+
+		GameRegistry.registerItem(DQAccessories.itemTenkuunotate, "ItemTenkuunotate");
+		GameRegistry.registerItem(DQAccessories.itemRotonotate, "ItemRotonotate");
+		GameRegistry.registerItem(DQAccessories.itemSabitatate, "ItemSabitatate");
+		GameRegistry.registerItem(DQAccessories.itemMegaminotate, "ItemMegaminotate");
+		GameRegistry.registerItem(DQAccessories.itemUroborosunotate, "ItemUroborosunotate");
+
+		GameRegistry.registerItem(DQAccessories.itemAccCanceler, "ItemAccCanceler");
+
+		GameRegistry.registerItem(DQMagics.itemBasirura, "ItemBasirura");
+		GameRegistry.registerItem(DQMagics.itemBasiruraC, "ItemBasiruraC");
+		GameRegistry.registerItem(DQMagics.itemBasiruraC2, "ItemBasirura2");
+
+		GameRegistry.registerItem(DQAccessories.itemFuujinnnotate2, "ItemFuujinnnotate2");
+		GameRegistry.registerItem(DQAccessories.itemFuujinnnotate3, "ItemFuujinnnotate3");
+
+		GameRegistry.registerItem(DQMonsters.itemMonsterAkuma, "ItemMonsterAkuma");
+		GameRegistry.registerItem(DQMonsters.itemMonsterBeast, "ItemMonsterBeast");
+		GameRegistry.registerItem(DQMonsters.itemMonsterBussitu, "ItemMonsterBussitu");
+		GameRegistry.registerItem(DQMonsters.itemMonsterDragon, "ItemMonsterDragon");
+		GameRegistry.registerItem(DQMonsters.itemMonsterMetaru, "ItemMonsterMetaru");
+		GameRegistry.registerItem(DQMonsters.itemMonsterSizen, "ItemMonsterSizen");
+		GameRegistry.registerItem(DQMonsters.itemMonsterTokusyu, "ItemMonsterTokusyu");
+		GameRegistry.registerItem(DQMonsters.itemMonsterUndead, "ItemMonsterUndead");
+		GameRegistry.registerItem(DQMonsters.itemMonsterUnknown, "ItemMonsterUnknown");
+
+		GameRegistry.registerItem(DQMiscs.itemShinjirukokoro, "ItemShinjirukokoro");
 	}
 }
 

@@ -20,11 +20,23 @@ public class MessagePlayerProperties3 implements IMessage {
 
     @Override
     public void fromBytes(ByteBuf buf) {
-        data = ByteBufUtils.readTag(buf);
+    	try
+    	{
+    		data = ByteBufUtils.readTag(buf);
+    	}catch(Exception e)
+    	{
+
+    	}
     }
 
     @Override
     public void toBytes(ByteBuf buf) {
-        ByteBufUtils.writeTag(buf, data);
+    	try
+    	{
+    		ByteBufUtils.writeTag(buf, data);
+    	}catch(Exception e)
+    	{
+
+    	}
     }
 }

@@ -23,7 +23,13 @@ public class ClientKeyBindCore {
 	public static final KeyBinding keyGuiBuffBar = new KeyBinding("key.setting.GuiBuffBar", Keyboard.KEY_K, "DQMIIImod");
 
 	public static final KeyBinding keyMagicToolMode = new KeyBinding("key.setting.magictoolMode", Keyboard.KEY_R, "DQMIIImod");
+	public static final KeyBinding keyOokinaFukuro = new KeyBinding("key.setting.ookinaFukuroOpen", Keyboard.KEY_L, "DQMIIImod");
 
+	public static final KeyBinding keyShieldUse = new KeyBinding("key.setting.shieldUse", Keyboard.KEY_Z, "DQMIIImod");
+	public static final KeyBinding keyGuiParty = new KeyBinding("key.setting.GuiPartyVis", Keyboard.KEY_O, "DQMIIImod");
+
+	public static final KeyBinding keyGuiPartyPlus = new KeyBinding("key.setting.GuiPartyLinePlus", Keyboard.KEY_ADD, "DQMIIImod");
+	public static final KeyBinding keyGuiPartyMinus = new KeyBinding("key.setting.GuiPartyLineMinus", Keyboard.KEY_SUBTRACT, "DQMIIImod");
 
 	public ClientKeyBindCore()
 	{
@@ -45,5 +51,12 @@ public class ClientKeyBindCore {
 		ClientRegistry.registerKeyBinding(keyGuiBuffBar);
 
 		ClientRegistry.registerKeyBinding(keyMagicToolMode);
+		ClientRegistry.registerKeyBinding(keyOokinaFukuro);
+
+		ClientRegistry.registerKeyBinding(keyShieldUse);
+		ClientRegistry.registerKeyBinding(keyGuiParty);
+
+		ClientRegistry.registerKeyBinding(keyGuiPartyPlus);
+		ClientRegistry.registerKeyBinding(keyGuiPartyMinus);
 	}
 }

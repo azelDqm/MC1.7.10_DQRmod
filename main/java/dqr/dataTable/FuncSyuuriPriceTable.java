@@ -1,8 +1,11 @@
 package dqr.dataTable;
 
 import net.minecraft.item.ItemStack;
+import dqr.DQR;
 import dqr.api.Items.DQArmors;
 import dqr.api.Items.DQWeapons;
+import dqr.api.enums.EnumDqmAccessory;
+import dqr.items.interfaceBase.ISubEquip;
 public class FuncSyuuriPriceTable
 {
 	public FuncSyuuriPriceTable(){}
@@ -1917,6 +1920,16 @@ public class FuncSyuuriPriceTable
         {
             fixPrice = 50000;
             return fixPrice;
+        }
+
+        if(par1ItemStack.getItem() instanceof ISubEquip)
+        {
+        	EnumDqmAccessory param = DQR.enumGetter.getAccessoryParam(par1ItemStack.getItem());
+
+        	if(param != null)
+        	{
+        		return param.getFixPrice();
+        	}
         }
         return fixPrice;
     }

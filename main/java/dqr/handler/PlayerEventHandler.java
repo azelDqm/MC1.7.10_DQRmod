@@ -1,29 +1,93 @@
 package dqr.handler;
 
+import java.util.List;
 import java.util.Random;
 
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.passive.EntityHorse;
+import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.RegistryNamespaced;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.ArrowLooseEvent;
+import net.minecraftforge.event.entity.player.PlayerDropsEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import dqr.DQR;
+import dqr.PacketHandler;
+import dqr.api.Items.DQWeapons;
 import dqr.api.enums.EnumDqmMessageConv;
 import dqr.api.enums.EnumDqmSkillW;
 import dqr.api.enums.EnumDqmWeapon;
+import dqr.api.enums.EnumDqmWeaponMode;
+import dqr.entity.mobEntity.DqmMobBase;
+import dqr.entity.petEntity.DqmPetBase;
 import dqr.entity.throwingEntity.throwing.ThrowingEntityDqrArrow;
 import dqr.items.base.DqmItemWeaponBase;
+import dqr.packetMessage.MessageClientCleatSlotItem;
 import dqr.playerData.ExtendedPlayerProperties;
 import dqr.playerData.ExtendedPlayerProperties2;
 import dqr.playerData.ExtendedPlayerProperties3;
 
 public class PlayerEventHandler {
+
+    @SubscribeEvent
+    public void onPlayerDropsEvent(PlayerDropsEvent event) {}
+
+    @SubscribeEvent
+    public void onEntityJoinWorld(EntityJoinWorldEvent event)  {
+
+
+        if (!event.entity.worldObj.isRemote && event.entity instanceof EntityPlayer)
+        {
+        	EntityPlayer ep = (EntityPlayer)event.entity;
+
+        	if(!ep.isDead && ep.getHealth() > 0 && ExtendedPlayerProperties3.get(ep).getDeadCheckFlg() > 0)
+        	{
+        		//System.out.println("TEST_B");
+        		 List list = ep.worldObj.getEntitiesWithinAABBExcludingEntity(ep,
+                 		ep.boundingBox.addCoord(ep.motionX, ep.motionY, ep.motionZ)
+                 		  .expand((double)DQR.conf.deadClearWidth, (double)DQR.conf.deadClearHeight, (double)DQR.conf.deadClearWidth));
+
+                 if (list != null && !list.isEmpty())
+                 {
+                 	for (int n = 0 ; n < list.size() ; n++)
+                 	{
+                 		Entity target = (Entity)list.get(n);
+
+                 		if (target instanceof DqmMobBase)
+                 		{
+                 			//System.out.println("TEST_A");
+                 			target.setDead();
+                 		}
+                 	}
+                 }
+
+        		//System.out.println("TEST2:" + ep.worldObj + ":" + ep.posX + "/" + ep.posY + "/" + ep.posZ);
+                 ExtendedPlayerProperties3.get(ep).setDeadCheckFlg(0);
+        	}else
+        	{
+        		ExtendedPlayerProperties3.get(ep).setDeadCheckFlg(1);
+        	}
+        }
+    }
+
+    public void onLivingDeathEvent(LivingDeathEvent event)  {
+        if (event.entityLiving instanceof EntityPlayer && !event.entity.worldObj.isRemote) {
+        	EntityPlayer ep = (EntityPlayer)event.entity;
+
+        	ExtendedPlayerProperties3.get(ep).setDeadCheckFlg(1);
+        }
+    }
 
 	@SubscribeEvent
 	public void ArrowLooseEventHandler(ArrowLooseEvent e)
@@ -39,7 +103,6 @@ public class PlayerEventHandler {
 		Random rand = new Random();
 		//System.out.println("今撃った？");
 		EntityPlayer ep = e.entityPlayer;
-
 
 		//entityarrow.rotationYaw = 25.0F;
 		//entityarrow2.rotationYaw = -25.0F;
@@ -177,6 +240,106 @@ public class PlayerEventHandler {
 		}
 
 		EntityPlayer ep = e.entityPlayer;
+
+		//System.out.println("test1");
+		if(e.action == Action.LEFT_CLICK_BLOCK)
+		{
+			//System.out.println("test2");
+			if(ep.getHeldItem() != null && ep.getHeldItem().getItem() == DQWeapons.itemKeironnoyumi)
+			{
+		    	int itemMode2 = ExtendedPlayerProperties.get(ep).getWeaponMode(EnumDqmWeaponMode.WEAPONMODE_ITEMUSEBOW.getId());
+		    	float pitch = 1.2F;
+				if(itemMode2 == 1)
+				{
+					//e.setCanceled(true);
+					if(DQR.func.isBind(ep) && ep.worldObj.isRemote)
+					{
+						ep.addChatMessage(new ChatComponentTranslation("msg.magic.rariho.txt",new Object[] {}));
+						ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
+						return;
+					}
+
+					EnumDqmWeapon enumWeapon = EnumDqmWeapon.DqmBow;
+
+					if(DQR.aptitudeTable.getWAptitude(ExtendedPlayerProperties.get(ep).getJob(),
+													  enumWeapon.getId(),
+													  ep) < 1 && DQR.debug == 0)
+					{
+						ep.addChatMessage(new ChatComponentTranslation("msg.magic.weaponNoAppti.txt",new Object[] {}));
+						ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
+						return;
+					}
+
+					//System.out.println("TEST" + (ep.getHeldItem().getItemDamage()) + "/" + (ep.getHeldItem().getMaxDamage() / 5 * 4 + 1));
+					if(ep.getHeldItem().getItemDamage() >= ep.getHeldItem().getMaxDamage() / 5 * 4 + 1)
+					{
+						ep.addChatMessage(new ChatComponentTranslation("msg.magic.weaponNoEnergy.txt",new Object[] {}));
+						ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
+						return;
+					}
+					ep.worldObj.playSoundAtEntity(ep, "dqr:player.jumon", 1.0F, 1.2F);
+					int attackDam = 30;
+
+
+		        	if(ep.getHealth() + attackDam > ep.getMaxHealth())
+		        	{
+		        		ep.setHealth(ep.getMaxHealth());
+		        	}else
+		        	{
+		        		ep.setHealth(ep.getHealth() + (float)attackDam);
+		        	}
+		        	ep.worldObj.playSoundAtEntity(ep, "dqr:player.hoimi", 1.0F, 1.0F);
+
+
+
+
+		            List list = ep.worldObj.getEntitiesWithinAABBExcludingEntity(ep,
+		            		ep.boundingBox.addCoord(ep.motionX, ep.motionY, ep.motionZ).expand(10.0D, 5.0D, 10.0D));
+
+		            if (list != null && !list.isEmpty())
+		            {
+		            	for (int n = 0 ; n < list.size() ; n++)
+		            	{
+		            		Entity target = (Entity)list.get(n);
+
+		            		if (target instanceof EntityPlayer || target instanceof EntityTameable || target instanceof EntityHorse)
+		            		{
+			    				attackDam = 30;
+
+			    				EntityLivingBase elb = (EntityLivingBase)target;
+
+	                			if(elb instanceof DqmPetBase && elb.getHealth() <= 0.1F)
+	                			{
+	                				;
+	                			}else
+	                			{
+
+			                    	if(elb.getHealth() + attackDam > elb.getMaxHealth())
+			                    	{
+			                    		elb.setHealth(elb.getMaxHealth());
+			                    	}else
+			                    	{
+			                    		elb.setHealth(elb.getHealth() + (float)attackDam);
+			                    	}
+			                    	elb.worldObj.playSoundAtEntity(elb, "dqr:player.hoimi", 1.0F, 1.0F);
+	                			}
+		            		}
+		            	}
+		            }
+
+		            ep.getHeldItem().damageItem(ep.getHeldItem().getItem().getMaxDamage() / 20, ep);
+
+		            //System.out.println("TESTXXX" + ep.getHeldItem().getItemDamage() + "/" + ep.getHeldItem().getMaxDamage());
+					if(ep.getHeldItem().getItemDamage() >= ep.getHeldItem().getMaxDamage())
+					{
+						//System.out.println("TEST?");
+						ep.getHeldItem().stackSize--;
+						PacketHandler.INSTANCE.sendTo(new MessageClientCleatSlotItem(ep.inventory.currentItem), (EntityPlayerMP)ep);
+					}
+				}
+				//System.out.println("TEST?");
+			}
+		}
 
 		//農業用マジックツール処理
 		if(ep.isSneaking() && ExtendedPlayerProperties2.get(ep).getSeedSetMode() == 1)

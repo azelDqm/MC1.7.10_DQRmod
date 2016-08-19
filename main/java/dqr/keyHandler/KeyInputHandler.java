@@ -17,6 +17,7 @@ public class KeyInputHandler {
     		DQR.conf.setCLGuiLogPos(DQR.conf.CLGuiLogPos, DQR.conf.CLGuiLogPosX, DQR.conf.CLGuiLogPosY);
     		DQR.conf.setCLGuiSubpointsPos(DQR.conf.CLGuiSubpointsPos, DQR.conf.CLGuiSubpointsPosX, DQR.conf.CLGuiSubpointsPosY);
     		DQR.conf.setCLGuiBuffBarPos(DQR.conf.CLGuiBuffBarPos, DQR.conf.CLGuiBuffBarPosX, DQR.conf.CLGuiBuffBarPosY);
+    		DQR.conf.setCLGuiPartyPos(DQR.conf.CLGuiPartyPos, DQR.conf.CLGuiPartyPosX, DQR.conf.CLGuiPartyPosY, DQR.conf.CLGuiPartyReturnLine);
     	}
 
 
@@ -160,7 +161,56 @@ public class KeyInputHandler {
         	}
         }
 
+        if (DQR.CLKeyBind.keyGuiParty.isPressed()) {
+        	if(DQR.conf.guiPositionMode == 0)
+        	{
+        		DQR.conf.CLGuiPartyVis = DQR.conf.CLGuiPartyVis==0? 1 : 0;
+        		DQR.conf.cfg_gui.get("GamePlayPotionEffectTimeGUI","GUI Visible", DQR.conf.CLGuiPartyVis ,"0=false 1=true").set(DQR.conf.CLGuiPartyVis);
+        		DQR.conf.cfg_gui.save();
+        	}else
+        	{
+        		if(DQR.conf.guiPositionTarget !=7)
+        		{
+        			DQR.conf.guiPositionTarget = 7;
+        		}else
+        		{
+        			DQR.conf.CLGuiPartyPos = DQR.conf.CLGuiPartyPos == 15? 1 :DQR.conf.CLGuiPartyPos + 1;
+        			DQR.conf.CLGuiPartyPosX = 0;
+        			DQR.conf.CLGuiPartyPosY = 0;
+        			//DQR.conf.setCLGuiSubpointsPos(DQR.conf.CLGuiSubpointsPos, DQR.conf.CLGuiSubpointsPosX, DQR.conf.CLGuiSubpointsPosY);
+        		}
+        	}
+        }
 
+
+
+        if (DQR.CLKeyBind.keyGuiPartyPlus.isPressed()) {
+        	if(DQR.conf.guiPositionMode == 1)
+        	{
+        		System.out.println("TEST1");
+        		if(DQR.conf.guiPositionTarget == 7)
+        		{
+        			DQR.conf.CLGuiPartyReturnLine = DQR.conf.CLGuiPartyReturnLine + 1;
+        		}
+        	}
+        }
+
+        if (DQR.CLKeyBind.keyGuiPartyMinus.isPressed()) {
+        	if(DQR.conf.guiPositionMode == 1)
+        	{
+        		System.out.println("TEST2");
+        		if(DQR.conf.guiPositionTarget == 7)
+        		{
+        			if(DQR.conf.CLGuiPartyReturnLine < 2)
+        			{
+        				DQR.conf.CLGuiPartyReturnLine = 1;
+        			}else
+        			{
+        				DQR.conf.CLGuiPartyReturnLine = DQR.conf.CLGuiPartyReturnLine - 1;
+        			}
+        		}
+        	}
+        }
 
 
         if (DQR.CLKeyBind.keyGuiPositionUP.isPressed()) {
@@ -175,6 +225,7 @@ public class KeyInputHandler {
         			case 4: DQR.conf.CLGuiLogPosY = DQR.conf.CLGuiLogPosY - DQR.conf.guiPositionSpeed;break;
         			case 5: DQR.conf.CLGuiSubpointsPosY = DQR.conf.CLGuiSubpointsPosY - DQR.conf.guiPositionSpeed;break;
         			case 6: DQR.conf.CLGuiBuffBarPosY = DQR.conf.CLGuiBuffBarPosY - DQR.conf.guiPositionSpeed;break;
+        			case 7: DQR.conf.CLGuiPartyPosY = DQR.conf.CLGuiPartyPosY - DQR.conf.guiPositionSpeed;break;
         		}
         	}
         }
@@ -191,6 +242,7 @@ public class KeyInputHandler {
         			case 4: DQR.conf.CLGuiLogPosY = DQR.conf.CLGuiLogPosY + DQR.conf.guiPositionSpeed;break;
         			case 5: DQR.conf.CLGuiSubpointsPosY = DQR.conf.CLGuiSubpointsPosY + DQR.conf.guiPositionSpeed;break;
         			case 6: DQR.conf.CLGuiBuffBarPosY = DQR.conf.CLGuiBuffBarPosY + DQR.conf.guiPositionSpeed;break;
+        			case 7: DQR.conf.CLGuiPartyPosY = DQR.conf.CLGuiPartyPosY + DQR.conf.guiPositionSpeed;break;
         		}
         	}
         }
@@ -207,6 +259,7 @@ public class KeyInputHandler {
         			case 4: DQR.conf.CLGuiLogPosX = DQR.conf.CLGuiLogPosX - DQR.conf.guiPositionSpeed;break;
         			case 5: DQR.conf.CLGuiSubpointsPosX = DQR.conf.CLGuiSubpointsPosX - DQR.conf.guiPositionSpeed;break;
         			case 6: DQR.conf.CLGuiBuffBarPosX = DQR.conf.CLGuiBuffBarPosX - DQR.conf.guiPositionSpeed;break;
+        			case 7: DQR.conf.CLGuiPartyPosX = DQR.conf.CLGuiPartyPosX - DQR.conf.guiPositionSpeed;break;
         		}
         	}
         }
@@ -223,6 +276,7 @@ public class KeyInputHandler {
         			case 4: DQR.conf.CLGuiLogPosX = DQR.conf.CLGuiLogPosX + DQR.conf.guiPositionSpeed;break;
         			case 5: DQR.conf.CLGuiSubpointsPosX = DQR.conf.CLGuiSubpointsPosX + DQR.conf.guiPositionSpeed;break;
         			case 6: DQR.conf.CLGuiBuffBarPosX = DQR.conf.CLGuiBuffBarPosX + DQR.conf.guiPositionSpeed;break;
+        			case 7: DQR.conf.CLGuiPartyPosX = DQR.conf.CLGuiPartyPosX + DQR.conf.guiPositionSpeed;break;
         		}
         	}
         }

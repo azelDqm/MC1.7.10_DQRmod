@@ -108,6 +108,7 @@ public class DQMiscs {
 	public static Item itemTouzokunokagi;
 	public static Item itemKenjanoseisui;
 	public static Item itemMahounokagi;
+	public static Item itemShinjirukokoro;
 
 	public static Item itemMegaminoinori0;
 	public static Item itemMegaminoinori1;

@@ -17,6 +17,7 @@ public class SlotJobChange extends Slot
     @Override
     public boolean canTakeStack(EntityPlayer p_82869_1_)
     {
+    	//System.out.println("TESTTEST");
     	return false;
         //return !(getHasStack() && getStack().getItem() == InventoryItemCore.instance.inventoryItem);
     }

@@ -23,9 +23,15 @@ import dqr.api.Items.DQWeapons;
 import dqr.api.enums.EnumDqmBuilder;
 import dqr.api.enums.EnumDqmJob;
 import dqr.api.enums.EnumDqmMagic;
+import dqr.api.enums.EnumDqmSubEquipType;
 import dqr.api.potion.DQPotionEtc;
 import dqr.api.potion.DQPotionMinus;
 import dqr.api.potion.DQPotionPlus;
+import dqr.items.Subequip.DqmItemBuffShield;
+import dqr.items.Subequip.DqmItemFuujinnnotate;
+import dqr.items.Subequip.DqmItemSeijukunokubikazari;
+import dqr.items.Subequip.DqmItemTikaranotate;
+import dqr.items.Subequip.DqmItemUsingAccessories;
 import dqr.items.base.DqmItemAccessoryBase;
 import dqr.items.base.DqmItemArmorBase;
 import dqr.items.base.DqmItemBowBase;
@@ -47,6 +53,9 @@ import dqr.items.builder.DqmItemBuilderDamaW;
 import dqr.items.builder.DqmItemBuilderIdoMedal;
 import dqr.items.fukuro.DqmItemFukuro;
 import dqr.items.magic.DqmItemMagicBagi;
+import dqr.items.magic.DqmItemMagicBasiRura;
+import dqr.items.magic.DqmItemMagicBasiRura2;
+import dqr.items.magic.DqmItemMagicBasiRuraC;
 import dqr.items.magic.DqmItemMagicBehomara;
 import dqr.items.magic.DqmItemMagicBuff;
 import dqr.items.magic.DqmItemMagicDebuff;
@@ -59,6 +68,7 @@ import dqr.items.magic.DqmItemMagicHyado;
 import dqr.items.magic.DqmItemMagicIo;
 import dqr.items.magic.DqmItemMagicKiari;
 import dqr.items.magic.DqmItemMagicMahoimi;
+import dqr.items.magic.DqmItemMagicMahouken;
 import dqr.items.magic.DqmItemMagicMera;
 import dqr.items.magic.DqmItemMagicNotImplemented;
 import dqr.items.magic.DqmItemMagicRaidein;
@@ -74,6 +84,7 @@ import dqr.items.magicTool.DqmItemMGTFarm1;
 import dqr.items.magicTool.DqmItemMGTFarm2;
 import dqr.items.magicTool.DqmItemMGTSet;
 import dqr.items.magicTool.DqmItemPetSuisyou;
+import dqr.items.miscs.DqmItemAccessoryCanceler;
 import dqr.items.miscs.DqmItemDyeWhite2;
 import dqr.items.miscs.DqmItemFarmerDiary;
 import dqr.items.miscs.DqmItemKenjanoisi;
@@ -101,90 +112,98 @@ public class DqItem {
         }
 
 		//アクセサリー
-		DQAccessories.itemSuraimupiasu = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemSuraimupiasu").setTextureName("dqr:Suraimupiasu");
-		DQAccessories.itemKinnopiasu = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemKinnopiasu").setTextureName("dqr:Kinnopiasu");
-		DQAccessories.itemBerupiasu = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemBerupiasu").setTextureName("dqr:Berupiasu");
-		DQAccessories.itemHosinopiasu = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemHosinopiasu").setTextureName("dqr:Hosinopiasu");
-		DQAccessories.itemKirapiasu2 = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemKirapiasu2").setTextureName("dqr:Kirapiasu2");
-		DQAccessories.itemAkumanopiasu = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemAkumanopiasu").setTextureName("dqr:Akumanopiasu");
-		DQAccessories.itemMahounopiasu = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemMahounopiasu").setTextureName("dqr:Mahounopiasu");
-		DQAccessories.itemTensinopiasu = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemTensinopiasu").setTextureName("dqr:Tensinopiasu");
-		DQAccessories.itemHosifurupiasu = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemHosifurupiasu").setTextureName("dqr:Hosifurupiasu");
-		DQAccessories.itemHosifurupiasu2 = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemHosifurupiasu2").setTextureName("dqr:Hosifurupiasu2");
+		DQAccessories.itemSuraimupiasu = new DqmItemAccessoryBase(EnumDqmSubEquipType.Piasu).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemSuraimupiasu").setTextureName("dqr:Suraimupiasu");
+		DQAccessories.itemKinnopiasu = new DqmItemAccessoryBase(EnumDqmSubEquipType.Piasu).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemKinnopiasu").setTextureName("dqr:Kinnopiasu");
+		DQAccessories.itemBerupiasu = new DqmItemAccessoryBase(EnumDqmSubEquipType.Piasu).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemBerupiasu").setTextureName("dqr:Berupiasu");
+		DQAccessories.itemHosinopiasu = new DqmItemAccessoryBase(EnumDqmSubEquipType.Piasu).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemHosinopiasu").setTextureName("dqr:Hosinopiasu");
+		DQAccessories.itemKirapiasu2 = new DqmItemAccessoryBase(EnumDqmSubEquipType.Piasu).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemKirapiasu2").setTextureName("dqr:Kirapiasu2");
+		DQAccessories.itemAkumanopiasu = new DqmItemAccessoryBase(EnumDqmSubEquipType.Piasu).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemAkumanopiasu").setTextureName("dqr:Akumanopiasu");
+		DQAccessories.itemMahounopiasu = new DqmItemAccessoryBase(EnumDqmSubEquipType.Piasu).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemMahounopiasu").setTextureName("dqr:Mahounopiasu");
+		DQAccessories.itemTensinopiasu = new DqmItemAccessoryBase(EnumDqmSubEquipType.Piasu).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemTensinopiasu").setTextureName("dqr:Tensinopiasu");
+		DQAccessories.itemHosifurupiasu = new DqmItemAccessoryBase(EnumDqmSubEquipType.Piasu).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemHosifurupiasu").setTextureName("dqr:Hosifurupiasu");
+		DQAccessories.itemHosifurupiasu2 = new DqmItemAccessoryBase(EnumDqmSubEquipType.Piasu).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemHosifurupiasu2").setTextureName("dqr:Hosifurupiasu2");
 
-		DQAccessories.itemHosinokubikazari = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemHosinokubikazari").setTextureName("dqr:Hosinokubikazari");
-		DQAccessories.itemRakkipendanto = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemRakkipendanto").setTextureName("dqr:Rakkipendanto");
-		DQAccessories.itemKataminokubikazari = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemKataminokubikazari").setTextureName("dqr:Kataminokubikazari");
-		DQAccessories.itemSingonnojuzu = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemSingonnojuzu").setTextureName("dqr:Singonnojuzu");
-		DQAccessories.itemSinigaminokubikazari = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemSinigaminokubikazari").setTextureName("dqr:Sinigaminokubikazari");
-		DQAccessories.itemSeijukunokubikazari = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemSeijukunokubikazari").setTextureName("dqr:Seijukunokubikazari");
-		DQAccessories.itemHosizoranokubikazari = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemHosizoranokubikazari").setTextureName("dqr:Hosizoranokubikazari");
-		DQAccessories.itemHosizoranokubikazari2 = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemHosizoranokubikazari2").setTextureName("dqr:Hosizoranokubikazari2");
-		DQAccessories.itemHosizoranokubikazari3 = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemHosizoranokubikazari3").setTextureName("dqr:Hosizoranokubikazari3");
-		DQAccessories.itemHosizoranokubikazari4 = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemHosizoranokubikazari4").setTextureName("dqr:Hosizoranokubikazari4");
+		DQAccessories.itemHosinokubikazari = new DqmItemAccessoryBase(EnumDqmSubEquipType.Kubikazari).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemHosinokubikazari").setTextureName("dqr:Hosinokubikazari");
+		DQAccessories.itemRakkipendanto = new DqmItemAccessoryBase(EnumDqmSubEquipType.Kubikazari).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemRakkipendanto").setTextureName("dqr:Rakkipendanto");
+		DQAccessories.itemKataminokubikazari = new DqmItemAccessoryBase(EnumDqmSubEquipType.Kubikazari).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemKataminokubikazari").setTextureName("dqr:Kataminokubikazari");
+		DQAccessories.itemSingonnojuzu = new DqmItemAccessoryBase(EnumDqmSubEquipType.Kubikazari).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemSingonnojuzu").setTextureName("dqr:Singonnojuzu");
+		DQAccessories.itemSinigaminokubikazari = new DqmItemAccessoryBase(EnumDqmSubEquipType.Kubikazari).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemSinigaminokubikazari").setTextureName("dqr:Sinigaminokubikazari");
+		DQAccessories.itemSeijukunokubikazari = new DqmItemSeijukunokubikazari(EnumDqmSubEquipType.Kubikazari).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemSeijukunokubikazari").setTextureName("dqr:Seijukunokubikazari");
+		DQAccessories.itemHosizoranokubikazari = new DqmItemAccessoryBase(EnumDqmSubEquipType.Kubikazari).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemHosizoranokubikazari").setTextureName("dqr:Hosizoranokubikazari");
+		DQAccessories.itemHosizoranokubikazari2 = new DqmItemAccessoryBase(EnumDqmSubEquipType.Kubikazari).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemHosizoranokubikazari2").setTextureName("dqr:Hosizoranokubikazari2");
+		DQAccessories.itemHosizoranokubikazari3 = new DqmItemAccessoryBase(EnumDqmSubEquipType.Kubikazari).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemHosizoranokubikazari3").setTextureName("dqr:Hosizoranokubikazari3");
+		DQAccessories.itemHosizoranokubikazari4 = new DqmItemAccessoryBase(EnumDqmSubEquipType.Kubikazari).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemHosizoranokubikazari4").setTextureName("dqr:Hosizoranokubikazari4");
 
-		DQAccessories.itemGoldburesuretto = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemGoldburesuretto").setTextureName("dqr:Goldburesuretto");
-		DQAccessories.itemHosifuru = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemHosifuru").setTextureName("dqr:Hosifuru");
-		DQAccessories.itemIyasinoudewa = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemIyasinoudewa").setTextureName("dqr:Iyasinoudewa");
-		DQAccessories.itemMamorinoudewa = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemMamorinoudewa").setTextureName("dqr:Mamorinoudewa");
-		DQAccessories.itemMamorinoudewa2 = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemMamorinoudewa2").setTextureName("dqr:Mamorinoudewa2");
-		DQAccessories.itemMamorinoudewa3 = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemMamorinoudewa3").setTextureName("dqr:Mamorinoudewa3");
-		DQAccessories.itemMamorinoudewa4 = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemMamorinoudewa4").setTextureName("dqr:Mamorinoudewa4");
-		DQAccessories.itemGouketunoudewa = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemGouketunoudewa").setTextureName("dqr:Gouketunoudewa");
-		DQAccessories.itemGouketunoudewa2 = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemGouketunoudewa2").setTextureName("dqr:Gouketunoudewa2");
-		DQAccessories.itemGouketunoudewa3 = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemGouketunoudewa3").setTextureName("dqr:Gouketunoudewa3");
-		DQAccessories.itemGouketunoudewa4 = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemGouketunoudewa4").setTextureName("dqr:Gouketunoudewa4");
+		DQAccessories.itemGoldburesuretto = new DqmItemAccessoryBase(EnumDqmSubEquipType.Udewa).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemGoldburesuretto").setTextureName("dqr:Goldburesuretto");
+		DQAccessories.itemHosifuru = new DqmItemAccessoryBase(EnumDqmSubEquipType.Udewa).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemHosifuru").setTextureName("dqr:Hosifuru");
+		DQAccessories.itemIyasinoudewa = new DqmItemAccessoryBase(EnumDqmSubEquipType.Udewa).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemIyasinoudewa").setTextureName("dqr:Iyasinoudewa");
+		DQAccessories.itemMamorinoudewa = new DqmItemAccessoryBase(EnumDqmSubEquipType.Udewa).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemMamorinoudewa").setTextureName("dqr:Mamorinoudewa");
+		DQAccessories.itemMamorinoudewa2 = new DqmItemAccessoryBase(EnumDqmSubEquipType.Udewa).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemMamorinoudewa2").setTextureName("dqr:Mamorinoudewa2");
+		DQAccessories.itemMamorinoudewa3 = new DqmItemAccessoryBase(EnumDqmSubEquipType.Udewa).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemMamorinoudewa3").setTextureName("dqr:Mamorinoudewa3");
+		DQAccessories.itemMamorinoudewa4 = new DqmItemAccessoryBase(EnumDqmSubEquipType.Udewa).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemMamorinoudewa4").setTextureName("dqr:Mamorinoudewa4");
+		DQAccessories.itemGouketunoudewa = new DqmItemAccessoryBase(EnumDqmSubEquipType.Udewa).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemGouketunoudewa").setTextureName("dqr:Gouketunoudewa");
+		DQAccessories.itemGouketunoudewa2 = new DqmItemAccessoryBase(EnumDqmSubEquipType.Udewa).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemGouketunoudewa2").setTextureName("dqr:Gouketunoudewa2");
+		DQAccessories.itemGouketunoudewa3 = new DqmItemAccessoryBase(EnumDqmSubEquipType.Udewa).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemGouketunoudewa3").setTextureName("dqr:Gouketunoudewa3");
+		DQAccessories.itemGouketunoudewa4 = new DqmItemAccessoryBase(EnumDqmSubEquipType.Udewa).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemGouketunoudewa4").setTextureName("dqr:Gouketunoudewa4");
 
-		DQAccessories.itemGoldring = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemGoldring").setTextureName("dqr:Goldring");
-		DQAccessories.itemHaramotiYubiwa = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemHaramotiYubiwa").setTextureName("dqr:HaramotiYubiwa");
-		DQAccessories.itemHaraherazuYubiwa = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemHaraherazuYubiwa").setTextureName("dqr:HaraherazuYubiwa");
-		DQAccessories.itemHayatenoring = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemHayatenoring").setTextureName("dqr:Hayatenoring");
-		DQAccessories.itemGinnoyubiwa = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemGinnoyubiwa").setTextureName("dqr:Ginnoyubiwa");
-		DQAccessories.itemInotinoyubiwa = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemInotinoyubiwa").setTextureName("dqr:Inotinoyubiwa");
-		DQAccessories.itemTikaranoyubiwa = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemTikaranoyubiwa").setTextureName("dqr:Tikaranoyubiwa");
-		DQAccessories.itemFurubitaring = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemFurubitaring").setTextureName("dqr:Furubitaring");
-		DQAccessories.itemMegaminoyubiwa = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemMegaminoyubiwa").setTextureName("dqr:Megaminoyubiwa");
-		DQAccessories.itemInorinoyubiwa = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemInorinoyubiwa").setTextureName("dqr:Inorinoyubiwa");
-		DQAccessories.itemSuparing = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemSuparing").setTextureName("dqr:Suparing");
-		DQAccessories.itemSosararing = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemSosararing").setTextureName("dqr:Sosararing");
-		DQAccessories.itemHagennoring = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemHagennoring").setTextureName("dqr:Hagennoring");
-		DQAccessories.itemHagennoring2 = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemHagennoring2").setTextureName("dqr:Hagennoring2");
-		DQAccessories.itemHadokunoring = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemHadokunoring").setTextureName("dqr:Hadokunoring");
-		DQAccessories.itemHadokunoring2 = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemHadokunoring2").setTextureName("dqr:Hadokunoring2");
-		DQAccessories.itemMangetunoring = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemMangetunoring").setTextureName("dqr:Mangetunoring");
-		DQAccessories.itemMangetunoring2 = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemMangetunoring2").setTextureName("dqr:Mangetunoring2");
-		DQAccessories.itemRiseinoring = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemRiseinoring").setTextureName("dqr:Riseinoring");
-		DQAccessories.itemRiseinoring2 = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemRiseinoring2").setTextureName("dqr:Riseinoring2");
+		DQAccessories.itemGoldring = new DqmItemAccessoryBase(EnumDqmSubEquipType.Yubiwa).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemGoldring").setTextureName("dqr:Goldring");
+		DQAccessories.itemHaramotiYubiwa = new DqmItemAccessoryBase(EnumDqmSubEquipType.Yubiwa).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemHaramotiYubiwa").setTextureName("dqr:HaramotiYubiwa");
+		DQAccessories.itemHaraherazuYubiwa = new DqmItemAccessoryBase(EnumDqmSubEquipType.Yubiwa).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemHaraherazuYubiwa").setTextureName("dqr:HaraherazuYubiwa");
+		DQAccessories.itemHayatenoring = new DqmItemAccessoryBase(EnumDqmSubEquipType.Yubiwa).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemHayatenoring").setTextureName("dqr:Hayatenoring");
+		DQAccessories.itemGinnoyubiwa = new DqmItemAccessoryBase(EnumDqmSubEquipType.Yubiwa).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemGinnoyubiwa").setTextureName("dqr:Ginnoyubiwa");
+		DQAccessories.itemInotinoyubiwa = new DqmItemUsingAccessories(EnumDqmSubEquipType.Yubiwa).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemInotinoyubiwa").setTextureName("dqr:Inotinoyubiwa");
+		DQAccessories.itemTikaranoyubiwa = new DqmItemAccessoryBase(EnumDqmSubEquipType.Yubiwa).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemTikaranoyubiwa").setTextureName("dqr:Tikaranoyubiwa");
+		DQAccessories.itemFurubitaring = new DqmItemAccessoryBase(EnumDqmSubEquipType.Yubiwa).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemFurubitaring").setTextureName("dqr:Furubitaring");
+		DQAccessories.itemMegaminoyubiwa = new DqmItemAccessoryBase(EnumDqmSubEquipType.Yubiwa).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemMegaminoyubiwa").setTextureName("dqr:Megaminoyubiwa");
+		DQAccessories.itemInorinoyubiwa = new DqmItemUsingAccessories(EnumDqmSubEquipType.Yubiwa).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemInorinoyubiwa").setTextureName("dqr:Inorinoyubiwa");
+		DQAccessories.itemSuparing = new DqmItemAccessoryBase(EnumDqmSubEquipType.Yubiwa).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemSuparing").setTextureName("dqr:Suparing");
+		DQAccessories.itemSosararing = new DqmItemAccessoryBase(EnumDqmSubEquipType.Yubiwa).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemSosararing").setTextureName("dqr:Sosararing");
+		DQAccessories.itemHagennoring = new DqmItemAccessoryBase(EnumDqmSubEquipType.Yubiwa).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemHagennoring").setTextureName("dqr:Hagennoring");
+		DQAccessories.itemHagennoring2 = new DqmItemAccessoryBase(EnumDqmSubEquipType.Yubiwa).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemHagennoring2").setTextureName("dqr:Hagennoring2");
+		DQAccessories.itemHadokunoring = new DqmItemAccessoryBase(EnumDqmSubEquipType.Yubiwa).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemHadokunoring").setTextureName("dqr:Hadokunoring");
+		DQAccessories.itemHadokunoring2 = new DqmItemAccessoryBase(EnumDqmSubEquipType.Yubiwa).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemHadokunoring2").setTextureName("dqr:Hadokunoring2");
+		DQAccessories.itemMangetunoring = new DqmItemAccessoryBase(EnumDqmSubEquipType.Yubiwa).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemMangetunoring").setTextureName("dqr:Mangetunoring");
+		DQAccessories.itemMangetunoring2 = new DqmItemAccessoryBase(EnumDqmSubEquipType.Yubiwa).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemMangetunoring2").setTextureName("dqr:Mangetunoring2");
+		DQAccessories.itemRiseinoring = new DqmItemAccessoryBase(EnumDqmSubEquipType.Yubiwa).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemRiseinoring").setTextureName("dqr:Riseinoring");
+		DQAccessories.itemRiseinoring2 = new DqmItemAccessoryBase(EnumDqmSubEquipType.Yubiwa).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemRiseinoring2").setTextureName("dqr:Riseinoring2");
 
-		DQAccessories.itemMayokenoseiin = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemMayokenoseiin").setTextureName("dqr:Mayokenoseiin");
-		DQAccessories.itemMamorinorubi = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemMamorinorubi").setTextureName("dqr:Mamorinorubi");
-		DQAccessories.itemTikaranorubi = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemTikaranorubi").setTextureName("dqr:Tikaranorubi");
-		DQAccessories.itemAkumanotatu = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemAkumanotatu").setTextureName("dqr:Akumanotatu");
-		DQAccessories.itemRyuunouroko = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemRyuunouroko").setTextureName("dqr:Ryuunouroko");
-		DQAccessories.itemRoiyarubajjji = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemRoiyarubajjji").setTextureName("dqr:Roiyarubajjji");
-		DQAccessories.itemIkarinotatu = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemIkarinotatu").setTextureName("dqr:Ikarinotatu");
-		DQAccessories.itemIkarinotatu2 = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemIkarinotatu2").setTextureName("dqr:Ikarinotatu2");
-		DQAccessories.itemIkarinotatu3 = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemIkarinotatu3").setTextureName("dqr:Ikarinotatu3");
-		DQAccessories.itemIkarinotatu4 = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemIkarinotatu4").setTextureName("dqr:Ikarinotatu4");
-		DQAccessories.itemSaikyounoakasi = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemSaikyounoakasi").setTextureName("dqr:Saikyounoakasi");
+		DQAccessories.itemMayokenoseiin = new DqmItemAccessoryBase(EnumDqmSubEquipType.Sonota).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemMayokenoseiin").setTextureName("dqr:Mayokenoseiin");
+		DQAccessories.itemMamorinorubi = new DqmItemAccessoryBase(EnumDqmSubEquipType.Sonota).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemMamorinorubi").setTextureName("dqr:Mamorinorubi");
+		DQAccessories.itemTikaranorubi = new DqmItemAccessoryBase(EnumDqmSubEquipType.Sonota).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemTikaranorubi").setTextureName("dqr:Tikaranorubi");
+		DQAccessories.itemAkumanotatu = new DqmItemAccessoryBase(EnumDqmSubEquipType.Sonota).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemAkumanotatu").setTextureName("dqr:Akumanotatu");
+		DQAccessories.itemRyuunouroko = new DqmItemAccessoryBase(EnumDqmSubEquipType.Sonota).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemRyuunouroko").setTextureName("dqr:Ryuunouroko");
+		DQAccessories.itemRoiyarubajjji = new DqmItemAccessoryBase(EnumDqmSubEquipType.Sonota).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemRoiyarubajjji").setTextureName("dqr:Roiyarubajjji");
+		DQAccessories.itemIkarinotatu = new DqmItemAccessoryBase(EnumDqmSubEquipType.Sonota).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemIkarinotatu").setTextureName("dqr:Ikarinotatu");
+		DQAccessories.itemIkarinotatu2 = new DqmItemAccessoryBase(EnumDqmSubEquipType.Sonota).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemIkarinotatu2").setTextureName("dqr:Ikarinotatu2");
+		DQAccessories.itemIkarinotatu3 = new DqmItemAccessoryBase(EnumDqmSubEquipType.Sonota).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemIkarinotatu3").setTextureName("dqr:Ikarinotatu3");
+		DQAccessories.itemIkarinotatu4 = new DqmItemAccessoryBase(EnumDqmSubEquipType.Sonota).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemIkarinotatu4").setTextureName("dqr:Ikarinotatu4");
+		DQAccessories.itemSaikyounoakasi = new DqmItemAccessoryBase(EnumDqmSubEquipType.Sonota).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemSaikyounoakasi").setTextureName("dqr:Saikyounoakasi");
 
-		DQAccessories.itemKawanotate = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemKawanotate").setTextureName("dqr:Kawanotate");
-		DQAccessories.itemUrokonotate = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemUrokonotate").setTextureName("dqr:Urokonotate");
-		DQAccessories.itemSuraimutorei = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemSuraimutorei").setTextureName("dqr:Suraimutorei");
-		DQAccessories.itemSeidounotate = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemSeidounotate").setTextureName("dqr:Seidounotate");
-		DQAccessories.itemHaganenotate = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemHaganenotate").setTextureName("dqr:Haganenotate");
-		DQAccessories.itemHowaitosirudo = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemHowaitosirudo").setTextureName("dqr:Howaitosirudo");
-		DQAccessories.itemHonoonotate = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemHonoonotate").setTextureName("dqr:Honoonotate");
-		DQAccessories.itemKoorinotate = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemKoorinotate").setTextureName("dqr:Koorinotate");
-		DQAccessories.itemMahounotate = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemMahounotate").setTextureName("dqr:Mahounotate");
-		DQAccessories.itemOogasirudo = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemOogasirudo").setTextureName("dqr:Oogasirudo");
-		DQAccessories.itemPuratinasirudo = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemPuratinasirudo").setTextureName("dqr:Puratinasirudo");
-		DQAccessories.itemFuujinnnotate = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemFuujinnnotate").setTextureName("dqr:Fuujinnnotate");
-		DQAccessories.itemMikagaminotate = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemMikagaminotate").setTextureName("dqr:Mikagaminotate");
-		DQAccessories.itemTikaranotate = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemTikaranotate").setTextureName("dqr:Tikaranotate");
-		DQAccessories.itemMetarukingnotate = new DqmItemAccessoryBase().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemMetarukingnotate").setTextureName("dqr:Metarukingnotate");
+		DQAccessories.itemKawanotate = new DqmItemAccessoryBase(EnumDqmSubEquipType.Shield).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemKawanotate").setTextureName("dqr:Kawanotate");
+		DQAccessories.itemUrokonotate = new DqmItemAccessoryBase(EnumDqmSubEquipType.Shield).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemUrokonotate").setTextureName("dqr:Urokonotate");
+		DQAccessories.itemSuraimutorei = new DqmItemAccessoryBase(EnumDqmSubEquipType.Shield).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemSuraimutorei").setTextureName("dqr:Suraimutorei");
+		DQAccessories.itemSeidounotate = new DqmItemAccessoryBase(EnumDqmSubEquipType.Shield).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemSeidounotate").setTextureName("dqr:Seidounotate");
+		DQAccessories.itemHaganenotate = new DqmItemAccessoryBase(EnumDqmSubEquipType.Shield).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemHaganenotate").setTextureName("dqr:Haganenotate");
+		DQAccessories.itemHowaitosirudo = new DqmItemAccessoryBase(EnumDqmSubEquipType.Shield).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemHowaitosirudo").setTextureName("dqr:Howaitosirudo");
+		DQAccessories.itemHonoonotate = new DqmItemAccessoryBase(EnumDqmSubEquipType.Shield).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemHonoonotate").setTextureName("dqr:Honoonotate");
+		DQAccessories.itemKoorinotate = new DqmItemAccessoryBase(EnumDqmSubEquipType.Shield).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemKoorinotate").setTextureName("dqr:Koorinotate");
+		DQAccessories.itemMahounotate = new DqmItemAccessoryBase(EnumDqmSubEquipType.Shield).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemMahounotate").setTextureName("dqr:Mahounotate");
+		DQAccessories.itemOogasirudo = new DqmItemAccessoryBase(EnumDqmSubEquipType.Shield).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemOogasirudo").setTextureName("dqr:Oogasirudo");
+		DQAccessories.itemPuratinasirudo = new DqmItemAccessoryBase(EnumDqmSubEquipType.Shield).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemPuratinasirudo").setTextureName("dqr:Puratinasirudo");
+		DQAccessories.itemFuujinnnotate = new DqmItemFuujinnnotate(EnumDqmSubEquipType.Shield, 1).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemFuujinnnotate").setTextureName("dqr:Fuujinnnotate");
+		DQAccessories.itemFuujinnnotate2 = new DqmItemFuujinnnotate(EnumDqmSubEquipType.Shield, 2).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemFuujinnnotate2").setTextureName("dqr:Fuujinnnotate2");
+		DQAccessories.itemFuujinnnotate3 = new DqmItemFuujinnnotate(EnumDqmSubEquipType.Shield, 3).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemFuujinnnotate3").setTextureName("dqr:Fuujinnnotate3");
+		DQAccessories.itemMikagaminotate = new DqmItemAccessoryBase(EnumDqmSubEquipType.Shield).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemMikagaminotate").setTextureName("dqr:Mikagaminotate");
+		DQAccessories.itemTikaranotate = new DqmItemTikaranotate(EnumDqmSubEquipType.Shield).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemTikaranotate").setTextureName("dqr:Tikaranotate");
+		DQAccessories.itemMetarukingnotate = new DqmItemAccessoryBase(EnumDqmSubEquipType.Shield).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemMetarukingnotate").setTextureName("dqr:Metarukingnotate");
 
+		DQAccessories.itemTenkuunotate = new DqmItemBuffShield(EnumDqmSubEquipType.Shield).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemTenkuunotate").setTextureName("dqr:Tenkuunotate");
+		DQAccessories.itemRotonotate = new DqmItemAccessoryBase(EnumDqmSubEquipType.Shield).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemRotonotate").setTextureName("dqr:Rotonotate");
+		DQAccessories.itemSabitatate = new DqmItemAccessoryBase(EnumDqmSubEquipType.Shield).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemSabitatate").setTextureName("dqr:Sabitatate");
+		DQAccessories.itemMegaminotate = new DqmItemAccessoryBase(EnumDqmSubEquipType.Shield).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemMegaminotate").setTextureName("dqr:Megaminotate");
+		DQAccessories.itemUroborosunotate = new DqmItemBuffShield(EnumDqmSubEquipType.Shield).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemUroborosunotate").setTextureName("dqr:Uroborosunotate");
 
+		DQAccessories.itemAccCanceler =  new DqmItemAccessoryCanceler().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemAccCanceler").setTextureName("dqr:Torihazusi");
 		//防具
 
 		DQArmors.itemDansanohanekazaribando = new DqmItemArmorBase(DQR.dqmMaterial.armorDansa, HELMET, 4).setCreativeTab(DQR.tabs.DqmTabArmor).setUnlocalizedName("dqm.itemDansanohanekazaribando").setTextureName("dqr:Dansanohanekazaribando");
@@ -630,18 +649,20 @@ public class DqItem {
 
 		DQMagics.itemKiari = new DqmItemMagicKiari((DQR.dqmMaterial.DqmMagicSouryo) , 2.0F, 2000, EnumDqmMagic.Kiari).setUnlocalizedName("dqm.itemKiari").setTextureName("dqr:Kiari").setCreativeTab(DQR.tabs.DqmTabMagic);
 
-		DQMagics.itemMahouken1 = new DqmItemMagicNotImplemented((DQR.dqmMaterial.DqmMagicMahouSensi) , 2.0F, 2000, EnumDqmMagic.Mahouken1).setUnlocalizedName("dqm.itemMahouken1").setTextureName("dqr:Mahouken1").setCreativeTab(DQR.tabs.DqmTabMagic);
-		DQMagics.itemMahouken2 = new DqmItemMagicNotImplemented((DQR.dqmMaterial.DqmMagicMahouSensi) , 2.0F, 2000, EnumDqmMagic.Mahouken2).setUnlocalizedName("dqm.itemMahouken2").setTextureName("dqr:Mahouken2").setCreativeTab(DQR.tabs.DqmTabMagic);
-		DQMagics.itemMahouken3 = new DqmItemMagicNotImplemented((DQR.dqmMaterial.DqmMagicMahouSensi) , 2.0F, 2000, EnumDqmMagic.Mahouken3).setUnlocalizedName("dqm.itemMahouken3").setTextureName("dqr:Mahouken3").setCreativeTab(DQR.tabs.DqmTabMagic);
-		DQMagics.itemMahouken4 = new DqmItemMagicNotImplemented((DQR.dqmMaterial.DqmMagicMahouSensi) , 2.0F, 2000, EnumDqmMagic.Mahouken4).setUnlocalizedName("dqm.itemMahouken4").setTextureName("dqr:Mahouken4").setCreativeTab(DQR.tabs.DqmTabMagic);
-		DQMagics.itemMahouken5 = new DqmItemMagicNotImplemented((DQR.dqmMaterial.DqmMagicMahouSensi) , 2.0F, 2000, EnumDqmMagic.Mahouken5).setUnlocalizedName("dqm.itemMahouken5").setTextureName("dqr:Mahouken5").setCreativeTab(DQR.tabs.DqmTabMagic);
-		DQMagics.itemMahouken6 = new DqmItemMagicNotImplemented((DQR.dqmMaterial.DqmMagicMahouSensi) , 2.0F, 2000, EnumDqmMagic.Mahouken6).setUnlocalizedName("dqm.itemMahouken6").setTextureName("dqr:Mahouken6").setCreativeTab(DQR.tabs.DqmTabMagic);
-		DQMagics.itemMahouken7 = new DqmItemMagicNotImplemented((DQR.dqmMaterial.DqmMagicMahouSensi) , 2.0F, 2000, EnumDqmMagic.Mahouken7).setUnlocalizedName("dqm.itemMahouken7").setTextureName("dqr:Mahouken7").setCreativeTab(DQR.tabs.DqmTabMagic);
+		DQMagics.itemMahouken1 = new DqmItemMagicMahouken((DQR.dqmMaterial.DqmMagicMahouSensi) , 2.0F, 2000, EnumDqmMagic.Mahouken1, DQPotionEtc.buffMahouken, 0).setUnlocalizedName("dqm.itemMahouken1").setTextureName("dqr:Mahouken1").setCreativeTab(DQR.tabs.DqmTabMagic);
+		DQMagics.itemMahouken2 = new DqmItemMagicMahouken((DQR.dqmMaterial.DqmMagicMahouSensi) , 2.0F, 2000, EnumDqmMagic.Mahouken2, DQPotionEtc.buffMahouken, 1).setUnlocalizedName("dqm.itemMahouken2").setTextureName("dqr:Mahouken2").setCreativeTab(DQR.tabs.DqmTabMagic);
+		DQMagics.itemMahouken3 = new DqmItemMagicMahouken((DQR.dqmMaterial.DqmMagicMahouSensi) , 2.0F, 2000, EnumDqmMagic.Mahouken3, DQPotionEtc.buffMahouken, 2).setUnlocalizedName("dqm.itemMahouken3").setTextureName("dqr:Mahouken3").setCreativeTab(DQR.tabs.DqmTabMagic);
+		DQMagics.itemMahouken4 = new DqmItemMagicMahouken((DQR.dqmMaterial.DqmMagicMahouSensi) , 2.0F, 2000, EnumDqmMagic.Mahouken4, DQPotionEtc.buffMahouken, 3).setUnlocalizedName("dqm.itemMahouken4").setTextureName("dqr:Mahouken4").setCreativeTab(DQR.tabs.DqmTabMagic);
+		DQMagics.itemMahouken5 = new DqmItemMagicMahouken((DQR.dqmMaterial.DqmMagicMahouSensi) , 2.0F, 2000, EnumDqmMagic.Mahouken5, DQPotionEtc.buffMahouken, 4).setUnlocalizedName("dqm.itemMahouken5").setTextureName("dqr:Mahouken5").setCreativeTab(DQR.tabs.DqmTabMagic);
+		DQMagics.itemMahouken6 = new DqmItemMagicMahouken((DQR.dqmMaterial.DqmMagicMahouSensi) , 2.0F, 2000, EnumDqmMagic.Mahouken6, DQPotionEtc.buffMahouken, 5).setUnlocalizedName("dqm.itemMahouken6").setTextureName("dqr:Mahouken6").setCreativeTab(DQR.tabs.DqmTabMagic);
+		DQMagics.itemMahouken7 = new DqmItemMagicMahouken((DQR.dqmMaterial.DqmMagicMahouSensi) , 2.0F, 2000, EnumDqmMagic.Mahouken7, DQPotionEtc.buffMahouken, 6).setUnlocalizedName("dqm.itemMahouken7").setTextureName("dqr:Mahouken7").setCreativeTab(DQR.tabs.DqmTabMagic);
 		//itemCallCloud = new DqmItemMagicWorld((DQR.dqmMaterial.DqmMagicKenja) , 2.0F, 2000, EnumDqmMagic.CallCloud).setUnlocalizedName("dqm.itemCallCloud").setTextureName("dqr:CallCloud").setCreativeTab(DQR.tabs.DqmTabMagic);
 		//itemCallMagma = new DqmItemMagicBuff((DQR.dqmMaterial.DqmMagicMahouTukai) , 2.0F, 2000, EnumDqmMagic.CallMagma, DQPotionPlus.buffCallMagma).setUnlocalizedName("dqm.itemCallMagma").setTextureName("dqr:CallMagma").setCreativeTab(DQR.tabs.DqmTabMagic);
 		//itemHikarinotue = new DqmItemMagicWorld((DQR.dqmMaterial.DqmMagicMahouTukai) , 2.0F, 2000, EnumDqmMagic.Hikarinotue).setUnlocalizedName("dqm.itemHikarinotue").setTextureName("dqr:Hikarinotue").setCreativeTab(DQR.tabs.DqmTabMagic);
 
-
+		DQMagics.itemBasirura = new DqmItemMagicBasiRura((DQR.dqmMaterial.DqmMagicMahouTukai) , 2.0F, 2000, EnumDqmMagic.Basirura).setUnlocalizedName("dqm.itemBasirura").setTextureName("dqr:BRura").setCreativeTab(DQR.tabs.DqmTabMagic);
+		DQMagics.itemBasiruraC = new DqmItemMagicBasiRuraC((DQR.dqmMaterial.DqmMagicMahouTukai) , 2.0F, 2000, EnumDqmMagic.BasiruraC).setUnlocalizedName("dqm.itembasirurac").setTextureName("dqr:BRuraC").setCreativeTab(DQR.tabs.DqmTabMagic);
+		DQMagics.itemBasiruraC2 = new DqmItemMagicBasiRura2((DQR.dqmMaterial.DqmMagicMahouTukai) , 2.0F, 2000, EnumDqmMagic.BasiruraC2).setUnlocalizedName("dqm.itemBasirura2").setTextureName("dqr:BRura2").setCreativeTab(DQR.tabs.DqmTabMagic);
 
 		//素材
 		DQMiscs.itemLittlemedal = new DqmItemLittlemedal().setCreativeTab(DQR.tabs.DqmTabMisc).setUnlocalizedName("dqm.itemLittlemedal").setTextureName("dqr:Littlemedal");
@@ -836,7 +857,7 @@ public class DqItem {
 		DQMiscs.itemMagicbook3 = new DqmItemMiscBase().setCreativeTab(DQR.tabs.DqmTabMisc).setUnlocalizedName("dqm.itemMagicbook3").setTextureName("dqr:Magicbook3");
 
 		DQMiscs.itemFarmBook = new DqmItemFarmBook().setTextureName("dqr:FarmBook").setUnlocalizedName("dqm.itemFarmBook").setCreativeTab(CreativeTabs.tabMisc);
-
+		DQMiscs.itemShinjirukokoro = new DqmItemMiscBase().setCreativeTab(DQR.tabs.DqmTabMisc).setUnlocalizedName("dqm.itemShinjirukokoro").setTextureName("dqr:Shinjirukokoro");
 
 		//植物
 		DQSeeds.itemYakusouSeed = new DqmItemSeedBase(DQPlants.BlockYakusouSeed1, Blocks.farmland).setCreativeTab(DQR.tabs.DqmTabPlant).setUnlocalizedName("dqm.itemYakusouSeed").setTextureName("dqr:YakusouSeed");
@@ -1178,5 +1199,15 @@ public class DqItem {
 		DQInventorySlots.itemSlotUdewa = new Item().setUnlocalizedName("dqm.itemSlotUdewa").setTextureName("dqr:slot_Udewa").setCreativeTab(DQR.tabs.DqmTabMisc);
 		DQInventorySlots.itemSlotYubiwa = new Item().setUnlocalizedName("dqm.itemSlotYubiwa").setTextureName("dqr:slot_Yubiwa").setCreativeTab(DQR.tabs.DqmTabMisc);
 		DQInventorySlots.itemSlotFukuro = new Item().setUnlocalizedName("dqm.itemSlotFukuro").setTextureName("dqr:slot_Fukuro").setCreativeTab(DQR.tabs.DqmTabMisc);
+
+		DQMonsters.itemMonsterAkuma = new DqmItemMonster().setUnlocalizedName("dqm.itemMonsterAkuma").setTextureName("dqr:FigAkuma");
+		DQMonsters.itemMonsterBeast = new DqmItemMonster().setUnlocalizedName("dqm.itemMonsterBeast").setTextureName("dqr:FigBeast");
+		DQMonsters.itemMonsterBussitu = new DqmItemMonster().setUnlocalizedName("dqm.itemMonsterBussitu").setTextureName("dqr:FigBussitu");
+		DQMonsters.itemMonsterDragon = new DqmItemMonster().setUnlocalizedName("dqm.itemMonsterDragon").setTextureName("dqr:FigDragon");
+		DQMonsters.itemMonsterMetaru = new DqmItemMonster().setUnlocalizedName("dqm.itemMonsterMetaru").setTextureName("dqr:FigMetal");
+		DQMonsters.itemMonsterSizen = new DqmItemMonster().setUnlocalizedName("dqm.itemMonsterSizen").setTextureName("dqr:FigSizen");
+		DQMonsters.itemMonsterTokusyu = new DqmItemMonster().setUnlocalizedName("dqm.itemMonsterTokusyu").setTextureName("dqr:FigTokusyu");
+		DQMonsters.itemMonsterUndead = new DqmItemMonster().setUnlocalizedName("dqm.itemMonsterUndead").setTextureName("dqr:FigUndead");
+		DQMonsters.itemMonsterUnknown = new DqmItemMonster().setUnlocalizedName("dqm.itemMonsterUnknown").setTextureName("dqr:FigUnknown");
 	}
 }

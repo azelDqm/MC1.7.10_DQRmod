@@ -1,6 +1,8 @@
 package dqr.items.base;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 
 import net.minecraft.block.Block;
@@ -8,12 +10,20 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.monster.EntitySkeleton;
+import net.minecraft.entity.monster.EntityZombie;
+import net.minecraft.entity.passive.EntityHorse;
+import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 
@@ -24,7 +34,24 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import dqr.DQR;
 import dqr.api.Items.DQWeapons;
+import dqr.api.enums.EnumColor;
+import dqr.api.enums.EnumDqmElement;
+import dqr.api.enums.EnumDqmMagic;
+import dqr.api.enums.EnumDqmMobRoot;
+import dqr.api.enums.EnumDqmWeapon;
+import dqr.api.enums.EnumDqmWeaponMode;
+import dqr.api.potion.DQPotionMinus;
 import dqr.blocks.base.DqmBlockOreBase;
+import dqr.entity.magicEntity.magic.MagicEntity;
+import dqr.entity.magicEntity.magic.MagicEntityBagi;
+import dqr.entity.magicEntity.magic.MagicEntityHyado;
+import dqr.entity.magicEntity.magic.MagicEntityIo;
+import dqr.entity.magicEntity.magic.MagicEntityMera;
+import dqr.entity.mobEntity.DqmMobBase;
+import dqr.entity.mobEntity.monsterDay.DqmMobBaseDay;
+import dqr.entity.mobEntity.monsterEnd.DqmMobBaseEnd;
+import dqr.entity.mobEntity.monsterHell.DqmMobBaseHell;
+import dqr.entity.mobEntity.monsterNight.DqmMobBaseNight;
 import dqr.playerData.ExtendedPlayerProperties;
 
 public class DqmItemWeaponBase extends Item{
@@ -63,14 +90,621 @@ public class DqmItemWeaponBase extends Item{
     	return this.field_150934_a;
     }
 
+    public EnumDqmElement getElement()
+    {
+    	if(this == DQWeapons.itemInazumanoyari)
+    	{
+    		return EnumDqmElement.KAMINARI;
+    	}else if(this == DQWeapons.itemSaramanda)
+    	{
+    		return EnumDqmElement.HONOO;
+    	}else if(this == DQWeapons.itemReiniroddo)
+    	{
+    		return EnumDqmElement.KOORI;
+    	}else if(this == DQWeapons.itemDaitinokanaduti)
+    	{
+    		return EnumDqmElement.DAITI;
+    	}else if(this == DQWeapons.itemFubukinoono)
+    	{
+    		return EnumDqmElement.KOORI;
+    	}else if(this == DQWeapons.itemKamenoougi)
+    	{
+    		return EnumDqmElement.DAITI;
+    	}else if(this == DQWeapons.itemTorinoougi)
+    	{
+    		return EnumDqmElement.HONOO;
+    	}else if(this == DQWeapons.itemNekonoougi)
+    	{
+    		return EnumDqmElement.KOORI;
+    	}else if(this == DQWeapons.itemHebinoougi)
+    	{
+    		return EnumDqmElement.KAMINARI;
+    	}else if(this == DQWeapons.itemKoorinobumeran)
+    	{
+    		return EnumDqmElement.KOORI;
+    	}else if(this == DQWeapons.itemMeteoejji)
+    	{
+    		return EnumDqmElement.KAMINARI;
+    	}
+
+    	return null;
+    }
+
     @Override
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
-    	par3EntityPlayer.setItemInUse(par1ItemStack, this.getMaxItemUseDuration(par1ItemStack));
+
+    	//System.out.println("TEST:" + this.getUnlocalizedName());
+    	int itemMode2 = ExtendedPlayerProperties.get(par3EntityPlayer).getWeaponMode(EnumDqmWeaponMode.WEAPONMODE_ITEMUSE.getId());
+    	float pitch = 1.2F;
+		if(DQR.spUseItems.specialUseItems.containsKey(par1ItemStack.getItem()) && itemMode2 == 1)
+		{
+
+			//System.out.println("TEST2");
+			boolean flg = false;
+			if(DQR.func.isBind(par3EntityPlayer) && par3EntityPlayer.worldObj.isRemote)
+			{
+		  		par3EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.magic.rariho.txt",new Object[] {}));
+	    		par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.pi", 1.0F, 1.0F);
+
+				return par1ItemStack;
+			}
+
+			if(!DQR.spUseItems.specialUseItems.containsKey(par1ItemStack.getItem()))
+			{
+				return par1ItemStack;
+			}
+
+			EnumDqmWeapon enumWeapon = EnumDqmWeapon.valueOf(this.getMaterial().name());
+
+			if(DQR.aptitudeTable.getWAptitude(ExtendedPlayerProperties.get(par3EntityPlayer).getJob(),
+											  enumWeapon.getId(),
+											  par3EntityPlayer) < 1 && DQR.debug == 0)
+			{
+				par3EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.magic.weaponNoAppti.txt",new Object[] {}));
+	    		par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.pi", 1.0F, 1.0F);
+				return par1ItemStack;
+			}
+
+
+			if(par1ItemStack.getItemDamage() >= par1ItemStack.getMaxDamage() / 5 * 4 + 1)
+			{
+				par3EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.magic.weaponNoEnergy.txt",new Object[] {}));
+				par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.pi", 1.0F, 1.0F);
+				return par1ItemStack;
+			}
+
+			if(!par2World.isRemote)
+			{
+				//System.out.println("TEST3");
+				EnumDqmMagic enumMagic = null;
+				if(par1ItemStack.getItem() == DQWeapons.itemOujanoturugi)
+				{
+					//王者の剣：バギクロス
+					flg = true;
+					par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.jumon", 1.0F, pitch);
+
+					enumMagic = EnumDqmMagic.Bagikurosu;
+					//バギクロス
+					MagicEntityBagi[] magic = null;
+					magic = new MagicEntityBagi[5];
+					magic[0] = new MagicEntityBagi(par2World, par3EntityPlayer, 1.5F, 1.0F, -1.0F, 0.0F, 0.0F, 0.0F, 0.0F);
+					magic[1] = new MagicEntityBagi(par2World, par3EntityPlayer, 1.5F, 1.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
+					magic[2] = new MagicEntityBagi(par2World, par3EntityPlayer, 1.5F, 1.0F, 1.0F, 0.0F, 0.0F, 0.0F, 0.0F);
+					magic[3] = new MagicEntityBagi(par2World, par3EntityPlayer, 1.5F, 1.0F, -1.0F, 0.0F, 0.0F, -22.5F, 0.0F);
+					magic[4] = new MagicEntityBagi(par2World, par3EntityPlayer, 1.5F, 1.0F, 1.0F, 0.0F, 0.0F, 22.5F, 0.0F);
+					for(int cnt = 0;cnt < 5; cnt++)
+					{
+						magic[cnt].setMaxTicksRange(enumMagic.getTickRange());
+					}
+
+					int matk = enumMagic.getAttack();
+					int attackDam = matk;
+
+					//attackDam = DQR.magicTable.getReasonableDamage(this, par3EntityPlayer, attackDam);
+
+					/*
+					if(enumMagic.getDamage() + par1ItemStack.getItemDamage() < par1ItemStack.getMaxDamage() )
+					{
+						par1ItemStack.damageItem(enumMagic.getDamage(), par3EntityPlayer);
+					}else
+					{
+						par1ItemStack.setItemDamage(par1ItemStack.getMaxDamage() - 1);
+					}
+					*/
+
+		    		for(int cnt = 0; cnt < magic.length; cnt++)
+		    		{
+						magic[cnt].setDamage(attackDam);
+			        	if (!par2World.isRemote)
+			        	{
+
+			        		magic[cnt].setWorldFlg(par3EntityPlayer.isSneaking());
+			        		par2World.spawnEntityInWorld(magic[cnt]);
+
+			        	}
+		    		}
+				}else if(par1ItemStack.getItem() == DQWeapons.itemTenkuunoturugi)
+				{
+					flg = true;
+					par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.jumon", 1.0F, pitch);
+					//System.out.println("TEST3");
+					par3EntityPlayer.clearActivePotions();
+					par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.itetuku", 1.0F, 1.0F);
+
+					//天空の剣：いてつく波動
+					 List list = par2World.getEntitiesWithinAABBExcludingEntity(par3EntityPlayer,
+			            		par3EntityPlayer.boundingBox.addCoord(par3EntityPlayer.motionX, par3EntityPlayer.motionY, par3EntityPlayer.motionZ).expand(10.0D, 5.0D, 10.0D));
+
+		            if (list != null && !list.isEmpty())
+		            {
+		            	for (int n = 0 ; n < list.size() ; n++)
+		            	{
+		            		Entity target = (Entity)list.get(n);
+
+		            		if(target instanceof EntityLivingBase)
+		            		{
+		            			((EntityLivingBase)target).clearActivePotions();
+		            			target.worldObj.playSoundAtEntity(target, "dqr:player.itetuku", 1.0F, 1.0F);
+		            		}
+		            	}
+		            }
+				}else if(par1ItemStack.getItem() == DQWeapons.itemKoorinoyaiba)
+				{
+					//氷の刃：ヒャダルコ
+					flg = true;
+					//par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.jumon", 1.0F, 2.0F);
+					par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.jumon", 1.0F, pitch);
+
+					enumMagic = EnumDqmMagic.Hyadaruko;
+
+					MagicEntityHyado[] magic = new MagicEntityHyado[3];
+	    			for(int cnt = 0;cnt < 3; cnt++)
+	    			{
+	    				magic[cnt] = new MagicEntityHyado(par2World, par3EntityPlayer, 1.5F, 1.0F, 0.0F, 0.0F, 0.0F, (float)(-15.0F + (15.0F * cnt)), 0.0F);
+	    				magic[cnt].setMaxTicksRange(enumMagic.getTickRange());
+	    				if(par3EntityPlayer.isSneaking())magic[cnt].setWorldFlg(1);
+	    			}
+
+					int matk = enumMagic.getAttack();
+					int attackDam = matk;
+
+					//attackDam = DQR.magicTable.getReasonableDamage(this, par3EntityPlayer, attackDam);
+
+		    		for(int cnt = 0; cnt < magic.length; cnt++)
+		    		{
+						magic[cnt].setDamage(attackDam);
+			        	if (!par2World.isRemote)
+			        	{
+			        		//magic[cnt].setWorldFlg(par3EntityPlayer.isSneaking());
+			        		par2World.spawnEntityInWorld(magic[cnt]);
+
+			        	}
+		    		}
+				}else if(par1ItemStack.getItem() == DQWeapons.itemHajanoturugi)
+				{
+					//破邪のつるぎ：ギラ
+					flg = true;
+					//par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.jumon", 1.0F, 2.0F);
+					par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.jumon", 1.0F, pitch);
+
+					enumMagic = EnumDqmMagic.Gira;
+
+					MagicEntity[] magic = new MagicEntity[3];
+	    			for(int cnt = 0;cnt < 3; cnt++)
+	    			{
+	    				magic[cnt] = new MagicEntityMera(par2World, par3EntityPlayer, 1.5F, 1.0F, (float)(-1 + cnt), 0.0F, 0.0F);
+	    			}
+
+					int matk = enumMagic.getAttack();
+					int attackDam = matk;
+
+					//attackDam = DQR.magicTable.getReasonableDamage(this, par3EntityPlayer, attackDam);
+
+		    		for(int cnt = 0; cnt < magic.length; cnt++)
+		    		{
+						magic[cnt].setDamage(attackDam);
+			        	if (!par2World.isRemote)
+			        	{
+			        		//magic[cnt].setWorldFlg(par3EntityPlayer.isSneaking());
+			        		par2World.spawnEntityInWorld(magic[cnt]);
+
+			        	}
+		    		}
+				}else if(par1ItemStack.getItem() == DQWeapons.itemInferunosword)
+				{
+					flg = true;
+					//par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.jumon", 1.0F, 2.0F);
+					par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.jumon", 1.0F, pitch);
+
+					enumMagic = EnumDqmMagic.Io;
+					//インフェルノソード：イオ
+					MagicEntityIo[] magic = new MagicEntityIo[8];
+	    			for(int cnt = 0;cnt < 8; cnt++)
+	    			{
+	    				magic[cnt] = new MagicEntityIo(par2World, par3EntityPlayer, 1.5F, 1.0F, 0.0F, 0.0F, 0.0F, (float)(-135.0F + (45.0F * cnt)), 0.0F);
+	    				magic[cnt].setMaxTicksRange(enumMagic.getTickRange());
+	    			}
+
+					int matk = enumMagic.getAttack();
+					int attackDam = matk;
+
+	        		for(int cnt = 0; cnt < magic.length; cnt++)
+	        		{
+	    				magic[cnt].setDamage(attackDam);
+	    	        	if (!par2World.isRemote)
+	    	        	{
+	    	        		magic[cnt].setWorldFlg(par3EntityPlayer.isSneaking());
+	    	        		par2World.spawnEntityInWorld(magic[cnt]);
+
+	    	        	}
+	        		}
+
+				}else if(par1ItemStack.getItem() == DQWeapons.itemMinagorosinoken)
+				{
+					flg = true;
+					//par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.jumon", 1.0F, 2.0F);
+					par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.jumon", 1.0F, pitch);
+
+					enumMagic = EnumDqmMagic.Rukanan;
+					Potion pot = DQPotionMinus.debuffRukani;
+
+					//みなごろしの剣：ルカナン
+					List list = par2World.getEntitiesWithinAABBExcludingEntity(par3EntityPlayer,
+		            		par3EntityPlayer.boundingBox.addCoord(par3EntityPlayer.motionX, par3EntityPlayer.motionY, par3EntityPlayer.motionZ).expand(10.0D, 5.0D, 10.0D));
+
+		            if (list != null && !list.isEmpty())
+		            {
+		            	for (int n = 0 ; n < list.size() ; n++)
+		            	{
+		            		Entity target = (Entity)list.get(n);
+
+		            		if (!(target instanceof EntityPlayer || target instanceof EntityTameable || target instanceof EntityHorse))
+		            		{
+		            			Random rand = new Random();
+		            			if(target instanceof EntityLivingBase)
+		            			{
+			            			if(rand.nextInt(100) < enumMagic.getRate())
+			            			{
+				            			EntityLivingBase elb = (EntityLivingBase)target;
+			            				elb.addPotionEffect(new PotionEffect(pot.id, enumMagic.getAttack(), 0));
+			            				elb.worldObj.playSoundAtEntity(elb, "dqr:player.down", 1.0F, 1.0F);
+			            			}
+		            			}
+		            		}
+		            	}
+		            }
+				}else if(par1ItemStack.getItem() == DQWeapons.itemHonoonotume)
+				{
+					//ほのおの爪：ベギラマ
+					flg = true;
+					//par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.jumon", 1.0F, 2.0F);
+					par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.jumon", 1.0F, pitch);
+
+					enumMagic = EnumDqmMagic.Begirama;
+
+					MagicEntity[] magic = new MagicEntity[5];
+	    			for(int cnt = 0;cnt < 5; cnt++)
+	    			{
+	    				magic[cnt] = new MagicEntityMera(par2World, par3EntityPlayer, 1.5F, 1.0F, (float)(-2 + cnt), 0.0F, 0.0F);
+	    			}
+
+					int matk = enumMagic.getAttack();
+					int attackDam = matk;
+
+					//attackDam = DQR.magicTable.getReasonableDamage(this, par3EntityPlayer, attackDam);
+
+		    		for(int cnt = 0; cnt < magic.length; cnt++)
+		    		{
+						magic[cnt].setDamage(attackDam);
+			        	if (!par2World.isRemote)
+			        	{
+			        		//magic[cnt].setWorldFlg(par3EntityPlayer.isSneaking());
+			        		par2World.spawnEntityInWorld(magic[cnt]);
+
+			        	}
+		    		}
+				}else if(par1ItemStack.getItem() == DQWeapons.itemKoorinotume)
+				{
+					//氷の爪：ヒャダルコ
+					flg = true;
+					//par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.jumon", 1.0F, 2.0F);
+					par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.jumon", 1.0F, pitch);
+
+					enumMagic = EnumDqmMagic.Hyadaruko;
+
+					MagicEntityHyado[] magic = new MagicEntityHyado[3];
+	    			for(int cnt = 0;cnt < 3; cnt++)
+	    			{
+	    				magic[cnt] = new MagicEntityHyado(par2World, par3EntityPlayer, 1.5F, 1.0F, 0.0F, 0.0F, 0.0F, (float)(-15.0F + (15.0F * cnt)), 0.0F);
+	    				magic[cnt].setMaxTicksRange(enumMagic.getTickRange());
+	    				if(par3EntityPlayer.isSneaking())magic[cnt].setWorldFlg(1);
+	    			}
+
+					int matk = enumMagic.getAttack();
+					int attackDam = matk;
+
+					//attackDam = DQR.magicTable.getReasonableDamage(this, par3EntityPlayer, attackDam);
+
+		    		for(int cnt = 0; cnt < magic.length; cnt++)
+		    		{
+						magic[cnt].setDamage(attackDam);
+			        	if (!par2World.isRemote)
+			        	{
+			        		//magic[cnt].setWorldFlg(par3EntityPlayer.isSneaking());
+			        		par2World.spawnEntityInWorld(magic[cnt]);
+
+			        	}
+		    		}
+				}else if(par1ItemStack.getItem() == DQWeapons.itemGureitoakusu)
+				{
+					//グレートアックス：バギマ
+					flg = true;
+					//par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.jumon", 1.0F, 2.0F);
+					par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.jumon", 1.0F, pitch);
+
+					enumMagic = EnumDqmMagic.Bagima;
+
+					MagicEntityBagi[] magic = null;
+					magic = new MagicEntityBagi[3];
+	    			magic[0] = new MagicEntityBagi(par2World, par3EntityPlayer, 1.5F, 1.0F, -1.0F, 0.0F, 0.0F, 0.0F, 0.0F);
+	    			magic[1] = new MagicEntityBagi(par2World, par3EntityPlayer, 1.5F, 1.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
+	    			magic[2] = new MagicEntityBagi(par2World, par3EntityPlayer, 1.5F, 1.0F, 1.0F, 0.0F, 0.0F, 0.0F, 0.0F);
+	    			for(int cnt = 0;cnt < 3; cnt++)
+	    			{
+	    				magic[cnt].setMaxTicksRange(enumMagic.getTickRange());
+	    			}
+
+					int matk = enumMagic.getAttack();
+					int attackDam = 50;
+
+		    		for(int cnt = 0; cnt < magic.length; cnt++)
+		    		{
+						magic[cnt].setDamage(attackDam);
+			        	if (!par2World.isRemote)
+			        	{
+
+			        		magic[cnt].setWorldFlg(par3EntityPlayer.isSneaking());
+			        		par2World.spawnEntityInWorld(magic[cnt]);
+
+			        	}
+		    		}
+				}else if(par1ItemStack.getItem() == DQWeapons.itemSeiginosoroban)
+				{
+					//正義の算盤：ニフラム
+					flg = true;
+					//par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.jumon", 1.0F, 2.0F);
+					par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.jumon", 1.0F, pitch);
+
+					//enumMagic = EnumDqmMagic.Rukanan;
+					//Potion pot = DQPotionMinus.debuffRukani;
+
+					List list = par2World.getEntitiesWithinAABBExcludingEntity(par3EntityPlayer,
+		            		par3EntityPlayer.boundingBox.addCoord(par3EntityPlayer.motionX, par3EntityPlayer.motionY, par3EntityPlayer.motionZ).expand(6.0D, 5.0D, 6.0D));
+
+		            if (list != null && !list.isEmpty())
+		            {
+		            	for (int n = 0 ; n < list.size() ; n++)
+		            	{
+		            		Entity target = (Entity)list.get(n);
+
+		            		if (!(target instanceof EntityPlayer || target instanceof EntityTameable || target instanceof EntityHorse))
+		            		{
+		            			Random rand = new Random();
+		            			if(target instanceof EntityLivingBase)
+		            			{
+		            				if(target instanceof DqmMobBase)
+		            				{
+		            					DqmMobBase mob = (DqmMobBase)target;
+		            					if(mob instanceof DqmMobBaseDay ||
+		            					   mob instanceof DqmMobBaseNight ||
+		            					   mob instanceof DqmMobBaseHell ||
+		            					   mob instanceof DqmMobBaseEnd)
+		            					{
+			            					if(mob.MobRoot.getId() == EnumDqmMobRoot.UNDEAD.getId())
+			            					{
+			            						if(rand.nextInt(2) == 0)
+						            			{
+							            			EntityLivingBase elb = (EntityLivingBase)target;
+							            			par3EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.causeNihuramu.txt",new Object[] {elb.getCommandSenderName()}));
+							            			//elb.playSound("dqr:player.kenja", 1.0F, 1.2F / (rand.nextFloat() * 0.2F + 0.9F));
+							            			elb.worldObj.playSoundAtEntity(elb, "dqr:player.kenja", 1.0F, 1.0F);
+						            				elb.setDead();
+						            			}
+			            					}else
+			            					{
+			            						if(rand.nextInt(100) < 5)
+						            			{
+							            			EntityLivingBase elb = (EntityLivingBase)target;
+							            			par3EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.causeNihuramu.txt",new Object[] {elb.getCommandSenderName()}));
+							            			//elb.playSound("dqr:player.kenja", 1.0F, 1.2F / (rand.nextFloat() * 0.2F + 0.9F));
+							            			elb.worldObj.playSoundAtEntity(elb, "dqr:player.kenja", 1.0F, 1.0F);
+						            				elb.setDead();
+						            			}
+			            					}
+		            					}
+		            				}else if(target instanceof EntityZombie || target instanceof EntitySkeleton)
+		            				{
+	            						if(rand.nextInt(2) == 0)
+				            			{
+					            			EntityLivingBase elb = (EntityLivingBase)target;
+					            			par3EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.causeNihuramu.txt",new Object[] {elb.getCommandSenderName()}));
+					            			//elb.playSound("dqr:player.kenja", 1.0F, 1.2F / (rand.nextFloat() * 0.2F + 0.9F));
+					            			elb.worldObj.playSoundAtEntity(elb, "dqr:player.kenja", 1.0F, 1.0F);
+				            				elb.setDead();
+				            			}
+		            				}else
+		            				{
+				            			if(rand.nextInt(100) < 5)
+				            			{
+					            			EntityLivingBase elb = (EntityLivingBase)target;
+					            			par3EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.causeNihuramu.txt",new Object[] {elb.getCommandSenderName()}));
+					            			//elb.playSound("dqr:player.kenja", 1.0F, 1.2F / (rand.nextFloat() * 0.2F + 0.9F));
+					            			elb.worldObj.playSoundAtEntity(elb, "dqr:player.kenja", 1.0F, 1.0F);
+				            				elb.setDead();
+				            			}
+		            				}
+		            			}
+		            		}
+		            	}
+		            }
+
+
+				}else if(par1ItemStack.getItem() == DQWeapons.itemMahounosoroban)
+				{
+					flg = true;
+					//par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.jumon", 1.0F, 2.0F);
+					par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.jumon", 1.0F, pitch);
+
+					//魔法のそろばん：所持金表示
+					int gold = ExtendedPlayerProperties.get(par3EntityPlayer).getGold();
+					par3EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.weapon.specialEffect.mahounosoroban.txt",new Object[] {gold}));
+
+				}else if(par1ItemStack.getItem() == DQWeapons.itemReppuunoougi)
+				{
+					//烈風の扇：バギ
+					flg = true;
+					//par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.jumon", 1.0F, 2.0F);
+					par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.jumon", 1.0F, pitch);
+
+					enumMagic = EnumDqmMagic.Bagikurosu;
+
+					MagicEntityBagi[] magic = null;
+					magic = new MagicEntityBagi[3];
+	    			magic[0] = new MagicEntityBagi(par2World, par3EntityPlayer, 1.5F, 1.0F, -1.0F, 0.0F, 0.0F, 0.0F, 0.0F);
+	    			magic[1] = new MagicEntityBagi(par2World, par3EntityPlayer, 1.5F, 1.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
+	    			magic[2] = new MagicEntityBagi(par2World, par3EntityPlayer, 1.5F, 1.0F, 1.0F, 0.0F, 0.0F, 0.0F, 0.0F);
+	    			for(int cnt = 0;cnt < 3; cnt++)
+	    			{
+	    				magic[cnt].setMaxTicksRange(enumMagic.getTickRange());
+	    			}
+
+					int matk = enumMagic.getAttack();
+					int attackDam = matk;
+
+		    		for(int cnt = 0; cnt < magic.length; cnt++)
+		    		{
+						magic[cnt].setDamage(attackDam);
+			        	if (!par2World.isRemote)
+			        	{
+
+			        		magic[cnt].setWorldFlg(par3EntityPlayer.isSneaking());
+			        		par2World.spawnEntityInWorld(magic[cnt]);
+
+			        	}
+		    		}
+				}
+
+				if(flg)
+				{
+					par1ItemStack.damageItem(par1ItemStack.getItem().getMaxDamage() / 20, par3EntityPlayer);
+
+					if(par1ItemStack.getItemDamage() >= par1ItemStack.getMaxDamage())
+					{
+						par1ItemStack.stackSize--;
+					}
+				}
+			}
+
+		}else
+		{
+			par3EntityPlayer.setItemInUse(par1ItemStack, this.getMaxItemUseDuration(par1ItemStack));
+		}
 
     	return par1ItemStack;
     }
+/*
 
+	public ItemStack onItemSpecialUse(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
+    {
+		boolean flg = false;
+		if(DQR.func.isBind(par3EntityPlayer) && par3EntityPlayer.worldObj.isRemote)
+		{
+	  		par3EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.magic.rariho.txt",new Object[] {}));
+    		par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.pi", 1.0F, 1.0F);
+
+			return par1ItemStack;
+		}
+
+		if(!DQR.spUseItems.specialUseItems.containsKey(par1ItemStack.getItem()))
+		{
+			return par1ItemStack;
+		}
+
+		EnumDqmWeapon enumWeapon = EnumDqmWeapon.valueOf(this.getMaterial().name());
+
+		if(DQR.aptitudeTable.getWAptitude(ExtendedPlayerProperties.get(par3EntityPlayer).getJob(),
+										  enumWeapon.getId(),
+										  par3EntityPlayer) < 1 && DQR.debug == 0)
+		{
+			par3EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.magic.weaponNoAppti.txt",new Object[] {}));
+    		par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.pi", 1.0F, 1.0F);
+			return par1ItemStack;
+		}
+
+		if(!par2World.isRemote)
+		{
+			EnumDqmMagic enumMagic = null;
+			if(par1ItemStack.getItem() == DQWeapons.itemOujanoturugi)
+			{
+				flg = true;
+
+				enumMagic = EnumDqmMagic.Bagikurosu;
+				//バギクロス
+				MagicEntityBagi[] magic = null;
+				magic = new MagicEntityBagi[5];
+				magic[0] = new MagicEntityBagi(par2World, par3EntityPlayer, 1.5F, 1.0F, -1.0F, 0.0F, 0.0F, 0.0F, 0.0F);
+				magic[1] = new MagicEntityBagi(par2World, par3EntityPlayer, 1.5F, 1.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
+				magic[2] = new MagicEntityBagi(par2World, par3EntityPlayer, 1.5F, 1.0F, 1.0F, 0.0F, 0.0F, 0.0F, 0.0F);
+				magic[3] = new MagicEntityBagi(par2World, par3EntityPlayer, 1.5F, 1.0F, -1.0F, 0.0F, 0.0F, -22.5F, 0.0F);
+				magic[4] = new MagicEntityBagi(par2World, par3EntityPlayer, 1.5F, 1.0F, 1.0F, 0.0F, 0.0F, 22.5F, 0.0F);
+				for(int cnt = 0;cnt < 5; cnt++)
+				{
+					magic[cnt].setMaxTicksRange(enumMagic.getTickRange());
+				}
+
+				int matk = enumMagic.getAttack();
+				int attackDam = matk;
+
+				attackDam = DQR.magicTable.getReasonableDamage(this, par3EntityPlayer, attackDam);
+
+
+				if(enumMagic.getDamage() + par1ItemStack.getItemDamage() < par1ItemStack.getMaxDamage() )
+				{
+					par1ItemStack.damageItem(enumMagic.getDamage(), par3EntityPlayer);
+				}else
+				{
+					par1ItemStack.setItemDamage(par1ItemStack.getMaxDamage() - 1);
+				}
+
+
+	    		for(int cnt = 0; cnt < magic.length; cnt++)
+	    		{
+					magic[cnt].setDamage(attackDam);
+		        	if (!par2World.isRemote)
+		        	{
+
+		        		magic[cnt].setWorldFlg(par3EntityPlayer.isSneaking());
+		        		par2World.spawnEntityInWorld(magic[cnt]);
+
+		        	}
+	    		}
+			}
+		}
+
+		if(flg)
+		{
+			par1ItemStack.damageItem(par1ItemStack.getItem().getMaxDamage() / 20, par3EntityPlayer);
+
+			//System.out.println("TEST2;" + par1ItemStack.getItem().getMaxDamage() / 20);
+			if(par1ItemStack.getItemDamage() >= par1ItemStack.getMaxDamage())
+			{
+				par1ItemStack.stackSize--;
+			}
+		}
+		return par1ItemStack;
+    }
+*/
     @Override
     public void onUpdate(ItemStack var1, World var2, Entity var3, int par4, boolean par5)
     {
@@ -147,7 +781,7 @@ public class DqmItemWeaponBase extends Item{
 				//System.out.println("test2:" + itemMode);
         	}
 
-        	if(this.field_150933_b == DQR.dqmMaterial.DqmAxe && itemMode > -1)
+        	if((this.field_150933_b == DQR.dqmMaterial.DqmAxe || this == DQWeapons.itemHaruberuto) && itemMode > -1)
         	{
         		//DQ斧の場合の処理
         		if(p_150893_2_.getMaterial() != Material.wood && p_150893_2_.getMaterial() != Material.plants && p_150893_2_.getMaterial() != Material.vine)
@@ -336,6 +970,13 @@ public class DqmItemWeaponBase extends Item{
     	p_77624_3_.add("");
     	p_77624_3_.add(I18n.format("dqm.iteminfo.attackdamage", new Object[]{dam}));
 
+    	if(this.getElement() != null)
+    	{
+    		EnumDqmElement element = this.getElement();
+    		p_77624_3_.add(element.getColor() + I18n.format("dqm.iteminfo.weapon.element." + element.getKey() + ".txt", new Object[]{}));
+    	}
+
+
     	int[] apptitudeTable = DQR.aptitudeTable.getWAptitudeTable(this);
     	String[] usefulJob = new String[32];
     	String[] usefulJob2 = new String[32];
@@ -415,6 +1056,44 @@ public class DqmItemWeaponBase extends Item{
 	    	}
     	}
 
+    	if(DQR.spUseItems.specialUseItems.containsKey(this))
+    	{
+    		String key = this.getUnlocalizedName().replace("item.dqm.", "");
+
+    		p_77624_3_.add(EnumColor.Aqua.getChatColor() + I18n.format("dqm.iteminfo.weapon." + key + ".txt", new Object[]{}));
+    		p_77624_3_.add(EnumColor.White.getChatColor() + I18n.format("dqm.iteminfo.weapon.base.txt", new Object[]{}));
+    		p_77624_3_.add("");
+    	}
+
+
+    	if(this.field_150933_b == DQR.dqmMaterial.DqmAxe || this == DQWeapons.itemHaruberuto)
+    	{
+    		p_77624_3_.add(EnumColor.Yellow.getChatColor() + I18n.format("dqm.iteminfo.weapon.toolmode.axe.txt", new Object[]{}));
+    		p_77624_3_.add("");
+    	}
+    	if(this.field_150933_b == DQR.dqmMaterial.DqmHammer0 || this.field_150933_b == DQR.dqmMaterial.DqmHammer1 ||
+    	   this.field_150933_b == DQR.dqmMaterial.DqmHammer2 || this.field_150933_b == DQR.dqmMaterial.DqmHammer3)
+    	{
+    		p_77624_3_.add(EnumColor.Yellow.getChatColor() + I18n.format("dqm.iteminfo.weapon.toolmode.pickaxe.txt", new Object[]{}));
+    		p_77624_3_.add("");
+    	}
+    	if(this.field_150933_b == DQR.dqmMaterial.DqmClaw)
+    	{
+    		p_77624_3_.add(EnumColor.Yellow.getChatColor() + I18n.format("dqm.iteminfo.weapon.toolmode.shovel.txt", new Object[]{}));
+    		p_77624_3_.add("");
+    	}
+
+		Map<Integer, Float> retMap = DQR.weaponBooster.getBooster(this);
+		if(retMap.containsKey(DQR.weaponBooster.DRAGON)){p_77624_3_.add(EnumColor.Blue.getChatColor() + I18n.format("dqm.iteminfo.weapon.booster.dragon.txt", new Object[]{}));}
+		if(retMap.containsKey(DQR.weaponBooster.WATER)){p_77624_3_.add(EnumColor.Blue.getChatColor() + I18n.format("dqm.iteminfo.weapon.booster.water.txt", new Object[]{}));}
+		if(retMap.containsKey(DQR.weaponBooster.UNDEAD)){p_77624_3_.add(EnumColor.Blue.getChatColor() + I18n.format("dqm.iteminfo.weapon.booster.undead.txt", new Object[]{}));}
+		if(retMap.containsKey(DQR.weaponBooster.MACHINE)){p_77624_3_.add(EnumColor.Blue.getChatColor() + I18n.format("dqm.iteminfo.weapon.booster.machine.txt", new Object[]{}));}
+		if(retMap.containsKey(DQR.weaponBooster.ELEMENT)){p_77624_3_.add(EnumColor.Blue.getChatColor() + I18n.format("dqm.iteminfo.weapon.booster.element.txt", new Object[]{}));}
+		if(retMap.containsKey(DQR.weaponBooster.SLIME)){p_77624_3_.add(EnumColor.Blue.getChatColor() + I18n.format("dqm.iteminfo.weapon.booster.slime.txt", new Object[]{}));}
+		if(retMap.containsKey(DQR.weaponBooster.BUSSHITU)){p_77624_3_.add(EnumColor.Blue.getChatColor() + I18n.format("dqm.iteminfo.weapon.booster.busshitu.txt", new Object[]{}));}
+		if(retMap.containsKey(DQR.weaponBooster.PLANT)){p_77624_3_.add(EnumColor.Blue.getChatColor() + I18n.format("dqm.iteminfo.weapon.booster.plant.txt", new Object[]{}));}
+		if(retMap.containsKey(DQR.weaponBooster.BIRD)){p_77624_3_.add(EnumColor.Blue.getChatColor() + I18n.format("dqm.iteminfo.weapon.booster.bird.txt", new Object[]{}));}
+		if(retMap.containsKey(DQR.weaponBooster.AKUMA)){p_77624_3_.add(EnumColor.Blue.getChatColor() + I18n.format("dqm.iteminfo.weapon.booster.akuma.txt", new Object[]{}));}
 
     	NBTTagCompound nbt = p_77624_1_.getTagCompound();
     	if(nbt != null)
@@ -429,5 +1108,11 @@ public class DqmItemWeaponBase extends Item{
     			p_77624_3_.add(medalValue);
     		}
     	}
+
+    	NBTTagList tag = p_77624_1_.getEnchantmentTagList();
+		if(tag != null)
+		{
+			p_77624_3_.add("");
+		}
     }
 }

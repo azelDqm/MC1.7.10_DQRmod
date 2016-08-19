@@ -2,17 +2,15 @@ package dqr;
 
 import java.io.File;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.world.World;
-import cpw.mods.fml.common.network.IGuiHandler;
 import dqr.entity.magicEntity.MagicRegister;
 import dqr.entity.mobEntity.MobRegister;
 import dqr.entity.mobEntity.MobSpawnRegister;
 import dqr.entity.petEntity.PetRegister;
 import dqr.entity.throwingEntity.ThrowingRegister;
-import dqr.gui.farmBook.GuiFarmBookContainer;
 
-public class CommonProxy implements IGuiHandler
+public class CommonProxy
 {
 
 	public File getDir()
@@ -20,7 +18,8 @@ public class CommonProxy implements IGuiHandler
 		return new File(".");
 	}
 
-	@Override
+	//@Override
+	/*
     public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
         if (ID == DQR.conf.GuiID_FarmBook) {
             return new GuiFarmBookContainer(x, y, z);
@@ -28,12 +27,14 @@ public class CommonProxy implements IGuiHandler
         return null;
     }
 
+
 	@Override
 	public Object getClientGuiElement(int ID, EntityPlayer player, World world,
 			int x, int y, int z) {
 		// TODO 自動生成されたメソッド・スタブ
 		return null;
 	}
+    */
 
 	public void registerClientInfo(){}
 
@@ -47,10 +48,11 @@ public class CommonProxy implements IGuiHandler
 
     }
 
-    public EntityPlayer getEntityPlayerInstance() {return null;}
+	public Minecraft getMinecraft(){return null;}
+
+	public EntityPlayer getEntityPlayerInstance() {return null;}
 
     public void registerGUI(){}
-
 
     public int getNewRenderType()
     {

@@ -255,6 +255,17 @@ public class DqmBlockSeedBase extends Block implements IPlantable
         par1World.setBlockMetadataWithNotify(par2, par3, par4, l, 2);
     }
 
+    public void fertilize2(World par1World, int par2, int par3, int par4, int fix)
+    {
+        int l = par1World.getBlockMetadata(par2, par3, par4) + fix;
+
+        if (l > 7)
+        {
+            l = 7;
+        }
+
+        par1World.setBlockMetadataWithNotify(par2, par3, par4, l, 2);
+    }
 
     public void dropBlockAsItemWithChance(World par1World, int par2, int par3, int par4, int par5, float par6, int par7)
     {

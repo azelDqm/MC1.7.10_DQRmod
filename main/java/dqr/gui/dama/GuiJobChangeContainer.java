@@ -13,12 +13,18 @@ import dqr.packetMessage.MessageServerJobChange;
 public class GuiJobChangeContainer extends Container
 {
     private InventoryJobChange inventory;
+    protected int xSize = 176;
+    /** The Y size of the inventory window in pixels. */
+    protected int ySize = 166;
 
     public GuiJobChangeContainer(InventoryPlayer inventoryPlayer)
     {
         //inventory = new InventoryItemJobChange(inventoryPlayer);
-    	inventory = new InventoryJobChange();
+    	inventory = new InventoryJobChange(inventoryPlayer.player);
         inventory.openInventory();
+
+		//int x = (this.width  - this.xSize) / 2;
+		//int y = (this.height - this.ySize) / 2;
 
         int i = 2 * 18 + 1;
 

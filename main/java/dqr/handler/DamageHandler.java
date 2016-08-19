@@ -1,33 +1,55 @@
 package dqr.handler;
 
 import java.util.List;
+import java.util.Map;
 
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.boss.EntityDragon;
 import net.minecraft.entity.boss.EntityWither;
+import net.minecraft.entity.monster.EntityPigZombie;
+import net.minecraft.entity.monster.EntitySilverfish;
+import net.minecraft.entity.monster.EntitySkeleton;
+import net.minecraft.entity.monster.EntitySpider;
+import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EntityDamageSource;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import scala.util.Random;
+import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import dqr.DQR;
+import dqr.api.Items.DQAccessories;
+import dqr.api.enums.EnumDqmElement;
 import dqr.api.enums.EnumDqmEndoraParam;
 import dqr.api.enums.EnumDqmMessageConv;
 import dqr.api.enums.EnumDqmMobRoot;
 import dqr.api.enums.EnumDqmSkillW;
 import dqr.api.enums.EnumDqmWeapon;
+import dqr.api.potion.DQPotionEtc;
 import dqr.api.potion.DQPotionMinus;
 import dqr.api.potion.DQPotionPlus;
 import dqr.entity.mobEntity.DqmMobBase;
 import dqr.entity.throwingEntity.throwing.ThrowingEntity;
+import dqr.gui.subEquip.InventorySubEquip;
 import dqr.items.base.DqmItemBowBase;
+import dqr.items.base.DqmItemThrowBase;
 import dqr.items.base.DqmItemWeaponBase;
+import dqr.items.interfaceBase.ISubEquip;
+import dqr.items.weapon.DqmItemThrowing;
 import dqr.playerData.ExtendedPlayerProperties;
 import dqr.playerData.ExtendedPlayerProperties3;
 
@@ -36,132 +58,470 @@ public class DamageHandler {
 
 	Random rand = new Random();
 
-	@SubscribeEvent
+	@SubscribeEvent(priority=EventPriority.HIGH)
+	public void onSpecialBoostDamageEvent(LivingHurtEvent event) {
+		//特攻等のダメージ調整
+		EntityLivingBase damager = event.entityLiving;
+		EntityPlayer ep = null;
+		DqmMobBase monster = null;
+
+		if(event.source.getEntity() instanceof EntityPlayer)
+		{
+			ep = (EntityPlayer)event.source.getEntity();
+		}else if(event.source.getSourceOfDamage() instanceof EntityPlayer)
+		{
+			ep = (EntityPlayer)event.source.getSourceOfDamage();
+		}
+
+		if(damager instanceof DqmMobBase)
+		{
+			monster = (DqmMobBase)damager;
+		}
+
+		if(ep != null)
+		{
+			//System.out.println("TEST!!!!!!!!!1");
+			PotionEffect pe = ep.getActivePotionEffect(DQPotionEtc.buffMahouken);
+
+			if(pe != null)
+			{
+				if(pe.getAmplifier() == 20)
+				{
+					//毒
+					if(rand.nextInt(5) == 0)
+					{
+						damager.addPotionEffect(new PotionEffect(DQPotionMinus.potionPoison.id, 300, 1));
+					}
+				}else if(pe.getAmplifier() == 21)
+				{
+					//毒2
+					if(rand.nextInt(5) == 0)
+					{
+						damager.addPotionEffect(new PotionEffect(DQPotionMinus.potionPoisonX.id, 300, 1));
+					}
+				}else if(pe.getAmplifier() == 22)
+				{
+					//毒3
+					if(rand.nextInt(5) == 0)
+					{
+						damager.addPotionEffect(new PotionEffect(DQPotionMinus.potionPoisonX.id, 600, 2));
+					}
+				}else if(pe.getAmplifier() == 23)
+				{
+					//遅
+					if(rand.nextInt(5) == 0)
+					{
+						damager.addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 300, 2));
+					}
+				}else if(pe.getAmplifier() == 24)
+				{
+					//炎
+					if(rand.nextInt(5) == 0)
+					{
+						damager.setFire(200);
+					}
+				}else if(pe.getAmplifier() == 25)
+				{
+					//MP吸収
+
+					if(rand.nextInt(4) == 0)
+					{
+						if(monster != null)
+						{
+							int getMP = (int)(event.ammount / 10) + 1;
+							int maxMP = ExtendedPlayerProperties.get(ep).getMaxMP();
+							int nowMP = ExtendedPlayerProperties.get(ep).getMP();
+
+							if(monster.DqmMobMP >= getMP)
+							{
+								if(nowMP + getMP > maxMP)
+								{
+									ExtendedPlayerProperties.get(ep).setMP(maxMP);
+									monster.DqmMobMP = monster.DqmMobMP - (maxMP - nowMP);
+								}else
+								{
+									ExtendedPlayerProperties.get(ep).setMP(ExtendedPlayerProperties.get(ep).getMP() + getMP);
+									monster.DqmMobMP = monster.DqmMobMP - getMP;
+								}
+							}else
+							{
+								if(nowMP + monster.DqmMobMP > maxMP)
+								{
+									ExtendedPlayerProperties.get(ep).setMP(maxMP);
+									monster.DqmMobMP = monster.DqmMobMP - (maxMP - nowMP);
+								}else
+								{
+									ExtendedPlayerProperties.get(ep).setMP(ExtendedPlayerProperties.get(ep).getMP() + monster.DqmMobMP);
+									monster.DqmMobMP = 0;
+								}
+
+								//ExtendedPlayerProperties.get(ep).setMP(ExtendedPlayerProperties.get(ep).getMP() + monster.DqmMobMP);
+							}
+						}
+					}
+				}else if(pe.getAmplifier() == 26)
+				{
+					if(rand.nextInt(4) == 0)
+					{
+						int getHP = (int)(event.ammount / 4) + 1;
+
+						if((int)damager.getHealth() > getHP)
+						{
+							ep.heal(getHP);
+						}else
+						{
+							ep.heal(damager.getHealth());
+						}
+						if(ep.getHealth() > ep.getMaxHealth())
+						{
+							ep.setHealth(ep.getMaxHealth());
+						}
+					}
+				}
+			}
+		}
+
+		if(damager != null && ep != null && ep.getHeldItem() != null)
+		{
+			ItemStack handStack = ep.getHeldItem();
+			Item handItem = handStack.getItem();
+
+			NBTTagList tag = ep.getCurrentEquippedItem().getEnchantmentTagList();
+			if(tag != null)
+			{
+				//DQR.func.debugString("DEBUG3:" + cnt);
+		    	for(int cnt2 = 0; cnt2 < tag.tagCount(); cnt2++)
+		    	{
+		    		//DQR.func.debugString("DEBUG4:" + cnt2);
+
+		    		NBTTagCompound nbt = tag.getCompoundTagAt(cnt2);
+		    		if(nbt != null && nbt.getShort("id") == Enchantment.smite.effectId)
+		    		{
+		    			//ゾンビ特攻
+		    			if(damager instanceof EntityZombie ||
+		    			   damager instanceof EntitySkeleton ||
+		    			   damager instanceof EntityPigZombie ||
+		    			   damager instanceof EntityWither ||
+		    			   (monster != null && monster.MobRoot == EnumDqmMobRoot.UNDEAD))
+		    			{
+		    				event.ammount = event.ammount * (1.0F + (nbt.getShort("lvl") * 0.2F));
+		    			}
+		    		}
+
+		    		if(nbt != null && nbt.getShort("id") == Enchantment.baneOfArthropods.effectId)
+		    		{
+		    			//虫特攻
+		    			if(damager instanceof EntitySpider ||
+				    	   damager instanceof EntitySilverfish ||
+				    	   (monster != null && DQR.calcDamage.isInsectMob(monster)))
+				    	{
+				    		event.ammount = event.ammount * (1.0F + (nbt.getShort("lvl") * 0.2F));
+				    	}
+		    		}
+		    	}
+			}
+
+
+			Map<Integer, Float> retMap = DQR.weaponBooster.getBooster(handItem);
+
+			if(retMap.containsKey(DQR.weaponBooster.DRAGON))
+			{
+				if(damager instanceof EntityDragon ||
+					(monster != null && monster.MobRoot == EnumDqmMobRoot.DRAGON))
+				{
+					event.ammount = event.ammount * retMap.get(DQR.weaponBooster.DRAGON);
+				}
+			}
+
+			if(retMap.containsKey(DQR.weaponBooster.WATER))
+			{
+				if(DQR.calcDamage.isWaterMob(monster))
+				{
+					event.ammount = event.ammount * retMap.get(DQR.weaponBooster.WATER);
+				}
+			}
+
+			if(retMap.containsKey(DQR.weaponBooster.UNDEAD))
+			{
+				if(monster != null && monster.MobRoot == EnumDqmMobRoot.UNDEAD)
+				{
+					event.ammount = event.ammount * retMap.get(DQR.weaponBooster.UNDEAD);
+				}
+			}
+
+			if(retMap.containsKey(DQR.weaponBooster.MACHINE))
+			{
+				if(DQR.calcDamage.isMachineMob(monster))
+				{
+					event.ammount = event.ammount * retMap.get(DQR.weaponBooster.MACHINE);
+				}
+			}
+
+			if(retMap.containsKey(DQR.weaponBooster.ELEMENT))
+			{
+				if(DQR.calcDamage.isElementMob(monster))
+				{
+					event.ammount = event.ammount * retMap.get(DQR.weaponBooster.ELEMENT);
+				}
+			}
+
+			if(retMap.containsKey(DQR.weaponBooster.SLIME))
+			{
+				if(monster != null && monster.MobRoot == EnumDqmMobRoot.SURAIMU)
+				{
+					event.ammount = event.ammount * retMap.get(DQR.weaponBooster.SLIME);
+				}
+			}
+
+			if(retMap.containsKey(DQR.weaponBooster.BUSSHITU))
+			{
+				if(monster != null && monster.MobRoot == EnumDqmMobRoot.BUSSITU)
+				{
+					event.ammount = event.ammount * retMap.get(DQR.weaponBooster.BUSSHITU);
+				}
+			}
+
+			if(retMap.containsKey(DQR.weaponBooster.PLANT))
+			{
+				if(DQR.calcDamage.isPlantMob(monster))
+				{
+					event.ammount = event.ammount * retMap.get(DQR.weaponBooster.PLANT);
+				}
+			}
+
+			if(retMap.containsKey(DQR.weaponBooster.BIRD))
+			{
+				if(DQR.calcDamage.isBirdMob(monster))
+				{
+					event.ammount = event.ammount * retMap.get(DQR.weaponBooster.BIRD);
+				}
+			}
+
+			if(retMap.containsKey(DQR.weaponBooster.AKUMA))
+			{
+				if(monster != null && monster.MobRoot == EnumDqmMobRoot.AKUMA)
+				{
+					event.ammount = event.ammount * retMap.get(DQR.weaponBooster.AKUMA);
+				}
+			}
+
+		}
+
+	}
+
+	@SubscribeEvent(priority=EventPriority.LOWEST)
 	public void onLivingHurtEvent(LivingHurtEvent event) {
 
 		int varDifficulty = DQR.conf.DqmEndoraDifficulty == -1 ? DQR.conf.DqmDifficulty : DQR.conf.DqmEndoraDifficulty;
 		EnumDqmEndoraParam enumEndora = DQR.enumGetter.getEndoraParam(varDifficulty);
 
+		if(event.source instanceof EntityDamageSource)
+		{
+			//System.out.println("TEST!!!!!!!!!!!");
+			//System.out.println(event.source.getDamageType());
+		}else
+		{
+			//System.out.println("NOOOOOOOOOOOOOOOOO!!");
+		}
 		//DQR.func.debugString("DAMTEST_A:" + event.ammount);
 
-		if(event.source.getEntity() != null){
-
+		if(event.entityLiving != null)
+		{
 
 			//System.out.println("TEST:" + event.source.getSourceOfDamage().getCommandSenderName());
 			//System.out.println("TEST:" + event.source.getEntity().getCommandSenderName());
-
-
+			EntityLivingBase elv = event.entityLiving;
+			//System.out.println("TEST:" + event.source.getDamageType());
 			//ルカニのダメージ加算
-			if(!(event.source.getEntity() instanceof EntityPlayer) && event.source.getEntity() instanceof EntityLivingBase)
+			//System.out.println("TEST1:" + event.source.getDamageType());
+			//System.out.println("TEST2:" + DamageSource.causeThornsDamage(elv).getDamageType());
+			if(event.source.getDamageType().equalsIgnoreCase(DamageSource.causeThornsDamage(elv).getDamageType()))
 			{
-				EntityLivingBase elv = (EntityLivingBase)event.source.getEntity();
-				if(event.source.getDamageType().equalsIgnoreCase(DamageSource.generic.getDamageType()) ||
-				   DQR.damageSource.isDqmSkillDamage(event.source))
+				try
 				{
-					PotionEffect pe = elv.getActivePotionEffect(DQPotionMinus.debuffRukani);
-					if(pe != null)
-					{
-						event.ammount = event.ammount +  (event.ammount / (2 - pe.getAmplifier()));
-					}
+					double damThorn = elv.getEntityAttribute(SharedMonsterAttributes.attackDamage).getAttributeValue();
+					//System.out.println("TEST2:" + damThorn);
+					event.ammount = (float)(damThorn / (2 + rand.nextInt(3)));
+				}catch (Exception e)
+				{
+					System.out.println("Thorn damage calculate Error.");
+				}
+			}
+
+			//盾情報取得
+			Item shield = null;
+			if(event.entityLiving instanceof EntityPlayer)
+			{
+				EntityPlayer pl = (EntityPlayer)event.entityLiving;
+
+	        	InventorySubEquip subEquip = new InventorySubEquip(pl);
+	        	subEquip.openInventory();
+
+		    	if(subEquip != null && subEquip.getStackInSlot(11) != null)
+		    	{
+		    		shield = subEquip.getStackInSlot(11).getItem();
+
+		    	}
+
+			}
+
+			//EntityLivingBase elv = (EntityLivingBase)event.source.getEntity();
+			if(event.source.getDamageType().equalsIgnoreCase("player") ||
+			   event.source.getDamageType().equalsIgnoreCase("mob") ||
+			   event.source.getDamageType().equalsIgnoreCase(DQR.damageSource.DqmPlayerSkill.getDamageType()) ||
+			   event.source.getDamageType().equalsIgnoreCase(DQR.damageSource.DqmPlayerSpecial.getDamageType()))
+			{
+				PotionEffect pe = elv.getActivePotionEffect(DQPotionMinus.debuffRukani);
+				if(pe != null)
+				{
+					event.ammount = event.ammount +  (event.ammount / (2 - pe.getAmplifier()));
 				}
 			}
 
 			//スカラのダメージ計算
-			if(!(event.source.getEntity() instanceof EntityPlayer) && event.source.getEntity() instanceof EntityLivingBase)
+			//if(!(event.source.getEntity() instanceof EntityPlayer) && event.source.getEntity() instanceof EntityLivingBase)
+			//{
+			//EntityLivingBase elv = (EntityLivingBase)event.source.getEntity();
+			if(event.source.getDamageType().equalsIgnoreCase("player") ||
+			   event.source.getDamageType().equalsIgnoreCase("mob") ||
+			   event.source.getDamageType().equalsIgnoreCase(DQR.damageSource.DqmPlayerSkill.getDamageType()) ||
+			   event.source.getDamageType().equalsIgnoreCase(DQR.damageSource.DqmPlayerSpecial.getDamageType()))
 			{
-				EntityLivingBase elv = (EntityLivingBase)event.source.getEntity();
-				if(event.source.getDamageType().equalsIgnoreCase(DamageSource.generic.getDamageType()) ||
-				   DQR.damageSource.isDqmSkillDamage(event.source))
+				PotionEffect pe = elv.getActivePotionEffect(DQPotionPlus.buffSukara);
+				if(pe != null)
 				{
-					PotionEffect pe = elv.getActivePotionEffect(DQPotionPlus.buffSukara);
-					if(pe != null)
-					{
-						event.ammount = event.ammount -  (event.ammount / (4 - (pe.getAmplifier() * 2)));
-					}
+					event.ammount = event.ammount -  (event.ammount / (4 - (pe.getAmplifier() * 2)));
 				}
 			}
+			//}
 
 
 			//ディバインスペル
-			if(event.source.getEntity() instanceof EntityLivingBase)
+			//if(event.source.getEntity() instanceof EntityLivingBase)
+			//{
+			//EntityLivingBase elv = (EntityLivingBase)event.source.getEntity();
+			PotionEffect pe = elv.getActivePotionEffect(DQPotionMinus.debuffDivainsuperu);
+
+			if(DQR.damageSource.isDqmMagicDamage(event.source))
 			{
-				EntityLivingBase elv = (EntityLivingBase)event.source.getEntity();
-				PotionEffect pe = elv.getActivePotionEffect(DQPotionMinus.debuffDivainsuperu);
 
-				if(DQR.damageSource.isDqmMagicDamage(event.source))
+				if(pe != null)
 				{
-
-					if(pe != null)
-					{
-						event.ammount = event.ammount +  (event.ammount / (2 - pe.getAmplifier()));
-					}
+					event.ammount = event.ammount +  (event.ammount / (2 - pe.getAmplifier()));
 				}
 			}
+			//}
 
 			//マジックバリアのダメージ計算
-			if(event.source.getEntity() instanceof EntityLivingBase)
+			//if(event.source.getEntity() instanceof EntityLivingBase)
+			//{
+			//EntityLivingBase elv = (EntityLivingBase)event.source.getEntity();
+			pe = elv.getActivePotionEffect(DQPotionPlus.buffMagicBaria);
+
+			if(DQR.damageSource.isDqmMagicDamage(event.source))
 			{
-				EntityLivingBase elv = (EntityLivingBase)event.source.getEntity();
-				PotionEffect pe = elv.getActivePotionEffect(DQPotionPlus.buffMagicBaria);
 
-				if(DQR.damageSource.isDqmMagicDamage(event.source))
+				if(pe != null)
 				{
-
-					if(pe != null)
-					{
-						event.ammount = event.ammount -  (event.ammount / (4 - (pe.getAmplifier() * 2)));
-					}
+					event.ammount = event.ammount -  (event.ammount / (4 - (pe.getAmplifier() * 2)));
 				}
 			}
+			//}
 
 
 
 			//バーハのダメージ計算
-			if(event.source.getEntity() instanceof EntityLivingBase)
-			{
-				EntityLivingBase elv = (EntityLivingBase)event.source.getEntity();
-				PotionEffect pe = elv.getActivePotionEffect(DQPotionPlus.buffBaha);
+			//if(event.source.getEntity() instanceof EntityLivingBase)
+			//{
+			//EntityLivingBase elv = (EntityLivingBase)event.source.getEntity();
+			pe = elv.getActivePotionEffect(DQPotionPlus.buffBaha);
 
-				if(pe != null)
+			if(pe != null)
+			{
+				if(event.source.getDamageType().equalsIgnoreCase(DamageSource.onFire.getDamageType()) ||
+				   event.source.getDamageType().equalsIgnoreCase(DamageSource.inFire.getDamageType()) ||
+				   event.source.getDamageType().equalsIgnoreCase(DamageSource.lava.getDamageType()) ||
+				   event.source.getDamageType().equalsIgnoreCase(DQR.damageSource.DqmHeavyFire.getDamageType()))
 				{
-					if(event.source == DamageSource.onFire ||
-					   event.source == DamageSource.inFire ||
-					   event.source == DamageSource.lava ||
-					   event.source.getDamageType().equalsIgnoreCase(DQR.damageSource.DqmHeavyFire.getDamageType()))
+					event.ammount = 0;
+					event.setCanceled(true);
+					if(elv.isBurning())
 					{
-						event.ammount = 0;
-						event.setCanceled(true);
-						return;
-					}else if(DQR.damageSource.isDqmBreathDamage(event.source))
-					{
-						event.ammount = event.ammount -  (event.ammount / (4 - (pe.getAmplifier() * 2)));
+
 					}
+					elv.extinguish();
+
+					return;
+				}else if(DQR.damageSource.isDqmBreathDamage(event.source))
+				{
+					event.ammount = event.ammount -  (event.ammount / (4 - (pe.getAmplifier() * 2)));
 				}
 			}
+			//}
 
 			//火草
-			if(event.source.getEntity() instanceof EntityLivingBase)
-			{
-				EntityLivingBase elv = (EntityLivingBase)event.source.getEntity();
-				PotionEffect pe = elv.getActivePotionEffect(DQPotionPlus.potionHonoonomi);
+			//if(event.source.getEntity() instanceof EntityLivingBase)
+			//{
+			//EntityLivingBase elv = (EntityLivingBase)event.source.getEntity();
+			pe = elv.getActivePotionEffect(DQPotionPlus.potionHonoonomi);
 
-				if(pe != null)
+			if(pe != null)
+			{
+				if(event.source.getDamageType().equalsIgnoreCase(DamageSource.onFire.getDamageType()) ||
+				   event.source.getDamageType().equalsIgnoreCase(DamageSource.inFire.getDamageType()) ||
+				   event.source.getDamageType().equalsIgnoreCase(DamageSource.lava.getDamageType()) ||
+				   event.source.getDamageType().equalsIgnoreCase(DQR.damageSource.DqmHeavyFire.getDamageType()))
 				{
-					if(event.source == DamageSource.onFire ||
-					   event.source == DamageSource.inFire ||
-					   event.source == DamageSource.lava ||
-					   event.source.getDamageType().equalsIgnoreCase(DQR.damageSource.DqmHeavyFire.getDamageType()))
+					event.ammount = 0;
+					event.setCanceled(true);
+					if(elv.isBurning())
 					{
-						event.ammount = 0;
-						event.setCanceled(true);
-						return;
-					}else if(DQR.damageSource.isDqmBreathDamage(event.source))
-					{
-						event.ammount = event.ammount -  (event.ammount / (4 - (pe.getAmplifier() * 2)));
+
 					}
+					elv.extinguish();
+
+					return;
+				}else if(DQR.damageSource.isDqmFireDamage(event.source))
+				{
+					event.ammount = event.ammount -  (event.ammount / (4 - (pe.getAmplifier() * 2)));
 				}
 			}
 
+			//}
+			//盾の耐性計算
+			if(shield != null)
+			{
+				if(shield == DQAccessories.itemHonoonotate)
+				{
+					if(DQR.damageSource.isDqmFireDamage(event.source))
+					{
+						event.ammount = event.ammount / 4 * 3;
+					}
+				}else if(shield == DQAccessories.itemKoorinotate)
+				{
+					if(DQR.damageSource.isDqmIceDamage(event.source))
+					{
+						event.ammount = event.ammount / 4 * 3;
+					}
+				}else if(shield == DQAccessories.itemMahounotate)
+				{
+					if(DQR.damageSource.isDqmMagicDamage(event.source))
+					{
+						event.ammount = event.ammount / 4 * 3;
+					}
+				}else if(shield == DQAccessories.itemMegaminotate)
+				{
+					if(DQR.damageSource.isDqmMagicDamage(event.source))
+					{
+						event.ammount = event.ammount / 2;
+					}
+				}
+			}
+		}
+
+
+//System.out.println("TEST1:" + event.ammount);
+		if(event.source.getEntity() != null && !(event.source.getDamageType().equalsIgnoreCase(DamageSource.causeThornsDamage(event.entityLiving).getDamageType()))){
 
 			if(event.source.getEntity() instanceof EntityDragon)
 			{
@@ -206,6 +566,24 @@ public class DamageHandler {
 
 				if(ep != null)
 				{
+					EnumDqmElement element = null;
+					Item handItem = ep.getHeldItem().getItem();
+
+					if(handItem instanceof DqmItemBowBase)
+					{
+						element = ((DqmItemBowBase)handItem).getElement();
+					}else if(handItem instanceof DqmItemThrowBase)
+					{
+						element = ((DqmItemThrowing)handItem).getElement();
+					}
+
+					if(element != null)
+					{
+						float dam = event.ammount;
+						event.ammount = event.ammount * DQR.calcDamage.applyDamageResistElement(dam, dam, event.entityLiving, element);
+					}
+
+
 					EntityLivingBase evb = event.entityLiving;
 					//int weapon = ExtendedPlayerProperties.get(ep).getWeapon();
 					int weaponSkill = ExtendedPlayerProperties3.get(ep).getWeaponSkillSet(weapon);
@@ -448,6 +826,7 @@ public class DamageHandler {
 			event.ammount = event.ammount / enumEndora.getDeffence();
  		}
 
+//System.out.println("TEST2:" + event.ammount);
 		//DQR.func.debugString("DAMTEST_B:" + event.ammount);
 
 		//エンドラの理不尽な防御力2
@@ -497,7 +876,8 @@ public class DamageHandler {
 				}
 
 				if(!event.source.getDamageType().equalsIgnoreCase(DQR.damageSource.DqmPlayerSkillDeath.getDamageType()) &&
-					!criticalFlg)
+				   !event.source.getDamageType().equalsIgnoreCase(DQR.damageSource.DqmPlayerSpecialDeath.getDamageType()) &&
+				   !criticalFlg)
 				{
 					if(event.source.getDamageType().equalsIgnoreCase(DamageSource.generic.getDamageType()) ||
 					   DQR.damageSource.isDqmSkillDamage(event.source))
@@ -521,6 +901,7 @@ public class DamageHandler {
 				int criticalVal = ExtendedPlayerProperties.get(epr).getKaisinritu() + 5;
 
 				if(event.source.getDamageType().equalsIgnoreCase(DQR.damageSource.DqmPlayerSkillCri.getDamageType()) ||
+				   event.source.getDamageType().equalsIgnoreCase(DQR.damageSource.DqmPlayerSpecialCri.getDamageType()) ||
 					(rand.nextInt(1000) < criticalVal &&
 					 (epr.getHeldItem() != null || (epr.getHeldItem() != null && (epr.getHeldItem().getItem() instanceof DqmItemWeaponBase || epr.getHeldItem().getItem() instanceof DqmItemBowBase)))
 					)
@@ -549,7 +930,8 @@ public class DamageHandler {
 				}
 
 				//即死系攻撃の場合
-				if(event.source.getDamageType().equalsIgnoreCase(DQR.damageSource.DqmPlayerSkillDeath.getDamageType()) &&
+				if((event.source.getDamageType().equalsIgnoreCase(DQR.damageSource.DqmPlayerSkillDeath.getDamageType()) ||
+					event.source.getDamageType().equalsIgnoreCase(DQR.damageSource.DqmPlayerSpecialDeath.getDamageType())) &&
 					event.ammount > 1.0F)
 				{
 					event.ammount = event.entityLiving.getMaxHealth() + 100.0F;
@@ -560,6 +942,7 @@ public class DamageHandler {
 
 				//回避チェック
 				if(!event.source.getDamageType().equalsIgnoreCase(DQR.damageSource.DqmPlayerSkillDeath.getDamageType()) &&
+				   !event.source.getDamageType().equalsIgnoreCase(DQR.damageSource.DqmPlayerSpecialDeath.getDamageType()) &&
 				   !criticalFlg)
 				{
 					if(event.source.getDamageType().equalsIgnoreCase(DamageSource.generic.getDamageType()) ||
@@ -585,7 +968,8 @@ public class DamageHandler {
 					{
 						float dam = DQR.calcDamage.getDummyDamage(event.ammount, event.entityLiving, event.source);
 
-						if (event.source.getDamageType().equalsIgnoreCase(DQR.damageSource.DqmPlayerSkillDeath.getDamageType()) &&
+						if ((event.source.getDamageType().equalsIgnoreCase(DQR.damageSource.DqmPlayerSkillDeath.getDamageType()) ||
+							 event.source.getDamageType().equalsIgnoreCase(DQR.damageSource.DqmPlayerSpecialDeath.getDamageType())) &&
 							event.ammount > 1.0F)
 						{
 							epr.addChatMessage(new ChatComponentTranslation("msg.toDamage3.txt",new Object[] {event.entityLiving.getCommandSenderName()}));
@@ -606,6 +990,7 @@ public class DamageHandler {
 			{
 				//回避チェック
 				if(!event.source.getDamageType().equalsIgnoreCase(DQR.damageSource.DqmPlayerSkillDeath.getDamageType()) &&
+				   !event.source.getDamageType().equalsIgnoreCase(DQR.damageSource.DqmPlayerSpecialDeath.getDamageType()) &&
 				   !criticalFlg)
 				{
 					if(event.source.getDamageType().equalsIgnoreCase(DamageSource.generic.getDamageType()) ||
@@ -630,6 +1015,23 @@ public class DamageHandler {
 				EntityPlayer ep = (EntityPlayer)event.entityLiving;
 
 				ep.inventory.damageArmor(event.ammount);
+
+		    	InventorySubEquip equipment = new InventorySubEquip(ep);
+		        equipment.openInventory();
+
+		        for(int cnt = 0; cnt < equipment.getSizeInventory(); cnt++)
+		        {
+		        	if(equipment.getStackInSlot(cnt) != null && (equipment.getStackInSlot(cnt).getItem() instanceof ISubEquip) && ((ISubEquip)equipment.getStackInSlot(cnt).getItem()).isDamageable2())
+		        	{
+		        		//EnumDqmAccessory accParam = DQR.enumGetter.getAccessoryParam(equipment.getStackInSlot(cnt).getItem());
+		        		ItemStack stack = equipment.getStackInSlot(cnt);
+		        		stack.damageItem(1, ep);
+
+		        		equipment.setInventorySlotContents(cnt, stack);
+		        		//System.out.println("TEST");
+		        	}
+		        }
+		        equipment.closeInventory();
 
 				if(!ep.worldObj.isRemote && criticalFlg)
 				{
@@ -661,7 +1063,7 @@ public class DamageHandler {
 			}
 
 		}
-
+//System.out.println("TEST3:" + event.ammount);
 		/*
 		if(event.entityLiving instanceof EntityPlayer)
 		{

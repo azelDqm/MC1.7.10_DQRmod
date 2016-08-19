@@ -8,7 +8,7 @@ import dqr.api.potion.DQPotionPlus;
 public class DqmPotion {
 
 	//現在使用している最大ポーションIDメモ用
-	private int tempNum = 43;
+	private int tempNum = 4;
 
 	public DqmPotion(int idx)
 	{
@@ -56,6 +56,13 @@ public class DqmPotion {
 
 		DQPotionMinus.debuffStop = new DqmPotionNoEffect(idx + 41, true, 0x000000).setIconIndex2(7, 1).setIconIndex(3, 2).setPotionName("dqm.potion.stop");
 		DQPotionPlus.buffKaihiUp = new DqmPotionNoEffect(idx + 42, false, 0x000000).setIconIndex2(3, 1).setIconIndex(0, 0).setPotionName("dqm.potion.kaihiUp");
-		DQPotionPlus.buffBreathReflect = new DqmPotionNoEffect(idx + 43, false, 0x000000).setIconIndex2(2, 6).setIconIndex(7, 1).setPotionName("dqm.potion.kaihiUp");
+		DQPotionPlus.buffBreathReflect = new DqmPotionNoEffect(idx + 43, false, 0x000000).setIconIndex2(2, 6).setIconIndex(7, 1).setPotionName("dqm.potion.breathReflect");
+
+		DQPotionPlus.buffHoshihuru = new DqmPotionNoEffect(idx + 44, false, 0x000000).setIconIndex2(3, 1).setIconIndex(0, 0).setPotionName("dqm.potion.hoshihuru").func_111184_a(SharedMonsterAttributes.movementSpeed, "91AEAA56-376B-4498-935B-2F7F68070650", 0.20000000298023224D, 2);
+
+		DQPotionPlus.buffHPRegeneration = new DqmPotionNoEffect(idx + 45, false, 0xFFAAAA).setIconIndex2(0, 4).setIconIndex(7, 0).setPotionName("dqm.potion.HPRegeneration");
+		DQPotionPlus.buffMPRegeneration = new DqmPotionNoEffect(idx + 46, false, 0xAAAAFF).setIconIndex2(0, 4).setIconIndex(7, 0).setPotionName("dqm.potion.MPRegeneration");
+
+		DQPotionEtc.buffMahouken = new DqmPotionNoEffect(idx + 47, false, 0xAAAAFF).setIconIndex2(0, 1).setIconIndex(4, 0).setPotionName("dqm.potion.Mahouken");
 	}
 }

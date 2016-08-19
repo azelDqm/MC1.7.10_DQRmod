@@ -90,7 +90,7 @@ public class DqmItemRecipe {
         GameRegistry.addShapelessRecipe(new ItemStack(DQDecorates.DqmBlockYajirusihai , 1), new Object[] {new ItemStack(DQDecorates.DqmBlockYajirusiao, 1), new ItemStack(DQMiscs.itemKoumorinohane, 1)});
         GameRegistry.addShapelessRecipe(new ItemStack(DQDecorates.DqmBlockYajirusisiro , 1), new Object[] {new ItemStack(DQDecorates.DqmBlockYajirusiao, 1), new ItemStack(DQMiscs.itemSiroikaigara, 1)});
         GameRegistry.addShapelessRecipe(new ItemStack(DQDecorates.DqmBlockYajirusiaka , 1), new Object[] {new ItemStack(DQDecorates.DqmBlockYajirusiao, 1), new ItemStack(DQMiscs.itemAkaisango, 1)});
-        GameRegistry.addShapelessRecipe(new ItemStack(DQDecorates.DqmBlockYajirusikuro , 1), new Object[] {new ItemStack(DQDecorates.DqmBlockYajirusiao, 1), new ItemStack(DQMiscs.itemKoumorinohane, 1)});
+        GameRegistry.addShapelessRecipe(new ItemStack(DQDecorates.DqmBlockYajirusikuro , 1), new Object[] {new ItemStack(DQDecorates.DqmBlockYajirusiao, 1), new ItemStack(DQMiscs.itemAyakasisou, 1)});
         GameRegistry.addShapelessRecipe(new ItemStack(DQDecorates.DqmBlockYajirusitya , 1), new Object[] {new ItemStack(DQDecorates.DqmBlockYajirusiao, 1), new ItemStack(DQBlocks.DqmBlockGenkotu, 1)});
         GameRegistry.addShapelessRecipe(new ItemStack(DQDecorates.DqmBlockYajirusikoimidori , 1), new Object[] {new ItemStack(DQDecorates.DqmBlockYajirusiao, 1), new ItemStack(DQMiscs.itemKyodaihigetokage, 1)});
         GameRegistry.addShapelessRecipe(new ItemStack(DQDecorates.DqmBlockYajirusimurasaki , 1), new Object[] {new ItemStack(DQDecorates.DqmBlockYajirusiao, 1), new ItemStack(DQMiscs.itemJuryokunomoto, 1)});
@@ -2658,7 +2658,7 @@ ver1.20ADD-<*/
                                    "YWV",
                                    'V', DQMiscs.itemIerooubu, 'W', DQIngots.itemOriharukon, 'X', DQIngots.itemTaiyounoisi2, 'Y', DQMiscs.itemSeireiseki, 'Z', DQMiscs.itemMetarukingnoha,
                                });
-*/
+
         GameRegistry.addRecipe(new ItemStack(DQWeapons.itemHayabusanoturugi , 1), new Object[]
                                {
                                    "WXW",
@@ -2666,6 +2666,7 @@ ver1.20ADD-<*/
                                    "WYW",
                                    'W', DQMiscs.itemLittlemedal5, 'X', DQAccessories.itemHayatenoring, 'Y', DQMiscs.itemKinkai, 'Z', DQWeapons.itemHaganenoturugi,
                                });
+*/
         GameRegistry.addRecipe(new ItemStack(DQWeapons.itemSefiramunoyumi , 1), new Object[]
                                {
                                    "WWX",
@@ -4076,6 +4077,27 @@ ver1.20ADD-<*/
         GameRegistry.addShapelessRecipe(new ItemStack(DQChests.DqmEnderChest5, 1), new Object[] {new ItemStack(Blocks.ender_chest, 1), new ItemStack(DQMobFigures.BlockFigureGaikotukensi, 1)});
         GameRegistry.addShapelessRecipe(new ItemStack(DQChests.DqmEnderChest5, 1), new Object[] {new ItemStack(Blocks.ender_chest, 1), new ItemStack(DQMobObjects.BlockObjGaikotukensi, 1)});
 
+        GameRegistry.addRecipe(new ItemStack(DQBlocks.DqmBlockJampBlock), new Object[]
+        {
+            "BFA",
+            "CED",
+            "AFB",
+            'E', Blocks.enchanting_table, 'A', DQSeeds.itemSubayasanotane3, 'B', Items.ender_pearl,
+            'C', DQMiscs.itemPaapuruoubu, 'D', DQMiscs.itemBuruoubu, 'F', Blocks.glass
+        });
+
+        GameRegistry.addRecipe(new ItemStack(DQBlocks.DqmBlockJampBlock), new Object[]
+        {
+            "BFA",
+            "CED",
+            "AFB",
+            'E', Blocks.enchanting_table, 'A', DQSeeds.itemSubayasanotane3, 'B', Items.ender_pearl,
+            'C', DQMiscs.itemPaapuruoubu, 'D', DQMiscs.itemBuruoubu, 'F', new ItemStack(Blocks.stained_glass, 1, OreDictionary.WILDCARD_VALUE)
+        });
+
+        GameRegistry.addShapelessRecipe(new ItemStack(Items.gold_ingot, 4), new Object[] {new ItemStack(DQMiscs.itemKinkai, 1)});
+
+
         GameRegistry.addRecipe(new ItemStack(DQMiscs.itemDragonObuB), new Object[]
         {
             "ADA",
@@ -4085,6 +4107,42 @@ ver1.20ADD-<*/
             'D', DQMiscs.itemRyuunonamida, 'E', DQMiscs.itemPisaronotamasii, 'F', DQMiscs.itemDoragonnonamida,
         });
 
-        GameRegistry.addShapelessRecipe(new ItemStack(Items.gold_ingot, 4), new Object[] {new ItemStack(DQMiscs.itemKinkai, 1)});
+        GameRegistry.addRecipe(new ItemStack(DQAccessories.itemAccCanceler), new Object[]
+        {
+            " A ",
+            "AAA",
+            " A ",
+            'A', DQIngots.itemMigakizuna
+        });
+
+        GameRegistry.addRecipe(new ItemStack(DQMiscs.itemShinjirukokoro), new Object[]
+        {
+            "ABA",
+            "AAA",
+            " A ",
+            'A', DQIngots.itemHosinokakera, 'B', DQIngots.itemInotinoisi
+        });
+        GameRegistry.addRecipe(new ItemStack(DQMiscs.itemShinjirukokoro), new Object[]
+        {
+            "ABA",
+            "AAA",
+            " A ",
+            'A', DQIngots.itemMoon, 'B', DQIngots.itemInotinoisi
+        });
+
+        GameRegistry.addRecipe(new ItemStack(DQMiscs.itemShinjirukokoro), new Object[]
+        {
+            "ABA",
+            "AAA",
+            " A ",
+            'A', DQIngots.itemHosinokakera, 'B', DQIngots.itemRubinogenseki
+        });
+        GameRegistry.addRecipe(new ItemStack(DQMiscs.itemShinjirukokoro), new Object[]
+        {
+            "ABA",
+            "AAA",
+            " A ",
+            'A', DQIngots.itemMoon, 'B', DQIngots.itemRubinogenseki
+        });
 	}
 }

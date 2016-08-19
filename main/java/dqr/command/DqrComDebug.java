@@ -25,6 +25,8 @@ public class DqrComDebug extends CommandBase {
 
         if("debug".equalsIgnoreCase(var2[0]))
         {
+        	System.out.println(var1.getEntityWorld().getBlock(Integer.parseInt(var2[1]), Integer.parseInt(var2[2]), Integer.parseInt(var2[3])).getUnlocalizedName());
+
         	System.out.println("DIMNAME" + var1.getEntityWorld().provider.getDimensionName());
         	System.out.println("DIMID" + var1.getEntityWorld().provider.dimensionId);
         	System.out.println("DIMSAVE" + var1.getEntityWorld().provider.getSaveFolder());

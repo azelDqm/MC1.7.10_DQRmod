@@ -13,9 +13,12 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.World;
 import dqr.DQR;
+import dqr.api.Items.DQAccessories;
 import dqr.api.enums.EnumDqmNpcTalk;
 import dqr.entity.npcEntity.DqmNPCBase;
+import dqr.gui.subEquip.InventorySubEquip;
 import dqr.items.base.DqmItemMagicBase;
+import dqr.items.interfaceBase.ISubEquip;
 import dqr.playerData.ExtendedPlayerProperties;
 
 public class DqmEntityNPCSyuuri extends DqmNPCBase
@@ -240,64 +243,133 @@ public class DqmEntityNPCSyuuri extends DqmNPCBase
     		}else if(flg == 1)
     		{
     			ItemStack its = ep.inventory.getCurrentItem();
-    			int syuuriPrice = DQR.syuuriPrice.Gold(its);
 
-    			syuuriPrice = DQR.calcPlayerStatus.calcShoninGold(syuuriPrice, ep);
-    			if(syuuriPrice >= 0)
+    			if(its != null && its.getItem() == DQAccessories.itemAccCanceler)
     			{
-    				if(!ep.isSneaking())
-    				{
-	    				ep.addChatMessage(new ChatComponentTranslation("msg.shopSyuriya.messages.1.txt",new Object[] {syuuriPrice}));
-	    				ep.addChatMessage(new ChatComponentTranslation("msg.shopSyuriya.messages.2.txt",new Object[] {}));
-	    				ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
-    				}else
-    				{
-    					int epGold = ExtendedPlayerProperties.get(ep).getGold();
-    					if(epGold >= syuuriPrice)
-    					{
-    	    				ep.addChatMessage(new ChatComponentTranslation("msg.shopSyuriya.messages.3.txt",new Object[] {syuuriPrice}));
-    	    				ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
+        			int syuuriPrice = 0;
 
-    	    				ep.inventory.getCurrentItem().setItemDamage(0);
-    	    				ExtendedPlayerProperties.get(ep).setGold(epGold - syuuriPrice);
-    					}else
-    					{
-    	    				ep.addChatMessage(new ChatComponentTranslation("msg.shopSyuriya.messages.4.txt",new Object[] {}));
-    	    				ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
-    					}
-    				}
-    			}else
-    			{
-    				if(its.getMaxDamage() > 20 && !(its.getItem() instanceof DqmItemMagicBase))
-    				{
+    		    	InventorySubEquip equipment = new InventorySubEquip(ep);
+    		        equipment.openInventory();
+
+    		        for(int cnt = 0; cnt < 12; cnt++)
+    		        {
+    		        	if(equipment.getStackInSlot(cnt) != null && (equipment.getStackInSlot(cnt).getItem() instanceof ISubEquip) && ((ISubEquip)equipment.getStackInSlot(cnt).getItem()).isDamageable2())
+    		        	{
+    		        		//EnumDqmAccessory accParam = DQR.enumGetter.getAccessoryParam(equipment.getStackInSlot(cnt).getItem());
+    		        		ItemStack stack = equipment.getStackInSlot(cnt);
+
+    		        		syuuriPrice = syuuriPrice + DQR.calcPlayerStatus.calcShoninGold(DQR.syuuriPrice.Gold(stack), ep);
+    		        	}
+    		        }
+
+	    			if(syuuriPrice > 0)
+	    			{
 	    				if(!ep.isSneaking())
 	    				{
-		    				ep.addChatMessage(new ChatComponentTranslation("msg.shopSyuriya.messages.1.txt",new Object[] {(its.getMaxDamage() * 10)}));
+		    				ep.addChatMessage(new ChatComponentTranslation("msg.shopSyuriya.messages.1.txt",new Object[] {syuuriPrice}));
 		    				ep.addChatMessage(new ChatComponentTranslation("msg.shopSyuriya.messages.2.txt",new Object[] {}));
 		    				ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
 	    				}else
 	    				{
 	    					int epGold = ExtendedPlayerProperties.get(ep).getGold();
-	    					if(epGold >= (its.getMaxDamage() * 10))
+	    					if(epGold >= syuuriPrice)
 	    					{
-	    	    				ep.addChatMessage(new ChatComponentTranslation("msg.shopSyuriya.messages.3.txt",new Object[] {(its.getMaxDamage() * 10)}));
+	    	    				ep.addChatMessage(new ChatComponentTranslation("msg.shopSyuriya.messages.3.txt",new Object[] {syuuriPrice}));
 	    	    				ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
 
+	    	    		        for(int cnt = 0; cnt < 12; cnt++)
+	    	    		        {
+	    	    		        	if(equipment.getStackInSlot(cnt) != null && (equipment.getStackInSlot(cnt).getItem() instanceof ISubEquip) && ((ISubEquip)equipment.getStackInSlot(cnt).getItem()).isDamageable2())
+	    	    		        	{
+	    	    		        		//EnumDqmAccessory accParam = DQR.enumGetter.getAccessoryParam(equipment.getStackInSlot(cnt).getItem());
+	    	    		        		ItemStack stack = equipment.getStackInSlot(cnt);
+	    	    		        		stack.setItemDamage(0);
+
+	    	    		        		equipment.setInventorySlotContents(cnt, stack);
+	    	    		        		//syuuriPrice = syuuriPrice + DQR.syuuriPrice.Gold(stack);
+	    	    		        	}
+	    	    		        }
+
+
 	    	    				ep.inventory.getCurrentItem().setItemDamage(0);
-	    	    				ExtendedPlayerProperties.get(ep).setGold(epGold - (its.getMaxDamage() * 10));
+	    	    				ExtendedPlayerProperties.get(ep).setGold(epGold - syuuriPrice);
 	    					}else
 	    					{
 	    	    				ep.addChatMessage(new ChatComponentTranslation("msg.shopSyuriya.messages.4.txt",new Object[] {}));
 	    	    				ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
 	    					}
 	    				}
-    				}else
-    				{
-        				ep.addChatMessage(new ChatComponentTranslation("msg.shopSyuriya.messages.5.txt",new Object[] {}));
+	    			}else
+	    			{
+        				ep.addChatMessage(new ChatComponentTranslation("msg.shopSyuriya.messages.6.txt",new Object[] {}));
         				ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
-    				}
-    				//ep.addChatMessage(new ChatComponentTranslation("msg.shopSyuriya.messages.5.txt",new Object[] {}));
-    				//ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
+	    			}
+
+    		        equipment.closeInventory();
+    			}else
+    			{
+	    			int syuuriPrice = DQR.syuuriPrice.Gold(its);
+
+	    			syuuriPrice = DQR.calcPlayerStatus.calcShoninGold(syuuriPrice, ep);
+	    			if(syuuriPrice > 0)
+	    			{
+	    				if(!ep.isSneaking())
+	    				{
+		    				ep.addChatMessage(new ChatComponentTranslation("msg.shopSyuriya.messages.1.txt",new Object[] {syuuriPrice}));
+		    				ep.addChatMessage(new ChatComponentTranslation("msg.shopSyuriya.messages.2.txt",new Object[] {}));
+		    				ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
+	    				}else
+	    				{
+	    					int epGold = ExtendedPlayerProperties.get(ep).getGold();
+	    					if(epGold >= syuuriPrice)
+	    					{
+	    	    				ep.addChatMessage(new ChatComponentTranslation("msg.shopSyuriya.messages.3.txt",new Object[] {syuuriPrice}));
+	    	    				ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
+
+	    	    				ep.inventory.getCurrentItem().setItemDamage(0);
+	    	    				ExtendedPlayerProperties.get(ep).setGold(epGold - syuuriPrice);
+	    					}else
+	    					{
+	    	    				ep.addChatMessage(new ChatComponentTranslation("msg.shopSyuriya.messages.4.txt",new Object[] {}));
+	    	    				ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
+	    					}
+	    				}
+	    			}else
+	    			{
+	    				if(its.getMaxDamage() > 20 && !(its.getItem() instanceof DqmItemMagicBase))
+	    				{
+		    				if(!ep.isSneaking())
+		    				{
+			    				ep.addChatMessage(new ChatComponentTranslation("msg.shopSyuriya.messages.1.txt",new Object[] {(its.getMaxDamage() * 10)}));
+			    				ep.addChatMessage(new ChatComponentTranslation("msg.shopSyuriya.messages.2.txt",new Object[] {}));
+			    				ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
+		    				}else
+		    				{
+		    					int fixPrice = (its.getMaxDamage() * 10);
+		    					fixPrice = DQR.calcPlayerStatus.calcShoninGold(fixPrice, ep);
+
+		    					int epGold = ExtendedPlayerProperties.get(ep).getGold();
+		    					if(epGold >= fixPrice)
+		    					{
+		    	    				ep.addChatMessage(new ChatComponentTranslation("msg.shopSyuriya.messages.3.txt",new Object[] {fixPrice}));
+		    	    				ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
+
+		    	    				ep.inventory.getCurrentItem().setItemDamage(0);
+		    	    				ExtendedPlayerProperties.get(ep).setGold(epGold - fixPrice);
+		    					}else
+		    					{
+		    	    				ep.addChatMessage(new ChatComponentTranslation("msg.shopSyuriya.messages.4.txt",new Object[] {}));
+		    	    				ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
+		    					}
+		    				}
+	    				}else
+	    				{
+	        				ep.addChatMessage(new ChatComponentTranslation("msg.shopSyuriya.messages.5.txt",new Object[] {}));
+	        				ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
+	    				}
+	    				//ep.addChatMessage(new ChatComponentTranslation("msg.shopSyuriya.messages.5.txt",new Object[] {}));
+	    				//ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
+	    			}
     			}
     			ExtendedPlayerProperties.get(ep).setNpcTalk(EnumDqmNpcTalk.SYURIYA.getId(), 1);
     		}

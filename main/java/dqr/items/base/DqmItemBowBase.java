@@ -1,11 +1,13 @@
 package dqr.items.base;
 
 import java.util.List;
+import java.util.Map;
 
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
@@ -15,6 +17,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
@@ -22,6 +25,9 @@ import net.minecraftforge.event.entity.player.ArrowLooseEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import dqr.DQR;
+import dqr.api.Items.DQWeapons;
+import dqr.api.enums.EnumColor;
+import dqr.api.enums.EnumDqmElement;
 import dqr.playerData.ExtendedPlayerProperties;
 
 public class DqmItemBowBase extends ItemBow{
@@ -41,6 +47,23 @@ public class DqmItemBowBase extends ItemBow{
 		this.setMaxDamage(maxDamage);
 	}
 
+	@Override
+    public boolean onLeftClickEntity(ItemStack p_77659_1_, EntityPlayer p_77659_2_, Entity p_77659_3_)
+    {
+    	//System.out.println("TESTTEST");
+    	return super.onLeftClickEntity(p_77659_1_, p_77659_2_, p_77659_3_);
+
+    }
+
+    public EnumDqmElement getElement()
+    {
+    	if(this == DQWeapons.itemKazekirinoyumi)
+    	{
+    		return EnumDqmElement.KAZE;
+    	}
+
+    	return null;
+    }
 	/*
 		if(var3 instanceof EntityPlayer)
 		{
@@ -282,6 +305,12 @@ public class DqmItemBowBase extends ItemBow{
 
     	p_77624_3_.add("");
     	p_77624_3_.add(I18n.format("dqm.iteminfo.attackdamage", new Object[]{dam}));
+
+    	if(this.getElement() != null)
+    	{
+    		EnumDqmElement element = this.getElement();
+    		p_77624_3_.add(element.getColor() + I18n.format("dqm.iteminfo.weapon.element." + element.getKey() + ".txt", new Object[]{}));
+    	}
     	/*
     	p_77624_3_.add(I18n.format("dqm.iteminfo.caneat"));
 
@@ -368,6 +397,29 @@ public class DqmItemBowBase extends ItemBow{
         	p_77624_3_.add("");
     	}
 
+
+    	if(DQR.spUseItems.specialUseItems.containsKey(this))
+    	{
+    		String key = this.getUnlocalizedName().replace("item.dqm.", "");
+
+    		p_77624_3_.add(EnumColor.Aqua.getChatColor() + I18n.format("dqm.iteminfo.weapon2." + key + ".txt", new Object[]{}));
+    		p_77624_3_.add(EnumColor.White.getChatColor() + I18n.format("dqm.iteminfo.weapon2.base.txt", new Object[]{}));
+    		p_77624_3_.add("");
+    	}
+
+		Map<Integer, Float> retMap = DQR.weaponBooster.getBooster(this);
+		if(retMap.containsKey(DQR.weaponBooster.DRAGON)){p_77624_3_.add(EnumColor.Blue.getChatColor() + I18n.format("dqm.iteminfo.weapon.booster.dragon.txt", new Object[]{}));}
+		if(retMap.containsKey(DQR.weaponBooster.WATER)){p_77624_3_.add(EnumColor.Blue.getChatColor() + I18n.format("dqm.iteminfo.weapon.booster.water.txt", new Object[]{}));}
+		if(retMap.containsKey(DQR.weaponBooster.UNDEAD)){p_77624_3_.add(EnumColor.Blue.getChatColor() + I18n.format("dqm.iteminfo.weapon.booster.undead.txt", new Object[]{}));}
+		if(retMap.containsKey(DQR.weaponBooster.MACHINE)){p_77624_3_.add(EnumColor.Blue.getChatColor() + I18n.format("dqm.iteminfo.weapon.booster.machine.txt", new Object[]{}));}
+		if(retMap.containsKey(DQR.weaponBooster.ELEMENT)){p_77624_3_.add(EnumColor.Blue.getChatColor() + I18n.format("dqm.iteminfo.weapon.booster.element.txt", new Object[]{}));}
+		if(retMap.containsKey(DQR.weaponBooster.SLIME)){p_77624_3_.add(EnumColor.Blue.getChatColor() + I18n.format("dqm.iteminfo.weapon.booster.slime.txt", new Object[]{}));}
+		if(retMap.containsKey(DQR.weaponBooster.BUSSHITU)){p_77624_3_.add(EnumColor.Blue.getChatColor() + I18n.format("dqm.iteminfo.weapon.booster.busshitu.txt", new Object[]{}));}
+		if(retMap.containsKey(DQR.weaponBooster.PLANT)){p_77624_3_.add(EnumColor.Blue.getChatColor() + I18n.format("dqm.iteminfo.weapon.booster.plant.txt", new Object[]{}));}
+		if(retMap.containsKey(DQR.weaponBooster.BIRD)){p_77624_3_.add(EnumColor.Blue.getChatColor() + I18n.format("dqm.iteminfo.weapon.booster.bird.txt", new Object[]{}));}
+		if(retMap.containsKey(DQR.weaponBooster.AKUMA)){p_77624_3_.add(EnumColor.Blue.getChatColor() + I18n.format("dqm.iteminfo.weapon.booster.akuma.txt", new Object[]{}));}
+
+
     	NBTTagCompound nbt = p_77624_1_.getTagCompound();
     	if(nbt != null)
     	{
@@ -381,6 +433,12 @@ public class DqmItemBowBase extends ItemBow{
     			p_77624_3_.add(medalValue);
     		}
     	}
+
+    	NBTTagList tag = p_77624_1_.getEnchantmentTagList();
+		if(tag != null)
+		{
+			p_77624_3_.add("");
+		}
 	 }
 
     @SideOnly(Side.CLIENT)

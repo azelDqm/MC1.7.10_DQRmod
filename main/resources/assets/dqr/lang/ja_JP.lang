@@ -1,4 +1,12 @@
 #
+mahouken.name.20=(毒I)
+mahouken.name.21=(毒II)
+mahouken.name.22=(毒III)
+mahouken.name.23=(遅)
+mahouken.name.24=(炎)
+mahouken.name.25=(MP吸収)
+mahouken.name.26=(HP吸収)
+
 main.job.0=遊び人
 main.job.1=戦士
 main.job.2=武闘家
@@ -22,12 +30,20 @@ main.job.19=踊子
 main.job.20=海賊
 main.job.21=マスタードラゴン
 
+gui.container.dama.title=転職
+gui.container.dama.page=Page. %f / %f
+gui.container.TamingPets.title=ペットモンスター
+
 death.attack.DqmDamageBlock=ダメージ床により力尽きた
 msg.toDamage.txt=%sに%dダメージを与えた
 msg.toDamage2.txt=%sに%.3fダメージを与えた
 msg.toDamage3.txt=%sの息の根を止めた！
 msg.toDamageP.txt=%sが%sに%dダメージを与えた
 msg.toDamage2P.txt=%sが%sに%.3fダメージを与えた
+
+msg.causeBasirura.txt=%sをx:%f,y:%f,z:%fに吹き飛ばした
+msg.causeNihuramu.txt=%sは光のかなたに消え去った
+
 msg.toSkillHit.txt=%s§e発動！
 msg.epCritical.txt=%sに会心の一撃
 msg.mobCritical.txt=%sの痛恨の一撃
@@ -87,7 +103,7 @@ msg.pet.status2.txt=!player.攻:%1$d 防:%2$d(%3$d) 魔:%4$d 力:%5$d 身:%6$d �
 msg.pet.taming1.txt=なんと %sが おきあがり
 msg.pet.taming2.txt=なかまに なりたそうに こちらをみている
 msg.pet.taming3.txt=なかまに してあげますか？ 
-msg.pet.taming4.txt=(はい=右クリック/いいえ=SHIFT+右クリック)
+msg.pet.taming4.txt=(仲間にする=右クリック/追い返す=スニーク+右クリック)
 
 msg.magic.noct.txt=魔法を使う準備が整っていない
 msg.magic.nomp.txt=しかしMPが足りない
@@ -102,6 +118,8 @@ msg.magic.callcloud.thunder=!player.%sで雷雨になるようにセットしま
 msg.magic.ranaluta=!player.%sで%d時間ずつ時間をすすめるようにセットしました。
 msg.magic.mahoton.txt=!player.魔法を封じられているため使用できない
 msg.magic.rariho.txt=!player.行動不能状態のため使用できない
+msg.magic.weaponNoAppti.txt=!player.この武器の能力を使いこなせない
+msg.magic.weaponNoEnergy.txt=!player.この武器には魔力が残っていない
 
 msg.defeatMob.txt=%sを倒した
 msg.lvUp.txt=レベルが%dに上がった
@@ -126,7 +144,9 @@ amplider.level.12=XII
 amplider.level.13=XIII
 amplider.level.14=XIV
 amplider.level.15=XV
-
+amplider.level.16=XVI
+amplider.level.17=XVII
+amplider.level.18=XVIII
 gui.pet.status.name=%s 
 gui.pet.status.EXP=Lv.%1$d  EXP %2$d / %3$d
 gui.pet.status.EXPMAX=Lv.%1$d  EXP MAX / MAX
@@ -184,13 +204,18 @@ gui.job.21=マスドラ
 gui.position.name=GUI位置調整
 gui.position.guiname.0=無し
 gui.position.guiname.1=プレイヤーデータ
-gui.position.guiname.2=プレイヤーステータス表示
+gui.position.guiname.2=プレイヤーステータス
 gui.position.guiname.3=装備耐久
 gui.position.guiname.4=ゲームログ
 gui.position.guiname.5=メダル・コイン
 gui.position.guiname.6=ポーション効果
+gui.position.guiname.7=パーティーステータス
 gui.position.line.1=選択中GUI: %s
 gui.position.line.2=GUI移動速度: %dpixels
+gui.position.line.3=パーティー1行表示数: %d
+
+gui.party.hp=HP
+gui.party.mp=MP
 
 gui.weapon.0=素手
 gui.weapon.1=バニラ
@@ -220,20 +245,27 @@ gui.weapon.26=モンスター
 gui.weapon.27=グローブ
 gui.weapon.28=鎌
 gui.weapon.29=ブレス
-key.setting.ModeChange=GUI位置調整
-key.setting.ChangeSpeed=GUI位置調整速度変更
-key.setting.GuiUP=GUI位置 UP
-key.setting.GuiDOWN=GUI位置 DOWN
-key.setting.GuiLEFT=GUI位置 LEFT
-key.setting.GuiRIGHT=GUI位置 RIGHT
+key.setting.ModeChange=[GUI調整] GUI位置調整モード
+key.setting.ChangeSpeed=[GUI調整] GUI位置調整速度変更
+key.setting.GuiUP=[GUI調整] GUI位置 UP
+key.setting.GuiDOWN=[GUI調整] GUI位置 DOWN
+key.setting.GuiLEFT=[GUI調整] GUI位置 LEFT
+key.setting.GuiRIGHT=[GUI調整] GUI位置 RIGHT
 key.setting.GuiPlayerDataVis=プレイヤーデータ表示
 key.setting.GuiPlayerStatusVis=プレイヤーステータス表示
 key.setting.GuiLogVis=ゲームログ表示
 key.setting.GuiArmorStatusVis=装備耐久表示
 key.setting.GuiSubpointsVis=メダル・コイン表示
 key.setting.GuiBuffBar=ポーション効果表示
+key.setting.GuiPartyVis=パーティーステータス表示
+
+key.setting.GuiPartyLinePlus=[GUI調整] パーティー1行の表示数＋
+key.setting.GuiPartyLineMinus=[GUI調整] パーティー1行の表示数－
 
 key.setting.magictoolMode=アイテム モード切替
+key.setting.ookinaFukuroOpen=アイテム袋を開く
+key.setting.shieldUse=盾をアイテムとして使用
+key.setting.handUse=手持ち武器の特殊効果発動
 
 item.dqm.itemDebugsword.name=デバッグソード
 
@@ -252,7 +284,7 @@ item.dqm.itemTenkuunoturugi.name=天空のつるぎ
 item.dqm.itemSinken.name=伝説のつるぎ
 item.dqm.itemSinken2.name=真・伝説のつるぎ
 
-item.dqm.itemHayabusanoturugi.name=はやぶさの剣
+item.dqm.itemHayabusanoturugi.name=§6はやぶさの剣
 item.dqm.itemDounoturugi.name=銅の剣
 item.dqm.itemHeisinoken.name=兵士の剣
 item.dqm.itemHaganenoturugi.name=鋼の剣
@@ -260,23 +292,23 @@ item.dqm.itemKoorinoyaiba.name=氷の刃
 item.dqm.itemHajanoturugi.name=はじゃのつるぎ
 item.dqm.itemDoragonkira.name=ドラゴンキラー
 item.dqm.itemInferunosword.name=インフェルノソード
-item.dqm.itemKisekinoturugi.name=奇跡の剣
+item.dqm.itemKisekinoturugi.name=§6奇跡の剣
 item.dqm.itemMinagorosinoken.name=みなごろしの剣
-item.dqm.itemMorohanoturugi.name=もろはのつるぎ
+item.dqm.itemMorohanoturugi.name=§6もろはのつるぎ
 item.dqm.itemMakainoturugi.name=魔界のつるぎ
 item.dqm.itemMetarukingnoturugi.name=メタルキングの剣
 item.dqm.itemSuiseinoturugi.name=彗星の剣
 item.dqm.itemGinganoturugi.name=銀河の剣
-item.dqm.itemMakenreipia.name=魔剣レイピア
+item.dqm.itemMakenreipia.name=魔剣士のレイピア
 item.dqm.itemReipia.name=レイピア
 item.dqm.itemSanzokusaberu.name=さんぞくサーベル
 item.dqm.itemGinganoturugi2.name=真・銀河の剣
 
 item.dqm.itemToraidento.name=トライデント
 item.dqm.itemInazumanoyari.name=稲妻の槍
-item.dqm.itemDemonsupia.name=デーモンスピア
+item.dqm.itemDemonsupia.name=§6デーモンスピア
 item.dqm.itemJigokumasou.name=じごくのまそう
-item.dqm.itemEiyuunoyari.name=英雄の槍
+item.dqm.itemEiyuunoyari.name=§6英雄の槍
 item.dqm.itemMetarukingnoyari.name=メタルキングの槍
 item.dqm.itemGurakosunoyari.name=グラコスのヤリ
 item.dqm.itemHaganenoyari.name=はがねのヤリ
@@ -287,16 +319,16 @@ item.dqm.itemTakenoyari.name=竹のヤリ
 item.dqm.itemTetunoyari.name=鉄のヤリ
 item.dqm.itemMetarukingnoyari2.name=真・メタルキングの槍
 
-item.dqm.itemDokubari.name=どくばり
+item.dqm.itemDokubari.name=§6どくばり
 item.dqm.itemSeinarunaifu.name=せいなるナイフ
-item.dqm.itemAsasindaga.name=アサシンダガー
-item.dqm.itemSodobureika.name=ソードブレイカー
+item.dqm.itemAsasindaga.name=§6アサシンダガー
+item.dqm.itemSodobureika.name=§6ソードブレイカー
 item.dqm.itemSaramanda.name=サラマンダー
 item.dqm.itemToririondaga.name=トリリオンダガー
-item.dqm.itemDokuganonaifu.name=どくがのナイフ
+item.dqm.itemDokuganonaifu.name=§6どくがのナイフ
 item.dqm.itemGuradiusu.name=グラディウス
 item.dqm.itemKudamononaifu.name=くだものナイフ
-item.dqm.itemKirapiasu.name=キラーピアス
+item.dqm.itemKirapiasu.name=§6キラーピアス
 item.dqm.itemToririondaga2.name=真・トリリオンダガー
 
 item.dqm.itemHaganenokon.name=はがねのこん
@@ -306,12 +338,12 @@ item.dqm.itemDoragonroddo.name=ドラゴンロッド
 item.dqm.itemNyoraikon.name=如来棍
 item.dqm.itemBusinnokon.name=武神の棍
 item.dqm.itemDaikokubasira.name=大黒柱
-item.dqm.itemRougabou.name=ろうがの棒
+item.dqm.itemRougabou.name=ろうが棒
 item.dqm.itemTenbinbou.name=てんびん棒
 item.dqm.itemNyoraikon2.name=真・如来棍
 
 item.dqm.itemMajuunotume.name=まじゅうのつめ
-item.dqm.itemAkumanotume.name=あくまのつめ
+item.dqm.itemAkumanotume.name=§6あくまのつめ
 item.dqm.itemHonoonotume.name=ほのおの爪
 item.dqm.itemKoorinotume.name=こおりの爪
 item.dqm.itemDoragonkuro.name=ドラゴンクロー
@@ -336,17 +368,17 @@ item.dqm.itemOninokanabou.name=おにのかなぼう
 item.dqm.itemAtorasunokanaduti.name=アトラスのかなづち
 item.dqm.itemDaitikudaki.name=大地砕き
 item.dqm.itemHosikudaki.name=星砕き
-item.dqm.itemMajinnokanaduti.name=まじんのかなづち
-item.dqm.itemHakainotekkyuu.name=破壊の鉄球
+item.dqm.itemMajinnokanaduti.name=§6まじんのかなづち
+item.dqm.itemHakainotekkyuu.name=§6破壊の鉄球
 item.dqm.itemGigakurassya.name=ギガクラッシャー
 item.dqm.itemJaiantokurabu.name=ジャイアントクラブ
 item.dqm.itemWohanmakai.name=ウォーハンマー改
-item.dqm.itemHakainotekkyuu2.name=真・破壊の鉄球
+item.dqm.itemHakainotekkyuu2.name=§6真・破壊の鉄球
 
 item.dqm.itemHaganenoono.name=はがねのオノ
 item.dqm.itemMoonakkusu.name=ムーンアックス
 item.dqm.itemHaounoono.name=はおうのオノ
-item.dqm.itemFubukinoono.name=ふぶきの斧
+item.dqm.itemFubukinoono.name=ふぶきのオノ
 item.dqm.itemFunsainooonata.name=ふんさいのおおなた
 item.dqm.itemGureitoakusu.name=グレートアックス
 item.dqm.itemGodakkusu.name=ゴッドアックス
@@ -358,14 +390,14 @@ item.dqm.itemGodakkusu2.name=真・ゴッドアックス
 item.dqm.itemIbaranomuti.name=いばらの鞭
 item.dqm.itemDoragonteiru.name=ドラゴンテイル
 item.dqm.itemMegaminomuti.name=女神のムチ
-item.dqm.itemGuringamunomuti.name=グリンガムの鞭
-item.dqm.itemTyouguringamunomuti.name=超グリンガムの鞭
+item.dqm.itemGuringamunomuti.name=§6グリンガムの鞭
+item.dqm.itemTyouguringamunomuti.name=§6超グリンガムの鞭
 item.dqm.itemAkumanomuti.name=悪魔のムチ
 item.dqm.itemBasutawipu.name=バスターウィップ
 item.dqm.itemBatoruribon.name=バトルリボン
 item.dqm.itemKarubebuto.name=カルベロビュート
 item.dqm.itemKawanomuti.name=皮のムチ
-item.dqm.itemTyouguringamunomuti2.name=真・超グリンガムの鞭
+item.dqm.itemTyouguringamunomuti2.name=§6真・超グリンガムの鞭
 
 item.dqm.itemSyotobou.name=ショートボウ
 item.dqm.itemKaryuudonoyumi.name=狩人の弓
@@ -692,6 +724,7 @@ item.dqm.itemNiku2.name=くんせいにく
 item.dqm.itemNiku3.name=ほねつきにく
 item.dqm.itemNiku4.name=しもふりにく
 item.dqm.itemPetSuisyou.name=占い師の水晶玉
+item.dqm.itemShinjirukokoro.name=信じる心
 
 item.dqm.itemBougu.name=貴重なレシピ(防具)
 item.dqm.itemDensetu.name=貴重なレシピ(伝説)
@@ -729,7 +762,7 @@ item.dqm.itemEsterk.name=エスターク討伐の証
 item.dqm.itemMe.name=はぐれメタルの証
 item.dqm.itemHissatuAs.name=必殺の紋章(遊び人)
 item.dqm.itemHissatuSe.name=必殺の紋章(戦士)
-item.dqm.itemHissatuBu.name=必殺の紋章(武道家)
+item.dqm.itemHissatuBu.name=必殺の紋章(武闘家)
 item.dqm.itemHissatuBa.name=必殺の紋章(バトルマスター)
 item.dqm.itemHissatuMa.name=必殺の紋章(魔法使い)
 item.dqm.itemHissatuSo.name=必殺の紋章(僧侶)
@@ -741,7 +774,7 @@ item.dqm.itemHissatuRe.name=必殺の紋章(レンジャー)
 
 item.dqm.itemEmbCivilian.name=遊び人の証
 item.dqm.itemEmbWarrior.name=戦士の証
-item.dqm.itemEmbFighter.name=武道家の証
+item.dqm.itemEmbFighter.name=武闘家の証
 item.dqm.itemEmbBattleMaster.name=バトルマスターの証
 item.dqm.itemEmbMagician.name=魔法使いの証
 item.dqm.itemEmbPriest.name=僧侶の証
@@ -764,7 +797,7 @@ item.dqm.itemEmbMasterDragon.name=マスタードラゴンの証
 
 item.dqm.itemDamaCivilian.name=遊び人
 item.dqm.itemDamaWarrior.name=戦士
-item.dqm.itemDamaFighter.name=武道家
+item.dqm.itemDamaFighter.name=武闘家
 item.dqm.itemDamaMagician.name=魔法使い
 item.dqm.itemDamaPriest.name=僧侶
 item.dqm.itemDamaMerchant.name=商人
@@ -784,6 +817,33 @@ item.dqm.itemDamaDragon.name=ドラゴン
 item.dqm.itemDamaGodHnad.name=ゴッドハンド
 item.dqm.itemDamaLegend.name=伝説の勇者
 item.dqm.itemDamaMasterDragon.name=マスタードラゴン
+
+item.dqm.itemDamaCivilian_1.name=遊び人
+item.dqm.itemDamaWarrior_1.name=戦士
+item.dqm.itemDamaFighter_1.name=武闘家
+item.dqm.itemDamaMagician_1.name=魔法使い
+item.dqm.itemDamaPriest_1.name=僧侶
+item.dqm.itemDamaMerchant_1.name=商人
+item.dqm.itemDamaThief_1.name=盗賊
+item.dqm.itemDamaDancer_1.name=踊り子
+item.dqm.itemDamaPirate_1.name=海賊
+item.dqm.itemDamaBattleMaster_1.name=バトルマスター
+item.dqm.itemDamaSage_1.name=賢者
+item.dqm.itemDamaPaladin_1.name=パラディン
+item.dqm.itemDamaMagickKnight_1.name=魔法戦士
+item.dqm.itemDamaRanger_1.name=レンジャー
+item.dqm.itemDamaMonsterTamer_1.name=魔物使い
+item.dqm.itemDamaSuperStar_1.name=スーパースター
+item.dqm.itemDamaHero_1.name=勇者
+item.dqm.itemDamaHaguremetal_1.name=はぐれメタル
+item.dqm.itemDamaDragon_1.name=ドラゴン
+item.dqm.itemDamaGodHnad_1.name=ゴッドハンド
+item.dqm.itemDamaLegend_1.name=伝説の勇者
+item.dqm.itemDamaMasterDragon_1.name=マスタードラゴン
+
+item.dqm.itemBasirura.name=バシルーラの杖
+item.dqm.itembasirurac.name=バシルーラの杖(改)
+item.dqm.itemBasirura2.name=バシルーラの杖(個人用)
 
 tile.dqm.blockOreBakudanisi.name=爆弾鉱石
 tile.dqm.blockOreHikarinoisi.name=光の原石
@@ -961,7 +1021,7 @@ item.dqm.itemRakkipendanto.name=ラッキーペンダント
 item.dqm.itemKataminokubikazari.name=形見の首飾り
 item.dqm.itemSingonnojuzu.name=しんごんのじゅず
 item.dqm.itemSinigaminokubikazari.name=死神の首飾り
-item.dqm.itemSeijukunokubikazari.name=聖邪の首飾り
+item.dqm.itemSeijukunokubikazari.name=静寂の首飾り
 item.dqm.itemHosizoranokubikazari.name=星空の首飾り
 item.dqm.itemHosizoranokubikazari2.name=超星空の首飾り
 item.dqm.itemHosizoranokubikazari3.name=極星空の首飾り
@@ -1024,9 +1084,20 @@ item.dqm.itemMahounotate.name=魔法の盾
 item.dqm.itemOogasirudo.name=オーガシールド
 item.dqm.itemPuratinasirudo.name=プラチナシールド
 item.dqm.itemFuujinnnotate.name=ふうじんの盾
+item.dqm.itemFuujinnnotate2.name=ふうじんの盾・改
+item.dqm.itemFuujinnnotate3.name=真・ふうじんの盾
 item.dqm.itemMikagaminotate.name=みかがみの盾
 item.dqm.itemTikaranotate.name=ちからの盾
 item.dqm.itemMetarukingnotate.name=メタルキングの盾
+
+item.dqm.itemTenkuunotate.name=天空の盾
+item.dqm.itemRotonotate.name=ロトの盾
+item.dqm.itemSabitatate.name=錆びた盾
+item.dqm.itemMegaminotate.name=女神の盾
+item.dqm.itemUroborosunotate.name=ウロボロスの盾
+item.dqm.itemAccCanceler.name=補助装備全解除
+
+item.dqm.ItemAccCanceler.name=補助装備一括解除
 
 item.dqm.itemMagicToolFarm1.name=マジックツール(農業用)
 item.dqm.itemMagicToolFarm2.name=超マジックツール(農業用)
@@ -1155,6 +1226,14 @@ item.dqm.itemRemira.name=レミーラの杖
 item.dqm.itemMadante.name=マダンテの印
 item.dqm.itemBigban.name=ビッグバンの印
 
+item.dqm.itemMahouken1.name=魔法剣(毒I)
+item.dqm.itemMahouken2.name=魔法剣(毒Ⅱ)
+item.dqm.itemMahouken3.name=魔法剣(毒Ⅲ)
+item.dqm.itemMahouken4.name=魔法剣(遅)
+item.dqm.itemMahouken5.name=魔法剣(炎)
+item.dqm.itemMahouken6.name=魔法剣(MP吸収)
+item.dqm.itemMahouken7.name=魔法剣(HP吸収)
+
 item.dqm.BuilderDama.name=ダーマ神殿設計図
 item.dqm.BuilderDama1.name=ダーマ神殿設計図の切れ端
 item.dqm.BuilderDama2.name=ダーマ神殿設計図の切れ端
@@ -1201,8 +1280,7 @@ item.dqm.mahounoTutu_3B.name=魔力を失った魔法の筒X(仮)
 item.dqm.mahounoTutu_5B.name=魔力を失った禁断の魔法の筒(仮)
 item.dqm.MahounoTutu2.name=魔法の筒(%s)
 
-
-
+dqm.potion.Mahouken=魔法剣
 dqm.potion.dokukesisou=毒消し草
 dqm.potion.tikaranotane=力の種
 dqm.potion.mamorinotane=守りの種
@@ -1215,6 +1293,10 @@ dqm.potion.ougonnomi=黄金の実
 dqm.potion.poison=毒
 dqm.potion.poisonX=猛毒
 dqm.potion.Suffocation=窒息
+dqm.potion.hoshihuru=速度上昇
+dqm.potion.HPRegeneration=HP自動回復
+dqm.potion.MPRegeneration=MP自動回復
+dqm.potion.MPRegeneration=MP自動回復
 
 dqm.skill.WSkill_2_0.name=ドラゴン斬り
 dqm.skill.WSkill_2_1.name=こうげき力+5
@@ -1521,7 +1603,7 @@ dqm.potion.baikiruto=バイキルト
 dqm.potion.sukara=スカラ
 dqm.potion.baha=バーハ
 dqm.potion.piora=ピオラ
-dqm.potion.magicBaria=マジックバリア
+dqm.potion.magicbaria=マジックバリア
 dqm.potion.mahokanta=マホカンタ
 dqm.potion.uminarinotue=海鳴りの杖
 dqm.potion.callMagma=マグマの杖
@@ -1557,6 +1639,11 @@ dqm.iteminfo.setEffect.MP=MP +%d
 dqm.iteminfo.setEffect.ATK=攻撃力 +%d
 dqm.iteminfo.setEffect.DEF=防御力 +%d
 dqm.iteminfo.setEffect.MAG=魔力 +%d
+dqm.iteminfo.setEffect.STR=力 +%d
+dqm.iteminfo.setEffect.INT=賢さ +%d
+dqm.iteminfo.setEffect.MISS=身かわし +%d
+dqm.iteminfo.setEffect.CRI=会心率 +%d
+
 
 dqm.iteminfo.weaponappti=強適正職:%s
 dqm.iteminfo.weaponapptiSPC=         %s
@@ -1602,6 +1689,97 @@ dqm.iteminfo.mahounoTutuA.2.txt=格納されているペットを取り出すこ
 
 dqm.iteminfo.PetSuisyou.1.txt=アイテムを使用すると
 dqm.iteminfo.PetSuisyou.2.txt=自分のペットの現在座標を調べることができる。
+
+dqm.iteminfo.accessory.base.txt=[特殊効果]
+dqm.iteminfo.accessory.Hosifurupiasu.0.txt=移動速度上昇
+dqm.iteminfo.accessory.Hosifurupiasu2.0.txt=移動速度上昇
+dqm.iteminfo.accessory.Hosifuru.0.txt=移動速度上昇
+dqm.iteminfo.accessory.Iyasinoudewa.0.txt=HP自動回復(耐久消費)
+dqm.iteminfo.accessory.Hayatenoring.0.txt=移動速度上昇
+dqm.iteminfo.accessory.HaramotiYubiwa.0.txt=空腹度が減りにくくなる
+dqm.iteminfo.accessory.HaraherazuYubiwa.0.txt=空腹度が減らなくなる。
+dqm.iteminfo.accessory.Inotinoyubiwa.0.txt=装備時:HP自動回復(耐久消費)
+dqm.iteminfo.accessory.Inotinoyubiwa.1.txt=
+dqm.iteminfo.accessory.Inotinoyubiwa.2.txt=使用時:HP回復
+dqm.iteminfo.accessory.Inotinoyubiwa.3.txt=使用時一定確率で壊れる
+dqm.iteminfo.accessory.Inorinoyubiwa.0.txt=装備時:MP自動回復(耐久消費)
+dqm.iteminfo.accessory.Inorinoyubiwa.1.txt=
+dqm.iteminfo.accessory.Inorinoyubiwa.2.txt=使用時:MP回復
+dqm.iteminfo.accessory.Inorinoyubiwa.3.txt=使用時一定確率で壊れる
+dqm.iteminfo.accessory.Hagennoring.0.txt=マヌーサ無効
+dqm.iteminfo.accessory.Hagennoring2.0.txt=マヌーサ無効
+dqm.iteminfo.accessory.Hagennoring2.1.txt=ラリホー無効
+dqm.iteminfo.accessory.Hadokunoring.0.txt=毒無効
+dqm.iteminfo.accessory.Hadokunoring2.0.txt=毒無効
+dqm.iteminfo.accessory.Hadokunoring2.1.txt=猛毒無効
+dqm.iteminfo.accessory.Mangetunoring.0.txt=鈍足無効
+dqm.iteminfo.accessory.Mangetunoring2.0.txt=鈍足無効
+dqm.iteminfo.accessory.Mangetunoring2.1.txt=マホトーン無効
+dqm.iteminfo.accessory.Riseinoring.0.txt=吐き気無効
+dqm.iteminfo.accessory.Riseinoring2.0.txt=吐き気無効
+dqm.iteminfo.accessory.Riseinoring2.1.txt=メダパニ無効
+
+dqm.iteminfo.weapon.itemOujanoturugi.txt=使用時(要武器適正)：バギクロス
+dqm.iteminfo.weapon.itemTenkuunoturugi.txt=使用時(要武器適正)：いてつく波動
+dqm.iteminfo.weapon.itemKoorinoyaiba.txt=使用時(要武器適正)：ヒャダルコ
+dqm.iteminfo.weapon.itemGureitoakusu.txt=使用時(要武器適正)：バギマ
+dqm.iteminfo.weapon.itemHajanoturugi.txt=使用時(要武器適正)：ギラ
+dqm.iteminfo.weapon.itemInferunosword.txt=使用時(要武器適正)：イオ
+dqm.iteminfo.weapon.itemMinagorosinoken.txt=使用時(要武器適正)：ルカナン
+dqm.iteminfo.weapon.itemHonoonotume.txt=使用時(要武器適正)：ベギラマ
+dqm.iteminfo.weapon.itemKoorinotume.txt=使用時(要武器適正)：ヒャダルコ
+dqm.iteminfo.weapon2.itemKeironnoyumi.txt=ブロック攻撃時：範囲内HP回復
+dqm.iteminfo.weapon.itemSeiginosoroban.txt=使用時(要武器適正)：ニフラム
+dqm.iteminfo.weapon.itemMahounosoroban.txt=使用時(要武器適正)：所持金確認
+dqm.iteminfo.weapon.itemReppuunoougi.txt=使用時(要武器適正)：バギ
+
+dqm.iteminfo.weapon.toolmode.axe.txt=アイテム モード切替対応：斧モード
+dqm.iteminfo.weapon.toolmode.shovel.txt=アイテム モード切替対応：シャベルモード
+dqm.iteminfo.weapon.toolmode.pickaxe.txt=アイテム モード切替対応：ピッケルモード
+
+dqm.iteminfo.weapon.base.txt=使用時効果切替：スニーク＋モード切替キー
+
+dqm.iteminfo.weapon2.base.txt=ブロック攻撃時効果切替：スニーク＋モード切替キー
+
+dqm.iteminfo.weapon.element.kaminari.txt=[属性：雷]
+dqm.iteminfo.weapon.element.honoo.txt=[属性：炎]
+dqm.iteminfo.weapon.element.koori.txt=[属性：氷]
+dqm.iteminfo.weapon.element.kaze.txt=[属性：風]
+dqm.iteminfo.weapon.element.daiti.txt=[属性：地]
+
+dqm.iteminfo.weapon.booster.dragon.txt=ドラゴン系特攻
+dqm.iteminfo.weapon.booster.water.txt=水棲系特攻
+dqm.iteminfo.weapon.booster.undead.txt=アンデッド系特攻
+dqm.iteminfo.weapon.booster.machine.txt=マシン系特攻
+dqm.iteminfo.weapon.booster.element.txt=エレメント系特攻
+dqm.iteminfo.weapon.booster.slime.txt=スライム系特攻
+dqm.iteminfo.weapon.booster.busshitu.txt=物質系特攻
+dqm.iteminfo.weapon.booster.plant.txt=植物系特攻
+dqm.iteminfo.weapon.booster.bird.txt=鳥系特攻
+dqm.iteminfo.weapon.booster.akuma.txt=悪魔系特攻
+
+dqm.iteminfo.accessory.Suraimupiasu.0.txt=
+dqm.iteminfo.accessory.Urokonotate.0.txt=毒耐性
+dqm.iteminfo.accessory.Honoonotate.0.txt=炎耐性上昇(小)
+dqm.iteminfo.accessory.Koorinotate.0.txt=氷耐性上昇(小)
+dqm.iteminfo.accessory.Mahounotate.0.txt=魔法耐性上昇(小)
+dqm.iteminfo.accessory.Fuujinnnotate.0.txt=使用時：バシルーラ
+dqm.iteminfo.accessory.Tikaranotate.0.txt=使用時：ベホイミ
+dqm.iteminfo.accessory.Metarukingnotate.0.txt=状態異常耐性
+dqm.iteminfo.accessory.Tenkuunotate.0.txt=使用時：マホカンタ
+dqm.iteminfo.accessory.Megaminotate.0.txt=ブレス・魔法耐性(中)
+dqm.iteminfo.accessory.Uroborosunotate.0.txt=使用時：マジックバリア
+dqm.iteminfo.accessory.Tenkuunotate.0.txt=使用時：マホカンタ
+dqm.iteminfo.accessory.Seijukunokubikazari.0.txt=使用時：マホトーン
+
+dqm.iteminfo.accessory.Suraimupiasu.ss2.txt=水分が減らなくなる
+dqm.iteminfo.accessory.HaramotiYubiwa.ss2.txt=スタミナが減りにくくなる
+dqm.iteminfo.accessory.HaraherazuYubiwa.ss2.txt=スタミナが減らなくなる。
+
+dqm.iteminfo.accessory.AccessoryCanceler.0.txt=使用すると補助装備をその場にばらまく。
+dqm.iteminfo.accessory.AccessoryCanceler.1.txt=
+dqm.iteminfo.accessory.AccessoryCanceler.2.txt=修理屋に修理依頼すると、装備している全ての補助装備の
+dqm.iteminfo.accessory.AccessoryCanceler.3.txt=修理をまとめて依頼することができる。
 
 dqm.iteminfo.setEffect.armorDansa=ダンサーセット
 dqm.iteminfo.setEffect.armorOdoriko=踊り子セット
@@ -1697,6 +1875,7 @@ dqm.magicinfo.ruraC.txt=座標登録：スニーク+魔法使用(OP権限者の�
 dqm.magicinfo.rura_all.txt=アイテム モード切替キーで効果対象を変更できます。
 
 dqm.magicinfo.kiari.txt=LV6～:毒のみ＄Lv25～:毒＋バニラ状態異常＄Lv60～:かなりの状態異常
+dqm.magicinfo.basirura.txt=[効果範囲]＄初期:モンスター・ペット＄Lv40～:動物など＄Lv50～:プレイヤー(PVP有効の場合)＋村人＄Lv60～:？？？
 dqm.magicinfo.bagi.txt=スニーク+魔法使用で木の葉破壊
 dqm.magicinfo.io.txt=スニーク+魔法使用で地形破壊
 dqm.magicinfo.mera.txt=スニーク+魔法使用で着火
@@ -1723,7 +1902,7 @@ msg.startingJob.jobInfo.1.2.txt=!player.適正武器は剣・鎚・槍
 msg.startingJob.jobInfo.1.3.txt=!player.ステータスバランスが良く、防具が比較的揃えやすい
 msg.startingJob.jobInfo.1.4.txt=!player.また、強適正武器の斧には木の一括伐採機能がついているのが強み
 msg.startingJob.jobInfo.1.5.txt=!player.
-msg.startingJob.jobInfo.2.0.txt=!player.「武道家」
+msg.startingJob.jobInfo.2.0.txt=!player.「武闘家」
 msg.startingJob.jobInfo.2.1.txt=!player.強適正武器は爪
 msg.startingJob.jobInfo.2.2.txt=!player.適正武器は拳・短剣
 msg.startingJob.jobInfo.2.3.txt=!player.基本職の中では比較的HPが高く、攻撃力も高め
@@ -1762,7 +1941,7 @@ msg.startingJob.jobInfo.7.2.txt=!player.適正武器は短剣・投擲
 msg.startingJob.jobInfo.7.3.txt=!player.これと言った特徴はない
 msg.startingJob.jobInfo.7.4.txt=!player.しかし、この職業を選択してLv50まで育てると……
 msg.startingJob.jobInfo.7.5.txt=!player.
-msg.startingJob.select.txt=!player.職業:%sの祈りを捧げますか？(「はい」=スニーク+右クリック)
+msg.startingJob.select.txt=!player.職業:%sの祈りを捧げますか？(「はい」=素手でスニーク+右クリック)
 
 msg.shopSyuriya.messages.0.txt=!player.よう！修理したい武具があれば直してやるぞ！
 msg.shopSyuriya.messages.1.txt=!player.そうだな、そいつの修理なら %dGになるがどうする？
@@ -1770,6 +1949,7 @@ msg.shopSyuriya.messages.2.txt=!player.修理するならスニーク状態で�
 msg.shopSyuriya.messages.3.txt=!player.%dG支払った。またきな！
 msg.shopSyuriya.messages.4.txt=!player.金が足らないようだな。
 msg.shopSyuriya.messages.5.txt=!player.悪いが、そいつは修理できねぇな。
+msg.shopSyuriya.messages.6.txt=!player.修理できるものがねぇな。
 
 msg.shopKaitori.messages.0.txt=!player.よう！いらない武具はないか？よかったら引取るぞ。
 msg.shopKaitori.messages.1.txt=!player.悪いが、そいつは買取してねぇんだ。他のものにしてくれ。
@@ -1897,6 +2077,9 @@ msg.rura.modeInfo.1.txt=!player.移動対象：自分 + ペット
 msg.rura.modeInfo.2.txt=!player.移動対象：自分 + ペット + 動物
 msg.rura.modeInfo.3.txt=!player.移動対象：自分 + ペット + 動物 + 村人
 
+msg.basirura.modeInfo.0.txt=!player.移動先：ランダムテレポート
+msg.basirura.modeInfo.1.txt=!player.移動先：指定座標テレポート
+
 msg.weapon.modeInfo.1.-1.txt=!player.斧モードを解除した
 msg.weapon.modeInfo.1.0.txt=!player.斧モードに切り替えた
 msg.weapon.modeInfo.1.1.txt=!player.原木破壊モードに切り替えた
@@ -1905,6 +2088,17 @@ msg.weapon.modeInfo.2.-1.txt=!player.ピッケルモードを解除した
 msg.weapon.modeInfo.2.0.txt=!player.ピッケルモードに切り替えた
 msg.weapon.modeInfo.3.-1.txt=!player.シャベルモードを解除した
 msg.weapon.modeInfo.3.0.txt=!player.シャベルモードに切り替えた
+
+msg.weapon.specialEffect.mahounosoroban.txt=!player.現在の所持金：%dゴールド
+
+msg.weapon2.modeInfo.0.txt=!player.武器使用時：防御
+msg.weapon2.modeInfo.1.txt=!player.武器使用時：武器能力発動
+msg.weapon2.modeInfo.2.txt=!player.武器使用時：防御＋武器能力発動
+
+msg.weapon3.modeInfo.0.txt=!player.攻撃時：通常攻撃
+msg.weapon3.modeInfo.1.txt=!player.攻撃時：武器能力発動
+msg.weapon3.modeInfo.2.txt=!player.攻撃時：通常攻撃＋武器能力発動
+
 
 msg.magictool.farm.mode.0.txt=!player.クワモードに切り替えた
 msg.magictool.farm.mode.1.txt=!player.種まきモードに切り替えた
@@ -2188,6 +2382,7 @@ dqm.guin.tab.medalking.magics2=魔法(補助系)
 dqm.guin.tab.medalking.job=転職証
 dqm.guin.tab.medalking.Misc=アイテム
 dqm.guin.tab.medalking.Medal=小さなメダル
+dqm.guin.tab.medalking.accessories=アクセサリー
 
 dqm.guin.tab.petstatus.status=ステータス
 dqm.guin.tab.petstatus.inv=道具袋
@@ -2861,3 +3056,10 @@ msg.farmerDiary.page9.4.txt=この命の木の実に、エンドラも非常に�
 msg.farmerDiary.page9.5.txt=せっかくなので与えてみたところ、無事体力が増えたようだ。
 msg.farmerDiary.page10.0.txt=[〇月30日]
 msg.farmerDiary.page10.1.txt=最近、エンドラに黄金の実を与えたい衝動に駆られる。
+
+msg.party.create.txt=§eパーティを作成した
+msg.party.leave.txt=§eパーティから脱退した
+msg.party.join.txt=§eパーティに参加した
+msg.party.join2.txt=§e%sがパーティに参加した
+msg.party.changeleader.txt=§eパーティーリーダが%sに変更された
+msg.party.hasparty.txt=§e%sは既に参加しているパーティがあるようだ

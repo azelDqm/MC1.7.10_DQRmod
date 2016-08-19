@@ -1,5 +1,6 @@
 package dqr.gui.dqrEnderChest;
 
+import invtweaks.api.container.ChestContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -9,6 +10,7 @@ import dqr.blocks.chest.InventoryDqmEnderChest;
 import dqr.blocks.chest.tileEntity.DqmTileEntityEnderChest;
 import dqr.playerData.ExtendedPlayerProperties2;
 
+@ChestContainer
 public class GuiDqrEnderChestContainer extends Container
 {
     private InventoryDqmEnderChest inventory;

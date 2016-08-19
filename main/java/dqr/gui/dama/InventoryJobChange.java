@@ -2,10 +2,17 @@ package dqr.gui.dama;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.ChatComponentTranslation;
+import dqr.DQR;
 import dqr.api.Items.DQEmblems;
+import dqr.api.enums.EnumDqmJob;
+import dqr.items.base.DqmItemEmblemBase;
+import dqr.playerData.ExtendedPlayerProperties;
+import dqr.playerData.ExtendedPlayerProperties3;
 
 public class InventoryJobChange implements IInventory
 {
@@ -13,35 +20,35 @@ public class InventoryJobChange implements IInventory
     //private ItemStack currentItem;
     private ItemStack[] items;
 
-    public InventoryJobChange()
+    public InventoryJobChange(EntityPlayer ep)
     {
         //inventoryPlayer = inventory;
         //currentItem = inventoryPlayer.getCurrentItem();
 
         //InventorySize
         items = new ItemStack[27];
-        items[0] = new ItemStack(DQEmblems.itemDamaCivilian, 1);
-        items[1] = new ItemStack(DQEmblems.itemDamaWarrior, 1);
-        items[2] = new ItemStack(DQEmblems.itemDamaFighter, 1);
-        items[3] = new ItemStack(DQEmblems.itemDamaMagician, 1);
-        items[4] = new ItemStack(DQEmblems.itemDamaPriest, 1);
-        items[5] = new ItemStack(DQEmblems.itemDamaMerchant, 1);
-        items[6] = new ItemStack(DQEmblems.itemDamaThief, 1);
+        items[0] = new ItemStack(DQEmblems.itemDamaCivilian, 1, checkJobPermission(ep, DQEmblems.itemDamaCivilian));
+        items[1] = new ItemStack(DQEmblems.itemDamaWarrior, 1, checkJobPermission(ep, DQEmblems.itemDamaWarrior));
+        items[2] = new ItemStack(DQEmblems.itemDamaFighter, 1, checkJobPermission(ep, DQEmblems.itemDamaFighter));
+        items[3] = new ItemStack(DQEmblems.itemDamaMagician, 1, checkJobPermission(ep, DQEmblems.itemDamaMagician));
+        items[4] = new ItemStack(DQEmblems.itemDamaPriest, 1, checkJobPermission(ep, DQEmblems.itemDamaPriest));
+        items[5] = new ItemStack(DQEmblems.itemDamaMerchant, 1, checkJobPermission(ep, DQEmblems.itemDamaMerchant));
+        items[6] = new ItemStack(DQEmblems.itemDamaThief, 1, checkJobPermission(ep, DQEmblems.itemDamaThief));
 
-        items[9] = new ItemStack(DQEmblems.itemDamaDancer, 1);
-        items[10] = new ItemStack(DQEmblems.itemDamaPirate, 1);
-        items[11] = new ItemStack(DQEmblems.itemDamaBattleMaster, 1);
-        items[12] = new ItemStack(DQEmblems.itemDamaSage, 1);
-        items[13] = new ItemStack(DQEmblems.itemDamaPaladin, 1);
-        items[14] = new ItemStack(DQEmblems.itemDamaMagickKnight, 1);
-        items[15] = new ItemStack(DQEmblems.itemDamaRanger, 1);
+        items[9] = new ItemStack(DQEmblems.itemDamaDancer, 1, checkJobPermission(ep, DQEmblems.itemDamaDancer));
+        items[10] = new ItemStack(DQEmblems.itemDamaPirate, 1, checkJobPermission(ep, DQEmblems.itemDamaPirate));
+        items[11] = new ItemStack(DQEmblems.itemDamaBattleMaster, 1, checkJobPermission(ep, DQEmblems.itemDamaBattleMaster));
+        items[12] = new ItemStack(DQEmblems.itemDamaSage, 1, checkJobPermission(ep, DQEmblems.itemDamaSage));
+        items[13] = new ItemStack(DQEmblems.itemDamaPaladin, 1, checkJobPermission(ep, DQEmblems.itemDamaPaladin));
+        items[14] = new ItemStack(DQEmblems.itemDamaMagickKnight, 1, checkJobPermission(ep, DQEmblems.itemDamaMagickKnight));
+        items[15] = new ItemStack(DQEmblems.itemDamaRanger, 1, checkJobPermission(ep, DQEmblems.itemDamaRanger));
 
-        items[18] = new ItemStack(DQEmblems.itemDamaMonsterTamer, 1);
-        items[19] = new ItemStack(DQEmblems.itemDamaSuperStar, 1);
-        items[20] = new ItemStack(DQEmblems.itemDamaHero, 1);
-        items[21] = new ItemStack(DQEmblems.itemDamaHaguremetal, 1);
-        items[22] = new ItemStack(DQEmblems.itemDamaDragon, 1);
-        items[23] = new ItemStack(DQEmblems.itemDamaGodHnad, 1);
+        items[18] = new ItemStack(DQEmblems.itemDamaMonsterTamer, 1, checkJobPermission(ep, DQEmblems.itemDamaMonsterTamer));
+        items[19] = new ItemStack(DQEmblems.itemDamaSuperStar, 1, checkJobPermission(ep, DQEmblems.itemDamaSuperStar));
+        items[20] = new ItemStack(DQEmblems.itemDamaHero, 1, checkJobPermission(ep, DQEmblems.itemDamaHero));
+        items[21] = new ItemStack(DQEmblems.itemDamaHaguremetal, 1, checkJobPermission(ep, DQEmblems.itemDamaHaguremetal));
+        items[22] = new ItemStack(DQEmblems.itemDamaDragon, 1, checkJobPermission(ep, DQEmblems.itemDamaDragon));
+        items[23] = new ItemStack(DQEmblems.itemDamaGodHnad, 1, checkJobPermission(ep, DQEmblems.itemDamaGodHnad));
     }
 
     @Override
@@ -195,4 +202,39 @@ public class InventoryJobChange implements IInventory
         return true;
     }
 
+    public int checkJobPermission(EntityPlayer ep, Item item)
+    {
+    	int ret = 1;
+
+
+    	if(item instanceof DqmItemEmblemBase)
+    	{
+    		DqmItemEmblemBase emb = (DqmItemEmblemBase)item;
+    		EnumDqmJob job = emb.getJobEnum();
+
+	        if(ExtendedPlayerProperties.get(ep).getTabidachiFlg() != 100 ||
+	                ExtendedPlayerProperties.get(ep).getJobLv(0) < 50 ||
+	                job.getId() != EnumDqmJob.Kenja.getId())
+	             {
+	     	        if(ExtendedPlayerProperties3.get(ep).getJobPermission(job.getId()) == 0)
+	     	        {
+	     	        	//ep.addChatMessage(new ChatComponentTranslation("msg.Dama1.messages.24.txt" ,new Object[] {}));
+	     	        	//ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
+	     	        	return 1;
+	     	        }
+
+	     	        if(!DQR.jobChangeTable.getCheckJobChange(ep, job.getId()))
+	     	        {
+	     	        	ep.addChatMessage(new ChatComponentTranslation("msg.Dama1.messages.25.txt" ,new Object[] {}));
+	     	        	ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
+	     	        	return 1;
+	     	        }
+	             }
+	     		//ep.worldObj.playSoundAtEntity(ep, "dqr:player.tensyoku", 1.0F, 1.0F);
+	            // ExtendedPlayerProperties.get(ep).setJob(pat);
+	            // ((ExtendedPlayerProperties)(ep.getExtendedProperties(ExtendedPlayerProperties.EXT_PROP_NAME))).loadProxyData((EntityPlayer)ep);
+    	}
+
+    	return 0;
+    }
 }

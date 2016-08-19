@@ -17,6 +17,9 @@ public class ExtendedPlayerProperties2 implements IExtendedEntityProperties {
     private int[] bugFixFlg = new int[8];
     private String PlayerName;
 
+    //private SubEquipmentStats equipment;
+    private boolean fukuroOpen = false;
+
     //以下MagicTool用パラメータ
     private NBTTagCompound SeedsNBTTagCompound = new NBTTagCompound();
     private int Tool1mode = 0;
@@ -51,6 +54,8 @@ public class ExtendedPlayerProperties2 implements IExtendedEntityProperties {
     private NBTTagList enderChestTagList5 = new NBTTagList();
     private int setlectEnderChestID = 0;
     private DqmTileEntityEnderChest enderChestEntity = null;
+
+    private NBTTagList SubEquips = new NBTTagList();
 
     private NBTTagCompound ToolSetInBlocks = new NBTTagCompound();
 
@@ -117,12 +122,22 @@ public class ExtendedPlayerProperties2 implements IExtendedEntityProperties {
         nbt.setTag("enderChestTagList4", enderChestTagList4);
         nbt.setTag("enderChestTagList5", enderChestTagList5);
 
+        nbt.setTag("SubEquips", SubEquips);
+
         nbt.setTag("ToolSetInBlocks", this.ToolSetInBlocks);
 
         nbt.setInteger("SelectSetBlockMeta", selectSetBlockMeta);
         nbt.setString("SelectSetBlock", selectSetBlock);
         nbt.setInteger("BlockSetMode", BlockSetMode);
         nbt.setInteger("BlockSetArea", BlockSetArea);
+
+        /*
+        if(this.equipment == null)
+        {
+        	this.equipment = new SubEquipmentStats();
+        }
+        this.equipment.writeNBT(compound);
+        */
 
         compound.setTag(EXT_PROP_NAME, nbt);
 	}
@@ -219,10 +234,26 @@ public class ExtendedPlayerProperties2 implements IExtendedEntityProperties {
         	ToolSetInBlocks = new NBTTagCompound();
         }
 
+        if(nbt.getTag("SubEquips") != null)
+        {
+        	SubEquips = (NBTTagList)nbt.getTag("SubEquips");
+        }else
+        {
+        	SubEquips = new NBTTagList();
+        }
+
         selectSetBlockMeta = nbt.getInteger("SelectSetBlockMeta");
         selectSetBlock = nbt.getString("SelectSetBlock");
         BlockSetMode = nbt.getInteger("BlockSetMode");
         BlockSetArea = nbt.getInteger("BlockSetArea");
+
+        /*
+        if(this.equipment == null)
+        {
+        	this.equipment = new SubEquipmentStats();
+        }
+        this.equipment.writeNBT(compound);
+        */
 	}
 
     public int[] getFarmRecipeA() {
@@ -372,6 +403,18 @@ public class ExtendedPlayerProperties2 implements IExtendedEntityProperties {
         return setlectEnderChestID;
     }
 
+    public void setSubEquips(NBTTagList par1)
+    {
+
+    		this.SubEquips = par1;
+    }
+
+    public NBTTagList getSubEquips()
+    {
+
+    		return this.SubEquips;
+    }
+
     public void setEnderChestTagList(NBTTagList par1, int id) {
     	switch(id)
     	{
@@ -505,4 +548,23 @@ public class ExtendedPlayerProperties2 implements IExtendedEntityProperties {
     {
     	return BlockSetArea;
     }
+
+    public void setFukuroOpen(boolean par1)
+    {
+    	fukuroOpen = par1;
+    }
+
+    public boolean getFukuroOpen()
+    {
+    	return fukuroOpen;
+    }
+    /*
+    public SubEquipmentStats getEquipmentStats() {
+        return equipment;
+    }
+
+    public void setEquipmentStats(SubEquipmentStats e) {
+        this.equipment = e;
+    }
+    */
 }

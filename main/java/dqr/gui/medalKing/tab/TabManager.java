@@ -11,6 +11,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.network.play.client.C0DPacketCloseWindow;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import cpw.mods.fml.client.FMLClientHandler;
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -220,4 +221,54 @@ public class TabManager {
         mc.displayGuiScreen(inventory);
     }
 
+
+    public static boolean hasPotion() {
+        if (mc.thePlayer.getActivePotionEffects().isEmpty()) return false;
+
+        return isNotNEI();
+
+        //if (!Loader.isModLoaded("NotEnoughItems")) return true;
+
+        //try
+        //{
+        //	Class<?> c = Class.forName("codechicken.nei.NEIClientConfig");
+        //	Object hidden = c.getMethod("isHidden").invoke(null);
+        //	Object enabled = c.getMethod("isEnabled").invoke(null);
+        //
+        //	if (hidden != null && hidden instanceof Boolean && enabled != null && enabled instanceof Boolean)
+        //	{
+        //		if ((Boolean) hidden || !((Boolean) enabled))
+        //		{
+        //			return true;
+        //		}
+        //	}
+
+        ////} catch (Exception e)
+        //}
+
+        //return false;
+
+    }
+
+    private static boolean isNotNEI() {
+
+        if (!Loader.isModLoaded("NotEnoughItems")) return true;
+
+        try {
+            Class<?> c = Class.forName("codechicken.nei.NEIClientConfig");
+            Object hidden = c.getMethod("isHidden").invoke(null);
+            Object enabled = c.getMethod("isEnabled").invoke(null);
+
+            if (hidden != null && hidden instanceof Boolean && enabled != null && enabled instanceof Boolean) {
+                if ((Boolean) hidden || !((Boolean) enabled)) {
+                    return true;
+                }
+            }
+
+        } catch (Exception e) {
+        }
+
+        return false;
+
+    }
 }

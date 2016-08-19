@@ -4,6 +4,7 @@ import java.util.Set;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
@@ -39,6 +40,8 @@ public class GuiPetBookGuiContainer extends GuiContainer
 		int x2 = (this.width  - this.xSize) / 2;
 		int y = (this.height - this.ySize) / 2;
 
+		String message = I18n.format("gui.container.TamingPets.title", new Object[]{});
+	    this.fontRendererObj.drawString(message, 8, 6, 4210752);
 
 		/*
     	this.buttonList.clear();
@@ -51,7 +54,6 @@ public class GuiPetBookGuiContainer extends GuiContainer
         //this.fontRendererObj.drawString("Item Container", 8, 6, 4210752);
         //this.fontRendererObj.drawString("Inventory", 8, this.ySize - 96 + 2, 4210752);
     }
-
 
     /*
         背景の描画

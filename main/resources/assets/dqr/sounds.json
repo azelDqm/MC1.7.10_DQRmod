@@ -403,5 +403,17 @@
         "pitch": 1
       }
     ]
+  },
+  "player.itetuku": {
+    "category":"player",
+    "sounds": [
+      {
+        "name": "player/Itetuku",
+        "stream": false,
+        "weight": 1,
+        "volume": 1,
+        "pitch": 1
+      }
+    ]
   }
 }

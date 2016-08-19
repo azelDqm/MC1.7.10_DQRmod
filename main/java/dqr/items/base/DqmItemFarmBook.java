@@ -22,10 +22,11 @@ public class DqmItemFarmBook extends Item {
     		PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties2(player), (EntityPlayerMP)player);
     	}
 
-    	if(player.worldObj.isRemote)
-    	{
+    	//if(player.worldObj.isRemote)
+    	//{
     		player.openGui(DQR.instance, DQR.conf.GuiID_FarmBook, world, MathHelper.ceiling_double_int(player.posX), MathHelper.ceiling_double_int(player.posY), MathHelper.ceiling_double_int(player.posZ));
-    	}
+    	//}
+
         return itemStack;
     }
 

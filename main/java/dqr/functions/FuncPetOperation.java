@@ -31,7 +31,7 @@ public class FuncPetOperation {
 			petData.setDouble("posX", pet.posX);
 			petData.setDouble("posY", pet.posY);
 			petData.setDouble("posZ", pet.posZ);
-			petData.setString("petRoor", pet.type.PetRoot);
+			petData.setString("petRoot", pet.type.PetRoot);
 			petData.setBoolean("enable", false);
 
 			if(playerPet.hasKey(pet.getUniqueID().toString()))
@@ -84,7 +84,7 @@ public class FuncPetOperation {
 			petData.setDouble("posX", pet.posX);
 			petData.setDouble("posY", pet.posY);
 			petData.setDouble("posZ", pet.posZ);
-			petData.setString("petRoor", pet.type.PetRoot);
+			petData.setString("petRoot", pet.type.PetRoot);
 			petData.setBoolean("enable", true);
 
 			if(playerPet.hasKey(pet.getUniqueID().toString()))

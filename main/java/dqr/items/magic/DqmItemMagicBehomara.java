@@ -108,6 +108,7 @@ public class DqmItemMagicBehomara extends DqmItemMagicBase{
 			int matk = ExtendedPlayerProperties.get(par3EntityPlayer).getMaryoku();
 			int attackDam = (par1ItemStack.getMaxDamage() - par1ItemStack.getItemDamage())* 100
 			        / par1ItemStack.getMaxDamage() *  matk / 100;
+			attackDam = DQR.magicTable.getReasonableDamage(this, par3EntityPlayer, attackDam);
 
 			if(par3EntityPlayer.isPotionActive(DQPotionPlus.buffMahokanta))
 			{

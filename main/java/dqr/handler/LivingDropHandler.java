@@ -10,6 +10,7 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import dqr.api.Blocks.DQDecorates;
 import dqr.api.Blocks.DQMobFigures;
 import dqr.api.Blocks.DQMobObjects;
+import dqr.api.Items.DQAccessories;
 import dqr.api.Items.DQEmblems;
 import dqr.api.Items.DQMiscs;
 import dqr.api.enums.EnumDqmMobRoot;
@@ -81,6 +82,7 @@ import dqr.entity.mobEntity.monsterDay.DqmEntityUzusioking;
 import dqr.entity.mobEntity.monsterDay.DqmEntityWaraibukuro;
 import dqr.entity.mobEntity.monsterDay.DqmEntityZinmentyou;
 import dqr.entity.mobEntity.monsterDay.DqmEntityZukkinya;
+import dqr.entity.mobEntity.monsterDay.DqmMobBaseDay;
 import dqr.entity.mobEntity.monsterEnd.DqmEntityAkairai;
 import dqr.entity.mobEntity.monsterEnd.DqmEntityBassaimasin;
 import dqr.entity.mobEntity.monsterEnd.DqmEntityBatorurex;
@@ -105,6 +107,7 @@ import dqr.entity.mobEntity.monsterEnd.DqmEntityManemane;
 import dqr.entity.mobEntity.monsterEnd.DqmEntityPandorabox;
 import dqr.entity.mobEntity.monsterEnd.DqmEntityRyuiso;
 import dqr.entity.mobEntity.monsterEnd.DqmEntityTororubonba;
+import dqr.entity.mobEntity.monsterEnd.DqmMobBaseEnd;
 import dqr.entity.mobEntity.monsterEtc.DqmEntityFurosutogizumo;
 import dqr.entity.mobEntity.monsterEtc.DqmEntityGizumo;
 import dqr.entity.mobEntity.monsterEtc.DqmEntityHiitogizumo;
@@ -181,6 +184,7 @@ import dqr.entity.mobEntity.monsterHell.DqmEntitySuraimumadyura;
 import dqr.entity.mobEntity.monsterHell.DqmEntityTororuking;
 import dqr.entity.mobEntity.monsterHell.DqmEntityTubokku;
 import dqr.entity.mobEntity.monsterHell.DqmEntityUmibouzu;
+import dqr.entity.mobEntity.monsterHell.DqmMobBaseHell;
 import dqr.entity.mobEntity.monsterMetaru.DqmEntityDaiyamondosuraimu;
 import dqr.entity.mobEntity.monsterMetaru.DqmEntityDragometaru;
 import dqr.entity.mobEntity.monsterMetaru.DqmEntityGoldenmetalslime;
@@ -265,6 +269,7 @@ import dqr.entity.mobEntity.monsterNight.DqmEntityTororu;
 import dqr.entity.mobEntity.monsterNight.DqmEntityTutiwarasi;
 import dqr.entity.mobEntity.monsterNight.DqmEntityUmiusi;
 import dqr.entity.mobEntity.monsterNight.DqmEntityYouganmajin;
+import dqr.entity.mobEntity.monsterNight.DqmMobBaseNight;
 import dqr.entity.mobEntity.monsterSP.DqmEntityAtorasu;
 import dqr.entity.mobEntity.monsterSP.DqmEntityBazuzu;
 import dqr.entity.mobEntity.monsterSP.DqmEntityBurasu;
@@ -286,6 +291,7 @@ import dqr.entity.mobEntity.monsterSP.DqmEntityTororubakkosu;
 import dqr.entity.mobEntity.monsterSP.DqmEntityUragirikozou;
 import dqr.entity.mobEntity.monsterSP.DqmEntityWanpakusatan;
 import dqr.entity.mobEntity.monsterSP.DqmEntityYamatanooroti;
+import dqr.entity.mobEntity.monsterSP.DqmMobBaseSP;
 import dqr.entity.mobEntity.monsterTensei.DqmEntityArukemisuton;
 import dqr.entity.mobEntity.monsterTensei.DqmEntityBebingosatan;
 import dqr.entity.mobEntity.monsterTensei.DqmEntityDebirurodo;
@@ -336,6 +342,41 @@ public class LivingDropHandler {
 			}
 		}
 
+		//悪魔のピアス
+		if(event.entityLiving instanceof DqmMobBase)
+		{
+			DqmMobBase mob = (DqmMobBase)event.entityLiving;
+			if(mob.MobRoot.getId() == EnumDqmMobRoot.AKUMA.getId())
+			{
+				int rate = 0;
+				if(event.entityLiving instanceof DqmMobBaseDay || event.entityLiving instanceof DqmMobBaseNight)
+				{
+					rate = 3000;
+				}else if(event.entityLiving instanceof DqmMobBaseHell)
+				{
+					rate = 1000;
+				}else if(event.entityLiving instanceof DqmMobBaseEnd)
+				{
+					rate = 500;
+				}else if(event.entityLiving instanceof DqmMobBaseSP)
+				{
+					rate = 100;
+				}else if(event.entityLiving instanceof DqmMobBaseTensei)
+				{
+					rate = 100;
+				}
+
+				if(rate > 0 && rand.nextInt(rate) == 0)
+				{
+					event.entityLiving.dropItem(DQAccessories.itemAkumanopiasu, 1);
+				}
+
+
+			}
+		}
+
+
+
 		//ドラゴン転職証
 		if(event.entityLiving instanceof DqmMobBase && rand.nextInt(1000) == 0)
 		{
@@ -345,13 +386,83 @@ public class LivingDropHandler {
 				event.entityLiving.dropItem(DQEmblems.itemEmbDragon, 1);
 			}
 		}
-		
+
 		if(event.entityLiving instanceof DqmMobBase && rand.nextInt(3000) == 0)
 		{
 			DqmMobBase mob = (DqmMobBase)event.entityLiving;
 			if(mob.MobRoot.getId() == EnumDqmMobRoot.DRAGON.getId())
 			{
 				event.entityLiving.dropItem(DQMiscs.itemDragonObuB, 1);
+			}
+		}
+
+		//転生からのアクセサリ
+		if(event.entityLiving instanceof DqmMobBaseTensei && rand.nextInt(500) == 0)
+		{
+			if(event.entityLiving instanceof DqmEntitySeigin){
+				event.entityLiving.dropItem(DQAccessories.itemMangetunoring, 1);
+			}else if(event.entityLiving instanceof DqmEntityDebirurodo){
+				event.entityLiving.dropItem(DQAccessories.itemHagennoring, 1);
+			}else if(event.entityLiving instanceof DqmEntityMaaburun){
+				event.entityLiving.dropItem(DQAccessories.itemRiseinoring, 1);
+			}else if(event.entityLiving instanceof DqmEntityArukemisuton){
+				event.entityLiving.dropItem(DQAccessories.itemRiseinoring, 1);
+			}else if(event.entityLiving instanceof DqmEntityGorudenkon){
+				event.entityLiving.dropItem(DQAccessories.itemMangetunoring, 1);
+			}else if(event.entityLiving instanceof DqmEntityKuinmomon){
+				event.entityLiving.dropItem(DQAccessories.itemRiseinoring, 1);
+			}else if(event.entityLiving instanceof DqmEntityMoonkimera){
+				event.entityLiving.dropItem(DQAccessories.itemMangetunoring, 1);
+			}else if(event.entityLiving instanceof DqmEntityTyokonuba){
+				event.entityLiving.dropItem(DQAccessories.itemHadokunoring, 1);
+			}else if(event.entityLiving instanceof DqmEntityReddoatya){
+				event.entityLiving.dropItem(DQAccessories.itemHadokunoring, 1);
+			}else if(event.entityLiving instanceof DqmEntityKirapike){
+				event.entityLiving.dropItem(DQAccessories.itemHadokunoring, 1);
+			}else if(event.entityLiving instanceof DqmEntityTogekonbou){
+				event.entityLiving.dropItem(DQAccessories.itemHadokunoring, 1);
+			}else if(event.entityLiving instanceof DqmEntityTaipug){
+				event.entityLiving.dropItem(DQAccessories.itemMangetunoring, 1);
+			}else if(event.entityLiving instanceof DqmEntityBebingosatan){
+				event.entityLiving.dropItem(DQAccessories.itemHagennoring, 1);
+			}else if(event.entityLiving instanceof DqmEntityGoldmanto){
+				event.entityLiving.dropItem(DQAccessories.itemRiseinoring, 1);
+			}else if(event.entityLiving instanceof DqmEntityHatonaito){
+				event.entityLiving.dropItem(DQAccessories.itemHagennoring, 1);
+			}else if(event.entityLiving instanceof DqmEntityMadrainbow){
+				event.entityLiving.dropItem(DQAccessories.itemRiseinoring, 1);
+			}else if(event.entityLiving instanceof DqmEntityMetaruhoimin){
+				event.entityLiving.dropItem(DQAccessories.itemMangetunoring, 1);
+			}else if(event.entityLiving instanceof DqmEntityMomoirosansimai){
+				event.entityLiving.dropItem(DQAccessories.itemHagennoring, 1);
+			}else if(event.entityLiving instanceof DqmEntityNoroinoiwa){
+				event.entityLiving.dropItem(DQAccessories.itemHadokunoring, 1);
+			}else if(event.entityLiving instanceof DqmEntityPinkbonbon){
+				event.entityLiving.dropItem(DQAccessories.itemHagennoring, 1);
+			}else if(event.entityLiving instanceof DqmEntitySabotengold){
+				event.entityLiving.dropItem(DQAccessories.itemHagennoring, 1);
+			}else if(event.entityLiving instanceof DqmEntityShuvaluts){
+				event.entityLiving.dropItem(DQAccessories.itemRiseinoring, 1);
+			}else if(event.entityLiving instanceof DqmEntitySirudoaniki){
+				event.entityLiving.dropItem(DQAccessories.itemHadokunoring, 1);
+			}
+		}
+
+		if(event.entityLiving instanceof DqmEntitySweetbag && rand.nextInt(999) == 0)
+		{
+			int val = rand.nextInt(4);
+			if(val == 0)
+			{
+				event.entityLiving.dropItem(DQAccessories.itemHadokunoring, 1);
+			}else if(val == 1)
+			{
+				event.entityLiving.dropItem(DQAccessories.itemHagennoring, 1);
+			}else if(val == 2)
+			{
+				event.entityLiving.dropItem(DQAccessories.itemRiseinoring, 1);
+			}else if(val == 3)
+			{
+				event.entityLiving.dropItem(DQAccessories.itemMangetunoring, 1);
 			}
 		}
 

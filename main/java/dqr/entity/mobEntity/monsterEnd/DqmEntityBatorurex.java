@@ -107,7 +107,7 @@ public class DqmEntityBatorurex extends DqmMobBaseEnd
         }
         if (DQR.funcMob.getCalcDROP(50, 1))
         {
-            this.dropItem(DQMiscs.itemGinka, 1);
+            this.dropItem(DQMiscs.itemKinka, 1);
         }
         if (DQR.funcMob.getCalcDROP(200, 1))
         {

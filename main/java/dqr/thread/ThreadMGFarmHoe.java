@@ -6,7 +6,9 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
 import dqr.DQR;
+import dqr.api.event.DqrFarmMGTEvent;
 import dqr.playerData.ExtendedPlayerProperties2;
 
 public class ThreadMGFarmHoe extends Thread{
@@ -71,9 +73,24 @@ public class ThreadMGFarmHoe extends Thread{
 				{
 					for(int cntZ = 0; (areaZ - 1) * -1 <= cntZ; cntZ--)
 					{
+						DqrFarmMGTEvent.PrePlow event = new DqrFarmMGTEvent.PrePlow(ep,
+								this.par3.getBlock(this.par4 + cntZ, this.par5+ cntY, this.par6 + cntX),
+								this.par3.getBlockMetadata(this.par4 + cntZ, this.par5+ cntY, this.par6 + cntX), par1,
+								this.par4 + cntZ, this.par5+ cntY, this.par6 + cntX, this.par7,
+								this.par8 + cntZ, this.par9 + cntY, this.par10 + cntX);
+						MinecraftForge.EVENT_BUS.post(event);
+
 						hoe.onItemUse(new ItemStack(Items.diamond_hoe, 1), ep, this.par3,
 									  this.par4 + cntZ, this.par5+ cntY, this.par6 + cntX, this.par7,
 									  this.par8 + cntZ, this.par9 + cntY, this.par10 + cntX);
+
+						DqrFarmMGTEvent.PostPlow event2 = new DqrFarmMGTEvent.PostPlow(ep,
+								this.par3.getBlock(this.par4 + cntZ, this.par5+ cntY, this.par6 + cntX),
+								this.par3.getBlockMetadata(this.par4 + cntZ, this.par5+ cntY, this.par6 + cntX), par1,
+								this.par4 + cntZ, this.par5+ cntY, this.par6 + cntX, this.par7,
+								this.par8 + cntZ, this.par9 + cntY, this.par10 + cntX);
+						MinecraftForge.EVENT_BUS.post(event2);
+
 					}
 				}
 			}
@@ -85,9 +102,23 @@ public class ThreadMGFarmHoe extends Thread{
 				{
 					for(int cntZ = 0; (areaZ - 1) * -1 <= cntZ; cntZ--)
 					{
+						DqrFarmMGTEvent.PrePlow event = new DqrFarmMGTEvent.PrePlow(ep,
+								this.par3.getBlock(this.par4 + cntX, this.par5+ cntY, this.par6 + cntZ),
+								this.par3.getBlockMetadata(this.par4 + cntX, this.par5+ cntY, this.par6 + cntZ), par1,
+								this.par4 + cntX, this.par5+ cntY, this.par6 + cntZ, this.par7,
+								this.par8 + cntX, this.par9 + cntY, this.par10 + cntZ);
+						MinecraftForge.EVENT_BUS.post(event);
+
 						hoe.onItemUse(new ItemStack(Items.diamond_hoe, 1), ep, this.par3,
 									  this.par4 + cntX, this.par5+ cntY, this.par6 + cntZ, this.par7,
 									  this.par8 + cntX, this.par9 + cntY, this.par10 + cntZ);
+
+						DqrFarmMGTEvent.PostPlow event2 = new DqrFarmMGTEvent.PostPlow(ep,
+								this.par3.getBlock(this.par4 + cntX, this.par5+ cntY, this.par6 + cntZ),
+								this.par3.getBlockMetadata(this.par4 + cntX, this.par5+ cntY, this.par6 + cntZ), par1,
+								this.par4 + cntX, this.par5+ cntY, this.par6 + cntZ, this.par7,
+								this.par8 + cntX, this.par9 + cntY, this.par10 + cntZ);
+						MinecraftForge.EVENT_BUS.post(event2);
 					}
 				}
 			}
@@ -100,9 +131,23 @@ public class ThreadMGFarmHoe extends Thread{
 				{
 					for(int cntZ = 0; (areaZ - 1) >= cntZ; cntZ++)
 					{
+						DqrFarmMGTEvent.PrePlow event = new DqrFarmMGTEvent.PrePlow(ep,
+								this.par3.getBlock(this.par4 + cntZ, this.par5+ cntY, this.par6 + cntX),
+								this.par3.getBlockMetadata(this.par4 + cntZ, this.par5+ cntY, this.par6 + cntX), par1,
+								this.par4 + cntZ, this.par5+ cntY, this.par6 + cntX, this.par7,
+								this.par8 + cntZ, this.par9 + cntY, this.par10 + cntX);
+						MinecraftForge.EVENT_BUS.post(event);
+
 						hoe.onItemUse(new ItemStack(Items.diamond_hoe, 1), ep, this.par3,
 									  this.par4 + cntZ, this.par5+ cntY, this.par6 + cntX, this.par7,
 									  this.par8 + cntZ, this.par9 + cntY, this.par10 + cntX);
+
+						DqrFarmMGTEvent.PostPlow event2 = new DqrFarmMGTEvent.PostPlow(ep,
+								this.par3.getBlock(this.par4 + cntZ, this.par5+ cntY, this.par6 + cntX),
+								this.par3.getBlockMetadata(this.par4 + cntZ, this.par5+ cntY, this.par6 + cntX), par1,
+								this.par4 + cntZ, this.par5+ cntY, this.par6 + cntX, this.par7,
+								this.par8 + cntZ, this.par9 + cntY, this.par10 + cntX);
+						MinecraftForge.EVENT_BUS.post(event2);
 					}
 				}
 			}
@@ -114,9 +159,23 @@ public class ThreadMGFarmHoe extends Thread{
 				{
 					for(int cntZ = 0; (areaZ - 1) >= cntZ; cntZ++)
 					{
+						DqrFarmMGTEvent.PrePlow event = new DqrFarmMGTEvent.PrePlow(ep,
+								this.par3.getBlock(this.par4 + cntX, this.par5+ cntY, this.par6 + cntZ),
+								this.par3.getBlockMetadata(this.par4 + cntX, this.par5+ cntY, this.par6 + cntZ), par1,
+								this.par4 + cntX, this.par5+ cntY, this.par6 + cntZ, this.par7,
+								this.par8 + cntX, this.par9 + cntY, this.par10 + cntZ);
+						MinecraftForge.EVENT_BUS.post(event);
+
 						hoe.onItemUse(new ItemStack(Items.diamond_hoe, 1), ep, this.par3,
 									  this.par4 + cntX, this.par5+ cntY, this.par6 + cntZ, this.par7,
 									  this.par8 + cntX, this.par9 + cntY, this.par10 + cntZ);
+
+						DqrFarmMGTEvent.PostPlow event2 = new DqrFarmMGTEvent.PostPlow(ep,
+								this.par3.getBlock(this.par4 + cntX, this.par5+ cntY, this.par6 + cntZ),
+								this.par3.getBlockMetadata(this.par4 + cntX, this.par5+ cntY, this.par6 + cntZ), par1,
+								this.par4 + cntX, this.par5+ cntY, this.par6 + cntZ, this.par7,
+								this.par8 + cntX, this.par9 + cntY, this.par10 + cntZ);
+						MinecraftForge.EVENT_BUS.post(event2);
 					}
 				}
 			}

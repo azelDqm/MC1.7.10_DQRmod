@@ -1,17 +1,25 @@
 package dqr.handler;
 
+import java.util.Random;
+
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.player.EntityInteractEvent;
 import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
+import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent;
 import dqr.DQR;
+import dqr.PacketHandler;
 import dqr.api.Items.DQMiscs;
 import dqr.api.enums.EnumDqmBugFix;
-import dqr.entity.petEntity.DqmPetBase;
-import dqr.items.base.DqmItemDebugBase;
+import dqr.gui.itemBag.InventoryItemBag;
+import dqr.gui.subEquip.InventorySubEquip;
+import dqr.items.base.DqmItemFukuroBase;
 import dqr.items.miscs.DqmItemLittlemedal;
+import dqr.packetMessage.MessageClientSound;
 import dqr.playerData.ExtendedPlayerProperties;
 import dqr.playerData.ExtendedPlayerProperties2;
 
@@ -53,9 +61,11 @@ public class EntityEventHandler {
         }
     }
 
-	@SubscribeEvent
+	@SubscribeEvent(priority=EventPriority.LOWEST)
 	public void onEntityItemPickupEvent(EntityItemPickupEvent event)
 	{
+		EntityPlayer ep = event.entityPlayer;
+
 		//System.out.println("TESSSSST");
 		if(event.item.getEntityItem() != null && (event.item.getEntityItem().getItem() == DQMiscs.itemLittlemedal ||
 												  event.item.getEntityItem().getItem() == DQMiscs.itemLittlemedal5 ||
@@ -66,7 +76,6 @@ public class EntityEventHandler {
 		{
 
 			int plusMedal = 0;
-			EntityPlayer ep = event.entityPlayer;
 
 			int stackVal = event.item.getEntityItem().stackSize;
 			if(event.item.getEntityItem().getItem() == DQMiscs.itemLittlemedal)
@@ -113,12 +122,44 @@ public class EntityEventHandler {
 			//FMLCommonHandler.instance().firePlayerItemPickupEvent(ep, event.item);
 			event.setCanceled(true);
 
+			return;
 		}
+
+		if(event.item.getEntityItem() != null && !(event.item.getEntityItem().getItem() instanceof DqmItemFukuroBase) && !ExtendedPlayerProperties2.get(ep).getFukuroOpen())
+		{
+	    	InventorySubEquip subEquip = new InventorySubEquip(ep);
+	    	subEquip.openInventory();
+
+	    	if(subEquip != null && subEquip.getStackInSlot(12) != null)
+	    	{
+	    		ItemStack bag = subEquip.getStackInSlot(12);
+	    		InventoryItemBag bagInventory = new InventoryItemBag(ep.inventory, bag);
+	    		bagInventory.openInventory();
+
+	    		if(event.item.getEntityItem() != null && bagInventory.addItemStackToInventory(event.item.getEntityItem()))
+	    		{
+	    			Random rand = new Random();
+	        		bagInventory.closeInventory2(subEquip);
+
+	        		if(!ep.worldObj.isRemote) ep.worldObj.playSoundAtEntity(ep, "random.pop", 0.2F, ((rand.nextFloat() - rand.nextFloat()) * 0.7F + 1.0F) * 2.0F);
+	            	//ep.worldObj.playSoundAtEntity(ep, "random.pop", 0.2F, ((rand.nextFloat() - rand.nextFloat()) * 0.7F + 1.0F) * 2.0F);
+	            	PacketHandler.INSTANCE.sendTo(new MessageClientSound((byte)3), (EntityPlayerMP)ep);
+
+	    			event.item.setDead();
+	    			event.setCanceled(true);
+	    			return;
+	    		}
+	    		bagInventory.closeInventory2(subEquip);
+
+	    	}
+		}
+
 	}
 
 	@SubscribeEvent
 	public void onEntityInteractEvent(EntityInteractEvent event)
 	{
+		/*
 		if(DQR.debug > 0 && event.target != null && event.target instanceof DqmPetBase)
 		{
 			EntityPlayer ep = event.entityPlayer;
@@ -128,6 +169,7 @@ public class EntityEventHandler {
 				mob.setPositionAndUpdate(10000.0D, 10.0D, 10000.0D);
 			}
 		}
+		*/
 
 		if(event.target != null && event.target instanceof EntityPlayer)
 		{

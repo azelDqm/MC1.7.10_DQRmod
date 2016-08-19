@@ -198,7 +198,7 @@ public class DqmItemBuilderIdoMedal extends DqmItemBuilderBase{
 
         	if(!par3World.isRemote)
         	{
-        		ThreadBuilderIdoMedal builderThread = new ThreadBuilderIdoMedal(par3World, mSize, mHeight, mUnder, par1ItemStack);
+        		ThreadBuilderIdoMedal builderThread = new ThreadBuilderIdoMedal(par3World, mSize + 1, mHeight, mUnder, par1ItemStack);
         		builderThread.start();
         	}
 

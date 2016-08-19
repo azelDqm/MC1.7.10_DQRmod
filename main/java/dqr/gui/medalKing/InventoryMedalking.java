@@ -51,6 +51,10 @@ public class InventoryMedalking implements IInventory
         {
         	//itemMap = DQR.medalItem.medalItem;
         	itemMap = DQR.medalItem.medalMedal;
+        }else if(guiId == DQR.conf.GuiID_MKAccessory)
+        {
+        	//itemMap = DQR.medalItem.medalItem;
+        	itemMap = DQR.medalItem.medalAccessory;
         }
 
 

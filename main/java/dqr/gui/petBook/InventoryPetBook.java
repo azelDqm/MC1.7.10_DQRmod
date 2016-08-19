@@ -4,6 +4,7 @@ import java.util.Set;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -52,11 +53,13 @@ public class InventoryPetBook implements IInventory
         	{
         		try
         		{
-        			items[cnt] = new ItemStack(DQMonsters.itemMonsterSuraimu, 1);
+
         			NBTTagCompound petData = playerPet.getCompoundTag((String)tagArray[cnt + (54 * par1)]);
 
         			if(petData != null)
         			{
+        				items[cnt] = new ItemStack(getMobTypeItem(petData.getString("petRoot")), 1);
+
         				items[cnt].setTagCompound(petData);
         				items[cnt].setStackDisplayName(petData.getString("PetName"));
         			}
@@ -229,6 +232,44 @@ public class InventoryPetBook implements IInventory
     public boolean isItemValidForSlot(int p_94041_1_, ItemStack p_94041_2_)
     {
         return true;
+    }
+
+    public Item getMobTypeItem(String par1)
+    {
+
+    	if(par1.equalsIgnoreCase("AKUMA"))
+    	{
+    		return DQMonsters.itemMonsterAkuma;
+    	}else if(par1.equalsIgnoreCase("BEAST"))
+    	{
+    		return DQMonsters.itemMonsterBeast;
+    	}else if(par1.equalsIgnoreCase("BUSSITU"))
+    	{
+    		return DQMonsters.itemMonsterBussitu;
+    	}else if(par1.equalsIgnoreCase("DRAGON"))
+    	{
+    		return DQMonsters.itemMonsterDragon;
+    	}else if(par1.equalsIgnoreCase("METARU"))
+    	{
+    		return DQMonsters.itemMonsterMetaru;
+    	}else if(par1.equalsIgnoreCase("SIZEN"))
+    	{
+    		return DQMonsters.itemMonsterSizen;
+    	}else if(par1.equalsIgnoreCase("SURAIMU"))
+    	{
+    		return DQMonsters.itemMonsterSuraimu;
+    	}else if(par1.equalsIgnoreCase("TOKUSYU"))
+    	{
+    		return DQMonsters.itemMonsterTokusyu;
+    	}else if(par1.equalsIgnoreCase("UNDEAD"))
+    	{
+    		return DQMonsters.itemMonsterUndead;
+    	}else if(par1.equalsIgnoreCase("UNKNOWN"))
+    	{
+    		return DQMonsters.itemMonsterUnknown;
+    	}
+
+    	return DQMonsters.itemMonsterSuraimu;
     }
 
 }

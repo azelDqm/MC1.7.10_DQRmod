@@ -16,11 +16,7 @@ import com.google.common.collect.Maps;
 
 import dqr.DQR;
 import dqr.api.enums.EnumDqmJob;
-import dqr.api.enums.EnumStatATK;
-import dqr.api.enums.EnumStatDEF;
-import dqr.api.enums.EnumStatHP;
-import dqr.api.enums.EnumStatMAG;
-import dqr.api.enums.EnumStatMP;
+import dqr.api.enums.EnumStat;
 import dqr.api.event.DqrArmorSetEvent;
 import dqr.api.potion.DQPotionMinus;
 import dqr.api.potion.DQPotionPlus;
@@ -765,11 +761,11 @@ public class FuncCalcPetStatus {
 		MinecraftForge.EVENT_BUS.post(event);
 
 
-		ExtendedPlayerProperties.get(ep).setArrayHP(EnumStatHP.armorSet.getId(), setEffect[4]);
-		ExtendedPlayerProperties.get(ep).setArrayMP(EnumStatMP.armorSet.getId(), setEffect[5]);
-		ExtendedPlayerProperties.get(ep).setArrayATK(EnumStatATK.armorSet.getId(), setEffect[1]);
-		ExtendedPlayerProperties.get(ep).setArrayMAG(EnumStatMAG.armorSet.getId(), setEffect[3]);
-		ExtendedPlayerProperties.get(ep).setArrayDEF(EnumStatDEF.armorSet.getId(), setEffect[2]);
+		ExtendedPlayerProperties.get(ep).setArrayHP(EnumStat.armorSet.getId(), setEffect[4]);
+		ExtendedPlayerProperties.get(ep).setArrayMP(EnumStat.armorSet.getId(), setEffect[5]);
+		ExtendedPlayerProperties.get(ep).setArrayATK(EnumStat.armorSet.getId(), setEffect[1]);
+		ExtendedPlayerProperties.get(ep).setArrayMAG(EnumStat.armorSet.getId(), setEffect[3]);
+		ExtendedPlayerProperties.get(ep).setArrayDEF(EnumStat.armorSet.getId(), setEffect[2]);
 
 		/*
 		for(int cnt = 0; cnt < enableSetCnt; cnt++)

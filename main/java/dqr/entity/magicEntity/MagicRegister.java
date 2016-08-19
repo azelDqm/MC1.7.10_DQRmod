@@ -4,6 +4,7 @@ import cpw.mods.fml.common.registry.EntityRegistry;
 import dqr.DQR;
 import dqr.entity.magicEntity.magic.MagicEntity;
 import dqr.entity.magicEntity.magic.MagicEntityBagi;
+import dqr.entity.magicEntity.magic.MagicEntityBasiRura;
 import dqr.entity.magicEntity.magic.MagicEntityBegiragon;
 import dqr.entity.magicEntity.magic.MagicEntityBegirama;
 import dqr.entity.magicEntity.magic.MagicEntityBuff;
@@ -72,6 +73,8 @@ public class MagicRegister {
 		EntityRegistry.registerModEntity(MagicEntityMerazomaB.class, "dqm.MagicEntityMerazomaB", idxID + 24, DQR.instance, 128, 5, true);
 		EntityRegistry.registerModEntity(MagicEntityMeragaiaB.class, "dqm.MagicEntityMeragaiaB", idxID + 25, DQR.instance, 128, 5, true);
 		EntityRegistry.registerModEntity(MagicEntityHyadoB.class, "dqm.MagicEntityHyadoB", idxID + 26, DQR.instance, 128, 5, true);
+
+		EntityRegistry.registerModEntity(MagicEntityBasiRura.class, "dqm.MagicEntityBasiRura", idxID + 27, DQR.instance, 128, 5, true);
 
 	}
 }

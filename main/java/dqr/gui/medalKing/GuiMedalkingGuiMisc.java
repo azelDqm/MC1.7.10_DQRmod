@@ -90,6 +90,12 @@ public class GuiMedalkingGuiMisc extends InventoryEffectRenderer
 
         int cornerY = this.guiTop;
 
+        if (TabManager.hasPotion()) //!mc.thePlayer.getActivePotionEffects().isEmpty())
+        {
+            cornerX = 160 + (this.width - this.xSize - 200) / 2;
+        } else {
+            cornerX = (this.width - this.xSize) / 2;
+        }
         //TabManager.updateTabValues(cornerX, cornerY,this.buttonList, PlayerTabs.ss,false);
         TabManager.updateTabValues(cornerX, cornerY,this.buttonList, MedalKingTabs.tabMedalMisc,false);
 

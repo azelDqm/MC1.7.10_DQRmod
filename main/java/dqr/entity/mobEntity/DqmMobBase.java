@@ -22,6 +22,7 @@ import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.entity.projectile.EntitySnowball;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
@@ -36,6 +37,7 @@ import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import dqr.DQR;
+import dqr.api.Items.DQWeapons;
 import dqr.api.enums.EnumDqmMagic;
 import dqr.api.enums.EnumDqmMessageConv;
 import dqr.api.enums.EnumDqmMobRoot;
@@ -79,6 +81,7 @@ import dqr.entity.npcEntity.npc.DqmEntityNPCGuntai;
 import dqr.entity.petEntity.DqmPetBase;
 import dqr.playerData.ExtendedPlayerProperties;
 import dqr.playerData.ExtendedPlayerProperties3;
+import dqr.thread.NoThreadProcess;
 import dqr.thread.ThreadLvUp;
 import dqr.thread.ThreadLvUpPet;
 
@@ -135,6 +138,8 @@ public class DqmMobBase extends EntityMob
 	public boolean noAI = false;
 
 	public boolean isFirstAttack = true;
+	public boolean isOverKill = false;
+	public float absoluteDam = -1.0F;
 
 	public DqmMobBase(World world, EnumDqmMonster mobType)
 	{
@@ -737,8 +742,17 @@ public class DqmMobBase extends EntityMob
 	            getExpVal = getExpVal + ExtendedPlayerProperties.get(ep).getJobExp(ExtendedPlayerProperties.get(ep).getJob());
 	            //DQR.func.debugString("doExp5:" + getExpVal);
 	            ExtendedPlayerProperties.get(ep).setJobExp(ExtendedPlayerProperties.get(ep).getJob(), getExpVal);
-	            ThreadLvUp lvup = new ThreadLvUp(ep);
-	            lvup.start();
+
+	            if(DQR.conf.cfg_NoThreadUse == 1)
+	            {
+	            	ThreadLvUp lvup = new ThreadLvUp(ep);
+	            	lvup.start();
+	            }else
+	            {
+	            	NoThreadProcess proc = new NoThreadProcess();
+	            	proc.doLevelUp(ep);
+	            }
+
 	        }else if(element instanceof DqmPetBase)
 	        {
 	            pet = (DqmPetBase)element;
@@ -776,15 +790,34 @@ public class DqmMobBase extends EntityMob
 	            	}
 
             		ExtendedPlayerProperties.get(ep).setJobExp(ExtendedPlayerProperties.get(ep).getJob(), tmpExpVal);
-    	            ThreadLvUp lvup = new ThreadLvUp(ep);
-    	            lvup.start();
+    	            //ThreadLvUp lvup = new ThreadLvUp(ep);
+    	            //lvup.start();
+    	            if(DQR.conf.cfg_NoThreadUse == 1)
+    	            {
+    	            	ThreadLvUp lvup = new ThreadLvUp(ep);
+    	            	lvup.start();
+    	            }else
+    	            {
+    	            	NoThreadProcess proc = new NoThreadProcess();
+    	            	proc.doLevelUp(ep);
+    	            }
 	            }
 
 	            getExpVal = getExpVal + pet.getJobExp(pet.getJob());
 	            //DQR.func.debugString("doExp5:" + getExpVal);
 	            pet.setJobExp(pet.getJob(), getExpVal);
-	            ThreadLvUpPet lvup = new ThreadLvUpPet(pet);
-	            lvup.start();
+	            //ThreadLvUpPet lvup = new ThreadLvUpPet(pet);
+	            //lvup.start();
+
+	            if(DQR.conf.cfg_NoThreadUse == 1)
+	            {
+		            ThreadLvUpPet lvup = new ThreadLvUpPet(pet);
+		            lvup.start();
+	            }else
+	            {
+	            	NoThreadProcess proc = new NoThreadProcess();
+	            	proc.doLevelUpPet(pet);
+	            }
 	        }
 
             /*
@@ -882,6 +915,12 @@ public class DqmMobBase extends EntityMob
 	@Override
     public void damageEntity(DamageSource source, float p_70665_2_)
     {
+		if(this.getHealth() <= 0.0F || this.isDead)
+		{
+			//死亡判定
+			return;
+		}
+		this.absoluteDam = -1.0F;
 		boolean skillFlg = false;
 		//DQR.func.debugString("damageEntity1:");
     	//System.out.println("testB:" + p_70665_2_);
@@ -889,7 +928,7 @@ public class DqmMobBase extends EntityMob
 		if (!this.isEntityInvulnerable())
         {
 
-
+			Item handItem = null;
     		if(source.getEntity() instanceof EntityPlayer)
     		{
     			EntityPlayer ep = (EntityPlayer)source.getEntity();
@@ -898,6 +937,30 @@ public class DqmMobBase extends EntityMob
     			int skillPerm = ExtendedPlayerProperties3.get(ep).getWeaponSkillPermission(weapon, weaponSkill);
 
     			//System.out.println("test1");
+    			if(ep.getHeldItem() != null && source.getDamageType().equalsIgnoreCase("player") && !ep.worldObj.isRemote)
+    			{
+    				handItem = ep.getHeldItem().getItem();
+    				if(handItem == DQWeapons.itemMajinnokanaduti)
+    				{
+    					//System.out.println("test2");
+    					if(rand.nextInt(5) == 0)
+    					{
+    						//System.out.println("test3");
+    						source = DQR.damageSource.getPlayerSpecialDamageCri(ep);
+	    					this.dqmBypassArmor = true;
+	    					source.setDamageBypassesArmor();
+    					}else
+    					{
+    						//System.out.println("test4");
+    						this.absoluteDam = 0.0F;
+    						p_70665_2_ = 0.0F;
+    					}
+    					skillFlg = true;
+    				}
+    			}
+
+
+//System.out.println("test1:" + p_70665_2_);
     			EnumDqmSkillW skillW = DQR.enumGetter.getSkillW(weapon, weaponSkill);
 				if(skillW != null && skillW.getFunc() == 1 && skillW.getRATE() > rand.nextInt(100))
 				{
@@ -925,6 +988,7 @@ public class DqmMobBase extends EntityMob
 	    					source.setDamageBypassesArmor();
     					}else
     					{
+    						this.absoluteDam = 0.0F;
     						p_70665_2_ = 0.0F;
     					}
     					skillFlg = true;
@@ -967,7 +1031,8 @@ public class DqmMobBase extends EntityMob
 				}
     		}
 
-    		if(source.getDamageType().equalsIgnoreCase(DQR.damageSource.DqmPlayerSkillDeath.getDamageType()))
+    		if(source.getDamageType().equalsIgnoreCase(DQR.damageSource.DqmPlayerSkillDeath.getDamageType()) ||
+    		   source.getDamageType().equalsIgnoreCase(DQR.damageSource.DqmPlayerSpecialDeath.getDamageType()))
     		{
     			skillFlg = true;
     			this.dqmBypassArmor = true;
@@ -980,30 +1045,39 @@ public class DqmMobBase extends EntityMob
         	//DQR.func.debugString("DAMTEST1:" + p_70665_2_);
             p_70665_2_ = ForgeHooks.onLivingHurt(this, source, p_70665_2_);
             //DQR.func.debugString("DAMTEST2:" + p_70665_2_);
-            //DQR.func.debugString("damageEntity3:" + p_70665_2_);
+//DQR.func.debugString("damageEntity3:" + p_70665_2_);
 
             if (p_70665_2_ <= 0) return;
 
 
     		p_70665_2_ = this.applyArmorCalculations(source, p_70665_2_);
+//DQR.func.debugString("damageEntity3A:" + p_70665_2_);
             //DQR.func.debugString("DAMTEST3:" + p_70665_2_);
             p_70665_2_ = this.applyPotionDamageCalculations(source, p_70665_2_);
             //DQR.func.debugString("DAMTEST4:" + p_70665_2_);
             //DQR.func.debugString("DAMTEST2:" + p_70665_2_);
             //スキルダメージ加算
             //if(!skillFlg && !source.getDamageType().equalsIgnoreCase(DQR.damageSource.DqmPlayerSkill.getDamageType()))
-
-            if(!skillFlg && !DQR.damageSource.isDqmSkillDamage(source))
+//DQR.func.debugString("damageEntity3B:" + p_70665_2_);
+            if(!skillFlg && !DQR.damageSource.isDqmSkillDamage(source) && !DQR.damageSource.isDqmSpecialDamage(source))
             {
             	//System.out.println("testA");
             	p_70665_2_ = DQR.calcDamage.applyDamageBoost(p_70665_2_, this, source, prevDamage);
             }
 
-            if(p_70665_2_ < 0.0F)
+            if(p_70665_2_ < 0.0F || this.isDead)
             {
+            	this.isOverKill = true;
+            	//死亡判定
             	return;
             }
+//DQR.func.debugString("damageEntity3C:" + p_70665_2_);
+            if(this.absoluteDam >= 0.0f)
+            {
+            	p_70665_2_ = this.absoluteDam;
+            }
 
+//DQR.func.debugString("damageEntity3D:" + p_70665_2_);
             //ダメージ0の場合にランダムで補正
             if(0.0F < p_70665_2_  && p_70665_2_ < 1.0F)
             {
@@ -1016,8 +1090,9 @@ public class DqmMobBase extends EntityMob
             	}
             }
 
+
             /////////////////////////////////
-            //DQR.func.debugString("DAMTEST3:" + p_70665_2_);
+//DQR.func.debugString("DAMTEST3:" + p_70665_2_);
 
             p_70665_2_ = DQR.calcDamage.applyDamageResistMagic(p_70665_2_, this, source);
 
@@ -1027,8 +1102,12 @@ public class DqmMobBase extends EntityMob
 
 
             /////////////////////////////////
-            //DQR.func.debugString("damageEntity4:" + p_70665_2_);
+//DQR.func.debugString("damageEntity4:" + p_70665_2_);
 
+            if(handItem == DQWeapons.itemMetarukingnoturugi && p_70665_2_ < 1.0F)
+            {
+            	p_70665_2_ = 1.0F;
+            }
 
             if (p_70665_2_ != 0.0F)
             {
@@ -3145,6 +3224,11 @@ public class DqmMobBase extends EntityMob
 
     public boolean attackEntityFrom(DamageSource p_70097_1_, float p_70097_2_)
     {
+    	if(this.getHealth() <= 0.0F || this.isDead)
+    	{
+    		//死亡判定
+    		return false;
+    	}
     	if(this.mobAI.getTeleport() > 0)
     	{
     		/*
@@ -3428,6 +3512,12 @@ public class DqmMobBase extends EntityMob
 
     public boolean attackEntityFrom2(DamageSource p_70097_1_, float p_70097_2_)
     {
+        if(this.getHealth() <= 0.0F || this.isDead)
+        {
+        	//死亡判定
+        	return false;
+        }
+
     	//DQR.func.debugString("attackEntityFrom2");
         if (ForgeHooks.onLivingAttack(this, p_70097_1_, p_70097_2_)) return false;
         if (this.isEntityInvulnerable())
@@ -3464,15 +3554,20 @@ public class DqmMobBase extends EntityMob
                 //if ((float)this.hurtResistantTime > (float)this.maxHurtResistantTime / 2.0F  && !p_70097_1_.getDamageType().equalsIgnoreCase(DQR.damageSource.DqmPlayerSkill.getDamageType()))
                 if ((float)this.hurtResistantTime > (float)this.maxHurtResistantTime / 2.0F)
                 {
-                    if (p_70097_2_ <= this.lastDamage)
+                    if(this.getHealth() <= 0.0F || this.isDead)
                     {
-                        return false;
+                    	//死亡判定
+                    	return false;
                     }
-
                     //System.out.println("TEST1");
                     this.damageEntity(p_70097_1_, p_70097_2_ - this.lastDamage);
+                    if(isOverKill)
+                    {
+                    	return false;
+                    }
                     this.lastDamage = p_70097_2_;
                     flag = false;
+//rgweygwerguy5
                 }
                 else
                 {
@@ -3481,8 +3576,14 @@ public class DqmMobBase extends EntityMob
                     this.prevHealth = this.getHealth();
                     this.hurtResistantTime = this.maxHurtResistantTime;
                     this.damageEntity(p_70097_1_, p_70097_2_);
+                    if(isOverKill)
+                    {
+                    	return false;
+                    }
                     this.hurtTime = this.maxHurtTime = 10;
                 }
+
+
 
                 this.attackedAtYaw = 0.0F;
                 Entity entity = p_70097_1_.getEntity();

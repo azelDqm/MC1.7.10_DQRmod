@@ -14,22 +14,62 @@ import dqr.items.interfaceBase.ISubEquip;
 public class SlotEquipment extends Slot {
 
     private EnumDqmSubEquipType equipment;
+    private IInventory invData;
 
     public SlotEquipment(EnumDqmSubEquipType type, IInventory p_i1824_1_, int p_i1824_2_, int x, int y) {
         super(p_i1824_1_, p_i1824_2_, x, y);
         equipment = type;
+        invData = p_i1824_1_;
     }
 
     @Override
     public boolean isItemValid(ItemStack stack) {
 
-        return stack.getItem() instanceof ISubEquip && ((ISubEquip) stack.getItem()).isItemValid(this.equipment, stack);
+    	//System.out.println("TAKE1");
+    	if(this.equipment.getId() == EnumDqmSubEquipType.Piasu.getId())
+    	{
+    		for(int cnt = 0; cnt < 2; cnt++)
+    		{
+    			if(invData.getStackInSlot(cnt) != null && invData.getStackInSlot(cnt).getItem() == stack.getItem())
+    			{
+    				return false;
+    			}
+    		}
+    	}else if(this.equipment.getId() == EnumDqmSubEquipType.Sonota.getId())
+    	{
+    		for(int cnt = 9; cnt < 11; cnt++)
+    		{
+    			if(invData.getStackInSlot(cnt) != null && invData.getStackInSlot(cnt).getItem() == stack.getItem())
+    			{
+    				return false;
+    			}
+    		}
+    	}else if(this.equipment.getId() == EnumDqmSubEquipType.Udewa.getId())
+    	{
+    		for(int cnt = 3; cnt < 5; cnt++)
+    		{
+    			if(invData.getStackInSlot(cnt) != null && invData.getStackInSlot(cnt).getItem() == stack.getItem())
+    			{
+    				return false;
+    			}
+    		}
+    	}else if(this.equipment.getId() == EnumDqmSubEquipType.Yubiwa.getId())
+    	{
+    		for(int cnt = 5; cnt < 9; cnt++)
+    		{
+    			if(invData.getStackInSlot(cnt) != null && invData.getStackInSlot(cnt).getItem() == stack.getItem())
+    			{
+    				return false;
+    			}
+    		}
+    	}
 
+        return stack.getItem() instanceof ISubEquip && ((ISubEquip) stack.getItem()).isItemValid(this.equipment, stack);
     }
 
     @Override
     public boolean canTakeStack(EntityPlayer player) {
-
+    	//System.out.println("TAKE2");
         return this.getStack() != null && ((ISubEquip) this.getStack().getItem()).canTakeStack(equipment, this.getStack(), player);
     }
 

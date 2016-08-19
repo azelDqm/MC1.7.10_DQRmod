@@ -14,6 +14,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.world.BlockEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import dqr.DQR;
+import dqr.api.Items.DQWeapons;
 import dqr.items.base.DqmItemWeaponBase;
 import dqr.playerData.ExtendedPlayerProperties;
 
@@ -29,13 +30,13 @@ public class WorldEventHandler {
 			//System.out.println(event.x + "/" +event.y + "/" + event.z );
 			DqmItemWeaponBase weapon = (DqmItemWeaponBase)event.getPlayer().getHeldItem().getItem();
 
-			if(weapon.getMaterial() == DQR.dqmMaterial.DqmAxe)
+			if(weapon.getMaterial() == DQR.dqmMaterial.DqmAxe || weapon == DQWeapons.itemHaruberuto)
 			{
 				int itemMode = ExtendedPlayerProperties.get(event.getPlayer()).getWeaponMode(1);
 				RegistryNamespaced rn = Block.blockRegistry;
 
 				int addDam = 0;
-				if(itemMode > 0 && !event.world.isRemote)
+				if(itemMode > 0)
 				{
 
 					if(DQR.cuttingWood.cuttingWoodBlockId.containsKey(event.block))
@@ -61,7 +62,10 @@ public class WorldEventHandler {
 										{
 											int targetMeta = wld.getBlockMetadata(event.x + cntX, event.y + cntY, event.z +cntZ);
 											Block targetBlock = wld.getBlock(event.x + cntX, event.y + cntY, event.z +cntZ);
-											wld.setBlockToAir(event.x + cntX, event.y + cntY, event.z +cntZ);
+											if(!event.world.isRemote)
+											{
+												wld.setBlockToAir(event.x + cntX, event.y + cntY, event.z +cntZ);
+											}
 
 											//System.out.println("METADATA値1？？？？？？？？？" + targetMeta);
 											Random rand = new Random();
@@ -74,24 +78,50 @@ public class WorldEventHandler {
 	        								Item blockKey = targetBlock.getItemDropped(targetMeta, rand, 0);
 	        								if(dropItemSet.containsKey(blockKey))
 	        								{
-	        									//int itemVal = dropItemSet.get(blockKey);
-	        									int[] valInt = dropItemSet.get(blockKey);
-	        									valInt[targetMeta] = valInt[targetMeta] + targetBlock.quantityDropped(targetMeta, 0, rand);
-	        									dropItemSet.put(blockKey, valInt);
+	        									if(targetBlock.damageDropped(targetMeta) > 15)
+	        									{
+	        	    								ItemStack drop = new ItemStack(blockKey, targetBlock.quantityDropped(targetMeta, 0, rand), targetBlock.damageDropped(targetMeta));
+	        	    								EntityItem itemR = new EntityItem(wld, event.x, event.y, event.z, drop);
+	    											if(!event.world.isRemote)
+	    											{
+	    												wld.spawnEntityInWorld(itemR);
+	    											}
+	        									}else
+	        									{
+	        										//int itemVal = dropItemSet.get(blockKey);
+	        										int[] valInt = dropItemSet.get(blockKey);
+	        										valInt[targetBlock.damageDropped(targetMeta)] = valInt[targetBlock.damageDropped(targetMeta)] + targetBlock.quantityDropped(targetMeta, 0, rand);
+	        										dropItemSet.put(blockKey, valInt);
+	        									}
 
 	        									//dropItemSet.put(blockKey, itemVal + targetBlock.quantityDropped(targetMeta, 0, rand));
 	        								}else
 	        								{
-	        									//System.out.println(" new key!!!!!!!!!!!!!!!!!!!!!");
-	        									int[] valInt = new int[16];
-	        									valInt[targetMeta] = targetBlock.quantityDropped(targetMeta, 0, rand);
-	        									dropItemSet.put(blockKey, valInt);
+	        									if(targetBlock.damageDropped(targetMeta) > 15)
+	        									{
+	        	    								ItemStack drop = new ItemStack(blockKey, targetBlock.quantityDropped(targetMeta, 0, rand), targetBlock.damageDropped(targetMeta));
+	        	    								EntityItem itemR = new EntityItem(wld, event.x, event.y, event.z, drop);
+	    											if(!event.world.isRemote)
+	    											{
+	    												wld.spawnEntityInWorld(itemR);
+	    											}
+	        									}else
+	        									{
+	        										//System.out.println(" new key!!!!!!!!!!!!!!!!!!!!!");
+	        										int[] valInt = new int[16];
+	        										valInt[targetBlock.damageDropped(targetMeta)] = targetBlock.quantityDropped(targetMeta, 0, rand);
+	        										dropItemSet.put(blockKey, valInt);
+	        									}
+
 	        									//System.out.println("METADATA値3？？？？？？？？？" + targetMeta);
 	        									//Block.getIdFromBlock(p_149682_0_)
 	        								}
 										}else
 										{
-											wld.func_147480_a(event.x + cntX, event.y + cntY, event.z +cntZ, true);
+											if(!event.world.isRemote)
+											{
+												wld.func_147480_a(event.x + cntX, event.y + cntY, event.z +cntZ, true);
+											}
 										}
 									}
 								}
@@ -126,7 +156,10 @@ public class WorldEventHandler {
 											if(DQR.conf.CuttingSmoothBreak != 0)
 											{
 												//System.out.println(" new key3!!!!!");
-												wld.setBlockToAir(event.x + cntX, event.y + cntY, event.z +cntZ);
+												if(!event.world.isRemote)
+												{
+													wld.setBlockToAir(event.x + cntX, event.y + cntY, event.z +cntZ);
+												}
 
 		        								if(!soundFlg)
 		        								{
@@ -154,24 +187,49 @@ public class WorldEventHandler {
 		        								if(dropItemSet.containsKey(blockKey))
 		        								{
 
-		        									//int itemVal = dropItemSet.get(blockKey);
-		        									int[] valInt = dropItemSet.get(blockKey);
-		        									valInt[targetMeta] = valInt[targetMeta] + targetBlock.quantityDropped(targetMeta, 0, rand);
-		        									dropItemSet.put(blockKey, valInt);
+		        									if(targetBlock.damageDropped(targetMeta) > 15)
+		        									{
+		        	    								ItemStack drop = new ItemStack(blockKey, targetBlock.quantityDropped(targetMeta, 0, rand), targetBlock.damageDropped(targetMeta));
+		        	    								EntityItem itemR = new EntityItem(wld, event.x, event.y, event.z, drop);
+		    											if(!event.world.isRemote)
+		    											{
+		    												wld.spawnEntityInWorld(itemR);
+		    											}
+		        									}else
+		        									{
+		        										//int itemVal = dropItemSet.get(blockKey);
+		        										int[] valInt = dropItemSet.get(blockKey);
+		        										valInt[targetBlock.damageDropped(targetMeta)] = valInt[targetBlock.damageDropped(targetMeta)] + targetBlock.quantityDropped(targetMeta, 0, rand);
+		        										dropItemSet.put(blockKey, valInt);
+		        									}
 		        									//System.out.println("METADATA値1？？？？？？？？？" + targetMeta);
 		        									//dropItemSet.put(blockKey, itemVal + targetBlock.quantityDropped(targetMeta, 0, rand));
 		        								}else
 		        								{
-		        									//System.out.println(" new key!!!!!!!!!!!!!!!!!!!!!");
-		        									int[] valInt = new int[16];
-		        									valInt[targetMeta] = targetBlock.quantityDropped(targetMeta, 0, rand);
-		        									dropItemSet.put(blockKey, valInt);
-		        									//System.out.println("METADATA値2？？？？？？？？？" + targetMeta);
-		        									//Block.getIdFromBlock(p_149682_0_)
+		        									if(targetBlock.damageDropped(targetMeta) > 15)
+		        									{
+		        	    								ItemStack drop = new ItemStack(blockKey, targetBlock.quantityDropped(targetMeta, 0, rand), targetBlock.damageDropped(targetMeta));
+		        	    								EntityItem itemR = new EntityItem(wld, event.x, event.y, event.z, drop);
+		    											if(!event.world.isRemote)
+		    											{
+		    												wld.spawnEntityInWorld(itemR);
+		    											}
+		        									}else
+		        									{
+		        										//System.out.println(" new key!!!!!!!!!!!!!!!!!!!!!");
+		        										int[] valInt = new int[16];
+		        										valInt[targetBlock.damageDropped(targetMeta)] = targetBlock.quantityDropped(targetMeta, 0, rand);
+		        										dropItemSet.put(blockKey, valInt);
+		        										//System.out.println("METADATA値2？？？？？？？？？" + targetMeta);
+		        										//Block.getIdFromBlock(p_149682_0_)
+		        									}
 		        								}
 											}else
 											{
-												wld.func_147480_a(event.x + cntX, event.y + cntY, event.z +cntZ, true);
+												if(!event.world.isRemote)
+												{
+													wld.func_147480_a(event.x + cntX, event.y + cntY, event.z +cntZ, true);
+												}
 											}
 										}
 
@@ -211,7 +269,10 @@ public class WorldEventHandler {
 
 			    							//System.out.println("METADATA値？？？？？？？？？" + cnt);
 											EntityItem itemX = new EntityItem(wld, event.x, event.y, event.z, dropStack);
-											wld.spawnEntityInWorld(itemX);
+											if(!event.world.isRemote)
+											{
+												wld.spawnEntityInWorld(itemX);
+											}
 			    						}
 			    					}
 			    				}

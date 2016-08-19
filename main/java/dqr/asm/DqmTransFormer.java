@@ -28,6 +28,8 @@ public class DqmTransFormer implements IClassTransformer, Opcodes
 	private static final String TARGET_CLASS_NAME2 = "net.minecraft.enchantment.EnumEnchantmentType";
 	//private static final String TARGET_CLASS_NAME3 = "net.minecraft.client.renderer.entity.RenderPlayer";
 	private static final String TARGET_CLASS_NAME3 = "net.minecraft.client.renderer.EntityRenderer";
+	private static final String TARGET_CLASS_NAME4 = "net.minecraft.util.FoodStats";
+	private static final String TARGET_CLASS_NAME5 = "net.minecraft.entity.EntityLivingBase";
 
     // クラスがロードされる際に呼び出されるメソッドです。
     @Override
@@ -41,7 +43,8 @@ public class DqmTransFormer implements IClassTransformer, Opcodes
         // name : 現在ロードされようとしているクラス名が格納されています。
         //if (!FMLRelauncher.side().equals("CLIENT") || !name.equals(TARGET_CLASS_NAME))
 
-    	if (!transformedName.equals(TARGET_CLASS_NAME) && !transformedName.equals(TARGET_CLASS_NAME3) && !transformedName.equals(TARGET_CLASS_NAME2))
+    	if (!transformedName.equals(TARGET_CLASS_NAME) && !transformedName.equals(TARGET_CLASS_NAME3) &&
+    		!transformedName.equals(TARGET_CLASS_NAME2) && !transformedName.equals(TARGET_CLASS_NAME5))
         {
             // 処理対象外なので何もしない
             return bytes;
@@ -71,6 +74,11 @@ public class DqmTransFormer implements IClassTransformer, Opcodes
         	{
         		return bytes;
         	}
+        	/*
+        	else if(transformedName.equals(TARGET_CLASS_NAME5))
+        	{
+        		return hookEntityLivingBaseClass(bytes);
+        	}*/
 
         }
         catch (Exception e)
@@ -79,6 +87,79 @@ public class DqmTransFormer implements IClassTransformer, Opcodes
         }
 
     }
+
+
+
+    private byte[] hookEntityLivingBaseClass(byte[] bytes)
+    {
+        // ASMで、bytesに格納されたクラスファイルを解析します。
+    	System.out.println("EntityLivingBaseClass patching START");
+        ClassNodeDum cnode = new ClassNodeDum();
+        ClassReader reader = new ClassReader(bytes);
+        reader.accept(cnode, 0);
+
+        // 改変対象のメソッド名です
+        String targetMethodName = "c";
+
+        // 改変対象メソッドの戻り値型および、引数型をあらわします
+        String targetMethoddesc = "(Lrw;)V";
+
+        // 対象のメソッドを検索取得します。
+        MethodNode mnode = null;
+        for (MethodNode curMnode : (List<MethodNode>) cnode.methods)
+        {
+            if (targetMethodName.equals(curMnode.name) && targetMethoddesc.equals(curMnode.desc))
+            {
+                mnode = curMnode;
+                break;
+            }
+        }
+
+        if (mnode != null)
+        {
+            try
+            {
+	        	System.out.println("EntityLivingBaseClass patching");
+	            InsnList overrideList = new InsnList();
+	            //LabelNode l2 = new LabelNode();
+
+	            overrideList.add(new FieldInsnNode(GETSTATIC, "dqr/DQR", "entityLivingBHook", "Ldqr/functions/FuncEntityLivingBaseExtension;"));
+	            overrideList.add(new VarInsnNode(ALOAD, 1));
+	            overrideList.add(new VarInsnNode(ALOAD, 0));
+	            overrideList.add(new MethodInsnNode(INVOKEVIRTUAL, "dqr/functions/FuncEntityLivingBaseExtension", "hookAddPotionEffect", "(Lrw;Lsv;)Z"));
+	            overrideList.add(new InsnNode(POP));
+
+	            // メソッドコールを、バイトコードであらわした例です。
+	            /*
+	            overrideList.add(new FieldInsnNode(GETSTATIC, "dqr/DQR", "entityLivingBHook", "Ldqr/functions/FuncEntityLivingBaseExtension;"));
+	            overrideList.add(new VarInsnNode(ALOAD, 1));
+	            overrideList.add(new VarInsnNode(ALOAD, 0));
+	            overrideList.add(new MethodInsnNode(INVOKEVIRTUAL, "dqr/functions/FuncEntityLivingBaseExtension", "hookAddPotionEffect", "(Lrw;Lsv;)Z"));
+	            overrideList.add(new JumpInsnNode(IFEQ, l2));
+	            overrideList.add(new InsnNode(IRETURN));
+	            overrideList.add(l2);
+	            */
+
+
+
+	            // mnode.instructions.get(1)で、対象のメソッドの先頭を取得
+	            // mnode.instructions.insertで、指定した位置にバイトコードを挿入します。
+	            mnode.instructions.insert(mnode.instructions.get(1), overrideList);
+	            // 改変したクラスファイルをバイト列に書き出します
+	            ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
+	            System.out.println("EntityLivingBaseClass patching:" + cnode.name);
+	            cnode.accept(cw);
+	            bytes = cw.toByteArray();
+
+	            System.out.println("EntityLivingBaseClass patching success!!:");
+            } catch (Exception e) {
+                throw new RuntimeException("failed : EntityLivingBaseClass patching ", e);
+            }
+        }
+
+        return bytes;
+    }
+
 
 
     private byte[] hookCombatTrackerMethod(byte[] bytes)
@@ -141,6 +222,64 @@ public class DqmTransFormer implements IClassTransformer, Opcodes
     }
 
 
+    private byte[] hookFoodStats(byte[] bytes)
+    {
+        // ASMで、bytesに格納されたクラスファイルを解析します。
+    	System.out.println("FoodStatsClass patching START");
+        ClassNodeDum cnode = new ClassNodeDum();
+        ClassReader reader = new ClassReader(bytes);
+        reader.accept(cnode, 0);
+
+        // 改変対象のメソッド名です
+        String targetMethodName = "a";
+
+        // 改変対象メソッドの戻り値型および、引数型をあらわします
+        String targetMethoddesc = "(Lro;FF)V";
+
+        // 対象のメソッドを検索取得します。
+        MethodNode mnode = null;
+        for (MethodNode curMnode : (List<MethodNode>) cnode.methods)
+        {
+            if (targetMethodName.equals(curMnode.name) && targetMethoddesc.equals(curMnode.desc))
+            {
+                mnode = curMnode;
+                break;
+            }
+        }
+
+        if (mnode != null)
+        {
+            try
+            {
+	        	System.out.println("CombatTrackerClass patching");
+	            InsnList overrideList = new InsnList();
+
+	            // メソッドコールを、バイトコードであらわした例です。
+	            overrideList.add(new FieldInsnNode(GETSTATIC, "dqr/DQR", "damMessage", "Ldqr/functions/FuncDamageMessage;"));
+	            overrideList.add(new VarInsnNode(ALOAD, 0));
+	            overrideList.add(new FieldInsnNode(GETFIELD, "rn", "b", "Lsv;"));
+	            overrideList.add(new VarInsnNode(ALOAD, 1));
+	            overrideList.add(new VarInsnNode(FLOAD, 2));
+	            overrideList.add(new VarInsnNode(FLOAD, 3));
+	            overrideList.add(new MethodInsnNode(INVOKEVIRTUAL, "dqr/functions/FuncDamageMessage", "message", "(Lsv;Lro;FF)V"));
+
+	            // mnode.instructions.get(1)で、対象のメソッドの先頭を取得
+	            // mnode.instructions.insertで、指定した位置にバイトコードを挿入します。
+	            mnode.instructions.insert(mnode.instructions.get(1), overrideList);
+	            // 改変したクラスファイルをバイト列に書き出します
+	            ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
+	            System.out.println("CombatTrackerClass patching:" + cnode.name);
+	            cnode.accept(cw);
+	            bytes = cw.toByteArray();
+
+	            System.out.println("CombatTrackerClass patching success!!:");
+            } catch (Exception e) {
+                throw new RuntimeException("failed : CombatTrackerClass patching ", e);
+            }
+        }
+
+        return bytes;
+    }
 
     private byte[] hookEnumEnchantment(byte[] bytes)
     {

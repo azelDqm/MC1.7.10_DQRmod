@@ -153,8 +153,8 @@ public class DqrAddonBiomesOPlenty {
 	{
 
 		BiomeGenBase[] nether = {BOPCBiomes.deadForest, BOPCBiomes.deadSwamp, BOPCBiomes.quagmire,
-								 BOPCBiomes.silkglades, BOPCBiomes.wasteland, BOPCBiomes.garden, BOPCBiomes.ominousWoods};
-		BiomeGenBase[] end = {BOPCBiomes.fungiForest, BOPCBiomes.wasteland, BOPCBiomes.garden, BOPCBiomes.volcano};
+								 BOPCBiomes.silkglades, BOPCBiomes.wasteland, BOPCBiomes.ominousWoods};
+		BiomeGenBase[] end = {BOPCBiomes.fungiForest, BOPCBiomes.wasteland, BOPCBiomes.volcano};
 		BiomeGenBase[] ALL = {BOPCBiomes.volcano, BOPCBiomes.mysticGrove};
 
 		BiomeGenBase[] end1 = {BOPCBiomes.ominousWoods};
@@ -331,7 +331,37 @@ public class DqrAddonBiomesOPlenty {
 		this.addSpawn(DqmEntityMasterdoragon.class, 1, 1, 1, DQR.dqmCreatureType.DqmMonster, ALL);
 		this.addSpawn(DqmEntityEsterk.class, 1, 1, 1, DQR.dqmCreatureType.DqmMonster, ALL);
 
+		List mobs = BOPCBiomes.garden.getSpawnableList(EnumCreatureType.monster);
+		mobs.clear();
+		/*
+		List fix = new ArrayList();
 
+		for(int cnt = 0; cnt < mobs.size(); cnt++)
+		{
+			SpawnListEntry entry = (SpawnListEntry)mobs.get(cnt);
+			if(!(entry.entityClass.getName().indexOf("dqr.entity") > -1))
+			{
+				//System.out.println("TEST" + entry.entityClass.getName());
+				fix.add(entry);
+			}
+			//if(mobs.get(index))
+		}
+
+		mobs.clear();
+		for(int cnt2 = 0; cnt2 < fix.size(); cnt2++)
+		{
+			mobs.add(fix.get(cnt2));
+		}
+		List mobs2 = BOPCBiomes.garden.getSpawnableList(EnumCreatureType.monster);
+		for(int cnt = 0; cnt < mobs2.size(); cnt++)
+		{
+			SpawnListEntry entry = (SpawnListEntry)mobs.get(cnt);
+			System.out.println("TEST" + entry.entityClass.getName());
+			//if(!(entry.entityClass.getName().indexOf("dqr.entity") > -1))
+			//if(mobs.get(index))
+		}
+		if(mobs2.size() == 0)System.out.println("TESTRRRRRRRRR");
+		*/
 	}
 
 	public static void addSpawn(Class <? extends EntityLiving > entityClass, int weightedProb, int min, int max, EnumCreatureType typeOfCreature, BiomeGenBase... biomes)

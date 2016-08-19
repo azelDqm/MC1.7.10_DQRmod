@@ -1,5 +1,6 @@
 package dqr.gui.petStatus;
 
+import invtweaks.api.container.ChestContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -8,6 +9,7 @@ import net.minecraft.item.ItemStack;
 import dqr.entity.petEntity.InventoryPetInventory;
 import dqr.playerData.ExtendedPlayerProperties3;
 
+@ChestContainer
 public class GuiPetInventoryContainer extends Container
 {
     private InventoryPetInventory inventory;

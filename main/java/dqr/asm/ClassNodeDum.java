@@ -426,7 +426,14 @@ public class ClassNodeDum extends ClassNode {
         	try
         	{
         		methods.get(i).accept(cv);
-        	}catch(Exception e){}
+        	}catch(Exception e){
+        		cv.visitEnd();
+        		//System.out.println(e.getMessage());
+        	}finally
+        	{
+        		cv.visitEnd();
+        		//System.out.println("LINE");
+        	}
         }
         // visits end
         //System.out.println("CombatTrackerClass patching lineK");

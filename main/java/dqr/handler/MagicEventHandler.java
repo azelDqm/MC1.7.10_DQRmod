@@ -14,6 +14,7 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import dqr.DQR;
 import dqr.api.potion.DQPotionEtc;
 import dqr.api.potion.DQPotionMinus;
+import dqr.entity.petEntity.DqmPetBase;
 import dqr.playerData.ExtendedPlayerProperties;
 
 public class MagicEventHandler {
@@ -189,10 +190,13 @@ public class MagicEventHandler {
 		                        }
 		            		}else
 		            		{
-			            		if(target.getActivePotionEffect(DQPotionMinus.debuffHeavyFire) == null)
-			            		{
-			            			target.addPotionEffect(new PotionEffect(DQPotionMinus.debuffHeavyFire.getId(), 60, 0));
-			            		}
+		            			if(!(target instanceof DqmPetBase))
+		            			{
+				            		if(target.getActivePotionEffect(DQPotionMinus.debuffHeavyFire) == null)
+				            		{
+				            			target.addPotionEffect(new PotionEffect(DQPotionMinus.debuffHeavyFire.getId(), 60, 0));
+				            		}
+		            			}
 		            		}
 	            		}
 	            	}

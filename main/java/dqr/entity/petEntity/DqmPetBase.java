@@ -64,6 +64,7 @@ import dqr.items.miscs.DqmItemMegaminoInori;
 import dqr.packetMessage.MessageClientPetEntityData;
 import dqr.playerData.ExtendedPlayerProperties;
 import dqr.playerData.ExtendedPlayerProperties3;
+import dqr.thread.NoThreadProcess;
 import dqr.thread.ThreadLvUpPet;
 
 public class DqmPetBase  extends EntityTameable implements IInvBasic
@@ -849,6 +850,13 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 
                         return true;
                     }
+                }
+
+              //debug
+                if (itemstack.getItem() == DQMiscs.itemShinjirukokoro && !this.worldObj.isRemote)
+                {
+                	//System.out.println("TEST_LINE_R");
+                	DQR.partyManager.addPartyMember(ep, this);
                 }
 
                 //
@@ -2727,8 +2735,17 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
         getExpVal = getExpVal + par1Item.getItemExp() + this.getJobExp(this.getJob());
         //DQR.func.debugString("doExp5:" + getExpVal);
         this.setJobExp(this.getJob(), getExpVal);
-        ThreadLvUpPet lvup = new ThreadLvUpPet(this);
-        lvup.start();
+        //ThreadLvUpPet lvup = new ThreadLvUpPet(this);
+        //lvup.start();
+        if(DQR.conf.cfg_NoThreadUse == 1)
+        {
+            ThreadLvUpPet lvup = new ThreadLvUpPet(this);
+            lvup.start();
+        }else
+        {
+        	NoThreadProcess proc = new NoThreadProcess();
+        	proc.doLevelUpPet(this);
+        }
     }
 
     /*

@@ -50,6 +50,17 @@ public class FuncBiomeBlockTable {
 		return Blocks.stone.getBlockTextureFromSide(side);
 	}
 
+	public Block getBiomeBaseBlock(int biomeId, int side)
+	{
+		if(biomeBlock.containsKey(biomeId))
+		{
+			return (Block)biomeBlock.get(biomeId);
+		}
+
+
+		return Blocks.stone;
+	}
+	
 	public Block getBiomeBlock(int biomeId)
 	{
 		if(biomeBlock.containsKey(biomeId))

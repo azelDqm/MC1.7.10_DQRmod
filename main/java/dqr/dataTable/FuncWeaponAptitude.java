@@ -201,6 +201,7 @@ public class FuncWeaponAptitude {
 
     	//はぐれメタル
     	this.WAptitudeMonster[EnumDqmJob.Haguremetal.getId()] = 1;
+    	this.WAptitudeWhip[EnumDqmJob.Haguremetal.getId()] = 1;
 
     	//商人
     	this.WAptitudeSoroban[EnumDqmJob.Syounin.getId()] = 2;
@@ -232,7 +233,8 @@ public class FuncWeaponAptitude {
     	this.WAptitudeScythe[EnumDqmJob.GodHand.getId()] = 0;
 
     	//ドラゴン
-    	this.WAptitudeMonster[EnumDqmJob.Haguremetal.getId()] = 1;
+    	this.WAptitudeMonster[EnumDqmJob.Dragon.getId()] = 1;
+    	this.WAptitudeClaw[EnumDqmJob.Dragon.getId()] = 1;
 
     	//伝説の勇者
     	this.WAptitudeSword[EnumDqmJob.Densetsu.getId()] = 3;

@@ -128,4 +128,9 @@ public class DqmBlockOreBase extends BlockOre {
 		return DQR.blockRenderType.renderOreBlockID;
 	}
 
+    //透けない
+    public boolean isOpaqueCube()
+    {
+        return true;
+    }
 }

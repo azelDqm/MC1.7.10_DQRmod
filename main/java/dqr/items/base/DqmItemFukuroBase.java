@@ -87,4 +87,10 @@ public class DqmItemFukuroBase extends Item implements ISubEquip{
 		// TODO 自動生成されたメソッド・スタブ
 		return EnumDqmSubEquipType.Fukuro;
 	}
+
+	@Override
+	public boolean isDamageable2() {
+		// TODO 自動生成されたメソッド・スタブ
+		return false;
+	}
 }

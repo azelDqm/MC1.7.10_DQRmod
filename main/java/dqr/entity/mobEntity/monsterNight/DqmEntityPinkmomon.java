@@ -5,6 +5,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import dqr.DQR;
+import dqr.api.Items.DQAccessories;
 import dqr.api.Items.DQArmors;
 import dqr.api.Items.DQMiscs;
 import dqr.api.enums.EnumDqmMonster;
@@ -79,6 +80,11 @@ public class DqmEntityPinkmomon extends DqmMobBaseNight
 	@Override
     protected void dropFewItems(boolean par1, int par2)
     {
+        if (DQR.funcMob.getCalcDROP(1000, 1))
+        {
+            this.dropItem(DQAccessories.itemKataminokubikazari, 1);
+        }
+
         if (DQR.funcMob.getCalcDROP(1, 1))
         {
             this.dropItem(DQMiscs.itemHananomitu, 1);

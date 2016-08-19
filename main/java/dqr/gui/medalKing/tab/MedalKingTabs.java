@@ -17,6 +17,7 @@ public class MedalKingTabs {
 	public static AbstractTab tabMedalJob;
 	public static AbstractTab tabMedalMisc;
 	public static AbstractTab tabMedalMedal;
+	public static AbstractTab tabMedalAccessory;
 
 	public static void initRecipes(){
 
@@ -38,8 +39,12 @@ public class MedalKingTabs {
 		tabMedalJob = new InventoryTabMedalJob();
 		TabManager.registerTab(tabMedalJob);
 
+		tabMedalAccessory = new InventoryTabMedalAccessory();
+		TabManager.registerTab(tabMedalAccessory);
+
 		tabMedalMisc = new InventoryTabMedalMisc();
 		TabManager.registerTab(tabMedalMisc);
+
 
 
 		/*

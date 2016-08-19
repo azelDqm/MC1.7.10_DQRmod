@@ -45,10 +45,10 @@ public class ThreadBuilderFrame extends Thread{
 
         switch(this.Hougaku)
         {
-        	case 1: xxx = xxx - (this.size + 1); break;
-        	case 2: zzz = zzz - (this.size + 1); break;
-        	case 3: xxx = xxx + (this.size + 1); break;
-        	case 0: zzz = zzz + (this.size + 1); break;
+        	case 1: xxx = xxx - (this.size); break;
+        	case 2: zzz = zzz - (this.size); break;
+        	case 3: xxx = xxx + (this.size); break;
+        	case 0: zzz = zzz + (this.size); break;
         }
 
         //int yyy = par3World.getHeightValue(xxx, zzz);

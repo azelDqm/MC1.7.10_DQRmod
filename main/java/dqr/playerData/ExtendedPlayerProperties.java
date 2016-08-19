@@ -79,6 +79,12 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
     private int[] RuraDim = new int[5];
     private int[] RuraEnable = new int[5];
 
+    private double[] BasiRuraX = new double[5];
+    private double[] BasiRuraY = new double[5];
+    private double[] BasiRuraZ = new double[5];
+    private int[] BasiRuraDim = new int[5];
+    private int[] BasiRuraEnable = new int[5];
+
     private double[] KimeraX = new double[5];
     private double[] KimeraY = new double[5];
     private double[] KimeraZ = new double[5];
@@ -95,6 +101,9 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
     private double[] rarihoLoc = new double[4];
 
     private int MaxItemUserCnt = 0;
+
+    private int preFoodLevel = -1;
+
 /*
     private int sampleInt = 0;
     private double sampleDouble = 0.0D;
@@ -231,6 +240,15 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
     		nbt.setDouble("RuraZ_" + cnt, this.RuraZ[cnt]);
     		nbt.setInteger("RuraDim_" + cnt, this.RuraDim[cnt]);
     		nbt.setInteger("RuraEnable_" + cnt, this.RuraEnable[cnt]);
+    	}
+
+    	for(int cnt = 0; cnt < BasiRuraX.length; cnt++)
+    	{
+    		nbt.setDouble("BasiRuraX_" + cnt, this.BasiRuraX[cnt]);
+    		nbt.setDouble("BasiRuraY_" + cnt, this.BasiRuraY[cnt]);
+    		nbt.setDouble("BasiRuraZ_" + cnt, this.BasiRuraZ[cnt]);
+    		nbt.setInteger("BasiRuraDim_" + cnt, this.BasiRuraDim[cnt]);
+    		nbt.setInteger("BasiRuraEnable_" + cnt, this.BasiRuraEnable[cnt]);
     	}
 
     	for(int cnt = 0; cnt < KimeraX.length; cnt++)
@@ -435,6 +453,15 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
     		RuraZ[cnt] = nbt.getDouble("RuraZ_" + cnt);
     		RuraDim[cnt] = nbt.getInteger("RuraDim_" + cnt);
     		RuraEnable[cnt] = nbt.getInteger("RuraEnable_" + cnt);
+    	}
+
+    	for(int cnt = 0; cnt < BasiRuraX.length; cnt++)
+    	{
+    		BasiRuraX[cnt] = nbt.getDouble("BasiRuraX_" + cnt);
+    		BasiRuraY[cnt] = nbt.getDouble("BasiRuraY_" + cnt);
+    		BasiRuraZ[cnt] = nbt.getDouble("BasiRuraZ_" + cnt);
+    		BasiRuraDim[cnt] = nbt.getInteger("BasiRuraDim_" + cnt);
+    		BasiRuraEnable[cnt] = nbt.getInteger("BasiRuraEnable_" + cnt);
     	}
 
     	for(int cnt = 0; cnt < KimeraX.length; cnt++)
@@ -1123,6 +1150,15 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
     	this.RuraEnable[par1] = par6;
     }
 
+    public void setBasiRura(int par1, double par2, double par3, double par4, int par5, int par6)
+    {
+    	this.BasiRuraX[par1] = par2;
+    	this.BasiRuraY[par1] = par3;
+    	this.BasiRuraZ[par1] = par4;
+    	this.BasiRuraDim[par1] = par5;
+    	this.BasiRuraEnable[par1] = par6;
+    }
+
     public void setKimera(int par1, double par2, double par3, double par4, int par5, int par6)
     {
     	this.KimeraX[par1] = par2;
@@ -1131,6 +1167,58 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
     	this.KimeraDim[par1] = par5;
     	this.KimeraEnable[par1] = par6;
     }
+
+
+    public double[] getBasiRura(int par1)
+    {
+    	return new double[]{this.BasiRuraX[par1], this.BasiRuraY[par1], this.BasiRuraZ[par1], this.BasiRuraDim[par1]};
+    }
+
+    public void setBasiRuraX(int par1, double par2)
+    {
+    	this.BasiRuraX[par1] = par2;
+    }
+    public double getBasiRuraX(int par1)
+    {
+    	return this.BasiRuraX[par1];
+    }
+
+    public void setBasiRuraY(int par1, double par2)
+    {
+    	this.BasiRuraY[par1] = par2;
+    }
+    public double getBasiRuraY(int par1)
+    {
+    	return this.BasiRuraY[par1];
+    }
+
+    public void setBasiRuraZ(int par1, double par2)
+    {
+    	this.BasiRuraZ[par1] = par2;
+    }
+    public double getBasiRuraZ(int par1)
+    {
+    	return this.BasiRuraZ[par1];
+    }
+
+    public void setBasiRuraDim(int par1, int par2)
+    {
+    	this.BasiRuraDim[par1] = par2;
+    }
+    public double getBasiRuraDim(int par1)
+    {
+    	return this.BasiRuraDim[par1];
+    }
+
+    public void setBasiRuraEnable(int par1, int par2)
+    {
+    	this.BasiRuraEnable[par1] = par2;
+    }
+    public double getBasiRuraEnable(int par1)
+    {
+    	return this.BasiRuraEnable[par1];
+    }
+
 
     public double[] getRura(int par1)
     {
@@ -1244,6 +1332,13 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
     }
     public void setMaxItemUserCnt(int par1) {
         this.MaxItemUserCnt = par1;
+    }
+
+    public int getPreFoodLevel() {
+        return preFoodLevel;
+    }
+    public void setPreFoodLevel(int par1) {
+        this.preFoodLevel = par1;
     }
     /*
     public int getSampleInt() {

@@ -3,18 +3,122 @@ package dqr.addons;
 import java.util.Random;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.PotionEffect;
+import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
+import shift.sextiarysector.SSItems;
+import shift.sextiarysector.SSPotions;
 import shift.sextiarysector.api.SextiarySectorAPI;
 import shift.sextiarysector.api.event.PlayerEatenEvent;
+import shift.sextiarysector.api.event.player.PlayerMoistureEvent;
+import shift.sextiarysector.api.event.player.PlayerStaminaEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import dqr.api.Items.DQAccessories;
 import dqr.api.Items.DQIngots;
 import dqr.api.Items.DQMiscs;
 import dqr.api.Items.DQSeeds;
 import dqr.api.event.DqmLvUpEvent;
 import dqr.api.event.DqrBedEvent;
+import dqr.api.event.DqrFarmMGTEvent;
+import dqr.entity.petEntity.DqmPetBase;
+import dqr.gui.subEquip.InventorySubEquip;
+import dqr.playerData.ExtendedPlayerProperties;
 
 public class DqrAddonSextiarySector2 {
 
+	@SubscribeEvent
+    public void onPotionCalc(LivingUpdateEvent event) {
+		if(event.entityLiving instanceof EntityPlayer)
+		{
+			EntityPlayer pl = (EntityPlayer)event.entityLiving;
+			PotionEffect pe = null;
+
+			pe = pl.getActivePotionEffect(SSPotions.hotSprings);
+			if(pe != null && pe.getDuration() > 0)
+			{
+    			if(pl.ticksExisted % 10 == 0)
+    			{
+	    			int mp = ExtendedPlayerProperties.get(pl).getMP();
+	    			if(ExtendedPlayerProperties.get(pl).getMaxMP() > mp)
+	    			{
+		    			ExtendedPlayerProperties.get(pl).setMP(mp + 1);
+	    			}
+
+					if(pl.getHealth() < pl.getMaxHealth())
+					{
+						pl.heal(1);
+					}
+    			}
+			}
+		}else if(event.entityLiving instanceof DqmPetBase)
+		{
+			DqmPetBase pl = (DqmPetBase)event.entityLiving;
+			PotionEffect pe = null;
+
+			pe = pl.getActivePotionEffect(SSPotions.hotSprings);
+			if(pe != null && pe.getDuration() > 0)
+			{
+    			if(pl.ticksExisted % 10 == 0)
+    			{
+	    			int mp = pl.getMP();
+	    			if(pl.getMaxMP() > mp)
+	    			{
+	    				pl.setMP(mp + 1);
+	    			}
+
+					if(pl.getHealth() < pl.getMaxHealth())
+					{
+						pl.heal(1);
+					}
+    			}
+			}
+		}
+	}
+
+	@SubscribeEvent
+	public void onMoistureExhaustionEvent(PlayerMoistureEvent.Exhaustion event) {
+
+    	InventorySubEquip inventory = new InventorySubEquip(event.entityPlayer);
+    	inventory.openInventory();
+
+		if(inventory.hasPiasu(DQAccessories.itemSuraimupiasu) != -1)
+		{
+			event.setCanceled(true);
+			return;
+		}
+
+
+	}
+	@SubscribeEvent
+	public void onMGTPostPlowEvent(DqrFarmMGTEvent.PostPlow event) {
+
+		if(event.ep.isSneaking())
+		{
+			Item item = SSItems.diamondScoop;
+			item.onItemUse(new ItemStack(item, 1), event.ep, event.ep.worldObj, event.blockX, event.blockY, event.blockZ, event.blockFace, event.float1, event.float2, event.float3);
+		}
+	}
+
+	@SubscribeEvent
+	public void onMoistureExhaustionEvent(PlayerStaminaEvent.Exhaustion event) {
+    	InventorySubEquip inventory = new InventorySubEquip(event.entityPlayer);
+    	inventory.openInventory();
+
+		if(inventory.hasYubiwa(DQAccessories.itemHaraherazuYubiwa) != -1)
+		{
+			event.setCanceled(true);
+			return;
+		}else if(inventory.hasYubiwa(DQAccessories.itemHaramotiYubiwa) != -1)
+		{
+			Random rand = new Random();
+			if(rand.nextInt(2) == 0)
+			{
+				event.setCanceled(true);
+				return;
+			}
+		}
+	}
 
 	@SubscribeEvent
 	public void onPlayerEatenEvent(PlayerEatenEvent event) {

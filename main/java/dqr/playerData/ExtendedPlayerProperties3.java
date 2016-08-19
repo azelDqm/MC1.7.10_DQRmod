@@ -18,6 +18,7 @@ public class ExtendedPlayerProperties3 implements IExtendedEntityProperties {
 	private NBTTagCompound NBTPlayerPetList = new NBTTagCompound();
 	private int petCount;
 
+	private int deadCheckFlg = 0;
 	//private NBTTagCompound NBTWeaponSkillPermission = new NBTTagCompound();
 	//private int[] skillPermission = new int[10];
 	private int[][] weaponSkillPermission = new int[64][SKILL_MAX_COUNTER];
@@ -27,6 +28,8 @@ public class ExtendedPlayerProperties3 implements IExtendedEntityProperties {
 	private DqmPetBase statusPet;
 	private String statusPetOwner;
 	//private DqmPetBase invPet;
+
+	private NBTTagCompound partyMemberData = new NBTTagCompound();
 
     private static String getSaveKey(EntityPlayer player) {
         return player.getCommandSenderName() + ":" + EXT_PROP_NAME;
@@ -77,12 +80,20 @@ public class ExtendedPlayerProperties3 implements IExtendedEntityProperties {
         	nbt.setInteger("weaponSkillSet" + cnt, weaponSkillSet[cnt]);
         }
 
+        nbt.setTag("partyMemberData", partyMemberData);
+        nbt.setInteger("deadCheckFlg", deadCheckFlg);
+
         compound.setTag(EXT_PROP_NAME, nbt);
 	}
 
 	@Override
 	public void loadNBTData(NBTTagCompound compound) {
 		// TODO 自動生成されたメソッド・スタブ
+		if(compound == null)
+		{
+			//System.out.println("packet lost");
+			return;
+		}
 		NBTTagCompound nbt = (NBTTagCompound)compound.getTag(EXT_PROP_NAME);
 
         for(int cnt = 0; cnt < 32; cnt++)
@@ -108,6 +119,17 @@ public class ExtendedPlayerProperties3 implements IExtendedEntityProperties {
         {
         	weaponSkillSet[cnt] = nbt.getInteger("weaponSkillSet" + cnt);
         }
+
+        if(nbt.getCompoundTag("partyMemberData") != null)
+        {
+        	partyMemberData = (NBTTagCompound)nbt.getCompoundTag("partyMemberData");
+        }else
+        {
+        	partyMemberData = new NBTTagCompound();
+        }
+
+        deadCheckFlg = nbt.getInteger("deadCheckFlg");
+        //partyTagList.func_150296_c()
 	}
 
     public int[] getJobPermissionA() {
@@ -240,6 +262,29 @@ public class ExtendedPlayerProperties3 implements IExtendedEntityProperties {
         return this.statusPetOwner;
     }
 
+
+    public void setPartyMemberData(NBTTagCompound par1) {
+    	if(par1 != null)
+    	{
+    		this.partyMemberData = new NBTTagCompound();
+    		this.partyMemberData = par1;
+    		//System.out.println(par1.func_150296_c().size());
+    	}else
+    	{
+    		this.partyMemberData = new NBTTagCompound();
+    	}
+    }
+    public NBTTagCompound getPartyMemberData() {
+        return this.partyMemberData;
+    }
+
+
+    public void setDeadCheckFlg(int par1) {
+        this.deadCheckFlg = par1;
+    }
+    public int getDeadCheckFlg() {
+        return this.deadCheckFlg;
+    }
     /*
     public void setInvPet(DqmPetBase par1) {
        //this.invPet = par1;

@@ -1,7 +1,8 @@
-package dqr.entity.magicEntity.magic;
+  package dqr.entity.magicEntity.magic;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -466,8 +467,9 @@ public class MagicEntityZaki extends MagicEntity implements IProjectile{
                     		if(pe != null && this.shootingEntity != null && this.shootingEntity instanceof EntityLivingBase)
                     		{
                             	EntityLiving elv = (EntityLiving)this.shootingEntity;
-
-                            	if(rand.nextInt(100) < this.rate)
+                            	float fixRate = DQR.calcDamage.applyDamageResistMagic2(0, elv, damagesource);
+                            	Random rand2 = new Random();
+                            	if(rand.nextInt(100) < this.rate && (fixRate * 100) > rand2.nextInt(100))
 	                            {
 	                            	//村人以外なら、ダメージを与える処理を呼ぶ
 	                            	i1 = (int)elv.getMaxHealth() + 10;
@@ -485,6 +487,7 @@ public class MagicEntityZaki extends MagicEntity implements IProjectile{
 	                            		ds = DQR.damageSource.getPlayerSkillDamage((EntityPlayer)damagesource.getSourceOfDamage());
 	                            	}
 
+	                            	ds.setDamageBypassesArmor();
 	                            	//DQR.damageSource.getPlayerSkillDamage(ep)
 	                            	//if (elv.attackEntityFrom(damagesource, (float)i1))
 	                            	if (elv.attackEntityFrom(ds, (float)i1))
@@ -559,8 +562,12 @@ public class MagicEntityZaki extends MagicEntity implements IProjectile{
 
                     		}else
                     		{
+
 	                        	//村人以外なら、ダメージを与える処理を呼ぶ
-                            	if(rand.nextInt(100) < this.rate)
+                            	float fixRate = DQR.calcDamage.applyDamageResistMagic2(0, target.entityHit, damagesource);
+                            	Random rand2 = new Random();
+                            	damagesource.setDamageBypassesArmor();
+                            	if(rand.nextInt(100) < this.rate && (fixRate * 100) > rand2.nextInt(100))
 	                            {
 	                    			if(target.entityHit instanceof EntityLiving)
 		                    		{

@@ -75,6 +75,7 @@ public class ThreadLvUp extends Thread{
 				break;
 			}
 		}
+
 	}
 
 	public void lvUpProcess(int lv)

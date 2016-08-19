@@ -82,7 +82,17 @@ public class DQAccessories {
 	public static Item itemOogasirudo;
 	public static Item itemPuratinasirudo;
 	public static Item itemFuujinnnotate;
+	public static Item itemFuujinnnotate2;
+	public static Item itemFuujinnnotate3;
 	public static Item itemMikagaminotate;
 	public static Item itemTikaranotate;
 	public static Item itemMetarukingnotate;
+
+	public static Item itemTenkuunotate;
+	public static Item itemRotonotate;
+	public static Item itemSabitatate;
+	public static Item itemMegaminotate;
+	public static Item itemUroborosunotate;
+
+	public static Item itemAccCanceler;
 }

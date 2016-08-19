@@ -84,10 +84,10 @@ public class DqmItemDyeWhite2 extends DqmItemMiscBase{
 
 	            if (!p_150919_1_.isRemote)
 	            {
-	            	if(rand.nextInt(4) == 0)
-	            	{
-	            		igrowable.fertilize(p_150919_1_, p_150919_2_, p_150919_3_, p_150919_4_);
-	            	}
+	            	//if(rand.nextInt(4) == 0)
+	            	//{
+	            	igrowable.fertilize2(p_150919_1_, p_150919_2_, p_150919_3_, p_150919_4_, rand.nextInt(5));
+	            	//}
 	        		--p_150919_0_.stackSize;
 	                return true;
 	            }

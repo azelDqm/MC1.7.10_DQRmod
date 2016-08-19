@@ -4,14 +4,12 @@ import java.io.File;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.MinecraftForge;
 import tconstruct.client.tabs.InventoryTabVanilla;
 import tconstruct.client.tabs.TabRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.common.network.IGuiHandler;
 import dqr.addons.mceconomy2.DqrEntityNPCBankMP;
 import dqr.addons.mceconomy2.DqrRenderNPCBankMP;
 import dqr.api.Items.DQWeapons;
@@ -28,11 +26,11 @@ import dqr.entity.throwingEntity.ThrowingRegister;
 import dqr.entity.throwingEntity.ThrowingRenderingRegister;
 import dqr.entity.villagerEntity.DqmVillagerSkinRegister;
 import dqr.functions.FuncEntityRenderExtension;
-import dqr.gui.farmBook.GuiFarmBookGuiContainer;
 import dqr.gui.medalKing.tab.MedalKingTabs;
 import dqr.gui.petStatus.tab.PetStatusTabs;
 import dqr.gui.playerHUD.GuiBuffBar;
 import dqr.gui.playerHUD.GuiLogger;
+import dqr.gui.playerHUD.GuiParty;
 import dqr.gui.playerHUD.GuiPlayerArmorStatus;
 import dqr.gui.playerHUD.GuiPlayerData;
 import dqr.gui.playerHUD.GuiPlayerStatus;
@@ -47,15 +45,17 @@ import dqr.items.render.ItemRenderBow;
 import dqr.keyHandler.ClientKeyBindCore;
 
 
-public class ClientProxy extends CommonProxy implements IGuiHandler
+public class ClientProxy extends CommonProxy
 {
-    @Override
+    //@Override
+	/*
     public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
         if (ID == DQR.conf.GuiID_FarmBook) {
             return new GuiFarmBookGuiContainer(x, y, z);
         }
         return null;
     }
+    */
 
 	@Override
 	public File getDir()
@@ -107,6 +107,7 @@ public class ClientProxy extends CommonProxy implements IGuiHandler
 
     	MinecraftForge.EVENT_BUS.register(new GuiBuffBar(Minecraft.getMinecraft()));
     	MinecraftForge.EVENT_BUS.register(new GuiLogger(Minecraft.getMinecraft()));
+    	MinecraftForge.EVENT_BUS.register(new GuiParty(Minecraft.getMinecraft()));
     	MinecraftForge.EVENT_BUS.register(new GuiPlayerData(Minecraft.getMinecraft()));
     	MinecraftForge.EVENT_BUS.register(new GuiPlayerStatus(Minecraft.getMinecraft()));
     	MinecraftForge.EVENT_BUS.register(new GuiPlayerSubpoint(Minecraft.getMinecraft()));

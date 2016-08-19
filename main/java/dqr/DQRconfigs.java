@@ -41,6 +41,12 @@ public class DQRconfigs {
 	public static int CLGuiLogPosX = 0;
 	public static int CLGuiLogPosY = 0;
 
+	public static int CLGuiPartyVis = 1;
+	public static int CLGuiPartyPos = 1;
+	public static int CLGuiPartyPosX = 0;
+	public static int CLGuiPartyPosY = 0;
+	public static int CLGuiPartyReturnLine = 5;
+
 	public static int CLGuiSubpointsVis = 1;
 	public static int CLGuiSubpointsPos = 10;
 	public static int CLGuiSubpointsPosX = 0;
@@ -67,6 +73,8 @@ public class DQRconfigs {
 	public static int GuiID_DqrEnderchest = 13;
 	public static int GuiID_ItemBag = 14;
 	public static int GuiID_SubEquip = 20;
+	public static int GuiID_SubItemBag = 21;
+	public static int GuiID_MKAccessory = 22;
 
 	public static int CLGuiLogWindowOff = 1;
 
@@ -83,6 +91,12 @@ public class DQRconfigs {
 	public static int[] RuraC_Y = {0, 0, 0, 0, 0};
 	public static int[] RuraC_Z = {0, 0, 0, 0, 0};
 	public static int[] RuraC_Dim = {0, 0, 0, 0, 0};
+
+	public static int BasiRuraC_IGF = 1;
+	public static int[] BasiRuraC_X = {0, 0, 0, 0, 0};
+	public static int[] BasiRuraC_Y = {0, 0, 0, 0, 0};
+	public static int[] BasiRuraC_Z = {0, 0, 0, 0, 0};
+	public static int[] BasiRuraC_Dim = {0, 0, 0, 0, 0};
 
 	public static int KimeraC_IGF = 1;
 	public static int[] KimeraC_X = {0, 0, 0, 0, 0};
@@ -167,6 +181,9 @@ public class DQRconfigs {
 
     public static int cfg_build_sleep = 250;
 
+    public static int cfg_NoThreadUse = 0;
+    public static int cfg_NoThreadUseHervest = 0;
+
     public static int cfg_generateOreDimType = 0;
     public static int[] cfg_generateOreDimId = new int[]{0, -5, -6};
     public static String[] cfg_generateOreDimFolder = new String[]{".", "DIM-5", "DIM-6"};
@@ -223,6 +240,7 @@ public class DQRconfigs {
     public static int[] MGFarm_Area_Z = new int[]{1, 3, 5, 7, 9, 10, 10, 10, 30, 30, 30};
 
     public static int MGBreak1_enable = 3;
+    public static int MGBreak1_damageWeight = 1;
     public static int MGBreak1_SmoothBreak = 1;
     public static int[] MGBreak1_Area_X = new int[]{1, 3, 5, 7, 9, 1, 3, 3, 1, 3, 1};
     public static int[] MGBreak1_Area_Y = new int[]{1, 3, 5, 7, 9, 3, 3, 3, 3, 3, 1};
@@ -230,6 +248,7 @@ public class DQRconfigs {
 
     public static int MGBreak2_enable = 3;
     public static int MGBreak2_SmoothBreak = 1;
+    public static int MGBreak2_damageWeight = 1;
     public static int[] MGBreak2_Area_X = new int[]{1, 3, 5, 7, 9, 1, 3, 3, 1, 3, 1};
     public static int[] MGBreak2_Area_Y = new int[]{1, 3, 5, 7, 9, 3, 3, 3, 3, 3, 1};
     public static int[] MGBreak2_Area_Z = new int[]{1, 3, 5, 7, 9, 3, 5, 10, 20, 30, 100};
@@ -376,6 +395,12 @@ public class DQRconfigs {
 
     public static String cfgVersion = "1.0.0";
     public static boolean readFlg1 = false;
+
+    public static int hoshihuri1 = 10;
+    public static int hoshihuri2 = 15;
+
+    public static int deadClearWidth = 0;
+    public static int deadClearHeight = 0;
 
     public DQRconfigs()
 	{
@@ -540,6 +565,7 @@ public class DQRconfigs {
 		config.setCategoryComment("MagicTool_Break1 settings", "");
 		MGBreak1_enable = config.get("MagicTool_Break1 settings","item enable", MGBreak1_enable , "0:disable 1:BreakOnly 2:DeleteOnly 3:Both").getInt();
 		MGBreak1_SmoothBreak = config.get("MagicTool_Break1 settings","Smooth break", MGBreak1_SmoothBreak , "0:disable 1:enable").getInt();
+		MGBreak1_damageWeight = config.get("MagicTool_Break1 settings","damage weight", MGBreak1_damageWeight , "using cost for one block break").getInt();
 		MGBreak1_Area_X = config.get("MagicTool_Break1 settings","Function area X", MGBreak1_Area_X , "Any function area X pattern").getIntList();
 		MGBreak1_Area_Y = config.get("MagicTool_Break1 settings","Function area Y", MGBreak1_Area_Y , "Any function area Y pattern").getIntList();
 		MGBreak1_Area_Z = config.get("MagicTool_Break1 settings","Function area Z", MGBreak1_Area_Z , "Any function area Z pattern").getIntList();
@@ -547,6 +573,7 @@ public class DQRconfigs {
 		config.setCategoryComment("MagicTool_Break2 settings", "");
 		MGBreak2_enable = config.get("MagicTool_Break2 settings","item enable", MGBreak2_enable , "0:disable 1:BreakOnly 2:DeleteOnly 3:Both").getInt();
 		MGBreak2_SmoothBreak = config.get("MagicTool_Break2 settings","Smooth break", MGBreak2_SmoothBreak , "0:disable 1:enable").getInt();
+		MGBreak2_damageWeight = config.get("MagicTool_Break2 settings","damage weight", MGBreak2_damageWeight , "using cost for one block break").getInt();
 		MGBreak2_Area_X = config.get("MagicTool_Break2 settings","Function area X", MGBreak2_Area_X , "Any function area X pattern").getIntList();
 		MGBreak2_Area_Y = config.get("MagicTool_Break2 settings","Function area Y", MGBreak2_Area_Y , "Any function area Y pattern").getIntList();
 		MGBreak2_Area_Z = config.get("MagicTool_Break2 settings","Function area Z", MGBreak2_Area_Z , "Any function area Z pattern").getIntList();
@@ -612,6 +639,16 @@ public class DQRconfigs {
 		needBuilderFrame3 = config.get("BuilderDama use condition","BuilderDamaW", needBuilderFrame3, "Use BuilderDamaW required builder frame(0:false 1:true)").getInt();
 		needBuilderFrame4 = config.get("BuilderDama use condition","BuilderIdoMedal", needBuilderFrame4, "Use BuilderIdoMedal required builder frame(0:false 1:true)").getInt();
 
+		config.setCategoryComment("Accessories properties", "this setting is advanced properties for accessories");
+		hoshihuri1 = config.get("Accessories properties","Hosifurupiasu Buff Lv", hoshihuri1, "Effect Amplifier for Hosifurupiasu").getInt();
+		hoshihuri2 = config.get("Accessories properties","Hosifurupiasu2 Buff Lv", hoshihuri2, "Effect Amplifier for Hosifurupiasu2").getInt();
+
+
+		config.setCategoryComment("Clearing for respawn", "this setting is width of clearing area");
+		deadClearWidth = config.get("Clearing for respawn","Clearing width (radius)", deadClearWidth).getInt();
+		deadClearHeight = config.get("Clearing for respawn","Clearing height (radius)", deadClearHeight).getInt();
+
+
 		config.setCategoryComment("Model render size", "this setting is Model render magnification");
 		figureMagni = (float)(config.get("Model render size","figure size", 3, "figure size = objSize / thisVal").getInt());
 		config.save();
@@ -633,6 +670,8 @@ public class DQRconfigs {
 		DqmDifficulty = config.get("Core Settings","Difficulty", DqmDifficulty ,"0:UltraEasy 1:VeryEasy 2:Easy 3:Normal 4:Hard 5:VeryHard 6:UltraHard").getInt();
 		DqmEndoraDifficulty = config.get("Core Settings","EndoraDifficulty", DqmEndoraDifficulty ,"set difficulty for EnderDragon(0-6). if set -1 then same as Core Settings.Difficulty").getInt();
 		cfg_build_sleep = config.get("Core Settings","Build waiting time", cfg_build_sleep ,"setting interval time(msec) for feature building").getInt();
+		cfg_NoThreadUse = config.get("Core Settings","Don't use parallel process for Lv UP", cfg_NoThreadUse ,"0:disable 1:enable").getInt();
+		cfg_NoThreadUseHervest = config.get("Core Settings","Don't use parallel process for Harvest(Farming Magic Tool)", cfg_NoThreadUseHervest ,"0:disable 1:enable").getInt();
 
 		config.setCategoryComment("SpawnerRoomGenerateRate", "this setting is SpawnerRoom generate Rating Val ");
 		SpawnRoomRate1 = config.get("SpawnerRoomGenerateRate","Overworld value", SpawnRoomRate1 ,"default = 1 / (512) - 0[settingVal]").getInt();
@@ -942,6 +981,12 @@ public class DQRconfigs {
 		CLGuiBuffBarPosX = config.get("GamePlayPotionEffectTimeGUI","GUI Position fix X", CLGuiBuffBarPosX, "GUI position fix pixels from GUI BasePosition").getInt();
 		CLGuiBuffBarPosY = config.get("GamePlayPotionEffectTimeGUI","GUI Position fix Y", CLGuiBuffBarPosY, "GUI position fix pixels from GUI BasePosition").getInt();
 
+		config.setCategoryComment("GamePlayPartyPlayGUI", "Party play status GUI settings");
+		CLGuiPartyVis = config.get("GamePlayPartyPlayGUI","GUI Visible", CLGuiPartyVis ,"0=false 1=true").getInt();
+		CLGuiPartyPos = config.get("GamePlayPartyPlayGUI","GUI BasePosition", CLGuiPartyPos ,"1=LeftTop, 2, 3=LeftMiddle, 4, 5=LeftBottom, 6=RightTop, 7, 8=RightMiddle, 9, 10=RightBottom, 11,CenterTop, 12, 13=CenterMiddle, 14, 15=CenterBottom").getInt();
+		CLGuiPartyPosX = config.get("GamePlayPartyPlayGUI","GUI Position fix X", CLGuiPartyPosX, "GUI position fix pixels from GUI BasePosition").getInt();
+		CLGuiPartyPosY = config.get("GamePlayPartyPlayGUI","GUI Position fix Y", CLGuiPartyPosY, "GUI position fix pixels from GUI BasePosition").getInt();
+		CLGuiPartyReturnLine = config.get("GamePlayPartyPlayGUI","GUI Return line", CLGuiPartyReturnLine, "GUI return line ").getInt();
 
 		config.save();
 	}
@@ -969,6 +1014,7 @@ public class DQRconfigs {
 		GuiID_MKJob =  config.get("GUI ID","MedalKingGUI(Job)", GuiID_MKJob).getInt();
 		GuiID_MKMisc =  config.get("GUI ID","MedalKingGUI(Misc)", GuiID_MKMisc).getInt();
 		GuiID_MKMedal =  config.get("GUI ID","MedalKingGUI(Medal)", GuiID_MKMedal).getInt();
+		GuiID_MKAccessory =  config.get("GUI ID","MedalKingGUI(Accessory)", GuiID_MKAccessory).getInt();
 		GuiID_PetBook =  config.get("GUI ID","PetBook", GuiID_PetBook).getInt();
 		GuiID_SkillWeapon =  config.get("GUI ID","SkillWeapon", GuiID_SkillWeapon).getInt();
 		GuiID_PetStatus =  config.get("GUI ID","PetStatus", GuiID_PetStatus).getInt();
@@ -976,6 +1022,7 @@ public class DQRconfigs {
 		GuiID_DqrEnderchest =  config.get("GUI ID","DQR EnderChest", GuiID_DqrEnderchest).getInt();
 		GuiID_ItemBag =  config.get("GUI ID","ItemBag", GuiID_ItemBag).getInt();
 		GuiID_SubEquip =  config.get("GUI ID","MainInventory SubEquip", GuiID_SubEquip).getInt();
+		GuiID_SubItemBag =  config.get("GUI ID","ItemBag on SubEquip", GuiID_SubItemBag).getInt();
 		config.save();
 
 	}
@@ -1050,6 +1097,42 @@ public class DQRconfigs {
 		KimeraC_Z[EnumDqmMagic.RuraYC.getType()] = config.get("KimeraC(Yellow) Coordinates","KimeraCYellow_Z", KimeraC_Z[EnumDqmMagic.RuraYC.getType()] ,"jump to posZ setting").getInt();
 		KimeraC_Dim[EnumDqmMagic.RuraYC.getType()] = config.get("KimeraC(Yellow) Coordinates","KimeraCYellow_Dim", KimeraC_Dim[EnumDqmMagic.RuraYC.getType()] ,"only use dimension setting. You can use this magic at this setting Dimension").getInt();
 
+
+		config.setCategoryComment("BasiRuraC Main", "BasiRuraC Main settings");
+		BasiRuraC_IGF = config.get("BasiRuraC Main","BasiRuraC_InGameFix", BasiRuraC_IGF, "allow in game cordinates fix (0:prohibit 1:allow only OP 2:allow for all player)").getInt();
+
+		config.setCategoryComment("BasiRuraC(white) Coordinates", "BasiRuraC Cordinates settings");
+		BasiRuraC_X[EnumDqmMagic.BasiruraC.getType()] = config.get("BasiRuraC(white) Coordinates","BasiRuraC_X", BasiRuraC_X[EnumDqmMagic.BasiruraC.getType()], "jump to posX setting").getInt();
+		BasiRuraC_Y[EnumDqmMagic.BasiruraC.getType()] = config.get("BasiRuraC(white) Coordinates","BasiRuraC_Y", BasiRuraC_Y[EnumDqmMagic.BasiruraC.getType()] ,"jump to posY setting").getInt();
+		BasiRuraC_Z[EnumDqmMagic.BasiruraC.getType()] = config.get("BasiRuraC(white) Coordinates","BasiRuraC_Z", BasiRuraC_Z[EnumDqmMagic.BasiruraC.getType()] ,"jump to posZ setting").getInt();
+		BasiRuraC_Dim[EnumDqmMagic.BasiruraC.getType()] = config.get("BasiRuraC(white) Coordinates","BasiRuraC_Dim", BasiRuraC_Dim[EnumDqmMagic.BasiruraC.getType()] ,"only use dimension setting. You can use this magic at this setting Dimension").getInt();
+
+		/*
+		config.setCategoryComment("BasiRuraC(Red) Coordinates", "BasiRuraC(Red) Cordinates settings");
+		BasiRuraC_X[EnumDqmMagic.RuraRC.getType()] = config.get("BasiRuraC(Red) Coordinates","BasiRuraCRed_X", BasiRuraC_X[EnumDqmMagic.RuraRC.getType()], "jump to posX setting").getInt();
+		BasiRuraC_Y[EnumDqmMagic.RuraRC.getType()] = config.get("BasiRuraC(Red) Coordinates","BasiRuraCRed_Y", BasiRuraC_Y[EnumDqmMagic.RuraRC.getType()] ,"jump to posY setting").getInt();
+		BasiRuraC_Z[EnumDqmMagic.RuraRC.getType()] = config.get("BasiRuraC(Red) Coordinates","BasiRuraCRed_Z", BasiRuraC_Z[EnumDqmMagic.RuraRC.getType()] ,"jump to posZ setting").getInt();
+		BasiRuraC_Dim[EnumDqmMagic.RuraRC.getType()] = config.get("BasiRuraC(Red) Coordinates","BasiRuraCRed_Dim", BasiRuraC_Dim[EnumDqmMagic.RuraRC.getType()] ,"only use dimension setting. You can use this magic at this setting Dimension").getInt();
+
+		config.setCategoryComment("BasiRuraC(Green) Coordinates", "BasiRuraC(Green) Cordinates settings");
+		BasiRuraC_X[EnumDqmMagic.RuraGC.getType()] = config.get("BasiRuraC(Green) Coordinates","BasiRuraCGreen_X", BasiRuraC_X[EnumDqmMagic.RuraGC.getType()], "jump to posX setting").getInt();
+		BasiRuraC_Y[EnumDqmMagic.RuraGC.getType()] = config.get("BasiRuraC(Green) Coordinates","BasiRuraCGreen_Y", BasiRuraC_Y[EnumDqmMagic.RuraGC.getType()] ,"jump to posY setting").getInt();
+		BasiRuraC_Z[EnumDqmMagic.RuraGC.getType()] = config.get("BasiRuraC(Green) Coordinates","BasiRuraCGreen_Z", BasiRuraC_Z[EnumDqmMagic.RuraGC.getType()] ,"jump to posZ setting").getInt();
+		BasiRuraC_Dim[EnumDqmMagic.RuraGC.getType()] = config.get("BasiRuraC(Green) Coordinates","BasiRuraCGreen_Dim", BasiRuraC_Dim[EnumDqmMagic.RuraGC.getType()] ,"only use dimension setting. You can use this magic at this setting Dimension").getInt();
+
+		config.setCategoryComment("BasiRuraC(Blue) Coordinates", "BasiRuraC(Blue) Cordinates settings");
+		BasiRuraC_X[EnumDqmMagic.RuraBC.getType()] = config.get("BasiRuraC(Blue) Coordinates","BasiRuraCBlue_X", BasiRuraC_X[EnumDqmMagic.RuraBC.getType()], "jump to posX setting").getInt();
+		BasiRuraC_Y[EnumDqmMagic.RuraBC.getType()] = config.get("BasiRuraC(Blue) Coordinates","BasiRuraCBlue_Y", BasiRuraC_Y[EnumDqmMagic.RuraBC.getType()] ,"jump to posY setting").getInt();
+		BasiRuraC_Z[EnumDqmMagic.RuraBC.getType()] = config.get("BasiRuraC(Blue) Coordinates","BasiRuraCBlue_Z", BasiRuraC_Z[EnumDqmMagic.RuraBC.getType()] ,"jump to posZ setting").getInt();
+		BasiRuraC_Dim[EnumDqmMagic.RuraBC.getType()] = config.get("BasiRuraC(Blue) Coordinates","BasiRuraCBlue_Dim", BasiRuraC_Dim[EnumDqmMagic.RuraBC.getType()] ,"only use dimension setting. You can use this magic at this setting Dimension").getInt();
+
+		config.setCategoryComment("BasiRuraC(Yellow) Coordinates", "BasiRuraC(Yellow) Cordinates settings");
+		BasiRuraC_X[EnumDqmMagic.RuraYC.getType()] = config.get("BasiRuraC(Yellow) Coordinates","BasiRuraCYellow_X", BasiRuraC_X[EnumDqmMagic.RuraYC.getType()], "jump to posX setting").getInt();
+		BasiRuraC_Y[EnumDqmMagic.RuraYC.getType()] = config.get("BasiRuraC(Yellow) Coordinates","BasiRuraCYellow_Y", BasiRuraC_Y[EnumDqmMagic.RuraYC.getType()] ,"jump to posY setting").getInt();
+		BasiRuraC_Z[EnumDqmMagic.RuraYC.getType()] = config.get("BasiRuraC(Yellow) Coordinates","BasiRuraCYellow_Z", BasiRuraC_Z[EnumDqmMagic.RuraYC.getType()] ,"jump to posZ setting").getInt();
+		BasiRuraC_Dim[EnumDqmMagic.RuraYC.getType()] = config.get("BasiRuraC(Yellow) Coordinates","BasiRuraCYellow_Dim", BasiRuraC_Dim[EnumDqmMagic.RuraYC.getType()] ,"only use dimension setting. You can use this magic at this setting Dimension").getInt();
+		*/
+
 		config.save();
 	}
 
@@ -1116,6 +1199,93 @@ public class DQRconfigs {
 		cfg_gui.get("GamePlayPotionEffectTimeGUI","GUI Position fix X", CLGuiBuffBarPosX, "GUI position fix pixels from GUI BasePosition").set(par2);
 		cfg_gui.get("GamePlayPotionEffectTimeGUI","GUI Position fix Y", CLGuiBuffBarPosY, "GUI position fix pixels from GUI BasePosition").set(par3);
 		cfg_gui.save();
+	}
+
+	public void setCLGuiPartyPos(int par1, int par2, int par3, int par4)
+	{
+		cfg_gui.load();
+		cfg_gui.get("GamePlayPartyPlayGUI","GUI BasePosition", CLGuiPartyPos ,"1=LeftTop, 2, 3=LeftMiddle, 4, 5=LeftBottom, 6=RightTop, 7, 8=RightMiddle, 9, 10=RightBottom, 11,CenterTop, 12, 13=CenterMiddle, 14, 15=CenterBottom").set(par1);
+		cfg_gui.get("GamePlayPartyPlayGUI","GUI Position fix X", CLGuiPartyPosX, "GUI position fix pixels from GUI BasePosition").set(par2);
+		cfg_gui.get("GamePlayPartyPlayGUI","GUI Position fix Y", CLGuiPartyPosY, "GUI position fix pixels from GUI BasePosition").set(par3);
+		cfg_gui.get("GamePlayPartyPlayGUI","GUI Return line", CLGuiPartyReturnLine, "GUI return line ").set(par4);
+		cfg_gui.save();
+	}
+
+	public void setBasiRuraCoordinates(EnumDqmMagic type, int x, int y, int z, int dim)
+	{
+		cfg_rura.load();
+		if(type == EnumDqmMagic.BasiruraC)
+		{
+			cfg_rura.setCategoryComment("BasiRuraC(white) Coordinates", "BasiRuraC Cordinates settings");
+			cfg_rura.get("BasiRuraC(white) Coordinates","BasiRuraC_X", BasiRuraC_X[EnumDqmMagic.BasiruraC.getType()], "jump to posX setting").set(x);
+			cfg_rura.get("BasiRuraC(white) Coordinates","BasiRuraC_Y", BasiRuraC_Y[EnumDqmMagic.BasiruraC.getType()] ,"jump to posY setting").set(y);
+			cfg_rura.get("BasiRuraC(white) Coordinates","BasiRuraC_Z", BasiRuraC_Z[EnumDqmMagic.BasiruraC.getType()] ,"jump to posZ setting").set(z);
+			cfg_rura.get("BasiRuraC(white) Coordinates","BasiRuraC_Dim", BasiRuraC_Dim[EnumDqmMagic.BasiruraC.getType()] ,"only use dimension setting. You can use this magic at this setting Dimension").set(dim);
+		}
+		/*
+		else if(type == EnumDqmMagic.RuraRC)
+		{
+			cfg_rura.setCategoryComment("BasiRuraC(Red) Coordinates", "BasiRuraC(Red) Cordinates settings");
+			cfg_rura.get("BasiRuraC(Red) Coordinates","BasiRuraCRed_X", BasiRuraC_X[EnumDqmMagic.RuraRC.getType()], "jump to posX setting").set(x);
+			cfg_rura.get("BasiRuraC(Red) Coordinates","BasiRuraCRed_Y", BasiRuraC_Y[EnumDqmMagic.RuraRC.getType()] ,"jump to posY setting").set(y);
+			cfg_rura.get("BasiRuraC(Red) Coordinates","BasiRuraCRed_Z", BasiRuraC_Z[EnumDqmMagic.RuraRC.getType()],"jump to posZ setting").set(z);
+			cfg_rura.get("BasiRuraC(Red) Coordinates","BasiRuraCRed_Dim", BasiRuraC_Dim[EnumDqmMagic.RuraRC.getType()] ,"only use dimension setting. You can use this magic at this setting Dimension").set(dim);
+
+		}else if(type == EnumDqmMagic.RuraGC)
+		{
+			cfg_rura.setCategoryComment("BasiRuraC(Green) Coordinates", "BasiRuraC(Green) Cordinates settings");
+			cfg_rura.get("BasiRuraC(Green) Coordinates","BasiRuraCGreen_X", BasiRuraC_X[EnumDqmMagic.RuraGC.getType()], "jump to posX setting").set(x);
+			cfg_rura.get("BasiRuraC(Green) Coordinates","BasiRuraCGreen_Y", BasiRuraC_Y[EnumDqmMagic.RuraGC.getType()] ,"jump to posY setting").set(y);
+			cfg_rura.get("BasiRuraC(Green) Coordinates","BasiRuraCGreen_Z", BasiRuraC_Z[EnumDqmMagic.RuraGC.getType()] ,"jump to posZ setting").set(z);
+			cfg_rura.get("BasiRuraC(Green) Coordinates","BasiRuraCGreen_Dim", BasiRuraC_Dim[EnumDqmMagic.RuraGC.getType()] ,"only use dimension setting. You can use this magic at this setting Dimension").set(dim);
+
+		}else if(type == EnumDqmMagic.RuraBC)
+		{
+			cfg_rura.setCategoryComment("BasiRuraC(Blue) Coordinates", "BasiRuraC(Blue) Cordinates settings");
+			cfg_rura.get("BasiRuraC(Blue) Coordinates","BasiRuraCBlue_X", BasiRuraC_X[EnumDqmMagic.RuraBC.getType()], "jump to posX setting").set(x);
+			cfg_rura.get("BasiRuraC(Blue) Coordinates","BasiRuraCBlue_Y", BasiRuraC_Y[EnumDqmMagic.RuraBC.getType()], "jump to posY setting").set(y);
+			cfg_rura.get("BasiRuraC(Blue) Coordinates","BasiRuraCBlue_Z", BasiRuraC_Z[EnumDqmMagic.RuraBC.getType()], "jump to posZ setting").set(z);
+			cfg_rura.get("BasiRuraC(Blue) Coordinates","BasiRuraCBlue_Dim", BasiRuraC_Dim[EnumDqmMagic.RuraBC.getType()] ,"only use dimension setting. You can use this magic at this setting Dimension").set(dim);
+
+		}else if(type == EnumDqmMagic.RuraYC)
+		{
+			cfg_rura.setCategoryComment("BasiRuraC(Yellow) Coordinates", "BasiRuraC(Yellow) Cordinates settings");
+			cfg_rura.get("BasiRuraC(Yellow) Coordinates","BasiRuraCYellow_X", BasiRuraC_X[EnumDqmMagic.RuraYC.getType()], "jump to posX setting").set(x);
+			cfg_rura.get("BasiRuraC(Yellow) Coordinates","BasiRuraCYellow_Y", BasiRuraC_Y[EnumDqmMagic.RuraYC.getType()], "jump to posY setting").set(y);
+			cfg_rura.get("BasiRuraC(Yellow) Coordinates","BasiRuraCYellow_Z", BasiRuraC_Z[EnumDqmMagic.RuraYC.getType()], "jump to posZ setting").set(z);
+			cfg_rura.get("BasiRuraC(Yellow) Coordinates","BasiRuraCYellow_Dim", BasiRuraC_Dim[EnumDqmMagic.RuraYC.getType()] ,"only use dimension setting. You can use this magic at this setting Dimension").set(dim);
+
+		}
+		*/
+		cfg_rura.save();
+
+		cfg_rura.load();
+		BasiRuraC_X[EnumDqmMagic.BasiruraC.getType()] = cfg_rura.get("BasiRuraC(white) Coordinates","BasiRuraC_X", BasiRuraC_X[EnumDqmMagic.BasiruraC.getType()], "jump to posX setting").getInt();
+		BasiRuraC_Y[EnumDqmMagic.BasiruraC.getType()] = cfg_rura.get("BasiRuraC(white) Coordinates","BasiRuraC_Y", BasiRuraC_Y[EnumDqmMagic.BasiruraC.getType()] ,"jump to posY setting").getInt();
+		BasiRuraC_Z[EnumDqmMagic.BasiruraC.getType()] = cfg_rura.get("BasiRuraC(white) Coordinates","BasiRuraC_Z", BasiRuraC_Z[EnumDqmMagic.BasiruraC.getType()] ,"jump to posZ setting").getInt();
+		BasiRuraC_Dim[EnumDqmMagic.BasiruraC.getType()] = cfg_rura.get("BasiRuraC(white) Coordinates","BasiRuraC_Dim", BasiRuraC_Dim[EnumDqmMagic.BasiruraC.getType()] ,"only use dimension setting. You can use this magic at this setting Dimension").getInt();
+
+		/*
+		BasiRuraC_X[EnumDqmMagic.RuraRC.getType()] = cfg_rura.get("BasiRuraC(Red) Coordinates","BasiRuraCRed_X", BasiRuraC_X[EnumDqmMagic.RuraRC.getType()], "jump to posX setting").getInt();
+		BasiRuraC_Y[EnumDqmMagic.RuraRC.getType()] = cfg_rura.get("BasiRuraC(Red) Coordinates","BasiRuraCRed_Y", BasiRuraC_Y[EnumDqmMagic.RuraRC.getType()] ,"jump to posY setting").getInt();
+		BasiRuraC_Z[EnumDqmMagic.RuraRC.getType()] = cfg_rura.get("BasiRuraC(Red) Coordinates","BasiRuraCRed_Z", BasiRuraC_Z[EnumDqmMagic.RuraRC.getType()] ,"jump to posZ setting").getInt();
+		BasiRuraC_Dim[EnumDqmMagic.RuraRC.getType()] = cfg_rura.get("BasiRuraC(Red) Coordinates","BasiRuraCRed_Dim", BasiRuraC_Dim[EnumDqmMagic.RuraRC.getType()] ,"only use dimension setting. You can use this magic at this setting Dimension").getInt();
+
+		BasiRuraC_X[EnumDqmMagic.RuraGC.getType()] = cfg_rura.get("BasiRuraC(Green) Coordinates","BasiRuraCGreen_X", BasiRuraC_X[EnumDqmMagic.RuraGC.getType()], "jump to posX setting").getInt();
+		BasiRuraC_Y[EnumDqmMagic.RuraGC.getType()] = cfg_rura.get("BasiRuraC(Green) Coordinates","BasiRuraCGreen_Y", BasiRuraC_Y[EnumDqmMagic.RuraGC.getType()] ,"jump to posY setting").getInt();
+		BasiRuraC_Z[EnumDqmMagic.RuraGC.getType()] = cfg_rura.get("BasiRuraC(Green) Coordinates","BasiRuraCGreen_Z", BasiRuraC_Z[EnumDqmMagic.RuraGC.getType()] ,"jump to posZ setting").getInt();
+		BasiRuraC_Dim[EnumDqmMagic.RuraGC.getType()] = cfg_rura.get("BasiRuraC(Green) Coordinates","BasiRuraCGreen_Dim", BasiRuraC_Dim[EnumDqmMagic.RuraGC.getType()] ,"only use dimension setting. You can use this magic at this setting Dimension").getInt();
+
+		BasiRuraC_X[EnumDqmMagic.RuraBC.getType()] = cfg_rura.get("BasiRuraC(Blue) Coordinates","BasiRuraCBlue_X", BasiRuraC_X[EnumDqmMagic.RuraBC.getType()], "jump to posX setting").getInt();
+		BasiRuraC_Y[EnumDqmMagic.RuraBC.getType()] = cfg_rura.get("BasiRuraC(Blue) Coordinates","BasiRuraCBlue_Y", BasiRuraC_Y[EnumDqmMagic.RuraBC.getType()] ,"jump to posY setting").getInt();
+		BasiRuraC_Z[EnumDqmMagic.RuraBC.getType()] = cfg_rura.get("BasiRuraC(Blue) Coordinates","BasiRuraCBlue_Z", BasiRuraC_Z[EnumDqmMagic.RuraBC.getType()] ,"jump to posZ setting").getInt();
+		BasiRuraC_Dim[EnumDqmMagic.RuraBC.getType()] = cfg_rura.get("BasiRuraC(Blue) Coordinates","BasiRuraCBlue_Dim", BasiRuraC_Dim[EnumDqmMagic.RuraBC.getType()] ,"only use dimension setting. You can use this magic at this setting Dimension").getInt();
+
+		BasiRuraC_X[EnumDqmMagic.RuraYC.getType()] = cfg_rura.get("BasiRuraC(Yellow) Coordinates","BasiRuraCYellow_X", BasiRuraC_X[EnumDqmMagic.RuraYC.getType()], "jump to posX setting").getInt();
+		BasiRuraC_Y[EnumDqmMagic.RuraYC.getType()] = cfg_rura.get("BasiRuraC(Yellow) Coordinates","BasiRuraCYellow_Y", BasiRuraC_Y[EnumDqmMagic.RuraYC.getType()] ,"jump to posY setting").getInt();
+		BasiRuraC_Z[EnumDqmMagic.RuraYC.getType()] = cfg_rura.get("BasiRuraC(Yellow) Coordinates","BasiRuraCYellow_Z", BasiRuraC_Z[EnumDqmMagic.RuraYC.getType()] ,"jump to posZ setting").getInt();
+		BasiRuraC_Dim[EnumDqmMagic.RuraYC.getType()] = cfg_rura.get("BasiRuraC(Yellow) Coordinates","BasiRuraCYellow_Dim", BasiRuraC_Dim[EnumDqmMagic.RuraYC.getType()] ,"only use dimension setting. You can use this magic at this setting Dimension").getInt();
+		*/
 	}
 
 	public void setRuraCoordinates(EnumDqmMagic type, int x, int y, int z, int dim)

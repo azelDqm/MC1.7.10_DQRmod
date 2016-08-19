@@ -22,9 +22,19 @@ main.job.19=Dancer
 main.job.20=Pirate
 main.job.21=MasterDragon
 
+gui.container.dama.title=job change
+gui.container.dama.page=Page. %f / %f
+gui.container.TamingPets.title=PetMonsters
+
 msg.toDamage.txt=%2$d damage to %1$s
 msg.toDamage2.txt=%2$.3f damage to %1$s
 msg.toDamage3.txt=kill %s!
+msg.toDamageP.txt=%s to %s %d damage
+msg.toDamage2P.txt=%s to%s %.3f damage
+
+msg.causeBasirura.txt=%s jump to x:%f,y:%f,z:%f
+msg.causeNihuramu.txt=%s out of world
+
 msg.toSkillHit.txt=Skill:[%s]§e
 msg.epCritical.txt=SuperCriticalHit to %s
 msg.mobCritical.txt=SuperCriticalHit from %s
@@ -104,6 +114,8 @@ msg.magic.callcloud.thunder=!player.%s : setThunder
 msg.magic.ranaluta=!player.%s : step %dhours
 msg.magic.mahoton.txt=!player.Magic is seal!!
 msg.magic.rariho.txt=!player.You are sleeping!!
+msg.magic.weaponNoAppti.txt=!player.can't use this power
+msg.magic.weaponNoEnergy.txt=!player.this weapon no energy
 
 msg.defeatMob.txt=Defeat the %s
 msg.lvUp.txt=Lv up to Lv.%d
@@ -232,7 +244,10 @@ key.setting.GuiLogVis=Show PlayerLog
 key.setting.GuiArmorStatusVis=Show ArmorStatus
 key.setting.GuiSubpointsVis=Show Subpoints
 key.setting.GuiBuffBar=Show PotionEffectBar
-key.setting.magictoolMode=Show Mode change
+key.setting.magictoolMode=Tool Mode change
+key.setting.ookinaFukuroOpen=Open ItemBag
+key.setting.shieldUse=Shield power using
+key.setting.handUse=HandWeapon power using
 
 item.dqm.itemDebugsword.name=Debugsword
 item.dqm.itemBsword1.name=Bsword1
@@ -252,7 +267,7 @@ item.dqm.itemSinken.name=Sinken
 item.dqm.itemSinken2.name=Sinken2
 
 #DQM.weapon.Sword
-item.dqm.itemHayabusanoturugi.name=Hayabusanoturugi
+item.dqm.itemHayabusanoturugi.name=§6Hayabusanoturugi
 item.dqm.itemDounoturugi.name=Dounoturugi
 item.dqm.itemHeisinoken.name=Heisinoken
 item.dqm.itemHaganenoturugi.name=Haganenoturugi
@@ -260,9 +275,9 @@ item.dqm.itemKoorinoyaiba.name=Koorinoyaiba
 item.dqm.itemHajanoturugi.name=Hajanoturugi
 item.dqm.itemDoragonkira.name=Doragonkira
 item.dqm.itemInferunosword.name=Inferunosword
-item.dqm.itemKisekinoturugi.name=Kisekinoturugi
+item.dqm.itemKisekinoturugi.name=§6Kisekinoturugi
 item.dqm.itemMinagorosinoken.name=Minagorosinoken
-item.dqm.itemMorohanoturugi.name=Morohanoturugi
+item.dqm.itemMorohanoturugi.name=§6Morohanoturugi
 item.dqm.itemMakainoturugi.name=Makainoturugi
 item.dqm.itemMetarukingnoturugi.name=Metarukingnoturugi
 item.dqm.itemSuiseinoturugi.name=Suiseinoturugi
@@ -275,9 +290,9 @@ item.dqm.itemGinganoturugi2.name=Ginganoturugi2
 #DQM.weapon.Spear
 item.dqm.itemToraidento.name=Toraidento
 item.dqm.itemInazumanoyari.name=Inazumanoyari
-item.dqm.itemDemonsupia.name=Demonsupia
+item.dqm.itemDemonsupia.name=§6Demonsupia
 item.dqm.itemJigokumasou.name=Jigokumasou
-item.dqm.itemEiyuunoyari.name=Eiyuunoyari
+item.dqm.itemEiyuunoyari.name=§6Eiyuunoyari
 item.dqm.itemMetarukingnoyari.name=Metarukingnoyari
 item.dqm.itemGurakosunoyari.name=Gurakosunoyari
 item.dqm.itemHaganenoyari.name=Haganenoyari
@@ -289,16 +304,16 @@ item.dqm.itemTetunoyari.name=Tetunoyari
 item.dqm.itemMetarukingnoyari2.name=Metarukingnoyari2
 
 #DQM.weapon.Knife
-item.dqm.itemDokubari.name=Dokubari
+item.dqm.itemDokubari.name=§6Dokubari
 item.dqm.itemSeinarunaifu.name=Seinarunaifu
-item.dqm.itemAsasindaga.name=Asasindaga
-item.dqm.itemSodobureika.name=Sodobureika
+item.dqm.itemAsasindaga.name=§6Asasindaga
+item.dqm.itemSodobureika.name=§6Sodobureika
 item.dqm.itemSaramanda.name=Saramanda
 item.dqm.itemToririondaga.name=Toririondaga
-item.dqm.itemDokuganonaifu.name=Dokuganonaifu
+item.dqm.itemDokuganonaifu.name=§6Dokuganonaifu
 item.dqm.itemGuradiusu.name=Guradiusu
 item.dqm.itemKudamononaifu.name=Kudamononaifu
-item.dqm.itemKirapiasu.name=Kirapiasu
+item.dqm.itemKirapiasu.name=§6Kirapiasu
 item.dqm.itemToririondaga2.name=Toririondaga2
 
 #DQM.weapon.Rod
@@ -315,7 +330,7 @@ item.dqm.itemNyoraikon2.name=Nyoraikon2
 
 #DQM.weapon.Claw
 item.dqm.itemMajuunotume.name=Majuunotume
-item.dqm.itemAkumanotume.name=Akumanotume
+item.dqm.itemAkumanotume.name=§6Akumanotume
 item.dqm.itemHonoonotume.name=Honoonotume
 item.dqm.itemKoorinotume.name=Koorinotume
 item.dqm.itemDoragonkuro.name=Doragonkuro
@@ -342,12 +357,12 @@ item.dqm.itemOninokanabou.name=Oninokanabou
 item.dqm.itemAtorasunokanaduti.name=Atorasunokanaduti
 item.dqm.itemDaitikudaki.name=Daitikudaki
 item.dqm.itemHosikudaki.name=Hosikudaki
-item.dqm.itemMajinnokanaduti.name=Majinnokanaduti
-item.dqm.itemHakainotekkyuu.name=Hakainotekkyuu
+item.dqm.itemMajinnokanaduti.name=§6Majinnokanaduti
+item.dqm.itemHakainotekkyuu.name=§6Hakainotekkyuu
 item.dqm.itemGigakurassya.name=Gigakurassya
 item.dqm.itemJaiantokurabu.name=Jaiantokurabu
 item.dqm.itemWohanmakai.name=Wohanmakai
-item.dqm.itemHakainotekkyuu2.name=Hakainotekkyuu2
+item.dqm.itemHakainotekkyuu2.name=§6Hakainotekkyuu2
 
 #DQM.weapon.Axe
 item.dqm.itemHaganenoono.name=Haganenoono
@@ -366,14 +381,14 @@ item.dqm.itemGodakkusu2.name=Godakkusu2
 item.dqm.itemIbaranomuti.name=Ibaranomuti
 item.dqm.itemDoragonteiru.name=Doragonteiru
 item.dqm.itemMegaminomuti.name=Megaminomuti
-item.dqm.itemGuringamunomuti.name=Guringamunomuti
-item.dqm.itemTyouguringamunomuti.name=Tyouguringamunomuti
+item.dqm.itemGuringamunomuti.name=§6Guringamunomuti
+item.dqm.itemTyouguringamunomuti.name=§6Tyouguringamunomuti
 item.dqm.itemAkumanomuti.name=Akumanomuti
 item.dqm.itemBasutawipu.name=Basutawipu
 item.dqm.itemBatoruribon.name=Batoruribon
 item.dqm.itemKarubebuto.name=Karubebuto
 item.dqm.itemKawanomuti.name=Kawanomuti
-item.dqm.itemTyouguringamunomuti2.name=Tyouguringamunomuti2
+item.dqm.itemTyouguringamunomuti2.name=§6Tyouguringamunomuti2
 
 #DQM.weapon.Bow
 item.dqm.itemSyotobou.name=Syotobou
@@ -799,12 +814,36 @@ item.dqm.itemDamaDancer.name=Dancer
 item.dqm.itemDamaPirate.name=Pirate
 item.dqm.itemDamaMasterDragon.name=MasterDragon
 
+item.dqm.itemDamaCivilian_1.name=Civilian
+item.dqm.itemDamaWarrior_1.name=Warrior
+item.dqm.itemDamaFighter_1.name=Fighter
+item.dqm.itemDamaMagician_1.name=agician
+item.dqm.itemDamaPriest_1.name=Priest
+item.dqm.itemDamaMerchant_1.name=Merchant
+item.dqm.itemDamaThief_1.name=Thief
+item.dqm.itemDamaDancer_1.name=Dancer
+item.dqm.itemDamaPirate_1.name=Pirate
+item.dqm.itemDamaBattleMaster_1.name=BattleMaster
+item.dqm.itemDamaSage_1.name=Sage
+item.dqm.itemDamaPaladin_1.name=Paladin
+item.dqm.itemDamaMagickKnight_1.name=MagickKnight
+item.dqm.itemDamaRanger_1.name=Ranger
+item.dqm.itemDamaMonsterTamer_1.name=MonsterTamer
+item.dqm.itemDamaSuperStar_1.name=SuperStar
+item.dqm.itemDamaHero_1.name=Hero
+item.dqm.itemDamaHaguremetal_1.name=Haguremetal
+item.dqm.itemDamaDragon_1.name=Dragon
+item.dqm.itemDamaGodHnad_1.name=GodHnad
+item.dqm.itemDamaLegend_1.name=Legend
+item.dqm.itemDamaMasterDragon_1.name=MasterDragon
+
 #DQM.magic
 item.dqm.itemMagicToolFarm1.name=MagicTool_Farm
 item.dqm.itemMagicToolFarm2.name=MagicTool_Farm2
 
 item.dqm.itemMagicToolBreak1.name=MagicTool_Break1
 item.dqm.itemMagicToolBreak2.name=MagicTool_Break2
+item.dqm.itemMagicToolSet.name=MagicTool_Set
 
 item.dqm.itemMera.name=itemMera
 item.dqm.itemMerami.name=itemMerami
@@ -864,6 +903,10 @@ item.dqm.itemDivainsuperu.name=itemDivainsuperu
 item.dqm.itemRukanan.name=itemRukanan
 item.dqm.itemRarihoma.name=itemRarihoma
 item.dqm.itemBomiosu.name=itemBomiosu
+item.dqm.itemBasirura.name=Basirura
+item.dqm.itembasirurac.name=BasiruraC
+item.dqm.itemBasirura2.name=Basirura2
+
 
 item.dqm.itemKiari.name=KiariStick
 item.dqm.itemUminarinotue.name=UmiknariStick
@@ -945,6 +988,8 @@ item.dqm.BuilderDamaW6.name=BuilderDamaW_parts
 item.dqm.BuilderDamaW7.name=BuilderDamaW_parts
 item.dqm.BuilderDamaW8.name=BuilderDamaW_parts
 item.dqm.BuilderDamaW9.name=BuilderDamaW_parts
+
+item.dqm.BuilderIdoMedal.name=House of MedalKing
 
 item.dqm.mahounoTutu_1.name=MagicRoll
 item.dqm.mahounoTutu_3.name=MagicRoll2
@@ -1204,6 +1249,18 @@ item.dqm.itemFuujinnnotate.name=Fuujinnnotate
 item.dqm.itemMikagaminotate.name=Mikagaminotate
 item.dqm.itemTikaranotate.name=Tikaranotate
 item.dqm.itemMetarukingnotate.name=Metarukingnotate
+
+item.dqm.itemFuujinnnotate2.name=Fuujinnnotate2
+item.dqm.itemFuujinnnotate3.name=Fuujinnnotate3
+item.dqm.itemTenkuunotate.name=Tenkuunotate
+item.dqm.itemRotonotate.name=Rotonotate
+item.dqm.itemSabitatate.name=Sabitatate
+item.dqm.itemMegaminotate.name=Megaminotate
+item.dqm.itemUroborosunotate.name=Uroborosunotate
+item.dqm.itemAccCanceler.name=AccCanceler
+
+
+item.dqm.ItemAccCanceler.name=SubEquipAllRelease
 
 #DQM.potion
 dqm.potion.dokukesisou=AntiPoison
@@ -1560,6 +1617,11 @@ dqm.iteminfo.setEffect.MP=MP +%d
 dqm.iteminfo.setEffect.ATK=ATK +%d
 dqm.iteminfo.setEffect.DEF=DEF +%d
 dqm.iteminfo.setEffect.MAG=MAG +%d
+dqm.iteminfo.setEffect.STR=STR +%d
+dqm.iteminfo.setEffect.INT=INT +%d
+dqm.iteminfo.setEffect.MISS=AVOID +%d
+dqm.iteminfo.setEffect.CRI=CRITICAL +%d
+
 
 dqm.iteminfo.weaponappti=ApptiX:%s
 dqm.iteminfo.weaponapptiSPC=         %s
@@ -1919,6 +1981,12 @@ msg.magictool.farm.mode.14.txt=!player.Mode : Planting Lv4
 msg.magictool.farm.mode.2.txt=!player.Mode : Harvesting
 msg.magictool.farm.mode.3.txt=!player.Mode : Seed storeing
 
+msg.rura.modeInfo.0.txt=!player.target : only me
+msg.rura.modeInfo.1.txt=!player.target : me and my pet
+
+msg.basirura.modeInfo.0.txt=!player.to random
+msg.basirura.modeInfo.1.txt=!player.to setting Coordinate
+
 msg.weapon.modeInfo.1.-1.txt=!player.Axe mode : false
 msg.weapon.modeInfo.1.0.txt=!player.Axe mode : true
 msg.weapon.modeInfo.1.1.txt=!player.Logs Destroy mode : true
@@ -1927,6 +1995,8 @@ msg.weapon.modeInfo.2.-1.txt=!player.PickAce mode : false
 msg.weapon.modeInfo.2.0.txt=!player.PickAce mode : true
 msg.weapon.modeInfo.3.-1.txt=!player.Shovel mode : false
 msg.weapon.modeInfo.3.0.txt=!player.Shovel mode : true
+
+msg.weapon.specialEffect.mahounosoroban.txt=!player.I have %dGold
 
 msg.magictool.farm.seedIn.1.txt=!player.Everytime seed store : true
 msg.magictool.farm.seedIn.0.txt=!player.Everytime seed store : false
@@ -2184,11 +2254,11 @@ tile.dqm.blockHakoBlock13.name=Box(monster)
 dqm.guin.tab.medalking.weapons=Weapons
 dqm.guin.tab.medalking.armors=Armors
 dqm.guin.tab.medalking.magics=Magic(Attack)
-dqm.guin.tab.medalking.magics2=Magic(Buff/Debuff/
+dqm.guin.tab.medalking.magics2=Magic(Buff/Debuff)
 dqm.guin.tab.medalking.job=JobChange
 dqm.guin.tab.medalking.Misc=Item
 dqm.guin.tab.medalking.Medal=LittleMedal
-
+dqm.guin.tab.medalking.accessories=Accessories
 dqm.guin.tab.petstatus.status=PetStatus
 dqm.guin.tab.petstatus.inv=PetInventory
 

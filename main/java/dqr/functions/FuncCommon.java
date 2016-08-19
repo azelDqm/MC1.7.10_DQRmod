@@ -224,4 +224,5 @@ public class FuncCommon {
 
 		return -1;
 	}
+
 }

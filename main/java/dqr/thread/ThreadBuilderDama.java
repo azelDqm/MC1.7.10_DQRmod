@@ -47,10 +47,10 @@ public class ThreadBuilderDama extends Thread{
 		this.Hougaku = nbt.getInteger("settingFace");
         switch(this.Hougaku)
         {
-        	case 1: xxx = xxx - 23; break;
-        	case 2: zzz = zzz - 23; break;
-        	case 3: xxx = xxx + 23; break;
-        	case 0: zzz = zzz + 23; break;
+        	case 1: xxx = xxx - 24; break;
+        	case 2: zzz = zzz - 24; break;
+        	case 3: xxx = xxx + 24; break;
+        	case 0: zzz = zzz + 24; break;
         }
 
 
@@ -120,6 +120,7 @@ public class ThreadBuilderDama extends Thread{
 	        }
 		}
 
+
         //土
 		Block topBlock;
 
@@ -138,7 +139,7 @@ public class ThreadBuilderDama extends Thread{
 
 		if(topBlock != null)
 		{
-			for (int x = -22; x <= 22; ++x)
+			for (int x = -24; x <= 24; ++x)
 	        {
 				try {
 					this.sleep(DQR.conf.cfg_build_sleep);
@@ -146,7 +147,7 @@ public class ThreadBuilderDama extends Thread{
 					// TODO 自動生成された catch ブロック
 					e.printStackTrace();
 				}
-	            for (int z = -22; z <= 22; ++z)
+	            for (int z = -24; z <= 24; ++z)
 	            {
 	                for (int y = -1; y <= -1 ; ++y)
 	                {
@@ -212,6 +213,23 @@ public class ThreadBuilderDama extends Thread{
         		metaV2 = 2;
         		metaV3 = 7;
         	}
+
+	        for (int x = -24; x <= 24; ++x)
+	        {
+				try {
+					this.sleep(DQR.conf.cfg_build_sleep);
+				} catch (InterruptedException e) {
+					// TODO 自動生成された catch ブロック
+					e.printStackTrace();
+				}
+	            for (int z = -24; z <= 24; ++z)
+	            {
+	                for (int y = 0; y <= 18; ++y)
+	                {
+	                    par3World.setBlock(xxx + x, yyy + y + takasa, zzz + (z * byVal), Blocks.air, 0, 2);
+	                }
+	            }
+	        }
 
 
 	        for (int x = -20; x <= 20; ++x)

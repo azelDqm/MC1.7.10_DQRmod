@@ -24,6 +24,7 @@ public class FuncMedalkingItems {
 	public static final Map<Item, Integer> medalJobchange = new LinkedHashMap<>();
 	public static final Map<Item, Integer> medalItem = new LinkedHashMap<>();
 	public static final Map<Item, Integer> medalMedal = new LinkedHashMap<>();
+	public static final Map<Item, Integer> medalAccessory = new LinkedHashMap<>();
 
 	public FuncMedalkingItems()
 	{
@@ -92,25 +93,30 @@ public class FuncMedalkingItems {
 		medalArmor.put(DQArmors.itemTenkuunoyoroi , 500);
 
 		//13
-		medalArmor.put(DQAccessories.itemMayokenoseiin , 50);
-		medalArmor.put(DQAccessories.itemKirapiasu2 , 75);
-		medalArmor.put(DQAccessories.itemHosifuru , 75);
-		medalArmor.put(DQAccessories.itemInotinoyubiwa , 75);
-		medalArmor.put(DQAccessories.itemHayatenoring , 75);
-		medalArmor.put(DQAccessories.itemTikaranorubi , 100);
-		medalArmor.put(DQAccessories.itemMamorinorubi , 100);
-		medalArmor.put(DQAccessories.itemGouketunoudewa , 200);
-		medalArmor.put(DQAccessories.itemMamorinoudewa , 200);
-		medalArmor.put(DQAccessories.itemFurubitaring , 300);
-		medalArmor.put(DQAccessories.itemRakkipendanto , 300);
-		medalArmor.put(DQAccessories.itemSuparing , 1000);
-		medalArmor.put(DQAccessories.itemSosararing , 1000);
+		medalAccessory.put(DQAccessories.itemSeidounotate , 50);
+		medalAccessory.put(DQAccessories.itemMayokenoseiin , 50);
+		medalAccessory.put(DQAccessories.itemKirapiasu2 , 75);
+		medalAccessory.put(DQAccessories.itemHosifuru , 75);
+		medalAccessory.put(DQAccessories.itemInotinoyubiwa , 75);
+		medalAccessory.put(DQAccessories.itemHayatenoring , 75);
+		medalAccessory.put(DQAccessories.itemMahounopiasu , 100);
+		medalAccessory.put(DQAccessories.itemTikaranorubi , 100);
+		medalAccessory.put(DQAccessories.itemMamorinorubi , 100);
+		medalAccessory.put(DQAccessories.itemGouketunoudewa , 200);
+		medalAccessory.put(DQAccessories.itemMamorinoudewa , 200);
+		medalAccessory.put(DQAccessories.itemKataminokubikazari , 200);
+		medalAccessory.put(DQAccessories.itemFurubitaring , 300);
+		medalAccessory.put(DQAccessories.itemRakkipendanto , 300);
+		medalAccessory.put(DQAccessories.itemHosizoranokubikazari, 750);
+		medalAccessory.put(DQAccessories.itemSuparing , 1000);
+		medalAccessory.put(DQAccessories.itemSosararing , 1000);
 
 
 		//魔法1
 		medalMagic.put(DQMagics.itemBegiragon , 500);
 		medalMagic.put(DQMagics.itemBagikurosu , 500);
 		medalMagic.put(DQMagics.itemIonazun , 500);
+		medalMagic.put(DQMagics.itemMahyado , 500);
 		medalMagic.put(DQMagics.itemMerazoma , 500);
 		medalMagic.put(DQMagics.itemDorumoa , 500);
 		medalMagic.put(DQMagics.itemZaraki , 550);
@@ -241,6 +247,10 @@ public class FuncMedalkingItems {
 			return medalMedal.get(itm);
 		}
 
+		if(medalAccessory.containsKey(itm))
+		{
+			return medalAccessory.get(itm);
+		}
 		return -1;
 	}
 }

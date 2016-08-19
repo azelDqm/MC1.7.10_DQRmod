@@ -87,6 +87,7 @@ public class DqmItemMagicMahoimi extends DqmItemMagicBase{
 							        / par1ItemStack.getMaxDamage() *  matk / 100;
 							*/
 		    				int attackDam = matk;
+		    				attackDam = DQR.magicTable.getReasonableDamage(this, par3EntityPlayer, attackDam);
 		    				magic.setDamage(attackDam);
 
 		    				if(this.getEnumMagic().getDamage() + par1ItemStack.getItemDamage() < par1ItemStack.getMaxDamage() )

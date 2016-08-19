@@ -69,7 +69,7 @@ public class DqmItemMGTBreak1 extends DqmItemMagicToolBase{
 			int areaY = DQR.conf.MGBreak1_Area_Y[area];
 			int areaZ = DQR.conf.MGBreak1_Area_Z[area];
 
-			int itemDam = areaX * areaY * areaZ * 10;
+			int itemDam = areaX * areaY * areaZ * DQR.conf.MGBreak1_damageWeight;
 
 
 			//System.out.println("test:" + areaX + "/" + areaY + "/" + areaZ);
@@ -167,16 +167,32 @@ public class DqmItemMGTBreak1 extends DqmItemMagicToolBase{
 	        								if(dropItemSet.containsKey(blockKey))
 	        								{
 	        									//int itemVal = dropItemSet.get(blockKey);
-	        									int[] valInt = dropItemSet.get(blockKey);
-	        									valInt[targetMeta] = valInt[targetMeta] + targetBlock.quantityDropped(targetMeta, 0, rand);
-	        									dropItemSet.put(blockKey, valInt);
+	        									if(targetBlock.damageDropped(targetMeta) > 15)
+	        									{
+	        	    								ItemStack drop = new ItemStack(blockKey, targetBlock.quantityDropped(targetMeta, 0, rand), targetBlock.damageDropped(targetMeta));
+	        	    								EntityItem itemR = new EntityItem(par3World, par4, par5, par6, drop);
+	        	    								par3World.spawnEntityInWorld(itemR);
+	        									}else
+	        									{
+	        										int[] valInt = dropItemSet.get(blockKey);
+	        										valInt[targetBlock.damageDropped(targetMeta)] = valInt[targetBlock.damageDropped(targetMeta)] + targetBlock.quantityDropped(targetMeta, 0, rand);
+	        										dropItemSet.put(blockKey, valInt);
+	        									}
 	        									//dropItemSet.put(blockKey, itemVal + targetBlock.quantityDropped(targetMeta, 0, rand));
 	        								}else
 	        								{
 	        									//System.out.println(" new key!!!!!!!!!!!!!!!!!!!!!");
-	        									int[] valInt = new int[16];
-	        									valInt[targetMeta] = targetBlock.quantityDropped(targetMeta, 0, rand);
-	        									dropItemSet.put(blockKey, valInt);
+	        									if(targetBlock.damageDropped(targetMeta) > 15)
+	        									{
+	        	    								ItemStack drop = new ItemStack(blockKey, targetBlock.quantityDropped(targetMeta, 0, rand), targetBlock.damageDropped(targetMeta));
+	        	    								EntityItem itemR = new EntityItem(par3World, par4, par5, par6, drop);
+	        	    								par3World.spawnEntityInWorld(itemR);
+	        									}else
+	        									{
+	        										int[] valInt = new int[16];
+	        										valInt[targetBlock.damageDropped(targetMeta)] = targetBlock.quantityDropped(targetMeta, 0, rand);
+	        										dropItemSet.put(blockKey, valInt);
+	        									}
 	        									//Block.getIdFromBlock(p_149682_0_)
 	        								}
         								}
@@ -228,18 +244,34 @@ public class DqmItemMGTBreak1 extends DqmItemMagicToolBase{
 	        								Item blockKey = targetBlock.getItemDropped(targetMeta, rand, 0);
 	        								if(dropItemSet.containsKey(blockKey))
 	        								{
-	        									//int itemVal = dropItemSet.get(blockKey);
-	        									int[] valInt = dropItemSet.get(blockKey);
-	        									valInt[targetMeta] = valInt[targetMeta] + targetBlock.quantityDropped(targetMeta, 0, rand);
-	        									dropItemSet.put(blockKey, valInt);
-	        									//dropItemSet.put(blockKey, itemVal + targetBlock.quantityDropped(targetMeta, 0, rand));
+	        									if(targetBlock.damageDropped(targetMeta) > 15)
+	        									{
+	        	    								ItemStack drop = new ItemStack(blockKey, targetBlock.quantityDropped(targetMeta, 0, rand), targetBlock.damageDropped(targetMeta));
+	        	    								EntityItem itemR = new EntityItem(par3World, par4, par5, par6, drop);
+	        	    								par3World.spawnEntityInWorld(itemR);
+	        									}else
+	        									{
+	        										//int itemVal = dropItemSet.get(blockKey);
+	        										int[] valInt = dropItemSet.get(blockKey);
+	        										valInt[targetBlock.damageDropped(targetMeta)] = valInt[targetBlock.damageDropped(targetMeta)] + targetBlock.quantityDropped(targetMeta, 0, rand);
+	        										dropItemSet.put(blockKey, valInt);
+	        										//dropItemSet.put(blockKey, itemVal + targetBlock.quantityDropped(targetMeta, 0, rand));
+	        									}
 	        								}else
 	        								{
-	        									//System.out.println(" new key!!!!!!!!!!!!!!!!!!!!!");
-	        									int[] valInt = new int[16];
-	        									valInt[targetMeta] = targetBlock.quantityDropped(targetMeta, 0, rand);
-	        									dropItemSet.put(blockKey, valInt);
-	        									//Block.getIdFromBlock(p_149682_0_)
+	        									if(targetBlock.damageDropped(targetMeta) > 15)
+	        									{
+	        	    								ItemStack drop = new ItemStack(blockKey, targetBlock.quantityDropped(targetMeta, 0, rand), targetBlock.damageDropped(targetMeta));
+	        	    								EntityItem itemR = new EntityItem(par3World, par4, par5, par6, drop);
+	        	    								par3World.spawnEntityInWorld(itemR);
+	        									}else
+	        									{
+	        										//System.out.println(" new key!!!!!!!!!!!!!!!!!!!!!");
+	        										int[] valInt = new int[16];
+	        										valInt[targetBlock.damageDropped(targetMeta)] = targetBlock.quantityDropped(targetMeta, 0, rand);
+	        										dropItemSet.put(blockKey, valInt);
+	        										//Block.getIdFromBlock(p_149682_0_)
+	        									}
 	        								}
         								}
         							}else
@@ -286,18 +318,34 @@ public class DqmItemMGTBreak1 extends DqmItemMagicToolBase{
 	        								Item blockKey = targetBlock.getItemDropped(targetMeta, rand, 0);
 	        								if(dropItemSet.containsKey(blockKey))
 	        								{
-	        									//int itemVal = dropItemSet.get(blockKey);
-	        									int[] valInt = dropItemSet.get(blockKey);
-	        									valInt[targetMeta] = valInt[targetMeta] + targetBlock.quantityDropped(targetMeta, 0, rand);
-	        									dropItemSet.put(blockKey, valInt);
-	        									//dropItemSet.put(blockKey, itemVal + targetBlock.quantityDropped(targetMeta, 0, rand));
+	        									if(targetBlock.damageDropped(targetMeta) > 15)
+	        									{
+	        	    								ItemStack drop = new ItemStack(blockKey, targetBlock.quantityDropped(targetMeta, 0, rand), targetBlock.damageDropped(targetMeta));
+	        	    								EntityItem itemR = new EntityItem(par3World, par4, par5, par6, drop);
+	        	    								par3World.spawnEntityInWorld(itemR);
+	        									}else
+	        									{
+	        										//int itemVal = dropItemSet.get(blockKey);
+	        										int[] valInt = dropItemSet.get(blockKey);
+	        										valInt[targetBlock.damageDropped(targetMeta)] = valInt[targetBlock.damageDropped(targetMeta)] + targetBlock.quantityDropped(targetMeta, 0, rand);
+	        										dropItemSet.put(blockKey, valInt);
+	        										//dropItemSet.put(blockKey, itemVal + targetBlock.quantityDropped(targetMeta, 0, rand));
+	        									}
 	        								}else
 	        								{
-	        									//System.out.println(" new key!!!!!!!!!!!!!!!!!!!!!");
-	        									int[] valInt = new int[16];
-	        									valInt[targetMeta] = targetBlock.quantityDropped(targetMeta, 0, rand);
-	        									dropItemSet.put(blockKey, valInt);
-	        									//Block.getIdFromBlock(p_149682_0_)
+	        									if(targetBlock.damageDropped(targetMeta) > 15)
+	        									{
+	        	    								ItemStack drop = new ItemStack(blockKey, targetBlock.quantityDropped(targetMeta, 0, rand), targetBlock.damageDropped(targetMeta));
+	        	    								EntityItem itemR = new EntityItem(par3World, par4, par5, par6, drop);
+	        	    								par3World.spawnEntityInWorld(itemR);
+	        									}else
+	        									{
+	        										//System.out.println(" new key!!!!!!!!!!!!!!!!!!!!!");
+	        										int[] valInt = new int[16];
+	        										valInt[targetBlock.damageDropped(targetMeta)] = targetBlock.quantityDropped(targetMeta, 0, rand);
+	        										dropItemSet.put(blockKey, valInt);
+	        										//Block.getIdFromBlock(p_149682_0_)
+	        									}
 	        								}
         								}
         							}else
@@ -344,18 +392,34 @@ public class DqmItemMGTBreak1 extends DqmItemMagicToolBase{
 	        								Item blockKey = targetBlock.getItemDropped(targetMeta, rand, 0);
 	        								if(dropItemSet.containsKey(blockKey))
 	        								{
-	        									//int itemVal = dropItemSet.get(blockKey);
-	        									int[] valInt = dropItemSet.get(blockKey);
-	        									valInt[targetMeta] = valInt[targetMeta] + targetBlock.quantityDropped(targetMeta, 0, rand);
-	        									dropItemSet.put(blockKey, valInt);
-	        									//dropItemSet.put(blockKey, itemVal + targetBlock.quantityDropped(targetMeta, 0, rand));
+	        									if(targetBlock.damageDropped(targetMeta) > 15)
+	        									{
+	        	    								ItemStack drop = new ItemStack(blockKey, targetBlock.quantityDropped(targetMeta, 0, rand), targetBlock.damageDropped(targetMeta));
+	        	    								EntityItem itemR = new EntityItem(par3World, par4, par5, par6, drop);
+	        	    								par3World.spawnEntityInWorld(itemR);
+	        									}else
+	        									{
+	        										//int itemVal = dropItemSet.get(blockKey);
+	        										int[] valInt = dropItemSet.get(blockKey);
+	        										valInt[targetBlock.damageDropped(targetMeta)] = valInt[targetBlock.damageDropped(targetMeta)] + targetBlock.quantityDropped(targetMeta, 0, rand);
+	        										dropItemSet.put(blockKey, valInt);
+	        										//dropItemSet.put(blockKey, itemVal + targetBlock.quantityDropped(targetMeta, 0, rand));
+	        									}
 	        								}else
 	        								{
-	        									//System.out.println(" new key!!!!!!!!!!!!!!!!!!!!!");
-	        									int[] valInt = new int[16];
-	        									valInt[targetMeta] = targetBlock.quantityDropped(targetMeta, 0, rand);
-	        									dropItemSet.put(blockKey, valInt);
-	        									//Block.getIdFromBlock(p_149682_0_)
+	        									if(targetBlock.damageDropped(targetMeta) > 15)
+	        									{
+	        	    								ItemStack drop = new ItemStack(blockKey, targetBlock.quantityDropped(targetMeta, 0, rand), targetBlock.damageDropped(targetMeta));
+	        	    								EntityItem itemR = new EntityItem(par3World, par4, par5, par6, drop);
+	        	    								par3World.spawnEntityInWorld(itemR);
+	        									}else
+	        									{
+	        										//System.out.println(" new key!!!!!!!!!!!!!!!!!!!!!");
+	        										int[] valInt = new int[16];
+	        										valInt[targetBlock.damageDropped(targetMeta)] = targetBlock.quantityDropped(targetMeta, 0, rand);
+	        										dropItemSet.put(blockKey, valInt);
+	        										//Block.getIdFromBlock(p_149682_0_)
+	        									}
 	        								}
         								}
         							}else
@@ -578,7 +642,7 @@ public class DqmItemMGTBreak1 extends DqmItemMagicToolBase{
 					int areaY = DQR.conf.MGBreak1_Area_Y[area];
 					int areaZ = DQR.conf.MGBreak1_Area_Z[area];
 
-					int itemDam = areaX * areaY * areaZ * 1;
+					int itemDam = areaX * areaY * areaZ * DQR.conf.MGBreak1_damageWeight;
 
 					ExtendedPlayerProperties2.get(ep).setToolBreak1Area(area);
 

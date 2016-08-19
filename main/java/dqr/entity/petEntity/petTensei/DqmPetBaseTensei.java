@@ -9,5 +9,6 @@ public class DqmPetBaseTensei extends DqmPetBase {
 	{
 		//this(world);
 		super(world, Type);
+		this.isImmuneToFire = true;
 	}
 }

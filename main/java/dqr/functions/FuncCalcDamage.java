@@ -15,12 +15,15 @@ import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.DamageSource;
 import dqr.DQR;
+import dqr.api.Items.DQWeapons;
+import dqr.api.enums.EnumDqmElement;
 import dqr.api.enums.EnumDqmMessageConv;
 import dqr.api.enums.EnumDqmMobRoot;
 import dqr.api.enums.EnumDqmMonster;
@@ -45,9 +48,12 @@ import dqr.entity.magicEntity.magic.MagicEntityMerazoma;
 import dqr.entity.magicEntity.magic.MagicEntityRaidein;
 import dqr.entity.magicEntity.magic.MagicEntityZaki;
 import dqr.entity.mobEntity.DqmMobBase;
+import dqr.entity.mobEntity.monsterDay.DqmEntityAyasiikage;
 import dqr.entity.mobEntity.monsterDay.DqmEntityBigCrow;
+import dqr.entity.mobEntity.monsterDay.DqmEntityDoronuba;
 import dqr.entity.mobEntity.monsterDay.DqmEntityDucksbill;
 import dqr.entity.mobEntity.monsterDay.DqmEntityEbiruapple;
+import dqr.entity.mobEntity.monsterDay.DqmEntityGizumoAZ;
 import dqr.entity.mobEntity.monsterDay.DqmEntityGuntaigani;
 import dqr.entity.mobEntity.monsterDay.DqmEntityKimera;
 import dqr.entity.mobEntity.monsterDay.DqmEntityKirikabuobake;
@@ -55,15 +61,22 @@ import dqr.entity.mobEntity.monsterDay.DqmEntityMomonja;
 import dqr.entity.mobEntity.monsterDay.DqmEntityObakekinoko;
 import dqr.entity.mobEntity.monsterDay.DqmEntityObakeumiusi;
 import dqr.entity.mobEntity.monsterDay.DqmEntityOokutibasi;
+import dqr.entity.mobEntity.monsterDay.DqmEntityOonamekuji;
 import dqr.entity.mobEntity.monsterDay.DqmEntitySabotenboru;
 import dqr.entity.mobEntity.monsterDay.DqmEntitySibirekurage;
 import dqr.entity.mobEntity.monsterDay.DqmEntityUzusioking;
+import dqr.entity.mobEntity.monsterDay.DqmEntityZinmentyou;
 import dqr.entity.mobEntity.monsterDay.DqmEntityZukkinya;
 import dqr.entity.mobEntity.monsterEnd.DqmEntityAkairai;
 import dqr.entity.mobEntity.monsterEnd.DqmEntityBassaimasin;
+import dqr.entity.mobEntity.monsterEnd.DqmEntityBurizado;
+import dqr.entity.mobEntity.monsterEnd.DqmEntityManemane;
+import dqr.entity.mobEntity.monsterEnd.DqmEntityRyuiso;
 import dqr.entity.mobEntity.monsterEtc.DqmEntityGanseki;
 import dqr.entity.mobEntity.monsterHell.DqmEntityBurakkubejita;
 import dqr.entity.mobEntity.monsterHell.DqmEntityDeddopekka;
+import dqr.entity.mobEntity.monsterHell.DqmEntityDgizumo;
+import dqr.entity.mobEntity.monsterHell.DqmEntityFureimu;
 import dqr.entity.mobEntity.monsterHell.DqmEntityGanirasu;
 import dqr.entity.mobEntity.monsterHell.DqmEntityJigokunohasami;
 import dqr.entity.mobEntity.monsterHell.DqmEntityKirakurabu;
@@ -71,24 +84,42 @@ import dqr.entity.mobEntity.monsterHell.DqmEntityKiramasin;
 import dqr.entity.mobEntity.monsterHell.DqmEntityKiramasin2;
 import dqr.entity.mobEntity.monsterHell.DqmEntityMagematango;
 import dqr.entity.mobEntity.monsterHell.DqmEntityMagemomonja;
+import dqr.entity.mobEntity.monsterHell.DqmEntityMagumaron;
+import dqr.entity.mobEntity.monsterHell.DqmEntityMaounokage;
 import dqr.entity.mobEntity.monsterHell.DqmEntityMetaruhanta;
+import dqr.entity.mobEntity.monsterHell.DqmEntityPombom;
+import dqr.entity.mobEntity.monsterHell.DqmEntityPuyon;
 import dqr.entity.mobEntity.monsterHell.DqmEntityStarkimera;
 import dqr.entity.mobEntity.monsterHell.DqmEntityUmibouzu;
+import dqr.entity.mobEntity.monsterNight.DqmEntityBaburin;
 import dqr.entity.mobEntity.monsterNight.DqmEntityButtizukinya;
 import dqr.entity.mobEntity.monsterNight.DqmEntityDansunidoru;
 import dqr.entity.mobEntity.monsterNight.DqmEntityDesufuratta;
+import dqr.entity.mobEntity.monsterNight.DqmEntityFgizumo;
 import dqr.entity.mobEntity.monsterNight.DqmEntityGappurin;
+import dqr.entity.mobEntity.monsterNight.DqmEntityHgizumo;
+import dqr.entity.mobEntity.monsterNight.DqmEntityHitokuiga;
+import dqr.entity.mobEntity.monsterNight.DqmEntityHoroghost;
+import dqr.entity.mobEntity.monsterNight.DqmEntityJeriman;
 import dqr.entity.mobEntity.monsterNight.DqmEntityMarinsuraimu;
 import dqr.entity.mobEntity.monsterNight.DqmEntityMatango;
+import dqr.entity.mobEntity.monsterNight.DqmEntityMeragosuto;
 import dqr.entity.mobEntity.monsterNight.DqmEntityMetaruhantaken;
+import dqr.entity.mobEntity.monsterNight.DqmEntitySamayoutamasii;
+import dqr.entity.mobEntity.monsterNight.DqmEntitySibireageha;
+import dqr.entity.mobEntity.monsterNight.DqmEntitySyado;
 import dqr.entity.mobEntity.monsterNight.DqmEntityUmiusi;
+import dqr.entity.mobEntity.monsterSP.DqmEntityFureizado;
 import dqr.entity.mobEntity.monsterSP.DqmEntityKiramajinga;
+import dqr.entity.mobEntity.monsterSP.DqmEntityMashougumo;
 import dqr.entity.mobEntity.monsterTensei.DqmEntityMoonkimera;
 import dqr.entity.mobEntity.monsterTensei.DqmEntitySabotengold;
 import dqr.entity.mobEntity.monsterTensei.DqmEntityTaipug;
+import dqr.entity.mobEntity.monsterTensei.DqmEntityTyokonuba;
 import dqr.entity.npcEntity.npc.DqmEntityNPCGuntai;
 import dqr.entity.petEntity.DqmPetBase;
 import dqr.entity.throwingEntity.throwItem.ThrowItemEntityIshitubute;
+import dqr.items.base.DqmItemWeaponBase;
 import dqr.playerData.ExtendedPlayerProperties;
 import dqr.playerData.ExtendedPlayerProperties3;
 
@@ -104,7 +135,7 @@ public class FuncCalcDamage {
 		float ret = par1;
 		String mobName = null;
 		Random rand = new Random();
-
+		Random rand2 = new Random();
 		//System.out.println("test1");
 		if(source.getEntity() instanceof EntityPlayer)
 		{
@@ -112,6 +143,234 @@ public class FuncCalcDamage {
 			int weapon = ExtendedPlayerProperties.get(ep).getWeapon();
 			int weaponSkill = ExtendedPlayerProperties3.get(ep).getWeaponSkillSet(weapon);
 			int skillPerm = ExtendedPlayerProperties3.get(ep).getWeaponSkillPermission(weapon, weaponSkill);
+    		float damFix = 1.0F;
+
+			if(ep.getHeldItem() != null && source.getDamageType().equalsIgnoreCase("player") && !ep.worldObj.isRemote)
+			{
+				Item handItem = ep.getHeldItem().getItem();
+
+				//属性チェック
+				if(handItem instanceof DqmItemWeaponBase)
+				{
+					EnumDqmElement element = ((DqmItemWeaponBase)handItem).getElement();
+					if(element != null)
+					{
+						float dam = ret;
+						ret = ret * DQR.calcDamage.applyDamageResistElement(dam, dam, evb, element);
+					}
+				}
+
+				//武器パッシブスキル
+				if(handItem == DQWeapons.itemHayabusanoturugi)
+				{
+					evb.hurtResistantTime = 0;
+					evb.attackEntityFrom(DQR.damageSource.getPlayerSpecialDamage(ep), (preDamage));
+					if(evb.getHealth() <= 0.0F || evb.isDead)
+					{
+						//System.out.println("TEST");
+						return -1.0F;
+					}
+					evb.hurtResistantTime = 0;
+				}else if (handItem == DQWeapons.itemKisekinoturugi)
+				{
+					int randFix =rand.nextInt(5);
+                	if(ep.getHealth() + (ret / (8 - randFix)) > ep.getMaxHealth())
+                	{
+                		ep.setHealth(ep.getMaxHealth());
+                	}else
+                	{
+                		ep.setHealth(ep.getHealth() + (ret / (8 - randFix)));
+                	}
+				}else if(handItem == DQWeapons.itemMorohanoturugi)
+				{
+					if(rand.nextInt(16) == 0)
+					{
+						ep.hurtResistantTime = 0;
+						ep.attackEntityFrom(DQR.damageSource.getPlayerSpecialDamage(ep), (preDamage));
+						ep.hurtResistantTime = 0;
+					}
+				}else if(handItem == DQWeapons.itemDemonsupia)
+				{
+					float fixRate = DQR.calcDamage.applyDamageResistMagic2(0, evb, DQR.damageSource.getPlayerSpecialDamageDeath(ep));
+
+					if(rand.nextInt(20) == 0 &&  (fixRate * 100) > rand2.nextInt(100))
+					{
+						evb.attackEntityFrom(DQR.damageSource.getPlayerSpecialDamageDeath(ep).setDamageBypassesArmor(), evb.getMaxHealth() + 10.0F);
+						if(evb.getHealth() <= 0.0F || evb.isDead)
+						{
+							//System.out.println("TEST");
+							return -1.0F;
+						}
+						skillPerm = 0;
+						ret = -1.0F;
+					}
+				}else if(handItem == DQWeapons.itemEiyuunoyari)
+				{
+					int randFix =rand.nextInt(5);
+                	if(ep.getHealth() + (ret / (8 - randFix)) > ep.getMaxHealth())
+                	{
+                		ep.setHealth(ep.getMaxHealth());
+                	}else
+                	{
+                		ep.setHealth(ep.getHealth() + (ret / (8 - randFix)));
+                	}
+				}else if(handItem == DQWeapons.itemDokubari)
+				{
+					//System.out.println("TESTTEST");
+					float fixRate = DQR.calcDamage.applyDamageResistMagic2(0, evb, DQR.damageSource.getPlayerSpecialDamageDeath(ep));
+					//System.out.println("TESTRRR:" + fixRate);
+					if(rand.nextInt(20) == 0 &&  (fixRate * 100) > rand2.nextInt(100))
+					{
+						//System.out.println("どくばり即死");
+						evb.attackEntityFrom(DQR.damageSource.getPlayerSpecialDamageDeath(ep).setDamageBypassesArmor(), evb.getMaxHealth() + 10.0F);
+						if(evb.getHealth() <= 0.0F || evb.isDead)
+						{
+							//System.out.println("TEST");
+							return -1.0F;
+						}
+						skillPerm = 0;
+						ret = -1.0F;
+					}else
+					{
+						((DqmMobBase)evb).absoluteDam = 1.0F;
+						ret = 1.0F;
+
+						source.setDamageBypassesArmor();
+					}
+				}else if(handItem == DQWeapons.itemAsasindaga)
+				{
+					float fixRate = DQR.calcDamage.applyDamageResistMagic2(0, evb, DQR.damageSource.getPlayerSpecialDamageDeath(ep));
+
+					if(rand.nextInt(20) == 0 &&  (fixRate * 100) > rand2.nextInt(100))
+					{
+						evb.attackEntityFrom(DQR.damageSource.getPlayerSpecialDamageDeath(ep).setDamageBypassesArmor(), evb.getMaxHealth() + 10.0F);
+						if(evb.getHealth() <= 0.0F || evb.isDead)
+						{
+							//System.out.println("TEST");
+							return -1.0F;
+						}
+						skillPerm = 0;
+						ret = -1.0F;
+					}
+				}
+				/*else if(false)
+				{
+					//handItem == DQWeapons.itemMajinnokanaduti
+					if(rand.nextInt(8) == 0)
+					{
+						System.out.println("まじんのかなづち会心");
+						//source = DQR.damageSource.getPlayerSpecialDamageCri(ep);
+						evb.attackEntityFrom(DQR.damageSource.getPlayerSpecialDamageCri(ep).setDamageBypassesArmor(), ret);
+						if(evb.getHealth() <= 0.0F || evb.isDead)
+						{
+							//System.out.println("TEST");
+							return -1.0F;
+						}
+						skillPerm = 0;
+						ret = -1.0F;
+					}else
+					{
+						ret = 0.0F;
+					}
+				}*/else  if(handItem == DQWeapons.itemSodobureika)
+				{
+					if(rand.nextInt(8) == 0)
+					{
+						evb.addPotionEffect(new PotionEffect(DQPotionMinus.debuffHenatosu.id, 40, 1));
+					}
+				}else  if(handItem == DQWeapons.itemDokuganonaifu)
+				{
+					if(rand.nextInt(8) == 0)
+					{
+						evb.addPotionEffect(new PotionEffect(DQPotionMinus.debuffStop.id, 40, 1));
+					}
+				}else if(handItem == DQWeapons.itemKirapiasu)
+				{
+					evb.hurtResistantTime = 0;
+					evb.attackEntityFrom(DQR.damageSource.getPlayerSpecialDamage(ep), (preDamage));
+					if(evb.getHealth() <= 0.0F || evb.isDead)
+					{
+						//System.out.println("TEST");
+						return -1.0F;
+					}
+					evb.hurtResistantTime = 0;
+				}else if(handItem == DQWeapons.itemAkumanotume)
+				{
+					if(rand.nextInt(8) == 0)
+					{
+						evb.addPotionEffect(new PotionEffect(DQPotionMinus.potionPoison.id, 40, 1));
+					}
+				}else if(handItem == DQWeapons.itemHakainotekkyuu || handItem == DQWeapons.itemHakainotekkyuu2)
+				{
+					List list = evb.worldObj.getEntitiesWithinAABBExcludingEntity(evb,
+							evb.boundingBox.addCoord(evb.motionX, evb.motionY, evb.motionZ).expand(2.0D, 2.0D, 2.0D));
+
+		            //System.out.println("TEST1:" + list.size());
+
+	            	for (int n = 0 ; n < list.size() ; n++)
+	            	{
+	            		Entity target = (Entity)list.get(n);
+
+	            		if (!(target instanceof EntityPlayer) && !(target instanceof EntityTameable) &&  !(target instanceof EntityHorse) && target instanceof EntityLivingBase)
+	            		{
+	            			EntityLivingBase tagMob = (EntityLivingBase)target;
+	            			//System.out.println("TEST2:" + tagMob.MobName);
+	            			tagMob.hurtResistantTime = 0;
+	            			tagMob.attackEntityFrom(DQR.damageSource.getPlayerSpecialDamage(ep), (preDamage * damFix));
+
+	            			//DQR.func.setKnockBack(tagMob, 4, ep, true);
+	            			damFix = damFix - 0.2F;
+	            			if(damFix < 0.1F)
+	            			{
+	            				damFix = 0.1F;
+	            			}
+	            			tagMob.hurtResistantTime = 0;
+	            		}
+	            	}
+					if(evb.getHealth() <= 0.0F || evb.isDead)
+					{
+						//System.out.println("TEST");
+						return -1.0F;
+					}
+				}else if(handItem == DQWeapons.itemGuringamunomuti || handItem == DQWeapons.itemTyouguringamunomuti || handItem == DQWeapons.itemTyouguringamunomuti2)
+				{
+					List list = evb.worldObj.getEntitiesWithinAABBExcludingEntity(evb,
+							evb.boundingBox.addCoord(evb.motionX, evb.motionY, evb.motionZ).expand(2.0D, 2.0D, 2.0D));
+
+		            //System.out.println("TEST1:" + list.size());
+
+	            	for (int n = 0 ; n < list.size() ; n++)
+	            	{
+	            		Entity target = (Entity)list.get(n);
+
+	            		if (!(target instanceof EntityPlayer) && !(target instanceof EntityTameable) &&  !(target instanceof EntityHorse) && target instanceof EntityLivingBase)
+	            		{
+	            			EntityLivingBase tagMob = (EntityLivingBase)target;
+	            			//System.out.println("TEST2:" + tagMob.MobName);
+	            			tagMob.hurtResistantTime = 0;
+	            			tagMob.attackEntityFrom(DQR.damageSource.getPlayerSpecialDamage(ep), (preDamage * damFix));
+	            			//DQR.func.setKnockBack(tagMob, 4, ep, true);
+	            			damFix = damFix - 0.2F;
+	            			if(damFix < 0.1F)
+	            			{
+	            				damFix = 0.1F;
+	            			}
+	            			tagMob.hurtResistantTime = 0;
+	            		}
+	            	}
+	            	if(evb.getHealth() <= 0.0F || evb.isDead)
+					{
+						//System.out.println("TEST");
+						return -1.0F;
+					}
+				}
+			}
+
+
+
+
+
+
 
 			if(skillPerm != 0)
 			{
@@ -172,6 +431,11 @@ public class FuncCalcDamage {
 							ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
 							evb.hurtResistantTime = 0;
 							evb.attackEntityFrom(DQR.damageSource.getPlayerSkillDamage(ep), (preDamage * 0.75F));
+							if(evb.getHealth() <= 0.0F || evb.isDead)
+							{
+								//System.out.println("TEST");
+								return -1.0F;
+							}
 							evb.hurtResistantTime = 0;
 							ret = ret * 0.75F;
 							hitFlg = false;
@@ -198,6 +462,11 @@ public class FuncCalcDamage {
 			            			tagMob.hurtResistantTime = 0;
 			            		}
 			            	}
+			            	if(evb.getHealth() <= 0.0F || evb.isDead)
+							{
+								//System.out.println("TEST");
+								return -1.0F;
+							}
 
 							ret = ret * 3.0F;
 							hitFlg = false;
@@ -228,6 +497,11 @@ public class FuncCalcDamage {
 			            			tagMob.hurtResistantTime = 0;
 			            		}
 			            	}
+			            	if(evb.getHealth() <= 0.0F || evb.isDead)
+							{
+								//System.out.println("TEST");
+								return -1.0F;
+							}
 
 							ret = ret * 1.2F;
 							hitFlg = false;
@@ -260,6 +534,11 @@ public class FuncCalcDamage {
 			            		}
 			            	}
 
+			            	if(evb.getHealth() <= 0.0F || evb.isDead)
+							{
+								//System.out.println("TEST");
+								return -1.0F;
+							}
 							ret = ret * 1.5F;
 							hitFlg = false;
 						}
@@ -327,7 +606,20 @@ public class FuncCalcDamage {
 				            		ep.boundingBox.addCoord(ep.motionX, ep.motionY, ep.motionZ).expand(6.0D, 3.0D, 6.0D));
 
 							Entity target = (Entity)list.get(rand.nextInt(list.size()));
-							if(target != null && !(target instanceof EntityPlayer) && !(target instanceof EntityTameable) &&  !(target instanceof EntityHorse) && target instanceof EntityLivingBase)
+							if(target != null && target instanceof EntityLivingBase && !(target instanceof EntityPlayer) && !(target instanceof EntityTameable) &&  !(target instanceof EntityHorse) && target instanceof EntityLivingBase)
+							{
+								if(!target.isDead)
+								{
+									target.hurtResistantTime = 0;
+									target.attackEntityFrom(DQR.damageSource.getPlayerSkillDamage(ep), preDamage * 0.5F);
+
+
+								}
+							}
+
+
+							target = (Entity)list.get(rand.nextInt(list.size()));
+							if(target != null && target instanceof EntityLivingBase && !(target instanceof EntityPlayer) && !(target instanceof EntityTameable) &&  !(target instanceof EntityHorse) && target instanceof EntityLivingBase)
 							{
 								if(!target.isDead)
 								{
@@ -338,18 +630,7 @@ public class FuncCalcDamage {
 
 
 							target = (Entity)list.get(rand.nextInt(list.size()));
-							if(target != null && !(target instanceof EntityPlayer) && !(target instanceof EntityTameable) &&  !(target instanceof EntityHorse) && target instanceof EntityLivingBase)
-							{
-								if(!target.isDead)
-								{
-									target.hurtResistantTime = 0;
-									target.attackEntityFrom(DQR.damageSource.getPlayerSkillDamage(ep), preDamage * 0.5F);
-								}
-							}
-
-
-							target = (Entity)list.get(rand.nextInt(list.size()));
-							if(target != null && !(target instanceof EntityPlayer) && !(target instanceof EntityTameable) &&  !(target instanceof EntityHorse) && target instanceof EntityLivingBase)
+							if(target != null && target instanceof EntityLivingBase && !(target instanceof EntityPlayer) && !(target instanceof EntityTameable) &&  !(target instanceof EntityHorse) && target instanceof EntityLivingBase)
 							{
 								if(!target.isDead)
 								{
@@ -361,7 +642,7 @@ public class FuncCalcDamage {
 
 
 						    target = (Entity)list.get(rand.nextInt(list.size()));
-						    if(target != null && !(target instanceof EntityPlayer) && !(target instanceof EntityTameable) &&  !(target instanceof EntityHorse) && target instanceof EntityLivingBase)
+						    if(target != null && target instanceof EntityLivingBase && !(target instanceof EntityPlayer) && !(target instanceof EntityTameable) &&  !(target instanceof EntityHorse) && target instanceof EntityLivingBase)
 						    {
 						    	if(!target.isDead)
 						    	{
@@ -369,7 +650,11 @@ public class FuncCalcDamage {
 						    		target.attackEntityFrom(DQR.damageSource.getPlayerSkillDamage(ep), preDamage * 0.5F);
 						    	}
 						    }
-
+			            	if(evb.getHealth() <= 0.0F || evb.isDead)
+							{
+								//System.out.println("TEST");
+								return -1.0F;
+							}
 
 							ret = -1.0F;
 
@@ -419,6 +704,11 @@ public class FuncCalcDamage {
 							//ウィングブロウ
 							//ret = ret + 30.0F + (rand.nextFloat() * 15);
 							evb.attackEntityFrom(DQR.damageSource.getPlayerSkillDamage(ep), (30.0F + (rand.nextFloat() * 15)));
+			            	if(evb.getHealth() <= 0.0F || evb.isDead)
+							{
+								//System.out.println("TEST");
+								return -1.0F;
+							}
 							hitFlg = true;
 						}else if(weaponSkill == 2)
 						{
@@ -440,6 +730,11 @@ public class FuncCalcDamage {
 								float fixDam = (1.0F+(rand.nextFloat() * 4)) * 0.1F;
 								evb.hurtResistantTime = 0;
 								evb.attackEntityFrom(DQR.damageSource.getPlayerSkillDamage(ep), preDamage * fixDam);
+				            	if(evb.getHealth() <= 0.0F || evb.isDead)
+								{
+									//System.out.println("TEST");
+									return -1.0F;
+								}
 							}
 
 							evb.hurtResistantTime = 0;
@@ -452,6 +747,11 @@ public class FuncCalcDamage {
 							ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
 							evb.hurtResistantTime = 0;
 							evb.attackEntityFrom(DQR.damageSource.getPlayerSkillDamage(ep), (preDamage * 0.75F));
+			            	if(evb.getHealth() <= 0.0F || evb.isDead)
+							{
+								//System.out.println("TEST");
+								return -1.0F;
+							}
 							evb.hurtResistantTime = 0;
 							ret = ret * 0.75F;
 							hitFlg = false;
@@ -527,7 +827,11 @@ public class FuncCalcDamage {
 				            			tagMob.hurtResistantTime = 0;
 				            		}
 				            	}
-
+				            	if(evb.getHealth() <= 0.0F || evb.isDead)
+								{
+									//System.out.println("TEST");
+									return -1.0F;
+								}
 								ret = ret * 1.3F;
 								hitFlg = false;
 							}
@@ -581,7 +885,11 @@ public class FuncCalcDamage {
 			            			tagMob.hurtResistantTime = 0;
 			            		}
 			            	}
-
+			            	if(evb.getHealth() <= 0.0F || evb.isDead)
+							{
+								//System.out.println("TEST");
+								return -1.0F;
+							}
 							ret = -1.0F;
 							hitFlg = false;
 
@@ -617,7 +925,11 @@ public class FuncCalcDamage {
 			            			tagMob.hurtResistantTime = 0;
 			            		}
 			            	}
-
+			            	if(evb.getHealth() <= 0.0F || evb.isDead)
+							{
+								//System.out.println("TEST");
+								return -1.0F;
+							}
 							ret = -1.0F;
 							hitFlg = false;
 						}else if(weaponSkill == 3)
@@ -655,7 +967,11 @@ public class FuncCalcDamage {
 			            			healPoint = healPoint + dam;
 			            		}
 			            	}
-
+			            	if(evb.getHealth() <= 0.0F || evb.isDead)
+							{
+								//System.out.println("TEST");
+								return -1.0F;
+							}
 							ret = ret * 1.0F;
 							healPoint = healPoint + ret;
 							ep.heal(healPoint / 4);
@@ -666,6 +982,11 @@ public class FuncCalcDamage {
 							ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
 							evb.hurtResistantTime = 0;
 							evb.attackEntityFrom(DQR.damageSource.getPlayerSkillDamage(ep), (preDamage * 1.25F));
+			            	if(evb.getHealth() <= 0.0F || evb.isDead)
+							{
+								//System.out.println("TEST");
+								return -1.0F;
+							}
 							evb.hurtResistantTime = 0;
 							ret = ret * 1.25F;
 							hitFlg = false;
@@ -685,11 +1006,17 @@ public class FuncCalcDamage {
 						{
 							//きゅうしょづき
 							ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
+							float fixRate = DQR.calcDamage.applyDamageResistMagic2(0, evb, DQR.damageSource.getPlayerSkillDamageDeath(ep));
 
-							if(rand.nextInt(5) == 0)
+							if(rand.nextInt(5) == 0 &&  (fixRate * 100) > rand2.nextInt(100))
 							{
-								evb.attackEntityFrom(DQR.damageSource.getPlayerSkillDamageDeath(ep), evb.getMaxHealth() + 10.0F);
+								evb.attackEntityFrom(DQR.damageSource.getPlayerSkillDamageDeath(ep).setDamageBypassesArmor(), evb.getMaxHealth() + 10.0F);
 								ret = -1.0F;
+				            	if(evb.getHealth() <= 0.0F || evb.isDead)
+								{
+									//System.out.println("TEST");
+									return -1.0F;
+								}
 							}else
 							{
 								ret = ret * 0.5F;
@@ -769,6 +1096,11 @@ public class FuncCalcDamage {
 					            }
 				            }
 
+			            	if(evb.getHealth() <= 0.0F || evb.isDead)
+							{
+								//System.out.println("TEST");
+								return -1.0F;
+							}
 				            ret = -1.0F;
 
 							hitFlg = false;
@@ -812,7 +1144,9 @@ public class FuncCalcDamage {
 							//アサシンアタック
 							ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
 
-							if(rand.nextInt(5) == 0)
+							float fixRate = DQR.calcDamage.applyDamageResistMagic2(0, evb, DQR.damageSource.getPlayerSkillDamageDeath(ep));
+
+							if(rand.nextInt(5) == 0 &&  (fixRate * 100) > rand2.nextInt(100))
 							{
 								//System.out.println("TESTXXXXXXXXXXX");
 								evb.attackEntityFrom(DQR.damageSource.getPlayerSkillDamageDeath(ep).setDamageBypassesArmor(), evb.getMaxHealth() + 10.0F);
@@ -906,7 +1240,11 @@ public class FuncCalcDamage {
 			            			//healPoint = healPoint + dam;
 			            		}
 			            	}
-
+			            	if(evb.getHealth() <= 0.0F || evb.isDead)
+							{
+								//System.out.println("TEST");
+								return -1.0F;
+							}
 			            	ret = -1.0F;
 							//ret = ret * 1.0F;
 							//healPoint = healPoint + ret;
@@ -961,7 +1299,11 @@ public class FuncCalcDamage {
 				            		target.attackEntityFrom(DQR.damageSource.getPlayerSkillDamage(ep), preDamage * 0.3F);
 				            	}
 				            }
-
+			            	if(evb.getHealth() <= 0.0F || evb.isDead)
+							{
+								//System.out.println("TEST");
+								return -1.0F;
+							}
 				            ret = -1.0F;
 				            hitFlg = false;
 						}
@@ -1327,6 +1669,84 @@ public class FuncCalcDamage {
 		return ret;
 	}
 
+	public float applyDamageResistElement(float par1, float fixDam, EntityLivingBase evb, EnumDqmElement element)
+	{
+		float ret = par1;
+
+		String mobName = null;
+
+		if(evb instanceof DqmMobBase)
+		{
+			DqmMobBase mob = (DqmMobBase)evb;
+			EnumDqmMonster type = mob.monsterType;
+			mobName = type.getMobName();
+
+		}
+
+		if(mobName != null)
+		{
+			//モンスター耐性処理
+			EnumDqmMonsterResist resist = DQR.enumGetter.getMonsterResistFromMobname(mobName);
+			float resRate = 1.0F;
+
+			if(element == EnumDqmElement.DAITI)
+			{
+				resRate = resist.getDaiti();
+				if(resRate > 1.0F)
+				{
+					//evb.worldObj.playSoundAtEntity(evb, "dqr:player.kaisinMera", 0.5F, 1.0F);
+				}
+			}else if(element == EnumDqmElement.HONOO)
+			{
+				resRate = resist.getMera();
+				if(resRate > 1.0F)
+				{
+					//evb.worldObj.playSoundAtEntity(evb, "dqr:player.kaisinMera", 0.5F, 1.0F);
+				}
+			}else if(element == EnumDqmElement.KAMINARI)
+			{
+				resRate = resist.getRaidein();
+				if(resRate > 1.0F)
+				{
+					//evb.worldObj.playSoundAtEntity(evb, "dqr:player.kaisinMera", 0.5F, 1.0F);
+				}
+			}else if(element == EnumDqmElement.KAZE)
+			{
+				resRate = resist.getBagi();
+				if(resRate > 1.0F)
+				{
+					//evb.worldObj.playSoundAtEntity(evb, "dqr:player.kaisinMera", 0.5F, 1.0F);
+				}
+			}else if(element == EnumDqmElement.KOORI)
+			{
+				resRate = resist.getHyado();
+				if(resRate > 1.0F)
+				{
+					//evb.worldObj.playSoundAtEntity(evb, "dqr:player.kaisinMera", 0.5F, 1.0F);
+				}
+			}
+
+			if(resRate < 1.0F)
+			{
+				//evb.worldObj.playSoundAtEntity(evb, "dqr:player.down", 0.5F, 1.0F);
+				ret = par1 * resRate;
+			}else if(resRate == 1.0F)
+			{
+				ret = fixDam;
+			}else if(resRate > 1.0F)
+			{
+				ret = fixDam * resRate;
+			}else
+			{
+				ret = par1;
+			}
+
+			//ret = ret * resRate;
+		}
+		return ret;
+	}
+
+
 	public float applyDamageResistMagic(float par1, EntityLivingBase evb, DamageSource source)
 	{
 		float ret = par1;
@@ -1401,14 +1821,6 @@ public class FuncCalcDamage {
 					{
 						evb.worldObj.playSoundAtEntity(evb, "dqr:player.kaisinDoruma", 0.5F, 1.0F);
 					}
-				}else if(ent instanceof MagicEntityZaki)
-				{
-					resRate = resist.getZaki();
-
-				}else if(source.getDamageType().equalsIgnoreCase(DQR.damageSource.DqmPlayerSkillDeath.getDamageType()))
-				{
-					resRate = resist.getKillSkill();
-					//source = DQR.damageSource.getPlayerSkillDamage(DQR.damageSource.DqmPlayerSkillDeath.getEntity());
 				}
 
 
@@ -1426,6 +1838,62 @@ public class FuncCalcDamage {
 		return ret;
 	}
 
+
+	public float applyDamageResistMagic2(float par1, Entity evb, DamageSource source)
+	{
+		//成功率耐性
+		float ret = par1;
+		String mobName = null;
+
+		if(evb instanceof DqmMobBase)
+		{
+			DqmMobBase mob = (DqmMobBase)evb;
+			EnumDqmMonster type = mob.monsterType;
+			mobName = type.getMobName();
+
+		}else if(evb instanceof DqmPetBase)
+		{
+			DqmPetBase mob = (DqmPetBase)evb;
+			EnumDqmPet type = mob.type;
+			mobName = type.PetName;
+		}
+
+		if(mobName != null)
+		{
+			//モンスター耐性処理
+			EnumDqmMonsterResist resist = DQR.enumGetter.getMonsterResistFromMobname(mobName);
+
+			if(resist != null)
+			{
+				float resRate = 1.0F;
+				Entity ent = source.getEntity();
+
+				if(ent instanceof MagicEntityZaki)
+				{
+					//System.out.println("拾えてる");
+					resRate = resist.getZaki();
+
+				}else if(source.getDamageType().equalsIgnoreCase(DQR.damageSource.DqmPlayerSkillDeath.getDamageType()))
+				{
+					resRate = resist.getKillSkill();
+					//source = DQR.damageSource.getPlayerSkillDamage(DQR.damageSource.DqmPlayerSkillDeath.getEntity());
+				}else if(source.getDamageType().equalsIgnoreCase(DQR.damageSource.DqmPlayerSpecialDeath.getDamageType()))
+				{
+					//System.out.println("GetResist");
+					resRate = resist.getKillSkill();
+					//source = DQR.damageSource.getPlayerSkillDamage(DQR.damageSource.DqmPlayerSkillDeath.getEntity());
+				}else if(source.getDamageType().equalsIgnoreCase("BasiRura"))
+				{
+					System.out.println("バシルーラ耐性チェック");
+					resRate = resist.getBasiRura();
+				}
+
+				ret = resRate;
+			}
+		}
+
+		return ret;
+	}
 	////////////ダミー計算/////////////
 	public float getDummyDamage(float par1, EntityLivingBase evb, DamageSource source)
 	{
@@ -1507,7 +1975,7 @@ public class FuncCalcDamage {
 
     public boolean isWaterMob(Entity par1)
     {
-    	//マシン系の場合
+    	//水棲系の場合
     	if(par1 instanceof DqmEntityGuntaigani ||
     	   par1 instanceof DqmEntitySibirekurage ||
     	   par1 instanceof DqmEntityObakeumiusi ||
@@ -1518,6 +1986,21 @@ public class FuncCalcDamage {
     	   par1 instanceof DqmEntityKirakurabu ||
     	   par1 instanceof DqmEntityUmiusi ||
     	   par1 instanceof DqmEntityMarinsuraimu)
+    	{
+    		return true;
+    	}
+
+    	return false;
+    }
+
+    public boolean isInsectMob(Entity par1)
+    {
+    	//虫系の場合
+    	if(par1 instanceof DqmEntityOonamekuji ||
+    	   par1 instanceof DqmEntityZinmentyou ||
+    	   par1 instanceof DqmEntityObakeumiusi ||
+    	   par1 instanceof DqmEntityHitokuiga ||
+    	   par1 instanceof DqmEntitySibireageha)
     	{
     		return true;
     	}
@@ -1566,7 +2049,7 @@ public class FuncCalcDamage {
 
     public boolean isBirdMob(Entity par1)
     {
-    	//植物系の場合
+    	//鳥系の場合
     	if(par1 instanceof DqmEntityKimera ||
     	   par1 instanceof DqmEntityStarkimera ||
     	   par1 instanceof DqmEntityStarkimera ||
@@ -1579,6 +2062,40 @@ public class FuncCalcDamage {
     	   par1 instanceof DqmEntityDucksbill ||
     	   par1 instanceof DqmEntityMomonja ||
     	   par1 instanceof DqmEntityMagemomonja)
+    	{
+    		return true;
+    	}
+
+    	return false;
+    }
+
+    public boolean isElementMob(Entity par1)
+    {
+    	//マシン系の場合
+    	if(par1 instanceof DqmEntityMeragosuto ||
+    	   par1 instanceof DqmEntitySamayoutamasii ||
+    	   par1 instanceof DqmEntityManemane ||
+    	   par1 instanceof DqmEntityGizumoAZ ||
+    	   par1 instanceof DqmEntityDgizumo ||
+    	   par1 instanceof DqmEntityHgizumo ||
+    	   par1 instanceof DqmEntityFgizumo ||
+    	   par1 instanceof DqmEntityMashougumo ||
+    	   par1 instanceof DqmEntityFureimu ||
+    	   par1 instanceof DqmEntityBurizado ||
+    	   par1 instanceof DqmEntityFureizado ||
+    	   par1 instanceof DqmEntityBaburin ||
+    	   par1 instanceof DqmEntityPuyon ||
+    	   par1 instanceof DqmEntityPombom ||
+    	   par1 instanceof DqmEntityRyuiso ||
+    	   par1 instanceof DqmEntityDoronuba ||
+    	   par1 instanceof DqmEntityJeriman ||
+    	   par1 instanceof DqmEntityUmibouzu ||
+    	   par1 instanceof DqmEntityMagumaron ||
+    	   par1 instanceof DqmEntityTyokonuba ||
+    	   par1 instanceof DqmEntityAyasiikage ||
+    	   par1 instanceof DqmEntitySyado ||
+    	   par1 instanceof DqmEntityMaounokage ||
+    	   par1 instanceof DqmEntityHoroghost)
     	{
     		return true;
     	}

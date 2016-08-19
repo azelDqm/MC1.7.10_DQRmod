@@ -18,6 +18,7 @@ import org.lwjgl.opengl.GL11;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import dqr.DQR;
+import dqr.api.potion.DQPotionEtc;
 import dqr.potion.DqmPotionBase;
 
 //
@@ -194,9 +195,11 @@ public class GuiBuffBar extends Gui
                 //this.drawTexturedModalRect(var1, var2, 0, 166, 140, 25);
                 if(DQR.conf.guiPositionTarget ==6 && DQR.conf.guiPositionMode == 1)
                 {
+                	//this.drawTexturedModalRect(var1, var2, 0, 141, 125, 25);
                 	this.drawTexturedModalRect(var1, var2, 0, 141, 125, 25);
                 }else
                 {
+                	//this.drawTexturedModalRect(var1, var2, 0, 166, 125, 25);
                 	this.drawTexturedModalRect(var1, var2, 0, 166, 125, 25);
                 }
 
@@ -205,6 +208,10 @@ public class GuiBuffBar extends Gui
                 int var22 = var21.icon_x;
                 int var23 = var21.icon_y;
                 //System.out.println("DEBUG: x= " + var22 + "/ y= " + var23);
+                if(var8.id == DQPotionEtc.buffMahouken.id)
+                {
+                	 this.drawTexturedModalRect(var1 + 6, var2 + 4, 90, 90, 18, 18);
+                }
                 this.drawTexturedModalRect(var1 + 6, var2 + 4, var22, var23, 18, 18);
             }else
             {
@@ -212,9 +219,11 @@ public class GuiBuffBar extends Gui
                 this.mc.renderEngine.bindTexture(reLoc);
                 if(DQR.conf.guiPositionTarget ==6 && DQR.conf.guiPositionMode == 1)
                 {
+                	//this.drawTexturedModalRect(var1, var2, 130, 166, 125, 25);
                 	this.drawTexturedModalRect(var1, var2, 130, 166, 125, 25);
                 }else
                 {
+                	//this.drawTexturedModalRect(var1, var2, 0, 166, 125, 25);
                 	this.drawTexturedModalRect(var1, var2, 0, 166, 125, 25);
                 }
 
@@ -228,9 +237,18 @@ public class GuiBuffBar extends Gui
             String var11 = I18n.format(var8.getName(), new Object[0]);
 
             //var11 = var11 + " " + I18n.format("dqr:amplider.level." + (var7.getAmplifier() + 1), new Object[0]);
-            if (var7.getAmplifier() < 15)
+            if(var8.id == DQPotionEtc.buffMahouken.id)
             {
-            	var11 = var11 + " " + I18n.format("amplider.level." + (var7.getAmplifier() + 1), new Object[0]);
+            	var11 = var11 + " " + I18n.format("mahouken.name." + var7.getAmplifier(), new Object[0]);
+            }else
+            {
+	            if (var7.getAmplifier() < 15)
+	            {
+	            	var11 = var11 + " " + I18n.format("amplider.level." + (var7.getAmplifier() + 1), new Object[0]);
+	            }else
+	            {
+	            	var11 = var11 + " " + (var7.getAmplifier() + 1);
+	            }
             }
 
             mc.fontRenderer.drawStringWithShadow(var11, var1 + 10 + 18, var2 + 5, 0xffffffff);
@@ -239,7 +257,7 @@ public class GuiBuffBar extends Gui
         }
     }
 
-    if(DQR.conf.guiPositionMode == 1)
+    if(DQR.conf.guiPositionMode == 1 && DQR.conf.guiPositionTarget == 6)
     {
     	//System.out.println("DEBUG+" + effectCnt);
     	if(effectCnt < 6)

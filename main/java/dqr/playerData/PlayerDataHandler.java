@@ -53,6 +53,7 @@ public class PlayerDataHandler {
         	EntityPlayer ep = (EntityPlayer)event.entity;
 
         	ExtendedPlayerProperties2.get(ep).setPlayerName(ep.getDisplayName());
+        	ExtendedPlayerProperties3.get(ep).setPartyMemberData(null);
 
         	 if(!ep.isDead && ep.getHealth() > 0)
         	{
@@ -105,6 +106,9 @@ public class PlayerDataHandler {
                 storeEntityData(event.entity.getCommandSenderName(), playerData, playerData2, playerData3);                //(event.entity.getExtendedProperties(ExtendedPlayerProperties.EXT_PROP_NAME)).loadNBTData(playerData);
                 //((ExtendedPlayerProperties)(event.entity.getExtendedProperties(ExtendedPlayerProperties.EXT_PROP_NAME))).loadProxyData((EntityPlayer)event.entity);
         	}
+
+        	//ExtendedPlayerProperties3.get(ep).setPartyMemberData(null);
+        	//PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties3(ep), (EntityPlayerMP)ep);
         }
     }
 
@@ -118,6 +122,7 @@ public class PlayerDataHandler {
 			ExtendedPlayerProperties.get(event.player).setMaxHP(DQR.calcPlayerStatus.calcHP(event.player));
 			event.player.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(ExtendedPlayerProperties.get(event.player).getMaxHP());
 			event.player.setHealth(event.player.getMaxHealth());
+
             PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties(event.player), (EntityPlayerMP)event.player);
             PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties2(event.player), (EntityPlayerMP)event.player);
             PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties3(event.player), (EntityPlayerMP)event.player);

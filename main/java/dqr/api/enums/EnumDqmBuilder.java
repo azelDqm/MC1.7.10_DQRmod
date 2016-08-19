@@ -2,9 +2,9 @@ package dqr.api.enums;
 
 public enum EnumDqmBuilder {
 
-	DAMA(0, "Dama", 22, 18, -1),
-	DAMAS(1, "DamaS", 22, 18, -1),
-	DAMAW(2, "DamaW", 22, 18, -1),
+	DAMA(0, "Dama", 24, 18, -1),
+	DAMAS(1, "DamaS", 24, 18, -1),
+	DAMAW(2, "DamaW", 24, 18, -1),
 	IDOMEDAL(3, "IdoMedal", 6, 2, -36),;
 
     private final int id;      //威力(攻撃力・回復量)

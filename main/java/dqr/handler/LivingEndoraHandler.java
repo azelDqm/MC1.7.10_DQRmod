@@ -3,13 +3,16 @@ package dqr.handler;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
 import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.boss.EntityDragon;
+import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -311,6 +314,19 @@ public class LivingEndoraHandler {
 			EntityDragon dragon = (EntityDragon)event.entityLiving;
 			int varDifficulty = DQR.conf.DqmEndoraDifficulty == -1 ? DQR.conf.DqmDifficulty : DQR.conf.DqmEndoraDifficulty;
 			EnumDqmEndoraParam enumEndora = DQR.enumGetter.getEndoraParam(varDifficulty);
+
+            List list = dragon.worldObj.getEntitiesWithinAABBExcludingEntity(dragon,
+            		dragon.boundingBox.addCoord(dragon.motionX, dragon.motionY, dragon.motionZ).expand(10.0D, 10.0D, 10.0D));
+            for (int l = 0; l < list.size(); ++l)
+            {
+                Entity entity1 = (Entity)list.get(l);
+
+                if(varDifficulty > 3 && entity1 instanceof EntityArrow)
+                {
+                	entity1.setDead();
+                }
+            }
+
 
 			if(dragon.getMaxHealth() < enumEndora.getMaxHP())
 			{

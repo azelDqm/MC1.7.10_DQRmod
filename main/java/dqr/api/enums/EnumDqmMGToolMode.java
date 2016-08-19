@@ -23,7 +23,12 @@ public enum EnumDqmMGToolMode {
 	RURAMODE0(0, "RuraMode0"),
 	RURAMODE10(1, "RuraMode10"),
 	RURAMODE25(2, "RuraMode25"),
-	RURAMODE40(3, "RuraMode40");
+	RURAMODE40(3, "RuraMode40"),
+
+	BASIRURAMODE0(0, "BasiRuraMode0"),
+	BASIRURAMODE10(1, "BasiRuraMode10"),
+
+	;
 
 
 

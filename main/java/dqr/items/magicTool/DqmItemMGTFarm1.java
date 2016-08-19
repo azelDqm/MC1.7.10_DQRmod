@@ -4,6 +4,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockBush;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -14,8 +16,10 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
 import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.util.MathHelper;
 import net.minecraft.util.RegistryNamespaced;
 import net.minecraft.world.World;
+import net.minecraftforge.common.IPlantable;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import dqr.DQR;
@@ -122,17 +126,26 @@ public class DqmItemMGTFarm1 extends DqmItemMagicToolBase{
 			{
 				//System.out.println("test" + p_77648_7_);
 
-				ExtendedPlayerProperties2.get(ep).setItemUseFlg(itemDam);
-	        	if(!par3World.isRemote)
-	        	{
-	        		String seedName = ExtendedPlayerProperties2.get(ep).getSelectSeed();
-	        		int seedVal = ExtendedPlayerProperties2.get(ep).getSeedVal(seedName);
-	        		ThreadMGFarmHarvest harvestThread = new ThreadMGFarmHarvest(par1ItemStack, ep, par3World,
-	        														p_77648_4_, p_77648_5_, p_77648_6_, p_77648_7_,
-	        														p_77648_8_, p_77648_9_, p_77648_10_);
-	        		harvestThread.start();
 
-	        	}
+        		String seedName = ExtendedPlayerProperties2.get(ep).getSelectSeed();
+        		int seedVal = ExtendedPlayerProperties2.get(ep).getSeedVal(seedName);
+
+        		if(DQR.conf.cfg_NoThreadUseHervest == 1)
+        		{
+        			this.doHarvest(par1ItemStack, ep, par3World,
+								   p_77648_4_, p_77648_5_, p_77648_6_, p_77648_7_,
+								   p_77648_8_, p_77648_9_, p_77648_10_);
+        		}else
+        		{
+    				ExtendedPlayerProperties2.get(ep).setItemUseFlg(itemDam);
+    	        	if(!par3World.isRemote)
+    	        	{
+	        			ThreadMGFarmHarvest harvestThread = new ThreadMGFarmHarvest(par1ItemStack, ep, par3World,
+	        																		p_77648_4_, p_77648_5_, p_77648_6_, p_77648_7_,
+	        																		p_77648_8_, p_77648_9_, p_77648_10_);
+	        			harvestThread.start();
+    	        	}
+        		}
 
 			}else if(mode == EnumDqmMGToolMode.MGFARM1_STORE.getId())
 			{
@@ -422,4 +435,112 @@ public class DqmItemMGTFarm1 extends DqmItemMagicToolBase{
         return book;
         */
     }
+
+
+	public void doHarvest(ItemStack par1, EntityPlayer ep, World par3, int par4, int par5, int par6, int par7, float par8, float par9, float par10)
+	{
+
+		int mode = ExtendedPlayerProperties2.get(ep).getTool1mode();
+		int area = ExtendedPlayerProperties2.get(ep).getToolArea();
+
+		int areaX = DQR.conf.MGFarm_Area_X[area];
+		int areaY = DQR.conf.MGFarm_Area_Y[area];
+		int areaZ = DQR.conf.MGFarm_Area_Z[area];
+
+		int itemDam = areaX * areaY * areaZ * 10;
+
+		int fixY = par7 == 1? 1 : 0;
+		if(par7 == 1 &&
+				(par3.isAirBlock(par4 + 1, par5 + fixY, par6) &&
+				 par3.isAirBlock(par4 - 1, par5 + fixY, par6) &&
+				 par3.isAirBlock(par4, par5 + fixY, par6 + 1) &&
+				 par3.isAirBlock(par4, par5 + fixY, par6 - 1)))
+			{
+				fixY = 0;
+			}
+		//System.out.println("test:" + areaX + "/" + areaY + "/" + areaZ);
+		//System.out.println("test2:" + (areaZ - 1) / 2 * -1 + "/" + (areaZ - 1) / 2);
+
+		//System.out.println("test:" + areaX + "/" + areaY + "/" + areaZ);
+		Item hoe = Items.diamond_hoe;
+
+		int l = MathHelper.floor_double((double)(ep.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
+
+		//System.out.println("DEBUG" + l);
+
+
+		if(l == 1)
+		{
+			//System.out.println("DEBUG;" + areaZ + "/" + areaX);
+			for(int cntY = (areaY - 1) / 2 * -1; (areaY - 1) / 2 >= cntY; cntY++)
+			{
+				for(int cntX = (areaX - 1) / 2 * -1; (areaX - 1) / 2 >= cntX; cntX++)
+				{
+					for(int cntZ = 0; (areaZ - 1) * -1 <= cntZ; cntZ--)
+					{
+						Block targetBlock = par3.getBlock(par4 + cntZ, par5+ cntY + fixY, par6 + cntX);
+
+						if(targetBlock instanceof IPlantable || targetBlock instanceof BlockBush)
+						{
+							par3.func_147480_a(par4 + cntZ, par5+ cntY + fixY, par6 + cntX, true);
+						}
+					}
+				}
+			}
+		}else if(l == 2)
+		{
+			for(int cntY = (areaY - 1) / 2 * -1; (areaY - 1) / 2 >= cntY; cntY++)
+			{
+				for(int cntX = (areaX - 1) / 2 * -1; (areaX - 1) / 2 >= cntX; cntX++)
+				{
+					for(int cntZ = 0; (areaZ - 1) * -1 <= cntZ; cntZ--)
+					{
+						Block targetBlock = par3.getBlock(par4 + cntX, par5+ cntY + fixY, par6 + cntZ);
+
+						if(targetBlock instanceof IPlantable || targetBlock instanceof BlockBush)
+						{
+							par3.func_147480_a(par4 + cntX, par5+ cntY + fixY, par6 + cntZ, true);
+						}
+					}
+				}
+			}
+		}else if(l == 3)
+		{
+			//System.out.println("DEBUG;" + areaZ + "/" + areaX);
+			for(int cntY = (areaY - 1) / 2 * -1; (areaY - 1) / 2 >= cntY; cntY++)
+			{
+				for(int cntX = (areaX - 1) / 2 * -1; (areaX - 1) / 2 >= cntX; cntX++)
+				{
+					for(int cntZ = 0; (areaZ - 1) >= cntZ; cntZ++)
+					{
+						Block targetBlock = par3.getBlock(par4 + cntZ, par5+ cntY + fixY, par6 + cntX);
+
+						if(targetBlock instanceof IPlantable || targetBlock instanceof BlockBush)
+						{
+							par3.func_147480_a(par4 + cntZ, par5+ cntY + fixY, par6 + cntX, true);
+						}
+					}
+				}
+			}
+		}else
+		{
+			for(int cntY = (areaY - 1) / 2 * -1; (areaY - 1) / 2 >= cntY; cntY++)
+			{
+				for(int cntX = (areaX - 1) / 2 * -1; (areaX - 1) / 2 >= cntX; cntX++)
+				{
+					for(int cntZ = 0; (areaZ - 1) >= cntZ; cntZ++)
+					{
+						Block targetBlock = par3.getBlock(par4 + cntX, par5+ cntY + fixY, par6 + cntZ);
+
+						if(targetBlock instanceof IPlantable || targetBlock instanceof BlockBush)
+						{
+							par3.func_147480_a(par4 + cntX, par5+ cntY + fixY, par6 + cntZ, true);
+						}
+					}
+				}
+			}
+		}
+
+
+	}
 }

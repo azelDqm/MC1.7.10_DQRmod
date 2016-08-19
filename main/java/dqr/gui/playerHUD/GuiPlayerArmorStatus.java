@@ -233,7 +233,7 @@ public class GuiPlayerArmorStatus extends Gui
     		  reLoc = new ResourceLocation("dqr","textures/gui/mpStatusArmor.png");
     	  }
           mc.renderEngine.bindTexture(reLoc);
-          
+
           this.drawTexturedModalRect(x, y0, 0, 0, 94, 90);
 
         	  //System.out.println("通過");
@@ -274,6 +274,7 @@ public class GuiPlayerArmorStatus extends Gui
     	  }
     	  RenderHelper.disableStandardItemLighting();
 
+    	  //RenderHelper.disableStandardItemLighting();
     	  /*
     	  GL11.glDisable(GL12.GL_RESCALE_NORMAL);
           OpenGlHelper.setActiveTexture(OpenGlHelper.lightmapTexUnit);

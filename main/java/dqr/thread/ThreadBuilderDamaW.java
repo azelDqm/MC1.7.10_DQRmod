@@ -47,19 +47,18 @@ public class ThreadBuilderDamaW extends Thread{
 		this.Hougaku = nbt.getInteger("settingFace");
         switch(this.Hougaku)
         {
-        	case 1: xxx = xxx - 23; break;
-        	case 2: zzz = zzz - 23; break;
-        	case 3: xxx = xxx + 23; break;
-        	case 0: zzz = zzz + 23; break;
+        	case 1: xxx = xxx - 24; break;
+        	case 2: zzz = zzz - 24; break;
+        	case 3: xxx = xxx + 24; break;
+        	case 0: zzz = zzz + 24; break;
         }
 
         int takasa = 0;
         int yyy = this.yMain;
         //int yyy = par3World.getHeightValue(xxx, zzz);
-
 		if(nbt.getInteger("buildReady") == 1)
 		{
-	        for (int x = (this.size * -1); x <= this.size; ++x)
+	        for (int x = (this.size * -1) - 1; x <= this.size + 1; ++x)
 	        {
 	        	if(par3World.getBlock(xxx + x, yyy + this.height, zzz + this.size) == DQBlocks.DqmBlockBuilderFrame)
 	        		par3World.setBlock(xxx + x, yyy + this.height, zzz + this.size, Blocks.air, 0, 2);
@@ -81,7 +80,7 @@ public class ThreadBuilderDamaW extends Thread{
 				e.printStackTrace();
 			}
 
-	        for (int z = (this.size * -1); z <= this.size; ++z)
+	        for (int z = (this.size * -1) - 1; z <= this.size + 1; ++z)
 	        {
 	        	if(par3World.getBlock(xxx + this.size, yyy + this.height, zzz + z) == DQBlocks.DqmBlockBuilderFrame)
 	        		par3World.setBlock(xxx + this.size, yyy + this.height, zzz + z, Blocks.air, 0, 2);
@@ -105,17 +104,17 @@ public class ThreadBuilderDamaW extends Thread{
 
 	        for (int y = this.under; y <= this.height; ++y)
 	        {
-	        	if(par3World.getBlock(xxx + this.size, yyy + y, zzz + this.size) == DQBlocks.DqmBlockBuilderFrame)
-	        		par3World.setBlock(xxx + this.size, yyy + y, zzz + this.size,Blocks.air, 0, 2);
+	        	if(par3World.getBlock(xxx + this.size + 1, yyy + y, zzz + this.size + 1) == DQBlocks.DqmBlockBuilderFrame)
+	        		par3World.setBlock(xxx + this.size + 1, yyy + y, zzz + this.size + 1,Blocks.air, 0, 2);
 
-	        	if(par3World.getBlock(xxx + this.size, yyy + y, zzz + (this.size * -1)) == DQBlocks.DqmBlockBuilderFrame)
-	        		par3World.setBlock(xxx + this.size, yyy + y, zzz + (this.size * -1), Blocks.air, 0, 2);
+	        	if(par3World.getBlock(xxx + this.size + 1, yyy + y, zzz + (this.size * -1) - 1) == DQBlocks.DqmBlockBuilderFrame)
+	        		par3World.setBlock(xxx + this.size + 1, yyy + y, zzz + (this.size * -1) - 1, Blocks.air, 0, 2);
 
-	        	if(par3World.getBlock(xxx + (this.size * -1), yyy + y, zzz + this.size) == DQBlocks.DqmBlockBuilderFrame)
-	        		par3World.setBlock(xxx + (this.size * -1), yyy + y, zzz + this.size, Blocks.air, 0, 2);
+	        	if(par3World.getBlock(xxx + (this.size * -1) - 1, yyy + y, zzz + this.size + 1) == DQBlocks.DqmBlockBuilderFrame)
+	        		par3World.setBlock(xxx + (this.size * -1) - 1, yyy + y, zzz + this.size + 1, Blocks.air, 0, 2);
 
-	        	if(par3World.getBlock(xxx + (this.size * -1), yyy + y, zzz + (this.size * -1)) == DQBlocks.DqmBlockBuilderFrame)
-	        		par3World.setBlock(xxx + (this.size * -1), yyy + y, zzz + (this.size * -1), Blocks.air, 0, 2);
+	        	if(par3World.getBlock(xxx + (this.size * -1) - 1, yyy + y, zzz + (this.size * -1) - 1) == DQBlocks.DqmBlockBuilderFrame)
+	        		par3World.setBlock(xxx + (this.size * -1) - 1, yyy + y, zzz + (this.size * -1 - 1), Blocks.air, 0, 2);
 	        }
 		}
 
@@ -137,7 +136,7 @@ public class ThreadBuilderDamaW extends Thread{
 		if(topBlock != null)
 		{
 	        //土
-	        for (int x = -22; x <= 22; ++x)
+	        for (int x = -24; x <= 24; ++x)
 	        {
 				try {
 					this.sleep(DQR.conf.cfg_build_sleep);
@@ -145,7 +144,7 @@ public class ThreadBuilderDamaW extends Thread{
 					// TODO 自動生成された catch ブロック
 					e.printStackTrace();
 				}
-	            for (int z = -22; z <= 22; ++z)
+	            for (int z = -24; z <= 24; ++z)
 	            {
 	                for (int y = -1; y <= -1 ; ++y)
 	                {
@@ -211,6 +210,23 @@ public class ThreadBuilderDamaW extends Thread{
         		metaV2 = 2;
         		metaV3 = 7;
         	}
+
+	        for (int x = -24; x <= 24; ++x)
+	        {
+				try {
+					this.sleep(DQR.conf.cfg_build_sleep);
+				} catch (InterruptedException e) {
+					// TODO 自動生成された catch ブロック
+					e.printStackTrace();
+				}
+	            for (int z = -24; z <= 24; ++z)
+	            {
+	                for (int y = 0; y <= 18; ++y)
+	                {
+	                    par3World.setBlock(xxx + x, yyy + y + takasa, zzz + (z * byVal), Blocks.air, 0, 2);
+	                }
+	            }
+	        }
 
 	        for (int x = -20; x <= 20; ++x)
 	        {

@@ -99,6 +99,7 @@ public class GuiPositionMode extends Gui
           String line1 = I18n.format("gui.position.line.1", new Object[]{targetGUI});
           String line2 = I18n.format("gui.position.line.2", new Object[]{DQR.conf.guiPositionSpeed});
 
+
           y1 = y0 + 3;
           y2 = y0 + 21;
           y3 = y0 + 32;
@@ -111,6 +112,11 @@ public class GuiPositionMode extends Gui
           mc.fontRenderer.drawStringWithShadow(title, x + 5 , y1, 0xffffffff);
           mc.fontRenderer.drawStringWithShadow(line1, x + 5 , y2, 0xffffffff);
           mc.fontRenderer.drawStringWithShadow(line2, x + 5, y3, 0xffffffff);
+          if(DQR.conf.guiPositionTarget == 7)
+          {
+        	  String addLine = I18n.format("gui.position.line.3", new Object[]{DQR.conf.CLGuiPartyReturnLine});
+        	  mc.fontRenderer.drawStringWithShadow(addLine, x + 5, y3 + 12, 0xffffffff);
+          }
 
 
       }

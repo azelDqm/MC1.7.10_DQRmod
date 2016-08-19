@@ -155,6 +155,7 @@ public class DqmItemMagicIo extends DqmItemMagicBase{
 	    				int matk = ExtendedPlayerProperties.get(par3EntityPlayer).getMaryoku();
 	    				int attackDam = (par1ItemStack.getMaxDamage() - par1ItemStack.getItemDamage())* 100
 						        / par1ItemStack.getMaxDamage() *  matk / 100;
+	    				attackDam = DQR.magicTable.getReasonableDamage(this, par3EntityPlayer, attackDam);
 
 	    				if(this.getEnumMagic().getDamage() + par1ItemStack.getItemDamage() < par1ItemStack.getMaxDamage() )
 	    				{

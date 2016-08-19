@@ -4,24 +4,25 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
-import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
-import shift.sextiarysector.api.equipment.EquipmentType;
-import shift.sextiarysector.api.equipment.IEquipment;
-import shift.sextiarysector.container.InventoryPlayerNext;
-import shift.sextiarysector.player.EntityPlayerManager;
+//import shift.sextiarysector.api.equipment.EquipmentType;
+//import shift.sextiarysector.api.equipment.IEquipment;
+//import shift.sextiarysector.player.EntityPlayerManager;
 import dqr.api.enums.EnumDqmSubEquipType;
+import dqr.items.interfaceBase.ISubEquip;
+import dqr.playerData.ExtendedPlayerProperties2;
 
 public class GuiSubEquipContainer extends Container {
 
-    public InventoryPlayerNext equipment;
+    public InventorySubEquip equipment;
     private EntityPlayer player;
 
     public GuiSubEquipContainer(InventoryPlayer par1InventoryPlayer, EntityPlayer p_i1819_3_) {
         //this.equipment = par2TileEntityFurnace;
         this.player = p_i1819_3_;
-        this.equipment = EntityPlayerManager.getEquipmentStats(p_i1819_3_).inventory;
-
+        //this.equipment = ExtendedPlayerProperties2.get(p_i1819_3_).getSubEquips();
+        this.equipment = new InventorySubEquip(p_i1819_3_);
+        this.equipment.openInventory();
         /*
         int c = 0 ;
         for(int i = 0;i<5;i++){
@@ -225,12 +226,61 @@ public class GuiSubEquipContainer extends Container {
         ItemStack itemstack = null;
         Slot slot = (Slot) this.inventorySlots.get(p_82846_2_);
 
+        //System.out.println("TEST:" + p_82846_2_);
+
         if (slot != null && slot.getHasStack()) {
             ItemStack itemstack1 = slot.getStack();
             itemstack = itemstack1.copy();
 
-            if (!((0 <= p_82846_2_ && p_82846_2_ <= 3) || (40 <= p_82846_2_ && p_82846_2_ <= 60))) {
+            if (!(36 <= p_82846_2_ && p_82846_2_ <= 48)){
+            	if (itemstack.getItem() instanceof ISubEquip && ((ISubEquip) itemstack.getItem()).isItemValid(EnumDqmSubEquipType.Piasu, itemstack)) {
 
+                    if (this.checkSameItem(itemstack1, 36, 38) || !this.mergeItemStack(itemstack1, 36, 38, false)) {
+                    	//System.out.println("LINE1");
+                    	//移動不可の場合
+
+                    	return null;
+                    }
+                    //System.out.println("LINE2" + (itemstack == null));
+                }else if (itemstack.getItem() instanceof ISubEquip && ((ISubEquip) itemstack.getItem()).isItemValid(EnumDqmSubEquipType.Kubikazari, itemstack)) {
+
+                    if (this.checkSameItem(itemstack1, 38, 39) || !this.mergeItemStack(itemstack1, 38, 39, false)) {
+                        return null;
+                    }
+
+                }else if (itemstack.getItem() instanceof ISubEquip && ((ISubEquip) itemstack.getItem()).isItemValid(EnumDqmSubEquipType.Shield, itemstack)) {
+
+                    if (this.checkSameItem(itemstack1, 47, 48) || !this.mergeItemStack(itemstack1, 47, 48, false)) {
+                        return null;
+                    }
+
+                }else if (itemstack.getItem() instanceof ISubEquip && ((ISubEquip) itemstack.getItem()).isItemValid(EnumDqmSubEquipType.Sonota, itemstack)) {
+
+                    if (this.checkSameItem(itemstack1, 45, 47) || !this.mergeItemStack(itemstack1, 45, 47, false)) {
+                        return null;
+                    }
+
+                }else if (itemstack.getItem() instanceof ISubEquip && ((ISubEquip) itemstack.getItem()).isItemValid(EnumDqmSubEquipType.Udewa, itemstack)) {
+
+                    if (this.checkSameItem(itemstack1, 39, 41) || !this.mergeItemStack(itemstack1, 39, 41, false)) {
+                        return null;
+                    }
+
+                }else if (itemstack.getItem() instanceof ISubEquip && ((ISubEquip) itemstack.getItem()).isItemValid(EnumDqmSubEquipType.Yubiwa, itemstack)) {
+
+                    if (this.checkSameItem(itemstack1, 41, 45) || !this.mergeItemStack(itemstack1, 41, 45, false)) {
+                        return null;
+                    }
+
+                }else if (itemstack.getItem() instanceof ISubEquip && ((ISubEquip) itemstack.getItem()).isItemValid(EnumDqmSubEquipType.Fukuro, itemstack)) {
+
+                    if (this.checkSameItem(itemstack1, 48, 49) || !this.mergeItemStack(itemstack1, 48, 49, false)) {
+                        return null;
+                    }
+
+                }
+            	//System.out.println("TEST:R");
+/*
                 if (itemstack.getItem() instanceof ItemArmor && !((Slot) this.inventorySlots.get(0 + ((ItemArmor) itemstack.getItem()).armorType)).getHasStack()) {
                     int j = 0 + ((ItemArmor) itemstack.getItem()).armorType;
 
@@ -243,37 +293,40 @@ public class GuiSubEquipContainer extends Container {
                     if (!this.mergeItemStack(itemstack1, j, j + 1, false)) {
                         return null;
                     }
-                } else if (itemstack.getItem() instanceof IEquipment && ((IEquipment) itemstack.getItem()).isItemValid(EquipmentType.Face, itemstack)) {
+                } else
+                */
+            	/*
+                if (itemstack.getItem() instanceof ISubEquip && ((ISubEquip) itemstack.getItem()).isItemValid(EquipmentType.Face, itemstack)) {
 
                     if (!this.mergeItemStack(itemstack1, 44, 45, false)) {
                         return null;
                     }
 
-                } else if (itemstack.getItem() instanceof IEquipment && ((IEquipment) itemstack.getItem()).isItemValid(EquipmentType.Bag, itemstack)) {
+                } else if (itemstack.getItem() instanceof ISubEquip && ((ISubEquip) itemstack.getItem()).isItemValid(EquipmentType.Bag, itemstack)) {
 
                     if (!this.mergeItemStack(itemstack1, 45, 46, false)) {
                         return null;
                     }
 
-                } else if (itemstack.getItem() instanceof IEquipment && ((IEquipment) itemstack.getItem()).isItemValid(EquipmentType.Hand, itemstack)) {
+                } else if (itemstack.getItem() instanceof ISubEquip && ((ISubEquip) itemstack.getItem()).isItemValid(EquipmentType.Hand, itemstack)) {
 
                     if (!this.mergeItemStack(itemstack1, 46, 47, false)) {
                         return null;
                     }
 
-                } else if (itemstack.getItem() instanceof IEquipment && ((IEquipment) itemstack.getItem()).isItemValid(EquipmentType.Belt, itemstack)) {
+                } else if (itemstack.getItem() instanceof ISubEqui alid(EquipmentType.Belt, itemstack)) {
 
                     if (!this.mergeItemStack(itemstack1, 47, 48, false)) {
                         return null;
                     }
 
-                } else if (itemstack.getItem() instanceof IEquipment && ((IEquipment) itemstack.getItem()).isItemValid(EquipmentType.Unit, itemstack)) {
+                } else if (itemstack.getItem() instanceof ISubEquip && ((ISubEquip) itemstack.getItem()).isItemValid(EquipmentType.Unit, itemstack)) {
 
                     if (!this.mergeItemStack(itemstack1, 48, 56, false)) {
                         return null;
                     }
 
-                } else if (itemstack.getItem() instanceof IEquipment && ((IEquipment) itemstack.getItem()).isItemValid(EquipmentType.Other, itemstack)) {
+                } else if (itemstack.getItem() instanceof ISubEquip && ((ISubEquip) itemstack.getItem()).isItemValid(EquipmentType.Other, itemstack)) {
 
                     if (!this.mergeItemStack(itemstack1, 56, 60, false)) {
                         return null;
@@ -286,9 +339,17 @@ public class GuiSubEquipContainer extends Container {
                 } else if (p_82846_2_ >= 13 && p_82846_2_ < 40 && !this.mergeItemStack(itemstack1, 4, 13, false)) {
                     return null;
                 }
+                */
 
-            } else if (!this.mergeItemStack(itemstack1, 4, 40, false)) {
-                return null;
+            }else{
+            	if (!this.mergeItemStack(itemstack1, 0, 36, false)) {
+            		//System.out.println("TEST:X");
+            		return null;
+            	}else
+            	{
+            		//System.out.println("TEST:Y");
+            	}
+
             }
 
             if (itemstack1.stackSize == 0) {
@@ -307,5 +368,39 @@ public class GuiSubEquipContainer extends Container {
         return itemstack;
     }
 
+    @Override
+    public void onContainerClosed(EntityPlayer p_75134_1_)
+    {
+    	//System.out.println("test");
+    	//System.out.println("CODE2");
+    	ExtendedPlayerProperties2.get(p_75134_1_).setFukuroOpen(false);
 
+        super.onContainerClosed(p_75134_1_);
+        this.equipment.closeInventory();
+    }
+    /*
+    public void onContainerClosed(EntityPlayer p_75134_1_)
+    {
+        super.onContainerClosed(p_75134_1_);
+        ExtendedPlayerProperties2.get(p_75134_1_).getEquipmentStats().onUpdate(p_75134_1_);
+        this.equipment.closeInventory();
+    }
+    */
+
+    public boolean checkSameItem(ItemStack ist, int slotS, int slotE)
+    {
+    	for(int cnt = slotS; cnt < slotE; cnt++)
+    	{
+            Slot slot = (Slot) this.inventorySlots.get(cnt);
+
+            if (slot != null && slot.getHasStack()) {
+	    		if(slot.getStack().getItem() == ist.getItem())
+	    		{
+	    			return true;
+	    		}
+            }
+    	}
+
+    	return false;
+    }
 }

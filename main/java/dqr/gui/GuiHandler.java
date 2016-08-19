@@ -15,6 +15,7 @@ import dqr.gui.farmBook.GuiFarmBookGuiContainer;
 import dqr.gui.itemBag.GuiItemBagContainer;
 import dqr.gui.itemBag.GuiItemBagGuiContainer;
 import dqr.gui.medalKing.GuiMedalkingContainer;
+import dqr.gui.medalKing.GuiMedalkingGuiAccessory;
 import dqr.gui.medalKing.GuiMedalkingGuiArmor;
 import dqr.gui.medalKing.GuiMedalkingGuiJob;
 import dqr.gui.medalKing.GuiMedalkingGuiMagic;
@@ -30,13 +31,14 @@ import dqr.gui.petStatus.GuiPetStatusContainer;
 import dqr.gui.petStatus.GuiPetStatusGuiContainer;
 import dqr.gui.subEquip.GuiSubEquipContainer;
 import dqr.gui.subEquip.GuiSubEquipGuiContainer;
+import dqr.playerData.ExtendedPlayerProperties2;
 
 public class GuiHandler implements IGuiHandler {
 
 	@Override
     public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
         if (ID == DQR.conf.GuiID_FarmBook) {
-            return new GuiFarmBookContainer(x, y, z);
+            return new GuiFarmBookContainer(player);
         }else if (ID == DQR.conf.GuiID_JobChange) {
             return new GuiJobChangeContainer(player.inventory);
         }else if (ID == DQR.conf.GuiID_MKWeapon) {
@@ -53,6 +55,8 @@ public class GuiHandler implements IGuiHandler {
             return new GuiMedalkingContainer(player.inventory, DQR.conf.GuiID_MKMisc);
         }else if (ID == DQR.conf.GuiID_MKMedal) {
             return new GuiMedalkingContainer(player.inventory, DQR.conf.GuiID_MKMedal);
+        }else if (ID == DQR.conf.GuiID_MKAccessory) {
+            return new GuiMedalkingContainer(player.inventory, DQR.conf.GuiID_MKAccessory);
         }else if (ID == DQR.conf.GuiID_PetBook) {
             return new GuiPetBookContainer(player);
         }else if (ID == DQR.conf.GuiID_SkillWeapon){
@@ -66,7 +70,11 @@ public class GuiHandler implements IGuiHandler {
         }else if (ID == DQR.conf.GuiID_ItemBag){
         	return new GuiItemBagContainer(player.inventory);
         }else if (ID == DQR.conf.GuiID_SubEquip){
+        	ExtendedPlayerProperties2.get(player).setFukuroOpen(true);
         	return new GuiSubEquipContainer(player.inventory, player);
+        }else if (ID == DQR.conf.GuiID_SubItemBag){
+        	ExtendedPlayerProperties2.get(player).setFukuroOpen(true);
+        	return new GuiItemBagContainer(player.inventory, player);
         }
 
         return null;
@@ -74,7 +82,7 @@ public class GuiHandler implements IGuiHandler {
 
     public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
         if (ID == DQR.conf.GuiID_FarmBook) {
-            return new GuiFarmBookGuiContainer(x, y, z);
+            return new GuiFarmBookGuiContainer(player);
         }else if (ID == DQR.conf.GuiID_JobChange) {
             return new GuiJobChangeGuiContainer(player.inventory);
         }else if (ID == DQR.conf.GuiID_MKWeapon) {
@@ -91,6 +99,8 @@ public class GuiHandler implements IGuiHandler {
             return new GuiMedalkingGuiMisc(player);
         }else if (ID == DQR.conf.GuiID_MKMedal) {
             return new GuiMedalkingGuiMedal(player);
+        }else if (ID == DQR.conf.GuiID_MKAccessory) {
+            return new GuiMedalkingGuiAccessory(player);
         }else if (ID == DQR.conf.GuiID_PetBook) {
             return new GuiPetBookGuiContainer(player);
         }else if (ID == DQR.conf.GuiID_SkillWeapon) {
@@ -104,7 +114,11 @@ public class GuiHandler implements IGuiHandler {
         }else if (ID == DQR.conf.GuiID_ItemBag) {
             return new GuiItemBagGuiContainer(player.inventory);
         }else if (ID == DQR.conf.GuiID_SubEquip){
+        	ExtendedPlayerProperties2.get(player).setFukuroOpen(true);
         	return new GuiSubEquipGuiContainer(player);
+        }else if (ID == DQR.conf.GuiID_SubItemBag){
+        	ExtendedPlayerProperties2.get(player).setFukuroOpen(true);
+        	return new GuiItemBagGuiContainer(player.inventory, player);
         }
 
 

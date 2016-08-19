@@ -1,8 +1,11 @@
 package dqr.dataTable;
 
 import net.minecraft.item.ItemStack;
+import dqr.DQR;
 import dqr.api.Items.DQArmors;
 import dqr.api.Items.DQWeapons;
+import dqr.api.enums.EnumDqmAccessory;
+import dqr.items.interfaceBase.ISubEquip;
 public class FuncKaitoriPriceTable
 {
 	public FuncKaitoriPriceTable(){}
@@ -1843,6 +1846,16 @@ public class FuncKaitoriPriceTable
         {
         	kaitoriPrice = 50000 / 5;
             return kaitoriPrice;
+        }
+
+        if(par1ItemStack.getItem() instanceof ISubEquip)
+        {
+        	EnumDqmAccessory param = DQR.enumGetter.getAccessoryParam(par1ItemStack.getItem());
+
+        	if(param != null)
+        	{
+        		return (param.getFixPrice() / 5);
+        	}
         }
 
         return kaitoriPrice;

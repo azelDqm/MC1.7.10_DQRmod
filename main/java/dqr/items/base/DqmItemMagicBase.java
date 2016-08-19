@@ -23,6 +23,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 import dqr.DQR;
 import dqr.api.enums.EnumDqmMagic;
 import dqr.api.enums.EnumDqmMagicCateg;
+import dqr.api.enums.EnumDqmWeapon;
+import dqr.playerData.ExtendedPlayerProperties;
 
 public class DqmItemMagicBase extends Item{
 	protected float efficiencyOnProperMaterial = 4.0F;
@@ -65,13 +67,25 @@ public class DqmItemMagicBase extends Item{
     @Override
     public void onUpdate(ItemStack var1, World var2, Entity var3, int par4, boolean par5)
     {
-
-    	if(var1.getItemDamage() < 0)
+    	if(var3 instanceof EntityPlayer)
     	{
+    		EntityPlayer ep = (EntityPlayer)var3;
+	    	EnumDqmWeapon enumWeapon = EnumDqmWeapon.valueOf(this.getMaterial().name());
+	    	int jukurenLv = ExtendedPlayerProperties.get(ep).getJukurenLv(enumWeapon.getId());
 
-    	}else if(var1.getItemDamage() > 0)
-    	{
-    		var1.setItemDamage(var1.getItemDamage() - 10);
+	    	if(var1.getItemDamage() < 0)
+	    	{
+
+	    	}else if(var1.getItemDamage() > 0)
+	    	{
+	    		if(var1.getItemDamage() - 10 - (jukurenLv * 10) < 0)
+	    		{
+	    			var1.setItemDamage(0);
+	    		}else
+	    		{
+	    			var1.setItemDamage(var1.getItemDamage() - 10 - (jukurenLv * 10));
+	    		}
+	    	}
     	}
 
     }

@@ -11,6 +11,12 @@ public class DqrWorldData extends WorldSavedData
 	public int[] RuraDim = new int[5];
 	public int[] RuraEnable = new int[5];
 
+	public double[] BasiRuraX = new double[5];
+	public double[] BasiRuraY = new double[5];
+	public double[] BasiRuraZ = new double[5];
+	public int[] BasiRuraDim = new int[5];
+	public int[] BasiRuraEnable = new int[5];
+
 	public double[] KimeraX = new double[5];
 	public double[] KimeraY = new double[5];
 	public double[] KimeraZ = new double[5];
@@ -38,6 +44,15 @@ public class DqrWorldData extends WorldSavedData
     		this.RuraEnable[cnt] = nbt.getInteger("RuraEnable_" + cnt);
     	}
 
+    	for(int cnt = 0; cnt < BasiRuraX.length; cnt++)
+    	{
+    		this.BasiRuraX[cnt] = nbt.getDouble("BasiRuraX_" + cnt);
+    		this.BasiRuraY[cnt] = nbt.getDouble("BasiRuraY_" + cnt);
+    		this.BasiRuraZ[cnt] = nbt.getDouble("BasiRuraZ_" + cnt);
+    		this.BasiRuraDim[cnt] = nbt.getInteger("BasiRuraDim_" + cnt);
+    		this.BasiRuraEnable[cnt] = nbt.getInteger("BasiRuraEnable_" + cnt);
+    	}
+
     	for(int cnt = 0; cnt < KimeraX.length; cnt++)
     	{
     		this.KimeraX[cnt] = nbt.getDouble("KimeraX_" + cnt);
@@ -62,6 +77,15 @@ public class DqrWorldData extends WorldSavedData
     		nbt.setInteger("RuraEnable_" + cnt, this.RuraEnable[cnt]);
     	}
 
+    	for(int cnt = 0; cnt < BasiRuraX.length; cnt++)
+    	{
+    		nbt.setDouble("BasiRuraX_" + cnt, this.BasiRuraX[cnt]);
+    		nbt.setDouble("BasiRuraY_" + cnt, this.BasiRuraY[cnt]);
+    		nbt.setDouble("BasiRuraZ_" + cnt, this.BasiRuraZ[cnt]);
+    		nbt.setInteger("BasiRuraDim_" + cnt, this.BasiRuraDim[cnt]);
+    		nbt.setInteger("BasiRuraEnable_" + cnt, this.BasiRuraEnable[cnt]);
+    	}
+
     	for(int cnt = 0; cnt < KimeraX.length; cnt++)
     	{
     		nbt.setDouble("KimeraX_" + cnt, this.KimeraX[cnt]);
@@ -81,6 +105,15 @@ public class DqrWorldData extends WorldSavedData
     	this.RuraEnable[par1] = par6;
     }
 
+    public void setBasiRura(int par1, double par2, double par3, double par4, int par5, int par6)
+    {
+    	this.BasiRuraX[par1] = par2;
+    	this.BasiRuraY[par1] = par3;
+    	this.BasiRuraZ[par1] = par4;
+    	this.BasiRuraDim[par1] = par5;
+    	this.BasiRuraEnable[par1] = par6;
+    }
+
     public void setKimera(int par1, double par2, double par3, double par4, int par5, int par6)
     {
     	this.KimeraX[par1] = par2;
@@ -93,6 +126,11 @@ public class DqrWorldData extends WorldSavedData
     public double[] getRura(int par1)
     {
     	return new double[]{this.RuraX[par1], this.RuraY[par1], this.RuraZ[par1], this.RuraDim[par1]};
+    }
+
+    public double[] getBasiRura(int par1)
+    {
+    	return new double[]{this.BasiRuraX[par1], this.BasiRuraY[par1], this.BasiRuraZ[par1], this.BasiRuraDim[par1]};
     }
 
     public double[] getKimera(int par1)
@@ -189,5 +227,52 @@ public class DqrWorldData extends WorldSavedData
     public double getKimeraEnable(int par1)
     {
     	return this.KimeraEnable[par1];
+    }
+
+
+
+    public void setBasiRuraX(int par1, double par2)
+    {
+    	this.BasiRuraX[par1] = par2;
+    }
+    public double getBasiRuraX(int par1)
+    {
+    	return this.BasiRuraX[par1];
+    }
+
+    public void setBasiRuraY(int par1, double par2)
+    {
+    	this.BasiRuraY[par1] = par2;
+    }
+    public double getBasiRuraY(int par1)
+    {
+    	return this.BasiRuraY[par1];
+    }
+
+    public void setBasiRuraZ(int par1, double par2)
+    {
+    	this.BasiRuraZ[par1] = par2;
+    }
+    public double getBasiRuraZ(int par1)
+    {
+    	return this.BasiRuraZ[par1];
+    }
+
+    public void setBasiRuraDim(int par1, int par2)
+    {
+    	this.BasiRuraDim[par1] = par2;
+    }
+    public double getBasiRuraDim(int par1)
+    {
+    	return this.BasiRuraDim[par1];
+    }
+
+    public void setBasiRuraEnable(int par1, int par2)
+    {
+    	this.BasiRuraEnable[par1] = par2;
+    }
+    public double getBasiRuraEnable(int par1)
+    {
+    	return this.BasiRuraEnable[par1];
     }
 }

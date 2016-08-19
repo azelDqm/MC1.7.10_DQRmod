@@ -9,5 +9,6 @@ public class DqmPetBaseHell extends DqmPetBase {
 	{
 		//this(world);
 		super(world, Type);
+		this.isImmuneToFire = true;
 	}
 }

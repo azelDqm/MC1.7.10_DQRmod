@@ -112,7 +112,7 @@ public class DqmEntityGorudentotemu extends DqmMobBaseHell
         }
         if (DQR.funcMob.getCalcDROP(50, 1))
         {
-            this.dropItem(DQMiscs.itemDouka, 1);
+            this.dropItem(DQMiscs.itemGinka, 1);
         }
         if (DQR.funcMob.getCalcDROP(200, 1))
         {

@@ -402,17 +402,17 @@ public class FuncMagicLvTable {
 								       -1, -1, -1, -1, -1, -1, -1, -1,
 								       -1, -1, -1, -1, -1, -1, -1, -1};
 
-	public static int[] BasiruraJobLv = {-1, -1, -1, -1, 23, -1, 28, -1,
+	public static int[] BasiruraJobLv = {-1, -1, -1, -1, 25, -1, 30, -1,
 								         -1, -1, -1, -1, -1, -1, -1, -1,
 								         -1, -1, -1, -1, -1, -1, -1, -1,
 								         -1, -1, -1, -1, -1, -1, -1, -1};
 
-	public static int[] BasiruraCJobLv = {-1, -1, -1, -1, 23, -1, 28, -1,
+	public static int[] BasiruraCJobLv = {-1, -1, -1, -1, 25, -1, 30, -1,
 								          -1, -1, -1, -1, -1, -1, -1, -1,
 								          -1, -1, -1, -1, -1, -1, -1, -1,
 								          -1, -1, -1, -1, -1, -1, -1, -1};
 
-	public static int[] BasiruraC2JobLv = {-1, -1, -1, -1, 23, -1, 28, -1,
+	public static int[] BasiruraC2JobLv = {-1, -1, -1, -1, 25, -1, 30, -1,
 								           -1, -1, -1, -1, -1, -1, -1, -1,
 								           -1, -1, -1, -1, -1, -1, -1, -1,
 								           -1, -1, -1, -1, -1, -1, -1, -1};
@@ -592,7 +592,7 @@ public class FuncMagicLvTable {
 
 	public static int[] RuraR2JobLv = {-1, -1, -1, -1, 8, -1, 10, -1,
 								       -1, -1, -1, -1, -1, -1, -1, -1,
-								       -1, -1, -1, -1, -1, -1, -1, -1,
+								       -1, -1, -1,  -1, -1, -1, -1, -1,
 								       -1, -1, -1, -1, -1, -1, -1, -1};
 
 	public static int[] RuraG2JobLv = {-1, -1, -1, -1, 8, -1, 10, -1,
@@ -1391,7 +1391,7 @@ public class FuncMagicLvTable {
     	if(jobId == EnumDqmJob.Densetsu.getId())
     	{
     		return dam + (dam / 5);
-    	}else if(jobId == EnumDqmJob.Densetsu.getId())
+    	}else if(jobId == EnumDqmJob.MASTERDRAGON.getId())
     	{
     		return ((dam * 2) + (dam / 2));
     	}else
