@@ -28,8 +28,12 @@ public enum EnumDqmMGToolMode {
 	BASIRURAMODE0(0, "BasiRuraMode0"),
 	BASIRURAMODE10(1, "BasiRuraMode10"),
 
+	SHINZIRU_MEMBER_ADD(0, "Shinziru_Member_ADD"),
+	SHINZIRU_MEMBER_KICK(1, "Shinziru_Member_Kick"),
+	SHINZIRU_PET_KICK(2, "Shinziru_Pet_Kick"),
+	SHINZIRU_LEAVE(3, "Shinziru_Leave"),
+	SHINZIRU_CLOSE(4, "Shinziru_Close")
 	;
-
 
 
 	private int id;

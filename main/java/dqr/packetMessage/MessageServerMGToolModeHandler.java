@@ -11,6 +11,7 @@ import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import dqr.DQR;
 import dqr.api.Items.DQAccessories;
 import dqr.api.Items.DQMagicTools;
+import dqr.api.Items.DQMiscs;
 import dqr.api.Items.DQWeapons;
 import dqr.api.enums.EnumDqmJob;
 import dqr.api.enums.EnumDqmMGToolMode;
@@ -200,7 +201,59 @@ public class MessageServerMGToolModeHandler implements IMessageHandler<MessageSe
 	        		ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
 	        		ep.addChatMessage(new ChatComponentTranslation("msg.basirura.modeInfo." + setIdx + ".txt", new Object[] {}));
 	        		ExtendedPlayerProperties.get(ep).setWeaponMode(EnumDqmWeaponMode.WEAPONMODE_BASIRURA.getId(), setIdx);
-	        	}else if(its.getItem() instanceof DqmItemMagicRura ||
+	        	}else if(DQR.conf.partyEnable != 0 && its.getItem() == DQMiscs.itemShinjirukokoro)
+		        {
+	        		int itemMode = ExtendedPlayerProperties.get(ep).getWeaponMode(EnumDqmWeaponMode.WEAPONMODE_SHINZIRU.getId());
+
+	        		int setIdx = 0;
+	        		//itemMode = itemMode + 1;
+
+	        		if(itemMode == EnumDqmMGToolMode.SHINZIRU_MEMBER_ADD.getId())
+	        		{
+	        			setIdx = EnumDqmMGToolMode.SHINZIRU_MEMBER_KICK.getId();
+	        		}else if(itemMode == EnumDqmMGToolMode.SHINZIRU_MEMBER_KICK.getId())
+	        		{
+	        			setIdx = EnumDqmMGToolMode.SHINZIRU_PET_KICK.getId();
+	        		}else if(itemMode == EnumDqmMGToolMode.SHINZIRU_PET_KICK.getId())
+	        		{
+	        			setIdx = EnumDqmMGToolMode.SHINZIRU_LEAVE.getId();
+	        		}else if(itemMode == EnumDqmMGToolMode.SHINZIRU_LEAVE.getId())
+	        		{
+	        			setIdx = EnumDqmMGToolMode.SHINZIRU_CLOSE.getId();
+	        		}else
+	        		{
+	        			setIdx = EnumDqmMGToolMode.SHINZIRU_MEMBER_ADD.getId();
+	        		}
+
+
+	        		ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
+
+        			if(!ep.worldObj.isRemote)
+        			{
+        				ep.addChatMessage(new ChatComponentTranslation("msg.shinziru.modeInfo." + setIdx + ".0.txt", new Object[] {}));
+        				ep.addChatMessage(new ChatComponentTranslation("msg.shinziru.modeInfo." + setIdx + ".1.txt", new Object[] {}));
+        			}
+	        		ExtendedPlayerProperties.get(ep).setWeaponMode(EnumDqmWeaponMode.WEAPONMODE_SHINZIRU.getId(), setIdx);
+		        		//信じるこころ
+	        		/*
+		        		int itemMode = ExtendedPlayerProperties.get(ep).getWeaponMode(EnumDqmWeaponMode.WEAPONMODE_BASIRURA.getId());
+
+		        		int setIdx = 0;
+		        		itemMode = itemMode + 1;
+
+		        		if(itemMode == EnumDqmMGToolMode.BASIRURAMODE10.getId())
+		        		{
+		        			setIdx = EnumDqmMGToolMode.BASIRURAMODE10.getId();
+		        		}else
+		        		{
+		        			setIdx = EnumDqmMGToolMode.BASIRURAMODE0.getId();
+		        		}
+
+		        		ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
+		        		ep.addChatMessage(new ChatComponentTranslation("msg.basirura.modeInfo." + setIdx + ".txt", new Object[] {}));
+		        		ExtendedPlayerProperties.get(ep).setWeaponMode(EnumDqmWeaponMode.WEAPONMODE_BASIRURA.getId(), setIdx);
+		        		*/
+		        }else if(its.getItem() instanceof DqmItemMagicRura ||
 	        			 its.getItem() instanceof DqmItemMagicRura2 ||
 	        			 its.getItem() instanceof DqmItemMagicRuraC)
 	        	{

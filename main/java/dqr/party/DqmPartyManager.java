@@ -1,7 +1,9 @@
 package dqr.party;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import net.minecraft.entity.Entity;
@@ -54,8 +56,14 @@ public class DqmPartyManager {
 			Entity er = minecraftserver.getConfigurationManager().func_152612_a(newMember);
 			//minecraftserver.getConfigurationManager().playerEntityList
 			//partySet.put(ep, er);
-			this.addPartyMember(ep, er);
-			ep.addChatMessage(new ChatComponentTranslation("msg.party.join.txt",new Object[] {ep.getCommandSenderName()}));
+			if(er != null)
+			{
+				this.addPartyMember(ep, er);
+				ep.addChatMessage(new ChatComponentTranslation("msg.party.join.txt",new Object[] {ep.getCommandSenderName()}));
+			}else
+			{
+				ep.addChatMessage(new ChatComponentTranslation("msg.party.noplayer.txt",new Object[] {}));
+			}
 
 		}
 	}
@@ -91,6 +99,27 @@ public class DqmPartyManager {
 		}
 	}
 
+	public boolean changePartyLeader(String newLeader, Entity oldLeader)
+	{
+		boolean ret = false;
+
+		if(!oldLeader.worldObj.isRemote)
+		{
+			MinecraftServer minecraftserver = MinecraftServer.getServer();
+			Entity er = minecraftserver.getConfigurationManager().func_152612_a(newLeader);
+
+			if(er != null)
+			{
+				this.changePartyLeader(er, oldLeader);
+			}else
+			{
+				((EntityPlayer)oldLeader).addChatMessage(new ChatComponentTranslation("msg.party.noplayer.txt",new Object[] {}));
+			}
+		}
+
+		return ret;
+	}
+
 	public boolean changePartyLeader(Entity newLeader, Entity oldLeader)
 	{
 		boolean ret = false;
@@ -107,7 +136,14 @@ public class DqmPartyManager {
         	}
         }
 
-        if(ret)this.sendPartyMessage(newLeader, "msg.party.changeleader.txt", new Object[] {newLeader.getCommandSenderName()});
+		if(ret)
+		{
+			//System.out.println("TEST_LINE_A3");
+			ThreadDqmPartyProc threadParty = new ThreadDqmPartyProc(newLeader);
+			threadParty.start();
+
+			this.sendPartyMessage(newLeader, "msg.party.changeleader.txt", new Object[] {newLeader.getCommandSenderName()});
+		}
 
 		return ret;
 	}
@@ -122,7 +158,7 @@ public class DqmPartyManager {
         while (iterator2.hasNext())
         {
         	Entity s = (Entity)iterator2.next();
-        	if(s instanceof EntityPlayer)
+        	if(s instanceof EntityPlayer && !s.getCommandSenderName().equalsIgnoreCase(oldLeader.getCommandSenderName()))
         	{
         		return this.changePartyLeader(s, oldLeader);
         	}
@@ -137,6 +173,8 @@ public class DqmPartyManager {
 	{
 		boolean ret = false;
 		boolean leaderFlg = this.isPartyLeader(par1);
+
+		List removeKeys = new ArrayList();
 
         Iterator iterator = partySet.keySet().iterator();
 
@@ -155,10 +193,23 @@ public class DqmPartyManager {
 
         if(partySet.containsKey(par1))
         {
-        	partySet.remove(par1);
+        	removeKeys.add(par1);
+        	//partySet.remove(par1);
         	ret = true;
+
+        }
+
+
+        for(int cnt = 0; cnt < removeKeys.size(); cnt++)
+        {
+        	partySet.remove(removeKeys.get(cnt));
         	if(par1 instanceof EntityPlayer)
         	{
+        		ExtendedPlayerProperties3.get((EntityPlayer)par1).setPartyMemberData(null);
+            	if(!par1.worldObj.isRemote)
+            	{
+            		PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties3((EntityPlayer)par1), (EntityPlayerMP)par1);
+            	}
         		EntityPlayer ep = (EntityPlayer)par1;
         		ep.addChatMessage(new ChatComponentTranslation("msg.party.leave.txt",new Object[] {}));
         	}
@@ -203,19 +254,29 @@ public class DqmPartyManager {
         while (iterator.hasNext())
         {
             Entity s = (Entity)iterator.next();
-            if(s.getCommandSenderName().equalsIgnoreCase(par1) &&
+            if(s.getCommandSenderName().equalsIgnoreCase(par1) && partySet.get(s) != null &&
             		partySet.get(s).getCommandSenderName().equalsIgnoreCase(ep.getCommandSenderName()))
             {
             	partySet.remove(s);
             	if(s instanceof EntityPlayer)
             	{
+            		ExtendedPlayerProperties3.get((EntityPlayer)s).setPartyMemberData(null);
+                	if(!ep.worldObj.isRemote)
+                	{
+                		PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties3((EntityPlayer)s), (EntityPlayerMP)s);
+                	}
             		((EntityPlayer)s).addChatMessage(new ChatComponentTranslation("msg.party.leave.txt",new Object[] {}));
+
+            		/*
+            		ExtendedPlayerProperties3.get((EntityPlayer)s).setPartyMemberData(null);
+                	if(!ep.worldObj.isRemote)
+                	{
+                		PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties3((EntityPlayer)s), (EntityPlayerMP)s);
+                	}
+                	*/
             	}
-            	ExtendedPlayerProperties3.get((EntityPlayer)s).setPartyMemberData(null);
-            	if(!ep.worldObj.isRemote)
-            	{
-            		PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties3((EntityPlayer)s), (EntityPlayerMP)s);
-            	}
+
+
             	return true;
             }
         }
@@ -226,6 +287,7 @@ public class DqmPartyManager {
 	public boolean kickPartyPet(EntityPlayer ep, boolean all)
 	{
         Iterator iterator = partySet.keySet().iterator();
+        List removeKeys = new ArrayList();
         boolean removeFlg = false;
 
         while (iterator.hasNext())
@@ -233,21 +295,45 @@ public class DqmPartyManager {
             Entity s = (Entity)iterator.next();
             //System.out.println("NAME" + partySet.get(s).getCommandSenderName() + " / " + ep.getCommandSenderName());
             //System.out.println("NAME" + s.getCommandSenderName() + " / " + s.getClass().getName());
-            if(s instanceof DqmPetBase &&
+            if(s instanceof DqmPetBase &&  partySet.get(s) != null &&
             		partySet.get(s).getCommandSenderName().equalsIgnoreCase(ep.getCommandSenderName()))
             {
-            	partySet.remove(s);
-            	if(s instanceof EntityPlayer)
-            	{
-            		((EntityPlayer)s).addChatMessage(new ChatComponentTranslation("msg.party.leave.txt",new Object[] {}));
-            	}
+
+
             	removeFlg = true;
             	if(!all)
             	{
+            		partySet.remove(s);
             		return true;
+            	}else
+            	{
+            		removeKeys.add(s);
             	}
             }
         }
+
+        for(int cnt = 0; cnt < removeKeys.size(); cnt++)
+        {
+        	partySet.remove(removeKeys.get(cnt));
+        }
+
+		return removeFlg;
+	}
+
+
+	public boolean kickPartyPet(EntityPlayer ep, DqmPetBase pet)
+	{
+
+        boolean removeFlg = false;
+
+        if(pet instanceof DqmPetBase && partySet.get(pet) != null &&
+        		partySet.get(pet).getCommandSenderName().equalsIgnoreCase(ep.getCommandSenderName()))
+        {
+        	partySet.remove(pet);
+
+        	removeFlg = true;
+        }
+
 
 		return removeFlg;
 	}
@@ -255,14 +341,38 @@ public class DqmPartyManager {
 	public void closeParty(Entity ep)
 	{
         Iterator iterator = partySet.keySet().iterator();
+        List removeKeys = new ArrayList();
 
         while (iterator.hasNext())
         {
         	 Entity s = (Entity)iterator.next();
-        	 if(partySet.get(s).getCommandSenderName().equalsIgnoreCase(ep.getCommandSenderName()))
+        	 if(partySet.get(s).getUniqueID().toString().equalsIgnoreCase(ep.getUniqueID().toString()))
         	 {
-        		 partySet.remove(s);
+        		 //partySet.remove(s);
+        		 removeKeys.add(s);
+
         	 }
+        }
+
+
+        for(int cnt = 0; cnt < removeKeys.size(); cnt++)
+        {
+        	partySet.remove(removeKeys.get(cnt));
+			if(removeKeys.get(cnt) instanceof EntityPlayer)
+			{
+				MinecraftServer minecraftserver = MinecraftServer.getServer();
+				Entity er = minecraftserver.getConfigurationManager().func_152612_a(((EntityPlayer)removeKeys.get(cnt)).getCommandSenderName());
+
+				if(er != null)
+				{
+					ExtendedPlayerProperties3.get((EntityPlayer)er).setPartyMemberData(null);
+
+					if(!ep.worldObj.isRemote)
+					{
+						PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties3((EntityPlayer)er), (EntityPlayerMP)er);
+					}
+				}
+			}
         }
 	}
 
@@ -297,6 +407,7 @@ public class DqmPartyManager {
             }
             */
             //System.out.println(s.getCommandSenderName());
+            //if(partySet.get(s).getCommandSenderName().equalsIgnoreCase(epx.getCommandSenderName()))
             if(partySet.get(s).getCommandSenderName().equalsIgnoreCase(epx.getCommandSenderName()))
             {
             	dataMap.put((Entity)s, (Entity)epx);
@@ -320,12 +431,30 @@ public class DqmPartyManager {
 
 	public boolean hasParty(Entity target)
 	{
-		return partySet.containsKey(target);
+
+		Iterator iterator = partySet.keySet().iterator();
+        int dataNum = 0;
+
+        while (iterator.hasNext())
+        {
+        	Entity s = (Entity)iterator.next();
+        	//System.out.println("CODE:" + s.getUniqueID().toString() + " / " + target.getUniqueID().toString());
+
+        	if(s.getUniqueID().toString().equalsIgnoreCase(target.getUniqueID().toString()))
+        	{
+        		return true;
+        	}
+        }
+
+        return false;
+		//return partySet.containsKey(target);
 	}
 
 	public void sendPartyMessage(Entity reader, String keys, Object[] obj)
 	{
 		Iterator iterator = partySet.keySet().iterator();
+		MinecraftServer minecraftserver = MinecraftServer.getServer();
+
         while (iterator.hasNext())
         {
         	 Entity s = (Entity)iterator.next();
@@ -333,7 +462,11 @@ public class DqmPartyManager {
         	 {
         		 if(s instanceof EntityPlayer)
         		 {
-        			 ((EntityPlayer)s).addChatMessage(new ChatComponentTranslation(keys,new Object[] {reader.getCommandSenderName()}));
+        			 EntityPlayer er = minecraftserver.getConfigurationManager().func_152612_a(s.getCommandSenderName());
+        			 if(er != null)
+        			 {
+        				 er.addChatMessage(new ChatComponentTranslation(keys,new Object[] {reader.getCommandSenderName()}));
+        			 }
         		 }
         	 }
         }

@@ -93,6 +93,13 @@ public class GuiParty extends Gui
     	  return;
       }
 
+      NBTTagCompound partyData = ExtendedPlayerProperties3.get(ep).getPartyMemberData();
+
+      if(!partyData.hasKey(ep.getUniqueID().toString()))
+      {
+    	  ExtendedPlayerProperties3.get(ep).setPartyMemberData(null);
+    	  return;
+      }
 
       if (DQR.conf.CLGuiPartyVis == 1)
       {
@@ -215,7 +222,7 @@ public class GuiParty extends Gui
           y9 = y0 + 74;
           */
 
-          NBTTagCompound partyData = ExtendedPlayerProperties3.get(ep).getPartyMemberData();
+
           Set dataMap = partyData.func_150296_c();
           TreeMap<String, Integer> dataTree = new TreeMap();
 
@@ -227,7 +234,7 @@ public class GuiParty extends Gui
               String s = (String)iterator.next();
 
               //System.out.println("TEST2" + s);
-              if(s.equalsIgnoreCase(ep.getCommandSenderName()))
+              if(s.equalsIgnoreCase(ep.getUniqueID().toString()))
               {
             	  dataTree.put(s, 0);
               }else
@@ -249,9 +256,11 @@ public class GuiParty extends Gui
               //if(DQR.debug == 0 && !ep.getCommandSenderName().equalsIgnoreCase(key))
               if(true)
               {
-            	  effectCnt++;
+
 	              NBTTagCompound dataNBT = partyData.getCompoundTag(key);
 
+	              effectCnt = dataTree.get(key);
+	              String name = dataNBT.getString("sName");
 	              int sHP = dataNBT.getInteger("sHP");
 	              int sMaxHP = dataNBT.getInteger("sMaxHP");
 	              int stringColor = 0xffffffff;
@@ -292,7 +301,7 @@ public class GuiParty extends Gui
 
 
 
-		          mc.fontRenderer.drawStringWithShadow(key, x + 5 + posXfix , y1 + ((effectCnt / DQR.conf.CLGuiPartyReturnLine) * 67 + 3), stringColor);
+		          mc.fontRenderer.drawStringWithShadow(name, x + 5 + posXfix , y1 + ((effectCnt / DQR.conf.CLGuiPartyReturnLine) * 67 + 3), stringColor);
 
 		          mc.fontRenderer.drawStringWithShadow(mesHP, x + 5 + fix +posXfix , yA + ((effectCnt / DQR.conf.CLGuiPartyReturnLine) * 67 + 3), stringColor);
 		          mc.fontRenderer.drawStringWithShadow(mesMP, x + 5 + fix + posXfix, yB + ((effectCnt / DQR.conf.CLGuiPartyReturnLine) * 67 + 3), stringColor);
@@ -303,9 +312,11 @@ public class GuiParty extends Gui
 		          mc.fontRenderer.drawStringWithShadow("" + sMP, x + 25 + fix + posXfix, y4 + ((effectCnt / DQR.conf.CLGuiPartyReturnLine) * 67 + 3), stringColor);
 		          mc.fontRenderer.drawStringWithShadow("" + sMaxMP, x + 25 + fix + posXfix, y5 + ((effectCnt / DQR.conf.CLGuiPartyReturnLine) * 67 + 3), stringColor);
 
-		          mc.fontRenderer.drawStringWithShadow(sJob2, x + 5 + (dataTree.get(key) * 69 + 5), y6 + ((effectCnt / DQR.conf.CLGuiPartyReturnLine) * 67 + 3), stringColor);
+		          //mc.fontRenderer.drawStringWithShadow(sJob2, x + 5 + (dataTree.get(key) * 69 + 5), y6 + ((effectCnt / DQR.conf.CLGuiPartyReturnLine) * 67 + 3), stringColor);
+		          mc.fontRenderer.drawStringWithShadow(sJob2, x + fix + posXfix, y6 + ((effectCnt / DQR.conf.CLGuiPartyReturnLine) * 67 + 3), stringColor);
 
 		          dataNum++;
+            	  effectCnt++;
               }
 
           }

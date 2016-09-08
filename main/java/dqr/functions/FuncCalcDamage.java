@@ -156,7 +156,8 @@ public class FuncCalcDamage {
 					if(element != null)
 					{
 						float dam = ret;
-						ret = ret * DQR.calcDamage.applyDamageResistElement(dam, dam, evb, element);
+						//ret = ret * DQR.calcDamage.applyDamageResistElement(dam, dam, evb, element);
+						ret = DQR.calcDamage.applyDamageResistElement(dam, dam, evb, element);
 					}
 				}
 

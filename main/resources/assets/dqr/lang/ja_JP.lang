@@ -1740,6 +1740,7 @@ dqm.iteminfo.weapon.toolmode.pickaxe.txt=アイテム モード切替対応：�
 dqm.iteminfo.weapon.base.txt=使用時効果切替：スニーク＋モード切替キー
 
 dqm.iteminfo.weapon2.base.txt=ブロック攻撃時効果切替：スニーク＋モード切替キー
+dqm.iteminfo.weapon.toolmode.party.txt=アイテム モード切替対応：パーティ編成モード
 
 dqm.iteminfo.weapon.element.kaminari.txt=[属性：雷]
 dqm.iteminfo.weapon.element.honoo.txt=[属性：炎]
@@ -2079,6 +2080,18 @@ msg.rura.modeInfo.3.txt=!player.移動対象：自分 + ペット + 動物 + 村
 
 msg.basirura.modeInfo.0.txt=!player.移動先：ランダムテレポート
 msg.basirura.modeInfo.1.txt=!player.移動先：指定座標テレポート
+
+msg.shinziru.modeInfo.0.0.txt=!player.[メンバー追加モード]に切り替えた
+msg.shinziru.modeInfo.0.1.txt=!player.他プレイヤー/ペットモンスターに使用するとパーティに追加します
+msg.shinziru.modeInfo.1.0.txt=!player.[メンバー除名モード]に切り替えた
+msg.shinziru.modeInfo.1.1.txt=!player.他プレイヤー/ペットモンスターに使用するとパーティから除名します
+msg.shinziru.modeInfo.2.0.txt=!player.[ペット除名モード]に切り替えた
+msg.shinziru.modeInfo.2.1.txt=!player.使用すると全ペットモンスターをパーティから除名します
+msg.shinziru.modeInfo.3.0.txt=!player.[パーティ脱退モード]に切り替えた
+msg.shinziru.modeInfo.3.1.txt=!player.使用するとパーティから脱退します
+msg.shinziru.modeInfo.4.0.txt=!player.[パーティ解散モード]に切り替えた
+msg.shinziru.modeInfo.4.1.txt=!player.使用するとパーティを解散します
+msg.shinziru.modeInfo.txt=!player.リーダーのみ実行できます
 
 msg.weapon.modeInfo.1.-1.txt=!player.斧モードを解除した
 msg.weapon.modeInfo.1.0.txt=!player.斧モードに切り替えた
@@ -3057,6 +3070,7 @@ msg.farmerDiary.page9.5.txt=せっかくなので与えてみたところ、無�
 msg.farmerDiary.page10.0.txt=[〇月30日]
 msg.farmerDiary.page10.1.txt=最近、エンドラに黄金の実を与えたい衝動に駆られる。
 
+msg.party.noplayer.txt=指定されたプレーヤーは見つかりませんでした
 msg.party.create.txt=§eパーティを作成した
 msg.party.leave.txt=§eパーティから脱退した
 msg.party.join.txt=§eパーティに参加した

@@ -90,7 +90,7 @@ import dqr.potion.DqmPotion;
 import dqr.world.DqmStructureRegister;
 import dqr.world.DqmVillageRegister;
 
-@Mod(modid = "DQMIIINext", name = "DQRespect", version = "0.9.1-Latest4_fix", useMetadata = true, dependencies = "after:PotionExtension")
+@Mod(modid = "DQMIIINext", name = "DQRespect", version = "0.9.1", useMetadata = true, dependencies = "after:PotionExtension")
 public class DQR {
 
 	@SidedProxy(clientSide = "dqr.ClientProxy", serverSide = "dqr.CommonProxy")
@@ -270,7 +270,10 @@ public class DQR {
 		func = new FuncCommon();
 		potionFunc = new DQPotionFunc();
 		petFunc = new FuncPetOperation();
-		partyManager = new DqmPartyManager();
+		if(this.conf.partyEnable != 0)
+		{
+			partyManager = new DqmPartyManager();
+		}
 
 		randomMob = new FuncMobRandom();
 		randomItem = new FuncItemRandom();
@@ -312,7 +315,12 @@ public class DQR {
 
 		FMLCommonHandler.instance().bus().register(new PlayerDataHandler());
 		FMLCommonHandler.instance().bus().register(new CraftingEventHandler());
-		MinecraftForge.EVENT_BUS.register(new PartyEventHandler());
+
+		if(this.conf.partyEnable != 0)
+		{
+			MinecraftForge.EVENT_BUS.register(new PartyEventHandler());
+			FMLCommonHandler.instance().bus().register(new PartyEventHandler());
+		}
 
 		new DqrFieldGenRegister();
 		NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
@@ -346,7 +354,10 @@ public class DQR {
 		{
 			event.registerServerCommand(new DqrComDebug());
 		}
-		event.registerServerCommand(new DqrComParty());
+		if(this.conf.partyEnable != 0)
+		{
+			event.registerServerCommand(new DqrComParty());
+		}
 	}
 
 }

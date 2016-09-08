@@ -94,6 +94,7 @@ import dqr.items.miscs.DqmItemKimeraC;
 import dqr.items.miscs.DqmItemLittlemedal;
 import dqr.items.miscs.DqmItemMahounoTutu;
 import dqr.items.miscs.DqmItemMegaminoInori;
+import dqr.items.miscs.DqmItemShinjirukokoro;
 import dqr.items.weapon.DqmItemThrowing;
 
 public class DqItem {
@@ -857,7 +858,7 @@ public class DqItem {
 		DQMiscs.itemMagicbook3 = new DqmItemMiscBase().setCreativeTab(DQR.tabs.DqmTabMisc).setUnlocalizedName("dqm.itemMagicbook3").setTextureName("dqr:Magicbook3");
 
 		DQMiscs.itemFarmBook = new DqmItemFarmBook().setTextureName("dqr:FarmBook").setUnlocalizedName("dqm.itemFarmBook").setCreativeTab(CreativeTabs.tabMisc);
-		DQMiscs.itemShinjirukokoro = new DqmItemMiscBase().setCreativeTab(DQR.tabs.DqmTabMisc).setUnlocalizedName("dqm.itemShinjirukokoro").setTextureName("dqr:Shinjirukokoro");
+		DQMiscs.itemShinjirukokoro = new DqmItemShinjirukokoro().setCreativeTab(DQR.tabs.DqmTabMisc).setUnlocalizedName("dqm.itemShinjirukokoro").setTextureName("dqr:Shinjirukokoro");
 
 		//植物
 		DQSeeds.itemYakusouSeed = new DqmItemSeedBase(DQPlants.BlockYakusouSeed1, Blocks.farmland).setCreativeTab(DQR.tabs.DqmTabPlant).setUnlocalizedName("dqm.itemYakusouSeed").setTextureName("dqr:YakusouSeed");

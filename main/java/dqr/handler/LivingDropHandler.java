@@ -24,6 +24,7 @@ import dqr.entity.mobEntity.monsterBoss.DqmEntityMasterdoragon;
 import dqr.entity.mobEntity.monsterBoss.DqmEntityRyuuou;
 import dqr.entity.mobEntity.monsterBoss.DqmEntityRyuuou2;
 import dqr.entity.mobEntity.monsterBoss.DqmEntityZoma;
+import dqr.entity.mobEntity.monsterBoss.DqmMobBaseBoss;
 import dqr.entity.mobEntity.monsterDay.DqmEntityAyasiikage;
 import dqr.entity.mobEntity.monsterDay.DqmEntityBigCrow;
 import dqr.entity.mobEntity.monsterDay.DqmEntityBigguhatto;
@@ -636,7 +637,10 @@ public class LivingDropHandler {
 
 
 		//ロトの紋章
-		if(event.entityLiving instanceof DqmMobBaseTensei && rand.nextInt(500) == 0)
+		if((event.entityLiving instanceof DqmMobBaseTensei || event.entityLiving instanceof DqmMobBaseSP)&& rand.nextInt(500) == 0)
+		{
+			event.entityLiving.dropItem(Item.getItemFromBlock(DQDecorates.DqmBlockRotomon), 1);
+		}else if(event.entityLiving instanceof DqmMobBaseBoss && rand.nextInt(100) == 0)
 		{
 			event.entityLiving.dropItem(Item.getItemFromBlock(DQDecorates.DqmBlockRotomon), 1);
 		}

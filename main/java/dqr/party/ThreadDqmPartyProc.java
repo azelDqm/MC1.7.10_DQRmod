@@ -53,14 +53,23 @@ public class ThreadDqmPartyProc extends Thread{
 					if(key instanceof EntityPlayer)
 					{
 						EntityPlayer xEp = (EntityPlayer)key;
+						boolean flgLeader = DQR.partyManager.isPartyLeader(xEp);
 						sideNBT.setInteger("sHP", (int)ExtendedPlayerProperties.get(xEp).getHP());
 						sideNBT.setInteger("sMaxHP", (int)ExtendedPlayerProperties.get(xEp).getMaxHP());
 						sideNBT.setInteger("sMP", ExtendedPlayerProperties.get(xEp).getMP());
 						sideNBT.setInteger("sMaxMP", ExtendedPlayerProperties.get(xEp).getMaxMP());
 						sideNBT.setInteger("sJob", ExtendedPlayerProperties.get(xEp).getJob());
 						sideNBT.setInteger("sLv",  ExtendedPlayerProperties.get(xEp).getJobLv(ExtendedPlayerProperties.get(xEp).getJob()));
+						if(flgLeader)
+						{
+							sideNBT.setString("sName", "[*]" + key.getCommandSenderName());
+						}else
+						{
+							sideNBT.setString("sName", key.getCommandSenderName());
+						}
 
-						mainNBT.setTag(key.getCommandSenderName(), sideNBT);
+						//mainNBT.setTag(key.getCommandSenderName(), sideNBT);
+						mainNBT.setTag(key.getUniqueID().toString(), sideNBT);
 					}else if(key instanceof DqmPetBase)
 					{
 						DqmPetBase pet = (DqmPetBase)key;
@@ -70,12 +79,15 @@ public class ThreadDqmPartyProc extends Thread{
 						sideNBT.setInteger("sMaxMP", pet.getMaxMP());
 						sideNBT.setInteger("sJob", pet.getJob());
 						sideNBT.setInteger("sLv",  pet.getJobLv(pet.getJob()));
+						sideNBT.setString("sName", key.getCommandSenderName());
 
-						mainNBT.setTag(key.getCommandSenderName(), sideNBT);
+						//mainNBT.setTag(key.getCommandSenderName(), sideNBT);
+						mainNBT.setTag(key.getUniqueID().toString(), sideNBT);
 					}
 
 				}
 
+				partyMap = DQR.partyManager.getPartyFromLeader(this.ep);
 				Iterator it2 = partyMap.keySet().iterator();
 
 				while(it2.hasNext())
@@ -86,18 +98,25 @@ public class ThreadDqmPartyProc extends Thread{
 					{
 						if(key instanceof EntityPlayer)
 						{
-							cntPlayer++;
-							EntityPlayer rEp = (EntityPlayer)key;
-							ExtendedPlayerProperties3.get(rEp).setPartyMemberData(mainNBT);
-							//System.out.println("TEST1" + mainNBT.func_150296_c().size());
 							MinecraftServer minecraftserver = MinecraftServer.getServer();
-							if(minecraftserver.getConfigurationManager().playerEntityList.contains(rEp))
+							//System.out.println("TEST : " + key.getCommandSenderName());
+							cntPlayer++;
+							//EntityPlayer rEp = (EntityPlayer)key;
+							EntityPlayer rEp = minecraftserver.getConfigurationManager().func_152612_a(key.getCommandSenderName());
+							if(rEp != null)
 							{
-								//System.out.println("TEST????");
-								PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties3(rEp), (EntityPlayerMP)rEp);
+								//System.out.println("TEST2 : " + rEp.getCommandSenderName());
+								ExtendedPlayerProperties3.get(rEp).setPartyMemberData(mainNBT);
+								//System.out.println("TEST1" + mainNBT.func_150296_c().size());
+
+								if(minecraftserver.getConfigurationManager().playerEntityList.contains(rEp))
+								{
+									//System.out.println("TEST????");
+									PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties3(rEp), (EntityPlayerMP)rEp);
+								}
 							}
 						}
-					}catch(Exception e){}
+					}catch(Exception e){System.out.println("Party thread process CAUTION!!!!");}
 				}
 			}
 
@@ -115,7 +134,7 @@ public class ThreadDqmPartyProc extends Thread{
 
 
 			try{
-				this.sleep(100L);
+				this.sleep((long)DQR.conf.partyRefreshInterval);
 			}catch(Exception e)
 			{
 

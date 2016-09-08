@@ -1,11 +1,15 @@
 package dqr.handler;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.ChatComponentTranslation;
 import net.minecraftforge.event.entity.player.EntityInteractEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent;
 import dqr.DQR;
 import dqr.api.Items.DQMiscs;
+import dqr.api.enums.EnumDqmMGToolMode;
+import dqr.api.enums.EnumDqmWeaponMode;
+import dqr.playerData.ExtendedPlayerProperties;
 
 public class PartyEventHandler {
 	@SubscribeEvent
@@ -16,14 +20,28 @@ public class PartyEventHandler {
 			EntityPlayer targetEp = (EntityPlayer)event.target;
 			EntityPlayer ep = event.entityPlayer;
 
-			if(ep.inventory.getCurrentItem() != null && ep.inventory.getCurrentItem().getItem() == DQMiscs.itemShinjirukokoro)
+			if(!ep.worldObj.isRemote && ep.inventory.getCurrentItem() != null && ep.inventory.getCurrentItem().getItem() == DQMiscs.itemShinjirukokoro)
 			{
-				if(DQR.partyManager.getPartyLeaderFromMember(ep) != null)
+				int itemMode = ExtendedPlayerProperties.get(ep).getWeaponMode(EnumDqmWeaponMode.WEAPONMODE_SHINZIRU.getId());
+
+				if(itemMode == EnumDqmMGToolMode.SHINZIRU_MEMBER_ADD.getId())
 				{
-					DQR.partyManager.addPartyMember(DQR.partyManager.getPartyLeaderFromMember(ep), targetEp);
-				}else
+					if(DQR.partyManager.getPartyLeaderFromMember(ep) != null)
+					{
+						DQR.partyManager.addPartyMember(DQR.partyManager.getPartyLeaderFromMember(ep), targetEp);
+					}else
+					{
+						DQR.partyManager.addPartyMember(ep, targetEp);
+					}
+				}else if(itemMode == EnumDqmMGToolMode.SHINZIRU_MEMBER_KICK.getId())
 				{
-					DQR.partyManager.addPartyMember(ep, targetEp);
+					if(DQR.partyManager.isPartyLeader(ep))
+					{
+						DQR.partyManager.kickPartyMember(targetEp.getCommandSenderName(), ep);
+					}else
+	        		{
+	        			ep.addChatMessage(new ChatComponentTranslation("msg.shinziru.modeInfo.txt", new Object[] {}));
+	        		}
 				}
 			}
 		}
@@ -33,10 +51,16 @@ public class PartyEventHandler {
     public void PlayerLogoutEvent(PlayerEvent.PlayerLoggedOutEvent e)
 	{
 		EntityPlayer ep = e.player;
-		if(DQR.partyManager.isPartyLeader(ep))
+
+		if(!ep.worldObj.isRemote)
 		{
-			DQR.partyManager.changePartyLeaderForce(ep);
+			//System.out.println("TEST_AAAA");
+			if(DQR.partyManager.isPartyLeader(ep))
+			{
+				//System.out.println("TEST_BBBB");
+				DQR.partyManager.changePartyLeaderForce(ep);
+			}
+			//System.out.println("TEST");
 		}
-		//System.out.println("TEST");
 	}
 }

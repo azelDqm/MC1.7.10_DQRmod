@@ -402,6 +402,9 @@ public class DQRconfigs {
     public static int deadClearWidth = 0;
     public static int deadClearHeight = 0;
 
+    public static int partyEnable = 1;
+    public static int partyRefreshInterval = 500;
+
     public DQRconfigs()
 	{
         cfg_core = new Configuration(new File(DQR.proxy.getDir(), "config/DQMIIINext_Core.cfg"));

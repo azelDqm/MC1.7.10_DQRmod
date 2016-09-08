@@ -52,7 +52,9 @@ import dqr.DQR;
 import dqr.PacketHandler;
 import dqr.api.Items.DQMagics;
 import dqr.api.Items.DQMiscs;
+import dqr.api.enums.EnumDqmMGToolMode;
 import dqr.api.enums.EnumDqmPet;
+import dqr.api.enums.EnumDqmWeaponMode;
 import dqr.api.potion.DQPotionMinus;
 import dqr.entity.petEntity.ai.EntityAIDeath;
 import dqr.entity.petEntity.ai.EntityAISit2;
@@ -579,7 +581,8 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
         	{
         		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(this.getMaxHP());
         	}
-        	this.setHealth(this.getMaxHP());
+        	//this.setHealth(this.getMaxHP());
+        	this.setHealth(this.getMaxHealth());
         }
         else
         {
@@ -808,6 +811,7 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 	                    	tutu.setStackDisplayName(tutu.getDisplayName().replace("xxx", this.getCommandSenderName()));
 	                        this.worldObj.playSoundAtEntity(this, "DQM_Sound.Rura", 0.8F, 1.5F);
 	                    	this.entityDropItem(tutu, 0.0F);
+
 	                    	this.setDead();
 	        			}
 
@@ -853,10 +857,32 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
                 }
 
               //debug
-                if (itemstack.getItem() == DQMiscs.itemShinjirukokoro && !this.worldObj.isRemote)
+                if (DQR.conf.partyEnable != 0 && itemstack.getItem() == DQMiscs.itemShinjirukokoro && !this.worldObj.isRemote)
                 {
                 	//System.out.println("TEST_LINE_R");
-                	DQR.partyManager.addPartyMember(ep, this);
+    				int itemMode = ExtendedPlayerProperties.get(ep).getWeaponMode(EnumDqmWeaponMode.WEAPONMODE_SHINZIRU.getId());
+
+    				if(itemMode == EnumDqmMGToolMode.SHINZIRU_MEMBER_ADD.getId())
+    				{
+    					if(DQR.partyManager.getPartyLeaderFromMember(ep) != null)
+    					{
+    						DQR.partyManager.addPartyMember(DQR.partyManager.getPartyLeaderFromMember(ep), this);
+    					}else
+    					{
+    						DQR.partyManager.addPartyMember(ep, this);
+    					}
+    				}else if(itemMode == EnumDqmMGToolMode.SHINZIRU_MEMBER_KICK.getId())
+    				{
+    					if(DQR.partyManager.isPartyLeader(ep))
+    					{
+    						DQR.partyManager.kickPartyPet(ep, this);
+    					}else
+    	        		{
+    	        			ep.addChatMessage(new ChatComponentTranslation("msg.shinziru.modeInfo.txt", new Object[] {}));
+    	        		}
+    				}
+
+                	//DQR.partyManager.addPartyMember(ep, this);
                 }
 
                 //
@@ -899,6 +925,7 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 			                        }
 		                        }
 	                        }
+
 
 	                        this.setDead();
 	                    }else
@@ -1268,6 +1295,7 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
         		if (!this.worldObj.isRemote)
 	            {
 	        		ep.worldObj.playSoundAtEntity(ep, "dqr:mob.petmob", 1.0F, 0.5F);
+
 	        		this.setDead();
 	            }
 
@@ -1303,7 +1331,7 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 		                    this.setAttackTarget((EntityLivingBase)null);
 		                    this.tasks.addTask(2, this.aiSit);
 		                    this.aiSit.setSitting(true);
-		                    this.setHealth(20.0F);
+		                    //this.setHealth(20.0F);
 		                    this.func_152115_b(ep.getUniqueID().toString());
 		                    this.playTameEffect(true);
 		                    this.worldObj.playSoundAtEntity(this, "dqr:player.pet", 1.0F, 1.0F);
@@ -2033,6 +2061,10 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
     public void setDead()
     {
     	EntityPlayer ep = null;
+    	if(DQR.partyManager.hasParty(this))
+    	{
+    		DQR.partyManager.removePartyMember(this);
+    	}
 
     	if(this != null && this.worldObj != null && this.getOwner() != null)
     	{

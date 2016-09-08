@@ -567,7 +567,12 @@ public class DamageHandler {
 				if(ep != null)
 				{
 					EnumDqmElement element = null;
-					Item handItem = ep.getHeldItem().getItem();
+					Item handItem = null;
+
+					if(ep.getHeldItem() != null)
+					{
+						handItem = ep.getHeldItem().getItem();
+					}
 
 					if(handItem instanceof DqmItemBowBase)
 					{
@@ -580,7 +585,8 @@ public class DamageHandler {
 					if(element != null)
 					{
 						float dam = event.ammount;
-						event.ammount = event.ammount * DQR.calcDamage.applyDamageResistElement(dam, dam, event.entityLiving, element);
+						//event.ammount = event.ammount * DQR.calcDamage.applyDamageResistElement(dam, dam, event.entityLiving, element);
+						event.ammount = DQR.calcDamage.applyDamageResistElement(dam, dam, event.entityLiving, element);
 					}
 
 
