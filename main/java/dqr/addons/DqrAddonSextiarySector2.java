@@ -14,6 +14,8 @@ import shift.sextiarysector.api.event.PlayerEatenEvent;
 import shift.sextiarysector.api.event.player.PlayerMoistureEvent;
 import shift.sextiarysector.api.event.player.PlayerStaminaEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.registry.GameRegistry;
+import dqr.api.Blocks.DQPlants;
 import dqr.api.Items.DQAccessories;
 import dqr.api.Items.DQIngots;
 import dqr.api.Items.DQMiscs;
@@ -27,6 +29,28 @@ import dqr.playerData.ExtendedPlayerProperties;
 
 public class DqrAddonSextiarySector2 {
 
+	public DqrAddonSextiarySector2()
+	{
+		//this.addRecipes();
+	}
+
+	public void addRecipes(){
+        GameRegistry.addRecipe(new ItemStack(DQPlants.BlockWaterBlockLight), new Object[]
+                {
+                    "AAA",
+                    "ABA",
+                    "AAA",
+                    'A', SSItems.yellowStoneDust, 'B', DQPlants.BlockWaterBlock
+                });
+
+        GameRegistry.addRecipe(new ItemStack(DQPlants.BlockWaterBlock), new Object[]
+                {
+                    "AAA",
+                    "ABA",
+                    "AAA",
+                    'A', SSItems.blueStoneDust, 'B', DQIngots.itemKoorinokessyou
+                });
+	}
 	@SubscribeEvent
     public void onPotionCalc(LivingUpdateEvent event) {
 		if(event.entityLiving instanceof EntityPlayer)

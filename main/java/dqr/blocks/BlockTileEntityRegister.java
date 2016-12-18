@@ -768,5 +768,22 @@ public class BlockTileEntityRegister {
 		GameRegistry.registerTileEntity(DqmTileEntityEnderChest3.class, "dqmTileEntityEnderChest3");
 		GameRegistry.registerTileEntity(DqmTileEntityEnderChest4.class, "dqmTileEntityEnderChest4");
 		GameRegistry.registerTileEntity(DqmTileEntityEnderChest5.class, "dqmTileEntityEnderChest5");
+
+		GameRegistry.registerTileEntity(DqmTileEntityFigureKandata.class, "dqmTileEntityFigureKandata");
+		GameRegistry.registerTileEntity(DqmTileEntityFigureBlackchack.class, "dqmTileEntityFigureBlackchack");
+		GameRegistry.registerTileEntity(DqmTileEntityFigureSuraimuemperor.class, "dqmTileEntityFigureSuraimuemperor");
+		GameRegistry.registerTileEntity(DqmTileEntityFigureDarkdoriado.class, "dqmTileEntityFigureDarkdoriado");
+		GameRegistry.registerTileEntity(DqmTileEntityFigureShadopan.class, "dqmTileEntityFigureShadopan");
+		GameRegistry.registerTileEntity(DqmTileEntityFigureShadopan2.class, "dqmTileEntityFigureShadopan2");
+
+		GameRegistry.registerTileEntity(DqmTileEntityObjKandata.class, "dqmTileEntityObjKandata");
+		GameRegistry.registerTileEntity(DqmTileEntityObjBlackchack.class, "dqmTileEntityObjBlackchack");
+		GameRegistry.registerTileEntity(DqmTileEntityObjSuraimuemperor.class, "dqmTileEntityObjSuraimuemperor");
+		GameRegistry.registerTileEntity(DqmTileEntityObjDarkdoriado.class, "dqmTileEntityObjDarkdoriado");
+		GameRegistry.registerTileEntity(DqmTileEntityObjShadopan.class, "dqmTileEntityObjShadopan");
+		GameRegistry.registerTileEntity(DqmTileEntityObjShadopan2.class, "dqmTileEntityObjShadopan2");
+
+		GameRegistry.registerTileEntity(DqmTileEntityObjOrutega.class, "dqmTileEntityObjOrutega");
+		GameRegistry.registerTileEntity(DqmTileEntityFigureOrutega.class, "dqmTileEntityFigureOrutega");
 	}
 }

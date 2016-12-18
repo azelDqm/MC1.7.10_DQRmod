@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockChest;
 import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -230,11 +231,39 @@ public class MagicEntityIo extends MagicEntity implements IProjectile{
 
                 if (this.ticksInGround > limit)
                 {
+
                 	if(worldFlg && DQR.conf.magicEpIo == 1)
                 	{
-                		this.worldObj.createExplosion(this, this.posX, this.posY, this.posZ, 3.0F, true);
+                    	if(DQR.conf.gurdBakudanisiChest > 0)
+                    	{
+                            //this.worldObj.playSoundAtEntity(this, "random.glass", 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
+                            int sPosX = (int)this.posX;
+                            int sPosY = (int)this.posY;
+                            int sPosZ = (int)this.posZ;
+                            int range = DQR.conf.gurdBakudanisiChest;
+
+                            for (int l = sPosX - range; l <= sPosX + range; ++l)
+                            {
+                                for (int i1 = sPosY - range; i1 <= sPosY + range; ++i1)
+                                {
+                                    for (int j1 = sPosZ - range; j1 <= sPosZ + range; ++j1)
+                                    {
+                                        if (this.worldObj.getBlock(l, i1, j1) instanceof BlockChest)
+                                        {
+                                        	this.setDead();
+                                            return;
+                                        }
+                                    }
+                                }
+                            }
+                    	}
+
+                    	this.worldObj.createExplosion(this, this.posX, this.posY, this.posZ, 3.0F, true);
+                        this.setDead();
+                		//this.worldObj.createExplosion(this, this.posX, this.posY, this.posZ, 3.0F, true);
                 	}
                     this.setDead();
+
                 }
             }
             else//埋まり状態の解除処理

@@ -178,19 +178,23 @@ public class DqmMobBase extends EntityMob
         //this.tasks.addTask(4, new EntityAIMoveTwardsRestriction(this, this.moveSpeed));
         //this.tasks.addTask(6, new EntityAIWander(this, this.moveSpeed));
         this.tasks.addTask(7, new EntityAIWatchClosest(this, EntityPlayer.class, 3.0F));
+        this.tasks.addTask(8, new EntityAIWatchClosest(this, DqmPetBase.class, 3.0F));
         //this.tasks.addTask(7, new EntityAILookIdle(this));
         this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false));
 
         if(this.mobAI.getHeavyFire() > 0)
         {
         	this.targetTasks.addTask(2, new EntityAINearestTargetHeavyFire(this, EntityPlayer.class, 20, true));
+        	this.targetTasks.addTask(4, new EntityAINearestTargetHeavyFire(this, DqmPetBase.class, 20, true));
         }
         else
         {
         	this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityPlayer.class, 25, true));
+        	this.targetTasks.addTask(4, new EntityAINearestAttackableTarget(this, DqmPetBase.class, 25, true));
         }
 
         this.targetTasks.addTask(3, new EntityAINearestAttackableTarget(this, EntityPlayer.class, 0, true));
+        this.targetTasks.addTask(5, new EntityAINearestAttackableTarget(this, DqmPetBase.class, 0, true));
 		/*
 		 * 近接攻撃を行うAIを追加する.
 		 * EntityAIAttackOnCollideの引数のうち, 末尾2つは(攻撃距離, ずっと追い続けるかどうか)
@@ -294,13 +298,16 @@ public class DqmMobBase extends EntityMob
         if(this.mobAI.getHeavyFire() > 0)
         {
         	this.targetTasks.addTask(2, new EntityAINearestTargetHeavyFire(this, EntityPlayer.class, 20, true));
+        	this.targetTasks.addTask(4, new EntityAINearestTargetHeavyFire(this, DqmPetBase.class, 20, true));
         }
         else
         {
         	this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityPlayer.class, 25, true));
+        	this.targetTasks.addTask(4, new EntityAINearestAttackableTarget(this, DqmPetBase.class, 25, true));
         }
 
         this.targetTasks.addTask(3, new EntityAINearestAttackableTarget(this, EntityPlayer.class, 0, true));
+        this.targetTasks.addTask(5, new EntityAINearestAttackableTarget(this, DqmPetBase.class, 0, true));
 		/*
 		 * 近接攻撃を行うAIを追加する.
 		 * EntityAIAttackOnCollideの引数のうち, 末尾2つは(攻撃距離, ずっと追い続けるかどうか)
@@ -337,6 +344,7 @@ public class DqmMobBase extends EntityMob
     	}else
     	{
     		this.tasks.addTask(1, new EntityAIAttackOnCollide2(this, EntityPlayer.class, 1.5D, true));
+    		this.tasks.addTask(3, new EntityAIAttackOnCollide2(this, DqmPetBase.class, 1.5D, true));
     	}
 
     	if(this.mobAI.getHonoo() > 0)
@@ -354,6 +362,7 @@ public class DqmMobBase extends EntityMob
         if (this.mobAI.getJump() > 0)
         {
         	this.tasks.addTask(1, new EntityAIAttackOnCollideJump(this, EntityPlayer.class, 1.5D, true));
+        	this.tasks.addTask(2, new EntityAIAttackOnCollideJump(this, DqmPetBase.class, 1.5D, true));
         }
 
     	if(this.mobAI.getHubuki() > 0)
@@ -920,6 +929,8 @@ public class DqmMobBase extends EntityMob
 			//死亡判定
 			return;
 		}
+
+//DQR.func.debugString("damageEntity1:" + this.hurtResistantTime);
 		this.absoluteDam = -1.0F;
 		boolean skillFlg = false;
 		//DQR.func.debugString("damageEntity1:");
@@ -1030,7 +1041,7 @@ public class DqmMobBase extends EntityMob
 	    			}
 				}
     		}
-
+//DQR.func.debugString("damageEntity2:" + this.hurtResistantTime);
     		if(source.getDamageType().equalsIgnoreCase(DQR.damageSource.DqmPlayerSkillDeath.getDamageType()) ||
     		   source.getDamageType().equalsIgnoreCase(DQR.damageSource.DqmPlayerSpecialDeath.getDamageType()))
     		{
@@ -1051,6 +1062,7 @@ public class DqmMobBase extends EntityMob
 
 
     		p_70665_2_ = this.applyArmorCalculations(source, p_70665_2_);
+//DQR.func.debugString("damageEntity3:" + this.hurtResistantTime);
 //DQR.func.debugString("damageEntity3A:" + p_70665_2_);
             //DQR.func.debugString("DAMTEST3:" + p_70665_2_);
             p_70665_2_ = this.applyPotionDamageCalculations(source, p_70665_2_);
@@ -1071,6 +1083,7 @@ public class DqmMobBase extends EntityMob
             	//死亡判定
             	return;
             }
+//            DQR.func.debugString("damageEntity4:" + this.hurtResistantTime);
 //DQR.func.debugString("damageEntity3C:" + p_70665_2_);
             if(this.absoluteDam >= 0.0f)
             {
@@ -1090,7 +1103,7 @@ public class DqmMobBase extends EntityMob
             	}
             }
 
-
+//DQR.func.debugString("damageEntity5:" + this.hurtResistantTime);
             /////////////////////////////////
 //DQR.func.debugString("DAMTEST3:" + p_70665_2_);
 
@@ -1118,6 +1131,7 @@ public class DqmMobBase extends EntityMob
                 //DQR.func.debugString("damageEntity5:");
             }
 
+//DQR.func.debugString("damageEntity5:" + this.hurtResistantTime);
 
             if(source!= null)
             {
@@ -3554,11 +3568,18 @@ public class DqmMobBase extends EntityMob
                 //if ((float)this.hurtResistantTime > (float)this.maxHurtResistantTime / 2.0F  && !p_70097_1_.getDamageType().equalsIgnoreCase(DQR.damageSource.DqmPlayerSkill.getDamageType()))
                 if ((float)this.hurtResistantTime > (float)this.maxHurtResistantTime / 2.0F)
                 {
+                	//DQR.func.debugString("TEST_NUMBER1 : " + this.hurtResistantTime + "/" + this.maxHurtResistantTime);
                     if(this.getHealth() <= 0.0F || this.isDead)
                     {
                     	//死亡判定
                     	return false;
                     }
+
+                    if (p_70097_2_ <= this.lastDamage)
+                    {
+                        return false;
+                    }
+
                     //System.out.println("TEST1");
                     this.damageEntity(p_70097_1_, p_70097_2_ - this.lastDamage);
                     if(isOverKill)
@@ -3571,6 +3592,7 @@ public class DqmMobBase extends EntityMob
                 }
                 else
                 {
+                	//DQR.func.debugString("TEST_NUMBER2 : " + this.hurtResistantTime + "/" + this.maxHurtResistantTime);
                 	//System.out.println("TEST2");
                     this.lastDamage = p_70097_2_;
                     this.prevHealth = this.getHealth();

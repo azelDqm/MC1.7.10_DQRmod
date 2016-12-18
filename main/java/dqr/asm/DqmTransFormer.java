@@ -30,6 +30,8 @@ public class DqmTransFormer implements IClassTransformer, Opcodes
 	private static final String TARGET_CLASS_NAME3 = "net.minecraft.client.renderer.EntityRenderer";
 	private static final String TARGET_CLASS_NAME4 = "net.minecraft.util.FoodStats";
 	private static final String TARGET_CLASS_NAME5 = "net.minecraft.entity.EntityLivingBase";
+	private static final String TARGET_CLASS_NAME6 = "net.minecraft.block.BlockFarmland";
+	private static final String TARGET_CLASS_NAME7 = "twilightforest.uncrafting.ContainerTFUncrafting";
 
     // クラスがロードされる際に呼び出されるメソッドです。
     @Override
@@ -44,7 +46,8 @@ public class DqmTransFormer implements IClassTransformer, Opcodes
         //if (!FMLRelauncher.side().equals("CLIENT") || !name.equals(TARGET_CLASS_NAME))
 
     	if (!transformedName.equals(TARGET_CLASS_NAME) && !transformedName.equals(TARGET_CLASS_NAME3) &&
-    		!transformedName.equals(TARGET_CLASS_NAME2) && !transformedName.equals(TARGET_CLASS_NAME5))
+    		!transformedName.equals(TARGET_CLASS_NAME2) && !transformedName.equals(TARGET_CLASS_NAME5) &&
+    		!transformedName.equals(TARGET_CLASS_NAME6) && !transformedName.equals(TARGET_CLASS_NAME7))
         {
             // 処理対象外なので何もしない
             return bytes;
@@ -70,6 +73,12 @@ public class DqmTransFormer implements IClassTransformer, Opcodes
         	}else if(transformedName.equals(TARGET_CLASS_NAME3))
         	{
         		return hookEntityRenderer(bytes);
+        	}else if(transformedName.equals(TARGET_CLASS_NAME6))
+        	{
+        		return hookWaterSearchMethod(bytes);
+        	}else if(transformedName.equals(TARGET_CLASS_NAME7))
+        	{
+        		return hookTFuncrafting(bytes);
         	}else
         	{
         		return bytes;
@@ -86,6 +95,92 @@ public class DqmTransFormer implements IClassTransformer, Opcodes
             throw new RuntimeException("failed : TutorialTransformer loading", e);
         }
 
+    }
+
+
+
+    private byte[] hookTFuncrafting(byte[] bytes)
+    {
+        // ASMで、bytesに格納されたクラスファイルを解析します。
+    	System.out.println("twilight forest uncrafting patching START");
+        ClassNodeDum cnode = new ClassNodeDum();
+        ClassReader reader = new ClassReader(bytes);
+        reader.accept(cnode, 0);
+
+        // 改変対象のメソッド名です
+        String targetMethodName = "a";
+        String targetMethodName2 = "getRecipeFor";
+
+        // 改変対象メソッドの戻り値型および、引数型をあらわします
+        String targetMethoddesc = "(Ladd)Lafg";
+        String targetMethoddesc2 = "(Ladd;)Lafg;";
+        String targetMethoddesc3 = "(Ladd;)Lafg";
+        String targetMethoddesc4 = "(Lnet/minecraft/item/ItemStack;)Lnet/minecraft/item/crafting/IRecipe;";
+
+        // 対象のメソッドを検索取得します。
+        MethodNode mnode = null;
+        for (MethodNode curMnode : (List<MethodNode>) cnode.methods)
+        {
+        	boolean flag = false;
+
+        	//System.out.println("twilight forest uncrafting patching : name:" + curMnode.name + " / desc:" + curMnode.desc);
+            if ((targetMethodName.equals(curMnode.name) || targetMethodName2.equals(curMnode.name)) &&
+            		(targetMethoddesc.equals(curMnode.desc) || targetMethoddesc2.equals(curMnode.desc) ||
+            		 targetMethoddesc3.equals(curMnode.desc) || targetMethoddesc4.equals(curMnode.desc))
+            	)
+            {
+                mnode = curMnode;
+                break;
+            }
+        }
+
+        if (mnode != null)
+        {
+            try
+            {
+	        	System.out.println("ContainerTFUncrafting patching");
+	            InsnList overrideList = new InsnList();
+
+	            overrideList.add(new FieldInsnNode(GETSTATIC, "dqr/DQR", "addons", "Ldqr/addons/DqrAddon;"));
+	            overrideList.add(new InsnNode(POP));
+	            overrideList.add(new FieldInsnNode(GETSTATIC, "dqr/addons/DqrAddon", "funcUncraftHook", "Ldqr/addons/twilightForest/FuncUncraftHook;"));
+	            overrideList.add(new VarInsnNode(ALOAD, 1));
+	            overrideList.add(new MethodInsnNode(INVOKEVIRTUAL, "dqr/addons/twilightForest/FuncUncraftHook", "hookTFUncraft", "(Ladd;)Lafg;"));
+	            overrideList.add(new InsnNode(ARETURN));
+
+	            /*
+	            LabelNode l5 = new LabelNode();
+
+	            // メソッドコールを、バイトコードであらわした例です。
+	            overrideList.add(new FieldInsnNode(GETSTATIC, "dqr/DQR", "farmlandHook", "Ldqr/functions/FuncFarmlandExtension;"));
+	            overrideList.add(new VarInsnNode(ALOAD, 1));
+	            overrideList.add(new VarInsnNode(ILOAD, 2));
+	            overrideList.add(new VarInsnNode(ILOAD, 3));
+	            overrideList.add(new VarInsnNode(ILOAD, 4));
+	            overrideList.add(new VarInsnNode(ALOAD, 0));
+	            overrideList.add(new MethodInsnNode(INVOKEVIRTUAL, "dqr/functions/FuncFarmlandExtension", "hookUpdateTick", "(Lahb;IIILaji;)Z"));
+	            overrideList.add(new JumpInsnNode(IFEQ, l5));
+	            //overrideList.add(new InsnNode(ICONST_1));
+	            overrideList.add(new InsnNode(RETURN));
+	            overrideList.add(l5);
+	            */
+
+	            // mnode.instructions.get(1)で、対象のメソッドの先頭を取得
+	            // mnode.instructions.insertで、指定した位置にバイトコードを挿入します。
+	            mnode.instructions.insert(mnode.instructions.get(1), overrideList);
+	            // 改変したクラスファイルをバイト列に書き出します
+	            ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
+	            System.out.println("ContainerTFUncrafting patching:" + cnode.name);
+	            cnode.accept(cw);
+	            bytes = cw.toByteArray();
+
+	            System.out.println("ContainerTFUncrafting patching success!!:");
+            } catch (Exception e) {
+                throw new RuntimeException("failed : ContainerTFUncrafting patching ", e);
+            }
+        }
+
+        return bytes;
     }
 
 
@@ -159,6 +254,75 @@ public class DqmTransFormer implements IClassTransformer, Opcodes
 
         return bytes;
     }
+
+
+
+
+    private byte[] hookWaterSearchMethod(byte[] bytes)
+    {
+        // ASMで、bytesに格納されたクラスファイルを解析します。
+    	System.out.println("BlockFarmlandClass patching START");
+        ClassNodeDum cnode = new ClassNodeDum();
+        ClassReader reader = new ClassReader(bytes);
+        reader.accept(cnode, 0);
+
+        // 改変対象のメソッド名です
+        String targetMethodName = "a";
+
+        // 改変対象メソッドの戻り値型および、引数型をあらわします
+        String targetMethoddesc = "(Lahb;III)V";
+
+        // 対象のメソッドを検索取得します。
+        MethodNode mnode = null;
+        for (MethodNode curMnode : (List<MethodNode>) cnode.methods)
+        {
+            if (targetMethodName.equals(curMnode.name) && targetMethoddesc.equals(curMnode.desc))
+            {
+                mnode = curMnode;
+                break;
+            }
+        }
+
+        if (mnode != null)
+        {
+            try
+            {
+	        	System.out.println("BlockFarmlandClass patching");
+	            InsnList overrideList = new InsnList();
+	            LabelNode l5 = new LabelNode();
+
+	            // メソッドコールを、バイトコードであらわした例です。
+	            overrideList.add(new FieldInsnNode(GETSTATIC, "dqr/DQR", "farmlandHook", "Ldqr/functions/FuncFarmlandExtension;"));
+	            overrideList.add(new VarInsnNode(ALOAD, 1));
+	            overrideList.add(new VarInsnNode(ILOAD, 2));
+	            overrideList.add(new VarInsnNode(ILOAD, 3));
+	            overrideList.add(new VarInsnNode(ILOAD, 4));
+	            overrideList.add(new VarInsnNode(ALOAD, 0));
+	            overrideList.add(new MethodInsnNode(INVOKEVIRTUAL, "dqr/functions/FuncFarmlandExtension", "hookUpdateTick", "(Lahb;IIILaji;)Z"));
+	            overrideList.add(new JumpInsnNode(IFEQ, l5));
+	            //overrideList.add(new InsnNode(ICONST_1));
+	            overrideList.add(new InsnNode(RETURN));
+	            overrideList.add(l5);
+
+	            // mnode.instructions.get(1)で、対象のメソッドの先頭を取得
+	            // mnode.instructions.insertで、指定した位置にバイトコードを挿入します。
+	            mnode.instructions.insert(mnode.instructions.get(1), overrideList);
+	            // 改変したクラスファイルをバイト列に書き出します
+	            ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
+	            System.out.println("BlockFarmlandClass patching:" + cnode.name);
+	            cnode.accept(cw);
+	            bytes = cw.toByteArray();
+
+	            System.out.println("BlockFarmlandClass patching success!!:");
+            } catch (Exception e) {
+                throw new RuntimeException("failed : BlockFarmlandClass patching ", e);
+            }
+        }
+
+        return bytes;
+    }
+
+
 
 
 

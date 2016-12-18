@@ -59,6 +59,7 @@ import dqr.functions.FuncCommon;
 import dqr.functions.FuncDamageMessage;
 import dqr.functions.FuncEnchantExtension;
 import dqr.functions.FuncEntityRenderExtension;
+import dqr.functions.FuncFarmlandExtension;
 import dqr.functions.FuncPetOperation;
 import dqr.gui.GuiHandler;
 import dqr.handler.ChunkEventHandler;
@@ -90,7 +91,7 @@ import dqr.potion.DqmPotion;
 import dqr.world.DqmStructureRegister;
 import dqr.world.DqmVillageRegister;
 
-@Mod(modid = "DQMIIINext", name = "DQRespect", version = "0.9.1", useMetadata = true, dependencies = "after:PotionExtension")
+@Mod(modid = "DQMIIINext", name = "DQRespect", version = "0.9.2", useMetadata = true, dependencies = "after:PotionExtension")
 public class DQR {
 
 	@SidedProxy(clientSide = "dqr.ClientProxy", serverSide = "dqr.CommonProxy")
@@ -99,7 +100,7 @@ public class DQR {
 	@Instance("DQMIIINext")
 	public static DQR instance;
 	public static String modID = "DQMIIINext";
-	public static int debug = 0;
+	public static int debug = 1;
 
 	public static FuncCalcMobParam funcMob;
 	public static DQRconfigs conf;
@@ -170,6 +171,8 @@ public class DQR {
 	public static DqmVillager villager;
 
 	public static FuncEntityRenderExtension entityRenderHook = null;
+	public static FuncFarmlandExtension farmlandHook;
+
 	public static final ArrayList<IModule> modules = new ArrayList<IModule>();
 
 	@EventHandler
@@ -270,6 +273,9 @@ public class DQR {
 		func = new FuncCommon();
 		potionFunc = new DQPotionFunc();
 		petFunc = new FuncPetOperation();
+
+		farmlandHook = new FuncFarmlandExtension();
+
 		if(this.conf.partyEnable != 0)
 		{
 			partyManager = new DqmPartyManager();

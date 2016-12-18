@@ -46,7 +46,7 @@ public class DqBlockObj {
 		DQMobObjects.BlockObjBiggufeisu = new DqmBlockMobObj(Material.ground).setBlockName("blockObjBiggufeisu").setStepSound(Block.soundTypeGlass).setHardness(0.2f).setCreativeTab(DQR.tabs.DqmTabMobObj).setBlockTextureName("dqr:ObjBussitu");
 		DQMobObjects.BlockObjBigguhatto = new DqmBlockMobObj(Material.ground).setBlockName("blockObjBigguhatto").setStepSound(Block.soundTypeGlass).setHardness(0.2f).setCreativeTab(DQR.tabs.DqmTabMobObj).setBlockTextureName("dqr:ObjBeast");
 		DQMobObjects.BlockObjBiggumoai = new DqmBlockMobObj(Material.ground).setBlockName("blockObjBiggumoai").setStepSound(Block.soundTypeGlass).setHardness(0.2f).setCreativeTab(DQR.tabs.DqmTabMobObj).setBlockTextureName("dqr:ObjBussitu");
-		DQMobObjects.BlockObjBighanma = new DqmBlockMobObj(Material.ground).setBlockName("blockObjBighanma").setStepSound(Block.soundTypeGlass).setHardness(0.2f).setCreativeTab(DQR.tabs.DqmTabMobObj).setBlockTextureName("dqr:ObjAkuma");
+		DQMobObjects.BlockObjBighanma = new DqmBlockMobObj(Material.ground).setBlockName("blockObjBighanma").setStepSound(Block.soundTypeGlass).setHardness(0.2f).setCreativeTab(DQR.tabs.DqmTabMobObj).setBlockTextureName("dqr:ObjBeast");
 		DQMobObjects.BlockObjBosutororu = new DqmBlockMobObj(Material.ground).setBlockName("blockObjBosutororu").setStepSound(Block.soundTypeGlass).setHardness(0.2f).setCreativeTab(DQR.tabs.DqmTabMobObj).setBlockTextureName("dqr:ObjAkuma");
 		DQMobObjects.BlockObjBoureikensi = new DqmBlockMobObj(Material.ground).setBlockName("blockObjBoureikensi").setStepSound(Block.soundTypeGlass).setHardness(0.2f).setCreativeTab(DQR.tabs.DqmTabMobObj).setBlockTextureName("dqr:ObjUndead");
 		DQMobObjects.BlockObjBubsura = new DqmBlockMobObj(Material.ground).setBlockName("blockObjBubsura").setStepSound(Block.soundTypeGlass).setHardness(0.2f).setCreativeTab(DQR.tabs.DqmTabMobObj).setBlockTextureName("dqr:ObjSuraimu");
@@ -254,7 +254,7 @@ public class DqBlockObj {
 		DQMobObjects.BlockObjSimasimacat = new DqmBlockMobObj(Material.ground).setBlockName("blockObjSimasimacat").setStepSound(Block.soundTypeGlass).setHardness(0.2f).setCreativeTab(DQR.tabs.DqmTabMobObj).setBlockTextureName("dqr:ObjBeast");
 		DQMobObjects.BlockObjSirubadebiru = new DqmBlockMobObj(Material.ground).setBlockName("blockObjSirubadebiru").setStepSound(Block.soundTypeGlass).setHardness(0.2f).setCreativeTab(DQR.tabs.DqmTabMobObj).setBlockTextureName("dqr:ObjAkuma");
 		DQMobObjects.BlockObjSirubamanto = new DqmBlockMobObj(Material.ground).setBlockName("blockObjSirubamanto").setStepSound(Block.soundTypeGlass).setHardness(0.2f).setCreativeTab(DQR.tabs.DqmTabMobObj).setBlockTextureName("dqr:ObjUndead");
-		DQMobObjects.BlockObjSirudoaniki = new DqmBlockMobObj(Material.ground).setBlockName("blockObjSirudoaniki").setStepSound(Block.soundTypeGlass).setHardness(0.2f).setCreativeTab(DQR.tabs.DqmTabMobObj).setBlockTextureName("dqr:ObjAkuma");
+		DQMobObjects.BlockObjSirudoaniki = new DqmBlockMobObj(Material.ground).setBlockName("blockObjSirudoaniki").setStepSound(Block.soundTypeGlass).setHardness(0.2f).setCreativeTab(DQR.tabs.DqmTabMobObj).setBlockTextureName("dqr:ObjBussitu");
 		DQMobObjects.BlockObjSirudokozou = new DqmBlockMobObj(Material.ground).setBlockName("blockObjSirudokozou").setStepSound(Block.soundTypeGlass).setHardness(0.2f).setCreativeTab(DQR.tabs.DqmTabMobObj).setBlockTextureName("dqr:ObjBussitu");
 		DQMobObjects.BlockObjSiryou = new DqmBlockMobObj(Material.ground).setBlockName("blockObjSiryou").setStepSound(Block.soundTypeGlass).setHardness(0.2f).setCreativeTab(DQR.tabs.DqmTabMobObj).setBlockTextureName("dqr:ObjUndead");
 		DQMobObjects.BlockObjSiryounokisi = new DqmBlockMobObj(Material.ground).setBlockName("blockObjSiryounokisi").setStepSound(Block.soundTypeGlass).setHardness(0.2f).setCreativeTab(DQR.tabs.DqmTabMobObj).setBlockTextureName("dqr:ObjUndead");
@@ -312,8 +312,13 @@ public class DqBlockObj {
 		DQMobObjects.BlockObjZoma = new DqmBlockMobObj(Material.ground).setBlockName("blockObjZoma").setStepSound(Block.soundTypeGlass).setHardness(0.2f).setCreativeTab(DQR.tabs.DqmTabMobObj).setBlockTextureName("dqr:ObjUnknown");
 		DQMobObjects.BlockObjZukkinya = new DqmBlockMobObj(Material.ground).setBlockName("blockObjZukkinya").setStepSound(Block.soundTypeGlass).setHardness(0.2f).setCreativeTab(DQR.tabs.DqmTabMobObj).setBlockTextureName("dqr:ObjSizen");
 
-
-
+		DQMobObjects.BlockObjKandata = new DqmBlockMobObj(Material.ground).setBlockName("blockObjKandata").setStepSound(Block.soundTypeGlass).setHardness(0.2f).setCreativeTab(DQR.tabs.DqmTabMobObj).setBlockTextureName("dqr:ObjUnknown");
+		DQMobObjects.BlockObjBlackchack = new DqmBlockMobObj(Material.ground).setBlockName("blockObjBlackchack").setStepSound(Block.soundTypeGlass).setHardness(0.2f).setCreativeTab(DQR.tabs.DqmTabMobObj).setBlockTextureName("dqr:ObjBeast");
+		DQMobObjects.BlockObjSuraimuemperor = new DqmBlockMobObj(Material.ground).setBlockName("blockObjSuraimuemperor").setStepSound(Block.soundTypeGlass).setHardness(0.2f).setCreativeTab(DQR.tabs.DqmTabMobObj).setBlockTextureName("dqr:ObjMetal");
+		DQMobObjects.BlockObjDarkdoriado = new DqmBlockMobObj(Material.ground).setBlockName("blockObjDarkdoriado").setStepSound(Block.soundTypeGlass).setHardness(0.2f).setCreativeTab(DQR.tabs.DqmTabMobObj).setBlockTextureName("dqr:ObjSizen");
+		DQMobObjects.BlockObjShadopan = new DqmBlockMobObj(Material.ground).setBlockName("blockObjShadopan").setStepSound(Block.soundTypeGlass).setHardness(0.2f).setCreativeTab(DQR.tabs.DqmTabMobObj).setBlockTextureName("dqr:ObjBeast");
+		DQMobObjects.BlockObjShadopan2 = new DqmBlockMobObj(Material.ground).setBlockName("blockObjShadopan2").setStepSound(Block.soundTypeGlass).setHardness(0.2f).setCreativeTab(DQR.tabs.DqmTabMobObj).setBlockTextureName("dqr:ObjBeast");
+		DQMobObjects.BlockObjOrutega = new DqmBlockMobObj(Material.ground).setBlockName("blockObjOrutega").setStepSound(Block.soundTypeGlass).setHardness(0.2f).setCreativeTab(DQR.tabs.DqmTabMobObj).setBlockTextureName("dqr:ObjUnknown");
 
 		DQMobFigures.BlockFigureAkairai = new DqmBlockMobFigure(Material.ground).setBlockName("blockFigAkairai").setStepSound(Block.soundTypeGlass).setHardness(0.2f).setCreativeTab(DQR.tabs.DqmTabMobOFigure).setBlockTextureName("dqr:FigSizen");
 		DQMobFigures.BlockFigureAkumanosyo = new DqmBlockMobFigure(Material.ground).setBlockName("blockFigAkumanosyo").setStepSound(Block.soundTypeGlass).setHardness(0.2f).setCreativeTab(DQR.tabs.DqmTabMobOFigure).setBlockTextureName("dqr:FigAkuma");
@@ -347,7 +352,7 @@ public class DqBlockObj {
 		DQMobFigures.BlockFigureBiggufeisu = new DqmBlockMobFigure(Material.ground).setBlockName("blockFigBiggufeisu").setStepSound(Block.soundTypeGlass).setHardness(0.2f).setCreativeTab(DQR.tabs.DqmTabMobOFigure).setBlockTextureName("dqr:FigBussitu");
 		DQMobFigures.BlockFigureBigguhatto = new DqmBlockMobFigure(Material.ground).setBlockName("blockFigBigguhatto").setStepSound(Block.soundTypeGlass).setHardness(0.2f).setCreativeTab(DQR.tabs.DqmTabMobOFigure).setBlockTextureName("dqr:FigBeast");
 		DQMobFigures.BlockFigureBiggumoai = new DqmBlockMobFigure(Material.ground).setBlockName("blockFigBiggumoai").setStepSound(Block.soundTypeGlass).setHardness(0.2f).setCreativeTab(DQR.tabs.DqmTabMobOFigure).setBlockTextureName("dqr:FigBussitu");
-		DQMobFigures.BlockFigureBighanma = new DqmBlockMobFigure(Material.ground).setBlockName("blockFigBighanma").setStepSound(Block.soundTypeGlass).setHardness(0.2f).setCreativeTab(DQR.tabs.DqmTabMobOFigure).setBlockTextureName("dqr:FigAkuma");
+		DQMobFigures.BlockFigureBighanma = new DqmBlockMobFigure(Material.ground).setBlockName("blockFigBighanma").setStepSound(Block.soundTypeGlass).setHardness(0.2f).setCreativeTab(DQR.tabs.DqmTabMobOFigure).setBlockTextureName("dqr:FigBeast");
 		DQMobFigures.BlockFigureBosutororu = new DqmBlockMobFigure(Material.ground).setBlockName("blockFigBosutororu").setStepSound(Block.soundTypeGlass).setHardness(0.2f).setCreativeTab(DQR.tabs.DqmTabMobOFigure).setBlockTextureName("dqr:FigAkuma");
 		DQMobFigures.BlockFigureBoureikensi = new DqmBlockMobFigure(Material.ground).setBlockName("blockFigBoureikensi").setStepSound(Block.soundTypeGlass).setHardness(0.2f).setCreativeTab(DQR.tabs.DqmTabMobOFigure).setBlockTextureName("dqr:FigUndead");
 		DQMobFigures.BlockFigureBubsura = new DqmBlockMobFigure(Material.ground).setBlockName("blockFigBubsura").setStepSound(Block.soundTypeGlass).setHardness(0.2f).setCreativeTab(DQR.tabs.DqmTabMobOFigure).setBlockTextureName("dqr:FigSuraimu");
@@ -555,7 +560,7 @@ public class DqBlockObj {
 		DQMobFigures.BlockFigureSimasimacat = new DqmBlockMobFigure(Material.ground).setBlockName("blockFigSimasimacat").setStepSound(Block.soundTypeGlass).setHardness(0.2f).setCreativeTab(DQR.tabs.DqmTabMobOFigure).setBlockTextureName("dqr:FigBeast");
 		DQMobFigures.BlockFigureSirubadebiru = new DqmBlockMobFigure(Material.ground).setBlockName("blockFigSirubadebiru").setStepSound(Block.soundTypeGlass).setHardness(0.2f).setCreativeTab(DQR.tabs.DqmTabMobOFigure).setBlockTextureName("dqr:FigAkuma");
 		DQMobFigures.BlockFigureSirubamanto = new DqmBlockMobFigure(Material.ground).setBlockName("blockFigSirubamanto").setStepSound(Block.soundTypeGlass).setHardness(0.2f).setCreativeTab(DQR.tabs.DqmTabMobOFigure).setBlockTextureName("dqr:FigUndead");
-		DQMobFigures.BlockFigureSirudoaniki = new DqmBlockMobFigure(Material.ground).setBlockName("blockFigSirudoaniki").setStepSound(Block.soundTypeGlass).setHardness(0.2f).setCreativeTab(DQR.tabs.DqmTabMobOFigure).setBlockTextureName("dqr:FigAkuma");
+		DQMobFigures.BlockFigureSirudoaniki = new DqmBlockMobFigure(Material.ground).setBlockName("blockFigSirudoaniki").setStepSound(Block.soundTypeGlass).setHardness(0.2f).setCreativeTab(DQR.tabs.DqmTabMobOFigure).setBlockTextureName("dqr:FigBussitu");
 		DQMobFigures.BlockFigureSirudokozou = new DqmBlockMobFigure(Material.ground).setBlockName("blockFigSirudokozou").setStepSound(Block.soundTypeGlass).setHardness(0.2f).setCreativeTab(DQR.tabs.DqmTabMobOFigure).setBlockTextureName("dqr:FigBussitu");
 		DQMobFigures.BlockFigureSiryou = new DqmBlockMobFigure(Material.ground).setBlockName("blockFigSiryou").setStepSound(Block.soundTypeGlass).setHardness(0.2f).setCreativeTab(DQR.tabs.DqmTabMobOFigure).setBlockTextureName("dqr:FigUndead");
 		DQMobFigures.BlockFigureSiryounokisi = new DqmBlockMobFigure(Material.ground).setBlockName("blockFigSiryounokisi").setStepSound(Block.soundTypeGlass).setHardness(0.2f).setCreativeTab(DQR.tabs.DqmTabMobOFigure).setBlockTextureName("dqr:FigUndead");
@@ -612,5 +617,14 @@ public class DqBlockObj {
 		DQMobFigures.BlockFigureZinmentyou = new DqmBlockMobFigure(Material.ground).setBlockName("blockFigZinmentyou").setStepSound(Block.soundTypeGlass).setHardness(0.2f).setCreativeTab(DQR.tabs.DqmTabMobOFigure).setBlockTextureName("dqr:FigSizen");
 		DQMobFigures.BlockFigureZoma = new DqmBlockMobFigure(Material.ground).setBlockName("blockFigZoma").setStepSound(Block.soundTypeGlass).setHardness(0.2f).setCreativeTab(DQR.tabs.DqmTabMobOFigure).setBlockTextureName("dqr:FigUnknown");
 		DQMobFigures.BlockFigureZukkinya = new DqmBlockMobFigure(Material.ground).setBlockName("blockFigZukkinya").setStepSound(Block.soundTypeGlass).setHardness(0.2f).setCreativeTab(DQR.tabs.DqmTabMobOFigure).setBlockTextureName("dqr:FigSizen");
+
+		DQMobFigures.BlockFigureKandata = new DqmBlockMobFigure(Material.ground).setBlockName("blockFigKandata").setStepSound(Block.soundTypeGlass).setHardness(0.2f).setCreativeTab(DQR.tabs.DqmTabMobOFigure).setBlockTextureName("dqr:FigUnknown");
+		DQMobFigures.BlockFigureBlackchack = new DqmBlockMobFigure(Material.ground).setBlockName("blockFigBlackchack").setStepSound(Block.soundTypeGlass).setHardness(0.2f).setCreativeTab(DQR.tabs.DqmTabMobOFigure).setBlockTextureName("dqr:FigBeast");
+		DQMobFigures.BlockFigureSuraimuemperor = new DqmBlockMobFigure(Material.ground).setBlockName("blockFigSuraimuemperor").setStepSound(Block.soundTypeGlass).setHardness(0.2f).setCreativeTab(DQR.tabs.DqmTabMobOFigure).setBlockTextureName("dqr:FigMetal");
+		DQMobFigures.BlockFigureDarkdoriado = new DqmBlockMobFigure(Material.ground).setBlockName("blockFigDarkdoriado").setStepSound(Block.soundTypeGlass).setHardness(0.2f).setCreativeTab(DQR.tabs.DqmTabMobOFigure).setBlockTextureName("dqr:FigSizen");
+		DQMobFigures.BlockFigureShadopan = new DqmBlockMobFigure(Material.ground).setBlockName("blockFigShadopan").setStepSound(Block.soundTypeGlass).setHardness(0.2f).setCreativeTab(DQR.tabs.DqmTabMobOFigure).setBlockTextureName("dqr:FigBeast");
+		DQMobFigures.BlockFigureShadopan2 = new DqmBlockMobFigure(Material.ground).setBlockName("blockFigShadopan2").setStepSound(Block.soundTypeGlass).setHardness(0.2f).setCreativeTab(DQR.tabs.DqmTabMobOFigure).setBlockTextureName("dqr:FigBeast");
+
+		DQMobFigures.BlockFigureOrutega = new DqmBlockMobFigure(Material.ground).setBlockName("blockFigOrutega").setStepSound(Block.soundTypeGlass).setHardness(0.2f).setCreativeTab(DQR.tabs.DqmTabMobOFigure).setBlockTextureName("dqr:FigUnknown");
 	}
 }

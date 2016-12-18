@@ -1,20 +1,19 @@
 package dqr.entity.petEntity.render2;
 
 import net.minecraft.client.renderer.entity.RenderLiving;
-import dqr.entity.petEntity.DqmPetBase;
 import net.minecraft.entity.Entity;
-import dqr.entity.petEntity.DqmPetBase;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
 import dqr.entity.mobEntity.model2.DqmModelSamayouyoroi;
+import dqr.entity.petEntity.DqmPetBase;
 
 public class DqmRenderPetKandatakobun extends RenderLiving
 {
 
-	private float scale = 1.8F;
+	private float scale = 2.0F;
 	/*
 	 * テクスチャへのResourceLocationを設定する.
 	 */

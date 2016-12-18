@@ -4,6 +4,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import dqr.api.enums.EnumDqmJob;
+import dqr.playerData.ExtendedPlayerProperties;
 
 public class DqmItemDebugBase extends Item{
 
@@ -39,6 +41,14 @@ public class DqmItemDebugBase extends Item{
 
     	}
     	*/
+
+    	/*
+    	RegistryNamespaced rnb = Block.blockRegistry;
+    	RegistryNamespaced rni = Item.itemRegistry;
+
+    	System.out.println("TEST1 : " + rnb.getNameForObject(this));
+    	System.out.println("TEST2 : " + rni.getNameForObject(this));
+		*/
 
     	if(!world.isRemote)
     	{
@@ -118,7 +128,7 @@ public class DqmItemDebugBase extends Item{
 
     	}
     	*/
-/*
+
 
     	int job = ExtendedPlayerProperties.get(player).getJob();
 
@@ -129,7 +139,7 @@ public class DqmItemDebugBase extends Item{
     	{
     		ExtendedPlayerProperties.get(player).setJob(job + 1);
     	}
-*/
+
     	//int job = ExtendedPlayerProperties.get(player).getJob();
     	//int exp = ExtendedPlayerProperties.get(player).getJobExp(job);
 

@@ -1,6 +1,7 @@
 package dqr.items.magic;
 
 import java.util.List;
+import java.util.Random;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -109,6 +110,14 @@ public class DqmItemMagicBehomara extends DqmItemMagicBase{
 			int attackDam = (par1ItemStack.getMaxDamage() - par1ItemStack.getItemDamage())* 100
 			        / par1ItemStack.getMaxDamage() *  matk / 100;
 			attackDam = DQR.magicTable.getReasonableDamage(this, par3EntityPlayer, attackDam);
+
+    		Random rand_jukuren = new Random();
+			if(DQR.magicTable.getMAptitude(this, par3EntityPlayer) > 0 && rand_jukuren.nextInt(5) == 0)
+			{
+
+				int getJukurenExp = 1 + ExtendedPlayerProperties.get(par3EntityPlayer).getJukurenExp(ExtendedPlayerProperties.get(par3EntityPlayer).getWeapon());
+				ExtendedPlayerProperties.get(par3EntityPlayer).setJukurenExp(ExtendedPlayerProperties.get(par3EntityPlayer).getWeapon(), getJukurenExp);
+			}
 
 			if(par3EntityPlayer.isPotionActive(DQPotionPlus.buffMahokanta))
 			{

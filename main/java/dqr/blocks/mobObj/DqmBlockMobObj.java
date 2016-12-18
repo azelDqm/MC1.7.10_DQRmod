@@ -951,6 +951,27 @@ public class DqmBlockMobObj extends BlockContainer
     	}else if(this == DQMobObjects.BlockObjZukkinya)
     	{
     		return new DqmTileEntityObjZukkinya();
+    	}else if(this == DQMobObjects.BlockObjKandata)
+    	{
+    		return new DqmTileEntityObjKandata();
+    	}else if(this == DQMobObjects.BlockObjBlackchack)
+    	{
+    		return new DqmTileEntityObjBlackchack();
+    	}else if(this == DQMobObjects.BlockObjSuraimuemperor)
+    	{
+    		return new DqmTileEntityObjSuraimuemperor();
+    	}else if(this == DQMobObjects.BlockObjDarkdoriado)
+    	{
+    		return new DqmTileEntityObjDarkdoriado();
+    	}else if(this == DQMobObjects.BlockObjShadopan)
+    	{
+    		return new DqmTileEntityObjShadopan();
+    	}else if(this == DQMobObjects.BlockObjShadopan2)
+    	{
+    		return new DqmTileEntityObjShadopan2();
+    	}else if(this == DQMobObjects.BlockObjOrutega)
+    	{
+    		return new DqmTileEntityObjOrutega();
     	}
 
     	return new DqmTileEntityObjSura();

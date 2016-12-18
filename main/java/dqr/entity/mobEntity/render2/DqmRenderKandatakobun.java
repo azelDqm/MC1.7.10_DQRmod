@@ -12,7 +12,7 @@ import dqr.entity.mobEntity.model2.DqmModelSamayouyoroi;
 public class DqmRenderKandatakobun extends RenderLiving
 {
 
-	private float scale = 1.8F;
+	private float scale = 2.0F;
 	/*
 	 * テクスチャへのResourceLocationを設定する.
 	 */

@@ -4,6 +4,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import dqr.DQR;
 import dqr.gui.subEquip.InventorySubEquip;
 
 
@@ -12,7 +13,7 @@ public class LivingDeathHandler {
 	@SubscribeEvent(priority=EventPriority.HIGHEST)
 	public void onLivingDeathEventEvent(LivingDeathEvent event)
 	{
-		if(event.entityLiving instanceof EntityPlayer)
+		if(event.entityLiving instanceof EntityPlayer && DQR.addons.tconstIsEnable == 0)
 		{
 			EntityPlayer ep = (EntityPlayer)event.entityLiving;
 	        if (!ep.worldObj.getGameRules().getGameRuleBooleanValue("keepInventory")) {

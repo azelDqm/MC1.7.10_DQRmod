@@ -10,9 +10,11 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttribute;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -25,6 +27,7 @@ import com.google.common.collect.Maps;
 
 import dqr.DQR;
 import dqr.api.Items.DQAccessories;
+import dqr.api.Items.DQWeapons;
 import dqr.api.enums.EnumDqmAccessory;
 import dqr.api.enums.EnumDqmJob;
 import dqr.api.enums.EnumDqmSkillW;
@@ -247,6 +250,7 @@ public class FuncCalcPlayerStatus {
 				//atk = (int)dqmSword.func_150931_i();
 
 				//とりあえず力を攻撃力にそのまま加算
+				atk = atk + this.getLegendWeaponDamage(ep.getCurrentEquippedItem(), ep);
 				atk = atk + ExtendedPlayerProperties.get(ep).getTikara();
 			}else if(ep.getCurrentEquippedItem().getItem() instanceof DqmItemBowBase)
 			{
@@ -319,6 +323,7 @@ public class FuncCalcPlayerStatus {
 		        //ep.getAttributeMap().applyAttributeModifiers(multimap);
 		    	//ep.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.attackDamage).setBaseValue(emptyHandDam + atk);
 				//とりあえず力を攻撃力にそのまま加算
+				atk = atk + this.getLegendWeaponDamage(ep.getCurrentEquippedItem(), ep);
 				atk = atk + ExtendedPlayerProperties.get(ep).getTikara();
 			}else if(ep.getCurrentEquippedItem().getItem() instanceof ItemSword)
 			{
@@ -1130,8 +1135,8 @@ public class FuncCalcPlayerStatus {
 		{
 			if(ExtendedPlayerProperties.get(ep).getPreFoodLevel() > foodstats.getFoodLevel())
 			{
-				if(equipment.hasYubiwa(DQAccessories.itemHaraherazuYubiwa) != -1 ||
-				   (equipment.hasYubiwa(DQAccessories.itemHaramotiYubiwa) != -1 && rand.nextInt(2) == 0))
+				if(equipment.hasYubiwa2(DQAccessories.itemHaraherazuYubiwa) != -1 ||
+				   (equipment.hasYubiwa2(DQAccessories.itemHaramotiYubiwa) != -1 && rand.nextInt(2) == 0))
 				{
 						//foodstats.setFoodLevel(ExtendedPlayerProperties.get(ep).getPreFoodLevel());
 					foodstats.addStats(ExtendedPlayerProperties.get(ep).getPreFoodLevel(), 0);
@@ -1143,17 +1148,17 @@ public class FuncCalcPlayerStatus {
 		}
 
 		//星降りピアス
-		if(equipment.hasPiasu(DQAccessories.itemHosifurupiasu) != -1)
+		if(equipment.hasPiasu2(DQAccessories.itemHosifurupiasu) != -1)
 		{
 			hoshihuri = hoshihuri + DQR.conf.hoshihuri1;
 		}
-		if(equipment.hasPiasu(DQAccessories.itemHosifurupiasu2) != -1)
+		if(equipment.hasPiasu2(DQAccessories.itemHosifurupiasu2) != -1)
 		{
 			hoshihuri = hoshihuri + DQR.conf.hoshihuri2;
 		}
 
 		//星降る腕輪
-		if(equipment.hasUdewa(DQAccessories.itemHosifuru) != -1)
+		if(equipment.hasUdewa2(DQAccessories.itemHosifuru) != -1)
 		{
 			hoshihuri = hoshihuri + 3;
 		}
@@ -1167,7 +1172,7 @@ public class FuncCalcPlayerStatus {
 		*/
 
 		//疾風指輪
-		if(equipment.hasYubiwa(DQAccessories.itemHayatenoring) != -1)
+		if(equipment.hasYubiwa2(DQAccessories.itemHayatenoring) != -1)
 		{
 			hoshihuri = hoshihuri + 2;
 		}
@@ -1179,45 +1184,45 @@ public class FuncCalcPlayerStatus {
 		}
 		*/
 
-		if(equipment.hasYubiwa(DQAccessories.itemHagennoring) != -1)
+		if(equipment.hasYubiwa2(DQAccessories.itemHagennoring) != -1)
 		{
 			ep.removePotionEffect(DQPotionMinus.debuffManusa.id);
 			//ep.removePotionEffect(Potion.confusion.id);
 		}
-		if(equipment.hasYubiwa(DQAccessories.itemHagennoring2) != -1)
+		if(equipment.hasYubiwa2(DQAccessories.itemHagennoring2) != -1)
 		{
 			ep.removePotionEffect(DQPotionMinus.debuffManusa.id);
 			ep.removePotionEffect(DQPotionMinus.debuffRariho.id);
 			ep.removePotionEffect(Potion.confusion.id);
 		}
-		if(equipment.hasYubiwa(DQAccessories.itemHadokunoring) != -1)
+		if(equipment.hasYubiwa2(DQAccessories.itemHadokunoring) != -1)
 		{
 			ep.removePotionEffect(DQPotionMinus.potionPoison.id);
 			ep.removePotionEffect(Potion.poison.id);
 		}
-		if(equipment.hasYubiwa(DQAccessories.itemHadokunoring2) != -1)
+		if(equipment.hasYubiwa2(DQAccessories.itemHadokunoring2) != -1)
 		{
 			ep.removePotionEffect(DQPotionMinus.potionPoisonX.id);
 			ep.removePotionEffect(DQPotionMinus.potionPoison.id);
 			ep.removePotionEffect(Potion.poison.id);
 		}
-		if(equipment.hasYubiwa(DQAccessories.itemMangetunoring) != -1)
+		if(equipment.hasYubiwa2(DQAccessories.itemMangetunoring) != -1)
 		{
 			ep.removePotionEffect(Potion.moveSlowdown.id);
 			ep.removePotionEffect(DQPotionMinus.debuffBomie.id);
 		}
-		if(equipment.hasYubiwa(DQAccessories.itemMangetunoring2) != -1)
+		if(equipment.hasYubiwa2(DQAccessories.itemMangetunoring2) != -1)
 		{
 			ep.removePotionEffect(Potion.moveSlowdown.id);
 			ep.removePotionEffect(DQPotionMinus.debuffBomie.id);
 			ep.removePotionEffect(DQPotionMinus.debuffMahoton.id);
 		}
-		if(equipment.hasYubiwa(DQAccessories.itemRiseinoring) != -1)
+		if(equipment.hasYubiwa2(DQAccessories.itemRiseinoring) != -1)
 		{
 			ep.removePotionEffect(Potion.confusion.id);
 			//ep.removePotionEffect(DQPotionMinus.debuffBomie.id);
 		}
-		if(equipment.hasYubiwa(DQAccessories.itemRiseinoring2) != -1)
+		if(equipment.hasYubiwa2(DQAccessories.itemRiseinoring2) != -1)
 		{
 			ep.removePotionEffect(Potion.confusion.id);
 			ep.removePotionEffect(DQPotionMinus.debuffMedapani.id);
@@ -1246,5 +1251,45 @@ public class FuncCalcPlayerStatus {
 		{
 			ep.removePotionEffect(DQPotionPlus.buffHoshihuru.id);
 		}
+
+		equipment.closeInventory();
+    }
+
+    public int getLegendWeaponDamage(ItemStack par1, EntityPlayer ep)
+    {
+    	int ret = 0;
+
+    	if(par1 != null)
+    	{
+    		Item item =  par1.getItem();
+    		int jExp = 0;
+
+    		if(item == DQWeapons.itemGinganoturugi2 ||
+    		   item == DQWeapons.itemSinken2 ||
+    		   item == DQWeapons.itemKobusi32 ||
+    		   item == DQWeapons.itemSinryuunotume2||
+    		   item == DQWeapons.itemHakainotekkyuu2 ||
+    		   item == DQWeapons.itemGodakkusu2 ||
+    		   item == DQWeapons.itemTyouguringamunomuti2 ||
+    		   item == DQWeapons.itemMetarukingnoyari2 ||
+    		   item == DQWeapons.itemToririondaga2 ||
+    		   item == DQWeapons.itemSefiramunoyumi2 ||
+    		   item == DQWeapons.itemHaipanova2 ||
+    		   item == DQWeapons.itemNyoraikon2 ||
+    		   item == DQWeapons.itemSeiginosoroban2 ||
+    		   item == DQWeapons.itemSaisyuuougi2)
+    		{
+    			if(DQR.aptitudeTable.getWAptitude(
+    					ExtendedPlayerProperties.get(ep).getJob(),
+    					ExtendedPlayerProperties.get(ep).getWeapon(),
+						ep) > 1)
+    			{
+    				jExp = ExtendedPlayerProperties.get(ep).getJukurenExp(ExtendedPlayerProperties.get(ep).getWeapon());
+    			}
+
+    			ret = jExp / 5000;
+    		}
+    	}
+    	return ret;
     }
 }

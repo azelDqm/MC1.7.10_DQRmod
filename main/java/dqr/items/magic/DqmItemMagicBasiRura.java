@@ -13,13 +13,18 @@ import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.world.World;
 import dqr.DQR;
 import dqr.DqrWorldData;
+import dqr.PacketHandler;
+import dqr.api.enums.EnumColor;
+import dqr.api.enums.EnumDqmFuncPacketCode;
 import dqr.api.enums.EnumDqmJob;
 import dqr.api.enums.EnumDqmMagic;
 import dqr.api.enums.EnumDqmWeaponMode;
 import dqr.api.potion.DQPotionMinus;
 import dqr.entity.magicEntity.magic.MagicEntityBasiRura;
 import dqr.items.base.DqmItemMagicBase;
+import dqr.packetMessage.MessageServerFunction;
 import dqr.playerData.ExtendedPlayerProperties;
+import dqr.playerData.ExtendedPlayerProperties3;
 
 public class DqmItemMagicBasiRura extends DqmItemMagicBase{
     private static final String __OBFID = "CL_00000072";
@@ -87,6 +92,10 @@ public class DqmItemMagicBasiRura extends DqmItemMagicBase{
 	    	        }
 
 	    	        wd.setBasiRura(this.getEnumMagic().getType(), par3EntityPlayer.posX, par3EntityPlayer.posY, par3EntityPlayer.posZ, par3EntityPlayer.dimension, 1);
+	    	        par3EntityPlayer.addChatMessage(new ChatComponentTranslation("dqm.iteminfo.kimeraLoc.2.txt",new Object[] {par3EntityPlayer.dimension,
+	    	        		Math.floor(par3EntityPlayer.posX),
+	    	        		Math.floor(par3EntityPlayer.posY),
+	    	        		Math.floor(par3EntityPlayer.posZ)}));
 	    	        wd.markDirty();
 	    	        par2World.setItemData(DQR.modID, wd);
     			}
@@ -119,8 +128,6 @@ public class DqmItemMagicBasiRura extends DqmItemMagicBase{
 						ExtendedPlayerProperties.get(par3EntityPlayer).setMP(epMP - this.getEnumMagic().getMP());
 					}
 
-
-
 		    		int epLevel = ExtendedPlayerProperties.get(par3EntityPlayer).getJobLv(EnumDqmJob.Mahoutukai.getId());
 		    		int epLevel2 = ExtendedPlayerProperties.get(par3EntityPlayer).getJobLv(EnumDqmJob.Kenja.getId());
 		    		int setLevel = -1;
@@ -145,6 +152,15 @@ public class DqmItemMagicBasiRura extends DqmItemMagicBase{
 
 						return par1ItemStack;
 		    		}
+
+		    		Random rand_jukuren = new Random();
+					if(DQR.magicTable.getMAptitude(this, par3EntityPlayer) > 0 && rand_jukuren.nextInt(5) == 0)
+					{
+
+						int getJukurenExp = 1 + ExtendedPlayerProperties.get(par3EntityPlayer).getJukurenExp(ExtendedPlayerProperties.get(par3EntityPlayer).getWeapon());
+						ExtendedPlayerProperties.get(par3EntityPlayer).setJukurenExp(ExtendedPlayerProperties.get(par3EntityPlayer).getWeapon(), getJukurenExp);
+					}
+
 
 		    		//座標取得
 					int teleX = 0;
@@ -232,6 +248,17 @@ public class DqmItemMagicBasiRura extends DqmItemMagicBase{
     @Override
   	 public void addInformation(ItemStack p_77624_1_, EntityPlayer p_77624_2_, List p_77624_3_, boolean p_77624_4_) {
     	super.addInformation(p_77624_1_, p_77624_2_, p_77624_3_, p_77624_4_);
+
+    	PacketHandler.INSTANCE.sendToServer(new MessageServerFunction(EnumDqmFuncPacketCode.SyncWBasirura));
+
+    	if(ExtendedPlayerProperties3.get(p_77624_2_).getW_BasiRuraEnable(this.getEnumMagic().getType()) != 0)
+    	{
+	    	int setDim = (int)ExtendedPlayerProperties3.get(p_77624_2_).getW_BasiRuraDim(this.getEnumMagic().getType());
+	        double setX = Math.floor(ExtendedPlayerProperties3.get(p_77624_2_).getW_BasiRuraX(this.getEnumMagic().getType()));
+	        double setY = Math.floor(ExtendedPlayerProperties3.get(p_77624_2_).getW_BasiRuraY(this.getEnumMagic().getType()));
+	        double setZ = Math.floor(ExtendedPlayerProperties3.get(p_77624_2_).getW_BasiRuraZ(this.getEnumMagic().getType()));
+	    	p_77624_3_.add(EnumColor.Gold.getChatColor() + I18n.format("dqm.iteminfo.kimeraLoc.1.txt", new Object[]{setDim, setX, setY, setZ}));
+    	}
 
     	p_77624_3_.add("");
     	String message = I18n.format("dqm.magicinfo.basirura.txt", new Object[]{});

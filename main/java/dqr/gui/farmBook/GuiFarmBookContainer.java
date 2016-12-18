@@ -113,7 +113,7 @@ public class GuiFarmBookContainer extends Container
     @Override
     public ItemStack slotClick(int par1, int par2, int par3, EntityPlayer ep)
     {
-    	System.out.println("TEST Click" + par1 + "/" + par2 + "/" + par3);
+    	//System.out.println("TEST Click" + par1 + "/" + par2 + "/" + par3);
 
     	if(par1 != 19 && par1 != 20)
     	{

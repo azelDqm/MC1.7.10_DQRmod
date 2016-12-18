@@ -21,6 +21,10 @@ public class ThreadLvUpPet extends Thread{
 
 	public void run()
 	{
+		if(this.pet.worldObj.isRemote)
+		{
+			return;
+		}
 
 		if(this.pet.getOnLevelThread())
 		{
@@ -180,13 +184,18 @@ public class ThreadLvUpPet extends Thread{
 		*/
 		//DQR.func.debugString("Job:" + plusHpVal + "/" + plusMpVal + "/" + plusTikaraVal + "/" + plusKasikosaVal);
 		pet.setJobHP(epJob, pet.getJobHP(epJob) + plusHpVal);
+
+		DQR.func.debugString("DEBUG_HP1 : " + pet.getMaxHealth(), this.getClass());
 		pet.setJobMP(epJob, pet.getJobMP(epJob) + plusMpVal);
 		pet.setJobTikara(epJob, pet.getJobTikara(epJob) + plusTikaraVal);
 		pet.setJobKasikosa(epJob, pet.getJobKasikosa(epJob) + plusKasikosaVal);
 		pet.setMaxHP(DQR.calcPetStatus.calcHP(this.pet));
 		pet.setMaxMP(DQR.calcPetStatus.calcMP(this.pet));
 
+		DQR.func.debugString("DEBUG_HP2 : " + pet.getMaxHealth(), this.getClass());
 		pet.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(pet.getMaxHP());
+
+		DQR.func.debugString("DEBUG_HP3 : " + pet.getMaxHealth(), this.getClass());
 	}
 
 	public void lvUpRefresh()

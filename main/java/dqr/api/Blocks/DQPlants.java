@@ -36,4 +36,6 @@ public class DQPlants {
 	public static Block BlockOugonSeed4;
 
 	public static Block BlockHoujyouDirt;
+	public static Block BlockWaterBlock;
+	public static Block BlockWaterBlockLight;
 }

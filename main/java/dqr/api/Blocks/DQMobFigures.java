@@ -301,4 +301,12 @@ public class DQMobFigures {
 	public static Block BlockFigureZoma;
 	public static Block BlockFigureZukkinya;
 
+	public static Block BlockFigureKandata;
+	public static Block BlockFigureBlackchack;
+	public static Block BlockFigureSuraimuemperor;
+	public static Block BlockFigureDarkdoriado;
+	public static Block BlockFigureShadopan;
+	public static Block BlockFigureShadopan2;
+
+	public static Block BlockFigureOrutega;
 }

@@ -86,6 +86,7 @@ import dqr.blocks.decorate.DqmBlockYajirusisita;
 import dqr.blocks.decorate.DqmBlockYajirusiue;
 import dqr.blocks.decorate.DqmFarmBookshelf;
 import dqr.blocks.mobSpawner.DqmBlockMobSpawner;
+import dqr.blocks.standard.DQmBlockWaterBlock;
 import dqr.blocks.standard.DqmBlockBuildFrame;
 import dqr.blocks.standard.DqmGansekiBlock;
 import dqr.blocks.standard.DqmGenkotuBlock;
@@ -104,6 +105,7 @@ import dqr.blocks.standard.DqmJumpBlock2;
 import dqr.blocks.standard.DqmJumpBlockToBoss;
 import dqr.blocks.standard.DqmKieruBlock;
 import dqr.blocks.standard.DqmKyouseiMoveBlock;
+import dqr.blocks.standard.DqmKyouseiMoveBlock2;
 import dqr.blocks.standard.DqmOneBlock2;
 import dqr.blocks.standard.DqmSetBlock1;
 import dqr.blocks.standard.DqmSyoumetu;
@@ -430,7 +432,12 @@ public class DqBlock {
     	DQBlock.DqmBlockKajino3B = new DqmKowarenaiBlockHikaru(Kajino3BID, 128).setBlockName("dqm.blockKajino3B").setBlockUnbreakable().setResistance(2000.0F).setStepSound(soundWoodFootstep).setCreativeTab(DQR.tabs.DqmTabBlock);
 
     	*/
+    	DQBlocks.DqmBlockN2 = new DqmKyouseiMoveBlock2(0).setBlockName("dqm.blockN2").setHardness(3.0f).setResistance(2000.0F).setStepSound(Block.soundTypeStone).setCreativeTab(DQR.tabs.DqmTabBlock).setBlockTextureName("dqr:KyouseiMoveN");
+    	DQBlocks.DqmBlockS2 = new DqmKyouseiMoveBlock2(1).setBlockName("dqm.blockS2").setHardness(3.0f).setResistance(2000.0F).setStepSound(Block.soundTypeStone).setCreativeTab(DQR.tabs.DqmTabBlock).setBlockTextureName("dqr:KyouseiMoveS");
+    	DQBlocks.DqmBlockW2 = new DqmKyouseiMoveBlock2(3).setBlockName("dqm.blockW2").setHardness(3.0f).setResistance(2000.0F).setStepSound(Block.soundTypeStone).setCreativeTab(DQR.tabs.DqmTabBlock).setBlockTextureName("dqr:KyouseiMoveW");
+    	DQBlocks.DqmBlockE2 = new DqmKyouseiMoveBlock2(2).setBlockName("dqm.blockE2").setHardness(3.0f).setResistance(2000.0F).setStepSound(Block.soundTypeStone).setCreativeTab(DQR.tabs.DqmTabBlock).setBlockTextureName("dqr:KyouseiMoveE");
 
-
+    	DQPlants.BlockWaterBlock = new DQmBlockWaterBlock(Material.water).setBlockName("dqm.blockWaterBlock").setHardness(5.0f).setResistance(2000.0F).setStepSound(Block.soundTypeGlass).setCreativeTab(DQR.tabs.DqmTabBlock).setBlockTextureName("dqr:water_flow");
+    	DQPlants.BlockWaterBlockLight = new DQmBlockWaterBlock(Material.water).setLightLevel(1.0F).setBlockName("dqm.blockWaterBlockLight").setHardness(5.0f).setResistance(2000.0F).setStepSound(Block.soundTypeGlass).setCreativeTab(DQR.tabs.DqmTabBlock).setBlockTextureName("dqr:water_flow");
 	}
 }

@@ -131,15 +131,15 @@ public class DqmItemRecipeMagic {
                                });
 
 
-        /*
+
         GameRegistry.addRecipe(new ItemStack(DQMagics.itemHaigou , 1), new Object[]
                                {
                                    "BBA",
                                    "BCB",
                                    "CBB",
-                                   'A', Buruoubu, 'C', Metaru, 'B', Inotinoisi
+                                   'A', DQMiscs.itemBuruoubu, 'C', DQMiscs.itemMetaru, 'B', DQIngots.itemInotinoisi
                                });
-         */
+
         GameRegistry.addRecipe(new ItemStack(DQMagics.itemDoruma , 1), new Object[]
                                {
                                    "BCA",
@@ -387,6 +387,11 @@ public class DqmItemRecipeMagic {
         GameRegistry.addShapelessRecipe(new ItemStack(DQMagics.itemRura2 , 1), new Object[] {new ItemStack(DQMagics.itemRuraG2, 1), new ItemStack(DQMiscs.itemSiroikaigara, 1)});
         GameRegistry.addShapelessRecipe(new ItemStack(DQMagics.itemRura2 , 1), new Object[] {new ItemStack(DQMagics.itemRuraY2, 1), new ItemStack(DQMiscs.itemSiroikaigara, 1)});
 
+        GameRegistry.addShapelessRecipe(new ItemStack(DQMagics.itemRuraC , 1), new Object[] {new ItemStack(DQMagics.itemRuraRC, 1), new ItemStack(DQMiscs.itemSiroikaigara, 1)});
+        GameRegistry.addShapelessRecipe(new ItemStack(DQMagics.itemRuraC , 1), new Object[] {new ItemStack(DQMagics.itemRuraBC, 1), new ItemStack(DQMiscs.itemSiroikaigara, 1)});
+        GameRegistry.addShapelessRecipe(new ItemStack(DQMagics.itemRuraC , 1), new Object[] {new ItemStack(DQMagics.itemRuraGC, 1), new ItemStack(DQMiscs.itemSiroikaigara, 1)});
+        GameRegistry.addShapelessRecipe(new ItemStack(DQMagics.itemRuraC , 1), new Object[] {new ItemStack(DQMagics.itemRuraYC, 1), new ItemStack(DQMiscs.itemSiroikaigara, 1)});
+
         GameRegistry.addShapelessRecipe(new ItemStack(DQMagics.itemRuraR , 1), new Object[] {new ItemStack(DQMagics.itemRura, 1), new ItemStack(DQMiscs.itemAkaisango, 1), new ItemStack(DQMiscs.itemAkaisango, 1), new ItemStack(DQMiscs.itemAkaisango, 1)});
         GameRegistry.addShapelessRecipe(new ItemStack(DQMagics.itemRuraR , 1), new Object[] {new ItemStack(DQMagics.itemRura, 1), new ItemStack(DQIngots.itemTaiyounoisi, 1)});
         GameRegistry.addShapelessRecipe(new ItemStack(DQMagics.itemRuraR , 1), new Object[] {new ItemStack(DQMagics.itemRura, 1), new ItemStack(DQIngots.itemYougansekinokakera, 1), new ItemStack(DQIngots.itemYougansekinokakera, 1)});
@@ -420,6 +425,24 @@ public class DqmItemRecipeMagic {
         GameRegistry.addShapelessRecipe(new ItemStack(DQMagics.itemRuraY2 , 1), new Object[] {new ItemStack(DQMagics.itemRura2, 1), new ItemStack(DQMiscs.itemHananomitu, 1), new ItemStack(DQMiscs.itemHananomitu, 1), new ItemStack(DQMiscs.itemHananomitu, 1)});
         GameRegistry.addShapelessRecipe(new ItemStack(DQMagics.itemRuraY2 , 1), new Object[] {new ItemStack(DQMagics.itemRura2, 1), new ItemStack(DQIngots.itemMoon, 1)});
         GameRegistry.addShapelessRecipe(new ItemStack(DQMagics.itemRuraY2 , 1), new Object[] {new ItemStack(DQMagics.itemRura2, 1), new ItemStack(DQMiscs.itemKinkai, 1)});
+
+        GameRegistry.addShapelessRecipe(new ItemStack(DQMagics.itemRuraRC , 1), new Object[] {new ItemStack(DQMagics.itemRuraC, 1), new ItemStack(DQMiscs.itemAkaisango, 1), new ItemStack(DQMiscs.itemAkaisango, 1), new ItemStack(DQMiscs.itemAkaisango, 1)});
+        GameRegistry.addShapelessRecipe(new ItemStack(DQMagics.itemRuraRC , 1), new Object[] {new ItemStack(DQMagics.itemRuraC, 1), new ItemStack(DQIngots.itemTaiyounoisi, 1)});
+        GameRegistry.addShapelessRecipe(new ItemStack(DQMagics.itemRuraRC , 1), new Object[] {new ItemStack(DQMagics.itemRuraC, 1), new ItemStack(DQIngots.itemYougansekinokakera, 1), new ItemStack(DQIngots.itemYougansekinokakera, 1)});
+        GameRegistry.addShapelessRecipe(new ItemStack(DQMagics.itemRuraRC , 1), new Object[] {new ItemStack(DQMagics.itemRuraC, 1), new ItemStack(DQMiscs.itemSuraimuosyarebana, 1), new ItemStack(DQMiscs.itemSuraimuosyarebana, 1), new ItemStack(DQMiscs.itemSuraimuosyarebana, 1)});
+        GameRegistry.addShapelessRecipe(new ItemStack(DQMagics.itemRuraGC , 1), new Object[] {new ItemStack(DQMagics.itemRuraC, 1), new ItemStack(DQMiscs.itemMajuunokawa, 1), new ItemStack(DQMiscs.itemMajuunokawa, 1), new ItemStack(DQMiscs.itemMajuunokawa, 1)});
+        GameRegistry.addShapelessRecipe(new ItemStack(DQMagics.itemRuraGC , 1), new Object[] {new ItemStack(DQMagics.itemRuraC, 1), new ItemStack(DQSeeds.itemYakusou, 1), new ItemStack(DQSeeds.itemYakusou, 1), new ItemStack(DQSeeds.itemYakusou, 1)});
+        GameRegistry.addShapelessRecipe(new ItemStack(DQMagics.itemRuraGC , 1), new Object[] {new ItemStack(DQMagics.itemRuraC, 1), new ItemStack(DQMiscs.itemMidorinokoke, 1), new ItemStack(DQMiscs.itemMidorinokoke, 1), new ItemStack(DQMiscs.itemMidorinokoke, 1)});
+        GameRegistry.addShapelessRecipe(new ItemStack(DQMagics.itemRuraGC , 1), new Object[] {new ItemStack(DQMagics.itemRuraC, 1), new ItemStack(DQMiscs.itemKyodaihigetokage, 1), new ItemStack(DQMiscs.itemKyodaihigetokage, 1), new ItemStack(DQMiscs.itemKyodaihigetokage, 1)});
+        GameRegistry.addShapelessRecipe(new ItemStack(DQMagics.itemRuraBC , 1), new Object[] {new ItemStack(DQMagics.itemRuraC, 1), new ItemStack(DQMiscs.itemSuraimuzeri, 1), new ItemStack(DQMiscs.itemSuraimuzeri, 1), new ItemStack(DQMiscs.itemSuraimuzeri, 1), new ItemStack(DQMiscs.itemSuraimuzeri, 1), new ItemStack(DQMiscs.itemSuraimuzeri, 1)});
+        GameRegistry.addShapelessRecipe(new ItemStack(DQMagics.itemRuraBC , 1), new Object[] {new ItemStack(DQMagics.itemRuraC, 1), new ItemStack(DQMiscs.itemKazekirinohane, 1), new ItemStack(DQMiscs.itemKazekirinohane, 1), new ItemStack(DQMiscs.itemKazekirinohane, 1)});
+        GameRegistry.addShapelessRecipe(new ItemStack(DQMagics.itemRuraBC , 1), new Object[] {new ItemStack(DQMagics.itemRuraC, 1), new ItemStack(DQMiscs.itemNebanebazeri, 1), new ItemStack(DQMiscs.itemNebanebazeri, 1), new ItemStack(DQMiscs.itemNebanebazeri, 1)});
+        GameRegistry.addShapelessRecipe(new ItemStack(DQMagics.itemRuraBC , 1), new Object[] {new ItemStack(DQMagics.itemRuraC, 1), new ItemStack(DQMiscs.itemDoragonnonamida, 1)});
+        GameRegistry.addShapelessRecipe(new ItemStack(DQMagics.itemRuraYC , 1), new Object[] {new ItemStack(DQMagics.itemRuraC, 1), new ItemStack(DQMiscs.itemGamanoabura, 1), new ItemStack(DQMiscs.itemGamanoabura, 1), new ItemStack(DQMiscs.itemGamanoabura, 1)});
+        GameRegistry.addShapelessRecipe(new ItemStack(DQMagics.itemRuraYC , 1), new Object[] {new ItemStack(DQMagics.itemRuraC, 1), new ItemStack(DQMiscs.itemHananomitu, 1), new ItemStack(DQMiscs.itemHananomitu, 1), new ItemStack(DQMiscs.itemHananomitu, 1)});
+        GameRegistry.addShapelessRecipe(new ItemStack(DQMagics.itemRuraYC , 1), new Object[] {new ItemStack(DQMagics.itemRuraC, 1), new ItemStack(DQIngots.itemMoon, 1)});
+        GameRegistry.addShapelessRecipe(new ItemStack(DQMagics.itemRuraYC , 1), new Object[] {new ItemStack(DQMagics.itemRuraC, 1), new ItemStack(DQMiscs.itemKinkai, 1)});
+
 
         GameRegistry.addRecipe(new ItemStack(DQMiscs.itemMagicbook2, 1), new Object[]
                 {
@@ -1201,6 +1224,7 @@ public class DqmItemRecipeMagic {
                     "AAA",
                     'A', DQMagics.itemMahyadodesu, 'B', DQMiscs.itemDragonObuB
                 });
+
 
         GameRegistry.addShapelessRecipe(new ItemStack(DQMagics.itemBasirura , 1), new Object[] {new ItemStack(DQMagics.itemRura, 1), new ItemStack(DQMiscs.itemUraminohouju, 1)});
         GameRegistry.addShapelessRecipe(new ItemStack(DQMagics.itemBasiruraC , 1), new Object[] {new ItemStack(DQMagics.itemBasirura, 1), new ItemStack(DQIngots.itemOriharukon, 1)});

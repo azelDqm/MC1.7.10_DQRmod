@@ -91,6 +91,7 @@ import dqr.entity.mobEntity.monsterEnd.DqmEntityKagenokisi;
 import dqr.entity.mobEntity.monsterEnd.DqmEntityManemane;
 import dqr.entity.mobEntity.monsterEnd.DqmEntityPandorabox;
 import dqr.entity.mobEntity.monsterEnd.DqmEntityRyuiso;
+import dqr.entity.mobEntity.monsterEnd.DqmEntityShadopan2;
 import dqr.entity.mobEntity.monsterEnd.DqmEntityTororubonba;
 import dqr.entity.mobEntity.monsterEtc.DqmEntityFurosutogizumo;
 import dqr.entity.mobEntity.monsterEtc.DqmEntityGanseki;
@@ -115,6 +116,7 @@ import dqr.entity.mobEntity.monsterHell.DqmEntityBosutororu;
 import dqr.entity.mobEntity.monsterHell.DqmEntityBoureikensi;
 import dqr.entity.mobEntity.monsterHell.DqmEntityBuraddosodo;
 import dqr.entity.mobEntity.monsterHell.DqmEntityBurakkubejita;
+import dqr.entity.mobEntity.monsterHell.DqmEntityDarkdoriado;
 import dqr.entity.mobEntity.monsterHell.DqmEntityDarkslime;
 import dqr.entity.mobEntity.monsterHell.DqmEntityDeddopekka;
 import dqr.entity.mobEntity.monsterHell.DqmEntityDgizumo;
@@ -157,6 +159,7 @@ import dqr.entity.mobEntity.monsterHell.DqmEntityPombom;
 import dqr.entity.mobEntity.monsterHell.DqmEntityPuyon;
 import dqr.entity.mobEntity.monsterHell.DqmEntityRedsaikuron;
 import dqr.entity.mobEntity.monsterHell.DqmEntitySaikuropusu;
+import dqr.entity.mobEntity.monsterHell.DqmEntityShadopan;
 import dqr.entity.mobEntity.monsterHell.DqmEntitySirubadebiru;
 import dqr.entity.mobEntity.monsterHell.DqmEntitySiryou;
 import dqr.entity.mobEntity.monsterHell.DqmEntitySiryounokisi;
@@ -255,19 +258,23 @@ import dqr.entity.mobEntity.monsterNight.DqmEntityUmiusi;
 import dqr.entity.mobEntity.monsterNight.DqmEntityYouganmajin;
 import dqr.entity.mobEntity.monsterSP.DqmEntityAtorasu;
 import dqr.entity.mobEntity.monsterSP.DqmEntityBazuzu;
+import dqr.entity.mobEntity.monsterSP.DqmEntityBlackchack;
 import dqr.entity.mobEntity.monsterSP.DqmEntityBurasu;
 import dqr.entity.mobEntity.monsterSP.DqmEntityDarkRamia;
 import dqr.entity.mobEntity.monsterSP.DqmEntityFureizado;
 import dqr.entity.mobEntity.monsterSP.DqmEntityGodonheddo;
+import dqr.entity.mobEntity.monsterSP.DqmEntityKandata;
 import dqr.entity.mobEntity.monsterSP.DqmEntityKandatakobun;
 import dqr.entity.mobEntity.monsterSP.DqmEntityKinghidora;
 import dqr.entity.mobEntity.monsterSP.DqmEntityKiramajinga;
 import dqr.entity.mobEntity.monsterSP.DqmEntityKiratoti;
 import dqr.entity.mobEntity.monsterSP.DqmEntityMashougumo;
 import dqr.entity.mobEntity.monsterSP.DqmEntityMasso;
+import dqr.entity.mobEntity.monsterSP.DqmEntityOrutega;
 import dqr.entity.mobEntity.monsterSP.DqmEntityPisaronaito;
 import dqr.entity.mobEntity.monsterSP.DqmEntityPuremiasuraimu;
 import dqr.entity.mobEntity.monsterSP.DqmEntitySirubamanto;
+import dqr.entity.mobEntity.monsterSP.DqmEntitySuraimuemperor;
 import dqr.entity.mobEntity.monsterSP.DqmEntitySuraimujeneraru;
 import dqr.entity.mobEntity.monsterSP.DqmEntityTattyan;
 import dqr.entity.mobEntity.monsterSP.DqmEntityTororubakkosu;
@@ -361,7 +368,14 @@ import dqr.entity.mobEntity.render2.DqmRenderTororubonba;
 import dqr.entity.mobEntity.render2.DqmRenderTororuking;
 import dqr.entity.mobEntity.render2.DqmRenderTumurinmama;
 import dqr.entity.mobEntity.render2.DqmRenderUragirikozou;
+import dqr.entity.mobEntity.render3.DqmRenderBlackchack;
+import dqr.entity.mobEntity.render3.DqmRenderDarkdoriado;
 import dqr.entity.mobEntity.render3.DqmRenderGansekiOtoshi;
+import dqr.entity.mobEntity.render3.DqmRenderKandata;
+import dqr.entity.mobEntity.render3.DqmRenderOrutega;
+import dqr.entity.mobEntity.render3.DqmRenderShadopan;
+import dqr.entity.mobEntity.render3.DqmRenderShadopan2;
+import dqr.entity.mobEntity.render3.DqmRenderSuraimuemperor;
 
 public class MobRenderingRegister {
 
@@ -681,5 +695,14 @@ public class MobRenderingRegister {
 		RenderingRegistry.registerEntityRenderingHandler(DqmEntityDesusutoka.class, new DqmRenderDesusutoka());
 
 		RenderingRegistry.registerEntityRenderingHandler(DqmEntityGanseki.class, new DqmRenderGansekiOtoshi());
+		RenderingRegistry.registerEntityRenderingHandler(DqmEntitySuraimuemperor.class, new DqmRenderSuraimuemperor());
+		RenderingRegistry.registerEntityRenderingHandler(DqmEntityBlackchack.class, new DqmRenderBlackchack());
+		RenderingRegistry.registerEntityRenderingHandler(DqmEntityDarkdoriado.class, new DqmRenderDarkdoriado());
+		RenderingRegistry.registerEntityRenderingHandler(DqmEntityShadopan.class, new DqmRenderShadopan());
+		RenderingRegistry.registerEntityRenderingHandler(DqmEntityShadopan2.class, new DqmRenderShadopan2());
+		RenderingRegistry.registerEntityRenderingHandler(DqmEntityKandata.class, new DqmRenderKandata());
+		RenderingRegistry.registerEntityRenderingHandler(DqmEntityOrutega.class, new DqmRenderOrutega());
+
+
 	}
 }

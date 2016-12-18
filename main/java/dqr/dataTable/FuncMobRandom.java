@@ -94,6 +94,7 @@ import dqr.entity.mobEntity.monsterEnd.DqmEntityKagenokisi;
 import dqr.entity.mobEntity.monsterEnd.DqmEntityManemane;
 import dqr.entity.mobEntity.monsterEnd.DqmEntityPandorabox;
 import dqr.entity.mobEntity.monsterEnd.DqmEntityRyuiso;
+import dqr.entity.mobEntity.monsterEnd.DqmEntityShadopan2;
 import dqr.entity.mobEntity.monsterEnd.DqmEntityTororubonba;
 import dqr.entity.mobEntity.monsterHell.DqmEntityAnkokumajin;
 import dqr.entity.mobEntity.monsterHell.DqmEntityAroinpu;
@@ -107,6 +108,7 @@ import dqr.entity.mobEntity.monsterHell.DqmEntityBosutororu;
 import dqr.entity.mobEntity.monsterHell.DqmEntityBoureikensi;
 import dqr.entity.mobEntity.monsterHell.DqmEntityBuraddosodo;
 import dqr.entity.mobEntity.monsterHell.DqmEntityBurakkubejita;
+import dqr.entity.mobEntity.monsterHell.DqmEntityDarkdoriado;
 import dqr.entity.mobEntity.monsterHell.DqmEntityDarkslime;
 import dqr.entity.mobEntity.monsterHell.DqmEntityDeddopekka;
 import dqr.entity.mobEntity.monsterHell.DqmEntityDgizumo;
@@ -148,6 +150,7 @@ import dqr.entity.mobEntity.monsterHell.DqmEntityPombom;
 import dqr.entity.mobEntity.monsterHell.DqmEntityPuyon;
 import dqr.entity.mobEntity.monsterHell.DqmEntityRedsaikuron;
 import dqr.entity.mobEntity.monsterHell.DqmEntitySaikuropusu;
+import dqr.entity.mobEntity.monsterHell.DqmEntityShadopan;
 import dqr.entity.mobEntity.monsterHell.DqmEntitySirubadebiru;
 import dqr.entity.mobEntity.monsterHell.DqmEntitySiryou;
 import dqr.entity.mobEntity.monsterHell.DqmEntitySiryounokisi;
@@ -246,10 +249,12 @@ import dqr.entity.mobEntity.monsterNight.DqmEntityUmiusi;
 import dqr.entity.mobEntity.monsterNight.DqmEntityYouganmajin;
 import dqr.entity.mobEntity.monsterSP.DqmEntityAtorasu;
 import dqr.entity.mobEntity.monsterSP.DqmEntityBazuzu;
+import dqr.entity.mobEntity.monsterSP.DqmEntityBlackchack;
 import dqr.entity.mobEntity.monsterSP.DqmEntityBurasu;
 import dqr.entity.mobEntity.monsterSP.DqmEntityDarkRamia;
 import dqr.entity.mobEntity.monsterSP.DqmEntityFureizado;
 import dqr.entity.mobEntity.monsterSP.DqmEntityGodonheddo;
+import dqr.entity.mobEntity.monsterSP.DqmEntityKandata;
 import dqr.entity.mobEntity.monsterSP.DqmEntityKandatakobun;
 import dqr.entity.mobEntity.monsterSP.DqmEntityKinghidora;
 import dqr.entity.mobEntity.monsterSP.DqmEntityKiramajinga;
@@ -259,6 +264,7 @@ import dqr.entity.mobEntity.monsterSP.DqmEntityMasso;
 import dqr.entity.mobEntity.monsterSP.DqmEntityPisaronaito;
 import dqr.entity.mobEntity.monsterSP.DqmEntityPuremiasuraimu;
 import dqr.entity.mobEntity.monsterSP.DqmEntitySirubamanto;
+import dqr.entity.mobEntity.monsterSP.DqmEntitySuraimuemperor;
 import dqr.entity.mobEntity.monsterSP.DqmEntitySuraimujeneraru;
 import dqr.entity.mobEntity.monsterSP.DqmEntityTattyan;
 import dqr.entity.mobEntity.monsterSP.DqmEntityTororubakkosu;
@@ -318,7 +324,7 @@ public class FuncMobRandom {
 
 	public DqmMobBase getRandomEnd(World par1)
 	{
-		int val = rand.nextInt(24);
+		int val = rand.nextInt(25);
 
 		switch(val)
 		{
@@ -346,13 +352,14 @@ public class FuncMobRandom {
 			case 21: return new DqmEntityTororubonba(par1);
 			case 22: return new DqmEntityDakuhobitto(par1);
 			case 23: return new DqmEntityDesusutoka(par1);
+			case 24: return new DqmEntityShadopan2(par1);
 			default :return new DqmEntitySura(par1);
 		}
 	}
 
 	public DqmMobBase getRandomNether(World par1)
 	{
-		int val = rand.nextInt(66);
+		int val = rand.nextInt(68);
 
 		switch(val)
 		{
@@ -422,6 +429,8 @@ public class FuncMobRandom {
 			case 63: return new DqmEntityTubokku(par1);
 			case 64: return new DqmEntityUmibouzu(par1);
 			case 65: return new DqmEntityEriminator(par1);
+			case 66: return new DqmEntityShadopan(par1);
+			case 67: return new DqmEntityDarkdoriado(par1);
 			default :return new DqmEntitySura(par1);
 		}
 	}
@@ -532,7 +541,7 @@ public class FuncMobRandom {
 
 	public DqmMobBase getRandomSP(World par1)
 	{
-		int val = rand.nextInt(21);
+		int val = rand.nextInt(24);
 
 		switch(val)
 		{
@@ -557,6 +566,9 @@ public class FuncMobRandom {
 			case 18: return new DqmEntityWanpakusatan(par1);
 			case 19: return new DqmEntityYamatanooroti(par1);
 			case 20: return new DqmEntityFureizado(par1);
+			case 21: return new DqmEntityKandata(par1);
+			case 22: return new DqmEntityBlackchack(par1);
+			case 23: return new DqmEntitySuraimuemperor(par1);
 			default :return new DqmEntitySura(par1);
 		}
 	}
@@ -697,7 +709,7 @@ public class FuncMobRandom {
 
 	public String getRandomEndName()
 	{
-		int val = rand.nextInt(24);
+		int val = rand.nextInt(25);
 
 		switch(val)
 		{
@@ -725,13 +737,14 @@ public class FuncMobRandom {
 			case 21: return "Tororubonba";
 			case 22: return "Dakuhobitto";
 			case 23: return "Akairai";
+			case 24: return "Shadopan2";
 			default :return "Sura";
 		}
 	}
 
 	public String getRandomNetherName()
 	{
-		int val = rand.nextInt(66);
+		int val = rand.nextInt(68);
 
 		switch(val)
 		{
@@ -801,6 +814,8 @@ public class FuncMobRandom {
 			case 63: return "Tubokku";
 			case 64: return "Umibouzu";
 			case 65: return "Eriminator";
+			case 66: return "Darkdoriado";
+			case 67: return "Shadopan";
 			default :return "Sura";
 		}
 	}
@@ -911,7 +926,7 @@ public class FuncMobRandom {
 
 	public String getRandomSPName()
 	{
-		int val = rand.nextInt(21);
+		int val = rand.nextInt(24);
 
 		switch(val)
 		{
@@ -936,6 +951,9 @@ public class FuncMobRandom {
 			case 18: return "Wanpakusatan";
 			case 19: return "Yamatanooroti";
 			case 20: return "Fureizado";
+			case 21: return "Kandata";
+			case 22: return "Blackchack";
+			case 23: return "Suraimuemperor";
 			default :return "Sura";
 		}
 	}

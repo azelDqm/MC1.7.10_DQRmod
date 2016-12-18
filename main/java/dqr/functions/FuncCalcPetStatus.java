@@ -266,9 +266,11 @@ public class FuncCalcPetStatus {
 
 	public float calcHP(DqmPetBase pet)
 	{
-		float HP = 20.0F;
+		//float HP = 20.0F;
+		float HP = pet.type.getHpdef();
 
 		//HP = ExtendedPlayerProperties.get(this.ep).getMaxHP()F;
+		//DQR.func.debugString("DEBUG_HP_A : " + HP, this.getClass());
 
 		float[] HPArray = pet.getArrayHPA();
 		for(int cnt = 0; cnt < HPArray.length; cnt++)
@@ -279,6 +281,7 @@ public class FuncCalcPetStatus {
 		float[] JobHP = pet.getJobHPA();
 		int job = pet.getJob();
 
+		//DQR.func.debugString("DEBUG_HP_B : " + HP, this.getClass());
 		for(int cnt = 0; cnt < JobHP.length; cnt++)
 		{
 			if(cnt == job)
@@ -291,12 +294,13 @@ public class FuncCalcPetStatus {
 			}
 		}
 
+		//DQR.func.debugString("DEBUG_HP_C : " + HP, this.getClass());
 		return HP;
 	}
 
 	public int calcMP(DqmPetBase pet)
 	{
-		int MP = 0;
+		int MP = pet.type.getMpdef();
 
 		//HP = ExtendedPlayerProperties.get(this.ep).getMaxHP()F;
 
@@ -347,7 +351,7 @@ public class FuncCalcPetStatus {
 	{
 		int tikara;
 
-		tikara = 0;
+		tikara = pet.type.getTikaradef();
 
 		int[] tikaraArray = pet.getArrayTikaraA();
 		for(int cnt = 0; cnt < tikaraArray.length; cnt++)
@@ -377,7 +381,7 @@ public class FuncCalcPetStatus {
 	{
 		int kasikosa;
 
-		kasikosa = 0;
+		kasikosa = pet.type.getKasikosadef();
 
 		int[] kasikosaArray = pet.getArrayKasikosaA();
 		for(int cnt = 0; cnt < kasikosaArray.length; cnt++)

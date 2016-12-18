@@ -1027,11 +1027,14 @@ public class DamageHandler {
 
 		        for(int cnt = 0; cnt < equipment.getSizeInventory(); cnt++)
 		        {
-		        	if(equipment.getStackInSlot(cnt) != null && (equipment.getStackInSlot(cnt).getItem() instanceof ISubEquip) && ((ISubEquip)equipment.getStackInSlot(cnt).getItem()).isDamageable2())
+		        	if(!ep.worldObj.isRemote && equipment.getStackInSlot(cnt) != null && (equipment.getStackInSlot(cnt).getItem() instanceof ISubEquip) && ((ISubEquip)equipment.getStackInSlot(cnt).getItem()).isDamageable2())
 		        	{
 		        		//EnumDqmAccessory accParam = DQR.enumGetter.getAccessoryParam(equipment.getStackInSlot(cnt).getItem());
 		        		ItemStack stack = equipment.getStackInSlot(cnt);
-		        		stack.damageItem(1, ep);
+		        		if(equipment.getItemDamgePercent(stack) < 95)
+		        		{
+		        			stack.damageItem(1, ep);
+		        		}
 
 		        		equipment.setInventorySlotContents(cnt, stack);
 		        		//System.out.println("TEST");

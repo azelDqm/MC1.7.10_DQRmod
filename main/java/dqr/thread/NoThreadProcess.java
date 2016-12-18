@@ -22,6 +22,11 @@ public class NoThreadProcess {
 
 	public void doLevelUp(EntityPlayer ep)
 	{
+		if(ep.worldObj.isRemote)
+		{
+			return;
+		}
+
 		boolean flg = true;
 		int epLv = ExtendedPlayerProperties.get(ep).getJobLv(ExtendedPlayerProperties.get(ep).getJob());
 		int epEXP = ExtendedPlayerProperties.get(ep).getJobExp(ExtendedPlayerProperties.get(ep).getJob());
@@ -159,6 +164,10 @@ public class NoThreadProcess {
 
 	public void doJukurenUp(EntityPlayer ep)
 	{
+		if(ep.worldObj.isRemote)
+		{
+			return;
+		}
 		boolean flg = true;
 		int epLv = ExtendedPlayerProperties.get(ep).getJukurenLv(ExtendedPlayerProperties.get(ep).getWeapon());
 		int epEXP = ExtendedPlayerProperties.get(ep).getJukurenExp(ExtendedPlayerProperties.get(ep).getWeapon());
@@ -216,7 +225,11 @@ public class NoThreadProcess {
 
 	public void doLevelUpPet(DqmPetBase pet)
 	{
-
+		if(pet.worldObj.isRemote)
+		{
+			return;
+		}
+		//System.out.println("TEST!!!!!");
 		if(pet.getOnLevelThread())
 		{
 			return;
@@ -313,6 +326,7 @@ public class NoThreadProcess {
 		int epJob = pet.getJob();
 		EnumDqmPet type = pet.type;
 
+		DQR.func.debugString("DEBUG_HP1 : " + pet.getMaxHealth(), this.getClass());
 		//HP
 		float plusHpVal = (float)DQR.func.xRandom(type.HPUPMIN, type.HPUPMAX);
 
@@ -325,6 +339,8 @@ public class NoThreadProcess {
 		int plusTikaraVal = DQR.func.xRandom(type.TIKARAUPMIN, type.TIKARAUPMAX);
 		int plusKasikosaVal = DQR.func.xRandom(type.KASIKOSAUPMIN, type.KASIKOSAUPMAX);
 
+		DQR.func.debugString("DEBUG_HP2 : " + pet.getMaxHealth(), this.getClass());
+
 
 		pet.setJobHP(epJob, pet.getJobHP(epJob) + plusHpVal);
 		pet.setJobMP(epJob, pet.getJobMP(epJob) + plusMpVal);
@@ -333,7 +349,12 @@ public class NoThreadProcess {
 		pet.setMaxHP(DQR.calcPetStatus.calcHP(pet));
 		pet.setMaxMP(DQR.calcPetStatus.calcMP(pet));
 
+		DQR.func.debugString("DEBUG_HP3 : " + pet.getMaxHealth(), this.getClass());
+
+
 		pet.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(pet.getMaxHP());
+
+		DQR.func.debugString("DEBUG_HP4 : " + pet.getMaxHealth(), this.getClass());
 	}
 
 	public void lvUpRefreshPet(DqmPetBase pet)

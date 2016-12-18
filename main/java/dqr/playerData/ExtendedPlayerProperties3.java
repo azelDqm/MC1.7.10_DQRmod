@@ -18,6 +18,10 @@ public class ExtendedPlayerProperties3 implements IExtendedEntityProperties {
 	private NBTTagCompound NBTPlayerPetList = new NBTTagCompound();
 	private int petCount;
 
+	//配合用ペットデータ
+	private NBTTagCompound haigouPet1 = null;
+	private NBTTagCompound haigouPet2 = null;
+
 	private int deadCheckFlg = 0;
 	//private NBTTagCompound NBTWeaponSkillPermission = new NBTTagCompound();
 	//private int[] skillPermission = new int[10];
@@ -30,6 +34,60 @@ public class ExtendedPlayerProperties3 implements IExtendedEntityProperties {
 	//private DqmPetBase invPet;
 
 	private NBTTagCompound partyMemberData = new NBTTagCompound();
+
+    private double[] W_RuraX = new double[5];
+    private double[] W_RuraY = new double[5];
+    private double[] W_RuraZ = new double[5];
+    private int[] W_RuraDim = new int[5];
+    private int[] W_RuraEnable = new int[5];
+
+    private double[] W_BasiRuraX = new double[5];
+    private double[] W_BasiRuraY = new double[5];
+    private double[] W_BasiRuraZ = new double[5];
+    private int[] W_BasiRuraDim = new int[5];
+    private int[] W_BasiRuraEnable = new int[5];
+
+    private double[] W_KimeraX = new double[5];
+    private double[] W_KimeraY = new double[5];
+    private double[] W_KimeraZ = new double[5];
+    private int[] W_KimeraDim = new int[5];
+    private int[] W_KimeraEnable = new int[5];
+
+    private int[] C_RuraX = new int[5];
+    private int[] C_RuraY = new int[5];
+    private int[] C_RuraZ = new int[5];
+    private int[] C_RuraDim = new int[5];
+    private int[] C_RuraEnable = new int[5];
+
+    private int[] C_BasiRuraX = new int[5];
+    private int[] C_BasiRuraY = new int[5];
+    private int[] C_BasiRuraZ = new int[5];
+    private int[] C_BasiRuraDim = new int[5];
+    private int[] C_BasiRuraEnable = new int[5];
+
+    private int[] C_KimeraX = new int[5];
+    private int[] C_KimeraY = new int[5];
+    private int[] C_KimeraZ = new int[5];
+    private int[] C_KimeraDim = new int[5];
+    private int[] C_KimeraEnable = new int[5];
+
+    private double[] W_RuraSinX = new double[10];
+    private double[] W_RuraSinY = new double[10];
+    private double[] W_RuraSinZ = new double[10];
+    private int[] W_RuraSinDim = new int[10];
+    private int[] W_RuraSinEnable = new int[10];
+
+    private int[] C_RuraSinX = new int[10];
+    private int[] C_RuraSinY = new int[10];
+    private int[] C_RuraSinZ = new int[10];
+    private int[] C_RuraSinDim = new int[10];
+    private int[] C_RuraSinEnable = new int[10];
+
+    public boolean tooltipInfoFlg = false;
+    public boolean tooltipShortRuraSin = false;
+    public boolean tooltipShortRuraSin2 = false;
+    public boolean tooltipShortRuraSinC = false;
+    //private
 
     private static String getSaveKey(EntityPlayer player) {
         return player.getCommandSenderName() + ":" + EXT_PROP_NAME;
@@ -83,6 +141,90 @@ public class ExtendedPlayerProperties3 implements IExtendedEntityProperties {
         nbt.setTag("partyMemberData", partyMemberData);
         nbt.setInteger("deadCheckFlg", deadCheckFlg);
 
+        if(haigouPet1 == null)
+        {
+        	haigouPet1 = new NBTTagCompound();
+        }
+        nbt.setTag("haigouPet1", haigouPet1);
+
+        if(haigouPet2 == null)
+        {
+        	haigouPet2 = new NBTTagCompound();
+        }
+        nbt.setTag("haigouPet2", haigouPet2);
+
+    	for(int cnt = 0; cnt < W_RuraX.length; cnt++)
+    	{
+    		nbt.setDouble("W_RuraX_" + cnt, this.W_RuraX[cnt]);
+    		nbt.setDouble("W_RuraY_" + cnt, this.W_RuraY[cnt]);
+    		nbt.setDouble("W_RuraZ_" + cnt, this.W_RuraZ[cnt]);
+    		nbt.setInteger("W_RuraDim_" + cnt, this.W_RuraDim[cnt]);
+    		nbt.setInteger("W_RuraEnable_" + cnt, this.W_RuraEnable[cnt]);
+    	}
+
+    	for(int cnt = 0; cnt < W_BasiRuraX.length; cnt++)
+    	{
+    		nbt.setDouble("W_BasiRuraX_" + cnt, this.W_BasiRuraX[cnt]);
+    		nbt.setDouble("W_BasiRuraY_" + cnt, this.W_BasiRuraY[cnt]);
+    		nbt.setDouble("W_BasiRuraZ_" + cnt, this.W_BasiRuraZ[cnt]);
+    		nbt.setInteger("W_BasiRuraDim_" + cnt, this.W_BasiRuraDim[cnt]);
+    		nbt.setInteger("W_BasiRuraEnable_" + cnt, this.W_BasiRuraEnable[cnt]);
+    	}
+
+    	for(int cnt = 0; cnt < W_KimeraX.length; cnt++)
+    	{
+    		nbt.setDouble("W_KimeraX_" + cnt, this.W_KimeraX[cnt]);
+    		nbt.setDouble("W_KimeraY_" + cnt, this.W_KimeraY[cnt]);
+    		nbt.setDouble("W_KimeraZ_" + cnt, this.W_KimeraZ[cnt]);
+    		nbt.setInteger("W_KimeraDim_" + cnt, this.W_KimeraDim[cnt]);
+    		nbt.setInteger("W_KimeraEnable_" + cnt, this.W_KimeraEnable[cnt]);
+    	}
+
+    	for(int cnt = 0; cnt < C_RuraX.length; cnt++)
+    	{
+    		nbt.setInteger("C_RuraX_" + cnt, this.C_RuraX[cnt]);
+    		nbt.setInteger("C_RuraY_" + cnt, this.C_RuraY[cnt]);
+    		nbt.setInteger("C_RuraZ_" + cnt, this.C_RuraZ[cnt]);
+    		nbt.setInteger("C_RuraDim_" + cnt, this.C_RuraDim[cnt]);
+    		nbt.setInteger("C_RuraEnable_" + cnt, this.C_RuraEnable[cnt]);
+    	}
+
+    	for(int cnt = 0; cnt < C_BasiRuraX.length; cnt++)
+    	{
+    		nbt.setInteger("C_BasiRuraX_" + cnt, this.C_BasiRuraX[cnt]);
+    		nbt.setInteger("C_BasiRuraY_" + cnt, this.C_BasiRuraY[cnt]);
+    		nbt.setInteger("C_BasiRuraZ_" + cnt, this.C_BasiRuraZ[cnt]);
+    		nbt.setInteger("C_BasiRuraDim_" + cnt, this.C_BasiRuraDim[cnt]);
+    		nbt.setInteger("C_BasiRuraEnable_" + cnt, this.C_BasiRuraEnable[cnt]);
+    	}
+
+    	for(int cnt = 0; cnt < C_KimeraX.length; cnt++)
+    	{
+    		nbt.setInteger("C_KimeraX_" + cnt, this.C_KimeraX[cnt]);
+    		nbt.setInteger("C_KimeraY_" + cnt, this.C_KimeraY[cnt]);
+    		nbt.setInteger("C_KimeraZ_" + cnt, this.C_KimeraZ[cnt]);
+    		nbt.setInteger("C_KimeraDim_" + cnt, this.C_KimeraDim[cnt]);
+    		nbt.setInteger("C_KimeraEnable_" + cnt, this.C_KimeraEnable[cnt]);
+    	}
+
+    	for(int cnt = 0; cnt < C_RuraSinX.length; cnt++)
+    	{
+    		nbt.setInteger("C_RuraSinX_" + cnt, this.C_RuraSinX[cnt]);
+    		nbt.setInteger("C_RuraSinY_" + cnt, this.C_RuraSinY[cnt]);
+    		nbt.setInteger("C_RuraSinZ_" + cnt, this.C_RuraSinZ[cnt]);
+    		nbt.setInteger("C_RuraSinDim_" + cnt, this.C_RuraSinDim[cnt]);
+    		nbt.setInteger("C_RuraSinEnable_" + cnt, this.C_RuraSinEnable[cnt]);
+    	}
+
+    	for(int cnt = 0; cnt < W_RuraSinX.length; cnt++)
+    	{
+    		nbt.setDouble("W_RuraSinX_" + cnt, this.W_RuraSinX[cnt]);
+    		nbt.setDouble("W_RuraSinY_" + cnt, this.W_RuraSinY[cnt]);
+    		nbt.setDouble("W_RuraSinZ_" + cnt, this.W_RuraSinZ[cnt]);
+    		nbt.setInteger("W_RuraSinDim_" + cnt, this.W_RuraSinDim[cnt]);
+    		nbt.setInteger("W_RuraSinEnable_" + cnt, this.W_RuraSinEnable[cnt]);
+    	}
+
         compound.setTag(EXT_PROP_NAME, nbt);
 	}
 
@@ -129,6 +271,91 @@ public class ExtendedPlayerProperties3 implements IExtendedEntityProperties {
         }
 
         deadCheckFlg = nbt.getInteger("deadCheckFlg");
+
+        haigouPet1 = nbt.getCompoundTag("haigouPet1");
+        if(haigouPet1 == null)
+        {
+        	haigouPet1 = new NBTTagCompound();
+        }
+
+        haigouPet2 = nbt.getCompoundTag("haigouPet2");
+        if(haigouPet2 == null)
+        {
+        	haigouPet2 = new NBTTagCompound();
+        }
+
+
+    	for(int cnt = 0; cnt < W_RuraX.length; cnt++)
+    	{
+    		W_RuraX[cnt] = nbt.getDouble("W_RuraX_" + cnt);
+    		W_RuraY[cnt] = nbt.getDouble("W_RuraY_" + cnt);
+    		W_RuraZ[cnt] = nbt.getDouble("W_RuraZ_" + cnt);
+    		W_RuraDim[cnt] = nbt.getInteger("W_RuraDim_" + cnt);
+    		W_RuraEnable[cnt] = nbt.getInteger("W_RuraEnable_" + cnt);
+    	}
+
+    	for(int cnt = 0; cnt < W_BasiRuraX.length; cnt++)
+    	{
+    		W_BasiRuraX[cnt] = nbt.getDouble("W_BasiRuraX_" + cnt);
+    		W_BasiRuraY[cnt] = nbt.getDouble("W_BasiRuraY_" + cnt);
+    		W_BasiRuraZ[cnt] = nbt.getDouble("W_BasiRuraZ_" + cnt);
+    		W_BasiRuraDim[cnt] = nbt.getInteger("W_BasiRuraDim_" + cnt);
+    		W_BasiRuraEnable[cnt] = nbt.getInteger("W_BasiRuraEnable_" + cnt);
+    	}
+
+    	for(int cnt = 0; cnt < W_KimeraX.length; cnt++)
+    	{
+    		W_KimeraX[cnt] = nbt.getDouble("W_KimeraX_" + cnt);
+    		W_KimeraY[cnt] = nbt.getDouble("W_KimeraY_" + cnt);
+    		W_KimeraZ[cnt] = nbt.getDouble("W_KimeraZ_" + cnt);
+    		W_KimeraDim[cnt] = nbt.getInteger("W_KimeraDim_" + cnt);
+    		W_KimeraEnable[cnt] = nbt.getInteger("W_KimeraEnable_" + cnt);
+    	}
+
+    	for(int cnt = 0; cnt < C_RuraX.length; cnt++)
+    	{
+    		C_RuraX[cnt] = nbt.getInteger("C_RuraX_" + cnt);
+    		C_RuraY[cnt] = nbt.getInteger("C_RuraY_" + cnt);
+    		C_RuraZ[cnt] = nbt.getInteger("C_RuraZ_" + cnt);
+    		C_RuraDim[cnt] = nbt.getInteger("C_RuraDim_" + cnt);
+    		C_RuraEnable[cnt] = nbt.getInteger("C_RuraEnable_" + cnt);
+    	}
+
+    	for(int cnt = 0; cnt < C_BasiRuraX.length; cnt++)
+    	{
+    		C_BasiRuraX[cnt] = nbt.getInteger("C_BasiRuraX_" + cnt);
+    		C_BasiRuraY[cnt] = nbt.getInteger("C_BasiRuraY_" + cnt);
+    		C_BasiRuraZ[cnt] = nbt.getInteger("C_BasiRuraZ_" + cnt);
+    		C_BasiRuraDim[cnt] = nbt.getInteger("C_BasiRuraDim_" + cnt);
+    		C_BasiRuraEnable[cnt] = nbt.getInteger("C_BasiRuraEnable_" + cnt);
+    	}
+
+    	for(int cnt = 0; cnt < C_KimeraX.length; cnt++)
+    	{
+    		C_KimeraX[cnt] = nbt.getInteger("C_KimeraX_" + cnt);
+    		C_KimeraY[cnt] = nbt.getInteger("C_KimeraY_" + cnt);
+    		C_KimeraZ[cnt] = nbt.getInteger("C_KimeraZ_" + cnt);
+    		C_KimeraDim[cnt] = nbt.getInteger("C_KimeraDim_" + cnt);
+    		C_KimeraEnable[cnt] = nbt.getInteger("C_KimeraEnable_" + cnt);
+    	}
+
+    	for(int cnt = 0; cnt < W_RuraSinX.length; cnt++)
+    	{
+    		W_RuraSinX[cnt] = nbt.getDouble("W_RuraSinX_" + cnt);
+    		W_RuraSinY[cnt] = nbt.getDouble("W_RuraSinY_" + cnt);
+    		W_RuraSinZ[cnt] = nbt.getDouble("W_RuraSinZ_" + cnt);
+    		W_RuraSinDim[cnt] = nbt.getInteger("W_RuraSinDim_" + cnt);
+    		W_RuraSinEnable[cnt] = nbt.getInteger("W_RuraSinEnable_" + cnt);
+    	}
+
+    	for(int cnt = 0; cnt < C_RuraSinX.length; cnt++)
+    	{
+    		C_RuraSinX[cnt] = nbt.getInteger("C_RuraSinX_" + cnt);
+    		C_RuraSinY[cnt] = nbt.getInteger("C_RuraSinY_" + cnt);
+    		C_RuraSinZ[cnt] = nbt.getInteger("C_RuraSinZ_" + cnt);
+    		C_RuraSinDim[cnt] = nbt.getInteger("C_RuraSinDim_" + cnt);
+    		C_RuraSinEnable[cnt] = nbt.getInteger("C_RuraSinEnable_" + cnt);
+    	}
         //partyTagList.func_150296_c()
 	}
 
@@ -188,6 +415,22 @@ public class ExtendedPlayerProperties3 implements IExtendedEntityProperties {
     }
     */
 
+    public NBTTagCompound getHaigouPet1() {
+        return haigouPet1;
+    }
+
+    public void setHaigouPet1(NBTTagCompound nbt) {
+        this.haigouPet1 = nbt;
+    }
+
+    public NBTTagCompound getHaigouPet2() {
+        return haigouPet2;
+    }
+
+    public void setHaigouPet2(NBTTagCompound nbt) {
+        this.haigouPet2 = nbt;
+    }
+
     public NBTTagCompound getNBTPlayerPetList() {
         return NBTPlayerPetList;
     }
@@ -195,6 +438,7 @@ public class ExtendedPlayerProperties3 implements IExtendedEntityProperties {
     public void setNBTPlayerPetList(NBTTagCompound nbt) {
         this.NBTPlayerPetList = nbt;
     }
+
 
     public void setPetCount(int par1) {
         this.petCount = par1;
@@ -295,4 +539,819 @@ public class ExtendedPlayerProperties3 implements IExtendedEntityProperties {
     	return this.statusPet;
     }
     */
+
+    public void setW_Rura(int par1, double par2, double par3, double par4, int par5, int par6)
+    {
+    	this.W_RuraX[par1] = par2;
+    	this.W_RuraY[par1] = par3;
+    	this.W_RuraZ[par1] = par4;
+    	this.W_RuraDim[par1] = par5;
+    	this.W_RuraEnable[par1] = par6;
+    }
+
+    public void setW_BasiRura(int par1, double par2, double par3, double par4, int par5, int par6)
+    {
+    	this.W_BasiRuraX[par1] = par2;
+    	this.W_BasiRuraY[par1] = par3;
+    	this.W_BasiRuraZ[par1] = par4;
+    	this.W_BasiRuraDim[par1] = par5;
+    	this.W_BasiRuraEnable[par1] = par6;
+    }
+
+    public void setW_Kimera(int par1, double par2, double par3, double par4, int par5, int par6)
+    {
+    	this.W_KimeraX[par1] = par2;
+    	this.W_KimeraY[par1] = par3;
+    	this.W_KimeraZ[par1] = par4;
+    	this.W_KimeraDim[par1] = par5;
+    	this.W_KimeraEnable[par1] = par6;
+    }
+
+
+    public double[] getW_Rura(int par1)
+    {
+    	return new double[]{this.W_RuraX[par1], this.W_RuraY[par1], this.W_RuraZ[par1], this.W_RuraDim[par1]};
+    }
+
+    public void setW_RuraXA(double[] par2)
+    {
+    	this.W_RuraX = par2;
+    }
+    public void setW_RuraYA(double[] par2)
+    {
+    	this.W_RuraY = par2;
+    }
+    public void setW_RuraZA(double[] par2)
+    {
+    	this.W_RuraZ = par2;
+    }
+    public void setW_RuraDimA(int[] par2)
+    {
+    	this.W_RuraDim = par2;
+    }
+    public void setW_RuraEnableA(int[] par2)
+    {
+    	this.W_RuraEnable = par2;
+    }
+
+
+    public void setW_BasiRuraXA(double[] par2)
+    {
+    	this.W_BasiRuraX = par2;
+    }
+    public void setW_BasiRuraYA(double[] par2)
+    {
+    	this.W_BasiRuraY = par2;
+    }
+    public void setW_BasiRuraZA(double[] par2)
+    {
+    	this.W_BasiRuraZ = par2;
+    }
+    public void setW_BasiRuraDimA(int[] par2)
+    {
+    	this.W_BasiRuraDim = par2;
+    }
+    public void setW_BasiRuraEnableA(int[] par2)
+    {
+    	this.W_BasiRuraEnable = par2;
+    }
+
+
+    public void setW_KimeraXA(double[] par2)
+    {
+    	this.W_KimeraX = par2;
+    }
+    public void setW_KimeraYA(double[] par2)
+    {
+    	this.W_KimeraY = par2;
+    }
+    public void setW_KimeraZA(double[] par2)
+    {
+    	this.W_KimeraZ = par2;
+    }
+    public void setW_KimeraDimA(int[] par2)
+    {
+    	this.W_KimeraDim = par2;
+    }
+    public void setW_KimeraEnableA(int[] par2)
+    {
+    	this.W_KimeraEnable = par2;
+    }
+
+    public double[] getW_RuraXA()
+    {
+    	return this.W_RuraX;
+    }
+    public double[] getW_RuraYA()
+    {
+    	return this.W_RuraY;
+    }
+    public double[] getW_RuraZA()
+    {
+    	return this.W_RuraZ;
+    }
+    public int[] getW_RuraDimA()
+    {
+    	return this.W_RuraDim;
+    }
+    public int[] getW_RuraEnableA()
+    {
+    	return this.W_RuraEnable;
+    }
+
+    public double[] getW_BasiRuraXA()
+    {
+    	return this.W_BasiRuraX;
+    }
+    public double[] getW_BasiRuraYA()
+    {
+    	return this.W_BasiRuraY;
+    }
+    public double[] getW_BasiRuraZA()
+    {
+    	return this.W_BasiRuraZ;
+    }
+    public int[] getW_BasiRuraDimA()
+    {
+    	return this.W_BasiRuraDim;
+    }
+    public int[] getW_BasiRuraEnableA()
+    {
+    	return this.W_BasiRuraEnable;
+    }
+
+    public double[] getW_KimeraXA()
+    {
+    	return this.W_KimeraX;
+    }
+    public double[] getW_KimeraYA()
+    {
+    	return this.W_KimeraY;
+    }
+    public double[] getW_KimeraZA()
+    {
+    	return this.W_KimeraZ;
+    }
+    public int[] getW_KimeraDimA()
+    {
+    	return this.W_KimeraDim;
+    }
+    public int[] getW_KimeraEnableA()
+    {
+    	return this.W_KimeraEnable;
+    }
+
+    public void setW_RuraX(int par1, double par2)
+    {
+    	this.W_RuraX[par1] = par2;
+    }
+    public double getW_RuraX(int par1)
+    {
+    	return this.W_RuraX[par1];
+    }
+
+    public void setW_RuraY(int par1, double par2)
+    {
+    	this.W_RuraY[par1] = par2;
+    }
+    public double getW_RuraY(int par1)
+    {
+    	return this.W_RuraY[par1];
+    }
+
+    public void setW_RuraZ(int par1, double par2)
+    {
+    	this.W_RuraZ[par1] = par2;
+    }
+    public double getW_RuraZ(int par1)
+    {
+    	return this.W_RuraZ[par1];
+    }
+
+    public void setW_RuraDim(int par1, int par2)
+    {
+    	this.W_RuraDim[par1] = par2;
+    }
+    public double getW_RuraDim(int par1)
+    {
+    	return this.W_RuraDim[par1];
+    }
+
+    public void setW_RuraEnable(int par1, int par2)
+    {
+    	this.W_RuraEnable[par1] = par2;
+    }
+    public double getW_RuraEnable(int par1)
+    {
+    	return this.W_RuraEnable[par1];
+    }
+
+    public double[] getW_Kimera(int par1)
+    {
+    	return new double[]{this.W_KimeraX[par1], this.W_KimeraY[par1], this.W_KimeraZ[par1], this.W_KimeraDim[par1]};
+    }
+
+    public void setW_KimeraX(int par1, double par2)
+    {
+    	this.W_KimeraX[par1] = par2;
+    }
+    public double getW_KimeraX(int par1)
+    {
+    	return this.W_KimeraX[par1];
+    }
+
+    public void setW_KimeraY(int par1, double par2)
+    {
+    	this.W_KimeraY[par1] = par2;
+    }
+    public double getW_KimeraY(int par1)
+    {
+    	return this.W_KimeraY[par1];
+    }
+
+    public void setW_KimeraZ(int par1, double par2)
+    {
+    	this.W_KimeraZ[par1] = par2;
+    }
+    public double getW_KimeraZ(int par1)
+    {
+    	return this.W_KimeraZ[par1];
+    }
+
+    public void setW_KimeraDim(int par1, int par2)
+    {
+    	this.W_KimeraDim[par1] = par2;
+    }
+    public double getW_KimeraDim(int par1)
+    {
+    	return this.W_KimeraDim[par1];
+    }
+
+    public void setW_KimeraEnable(int par1, int par2)
+    {
+    	this.W_KimeraEnable[par1] = par2;
+    }
+    public double getW_KimeraEnable(int par1)
+    {
+    	return this.W_KimeraEnable[par1];
+    }
+
+    public void setW_BasiRuraX(int par1, double par2)
+    {
+    	this.W_BasiRuraX[par1] = par2;
+    }
+    public double getW_BasiRuraX(int par1)
+    {
+    	return this.W_BasiRuraX[par1];
+    }
+
+    public void setW_BasiRuraY(int par1, double par2)
+    {
+    	this.W_BasiRuraY[par1] = par2;
+    }
+    public double getW_BasiRuraY(int par1)
+    {
+    	return this.W_BasiRuraY[par1];
+    }
+
+    public void setW_BasiRuraZ(int par1, double par2)
+    {
+    	this.W_BasiRuraZ[par1] = par2;
+    }
+    public double getW_BasiRuraZ(int par1)
+    {
+    	return this.W_BasiRuraZ[par1];
+    }
+
+    public void setW_BasiRuraDim(int par1, int par2)
+    {
+    	this.W_BasiRuraDim[par1] = par2;
+    }
+    public double getW_BasiRuraDim(int par1)
+    {
+    	return this.W_BasiRuraDim[par1];
+    }
+
+    public void setW_BasiRuraEnable(int par1, int par2)
+    {
+    	this.W_BasiRuraEnable[par1] = par2;
+    }
+    public double getW_BasiRuraEnable(int par1)
+    {
+    	return this.W_BasiRuraEnable[par1];
+    }
+
+
+
+    ///////////////////////////////////////////////////////////
+
+
+    public void setC_Rura(int par1, int par2, int par3, int par4, int par5, int par6)
+    {
+    	this.C_RuraX[par1] = par2;
+    	this.C_RuraY[par1] = par3;
+    	this.C_RuraZ[par1] = par4;
+    	this.C_RuraDim[par1] = par5;
+    	this.C_RuraEnable[par1] = par6;
+    }
+
+    public void setC_BasiRura(int par1, int par2, int par3, int par4, int par5, int par6)
+    {
+    	this.C_BasiRuraX[par1] = par2;
+    	this.C_BasiRuraY[par1] = par3;
+    	this.C_BasiRuraZ[par1] = par4;
+    	this.C_BasiRuraDim[par1] = par5;
+    	this.C_BasiRuraEnable[par1] = par6;
+    }
+
+    public void setC_Kimera(int par1, int par2, int par3, int par4, int par5, int par6)
+    {
+    	this.C_KimeraX[par1] = par2;
+    	this.C_KimeraY[par1] = par3;
+    	this.C_KimeraZ[par1] = par4;
+    	this.C_KimeraDim[par1] = par5;
+    	this.C_KimeraEnable[par1] = par6;
+    }
+
+
+    public int[] getC_Rura(int par1)
+    {
+    	return new int[]{this.C_RuraX[par1], this.C_RuraY[par1], this.C_RuraZ[par1], this.C_RuraDim[par1]};
+    }
+
+    public void setC_RuraXA(int[] par2)
+    {
+    	this.C_RuraX = par2;
+    }
+    public void setC_RuraYA(int[] par2)
+    {
+    	this.C_RuraY = par2;
+    }
+    public void setC_RuraZA(int[] par2)
+    {
+    	this.C_RuraZ = par2;
+    }
+    public void setC_RuraDimA(int[] par2)
+    {
+    	this.C_RuraDim = par2;
+    }
+    public void setC_RuraEnableA(int[] par2)
+    {
+    	this.C_RuraEnable = par2;
+    }
+
+
+    public void setC_BasiRuraXA(int[] par2)
+    {
+    	this.C_BasiRuraX = par2;
+    }
+    public void setC_BasiRuraYA(int[] par2)
+    {
+    	this.C_BasiRuraY = par2;
+    }
+    public void setC_BasiRuraZA(int[] par2)
+    {
+    	this.C_BasiRuraZ = par2;
+    }
+    public void setC_BasiRuraDimA(int[] par2)
+    {
+    	this.C_BasiRuraDim = par2;
+    }
+    public void setC_BasiRuraEnableA(int[] par2)
+    {
+    	this.C_BasiRuraEnable = par2;
+    }
+
+
+    public void setC_KimeraXA(int[] par2)
+    {
+    	this.C_KimeraX = par2;
+    }
+    public void setC_KimeraYA(int[] par2)
+    {
+    	this.C_KimeraY = par2;
+    }
+    public void setC_KimeraZA(int[] par2)
+    {
+    	this.C_KimeraZ = par2;
+    }
+    public void setC_KimeraDimA(int[] par2)
+    {
+    	this.C_KimeraDim = par2;
+    }
+    public void setC_KimeraEnableA(int[] par2)
+    {
+    	this.C_KimeraEnable = par2;
+    }
+
+    public int[] getC_RuraXA()
+    {
+    	return this.C_RuraX;
+    }
+    public int[] getC_RuraYA()
+    {
+    	return this.C_RuraY;
+    }
+    public int[] getC_RuraZA()
+    {
+    	return this.C_RuraZ;
+    }
+    public int[] getC_RuraDimA()
+    {
+    	return this.C_RuraDim;
+    }
+    public int[] getC_RuraEnableA()
+    {
+    	return this.C_RuraEnable;
+    }
+
+    public int[] getC_BasiRuraXA()
+    {
+    	return this.C_BasiRuraX;
+    }
+    public int[] getC_BasiRuraYA()
+    {
+    	return this.C_BasiRuraY;
+    }
+    public int[] getC_BasiRuraZA()
+    {
+    	return this.C_BasiRuraZ;
+    }
+    public int[] getC_BasiRuraDimA()
+    {
+    	return this.C_BasiRuraDim;
+    }
+    public int[] getC_BasiRuraEnableA()
+    {
+    	return this.C_BasiRuraEnable;
+    }
+
+    public int[] getC_KimeraXA()
+    {
+    	return this.C_KimeraX;
+    }
+    public int[] getC_KimeraYA()
+    {
+    	return this.C_KimeraY;
+    }
+    public int[] getC_KimeraZA()
+    {
+    	return this.C_KimeraZ;
+    }
+    public int[] getC_KimeraDimA()
+    {
+    	return this.C_KimeraDim;
+    }
+    public int[] getC_KimeraEnableA()
+    {
+    	return this.C_KimeraEnable;
+    }
+
+    public void setC_RuraX(int par1, int par2)
+    {
+    	this.C_RuraX[par1] = par2;
+    }
+    public int getC_RuraX(int par1)
+    {
+    	return this.C_RuraX[par1];
+    }
+
+    public void setC_RuraY(int par1, int par2)
+    {
+    	this.C_RuraY[par1] = par2;
+    }
+    public int getC_RuraY(int par1)
+    {
+    	return this.C_RuraY[par1];
+    }
+
+    public void setC_RuraZ(int par1, int par2)
+    {
+    	this.C_RuraZ[par1] = par2;
+    }
+    public int getC_RuraZ(int par1)
+    {
+    	return this.C_RuraZ[par1];
+    }
+
+    public void setC_RuraDim(int par1, int par2)
+    {
+    	this.C_RuraDim[par1] = par2;
+    }
+    public int getC_RuraDim(int par1)
+    {
+    	return this.C_RuraDim[par1];
+    }
+
+    public void setC_RuraEnable(int par1, int par2)
+    {
+    	this.C_RuraEnable[par1] = par2;
+    }
+    public int getC_RuraEnable(int par1)
+    {
+    	return this.C_RuraEnable[par1];
+    }
+
+    public int[] getC_Kimera(int par1)
+    {
+    	return new int[]{this.C_KimeraX[par1], this.C_KimeraY[par1], this.C_KimeraZ[par1], this.C_KimeraDim[par1]};
+    }
+
+    public void setC_KimeraX(int par1, int par2)
+    {
+    	this.C_KimeraX[par1] = par2;
+    }
+    public int getC_KimeraX(int par1)
+    {
+    	return this.C_KimeraX[par1];
+    }
+
+    public void setC_KimeraY(int par1, int par2)
+    {
+    	this.C_KimeraY[par1] = par2;
+    }
+    public int getC_KimeraY(int par1)
+    {
+    	return this.C_KimeraY[par1];
+    }
+
+    public void setC_KimeraZ(int par1, int par2)
+    {
+    	this.C_KimeraZ[par1] = par2;
+    }
+    public int getC_KimeraZ(int par1)
+    {
+    	return this.C_KimeraZ[par1];
+    }
+
+    public void setC_KimeraDim(int par1, int par2)
+    {
+    	this.C_KimeraDim[par1] = par2;
+    }
+    public int getC_KimeraDim(int par1)
+    {
+    	return this.C_KimeraDim[par1];
+    }
+
+    public void setC_KimeraEnable(int par1, int par2)
+    {
+    	this.C_KimeraEnable[par1] = par2;
+    }
+    public int getC_KimeraEnable(int par1)
+    {
+    	return this.C_KimeraEnable[par1];
+    }
+
+    public void setC_BasiRuraX(int par1, int par2)
+    {
+    	this.C_BasiRuraX[par1] = par2;
+    }
+    public int getC_BasiRuraX(int par1)
+    {
+    	return this.C_BasiRuraX[par1];
+    }
+
+    public void setC_BasiRuraY(int par1, int par2)
+    {
+    	this.C_BasiRuraY[par1] = par2;
+    }
+    public int getC_BasiRuraY(int par1)
+    {
+    	return this.C_BasiRuraY[par1];
+    }
+
+    public void setC_BasiRuraZ(int par1, int par2)
+    {
+    	this.C_BasiRuraZ[par1] = par2;
+    }
+    public int getC_BasiRuraZ(int par1)
+    {
+    	return this.C_BasiRuraZ[par1];
+    }
+
+    public void setC_BasiRuraDim(int par1, int par2)
+    {
+    	this.C_BasiRuraDim[par1] = par2;
+    }
+    public int getC_BasiRuraDim(int par1)
+    {
+    	return this.C_BasiRuraDim[par1];
+    }
+
+    public void setC_BasiRuraEnable(int par1, int par2)
+    {
+    	this.C_BasiRuraEnable[par1] = par2;
+    }
+    public int getC_BasiRuraEnable(int par1)
+    {
+    	return this.C_BasiRuraEnable[par1];
+    }
+
+
+    /////////////////////
+
+    public void setW_RuraSin(int par1, double par2, double par3, double par4, int par5, int par6)
+    {
+    	this.W_RuraSinX[par1] = par2;
+    	this.W_RuraSinY[par1] = par3;
+    	this.W_RuraSinZ[par1] = par4;
+    	this.W_RuraSinDim[par1] = par5;
+    	this.W_RuraSinEnable[par1] = par6;
+    }
+
+    public double[] getW_RuraSin(int par1)
+    {
+    	return new double[]{this.W_RuraSinX[par1], this.W_RuraSinY[par1], this.W_RuraSinZ[par1], this.W_RuraSinDim[par1]};
+    }
+
+    public void setW_RuraSinXA(double[] par2)
+    {
+    	this.W_RuraSinX = par2;
+    }
+    public void setW_RuraSinYA(double[] par2)
+    {
+    	this.W_RuraSinY = par2;
+    }
+    public void setW_RuraSinZA(double[] par2)
+    {
+    	this.W_RuraSinZ = par2;
+    }
+    public void setW_RuraSinDimA(int[] par2)
+    {
+    	this.W_RuraSinDim = par2;
+    }
+    public void setW_RuraSinEnableA(int[] par2)
+    {
+    	this.W_RuraSinEnable = par2;
+    }
+
+    public double[] getW_RuraSinXA()
+    {
+    	return this.W_RuraSinX;
+    }
+    public double[] getW_RuraSinYA()
+    {
+    	return this.W_RuraSinY;
+    }
+    public double[] getW_RuraSinZA()
+    {
+    	return this.W_RuraSinZ;
+    }
+    public int[] getW_RuraSinDimA()
+    {
+    	return this.W_RuraSinDim;
+    }
+    public int[] getW_RuraSinEnableA()
+    {
+    	return this.W_RuraSinEnable;
+    }
+
+
+    public void setW_RuraSinX(int par1, double par2)
+    {
+    	this.W_RuraSinX[par1] = par2;
+    }
+    public double getW_RuraSinX(int par1)
+    {
+    	return this.W_RuraSinX[par1];
+    }
+
+    public void setW_RuraSinY(int par1, double par2)
+    {
+    	this.W_RuraSinY[par1] = par2;
+    }
+    public double getW_RuraSinY(int par1)
+    {
+    	return this.W_RuraSinY[par1];
+    }
+
+    public void setW_RuraSinZ(int par1, double par2)
+    {
+    	this.W_RuraSinZ[par1] = par2;
+    }
+    public double getW_RuraSinZ(int par1)
+    {
+    	return this.W_RuraSinZ[par1];
+    }
+
+    public void setW_RuraSinDim(int par1, int par2)
+    {
+    	this.W_RuraSinDim[par1] = par2;
+    }
+    public double getW_RuraSinDim(int par1)
+    {
+    	return this.W_RuraSinDim[par1];
+    }
+
+    public void setW_RuraSinEnable(int par1, int par2)
+    {
+    	this.W_RuraSinEnable[par1] = par2;
+    }
+    public double getW_RuraSinEnable(int par1)
+    {
+    	return this.W_RuraSinEnable[par1];
+    }
+
+
+    public void setC_RuraSin(int par1, int par2, int par3, int par4, int par5, int par6)
+    {
+    	this.C_RuraSinX[par1] = par2;
+    	this.C_RuraSinY[par1] = par3;
+    	this.C_RuraSinZ[par1] = par4;
+    	this.C_RuraSinDim[par1] = par5;
+    	this.C_RuraSinEnable[par1] = par6;
+    }
+
+    public int[] getC_RuraSin(int par1)
+    {
+    	return new int[]{this.C_RuraSinX[par1], this.C_RuraSinY[par1], this.C_RuraSinZ[par1], this.C_RuraSinDim[par1]};
+    }
+
+    public void setC_RuraSinXA(int[] par2)
+    {
+    	this.C_RuraSinX = par2;
+    }
+    public void setC_RuraSinYA(int[] par2)
+    {
+    	this.C_RuraSinY = par2;
+    }
+    public void setC_RuraSinZA(int[] par2)
+    {
+    	this.C_RuraSinZ = par2;
+    }
+    public void setC_RuraSinDimA(int[] par2)
+    {
+    	this.C_RuraSinDim = par2;
+    }
+    public void setC_RuraSinEnableA(int[] par2)
+    {
+    	this.C_RuraSinEnable = par2;
+    }
+
+    public int[] getC_RuraSinXA()
+    {
+    	return this.C_RuraSinX;
+    }
+    public int[] getC_RuraSinYA()
+    {
+    	return this.C_RuraSinY;
+    }
+    public int[] getC_RuraSinZA()
+    {
+    	return this.C_RuraSinZ;
+    }
+    public int[] getC_RuraSinDimA()
+    {
+    	return this.C_RuraSinDim;
+    }
+    public int[] getC_RuraSinEnableA()
+    {
+    	return this.C_RuraSinEnable;
+    }
+
+
+   public void setC_RuraSinX(int par1, int par2)
+    {
+    	this.C_RuraSinX[par1] = par2;
+    }
+    public int getC_RuraSinX(int par1)
+    {
+    	return this.C_RuraSinX[par1];
+    }
+
+    public void setC_RuraSinY(int par1, int par2)
+    {
+    	this.C_RuraSinY[par1] = par2;
+    }
+    public int getC_RuraSinY(int par1)
+    {
+    	return this.C_RuraSinY[par1];
+    }
+
+    public void setC_RuraSinZ(int par1, int par2)
+    {
+    	this.C_RuraSinZ[par1] = par2;
+    }
+    public int getC_RuraSinZ(int par1)
+    {
+    	return this.C_RuraSinZ[par1];
+    }
+
+    public void setC_RuraSinDim(int par1, int par2)
+    {
+    	this.C_RuraSinDim[par1] = par2;
+    }
+    public int getC_RuraSinDim(int par1)
+    {
+    	return this.C_RuraSinDim[par1];
+    }
+
+    public void setC_RuraSinEnable(int par1, int par2)
+    {
+    	this.C_RuraSinEnable[par1] = par2;
+    }
+    public int getC_RuraSinEnable(int par1)
+    {
+    	return this.C_RuraSinEnable[par1];
+    }
 }

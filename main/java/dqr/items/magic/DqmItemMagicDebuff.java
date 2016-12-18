@@ -126,6 +126,14 @@ public class DqmItemMagicDebuff extends DqmItemMagicBase{
 	            			{
 		            			if(rand.nextInt(100) < this.getEnumMagic().getRate())
 		            			{
+		        		    		Random rand_jukuren = new Random();
+		        					if(DQR.magicTable.getMAptitude(this, par3EntityPlayer) > 0 && rand_jukuren.nextInt(5) == 0)
+		        					{
+
+		        						int getJukurenExp = 1 + ExtendedPlayerProperties.get(par3EntityPlayer).getJukurenExp(ExtendedPlayerProperties.get(par3EntityPlayer).getWeapon());
+		        						ExtendedPlayerProperties.get(par3EntityPlayer).setJukurenExp(ExtendedPlayerProperties.get(par3EntityPlayer).getWeapon(), getJukurenExp);
+		        					}
+
 			            			EntityLivingBase elb = (EntityLivingBase)target;
 			            			if(elb.isPotionActive(DQPotionPlus.buffMahokanta))
 			            			{
@@ -158,6 +166,14 @@ public class DqmItemMagicDebuff extends DqmItemMagicBase{
     				magic.setRate(this.getEnumMagic().getRate());
     				magic.setPotionEffect(new PotionEffect(this.pot.id, this.getEnumMagic().getAttack(), 1));
     				par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.jumon", 1.0F, 1.0F);
+
+		    		Random rand_jukuren = new Random();
+					if(DQR.magicTable.getMAptitude(this, par3EntityPlayer) > 0 && rand_jukuren.nextInt(5) == 0)
+					{
+
+						int getJukurenExp = 1 + ExtendedPlayerProperties.get(par3EntityPlayer).getJukurenExp(ExtendedPlayerProperties.get(par3EntityPlayer).getWeapon());
+						ExtendedPlayerProperties.get(par3EntityPlayer).setJukurenExp(ExtendedPlayerProperties.get(par3EntityPlayer).getWeapon(), getJukurenExp);
+					}
 
     	        	if (!par2World.isRemote)
     	        	{

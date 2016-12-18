@@ -404,6 +404,18 @@
       }
     ]
   },
+  "player.haigouin": {
+    "category":"player",
+    "sounds": [
+      {
+        "name": "player/Haigouin",
+        "stream": false,
+        "weight": 1,
+        "volume": 1,
+        "pitch": 1
+      }
+    ]
+  },
   "player.itetuku": {
     "category":"player",
     "sounds": [

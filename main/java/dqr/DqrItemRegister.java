@@ -1983,6 +1983,34 @@ public class DqrItemRegister {
 		GameRegistry.registerItem(DQMonsters.itemMonsterUnknown, "ItemMonsterUnknown");
 
 		GameRegistry.registerItem(DQMiscs.itemShinjirukokoro, "ItemShinjirukokoro");
+
+    	GameRegistry.registerBlock(DQBlocks.DqmBlockN2 ,"DqmBlockN2");
+    	GameRegistry.registerBlock(DQBlocks.DqmBlockS2 ,"DqmBlockS2");
+    	GameRegistry.registerBlock(DQBlocks.DqmBlockW2 ,"DqmBlockW2");
+    	GameRegistry.registerBlock(DQBlocks.DqmBlockE2 ,"DqmBlockE2");
+
+
+    	GameRegistry.registerBlock(DQMobFigures.BlockFigureKandata, "BlockFigureKandata ");
+    	GameRegistry.registerBlock(DQMobFigures.BlockFigureBlackchack, "BlockFigureBlackchack ");
+    	GameRegistry.registerBlock(DQMobFigures.BlockFigureSuraimuemperor, "BlockFigureSuraimuemperor ");
+    	GameRegistry.registerBlock(DQMobFigures.BlockFigureDarkdoriado, "BlockFigureDarkdoriado ");
+    	GameRegistry.registerBlock(DQMobFigures.BlockFigureShadopan, "BlockFigureShadopan ");
+    	GameRegistry.registerBlock(DQMobFigures.BlockFigureShadopan2, "BlockFigureShadopan2 ");
+
+    	GameRegistry.registerBlock(DQMobObjects.BlockObjKandata, "BlockObjKandata ");
+    	GameRegistry.registerBlock(DQMobObjects.BlockObjBlackchack, "BlockObjBlackchack ");
+    	GameRegistry.registerBlock(DQMobObjects.BlockObjSuraimuemperor, "BlockObjSuraimuemperor ");
+    	GameRegistry.registerBlock(DQMobObjects.BlockObjDarkdoriado, "BlockObjDarkdoriado ");
+    	GameRegistry.registerBlock(DQMobObjects.BlockObjShadopan, "BlockObjShadopan ");
+    	GameRegistry.registerBlock(DQMobObjects.BlockObjShadopan2, "BlockObjShadopan2 ");
+
+    	GameRegistry.registerBlock(DQPlants.BlockWaterBlock, "BlockWaterBlock");
+    	GameRegistry.registerBlock(DQPlants.BlockWaterBlockLight, "BlockWaterBlockLight");
+
+    	GameRegistry.registerBlock(DQMobFigures.BlockFigureOrutega, "BlockFigureOrutega");
+    	GameRegistry.registerBlock(DQMobObjects.BlockObjOrutega, "BlockObjOrutega");
+
+    	GameRegistry.registerItem(DQMagics.itemRurasinC, "ItemRurasinC");
 	}
 }
 

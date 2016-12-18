@@ -23,6 +23,11 @@ public class ThreadLvUp extends Thread{
 
 	public void run()
 	{
+		if(this.ep.worldObj.isRemote)
+		{
+			return;
+		}
+
 		boolean flg = true;
 		int epLv = ExtendedPlayerProperties.get(this.ep).getJobLv(ExtendedPlayerProperties.get(this.ep).getJob());
 		int epEXP = ExtendedPlayerProperties.get(this.ep).getJobExp(ExtendedPlayerProperties.get(this.ep).getJob());
@@ -35,7 +40,6 @@ public class ThreadLvUp extends Thread{
 			ExtendedPlayerProperties.get(this.ep).setJobMP(epJob, 0);
 			ExtendedPlayerProperties.get(this.ep).setJobTikara(epJob, 0);
 			ExtendedPlayerProperties.get(this.ep).setJobKasikosa(epJob, 0);
-
 		}
 
 		for (int i = 0; i < 100; i++)

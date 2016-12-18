@@ -3,6 +3,7 @@ package dqr.handler;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import dqr.DQR;
 
 public class RenderGameOverlayHandler {
 
@@ -11,12 +12,18 @@ public class RenderGameOverlayHandler {
 	{
 		if(event.type == ElementType.HEALTH)
 		{
-			event.setCanceled(true);
+			if(DQR.conf.GuiVanillaHUDVis_Health == 0)
+			{
+				event.setCanceled(true);
+			}
 		}
 
 		if(event.type == ElementType.ARMOR)
 		{
-			event.setCanceled(true);
+			if(DQR.conf.GuiVanillaHUDVis_Armor == 0)
+			{
+				event.setCanceled(true);
+			}
 		}
 
 	}

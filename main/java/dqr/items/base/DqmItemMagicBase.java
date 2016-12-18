@@ -382,14 +382,22 @@ public class DqmItemMagicBase extends Item{
     	}
 
     	p_77624_3_.add(I18n.format("dqm.magicinfo.mp", new Object[]{this.enumMagic.getMP()}));
-    	p_77624_3_.add(I18n.format("dqm.magicinfo.needLv", new Object[]{needLv}));
-    	p_77624_3_.add(I18n.format("dqm.magicinfo.usefulJob", new Object[]{usefulJob[0]}));
-    	if(usefulLine > 0)
+
+    	if(needLv.length() > 0)
     	{
-    		for(int lCnt = 0; lCnt < usefulLine; lCnt++)
-    		{
-    			p_77624_3_.add(I18n.format("dqm.magicinfo.usefulJobSPC", new Object[]{usefulJob[lCnt + 1]}));
-    		}
+    		p_77624_3_.add(I18n.format("dqm.magicinfo.needLv", new Object[]{needLv}));
+    	}
+
+    	if(usefulJob[0] != null)
+    	{
+	    	p_77624_3_.add(I18n.format("dqm.magicinfo.usefulJob", new Object[]{usefulJob[0]}));
+	    	if(usefulLine > 0)
+	    	{
+	    		for(int lCnt = 0; lCnt < usefulLine; lCnt++)
+	    		{
+	    			p_77624_3_.add(I18n.format("dqm.magicinfo.usefulJobSPC", new Object[]{usefulJob[lCnt + 1]}));
+	    		}
+	    	}
     	}
 
     	p_77624_3_.add("");

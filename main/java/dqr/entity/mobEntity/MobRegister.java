@@ -92,6 +92,7 @@ import dqr.entity.mobEntity.monsterEnd.DqmEntityKagenokisi;
 import dqr.entity.mobEntity.monsterEnd.DqmEntityManemane;
 import dqr.entity.mobEntity.monsterEnd.DqmEntityPandorabox;
 import dqr.entity.mobEntity.monsterEnd.DqmEntityRyuiso;
+import dqr.entity.mobEntity.monsterEnd.DqmEntityShadopan2;
 import dqr.entity.mobEntity.monsterEnd.DqmEntityTororubonba;
 import dqr.entity.mobEntity.monsterEtc.DqmEntityFurosutogizumo;
 import dqr.entity.mobEntity.monsterEtc.DqmEntityGanseki;
@@ -116,6 +117,7 @@ import dqr.entity.mobEntity.monsterHell.DqmEntityBosutororu;
 import dqr.entity.mobEntity.monsterHell.DqmEntityBoureikensi;
 import dqr.entity.mobEntity.monsterHell.DqmEntityBuraddosodo;
 import dqr.entity.mobEntity.monsterHell.DqmEntityBurakkubejita;
+import dqr.entity.mobEntity.monsterHell.DqmEntityDarkdoriado;
 import dqr.entity.mobEntity.monsterHell.DqmEntityDarkslime;
 import dqr.entity.mobEntity.monsterHell.DqmEntityDeddopekka;
 import dqr.entity.mobEntity.monsterHell.DqmEntityDgizumo;
@@ -158,6 +160,7 @@ import dqr.entity.mobEntity.monsterHell.DqmEntityPombom;
 import dqr.entity.mobEntity.monsterHell.DqmEntityPuyon;
 import dqr.entity.mobEntity.monsterHell.DqmEntityRedsaikuron;
 import dqr.entity.mobEntity.monsterHell.DqmEntitySaikuropusu;
+import dqr.entity.mobEntity.monsterHell.DqmEntityShadopan;
 import dqr.entity.mobEntity.monsterHell.DqmEntitySirubadebiru;
 import dqr.entity.mobEntity.monsterHell.DqmEntitySiryou;
 import dqr.entity.mobEntity.monsterHell.DqmEntitySiryounokisi;
@@ -256,19 +259,23 @@ import dqr.entity.mobEntity.monsterNight.DqmEntityUmiusi;
 import dqr.entity.mobEntity.monsterNight.DqmEntityYouganmajin;
 import dqr.entity.mobEntity.monsterSP.DqmEntityAtorasu;
 import dqr.entity.mobEntity.monsterSP.DqmEntityBazuzu;
+import dqr.entity.mobEntity.monsterSP.DqmEntityBlackchack;
 import dqr.entity.mobEntity.monsterSP.DqmEntityBurasu;
 import dqr.entity.mobEntity.monsterSP.DqmEntityDarkRamia;
 import dqr.entity.mobEntity.monsterSP.DqmEntityFureizado;
 import dqr.entity.mobEntity.monsterSP.DqmEntityGodonheddo;
+import dqr.entity.mobEntity.monsterSP.DqmEntityKandata;
 import dqr.entity.mobEntity.monsterSP.DqmEntityKandatakobun;
 import dqr.entity.mobEntity.monsterSP.DqmEntityKinghidora;
 import dqr.entity.mobEntity.monsterSP.DqmEntityKiramajinga;
 import dqr.entity.mobEntity.monsterSP.DqmEntityKiratoti;
 import dqr.entity.mobEntity.monsterSP.DqmEntityMashougumo;
 import dqr.entity.mobEntity.monsterSP.DqmEntityMasso;
+import dqr.entity.mobEntity.monsterSP.DqmEntityOrutega;
 import dqr.entity.mobEntity.monsterSP.DqmEntityPisaronaito;
 import dqr.entity.mobEntity.monsterSP.DqmEntityPuremiasuraimu;
 import dqr.entity.mobEntity.monsterSP.DqmEntitySirubamanto;
+import dqr.entity.mobEntity.monsterSP.DqmEntitySuraimuemperor;
 import dqr.entity.mobEntity.monsterSP.DqmEntitySuraimujeneraru;
 import dqr.entity.mobEntity.monsterSP.DqmEntityTattyan;
 import dqr.entity.mobEntity.monsterSP.DqmEntityTororubakkosu;
@@ -624,6 +631,15 @@ public class MobRegister {
 		//EntityRegistry.registerModEntity(DqmEntityKandata.class, "Gorotuki", idxID + 559, DQR.instance, 250, 1, false);
 
 		EntityRegistry.registerModEntity(DqmEntityGanseki.class, "GansekiOtoshi", idxID + 562, DQR.instance, 250, 1, false);
+		EntityRegistry.registerModEntity(DqmEntityBlackchack.class, "Blackchack", idxID + 563, DQR.instance, 250, 1, false);
+		EntityRegistry.registerModEntity(DqmEntitySuraimuemperor.class, "Suraimuemperor", idxID + 564, DQR.instance, 250, 1, false);
+		EntityRegistry.registerModEntity(DqmEntityDarkdoriado.class, "Darkdoriado", idxID + 565, DQR.instance, 250, 1, false);
+
+		EntityRegistry.registerModEntity(DqmEntityShadopan.class, "Shadopan", idxID + 566, DQR.instance, 250, 1, false);
+		EntityRegistry.registerModEntity(DqmEntityShadopan2.class, "Shadopan2", idxID + 567, DQR.instance, 250, 1, false);
+		EntityRegistry.registerModEntity(DqmEntityKandata.class, "Kandata", idxID + 568, DQR.instance, 250, 1, false);
+
+		EntityRegistry.registerModEntity(DqmEntityOrutega.class, "Orutega", idxID + 569, DQR.instance, 250, 1, false);
 
 	}
 }

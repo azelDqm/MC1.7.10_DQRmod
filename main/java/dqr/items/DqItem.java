@@ -63,6 +63,7 @@ import dqr.items.magic.DqmItemMagicDoruma;
 import dqr.items.magic.DqmItemMagicDragonF;
 import dqr.items.magic.DqmItemMagicDragonS;
 import dqr.items.magic.DqmItemMagicGira;
+import dqr.items.magic.DqmItemMagicHaigou;
 import dqr.items.magic.DqmItemMagicHoimi;
 import dqr.items.magic.DqmItemMagicHyado;
 import dqr.items.magic.DqmItemMagicIo;
@@ -75,6 +76,9 @@ import dqr.items.magic.DqmItemMagicRaidein;
 import dqr.items.magic.DqmItemMagicRura;
 import dqr.items.magic.DqmItemMagicRura2;
 import dqr.items.magic.DqmItemMagicRuraC;
+import dqr.items.magic.DqmItemMagicRuraSin;
+import dqr.items.magic.DqmItemMagicRuraSin2;
+import dqr.items.magic.DqmItemMagicRuraSinC;
 import dqr.items.magic.DqmItemMagicWorld;
 import dqr.items.magic.DqmItemMagicZaki;
 import dqr.items.magic.DqmItemMagicZaoriku;
@@ -625,12 +629,13 @@ public class DqItem {
 
 		DQMagics.itemZaoraru = new DqmItemMagicZaoriku((DQR.dqmMaterial.DqmMagicSouryo) , 2.0F, 2000, EnumDqmMagic.Zaoraru).setUnlocalizedName("dqm.itemZaoraru").setTextureName("dqr:Zaoraru").setCreativeTab(DQR.tabs.DqmTabMagic);
 		DQMagics.itemZaoriku = new DqmItemMagicZaoriku((DQR.dqmMaterial.DqmMagicSouryo) , 2.0F, 2000, EnumDqmMagic.Zaoriku).setUnlocalizedName("dqm.itemZaoriku").setTextureName("dqr:Zaoriku").setCreativeTab(DQR.tabs.DqmTabMagic);
-		DQMagics.itemHaigou = new DqmItemMagicNotImplemented((DQR.dqmMaterial.DqmMagicALL) , 2.0F, 2000, EnumDqmMagic.Haigou).setUnlocalizedName("dqm.itemHaigou").setTextureName("dqr:Haigou").setCreativeTab(DQR.tabs.DqmTabMagic);
+		DQMagics.itemHaigou = new DqmItemMagicHaigou((DQR.dqmMaterial.DqmMagicMamonotukai) , 2.0F, 2000, EnumDqmMagic.Haigou).setUnlocalizedName("dqm.itemHaigou").setTextureName("dqr:Haigou").setCreativeTab(DQR.tabs.DqmTabMagic);
 		DQMagics.itemHaigou2 = new DqmItemMagicNotImplemented((DQR.dqmMaterial.DqmMagicMamonotukai) , 2.0F, 2000, EnumDqmMagic.Haigou2).setUnlocalizedName("dqm.itemHaigou2").setTextureName("dqr:Haigou2").setCreativeTab(DQR.tabs.DqmTabMagic);
 		DQMagics.itemParupunte = new DqmItemMagicNotImplemented((DQR.dqmMaterial.DqmMagicAsobinin) , 2.0F, 2000, EnumDqmMagic.Parupunte).setUnlocalizedName("dqm.itemParupunte").setTextureName("dqr:Parupunte").setCreativeTab(DQR.tabs.DqmTabMagic);
 
-		DQMagics.itemRurasin = new DqmItemMagicNotImplemented((DQR.dqmMaterial.DqmMagicMahouTukai) , 2.0F, 2000, EnumDqmMagic.Rurasin).setUnlocalizedName("dqm.itemRurasin").setTextureName("dqr:Rurasin").setCreativeTab(DQR.tabs.DqmTabMagic);
-		DQMagics.itemRurasin2 = new DqmItemMagicNotImplemented((DQR.dqmMaterial.DqmMagicMahouTukai) , 2.0F, 2000, EnumDqmMagic.Rurasin2).setUnlocalizedName("dqm.itemRurasin2").setTextureName("dqr:Rurasin2").setCreativeTab(DQR.tabs.DqmTabMagic);
+		DQMagics.itemRurasin = new DqmItemMagicRuraSin((DQR.dqmMaterial.DqmMagicMahouTukai) , 2.0F, 2000, EnumDqmMagic.Rurasin).setUnlocalizedName("dqm.itemRurasin").setTextureName("dqr:Rurasin").setCreativeTab(DQR.tabs.DqmTabMagic);
+		DQMagics.itemRurasin2 = new DqmItemMagicRuraSin2((DQR.dqmMaterial.DqmMagicMahouTukai) , 2.0F, 2000, EnumDqmMagic.Rurasin2).setUnlocalizedName("dqm.itemRurasin2").setTextureName("dqr:Rurasin2").setCreativeTab(DQR.tabs.DqmTabMagic);
+		DQMagics.itemRurasinC = new DqmItemMagicRuraSinC((DQR.dqmMaterial.DqmMagicMahouTukai) , 2.0F, 2000, EnumDqmMagic.RurasinC).setUnlocalizedName("dqm.itemRurasinC").setTextureName("dqr:RurasinC").setCreativeTab(DQR.tabs.DqmTabMagic);
 
 		DQMagics.itemRaidein = new DqmItemMagicRaidein((DQR.dqmMaterial.DqmMagicYuusha) , 2.0F, 2000, EnumDqmMagic.Raidein).setUnlocalizedName("dqm.itemRaidein").setTextureName("dqr:Raidein").setCreativeTab(DQR.tabs.DqmTabMagic);
 		DQMagics.itemGigadein = new DqmItemMagicRaidein((DQR.dqmMaterial.DqmMagicYuusha) , 2.0F, 2000, EnumDqmMagic.Gigadein).setUnlocalizedName("dqm.itemGigadein").setTextureName("dqr:Gigadein").setCreativeTab(DQR.tabs.DqmTabMagic);

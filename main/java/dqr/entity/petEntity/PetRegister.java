@@ -92,6 +92,7 @@ import dqr.entity.petEntity.petEnd.DqmPetEntityKagenokisi;
 import dqr.entity.petEntity.petEnd.DqmPetEntityManemane;
 import dqr.entity.petEntity.petEnd.DqmPetEntityPandorabox;
 import dqr.entity.petEntity.petEnd.DqmPetEntityRyuiso;
+import dqr.entity.petEntity.petEnd.DqmPetEntityShadopan2;
 import dqr.entity.petEntity.petEnd.DqmPetEntityTororubonba;
 import dqr.entity.petEntity.petEtc.DqmPetEntityFurosutogizumo;
 import dqr.entity.petEntity.petEtc.DqmPetEntityGizumo;
@@ -115,6 +116,7 @@ import dqr.entity.petEntity.petHell.DqmPetEntityBosutororu;
 import dqr.entity.petEntity.petHell.DqmPetEntityBoureikensi;
 import dqr.entity.petEntity.petHell.DqmPetEntityBuraddosodo;
 import dqr.entity.petEntity.petHell.DqmPetEntityBurakkubejita;
+import dqr.entity.petEntity.petHell.DqmPetEntityDarkdoriado;
 import dqr.entity.petEntity.petHell.DqmPetEntityDarkslime;
 import dqr.entity.petEntity.petHell.DqmPetEntityDeddopekka;
 import dqr.entity.petEntity.petHell.DqmPetEntityDgizumo;
@@ -157,6 +159,7 @@ import dqr.entity.petEntity.petHell.DqmPetEntityPombom;
 import dqr.entity.petEntity.petHell.DqmPetEntityPuyon;
 import dqr.entity.petEntity.petHell.DqmPetEntityRedsaikuron;
 import dqr.entity.petEntity.petHell.DqmPetEntitySaikuropusu;
+import dqr.entity.petEntity.petHell.DqmPetEntityShadopan;
 import dqr.entity.petEntity.petHell.DqmPetEntitySirubadebiru;
 import dqr.entity.petEntity.petHell.DqmPetEntitySiryou;
 import dqr.entity.petEntity.petHell.DqmPetEntitySiryounokisi;
@@ -255,19 +258,23 @@ import dqr.entity.petEntity.petNight.DqmPetEntityUmiusi;
 import dqr.entity.petEntity.petNight.DqmPetEntityYouganmajin;
 import dqr.entity.petEntity.petSP.DqmPetEntityAtorasu;
 import dqr.entity.petEntity.petSP.DqmPetEntityBazuzu;
+import dqr.entity.petEntity.petSP.DqmPetEntityBlackchack;
 import dqr.entity.petEntity.petSP.DqmPetEntityBurasu;
 import dqr.entity.petEntity.petSP.DqmPetEntityDarkRamia;
 import dqr.entity.petEntity.petSP.DqmPetEntityFureizado;
 import dqr.entity.petEntity.petSP.DqmPetEntityGodonheddo;
+import dqr.entity.petEntity.petSP.DqmPetEntityKandata;
 import dqr.entity.petEntity.petSP.DqmPetEntityKandatakobun;
 import dqr.entity.petEntity.petSP.DqmPetEntityKinghidora;
 import dqr.entity.petEntity.petSP.DqmPetEntityKiramajinga;
 import dqr.entity.petEntity.petSP.DqmPetEntityKiratoti;
 import dqr.entity.petEntity.petSP.DqmPetEntityMashougumo;
 import dqr.entity.petEntity.petSP.DqmPetEntityMasso;
+import dqr.entity.petEntity.petSP.DqmPetEntityOrutega;
 import dqr.entity.petEntity.petSP.DqmPetEntityPisaronaito;
 import dqr.entity.petEntity.petSP.DqmPetEntityPuremiasuraimu;
 import dqr.entity.petEntity.petSP.DqmPetEntitySirubamanto;
+import dqr.entity.petEntity.petSP.DqmPetEntitySuraimuemperor;
 import dqr.entity.petEntity.petSP.DqmPetEntitySuraimujeneraru;
 import dqr.entity.petEntity.petSP.DqmPetEntityTattyan;
 import dqr.entity.petEntity.petSP.DqmPetEntityTororubakkosu;
@@ -622,5 +629,14 @@ public class PetRegister {
 		EntityRegistry.registerModEntity(DqmPetEntityDesusutoka.class, "PetDesusutoka", idxID + 561, DQR.instance, 250, 1, false);
 		//EntityRegistry.registerModEntity(DqmPetEntityKandata.class, "PetGorotuki", idxID + 559, DQR.instance, 250, 1, false);
 
+		EntityRegistry.registerModEntity(DqmPetEntityBlackchack.class, "PetBlackchack", idxID + 563, DQR.instance, 250, 1, false);
+		EntityRegistry.registerModEntity(DqmPetEntitySuraimuemperor.class, "PetSuraimuemperor", idxID + 564, DQR.instance, 250, 1, false);
+		EntityRegistry.registerModEntity(DqmPetEntityDarkdoriado.class, "PetDarkdoriado", idxID + 565, DQR.instance, 250, 1, false);
+
+		EntityRegistry.registerModEntity(DqmPetEntityShadopan.class, "PetShadopan", idxID + 566, DQR.instance, 250, 1, false);
+		EntityRegistry.registerModEntity(DqmPetEntityShadopan2.class, "PetShadopan2", idxID + 567, DQR.instance, 250, 1, false);
+
+		EntityRegistry.registerModEntity(DqmPetEntityKandata.class, "PetKandata", idxID + 568, DQR.instance, 250, 1, false);
+		EntityRegistry.registerModEntity(DqmPetEntityOrutega.class, "PetOrutega", idxID + 569, DQR.instance, 250, 1, false);
 	}
 }

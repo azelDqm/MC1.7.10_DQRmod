@@ -19,9 +19,9 @@ public class DqmTileEntityRenderFigureKandatakobun extends TileEntitySpecialRend
     private DqmModelSamayouyoroi model = new DqmModelSamayouyoroi();
 
     private float fixA = 0;
-    private float fixB = 1.8F;
+    private float fixB = 2.0F;
     private float fixC = 0;
-    private float fixD = 1.8F;
+    private float fixD = 2.0F;
 	private static final ResourceLocation DqmMobTexture = new ResourceLocation("dqr:textures/entity/mob/Kandatakobun.png");
 
     public void renderTileEntityAt(TileEntity var1, double var2, double var4, double var6, float var8)

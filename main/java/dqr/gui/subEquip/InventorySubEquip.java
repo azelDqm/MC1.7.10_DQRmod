@@ -141,10 +141,12 @@ public class InventorySubEquip implements IInventory
     	//System.out.println("===============" + ExtendedPlayerProperties2.get(ep).getFukuroOpen());
 
 
+    	/*
     	if (this.associatedChest != null)
         {
             this.associatedChest.func_145969_a();
         }
+        */
 
 
         /*
@@ -330,6 +332,18 @@ public class InventorySubEquip implements IInventory
     	return -1;
     }
 
+    public int hasPiasu2(Item par1)
+    {
+    	if(this.items[0] != null && this.items[0].getItem() == par1 && getItemDamgePercent(this.items[0]) < 90)
+    	{
+    		return 0;
+    	}else if(this.items[1] != null && this.items[1].getItem() == par1 && getItemDamgePercent(this.items[1]) < 90)
+    	{
+    		return 1;
+    	}
+    	return -1;
+    }
+
     public int hasSonota(Item par1)
     {
     	if(this.items[9] != null && this.items[9].getItem() == par1)
@@ -354,6 +368,18 @@ public class InventorySubEquip implements IInventory
     	return -1;
     }
 
+    public int hasUdewa2(Item par1)
+    {
+    	if(this.items[3] != null && this.items[3].getItem() == par1 && getItemDamgePercent(this.items[3]) < 90)
+    	{
+    		return 3;
+    	}else if(this.items[4] != null && this.items[4].getItem() == par1 && getItemDamgePercent(this.items[4]) < 90)
+    	{
+    		return 4;
+    	}
+    	return -1;
+    }
+
     public int hasYubiwa(Item par1)
     {
     	if(this.items[5] != null && this.items[5].getItem() == par1)
@@ -366,6 +392,24 @@ public class InventorySubEquip implements IInventory
     	{
     		return 7;
     	}else if(this.items[8] != null && this.items[8].getItem() == par1)
+    	{
+    		return 8;
+    	}
+    	return -1;
+    }
+
+    public int hasYubiwa2(Item par1)
+    {
+    	if(this.items[5] != null && this.items[5].getItem() == par1 && getItemDamgePercent(this.items[5]) < 90)
+    	{
+    		return 5;
+    	}else if(this.items[6] != null && this.items[6].getItem() == par1 && getItemDamgePercent(this.items[6]) < 90)
+    	{
+    		return 6;
+    	}else if(this.items[7] != null && this.items[7].getItem() == par1 && getItemDamgePercent(this.items[7]) < 90)
+    	{
+    		return 7;
+    	}else if(this.items[8] != null && this.items[8].getItem() == par1 && getItemDamgePercent(this.items[8]) < 90)
     	{
     		return 8;
     	}
@@ -388,5 +432,14 @@ public class InventorySubEquip implements IInventory
     		return 11;
     	}
     	return -1;
+    }
+
+    public int getItemDamgePercent(ItemStack par1)
+    {
+     	int ret = 0;
+
+    	ret = par1.getItemDamage() * 100 / par1.getMaxDamage();
+
+    	return ret;
     }
 }

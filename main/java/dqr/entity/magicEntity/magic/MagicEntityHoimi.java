@@ -178,7 +178,7 @@ public class MagicEntityHoimi extends MagicEntity implements IProjectile{
     public void onUpdate()
     {
         super.onUpdate();
-
+        //System.out.println("TEST0 : ");
         if(this.isDoSetDead(this, shootingEntity))
         {
         	this.setDead();
@@ -372,10 +372,11 @@ public class MagicEntityHoimi extends MagicEntity implements IProjectile{
                         	//EntityLiving elv = (EntityLiving)this.shootingEntity;
 
                         	//ダメージを与えることに成功したら以下の処理を行う
+                			//System.out.println("TEST1 : " + target.entityHit.getCommandSenderName());
                             if (target.entityHit instanceof EntityLivingBase)
                             {
                             	EntityLivingBase eb = (EntityLivingBase)this.shootingEntity;;
-
+                            	//System.out.println("TEST2 : " + eb.getCommandSenderName());
                             	if(eb.getHealth() + this.damage > eb.getMaxHealth())
                             	{
                             		eb.setHealth(eb.getMaxHealth());
@@ -403,11 +404,12 @@ public class MagicEntityHoimi extends MagicEntity implements IProjectile{
                             }
                 		}else
                 		{
+                			//System.out.println("TEST1 : " + target.entityHit.getCommandSenderName());
 	                		//ダメージを与えることに成功したら以下の処理を行う
 	                        if (target.entityHit instanceof EntityLivingBase)
 	                        {
 	                        	EntityLivingBase eb = (EntityLivingBase)target.entityHit;
-
+	                        	//System.out.println("TEST2 : " + this.damage);
 	                        	if(eb instanceof DqmPetBase && eb.getHealth() <= 0.1F)
 	                        	{
 	                        		;
@@ -415,9 +417,11 @@ public class MagicEntityHoimi extends MagicEntity implements IProjectile{
 	                        	{
 		                        	if(eb.getHealth() + this.damage > eb.getMaxHealth())
 		                        	{
+		                        		//System.out.println("TEST3");
 		                        		eb.setHealth(eb.getMaxHealth());
 		                        	}else
 		                        	{
+		                        		//System.out.println("TEST4");
 		                        		eb.setHealth(eb.getHealth() + (float)this.damage);
 		                        	}
 

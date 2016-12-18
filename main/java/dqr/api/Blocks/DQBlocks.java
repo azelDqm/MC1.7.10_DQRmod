@@ -84,4 +84,10 @@ public class DQBlocks {
 
     public static Block DqmBlockBuilderFrame;
     public static Block DqmBlockGanseki;
+
+    public static Block DqmBlockN2;
+    public static Block DqmBlockS2;
+    public static Block DqmBlockE2;
+    public static Block DqmBlockW2;
+
 }

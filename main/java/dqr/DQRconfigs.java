@@ -23,6 +23,9 @@ public class DQRconfigs {
     public static int guiPositionTarget = 0; //(0:無し 1:HP/MP 2:STATUS 3:Armor 4:Log)
     public static int guiPositionSpeed = 1;
 
+    public static int GuiVanillaHUDVis_Health = 0;
+    public static int GuiVanillaHUDVis_Armor = 0;
+
 	public static int CLGuiVis1 = 1;
 	public static int CLGuiPos1 = 5;
 	public static int CLGuiPos1X = 0;
@@ -91,6 +94,21 @@ public class DQRconfigs {
 	public static int[] RuraC_Y = {0, 0, 0, 0, 0};
 	public static int[] RuraC_Z = {0, 0, 0, 0, 0};
 	public static int[] RuraC_Dim = {0, 0, 0, 0, 0};
+
+	public static int RuraSinC_IGF = 1;
+	public static int[] RuraSinC_X = {0, 0, 0, 0, 0, 0, 0, 0, 0};
+	public static int[] RuraSinC_Y = {0, 0, 0, 0, 0, 0, 0, 0, 0};
+	public static int[] RuraSinC_Z = {0, 0, 0, 0, 0, 0, 0, 0, 0};
+	public static int[] RuraSinC_Dim = {0, 0, 0, 0, 0, 0, 0, 0, 0};
+	public static String[] RuraSinC_Name = {"Position1",
+											"Position2",
+											"Position3",
+											"Position4",
+											"Position5",
+											"Position6",
+											"Position7",
+											"Position8",
+											"Position9"};
 
 	public static int BasiRuraC_IGF = 1;
 	public static int[] BasiRuraC_X = {0, 0, 0, 0, 0};
@@ -380,12 +398,14 @@ public class DQRconfigs {
     public static int petPermGiveExpItems = 1;
     public static int petPermRevive = 1;
     public static int petPermUseMagicRoll = 2;
+    public static int petPermUseMonsterMix = 2;
     public static int petPermUseEraser = 2;
     public static int petPermRewriteOwner = 2;
     public static int petPermPetSitting = 2;
     public static int petPermOpenInventory = 0;
 
     public static int permUseBakudanisi = 2;
+    public static int gurdBakudanisiChest = 0;
     public static int permUseShinkanoHiseki = 2;
 
     public static int damageDigits = 0;
@@ -625,6 +645,7 @@ public class DQRconfigs {
 		petPermUseEraser = config.get("Monstar taming permission settings","Use eraser items (0:allow only owner 1:allow for all player 2:allow owner and OP)", petPermUseEraser).getInt();
 		petPermRewriteOwner = config.get("Monstar taming permission settings","pet owner rewrite when pet wake (0:allow only owner 1:allow for all player 2:allow owner and OP)", petPermRewriteOwner).getInt();
 		petPermUseMagicRoll = config.get("Monstar taming permission settings","Use magic roll item(0:allow only owner 1:allow for all player 2:allow owner and OP)", petPermUseMagicRoll).getInt();
+		petPermUseMonsterMix = config.get("Monstar taming permission settings","Use monster mix magic(0:allow only owner 1:allow for all player 2:allow owner and OP)", petPermUseMonsterMix).getInt();
 		petPermPetSitting = config.get("Monstar taming permission settings","Pet sitting (0:allow only owner 1:allow for all player 2:allow owner and OP)", petPermPetSitting).getInt();
 		petPermOpenInventory = config.get("Monstar taming permission settings","Pet inventorty open (0:allow only owner 2:allow owner and OP)", petPermOpenInventory).getInt();
 
@@ -635,6 +656,7 @@ public class DQRconfigs {
 		permBuilder4 = config.get("Item use permission","BuilderIdoMedal", permBuilder4, "allow use BuilderIdoMedal (0:prohibit 1:allow only OP 2:allow for all player)").getInt();
 
 		permUseBakudanisi = config.get("Item use permission","Bakudanisi", permUseBakudanisi, "allow use Bakudanisi (0:prohibit 1:allow only OP 2:allow for all player)").getInt();
+
 		permUseShinkanoHiseki = config.get("Item use permission","ShinkanoHiseki", permUseShinkanoHiseki, "allow use ShinkanoHiseki (0:prohibit 1:allow only OP 2:allow for all player)").getInt();
 
 		needBuilderFrame1 = config.get("BuilderDama use condition","BuilderDama", needBuilderFrame1, "Use BuilderDama required builder frame(0:false 1:true)").getInt();
@@ -700,6 +722,8 @@ public class DQRconfigs {
 		magicEpDein = config.get("Player magicSpecialEffect Settings","Dein with thunder", magicEpDein , "0:disable 1:enable").getInt();
 		magicEpCallMagma = config.get("Player magicSpecialEffect Settings","Call magma with water blocking", magicEpCallMagma , "0:disable 1:enable").getInt();
 		magicEpUminari = config.get("Player magicSpecialEffect Settings","Uminari with magma blocking", magicEpUminari , "0:disable 1:enable").getInt();
+
+		gurdBakudanisiChest = config.get("Player magicSpecialEffect Settings","Range of Chest guard for Io and Bakudanisi world break", gurdBakudanisiChest).getInt();
 
 		config.setCategoryComment("Status recaluc", "this setting is status recaluculations cause bug");
 		recalcLvStatus1 = config.get("Status recaluc","cause over Lv99", recalcLvStatus1 , "0:disable 1:enable").getInt();
@@ -991,6 +1015,11 @@ public class DQRconfigs {
 		CLGuiPartyPosY = config.get("GamePlayPartyPlayGUI","GUI Position fix Y", CLGuiPartyPosY, "GUI position fix pixels from GUI BasePosition").getInt();
 		CLGuiPartyReturnLine = config.get("GamePlayPartyPlayGUI","GUI Return line", CLGuiPartyReturnLine, "GUI return line ").getInt();
 
+		config.setCategoryComment("Vanilla HUD Visible Settings", "Armor and Health HUD visible settings");
+		GuiVanillaHUDVis_Health = config.get("Vanilla HUD Visible Settings","Health HUD visible", GuiVanillaHUDVis_Health ,"0=false 1=true").getInt();
+		GuiVanillaHUDVis_Armor = config.get("Vanilla HUD Visible Settings","Armor HUD visible", GuiVanillaHUDVis_Armor ,"0=false 1=true").getInt();
+
+
 		config.save();
 	}
 
@@ -1066,6 +1095,23 @@ public class DQRconfigs {
 		RuraC_Y[EnumDqmMagic.RuraYC.getType()] = config.get("RuraC(Yellow) Coordinates","RuraCYellow_Y", RuraC_Y[EnumDqmMagic.RuraYC.getType()] ,"jump to posY setting").getInt();
 		RuraC_Z[EnumDqmMagic.RuraYC.getType()] = config.get("RuraC(Yellow) Coordinates","RuraCYellow_Z", RuraC_Z[EnumDqmMagic.RuraYC.getType()] ,"jump to posZ setting").getInt();
 		RuraC_Dim[EnumDqmMagic.RuraYC.getType()] = config.get("RuraC(Yellow) Coordinates","RuraCYellow_Dim", RuraC_Dim[EnumDqmMagic.RuraYC.getType()] ,"only use dimension setting. You can use this magic at this setting Dimension").getInt();
+
+
+/////////////////////////////
+
+		for(int cnt = 0; cnt < 9; cnt++)
+		{
+			config.setCategoryComment("RuraSinC(" + (cnt + 1) +") Coordinates", "RuraSinC(" + (cnt + 1) +") Cordinates settings");
+			RuraSinC_X[cnt] = config.get("RuraSinC(" + (cnt + 1) +") Coordinates","RuraSinC" + (cnt + 1) +"_X", RuraSinC_X[cnt], "jump to posX setting").getInt();
+			RuraSinC_Y[cnt] = config.get("RuraSinC(" + (cnt + 1) +") Coordinates","RuraSinC" + (cnt + 1) +"_Y", RuraSinC_Y[cnt] ,"jump to posY setting").getInt();
+			RuraSinC_Z[cnt] = config.get("RuraSinC(" + (cnt + 1) +") Coordinates","RuraSinC" + (cnt + 1) +"_Z", RuraSinC_Z[cnt] ,"jump to posZ setting").getInt();
+			RuraSinC_Dim[cnt] = config.get("RuraSinC(" + (cnt + 1) +") Coordinates","RuraSinC" + (cnt + 1) +"_Dim", RuraSinC_Dim[cnt] ,"only use dimension setting. You can use this magic at this setting Dimension").getInt();
+			RuraSinC_Name[cnt] = config.get("RuraSinC(" + (cnt + 1) +") Coordinates","RuraSinC" + (cnt + 1) +"_PositionName", RuraSinC_Name[cnt] ,"Position name.").getString();
+		}
+
+
+///////////////////////////////
+
 
 		config.setCategoryComment("KimeraC Main", "KimeraC Main settings");
 		KimeraC_IGF = config.get("KimeraC Main","KimeraC_InGameFix", KimeraC_IGF, "allow in game cordinates fix (0:prohibit 1:allow only OP 2:allow for all player)").getInt();
@@ -1436,6 +1482,29 @@ public class DQRconfigs {
 		KimeraC_Dim[EnumDqmMagic.RuraYC.getType()] = cfg_rura.get("KimeraC(Yellow) Coordinates","KimeraCYellow_Dim", KimeraC_Dim[EnumDqmMagic.RuraYC.getType()] ,"only use dimension setting. You can use this magic at this setting Dimension").getInt();
 
 	}
+
+
+	public void setRuraSinCoordinates(int select, int x, int y, int z, int dim)
+	{
+		cfg_rura.load();
+
+		cfg_rura.setCategoryComment("RuraSinC(" + select + ") Coordinates", "RuraSinC Cordinates settings");
+		cfg_rura.get("RuraSinC(" + select + ") Coordinates","RuraSinC" + (select + 1) +"_X", RuraSinC_X[select], "jump to posX setting").set(x);
+		cfg_rura.get("RuraSinC(" + select + ") Coordinates","RuraSinC" + (select + 1) +"_Y", RuraSinC_Y[select] ,"jump to posY setting").set(y);
+		cfg_rura.get("RuraSinC(" + select + ") Coordinates","RuraSinC" + (select + 1) +"_Z", RuraSinC_Z[select] ,"jump to posZ setting").set(z);
+		cfg_rura.get("RuraSinC(" + select + ") Coordinates","RuraSinC" + (select + 1) +"_Dim", RuraSinC_Dim[select] ,"only use dimension setting. You can use this magic at this setting Dimension").set(dim);
+
+		cfg_rura.save();
+
+		cfg_rura.load();
+		RuraSinC_X[select] = cfg_rura.get("RuraSinC(" + (select + 1) + ") Coordinates","RuraSinC" + (select + 1) +"_X", RuraSinC_X[EnumDqmMagic.RuraSinC.getType()], "jump to posX setting").getInt();
+		RuraSinC_Y[select] = cfg_rura.get("RuraSinC(" + (select + 1) + ") Coordinates","RuraSinC" + (select + 1) +"_Y", RuraSinC_Y[EnumDqmMagic.RuraSinC.getType()] ,"jump to posY setting").getInt();
+		RuraSinC_Z[select] = cfg_rura.get("RuraSinC(" + (select + 1) + ") Coordinates","RuraSinC" + (select + 1) +"_Z", RuraSinC_Z[EnumDqmMagic.RuraSinC.getType()] ,"jump to posZ setting").getInt();
+		RuraSinC_Dim[select] = cfg_rura.get("RuraSinC(" + (select + 1) + ") Coordinates","RuraSinC" + (select + 1) +"_Dim", RuraSinC_Dim[EnumDqmMagic.RuraSinC.getType()] ,"only use dimension setting. You can use this magic at this setting Dimension").getInt();
+
+	}
+
+
 }
 
 

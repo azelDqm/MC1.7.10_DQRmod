@@ -85,6 +85,7 @@ public class DqmItemMagicWorld extends DqmItemMagicBase{
 
 		if(par3EntityPlayer.isSneaking())
 		{
+
 			if(this == DQMagics.itemCallCloud)
 			{
 				if(!par3EntityPlayer.worldObj.isRemote)
@@ -147,6 +148,14 @@ public class DqmItemMagicWorld extends DqmItemMagicBase{
 			par1ItemStack.damageItem(this.getEnumMagic().getDamage(), par3EntityPlayer);
 
 			par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.jumon", 1.0F, 1.0F);
+
+			Random rand_jukuren = new Random();
+			if(DQR.magicTable.getMAptitude(this, par3EntityPlayer) > 0 && rand_jukuren.nextInt(5) == 0)
+			{
+
+				int getJukurenExp = 1 + ExtendedPlayerProperties.get(par3EntityPlayer).getJukurenExp(ExtendedPlayerProperties.get(par3EntityPlayer).getWeapon());
+				ExtendedPlayerProperties.get(par3EntityPlayer).setJukurenExp(ExtendedPlayerProperties.get(par3EntityPlayer).getWeapon(), getJukurenExp);
+			}
 
 			if(this == DQMagics.itemCallCloud && (!par3EntityPlayer.worldObj.isRemote))
 			{

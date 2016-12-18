@@ -817,6 +817,72 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 
 	            		return true;
 	            	}
+
+	            	//配合の杖
+	            	if (itemstack.getItem() == DQMagics.itemHaigou &&
+	            		(this.func_152114_e(ep) ||
+	            		 DQR.conf.petPermUseMonsterMix == 1 ||
+	            		 (DQR.conf.petPermUseMonsterMix == 2 && opFlg)
+	            		)
+	            	   )
+	            	{
+
+	        			if (!this.worldObj.isRemote)
+	        			{
+	        				NBTTagCompound haigouPet1 = ExtendedPlayerProperties3.get(ep).getHaigouPet1();
+	        				NBTTagCompound haigouPet2 = ExtendedPlayerProperties3.get(ep).getHaigouPet2();
+
+	        				if(haigouPet1 == null || haigouPet1.hasNoTags())
+	        				{
+	        					ExtendedPlayerProperties3.get(ep).setHaigouPet1(this.makeTutuNBT(new NBTTagCompound()));
+	        					ep.addChatMessage(new ChatComponentTranslation("dqm.iteminfo.petHaigou1",new Object[] {this.getCommandSenderName(), this.JobLv[0]}));
+	        				}else if(haigouPet2 == null || haigouPet2.hasNoTags())
+	        				{
+	        					ep.addChatMessage(new ChatComponentTranslation("dqm.iteminfo.petHaigou1",new Object[] {haigouPet1.getString("PetName"), haigouPet1.getInteger("JobLv_0")}));
+	        					ExtendedPlayerProperties3.get(ep).setHaigouPet2(this.makeTutuNBT(new NBTTagCompound()));
+	        					ep.addChatMessage(new ChatComponentTranslation("dqm.iteminfo.petHaigou2",new Object[] {this.getCommandSenderName(), this.JobLv[0]}));
+	        				}else
+	        				{
+	        					ep.addChatMessage(new ChatComponentTranslation("dqm.iteminfo.petHaigou1",new Object[] {haigouPet1.getString("PetName"), haigouPet1.getInteger("JobLv_0")}));
+	        					ep.addChatMessage(new ChatComponentTranslation("dqm.iteminfo.petHaigou2",new Object[] {haigouPet2.getString("PetName"), haigouPet2.getInteger("JobLv_0")}));
+
+	        					//System.out.println("TEST:" + haigouPet1.getString("PetBaseName"));
+	        					//System.out.println("TEST2:" + haigouPet2.getString("PetBaseName"));
+	        					return true;
+	        				}
+
+	        				//System.out.println("TEST:" + haigouPet1.getString("PetBaseName"));
+	                        //NBTTagCompound nbt = tutu.getTagCompound();
+
+	                        //nbt = this.getEntityData();
+	                        //nbt.setString("PetBaseName", this.getEntityString());
+
+	                        //tutu.setTagCompound(nbt);
+	                        //tutu.setStackDisplayName((new ChatComponentTranslation("item.dqm.MahounoTutu2.name",new Object[] { this.getCommandSenderName()})).getFormattedText());
+
+	                        this.worldObj.playSoundAtEntity(this, "dqr:player.haigouin", 0.6F, 3.0F);
+	                        if(!ep.worldObj.isRemote)
+	                        {
+		                        if(chestOn)
+		                        {
+			                        InventoryPetInventory inventory = new InventoryPetInventory(this);
+			                        inventory.openInventory();
+
+			                        for(int cnt = 0; cnt < inventory.getSizeInventory(); cnt++)
+			                        {
+			                        	if(inventory.getStackInSlot(cnt) != null)
+			                        	{
+			                        		this.entityDropItem(inventory.getStackInSlot(cnt), 0.0F);
+			                        	}
+			                        }
+		                        }
+	                        }
+	                    	this.setDead();
+	        			}
+
+
+	            		return true;
+	            	}
                 }
 
             	//世界樹の葉
@@ -1321,8 +1387,8 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 		                    this.setMaxHP(type.HPDEF);
 		                    this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(type.HPDEF);
 		                    this.setMaxMP(type.MPDEF);
-		                    this.setJobTikara(this.getJob(), type.TIKARADEF);
-		                    this.setJobKasikosa(this.getJob(), type.KASIKOSADEF);
+		                    //this.setJobTikara(this.getJob(), type.TIKARADEF);
+		                    //this.setJobKasikosa(this.getJob(), type.KASIKOSADEF);
 		                    this.setHealth(this.getMaxHealth());
 		                    this.setMP(this.getMaxMP());
 		                    //System.out.println("TEST2");
@@ -2696,8 +2762,10 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
         nbt.setBoolean("isTamed", this.isTamed());
 
         nbt.setString("PetBaseName", this.getEntityString());
+        nbt.setString("PetName", this.getCommandSenderName());
         //System.out.println("Name1" + this.getEntityString());
 
+        nbt.setString("PetMobName", this.type.getPetname());
         /*
         if(chestOn)
         {
@@ -2728,8 +2796,8 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
                 this.sampleItemStack = new ItemStack(Items.wooden_sword, 1);
                 this.sampleItemStack.setTagCompound(new NBTTagCompound());
                 this.sampleItemStack.getTagCompound().setTag("Items", new NBTTagList());
-
         	}
+
         	this.sampleItemStack.writeToNBT(itemNBT);
         	nbt.setTag("sampleItemStack", itemNBT);
             /*
@@ -2764,20 +2832,23 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
     {
     	int getExpVal = 0;
 
-        getExpVal = getExpVal + par1Item.getItemExp() + this.getJobExp(this.getJob());
-        //DQR.func.debugString("doExp5:" + getExpVal);
-        this.setJobExp(this.getJob(), getExpVal);
-        //ThreadLvUpPet lvup = new ThreadLvUpPet(this);
-        //lvup.start();
-        if(DQR.conf.cfg_NoThreadUse == 1)
-        {
-            ThreadLvUpPet lvup = new ThreadLvUpPet(this);
-            lvup.start();
-        }else
-        {
-        	NoThreadProcess proc = new NoThreadProcess();
-        	proc.doLevelUpPet(this);
-        }
+    	if(!this.worldObj.isRemote)
+    	{
+	        getExpVal = getExpVal + par1Item.getItemExp() + this.getJobExp(this.getJob());
+	        //DQR.func.debugString("doExp5:" + getExpVal);
+	        this.setJobExp(this.getJob(), getExpVal);
+	        //ThreadLvUpPet lvup = new ThreadLvUpPet(this);
+	        //lvup.start();
+	        if(DQR.conf.cfg_NoThreadUse == 1)
+	        {
+	            ThreadLvUpPet lvup = new ThreadLvUpPet(this);
+	            lvup.start();
+	        }else
+	        {
+	        	NoThreadProcess proc = new NoThreadProcess();
+	        	proc.doLevelUpPet(this);
+	        }
+    	}
     }
 
     /*

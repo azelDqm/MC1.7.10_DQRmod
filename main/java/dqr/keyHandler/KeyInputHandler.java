@@ -8,6 +8,27 @@ public class KeyInputHandler {
     //キーが“押された時”に呼ばれる。“押しっぱなし”の判定は別途用意する必要あり。
     @SubscribeEvent
     public void KeyHandlingEvent(KeyInputEvent event) {
+
+    	/*
+    	GameSettings settings = Minecraft.getMinecraft().gameSettings;
+    	System.out.println("AAAAAAAAA");
+    	if(settings != null && settings.keyBindSneak.isPressed())
+    	{
+    		System.out.println("BBBBBBBB");
+    		EntityPlayer ep = Minecraft.getMinecraft().thePlayer;
+
+
+    		if(ExtendedPlayerProperties3.get(ep).tooltipInfoFlg)
+    		{
+    			System.out.println("TEST!!!!!!!!!!!!!");
+    		}else
+    		{
+    			System.out.println("TEST???????????");
+    		}
+    	}
+    	*/
+
+
     	if (DQR.CLKeyBind.keyGuiPositionMode.isPressed()) {
     		DQR.conf.guiPositionMode = DQR.conf.guiPositionMode == 0? 1: 0;
 

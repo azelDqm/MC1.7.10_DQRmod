@@ -1,9 +1,11 @@
 package dqr.entity.throwingEntity.throwItem;
 
+import net.minecraft.block.BlockChest;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
+import dqr.DQR;
 
 public class ThrowItemEntityBakudanisi extends ThrowItemEntity
 {
@@ -63,6 +65,30 @@ public class ThrowItemEntityBakudanisi extends ThrowItemEntity
 
         if (!this.worldObj.isRemote)
         {
+        	if(DQR.conf.gurdBakudanisiChest > 0)
+        	{
+                //this.worldObj.playSoundAtEntity(this, "random.glass", 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
+                int sPosX = (int)this.posX;
+                int sPosY = (int)this.posY;
+                int sPosZ = (int)this.posZ;
+                int range = DQR.conf.gurdBakudanisiChest;
+
+                for (int l = sPosX - range; l <= sPosX + range; ++l)
+                {
+                    for (int i1 = sPosY - range; i1 <= sPosY + range; ++i1)
+                    {
+                        for (int j1 = sPosZ - range; j1 <= sPosZ + range; ++j1)
+                        {
+                            if (this.worldObj.getBlock(l, i1, j1) instanceof BlockChest)
+                            {
+                            	this.setDead();
+                                return;
+                            }
+                        }
+                    }
+                }
+        	}
+
         	this.worldObj.createExplosion(this, this.posX, this.posY, this.posZ, 3.0F, true);
             this.setDead();
         }

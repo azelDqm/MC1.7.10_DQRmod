@@ -290,8 +290,8 @@ public class LivingEventHandler {
 					ExtendedPlayerProperties.get(killer).setJukurenExp(EnumDqmWeapon.DqmVanillaS.getId(), getJukurenExp);
 				}else if(handItem != null && handItem.getItem() instanceof DqmItemMagicBase)
 				{
-					int[] magicTable = DQR.magicTable.getMagicLvTable(handItem.getItem());
-					if(magicTable != null && magicTable[ExtendedPlayerProperties.get(killer).getJob()] > 0)
+					//int[] magicTable = DQR.magicTable.getMagicLvTable(handItem.getItem());
+					if(DQR.magicTable.getMAptitude(handItem.getItem(), killer) > 0)
 					{
 						getJukurenExp = 1 + ExtendedPlayerProperties.get(killer).getJukurenExp(ExtendedPlayerProperties.get(killer).getWeapon());
 						ExtendedPlayerProperties.get(killer).setJukurenExp(ExtendedPlayerProperties.get(killer).getWeapon(), getJukurenExp);
@@ -883,7 +883,7 @@ public class LivingEventHandler {
     		EntityPlayer ep = (EntityPlayer)event.entityLiving;
     		Random rand = new Random();
 
-			if(event.entityLiving instanceof EntityPlayer)
+			if(event.entityLiving instanceof EntityPlayer && !event.entityLiving.worldObj.isRemote)
 			{
 				EntityPlayer pl = (EntityPlayer)event.entityLiving;
 
@@ -970,7 +970,7 @@ public class LivingEventHandler {
 			    	}
 
 			    	//命の指輪回復処理
-			    	if(subEquip.hasYubiwa(DQAccessories.itemInotinoyubiwa) != -1)
+			    	if(subEquip.hasYubiwa2(DQAccessories.itemInotinoyubiwa) != -1)
 			    	{
 	    				if(ep.getHealth() < ep.getMaxHealth())
 	    				{
@@ -983,7 +983,7 @@ public class LivingEventHandler {
 			    	}
 
 			    	//祈りの指輪回復処理
-			    	if(subEquip.hasYubiwa(DQAccessories.itemInorinoyubiwa) != -1)
+			    	if(subEquip.hasYubiwa2(DQAccessories.itemInorinoyubiwa) != -1)
 			    	{
 		    			int mp = ExtendedPlayerProperties.get(ep).getMP();
 		    			if(ExtendedPlayerProperties.get(ep).getMaxMP() > mp)
@@ -997,7 +997,7 @@ public class LivingEventHandler {
 			    	}
 
 			    	//癒しの腕輪
-			    	if(subEquip.hasUdewa(DQAccessories.itemIyasinoudewa) != -1)
+			    	if(subEquip.hasUdewa2(DQAccessories.itemIyasinoudewa) != -1)
 			    	{
 	    				if(ep.getHealth() < ep.getMaxHealth())
 	    				{
@@ -1008,9 +1008,8 @@ public class LivingEventHandler {
 	    					subEquip.setInventorySlotContents(subEquip.hasUdewa(DQAccessories.itemIyasinoudewa), stack);
 	    				}
 			    	}
-
-			    	subEquip.closeInventory();
     			}
+		    	subEquip.closeInventory();
 			}
 
     		pe = ep.getActivePotionEffect(DQPotionMinus.debuffRariho);

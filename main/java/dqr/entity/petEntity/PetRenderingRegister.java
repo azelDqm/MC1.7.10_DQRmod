@@ -91,6 +91,7 @@ import dqr.entity.petEntity.petEnd.DqmPetEntityKagenokisi;
 import dqr.entity.petEntity.petEnd.DqmPetEntityManemane;
 import dqr.entity.petEntity.petEnd.DqmPetEntityPandorabox;
 import dqr.entity.petEntity.petEnd.DqmPetEntityRyuiso;
+import dqr.entity.petEntity.petEnd.DqmPetEntityShadopan2;
 import dqr.entity.petEntity.petEnd.DqmPetEntityTororubonba;
 import dqr.entity.petEntity.petEtc.DqmPetEntityFurosutogizumo;
 import dqr.entity.petEntity.petEtc.DqmPetEntityGizumo;
@@ -114,6 +115,7 @@ import dqr.entity.petEntity.petHell.DqmPetEntityBosutororu;
 import dqr.entity.petEntity.petHell.DqmPetEntityBoureikensi;
 import dqr.entity.petEntity.petHell.DqmPetEntityBuraddosodo;
 import dqr.entity.petEntity.petHell.DqmPetEntityBurakkubejita;
+import dqr.entity.petEntity.petHell.DqmPetEntityDarkdoriado;
 import dqr.entity.petEntity.petHell.DqmPetEntityDarkslime;
 import dqr.entity.petEntity.petHell.DqmPetEntityDeddopekka;
 import dqr.entity.petEntity.petHell.DqmPetEntityDgizumo;
@@ -156,6 +158,7 @@ import dqr.entity.petEntity.petHell.DqmPetEntityPombom;
 import dqr.entity.petEntity.petHell.DqmPetEntityPuyon;
 import dqr.entity.petEntity.petHell.DqmPetEntityRedsaikuron;
 import dqr.entity.petEntity.petHell.DqmPetEntitySaikuropusu;
+import dqr.entity.petEntity.petHell.DqmPetEntityShadopan;
 import dqr.entity.petEntity.petHell.DqmPetEntitySirubadebiru;
 import dqr.entity.petEntity.petHell.DqmPetEntitySiryou;
 import dqr.entity.petEntity.petHell.DqmPetEntitySiryounokisi;
@@ -254,19 +257,23 @@ import dqr.entity.petEntity.petNight.DqmPetEntityUmiusi;
 import dqr.entity.petEntity.petNight.DqmPetEntityYouganmajin;
 import dqr.entity.petEntity.petSP.DqmPetEntityAtorasu;
 import dqr.entity.petEntity.petSP.DqmPetEntityBazuzu;
+import dqr.entity.petEntity.petSP.DqmPetEntityBlackchack;
 import dqr.entity.petEntity.petSP.DqmPetEntityBurasu;
 import dqr.entity.petEntity.petSP.DqmPetEntityDarkRamia;
 import dqr.entity.petEntity.petSP.DqmPetEntityFureizado;
 import dqr.entity.petEntity.petSP.DqmPetEntityGodonheddo;
+import dqr.entity.petEntity.petSP.DqmPetEntityKandata;
 import dqr.entity.petEntity.petSP.DqmPetEntityKandatakobun;
 import dqr.entity.petEntity.petSP.DqmPetEntityKinghidora;
 import dqr.entity.petEntity.petSP.DqmPetEntityKiramajinga;
 import dqr.entity.petEntity.petSP.DqmPetEntityKiratoti;
 import dqr.entity.petEntity.petSP.DqmPetEntityMashougumo;
 import dqr.entity.petEntity.petSP.DqmPetEntityMasso;
+import dqr.entity.petEntity.petSP.DqmPetEntityOrutega;
 import dqr.entity.petEntity.petSP.DqmPetEntityPisaronaito;
 import dqr.entity.petEntity.petSP.DqmPetEntityPuremiasuraimu;
 import dqr.entity.petEntity.petSP.DqmPetEntitySirubamanto;
+import dqr.entity.petEntity.petSP.DqmPetEntitySuraimuemperor;
 import dqr.entity.petEntity.petSP.DqmPetEntitySuraimujeneraru;
 import dqr.entity.petEntity.petSP.DqmPetEntityTattyan;
 import dqr.entity.petEntity.petSP.DqmPetEntityTororubakkosu;
@@ -360,6 +367,13 @@ import dqr.entity.petEntity.render2.DqmRenderPetTororubonba;
 import dqr.entity.petEntity.render2.DqmRenderPetTororuking;
 import dqr.entity.petEntity.render2.DqmRenderPetTumurinmama;
 import dqr.entity.petEntity.render2.DqmRenderPetUragirikozou;
+import dqr.entity.petEntity.render3.DqmRenderPetBlackchack;
+import dqr.entity.petEntity.render3.DqmRenderPetDarkdoriado;
+import dqr.entity.petEntity.render3.DqmRenderPetKandata;
+import dqr.entity.petEntity.render3.DqmRenderPetOrutega;
+import dqr.entity.petEntity.render3.DqmRenderPetShadopan;
+import dqr.entity.petEntity.render3.DqmRenderPetShadopan2;
+import dqr.entity.petEntity.render3.DqmRenderPetSuraimuemperor;
 
 public class PetRenderingRegister {
 
@@ -678,5 +692,14 @@ public class PetRenderingRegister {
 		RenderingRegistry.registerEntityRenderingHandler(DqmPetEntityEriminator.class, new DqmRenderPetEriminator());
 		RenderingRegistry.registerEntityRenderingHandler(DqmPetEntityDesusutoka.class, new DqmRenderPetDesusutoka());
 
+		RenderingRegistry.registerEntityRenderingHandler(DqmPetEntityBlackchack.class, new DqmRenderPetBlackchack());
+		RenderingRegistry.registerEntityRenderingHandler(DqmPetEntitySuraimuemperor.class, new DqmRenderPetSuraimuemperor());
+		RenderingRegistry.registerEntityRenderingHandler(DqmPetEntityDarkdoriado.class, new DqmRenderPetDarkdoriado());
+
+		RenderingRegistry.registerEntityRenderingHandler(DqmPetEntityShadopan.class, new DqmRenderPetShadopan());
+		RenderingRegistry.registerEntityRenderingHandler(DqmPetEntityShadopan2.class, new DqmRenderPetShadopan2());
+
+		RenderingRegistry.registerEntityRenderingHandler(DqmPetEntityKandata.class, new DqmRenderPetKandata());
+		RenderingRegistry.registerEntityRenderingHandler(DqmPetEntityOrutega.class, new DqmRenderPetOrutega());
 	}
 }

@@ -2,16 +2,23 @@ package dqr.addons;
 
 import java.io.File;
 
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
 import net.minecraft.world.gen.structure.MapGenStructureIO;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.registry.EntityRegistry;
+import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.VillagerRegistry;
 import dqr.DQR;
 import dqr.addons.mceconomy2.ComponentVillageBankMPHouse;
 import dqr.addons.mceconomy2.DqrEntityNPCBankMP;
 import dqr.addons.mceconomy2.VillageCreationHandleBankMP;
+import dqr.addons.twilightForest.DqmItemTwilightFigureDummy;
+import dqr.addons.twilightForest.FuncRejectUncraft;
+import dqr.addons.twilightForest.FuncUncraftHook;
+import dqr.addons.twilightForest.SS2drawFixHandler;
 
 public class DqrAddon {
 
@@ -22,6 +29,8 @@ public class DqrAddon {
 	public static String ss2Name = "SextiarySector";
 	public static String ss2AddName = "DQRmodSS2addon";
 	public static String tofuName = "TofuCraft";
+	public static String tasogareName = "TwilightForest";
+	public static String tconstName = "TConstruct";
 	public static boolean bopIsLoad = false;
 	public static boolean galactiIsLoad = false;
 	public static boolean mce2IsLoad = false;
@@ -29,10 +38,23 @@ public class DqrAddon {
 	public static boolean ss2IsLoad = false;
 	public static boolean ss2AddIsLoad = false;
 	public static boolean tofuIsLoad = false;
+	public static boolean tasogareIsLoad = false;
+	public static boolean tconstIsLoad = false;
+
+	public static int bopIsEnable = 0;
+	public static int galactiIsEnable = 0;
+	public static int mce2IsEnable = 0;
+	public static int amt2IsEnable = 0;
+	public static int ss2IsEnable = 0;
+	public static int ss2AddIsEnable = 0;
+	public static int tofuIsEnable = 0;
+	public static int tasogareIsEnable = 0;
+	public static int tconstIsEnable = 0;
 
 	public static DqrAddonGalacticraft addonGalacticraft;
 	public static DqrAddonMCEconomy2 addonMCEconomy2;
 	public static DqrAddonBiomesOPlenty addonBiomeOPlenty;
+	public static DqrAddonSextiarySector2 addonSextiarySector2;
 
 	public static Configuration cfg_addons;
 
@@ -46,10 +68,34 @@ public class DqrAddon {
 	public int objPriceMetaru = 1000;
 	public int mce2NPCBankMPId = 5001;
 	public int rateMP = 10000; //1000Gあたりのレート
-	
-	public int mce2IsEnabled = 0;
 
+	//public int mce2IsEnabled = 0;
 
+	public Item itemTwilightFigureDummy = null;
+
+	public static FuncRejectUncraft funcUncraft;
+	public static FuncUncraftHook funcUncraftHook;
+	public static String[] rejectUncraft = new String[]
+			{
+				"DQMIIINext:ItemMegaminoinori0",
+				"DQMIIINext:ItemMegaminoinori1",
+				"DQMIIINext:ItemMegaminoinori2",
+				"DQMIIINext:ItemMegaminoinori3",
+				"DQMIIINext:ItemMegaminoinori4",
+				"DQMIIINext:ItemMegaminoinori5",
+				"DQMIIINext:ItemMegaminoinori6",
+				"DQMIIINext:ItemMegaminoinori7",
+				"DQMIIINext:ItemMegaminoinori8",
+				"DQMIIINext:ItemMegaminoinori9",
+				"DQMIIINext:ItemMegaminoinori10",
+				"DQMIIINext:ItemSinkanohiseki",
+				"DQMIIINext:BlockWaterBlock",
+				"DQMIIINext:BlockWaterBlockLight",
+				"DQMIIINext:ItemNiku1",
+				"DQMIIINext:ItemNiku2",
+				"DQMIIINext:ItemNiku3",
+				"DQMIIINext:ItemNiku4"
+			};
 
 	public DqrAddon()
 	{
@@ -60,11 +106,14 @@ public class DqrAddon {
 		ss2IsLoad = Loader.isModLoaded(ss2Name);
 		ss2AddIsLoad = Loader.isModLoaded(ss2AddName);
 		tofuIsLoad = Loader.isModLoaded(tofuName);
+		tasogareIsLoad = Loader.isModLoaded(tasogareName);
+		tconstIsLoad = Loader.isModLoaded(tconstName);
 	}
+
 
 	public void setAddons()
 	{
-		if(bopIsLoad || galactiIsLoad || amt2IsLoad || ss2IsLoad || tofuIsLoad)
+		if(bopIsLoad || galactiIsLoad || amt2IsLoad || ss2IsLoad || tofuIsLoad || tasogareIsLoad || tconstIsLoad)
 		{
 			cfg_addons = new Configuration(new File(DQR.proxy.getDir(), "config/DQMIIINext/DQMIIINext_Addons.cfg"));
 			cfg_addons.load();
@@ -72,8 +121,8 @@ public class DqrAddon {
 
 			if(DQR.addons.galactiIsLoad)
 			{
-				int  flg = cfg_addons.get("Addon enabler","addon for Galacticraft", 1 , "0:disable 1:enable").getInt();;
-				if(flg > 0)
+				galactiIsEnable = cfg_addons.get("Addon enabler","addon for Galacticraft", 1 , "0:disable 1:enable").getInt();;
+				if(galactiIsEnable > 0)
 				{
 					System.out.println("adding GalacticraftsAddon");
 					addonGalacticraft = new DqrAddonGalacticraft();
@@ -81,10 +130,19 @@ public class DqrAddon {
 				}
 			}
 
+			if(DQR.addons.tconstIsLoad)
+			{
+				tconstIsEnable = cfg_addons.get("Addon enabler","addon for TinkersConstruct", 1 , "0:disable 1:enable").getInt();;
+				if(tconstIsEnable > 0)
+				{
+					System.out.println("adding TinkersConstructAddon");
+				}
+			}
+
 			if(DQR.addons.mce2IsLoad)
 			{
-				mce2IsEnabled = cfg_addons.get("Addon enabler","addon for MCEconomy2", 1 , "0:disable 1:enable").getInt();;
-				if(mce2IsEnabled > 0)
+				mce2IsEnable = cfg_addons.get("Addon enabler","addon for MCEconomy2", 1 , "0:disable 1:enable").getInt();;
+				if(mce2IsEnable > 0)
 				{
 					System.out.println("adding MCEconomy2Addon");
 
@@ -114,13 +172,53 @@ public class DqrAddon {
 
 			if(!DQR.addons.ss2AddIsLoad && DQR.addons.ss2IsLoad)
 			{
-				int  flg = cfg_addons.get("Addon enabler","addon for SextiarySector2", 1 , "0:disable 1:enable").getInt();;
-				if(flg > 0)
+				ss2IsEnable = cfg_addons.get("Addon enabler","addon for SextiarySector2", 1 , "0:disable 1:enable").getInt();;
+				if(ss2IsEnable > 0)
 				{
+					addonSextiarySector2 = new DqrAddonSextiarySector2();
+					addonSextiarySector2.addRecipes();
 					System.out.println("adding SextiarySector2Addon");
 					MinecraftForge.EVENT_BUS.register(new DqrAddonSextiarySector2());
 				}
 			}
+
+			//MinecraftForge.EVENT_BUS.register(new SS2drawFixHandler());
+			//itemTwilightFigureDummy = new DqmItemTwilightFigureDummy();
+			//itemTwilightFigureDummy.setMaxStackSize(1).setUnlocalizedName("dqm.itemTwilightFigureDummy").setTextureName("dqr:TwilightFigureDummy").setCreativeTab(DQR.tabs.DqmTabMisc);
+			//GameRegistry.registerItem(itemTwilightFigureDummy, "ItemTwilightFigureDummy");
+
+
+			if(DQR.addons.tasogareIsLoad)
+			{
+				rejectUncraft  = cfg_addons.get("Advanced Settings (TwilightForest)","Reject list for TFUncraftingTable", rejectUncraft , "add Items (write format  modName:Itemname(1line 1item)   ex.  hogehoget:hogelog1)").getStringList();
+				funcUncraft = new FuncRejectUncraft();
+				funcUncraftHook = new FuncUncraftHook();
+
+
+				tasogareIsEnable = cfg_addons.get("Addon enabler","addon for TwilightForest", 1 , "0:disable 1:enable").getInt();
+				if(tasogareIsEnable > 0)
+				{
+
+					if(!DQR.addons.ss2AddIsLoad && DQR.addons.ss2IsLoad)
+					{
+						int flg2 = cfg_addons.get("Addon enabler","addon for SextiarySector2", 1 , "0:disable 1:enable").getInt();
+						int flg3 = cfg_addons.get("Advanced Settings (TwilightForest with SextiarySector2)","Figure miss draw fix", 1 , "0:disable 1:enable").getInt();
+
+						if(flg2 > 0 && flg3 > 0)
+						{
+							System.out.println("adding TwilightForest with SextiarySector2 Addon");
+
+							itemTwilightFigureDummy = new DqmItemTwilightFigureDummy();
+							itemTwilightFigureDummy.setMaxStackSize(1).setUnlocalizedName("dqm.itemTwilightFigureDummy").setTextureName("dqr:TwilightFigureDummy").setCreativeTab(CreativeTabs.tabMisc);//.setCreativeTab(DQR.tabs.DqmTabMisc);
+							GameRegistry.registerItem(itemTwilightFigureDummy, "ItemTwilightFigureDummy");
+							MinecraftForge.EVENT_BUS.register(new SS2drawFixHandler());
+						}
+					}
+
+				}
+
+			}
+
 
 			if(DQR.addons.bopIsLoad)
 			{

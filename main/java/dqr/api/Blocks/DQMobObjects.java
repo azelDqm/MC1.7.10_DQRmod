@@ -301,4 +301,12 @@ public class DQMobObjects {
 	public static Block BlockObjZoma;
 	public static Block BlockObjZukkinya;
 
+	public static Block BlockObjKandata;
+	public static Block BlockObjBlackchack;
+	public static Block BlockObjSuraimuemperor;
+	public static Block BlockObjDarkdoriado;
+	public static Block BlockObjShadopan;
+	public static Block BlockObjShadopan2;
+
+	public static Block BlockObjOrutega;
 }

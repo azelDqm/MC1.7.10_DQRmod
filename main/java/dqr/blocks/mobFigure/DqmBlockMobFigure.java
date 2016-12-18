@@ -951,6 +951,27 @@ public class DqmBlockMobFigure extends BlockContainer
     	}else if(this == DQMobFigures.BlockFigureZukkinya)
     	{
     		return new DqmTileEntityFigureZukkinya();
+    	}else if(this == DQMobFigures.BlockFigureKandata)
+    	{
+    		return new DqmTileEntityFigureKandata();
+    	}else if(this == DQMobFigures.BlockFigureBlackchack)
+    	{
+    		return new DqmTileEntityFigureBlackchack();
+    	}else if(this == DQMobFigures.BlockFigureSuraimuemperor)
+    	{
+    		return new DqmTileEntityFigureSuraimuemperor();
+    	}else if(this == DQMobFigures.BlockFigureDarkdoriado)
+    	{
+    		return new DqmTileEntityFigureDarkdoriado();
+    	}else if(this == DQMobFigures.BlockFigureShadopan)
+    	{
+    		return new DqmTileEntityFigureShadopan();
+    	}else if(this == DQMobFigures.BlockFigureShadopan2)
+    	{
+    		return new DqmTileEntityFigureShadopan2();
+    	}else if(this == DQMobFigures.BlockFigureOrutega)
+    	{
+    		return new DqmTileEntityFigureOrutega();
     	}
 
     	return new DqmTileEntityFigureSura();

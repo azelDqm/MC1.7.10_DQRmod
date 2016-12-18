@@ -41,7 +41,7 @@ msg.toDamage3.txt=%sの息の根を止めた！
 msg.toDamageP.txt=%sが%sに%dダメージを与えた
 msg.toDamage2P.txt=%sが%sに%.3fダメージを与えた
 
-msg.causeBasirura.txt=%sをx:%f,y:%f,z:%fに吹き飛ばした
+msg.causeBasirura.txt=%sをx:%f, y:%f, z:%fに吹き飛ばした
 msg.causeNihuramu.txt=%sは光のかなたに消え去った
 
 msg.toSkillHit.txt=%s§e発動！
@@ -239,12 +239,14 @@ gui.weapon.18=魔法(勇者)
 gui.weapon.19=魔法(その他)
 gui.weapon.20=魔法(パラディン)
 gui.weapon.21=魔法(全職業)
+gui.weapon.23=魔法(魔物使い)
 gui.weapon.24=算盤
 gui.weapon.25=扇
 gui.weapon.26=モンスター
 gui.weapon.27=グローブ
 gui.weapon.28=鎌
 gui.weapon.29=ブレス
+
 key.setting.ModeChange=[GUI調整] GUI位置調整モード
 key.setting.ChangeSpeed=[GUI調整] GUI位置調整速度変更
 key.setting.GuiUP=[GUI調整] GUI位置 UP
@@ -1210,7 +1212,8 @@ item.dqm.itemHaigou.name=配合の杖
 item.dqm.itemHaigou2.name=配合の杖(改)
 item.dqm.itemParupunte.name=パルプンテの書
 item.dqm.itemRurasin.name=真・ルーラ
-item.dqm.itemRurasin2.name=真・ルーラ(改)
+item.dqm.itemRurasin2.name=真・ルーラ(個人用)
+item.dqm.itemRurasinC.name=真・ルーラ(改)
 item.dqm.itemRaidein.name=ライデインの杖
 item.dqm.itemGigadein.name=ギガデインの杖
 item.dqm.itemMinadein.name=ミナデインの杖
@@ -1624,8 +1627,16 @@ dqm.iteminfo.megaminoinori2=§fペットの経験値が§d%d§f上昇する。
 
 dqm.iteminfo.petLocation1=§f[ペットの現在位置]
 dqm.iteminfo.petLocation2=§fDimension: %d
-dqm.iteminfo.petLocation3=§fLocation x: %d  y: %d  z:%d
+dqm.iteminfo.petLocation3=§fLocation x:%d ,y:%d ,z:%d
 dqm.iteminfo.petLocation0=取得失敗
+
+dqm.iteminfo.petHaigou0=配合に失敗しました。
+dqm.iteminfo.petHaigou1=配合モンスター1匹目：%s Lv.%d
+dqm.iteminfo.petHaigou01=配合モンスター1匹目：なし
+dqm.iteminfo.petHaigou2=配合モンスター2匹目：%s Lv.%d
+dqm.iteminfo.petHaigou02=配合モンスター2匹目：なし
+dqm.iteminfo.petHaigou3=§cこの組み合わせは特殊な結果が出そうだ。
+dqm.iteminfo.petHaigou4=スニーク+アイテム使用で配合をキャンセルできます。
 
 dqm.iteminfo.caneat=§6[食用]
 dqm.iteminfo.hpheal=§fHP回復量:%1d-%2d
@@ -1662,6 +1673,16 @@ dqm.iteminfo.littleMedal.2.txt=他プレイヤーにメダルを送ることが�
 dqm.iteminfo.kimera.txt=座標登録：スニーク+アイテム使用＄※設定はサーバー内共通
 dqm.iteminfo.kimera2.txt=座標登録：スニーク+アイテム使用＄※設定は個人専用
 dqm.iteminfo.kimeraC.txt=座標登録：スニーク+アイテム使用(OP権限者のみ)＄設定はconfig依存
+dqm.iteminfo.kimeraLoc.1.txt=登録座標[DIM:%d, X:%d, Y:%d, Z:%d]
+dqm.iteminfo.kimeraLoc.2.txt=§6登録座標を DIM:%d§6, X:%d§6, Y:%d§6, Z:%d §6に変更しました。
+
+dqm.iteminfo.RurasinNoLoc.txt=登録座標%d [未登録]
+dqm.iteminfo.RurasinNoLoc2.txt=%s [未登録]
+dqm.iteminfo.RurasinLoc.txt=登録座標%d [DIM:%d, X:%d, Y:%d, Z:%d]
+dqm.iteminfo.RurasinLoc.txt=%s [DIM:%d, X:%d, Y:%d, Z:%d]
+dqm.iteminfo.RurasinLastLoc.txt=最後にルーラを使用した場所 [DIM:%d, X:%d, Y:%d, Z:%d]
+dqm.iteminfo.RurasinLastNoLoc.txt=最後にルーラを使用した場所 [未登録]
+
 dqm.iteminfo.builderDama.0.txt=(使用方法)
 dqm.iteminfo.builderDama.1.txt=アイテム使用でガイドフレーム生成
 dqm.iteminfo.builderDama.2.txt=再度アイテム使用でガイドフレーム削除
@@ -2078,6 +2099,9 @@ msg.rura.modeInfo.1.txt=!player.移動対象：自分 + ペット
 msg.rura.modeInfo.2.txt=!player.移動対象：自分 + ペット + 動物
 msg.rura.modeInfo.3.txt=!player.移動対象：自分 + ペット + 動物 + 村人
 
+msg.rurasin.modeInfo.0.txt=!player.モード：移動先切り替え
+msg.rurasin.modeInfo.1.txt=!player.モード：移動先指定
+
 msg.basirura.modeInfo.0.txt=!player.移動先：ランダムテレポート
 msg.basirura.modeInfo.1.txt=!player.移動先：指定座標テレポート
 
@@ -2242,8 +2266,6 @@ tile.dqm.blockKowareru6.name=金の装飾石
 tile.dqm.blockKowareru7.name=ダイヤの装飾石
 tile.dqm.blockKowareru8.name=レッドストーンの装飾石
 tile.dqm.blockKowareru9.name=エメラルドの装飾石
-tile.dqm.blockJampBlock.name=ハイジャンプブロック
-tile.dqm.blockJampBlock2.name=ジャンプブロック
 
 tile.dqm.blockHikariB2.name=矢印ブロック
 tile.dqm.blockYajirusidaidai.name=スライム矢印(橙)
@@ -2376,8 +2398,22 @@ tile.dqm.blockSZukkinya.name=ズッキーニャの黄金像(装飾品)
 tile.dqm.blockGenkotu.name=げんこつダケ
 
 tile.dqm.blockBuilderFrame.name=建築予定地枠
-tile.dqm.blockJumpBlock.name=ジャンプブロック
+tile.dqm.blockJumpBlock.name=ハイジャンプブロック
 tile.dqm.blockJumpBlock2.name=ジャンプブロック
+
+tile.dqm.blockN.name=強制移動床(北)
+tile.dqm.blockS.name=強制移動床(南)
+tile.dqm.blockW.name=強制移動床(西)
+tile.dqm.blockE.name=強制移動床(東)
+
+tile.dqm.blockN2.name=強制移動床・改(北)
+tile.dqm.blockS2.name=強制移動床・改(南)
+tile.dqm.blockW2.name=強制移動床・改(西)
+tile.dqm.blockE2.name=強制移動床・改(東)
+
+tile.dqm.blockWaterBlock.name=水ブロック
+tile.dqm.blockWaterBlockLight.name=水ブロック(光)
+
 tile.dqm.blockToramanaYuka.name=ダメージ床
 tile.dqm.blockMobSpawner.name=DQRモブスポナー
 tile.dqm.blockHakoHakoK.name=箱(装飾品)
@@ -2700,6 +2736,14 @@ tile.blockObjYouganmajin.name=ようがんまじん(オブジェクト)
 tile.blockObjZinmentyou.name=じんめんちょう(オブジェクト)
 tile.blockObjZoma.name=ゾーマ(オブジェクト)
 tile.blockObjZukkinya.name=ズッキーニャ(オブジェクト)
+
+tile.blockObjKandata.name=カンダタ(オブジェクト)
+tile.blockObjBlackchack.name=ブラックチャック(オブジェクト)
+tile.blockObjSuraimuemperor.name=スライムエンペラー(オブジェクト)
+tile.blockObjDarkdoriado.name=ダークドリアード(オブジェクト)
+tile.blockObjShadopan.name=シャドウベビー(オブジェクト)
+tile.blockObjShadopan2.name=シャドウパンサー(オブジェクト)
+
 tile.blockFigAkairai.name=アカイライ(フィギュア)
 tile.blockFigAkumanosyo.name=あくまの書(フィギュア)
 tile.blockFigAkumanotubo.name=あくまのツボ(フィギュア)
@@ -2998,6 +3042,13 @@ tile.blockFigZinmentyou.name=じんめんちょう(フィギュア)
 tile.blockFigZoma.name=ゾーマ(フィギュア)
 tile.blockFigZukkinya.name=ズッキーニャ(フィギュア)
 
+tile.blockFigKandata.name=カンダタ(フィギュア)
+tile.blockFigBlackchack.name=ブラックチャック(フィギュア)
+tile.blockFigSuraimuemperor.name=スライムエンペラー(フィギュア)
+tile.blockFigDarkdoriado.name=ダークドリアード(フィギュア)
+tile.blockFigShadopan.name=シャドウベビー(フィギュア)
+tile.blockFigShadopan2.name=シャドウパンサー(フィギュア)
+
 msg.farmerDiary.title=エンダードラゴン育成日記
 msg.farmerDiary.author=農夫スティーブ
 msg.farmerDiary.page.date.txt=[%1$d月%2$d日]
@@ -3077,3 +3128,7 @@ msg.party.join.txt=§eパーティに参加した
 msg.party.join2.txt=§e%sがパーティに参加した
 msg.party.changeleader.txt=§eパーティーリーダが%sに変更された
 msg.party.hasparty.txt=§e%sは既に参加しているパーティがあるようだ
+
+item.dqm.itemTwilightFigureDummy.name=TwilightForest実績証
+dqm.iteminfo.twilightForestDummy1=名前 : %s
+dqm.iteminfo.twilightForestDummy2=エディション : %s

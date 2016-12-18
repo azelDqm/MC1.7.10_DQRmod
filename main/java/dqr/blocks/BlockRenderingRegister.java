@@ -784,5 +784,22 @@ public class BlockRenderingRegister {
 		ClientRegistry.bindTileEntitySpecialRenderer(DqmTileEntityEnderChest3.class, new DqmTileEntityRenderEnderChest3());
 		ClientRegistry.bindTileEntitySpecialRenderer(DqmTileEntityEnderChest4.class, new DqmTileEntityRenderEnderChest4());
 		ClientRegistry.bindTileEntitySpecialRenderer(DqmTileEntityEnderChest5.class, new DqmTileEntityRenderEnderChest5());
+
+		ClientRegistry.bindTileEntitySpecialRenderer(DqmTileEntityFigureKandata.class, new DqmTileEntityRenderFigureKandata());
+		ClientRegistry.bindTileEntitySpecialRenderer(DqmTileEntityFigureBlackchack.class, new DqmTileEntityRenderFigureBlackchack());
+		ClientRegistry.bindTileEntitySpecialRenderer(DqmTileEntityFigureSuraimuemperor.class, new DqmTileEntityRenderFigureSuraimuemperor());
+		ClientRegistry.bindTileEntitySpecialRenderer(DqmTileEntityFigureDarkdoriado.class, new DqmTileEntityRenderFigureDarkdoriado());
+		ClientRegistry.bindTileEntitySpecialRenderer(DqmTileEntityFigureShadopan.class, new DqmTileEntityRenderFigureShadopan());
+		ClientRegistry.bindTileEntitySpecialRenderer(DqmTileEntityFigureShadopan2.class, new DqmTileEntityRenderFigureShadopan2());
+
+		ClientRegistry.bindTileEntitySpecialRenderer(DqmTileEntityObjKandata.class, new DqmTileEntityRenderObjKandata());
+		ClientRegistry.bindTileEntitySpecialRenderer(DqmTileEntityObjBlackchack.class, new DqmTileEntityRenderObjBlackchack());
+		ClientRegistry.bindTileEntitySpecialRenderer(DqmTileEntityObjSuraimuemperor.class, new DqmTileEntityRenderObjSuraimuemperor());
+		ClientRegistry.bindTileEntitySpecialRenderer(DqmTileEntityObjDarkdoriado.class, new DqmTileEntityRenderObjDarkdoriado());
+		ClientRegistry.bindTileEntitySpecialRenderer(DqmTileEntityObjShadopan.class, new DqmTileEntityRenderObjShadopan());
+		ClientRegistry.bindTileEntitySpecialRenderer(DqmTileEntityObjShadopan2.class, new DqmTileEntityRenderObjShadopan2());
+
+		ClientRegistry.bindTileEntitySpecialRenderer(DqmTileEntityObjOrutega.class, new DqmTileEntityRenderObjOrutega());
+		ClientRegistry.bindTileEntitySpecialRenderer(DqmTileEntityFigureOrutega.class, new DqmTileEntityRenderFigureOrutega());
 	}
 }

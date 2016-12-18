@@ -81,6 +81,29 @@ public class EnumDqmGetter {
     	return null;
     }
 
+    public EnumDqmMonster getMonsterFromName(String par1)
+    {
+    	EnumDqmMonster ret = null;
+
+    	try
+    	{
+    		EnumDqmMonster[] data = EnumDqmMonster.values();
+
+	    	for(int cnt = 0; cnt < data.length; cnt++)
+	    	{
+	    		if(data[cnt].getMobName().equalsIgnoreCase(par1))
+	    		{
+	    			return data[cnt];
+	    		}
+	    	}
+    	}catch (Exception e)
+    	{
+    		System.out.println("EnumDqmMonster getting error!!");
+    	}
+
+    	return null;
+    }
+
     public TreeMap getSkillW(int wId)
     {
     	//wId : weaponID
@@ -114,6 +137,144 @@ public class EnumDqmGetter {
     	}
 
     	return null;
+    }
+
+    public EnumDqmMobRoot getMobRootFromName(String par1)
+    {
+    	EnumDqmMobRoot[] data = EnumDqmMobRoot.values();
+
+    	for(int cnt = 0; cnt < data.length; cnt++)
+    	{
+    		if(data[cnt].getName().equalsIgnoreCase(par1))
+    		{
+    			return data[cnt];
+    		}
+    	}
+
+    	return null;
+    }
+
+    public EnumDqmMobCateg getMobCategFromName(String par1)
+    {
+    	EnumDqmMobCateg[] data = EnumDqmMobCateg.values();
+
+    	for(int cnt = 0; cnt < data.length; cnt++)
+    	{
+    		if(data[cnt].getName().equalsIgnoreCase(par1))
+    		{
+    			return data[cnt];
+    		}
+    	}
+
+    	return null;
+    }
+
+    public EnumDqmMobCateg getMobCategFromId(int Id)
+    {
+    	EnumDqmMobCateg[] data = EnumDqmMobCateg.values();
+
+    	for(int cnt = 0; cnt < data.length; cnt++)
+    	{
+    		if(data[cnt].getId() == Id)
+    		{
+    			return data[cnt];
+    		}
+    	}
+
+    	return null;
+    }
+
+    public EnumDqmMobRoot getMobRootFromHIdCateg(int hCateg, int hId)
+    {
+    	EnumDqmMobRoot[] data = EnumDqmMobRoot.values();
+
+    	for(int cnt = 0; cnt < data.length; cnt++)
+    	{
+    		if(data[cnt].getHaigouId() ==hId && data[cnt].getHaigouCateg() == hCateg)
+    		{
+    			return data[cnt];
+    		}
+    	}
+
+    	return null;
+    }
+
+    public EnumDqmPetHaigouSP getEnumDqmPetHaigouSPFromName(String pat1, String pat2)
+    {
+    	EnumDqmPetHaigouSP[] data = EnumDqmPetHaigouSP.values();
+
+    	for(int cnt = 0; cnt < data.length; cnt++)
+    	{
+    		if(data[cnt].getPar1().equalsIgnoreCase(pat1) &&
+    		   data[cnt].getPar2().equalsIgnoreCase(pat2))
+    		{
+    			return data[cnt];
+    		}
+    	}
+
+    	return null;
+    }
+
+    public EnumDqmPet getEnumDqmPetFromName(String name)
+    {
+    	EnumDqmPet ret = null;
+
+    	EnumDqmPet[] data = EnumDqmPet.values();
+
+    	for(int cnt = 0; cnt < data.length; cnt++)
+    	{
+    		if(data[cnt].getPetname().equalsIgnoreCase(name))
+    		{
+    			return data[cnt];
+    		}
+    	}
+
+    	return null;
+    }
+
+    public EnumDqmPet[] getHaigouPetList(EnumDqmMobRoot par1, EnumDqmMobCateg par2)
+    {
+    	EnumDqmPet[] ret = null;
+    	EnumDqmPet[] data = EnumDqmPet.values();
+    	EnumDqmMobCateg mob2 = par2;
+    	int resultCnt = 0;
+
+    	while(resultCnt == 0 && mob2.getId() >= 0)
+    	{
+	    	for(int cnt = 0; cnt < data.length; cnt++)
+	    	{
+	    		if(data[cnt].getPetcateg().equalsIgnoreCase(mob2.getName()) &&
+	    			data[cnt].getPetroot().equalsIgnoreCase(par1.getName()))
+	    		{
+	    			resultCnt++;
+	    		}
+	    	}
+
+	    	if(resultCnt == 0)
+	    	{
+	    		mob2 = this.getMobCategFromId(mob2.getId() - 1);
+	    	}
+    	}
+
+    	if(resultCnt > 0)
+    	{
+    		ret = new EnumDqmPet[resultCnt];
+    		resultCnt = 0;
+    		for(int cnt = 0; cnt < data.length; cnt++)
+        	{
+        		if(data[cnt].getPetcateg().equalsIgnoreCase(mob2.getName()) &&
+        			data[cnt].getPetroot().equalsIgnoreCase(par1.getName()))
+        		{
+        			ret[resultCnt] = data[cnt];
+        			resultCnt++;
+        		}
+        	}
+
+    		return ret;
+    	}else
+    	{
+    		return null;
+    	}
     }
 
 	public EnumDqmAccessory getAccessoryParam(Item par1)

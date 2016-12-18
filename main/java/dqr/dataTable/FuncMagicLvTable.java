@@ -154,7 +154,7 @@ public class FuncMagicLvTable {
 								         -1, -1, -1, -1, -1, -1, -1, -1};
 
 	public static int[] HaigouJobLv = {-1, -1, -1, -1, -1, -1, -1, -1,
-								       -1, -1, -1, -1, -1, -1, -1, -1,
+								       -1, -1, -1, 100, -1, -1, -1, -1,
 								       -1, -1, -1, -1, -1, -1, -1, -1,
 								       -1, -1, -1, -1, -1, -1, -1, -1};
 
@@ -351,6 +351,12 @@ public class FuncMagicLvTable {
 								         -1, -1, -1, -1, -1, -1, -1, -1,
 								         -1, -1, -1, -1, -1, -1, -1, -1,
 								         -1, -1, -1, -1, -1, -1, -1, -1};
+
+	public static int[] RurasinCJobLv = {-1, -1, -1, -1, 20, -1, 25, -1,
+								        -1, -1, -1, -1, -1, -1, -1, -1,
+								        -1, -1, -1, -1, -1, -1, -1, -1,
+								        -1, -1, -1, -1, -1, -1, -1, -1};
+
 
 	public static int[] RuraJobLv = {-1, -1, -1, -1, 8, -1, 10, -1,
 								     -1, -1, -1, -1, -1, -1, -1, -1,
@@ -788,6 +794,8 @@ public class FuncMagicLvTable {
 	    	lvTable = RurasinJobLv;
 	    }else if(itm == DQMagics.itemRurasin2){
 	    	lvTable = Rurasin2JobLv;
+	    }else if(itm == DQMagics.itemRurasinC){
+	    	lvTable = RurasinCJobLv;
 	    }else if(itm == DQMagics.itemRura){
 	    	lvTable = RuraJobLv;
 	    }else if(itm == DQMagics.itemRuraR){
@@ -1136,6 +1144,17 @@ public class FuncMagicLvTable {
     }
     */
 
+    public int getMAptitude(Item magic, EntityPlayer ep)
+    {
+    	int ret = 0;
+
+    	int[] lvTable = getMagicLvTable(magic);
+    	int job = ExtendedPlayerProperties.get(ep).getJob();
+
+    	ret = lvTable[job];
+    	return ret;
+    }
+
     public int[] getMagicLvTable(Item itm)
     {
 
@@ -1225,6 +1244,8 @@ public class FuncMagicLvTable {
 	    	lvTable = RurasinJobLv;
 	    }else if(itm == DQMagics.itemRurasin2){
 	    	lvTable = Rurasin2JobLv;
+	    }else if(itm == DQMagics.itemRurasinC){
+	    	lvTable = RurasinCJobLv;
 	    }else if(itm == DQMagics.itemRura){
 	    	lvTable = RuraJobLv;
 	    }else if(itm == DQMagics.itemRuraR){

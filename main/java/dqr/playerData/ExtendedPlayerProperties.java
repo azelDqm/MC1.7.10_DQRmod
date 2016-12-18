@@ -8,6 +8,9 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IExtendedEntityProperties;
 import dqr.PacketHandler;
+import dqr.items.magic.DqmItemMagicRuraSin;
+import dqr.items.magic.DqmItemMagicRuraSin2;
+import dqr.items.magic.DqmItemMagicRuraSinC;
 
 public class ExtendedPlayerProperties implements IExtendedEntityProperties {
    /* MOD固有の文字列。EntityPlayerに登録時に使用。
@@ -72,6 +75,15 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
 
     private int weapon; //0:素手 1:バニラ剣 2:剣 3:勇者剣 4:拳 5:爪 6:鎚 7:斧 8:鞭 9:槍 10:短剣 11:弓 12:投擲 13:棍
     private int[] weaponMode = new int[64]; //1:斧モード 2:ツルハシモード 3:爪モード
+
+    private double[] RuraSinX = new double[10];
+    private double[] RuraSinY = new double[10];
+    private double[] RuraSinZ = new double[10];
+    private int[] RuraSinDim = new int[10];
+    private int[] RuraSinEnable = new int[10];
+    private int RuraSinSelect;
+    private int RuraSinSelect2;
+    private int RuraSinSelectC;
 
     private double[] RuraX = new double[5];
     private double[] RuraY = new double[5];
@@ -259,6 +271,19 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
     		nbt.setInteger("KimeraDim_" + cnt, this.KimeraDim[cnt]);
     		nbt.setInteger("KimeraEnable_" + cnt, this.KimeraEnable[cnt]);
     	}
+
+    	for(int cnt = 0; cnt < RuraSinX.length; cnt++)
+    	{
+    		nbt.setDouble("RuraSinX_" + cnt, this.RuraSinX[cnt]);
+    		nbt.setDouble("RuraSinY_" + cnt, this.RuraSinY[cnt]);
+    		nbt.setDouble("RuraSinZ_" + cnt, this.RuraSinZ[cnt]);
+    		nbt.setInteger("RuraSinDim_" + cnt, this.RuraSinDim[cnt]);
+    		nbt.setInteger("RuraSinEnable_" + cnt, this.RuraSinEnable[cnt]);
+    	}
+    	nbt.setInteger("RuraSinSelect", this.RuraSinSelect);
+    	nbt.setInteger("RuraSinSelect2", this.RuraSinSelect2);
+    	nbt.setInteger("RuraSinSelectC", this.RuraSinSelectC);
+
         /*
         for(int cnt = 0; cnt < 32; cnt++)
         {
@@ -472,6 +497,18 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
     		KimeraDim[cnt] = nbt.getInteger("KimeraDim_" + cnt);
     		KimeraEnable[cnt] = nbt.getInteger("KimeraEnable_" + cnt);
     	}
+
+    	for(int cnt = 0; cnt < RuraSinX.length; cnt++)
+    	{
+    		RuraSinX[cnt] = nbt.getDouble("RuraSinX_" + cnt);
+    		RuraSinY[cnt] = nbt.getDouble("RuraSinY_" + cnt);
+    		RuraSinZ[cnt] = nbt.getDouble("RuraSinZ_" + cnt);
+    		RuraSinDim[cnt] = nbt.getInteger("RuraSinDim_" + cnt);
+    		RuraSinEnable[cnt] = nbt.getInteger("RuraSinEnable_" + cnt);
+    	}
+		RuraSinSelect = nbt.getInteger("RuraSinSelect");
+		RuraSinSelect2 = nbt.getInteger("RuraSinSelect2");
+		RuraSinSelectC = nbt.getInteger("RuraSinSelectC");
         /*
         for(int cnt = 0; cnt < 32; cnt++)
         {
@@ -1150,6 +1187,15 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
     	this.RuraEnable[par1] = par6;
     }
 
+    public void setRuraSin(int par1, double par2, double par3, double par4, int par5, int par6)
+    {
+    	this.RuraSinX[par1] = par2;
+    	this.RuraSinY[par1] = par3;
+    	this.RuraSinZ[par1] = par4;
+    	this.RuraSinDim[par1] = par5;
+    	this.RuraSinEnable[par1] = par6;
+    }
+
     public void setBasiRura(int par1, double par2, double par3, double par4, int par5, int par6)
     {
     	this.BasiRuraX[par1] = par2;
@@ -1168,6 +1214,62 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
     	this.KimeraEnable[par1] = par6;
     }
 
+    public int getRuraSinSelectX(Item item)
+    {
+    	if(item instanceof DqmItemMagicRuraSin)
+    	{
+    		return this.RuraSinSelect;
+    	}else if(item instanceof DqmItemMagicRuraSin2)
+    	{
+    		return this.RuraSinSelect2;
+    	}else if(item instanceof DqmItemMagicRuraSinC)
+    	{
+    		return this.RuraSinSelectC;
+    	}
+
+    	return -1;
+    }
+    public void setRuraSinSelectX(Item item, int par1)
+    {
+    	if(item instanceof DqmItemMagicRuraSin)
+    	{
+    		this.RuraSinSelect = par1;
+    	}else if(item instanceof DqmItemMagicRuraSin2)
+    	{
+    		this.RuraSinSelect2 = par1;
+    	}else if(item instanceof DqmItemMagicRuraSinC)
+    	{
+    		this.RuraSinSelectC = par1;
+    	}
+
+    }
+
+    public int getRuraSinSelect()
+    {
+    	return this.RuraSinSelect;
+    }
+    public void setRuraSinSelect(int par1)
+    {
+    	this.RuraSinSelect = par1;
+    }
+
+    public int getRuraSinSelect2()
+    {
+    	return this.RuraSinSelect2;
+    }
+    public void setRuraSinSelect2(int par1)
+    {
+    	this.RuraSinSelect2 = par1;
+    }
+
+    public int getRuraSinSelectC()
+    {
+    	return this.RuraSinSelectC;
+    }
+    public void setRuraSinSelectC(int par1)
+    {
+    	this.RuraSinSelectC = par1;
+    }
 
     public double[] getBasiRura(int par1)
     {
@@ -1268,6 +1370,57 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
     public double getRuraEnable(int par1)
     {
     	return this.RuraEnable[par1];
+    }
+
+
+    public double[] getRuraSin(int par1)
+    {
+    	return new double[]{this.RuraSinX[par1], this.RuraSinY[par1], this.RuraSinZ[par1], this.RuraSinDim[par1]};
+    }
+
+    public void setRuraSinX(int par1, double par2)
+    {
+    	this.RuraSinX[par1] = par2;
+    }
+    public double getRuraSinX(int par1)
+    {
+    	return this.RuraSinX[par1];
+    }
+
+    public void setRuraSinY(int par1, double par2)
+    {
+    	this.RuraSinY[par1] = par2;
+    }
+    public double getRuraSinY(int par1)
+    {
+    	return this.RuraSinY[par1];
+    }
+
+    public void setRuraSinZ(int par1, double par2)
+    {
+    	this.RuraSinZ[par1] = par2;
+    }
+    public double getRuraSinZ(int par1)
+    {
+    	return this.RuraSinZ[par1];
+    }
+
+    public void setRuraSinDim(int par1, int par2)
+    {
+    	this.RuraSinDim[par1] = par2;
+    }
+    public int getRuraSinDim(int par1)
+    {
+    	return this.RuraSinDim[par1];
+    }
+
+    public void setRuraSinEnable(int par1, int par2)
+    {
+    	this.RuraSinEnable[par1] = par2;
+    }
+    public int getRuraSinEnable(int par1)
+    {
+    	return this.RuraSinEnable[par1];
     }
 
     public double[] getKimera(int par1)

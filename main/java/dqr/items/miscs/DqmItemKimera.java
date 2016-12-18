@@ -10,13 +10,17 @@ import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.world.World;
 import dqr.DQR;
 import dqr.DqrWorldData;
+import dqr.PacketHandler;
 import dqr.api.enums.EnumColor;
+import dqr.api.enums.EnumDqmFuncPacketCode;
 import dqr.api.enums.EnumDqmMGToolMode;
 import dqr.api.enums.EnumDqmMagic;
 import dqr.api.enums.EnumDqmWeaponMode;
 import dqr.api.event.DqrRuraEvent;
 import dqr.items.base.DqmItemMiscBase;
+import dqr.packetMessage.MessageServerFunction;
 import dqr.playerData.ExtendedPlayerProperties;
+import dqr.playerData.ExtendedPlayerProperties3;
 
 public class DqmItemKimera extends DqmItemMiscBase{
 
@@ -40,6 +44,11 @@ public class DqmItemKimera extends DqmItemMiscBase{
     	        }
 
     	        wd.setKimera(this.getEnumMagic().getType(), par3EntityPlayer.posX, par3EntityPlayer.posY, par3EntityPlayer.posZ, par3EntityPlayer.dimension, 1);
+    	        par3EntityPlayer.addChatMessage(new ChatComponentTranslation("dqm.iteminfo.kimeraLoc.2.txt",new Object[] {par3EntityPlayer.dimension,
+    	        		Math.floor(par3EntityPlayer.posX),
+    	        		Math.floor(par3EntityPlayer.posY),
+    	        		Math.floor(par3EntityPlayer.posZ)}));
+
     	        wd.markDirty();
     	        par2World.setItemData(DQR.modID, wd);
 			}
@@ -52,7 +61,6 @@ public class DqmItemKimera extends DqmItemMiscBase{
 			{
 
 				DqrWorldData wd = (DqrWorldData)par2World.loadItemData(DqrWorldData.class, DQR.modID);
-
 
     	        if (wd == null)
     	        {
@@ -134,6 +142,17 @@ public class DqmItemKimera extends DqmItemMiscBase{
   	 public void addInformation(ItemStack p_77624_1_, EntityPlayer p_77624_2_, List p_77624_3_, boolean p_77624_4_) {
     	super.addInformation(p_77624_1_, p_77624_2_, p_77624_3_, p_77624_4_);
 
+    	PacketHandler.INSTANCE.sendToServer(new MessageServerFunction(EnumDqmFuncPacketCode.SyncWKimera));
+
+    	if(ExtendedPlayerProperties3.get(p_77624_2_).getW_KimeraEnable(this.getEnumMagic().getType()) != 0)
+    	{
+	    	int setDim = (int)ExtendedPlayerProperties3.get(p_77624_2_).getW_KimeraDim(this.getEnumMagic().getType());
+	        double setX = Math.floor(ExtendedPlayerProperties3.get(p_77624_2_).getW_KimeraX(this.getEnumMagic().getType()));
+	        double setY = Math.floor(ExtendedPlayerProperties3.get(p_77624_2_).getW_KimeraY(this.getEnumMagic().getType()));
+	        double setZ = Math.floor(ExtendedPlayerProperties3.get(p_77624_2_).getW_KimeraZ(this.getEnumMagic().getType()));
+	    	p_77624_3_.add(EnumColor.Gold.getChatColor() + I18n.format("dqm.iteminfo.kimeraLoc.1.txt", new Object[]{setDim, setX, setY, setZ}));
+    	}
+
     	p_77624_3_.add("");
     	String message = I18n.format("dqm.iteminfo.kimera.txt", new Object[]{});
     	String[] addLine = message.split("＄");
@@ -146,5 +165,6 @@ public class DqmItemKimera extends DqmItemMiscBase{
 
     	message = I18n.format("dqm.magicinfo.rura_all.txt", new Object[]{});
     	p_77624_3_.add(EnumColor.Aqua.getChatColor() + message);
+
     }
 }

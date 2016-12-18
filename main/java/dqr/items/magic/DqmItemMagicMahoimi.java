@@ -1,6 +1,7 @@
 package dqr.items.magic;
 
 import java.util.List;
+import java.util.Random;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
@@ -105,6 +106,13 @@ public class DqmItemMagicMahoimi extends DqmItemMagicBase{
 		    	        		par2World.spawnEntityInWorld(magic);
 
 		    	        	}
+		    	        	Random rand_jukuren = new Random();
+							if(DQR.magicTable.getMAptitude(this, par3EntityPlayer) > 0 && rand_jukuren.nextInt(5) == 0)
+							{
+
+								int getJukurenExp = 1 + ExtendedPlayerProperties.get(par3EntityPlayer).getJukurenExp(ExtendedPlayerProperties.get(par3EntityPlayer).getWeapon());
+								ExtendedPlayerProperties.get(par3EntityPlayer).setJukurenExp(ExtendedPlayerProperties.get(par3EntityPlayer).getWeapon(), getJukurenExp);
+							}
 		    			}else
 		    			{
 		    				magic = null;
@@ -159,6 +167,14 @@ public class DqmItemMagicMahoimi extends DqmItemMagicBase{
 	                    	{
 	                    		ExtendedPlayerProperties.get(par3EntityPlayer).setMP((int)attackDam + mp);
 	                    	}
+
+	                    	Random rand_jukuren = new Random();
+	    					if(DQR.magicTable.getMAptitude(this, par3EntityPlayer) > 0 && rand_jukuren.nextInt(5) == 0)
+	    					{
+
+	    						int getJukurenExp = 1 + ExtendedPlayerProperties.get(par3EntityPlayer).getJukurenExp(ExtendedPlayerProperties.get(par3EntityPlayer).getWeapon());
+	    						ExtendedPlayerProperties.get(par3EntityPlayer).setJukurenExp(ExtendedPlayerProperties.get(par3EntityPlayer).getWeapon(), getJukurenExp);
+	    					}
 
 		    				par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.hoimi", 1.0F, 1.0F);
 	    				}

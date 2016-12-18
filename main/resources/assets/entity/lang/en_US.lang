@@ -299,6 +299,9 @@ entity.DQMIIINext.Eriminator=Eriminator
 entity.DQMIIINext.Desusutoka=Desusutoka
 entity.DQMIIINext.Kandata=Kandata
 entity.DQMIIINext.Fureizado.name=Fureizado
+entity.DQMIIINext.Blackchack.name=Blackchack
+entity.DQMIIINext.Suraimuemperor.name=Suraimuemperor
+entity.DQMIIINext.Darkdoriado.name=Darkdoriado
 
 entity.DQMIIINext.dqm.MagicEntityMera.name=Mera
 entity.DQMIIINext.dqm.MagicEntityMerami.name=Mera
@@ -633,3 +636,5 @@ entity.DQMIIINext.PetEriminator=Eriminator[PET]
 entity.DQMIIINext.PetDesusutoka=Desusutoka[PET]
 entity.DQMIIINext.PetKandata=Kandata[PET]
 entity.DQMIIINext.PetFureizado.name=Fureizado[PET]
+entity.DQMIIINext.PetBlackchack.name=Blackchack[PET]
+entity.DQMIIINext.PetSuraimuemperor.name=Suraimuemperor[PET]

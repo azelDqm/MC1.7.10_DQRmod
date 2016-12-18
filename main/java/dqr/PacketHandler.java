@@ -11,6 +11,8 @@ import dqr.packetMessage.MessageClientSound;
 import dqr.packetMessage.MessageClientSoundHandler;
 import dqr.packetMessage.MessageServerBookWrite;
 import dqr.packetMessage.MessageServerBookWriteHandler;
+import dqr.packetMessage.MessageServerFunction;
+import dqr.packetMessage.MessageServerFunctionHandler;
 import dqr.packetMessage.MessageServerGuiId;
 import dqr.packetMessage.MessageServerGuiIdHandler;
 import dqr.packetMessage.MessageServerJobChange;
@@ -50,6 +52,7 @@ public class PacketHandler {
 
         INSTANCE.registerMessage(MessageServerSkillWeaponHandler.class, MessageServerSkillWeapon.class, 9, Side.SERVER);
         INSTANCE.registerMessage(MessageClientPetEntityDataHandler.class, MessageClientPetEntityData.class, 10, Side.CLIENT);
+        INSTANCE.registerMessage(MessageServerFunctionHandler.class, MessageServerFunction.class, 11, Side.SERVER);
 
     }
 }

@@ -107,6 +107,7 @@ import dqr.entity.mobEntity.monsterEnd.DqmEntityKagenokisi;
 import dqr.entity.mobEntity.monsterEnd.DqmEntityManemane;
 import dqr.entity.mobEntity.monsterEnd.DqmEntityPandorabox;
 import dqr.entity.mobEntity.monsterEnd.DqmEntityRyuiso;
+import dqr.entity.mobEntity.monsterEnd.DqmEntityShadopan2;
 import dqr.entity.mobEntity.monsterEnd.DqmEntityTororubonba;
 import dqr.entity.mobEntity.monsterEnd.DqmMobBaseEnd;
 import dqr.entity.mobEntity.monsterEtc.DqmEntityFurosutogizumo;
@@ -131,6 +132,7 @@ import dqr.entity.mobEntity.monsterHell.DqmEntityBosutororu;
 import dqr.entity.mobEntity.monsterHell.DqmEntityBoureikensi;
 import dqr.entity.mobEntity.monsterHell.DqmEntityBuraddosodo;
 import dqr.entity.mobEntity.monsterHell.DqmEntityBurakkubejita;
+import dqr.entity.mobEntity.monsterHell.DqmEntityDarkdoriado;
 import dqr.entity.mobEntity.monsterHell.DqmEntityDarkslime;
 import dqr.entity.mobEntity.monsterHell.DqmEntityDeddopekka;
 import dqr.entity.mobEntity.monsterHell.DqmEntityDgizumo;
@@ -173,6 +175,7 @@ import dqr.entity.mobEntity.monsterHell.DqmEntityPombom;
 import dqr.entity.mobEntity.monsterHell.DqmEntityPuyon;
 import dqr.entity.mobEntity.monsterHell.DqmEntityRedsaikuron;
 import dqr.entity.mobEntity.monsterHell.DqmEntitySaikuropusu;
+import dqr.entity.mobEntity.monsterHell.DqmEntityShadopan;
 import dqr.entity.mobEntity.monsterHell.DqmEntitySirubadebiru;
 import dqr.entity.mobEntity.monsterHell.DqmEntitySiryou;
 import dqr.entity.mobEntity.monsterHell.DqmEntitySiryounokisi;
@@ -273,10 +276,12 @@ import dqr.entity.mobEntity.monsterNight.DqmEntityYouganmajin;
 import dqr.entity.mobEntity.monsterNight.DqmMobBaseNight;
 import dqr.entity.mobEntity.monsterSP.DqmEntityAtorasu;
 import dqr.entity.mobEntity.monsterSP.DqmEntityBazuzu;
+import dqr.entity.mobEntity.monsterSP.DqmEntityBlackchack;
 import dqr.entity.mobEntity.monsterSP.DqmEntityBurasu;
 import dqr.entity.mobEntity.monsterSP.DqmEntityDarkRamia;
 import dqr.entity.mobEntity.monsterSP.DqmEntityFureizado;
 import dqr.entity.mobEntity.monsterSP.DqmEntityGodonheddo;
+import dqr.entity.mobEntity.monsterSP.DqmEntityKandata;
 import dqr.entity.mobEntity.monsterSP.DqmEntityKandatakobun;
 import dqr.entity.mobEntity.monsterSP.DqmEntityKinghidora;
 import dqr.entity.mobEntity.monsterSP.DqmEntityKiramajinga;
@@ -286,6 +291,7 @@ import dqr.entity.mobEntity.monsterSP.DqmEntityMasso;
 import dqr.entity.mobEntity.monsterSP.DqmEntityPisaronaito;
 import dqr.entity.mobEntity.monsterSP.DqmEntityPuremiasuraimu;
 import dqr.entity.mobEntity.monsterSP.DqmEntitySirubamanto;
+import dqr.entity.mobEntity.monsterSP.DqmEntitySuraimuemperor;
 import dqr.entity.mobEntity.monsterSP.DqmEntitySuraimujeneraru;
 import dqr.entity.mobEntity.monsterSP.DqmEntityTattyan;
 import dqr.entity.mobEntity.monsterSP.DqmEntityTororubakkosu;
@@ -1539,6 +1545,24 @@ public class LivingDropHandler {
 			else if(event.entityLiving instanceof DqmEntityZukkinya){
 				event.entityLiving.dropItem(Item.getItemFromBlock(DQMobFigures.BlockFigureZukkinya), 1);
 			}
+			else if(event.entityLiving instanceof DqmEntityKandata){
+				event.entityLiving.dropItem(Item.getItemFromBlock(DQMobFigures.BlockFigureKandata), 1);
+			}
+			else if(event.entityLiving instanceof DqmEntityBlackchack){
+				event.entityLiving.dropItem(Item.getItemFromBlock(DQMobFigures.BlockFigureBlackchack), 1);
+			}
+			else if(event.entityLiving instanceof DqmEntitySuraimuemperor){
+				event.entityLiving.dropItem(Item.getItemFromBlock(DQMobFigures.BlockFigureSuraimuemperor), 1);
+			}
+			else if(event.entityLiving instanceof DqmEntityDarkdoriado){
+				event.entityLiving.dropItem(Item.getItemFromBlock(DQMobFigures.BlockFigureDarkdoriado), 1);
+			}
+			else if(event.entityLiving instanceof DqmEntityShadopan){
+				event.entityLiving.dropItem(Item.getItemFromBlock(DQMobFigures.BlockFigureShadopan), 1);
+			}
+			else if(event.entityLiving instanceof DqmEntityShadopan2){
+				event.entityLiving.dropItem(Item.getItemFromBlock(DQMobFigures.BlockFigureShadopan2), 1);
+			}
 		}
 
 		if(event.entityLiving instanceof DqmMobBase && rand.nextInt(60) == 0)
@@ -2434,6 +2458,25 @@ public class LivingDropHandler {
 			else if(event.entityLiving instanceof DqmEntityZukkinya){
 				event.entityLiving.dropItem(Item.getItemFromBlock(DQMobObjects.BlockObjZukkinya), 1);
 			}
+			else if(event.entityLiving instanceof DqmEntityKandata){
+				event.entityLiving.dropItem(Item.getItemFromBlock(DQMobObjects.BlockObjKandata), 1);
+			}
+			else if(event.entityLiving instanceof DqmEntityBlackchack){
+				event.entityLiving.dropItem(Item.getItemFromBlock(DQMobObjects.BlockObjBlackchack), 1);
+			}
+			else if(event.entityLiving instanceof DqmEntitySuraimuemperor){
+				event.entityLiving.dropItem(Item.getItemFromBlock(DQMobObjects.BlockObjSuraimuemperor), 1);
+			}
+			else if(event.entityLiving instanceof DqmEntityDarkdoriado){
+				event.entityLiving.dropItem(Item.getItemFromBlock(DQMobObjects.BlockObjDarkdoriado), 1);
+			}
+			else if(event.entityLiving instanceof DqmEntityShadopan){
+				event.entityLiving.dropItem(Item.getItemFromBlock(DQMobObjects.BlockObjShadopan), 1);
+			}
+			else if(event.entityLiving instanceof DqmEntityShadopan2){
+				event.entityLiving.dropItem(Item.getItemFromBlock(DQMobObjects.BlockObjShadopan2), 1);
+			}
+
 
 		}
 	}

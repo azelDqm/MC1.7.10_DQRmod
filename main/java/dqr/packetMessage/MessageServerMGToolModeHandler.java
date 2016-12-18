@@ -9,6 +9,7 @@ import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import dqr.DQR;
+import dqr.DqrWorldData;
 import dqr.api.Items.DQAccessories;
 import dqr.api.Items.DQMagicTools;
 import dqr.api.Items.DQMiscs;
@@ -25,6 +26,9 @@ import dqr.items.magic.DqmItemMagicBasiRuraC;
 import dqr.items.magic.DqmItemMagicRura;
 import dqr.items.magic.DqmItemMagicRura2;
 import dqr.items.magic.DqmItemMagicRuraC;
+import dqr.items.magic.DqmItemMagicRuraSin;
+import dqr.items.magic.DqmItemMagicRuraSin2;
+import dqr.items.magic.DqmItemMagicRuraSinC;
 import dqr.items.miscs.DqmItemKimera;
 import dqr.items.miscs.DqmItemKimera2;
 import dqr.items.miscs.DqmItemKimeraC;
@@ -253,7 +257,167 @@ public class MessageServerMGToolModeHandler implements IMessageHandler<MessageSe
 		        		ep.addChatMessage(new ChatComponentTranslation("msg.basirura.modeInfo." + setIdx + ".txt", new Object[] {}));
 		        		ExtendedPlayerProperties.get(ep).setWeaponMode(EnumDqmWeaponMode.WEAPONMODE_BASIRURA.getId(), setIdx);
 		        		*/
-		        }else if(its.getItem() instanceof DqmItemMagicRura ||
+		        }else if(its.getItem() instanceof DqmItemMagicRuraSin ||
+	        			 its.getItem() instanceof DqmItemMagicRuraSin2 ||
+	        			 its.getItem() instanceof DqmItemMagicRuraSinC)
+	        	{
+	        		if(ep.isSneaking())
+	        		{
+	        			int select = ExtendedPlayerProperties.get(ep).getRuraSinSelectX(its.getItem());
+	        			select++;
+
+	        			if(select > 9)
+	        			{
+	        				select = 0;
+	        			}
+
+	        			//座標取得
+	        			double ruraX = 0;
+	        			double ruraY = 0;
+	        			double ruraZ = 0;
+	        			int ruraDim = 0;
+	        			int ruraEnable = 0;
+	        			String ruraName = null;
+
+	        			if(select == 9)
+	        			{
+	        				ruraX =  ExtendedPlayerProperties.get(ep).getRuraSinX(9);
+	        				ruraY =  ExtendedPlayerProperties.get(ep).getRuraSinY(9);
+	        				ruraZ =  ExtendedPlayerProperties.get(ep).getRuraSinZ(9);
+	        				ruraDim =  ExtendedPlayerProperties.get(ep).getRuraSinDim(9);
+	        				ruraEnable =  ExtendedPlayerProperties.get(ep).getRuraSinEnable(9);
+	        			}else if(its.getItem() instanceof DqmItemMagicRuraSin)
+	        	    	{
+	        	        	DqrWorldData wd = (DqrWorldData)ep.worldObj.loadItemData(DqrWorldData.class, DQR.modID);
+
+	        	        	if(wd != null)
+	        	        	{
+	        	        		ruraX = wd.getRuraSinX(select);
+	        	        		ruraY = wd.getRuraSinY(select);
+	        	        		ruraZ = wd.getRuraSinZ(select);
+	        	        		ruraDim = wd.getRuraSinDim(select);
+	        	        		ruraEnable = wd.getRuraSinEnable(select);
+	        	        	}
+	        	    	}else if(its.getItem() instanceof DqmItemMagicRuraSin2)
+	        	    	{
+	        				ruraX = ExtendedPlayerProperties.get(ep).getRuraSinX(select);
+	        				ruraY = ExtendedPlayerProperties.get(ep).getRuraSinY(select);
+	        				ruraZ = ExtendedPlayerProperties.get(ep).getRuraSinZ(select);
+	        				ruraDim = ExtendedPlayerProperties.get(ep).getRuraSinDim(select);
+	        				ruraEnable = ExtendedPlayerProperties.get(ep).getRuraSinEnable(select);
+	        	    	}else if(its.getItem() instanceof DqmItemMagicRuraSinC)
+	        	    	{
+	        	    		ruraX = DQR.conf.RuraSinC_X[select];
+	        	    		ruraY = DQR.conf.RuraSinC_Y[select];
+	        	    		ruraZ = DQR.conf.RuraSinC_Z[select];
+	        	    		ruraDim = DQR.conf.RuraSinC_Dim[select];
+	        	    		ruraName = DQR.conf.RuraSinC_Name[select];
+	        	    		if(ruraX != 0 || ruraY != 0 || ruraZ != 0 || ruraDim != 0) ruraEnable = 1;
+	        	    	}
+
+	        			ruraX = Math.floor(ruraX);
+	        			ruraY = Math.floor(ruraY);
+	        			ruraZ = Math.floor(ruraZ);
+
+	        			ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
+	        			if(select == 9)
+	        			{
+	        				if(ruraEnable > 0)
+	        				{
+	        					ep.addChatMessage(new ChatComponentTranslation("dqm.iteminfo.RurasinLastLoc.txt", new Object[] {ruraDim, ruraX, ruraY ,ruraZ}));
+	        				}else
+	        				{
+	        					ep.addChatMessage(new ChatComponentTranslation("dqm.iteminfo.RurasinLastNoLoc.txt", new Object[] {}));
+	        				}
+	        			}else
+	        			{
+	        				if(ruraEnable > 0)
+	        				{
+	        					if(ruraName != null)
+	        					{
+	        						ep.addChatMessage(new ChatComponentTranslation("dqm.iteminfo.RurasinLoc2.txt", new Object[] {ruraName, ruraDim, ruraX, ruraY ,ruraZ}));
+	        					}else
+	        					{
+	        						ep.addChatMessage(new ChatComponentTranslation("dqm.iteminfo.RurasinLoc.txt", new Object[] {(select + 1), ruraDim, ruraX, ruraY ,ruraZ}));
+	        					}
+	        				}else
+	        				{
+	        					if(ruraName != null)
+	        					{
+	        						ep.addChatMessage(new ChatComponentTranslation("dqm.iteminfo.RurasinNoLoc2.txt", new Object[] {(ruraName)}));
+	        					}else
+	        					{
+	        						ep.addChatMessage(new ChatComponentTranslation("dqm.iteminfo.RurasinNoLoc.txt", new Object[] {(select + 1)}));
+	        					}
+	        				}
+	        			}
+
+	        			ExtendedPlayerProperties.get(ep).setRuraSinSelectX(its.getItem(), select);
+	        			/*
+	        			int itemMode = ExtendedPlayerProperties.get(ep).getWeaponMode(EnumDqmWeaponMode.WEAPONMODE_RURASINPOS.getId());
+	        			int setIdx = 0;
+		        		itemMode = itemMode + 1;
+
+		        		if(itemMode == EnumDqmMGToolMode.RURASINPOS1.getId())
+		        		{
+		        			setIdx = EnumDqmMGToolMode.RURASINPOS1.getId();
+		        		}else
+		        		{
+		        			setIdx = EnumDqmMGToolMode.RURASINPOS0.getId();
+		        		}
+
+		        		ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
+		        		ep.addChatMessage(new ChatComponentTranslation("msg.rurasin.modeInfo." + setIdx + ".txt", new Object[] {}));
+		        		ExtendedPlayerProperties.get(ep).setWeaponMode(EnumDqmWeaponMode.WEAPONMODE_RURASINPOS.getId(), setIdx);
+		        		*/
+	        		}else
+	        		{
+			        	//ルーラの制御切り替え
+		        		int itemMode = ExtendedPlayerProperties.get(ep).getWeaponMode(EnumDqmWeaponMode.WEAPONMODE_RURASINMODE.getId());
+		        		int jobLvMag = ExtendedPlayerProperties.get(ep).getJobLv(EnumDqmJob.Mahoutukai.getId());
+		        		int jobLvSag = ExtendedPlayerProperties.get(ep).getJobLv(EnumDqmJob.Kenja.getId());
+		        		int setIdx = 0;
+		        		itemMode = itemMode + 1;
+
+		        		if(itemMode == EnumDqmMGToolMode.RURAMODE10.getId())
+		        		{
+		        			setIdx = EnumDqmMGToolMode.RURAMODE10.getId();
+		        		}else
+		        		{
+		        			setIdx = EnumDqmMGToolMode.RURAMODE0.getId();
+		        		}
+
+		        		/*
+		        		}else if(itemMode == EnumDqmMGToolMode.RURAMODE25.getId())
+		        		{
+		        			if(jobLvMag >= 25 || jobLvSag >= 25)
+		        			{
+		        				setIdx = EnumDqmMGToolMode.RURAMODE25.getId();
+		        			}else
+		        			{
+		        				setIdx = EnumDqmMGToolMode.RURAMODE0.getId();
+		        			}
+		        		}else if(itemMode == EnumDqmMGToolMode.RURAMODE40.getId())
+		        		{
+		        			if(jobLvMag >= 40 || jobLvSag >= 40)
+		        			{
+		        				setIdx = EnumDqmMGToolMode.RURAMODE40.getId();
+		        			}else
+		        			{
+		        				setIdx = EnumDqmMGToolMode.RURAMODE0.getId();
+		        			}
+		        		}else
+		        		{
+		        			setIdx = EnumDqmMGToolMode.RURAMODE0.getId();
+		        		}
+		        		*/
+
+		        		ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
+		        		ep.addChatMessage(new ChatComponentTranslation("msg.rura.modeInfo." + setIdx + ".txt", new Object[] {}));
+		        		ExtendedPlayerProperties.get(ep).setWeaponMode(EnumDqmWeaponMode.WEAPONMODE_RURASINMODE.getId(), setIdx);
+	        		}
+
+	        	}else if(its.getItem() instanceof DqmItemMagicRura ||
 	        			 its.getItem() instanceof DqmItemMagicRura2 ||
 	        			 its.getItem() instanceof DqmItemMagicRuraC)
 	        	{

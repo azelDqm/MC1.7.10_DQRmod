@@ -10,7 +10,8 @@ public enum EnumDqmWeaponMode {
 	WEAPONMODE_BASIRURA(6, "WeaponMode_BasiRura", "BASIRURA"),
 	WEAPONMODE_ITEMUSE(7, "WeaponMode_ItemUse", "ItemUse"),
 	WEAPONMODE_ITEMUSEBOW(8, "WeaponMode_ItemUseBow", "ItemUseBow"),
-	WEAPONMODE_SHINZIRU(9, "WeaponMode_Shinziru", "Shinziru");;
+	WEAPONMODE_SHINZIRU(9, "WeaponMode_Shinziru", "Shinziru"),
+	WEAPONMODE_RURASINMODE(10, "WeaponMode_RuraSinMode", "RURASINMODE");
 
 	private int id;
 	private String name;

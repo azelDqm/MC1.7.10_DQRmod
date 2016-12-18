@@ -74,6 +74,7 @@ import dqr.entity.mobEntity.monsterEnd.DqmEntityManemane;
 import dqr.entity.mobEntity.monsterEnd.DqmEntityRyuiso;
 import dqr.entity.mobEntity.monsterEtc.DqmEntityGanseki;
 import dqr.entity.mobEntity.monsterHell.DqmEntityBurakkubejita;
+import dqr.entity.mobEntity.monsterHell.DqmEntityDarkdoriado;
 import dqr.entity.mobEntity.monsterHell.DqmEntityDeddopekka;
 import dqr.entity.mobEntity.monsterHell.DqmEntityDgizumo;
 import dqr.entity.mobEntity.monsterHell.DqmEntityFureimu;
@@ -137,7 +138,7 @@ public class FuncCalcDamage {
 		Random rand = new Random();
 		Random rand2 = new Random();
 		//System.out.println("test1");
-		if(source.getEntity() instanceof EntityPlayer)
+		if(source.getEntity() instanceof EntityPlayer )
 		{
 			EntityPlayer ep = (EntityPlayer)source.getEntity();
 			int weapon = ExtendedPlayerProperties.get(ep).getWeapon();
@@ -369,11 +370,43 @@ public class FuncCalcDamage {
 
 
 
+			/*
+			ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + "TEST" + EnumDqmMessageConv.SkillName.getEndS()}));
+            List list2 = ep.worldObj.getEntitiesWithinAABBExcludingEntity(ep,
+            		ep.boundingBox.addCoord(ep.motionX, ep.motionY, ep.motionZ).expand(4.0D, 3.0D, 4.0D));
+
+            //System.out.println("TEST1:" + list.size());
+
+        	for (int n = 0 ; n < list2.size() ; n++)
+        	{
+        		Entity target = (Entity)list2.get(n);
+
+        		if (!(target instanceof EntityPlayer) && !(target instanceof EntityTameable) &&  !(target instanceof EntityHorse) && target instanceof EntityLivingBase)
+        		{
+        			EntityLivingBase tagMob = (EntityLivingBase)target;
+        			//System.out.println("TEST2:" + tagMob.MobName);
+        			tagMob.hurtResistantTime = 0;
+        			float dam = preDamage * (1.0F - (0.9F / list2.size() * n ));
+        			tagMob.attackEntityFrom(DQR.damageSource.getPlayerSkillDamage(ep), (dam));
+        			tagMob.hurtResistantTime = 0;
+        			//healPoint = healPoint + dam;
+        		}
+        	}
+        	if(evb.getHealth() <= 0.0F || evb.isDead)
+			{
+				//System.out.println("TEST");
+				return -1.0F;
+			}
+        	ret = -1.0F;
+        	*/
+			//ret = ret * 1.0F;
+			//healPoint = healPoint + ret;
+			//ep.heal(healPoint / 4);
 
 
 
 
-			if(skillPerm != 0)
+			if(skillPerm != 0 && !ep.worldObj.isRemote)
 			{
 				DqmMobBase monster = null;
 				if(evb instanceof DqmMobBase)
@@ -2040,6 +2073,7 @@ public class FuncCalcDamage {
     	   par1 instanceof DqmEntityButtizukinya ||
     	   par1 instanceof DqmEntityDansunidoru ||
     	   par1 instanceof DqmEntityGappurin ||
+    	   par1 instanceof DqmEntityDarkdoriado ||
     	   par1 instanceof DqmEntitySabotengold)
     	{
     		return true;

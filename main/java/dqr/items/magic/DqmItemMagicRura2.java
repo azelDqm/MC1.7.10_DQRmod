@@ -1,6 +1,7 @@
 package dqr.items.magic;
 
 import java.util.List;
+import java.util.Random;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;
@@ -68,6 +69,10 @@ public class DqmItemMagicRura2 extends DqmItemMagicBase{
     			if(!par2World.isRemote)
     			{
     				ExtendedPlayerProperties.get(par3EntityPlayer).setRura(this.getEnumMagic().getType(), par3EntityPlayer.posX, par3EntityPlayer.posY, par3EntityPlayer.posZ, par3EntityPlayer.dimension, 1);
+        	        par3EntityPlayer.addChatMessage(new ChatComponentTranslation("dqm.iteminfo.kimeraLoc.2.txt",new Object[] {par3EntityPlayer.dimension,
+        	        		Math.floor(par3EntityPlayer.posX),
+        	        		Math.floor(par3EntityPlayer.posY),
+        	        		Math.floor(par3EntityPlayer.posZ)}));
 
     			}
     	        par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.mira", 0.9F, 0.9F);
@@ -108,6 +113,14 @@ public class DqmItemMagicRura2 extends DqmItemMagicBase{
     		    	        double setX = Math.floor(ExtendedPlayerProperties.get(par3EntityPlayer).getRuraX(this.getEnumMagic().getType()));
     		    	        double setY = Math.floor(ExtendedPlayerProperties.get(par3EntityPlayer).getRuraY(this.getEnumMagic().getType()));
     		    	        double setZ = Math.floor(ExtendedPlayerProperties.get(par3EntityPlayer).getRuraZ(this.getEnumMagic().getType()));
+
+    		    	        Random rand_jukuren = new Random();
+    						if(DQR.magicTable.getMAptitude(this, par3EntityPlayer) > 0 && rand_jukuren.nextInt(5) == 0)
+    						{
+
+    							int getJukurenExp = 1 + ExtendedPlayerProperties.get(par3EntityPlayer).getJukurenExp(ExtendedPlayerProperties.get(par3EntityPlayer).getWeapon());
+    							ExtendedPlayerProperties.get(par3EntityPlayer).setJukurenExp(ExtendedPlayerProperties.get(par3EntityPlayer).getWeapon(), getJukurenExp);
+    						}
 
     		    	        if(ruraMode != EnumDqmMGToolMode.RURAMODE0.getId())
     		    	        {
@@ -210,6 +223,15 @@ public class DqmItemMagicRura2 extends DqmItemMagicBase{
     @Override
   	 public void addInformation(ItemStack p_77624_1_, EntityPlayer p_77624_2_, List p_77624_3_, boolean p_77624_4_) {
     	super.addInformation(p_77624_1_, p_77624_2_, p_77624_3_, p_77624_4_);
+
+    	if(ExtendedPlayerProperties.get(p_77624_2_).getRuraEnable(this.getEnumMagic().getType()) != 0)
+    	{
+	    	int setDim = (int)ExtendedPlayerProperties.get(p_77624_2_).getRuraDim(this.getEnumMagic().getType());
+	        double setX = Math.floor(ExtendedPlayerProperties.get(p_77624_2_).getRuraX(this.getEnumMagic().getType()));
+	        double setY = Math.floor(ExtendedPlayerProperties.get(p_77624_2_).getRuraY(this.getEnumMagic().getType()));
+	        double setZ = Math.floor(ExtendedPlayerProperties.get(p_77624_2_).getRuraZ(this.getEnumMagic().getType()));
+	    	p_77624_3_.add(EnumColor.Gold.getChatColor() + I18n.format("dqm.iteminfo.kimeraLoc.1.txt", new Object[]{setDim, setX, setY, setZ}));
+    	}
 
     	p_77624_3_.add("");
     	String message = I18n.format("dqm.magicinfo.rura2.txt", new Object[]{});

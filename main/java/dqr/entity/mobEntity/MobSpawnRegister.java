@@ -89,6 +89,7 @@ import dqr.entity.mobEntity.monsterEnd.DqmEntityKagenokisi;
 import dqr.entity.mobEntity.monsterEnd.DqmEntityManemane;
 import dqr.entity.mobEntity.monsterEnd.DqmEntityPandorabox;
 import dqr.entity.mobEntity.monsterEnd.DqmEntityRyuiso;
+import dqr.entity.mobEntity.monsterEnd.DqmEntityShadopan2;
 import dqr.entity.mobEntity.monsterEnd.DqmEntityTororubonba;
 import dqr.entity.mobEntity.monsterHell.DqmEntityAnkokumajin;
 import dqr.entity.mobEntity.monsterHell.DqmEntityAroinpu;
@@ -102,6 +103,7 @@ import dqr.entity.mobEntity.monsterHell.DqmEntityBosutororu;
 import dqr.entity.mobEntity.monsterHell.DqmEntityBoureikensi;
 import dqr.entity.mobEntity.monsterHell.DqmEntityBuraddosodo;
 import dqr.entity.mobEntity.monsterHell.DqmEntityBurakkubejita;
+import dqr.entity.mobEntity.monsterHell.DqmEntityDarkdoriado;
 import dqr.entity.mobEntity.monsterHell.DqmEntityDarkslime;
 import dqr.entity.mobEntity.monsterHell.DqmEntityDeddopekka;
 import dqr.entity.mobEntity.monsterHell.DqmEntityDgizumo;
@@ -143,6 +145,7 @@ import dqr.entity.mobEntity.monsterHell.DqmEntityPombom;
 import dqr.entity.mobEntity.monsterHell.DqmEntityPuyon;
 import dqr.entity.mobEntity.monsterHell.DqmEntityRedsaikuron;
 import dqr.entity.mobEntity.monsterHell.DqmEntitySaikuropusu;
+import dqr.entity.mobEntity.monsterHell.DqmEntityShadopan;
 import dqr.entity.mobEntity.monsterHell.DqmEntitySirubadebiru;
 import dqr.entity.mobEntity.monsterHell.DqmEntitySiryou;
 import dqr.entity.mobEntity.monsterHell.DqmEntitySiryounokisi;
@@ -869,6 +872,8 @@ public class MobSpawnRegister {
 		//this.addSpawn(DqmEntityTubokku.class, 20, 1, 2, DQR.dqmCreatureType.DqmMonster, nether);
 		this.addSpawn(DqmEntityUmibouzu.class, 20, 1, 2, DQR.dqmCreatureType.DqmMonster, nether);
 		this.addSpawn(DqmEntityEriminator.class, 20, 1, 2, DQR.dqmCreatureType.DqmMonster, nether);
+		this.addSpawn(DqmEntityDarkdoriado.class, 20, 1, 2, DQR.dqmCreatureType.DqmMonster, nether);
+		this.addSpawn(DqmEntityShadopan.class, 20, 1, 2, DQR.dqmCreatureType.DqmMonster, nether);
 
 		this.addSpawn(DqmEntityAkairai.class, 20, 1, 2, DQR.dqmCreatureType.DqmMonster, end);
 		this.addSpawn(DqmEntityBassaimasin.class, 20, 1, 2, DQR.dqmCreatureType.DqmMonster, end);
@@ -894,6 +899,7 @@ public class MobSpawnRegister {
 		this.addSpawn(DqmEntityRyuiso.class, 20, 1, 2, DQR.dqmCreatureType.DqmMonster, end);
 		this.addSpawn(DqmEntityTororubonba.class, 20, 1, 2, DQR.dqmCreatureType.DqmMonster, end);
 		this.addSpawn(DqmEntityDesusutoka.class, 20, 1, 2, DQR.dqmCreatureType.DqmMonster, end);
+		this.addSpawn(DqmEntityShadopan2.class, 20, 1, 2, DQR.dqmCreatureType.DqmMonster, end);
 
 	}
 

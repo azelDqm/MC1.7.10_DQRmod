@@ -1,6 +1,7 @@
 package dqr.items.magic;
 
 import java.util.List;
+import java.util.Random;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;
@@ -109,6 +110,14 @@ public class DqmItemMagicBuff extends DqmItemMagicBase{
 
 			if(this == DQMagics.itemSukuruto || this == DQMagics.itemFubaha ||this == DQMagics.itemPiorimu)
 			{
+	    		Random rand_jukuren = new Random();
+				if(DQR.magicTable.getMAptitude(this, par3EntityPlayer) > 0 && rand_jukuren.nextInt(5) == 0)
+				{
+
+					int getJukurenExp = 1 + ExtendedPlayerProperties.get(par3EntityPlayer).getJukurenExp(ExtendedPlayerProperties.get(par3EntityPlayer).getWeapon());
+					ExtendedPlayerProperties.get(par3EntityPlayer).setJukurenExp(ExtendedPlayerProperties.get(par3EntityPlayer).getWeapon(), getJukurenExp);
+				}
+
 				par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.jumon", 1.0F, 1.0F);
 				if(par3EntityPlayer.isPotionActive(DQPotionPlus.buffMahokanta))
 				{
@@ -130,6 +139,14 @@ public class DqmItemMagicBuff extends DqmItemMagicBase{
 
 	            		if(target instanceof EntityPlayer || target instanceof EntityTameable || target instanceof EntityHorse)
 	            		{
+
+	    					if(DQR.magicTable.getMAptitude(this, par3EntityPlayer) > 0 && rand_jukuren.nextInt(5) == 0)
+	    					{
+
+	    						int getJukurenExp = 1 + ExtendedPlayerProperties.get(par3EntityPlayer).getJukurenExp(ExtendedPlayerProperties.get(par3EntityPlayer).getWeapon());
+	    						ExtendedPlayerProperties.get(par3EntityPlayer).setJukurenExp(ExtendedPlayerProperties.get(par3EntityPlayer).getWeapon(), getJukurenExp);
+	    					}
+
 	            			EntityLivingBase elb = (EntityLivingBase)target;
 	            			if(elb.isPotionActive(DQPotionPlus.buffMahokanta))
 	            			{
@@ -149,6 +166,14 @@ public class DqmItemMagicBuff extends DqmItemMagicBase{
 	            return par1ItemStack;
 			}else if((this != DQMagics.itemUminarinotue && this != DQMagics.itemCallMagma) && par3EntityPlayer.isSneaking())
 	    	{
+	    		Random rand_jukuren = new Random();
+				if(DQR.magicTable.getMAptitude(this, par3EntityPlayer) > 0 && rand_jukuren.nextInt(5) == 0)
+				{
+
+					int getJukurenExp = 1 + ExtendedPlayerProperties.get(par3EntityPlayer).getJukurenExp(ExtendedPlayerProperties.get(par3EntityPlayer).getWeapon());
+					ExtendedPlayerProperties.get(par3EntityPlayer).setJukurenExp(ExtendedPlayerProperties.get(par3EntityPlayer).getWeapon(), getJukurenExp);
+				}
+
 	        	MagicEntityBuff magic = null;
 
 	        	magic = new MagicEntityBuff(par2World, par3EntityPlayer, 1.5F, 1.0F, 0.0F, 0.0F, 0.0F);
@@ -201,6 +226,14 @@ public class DqmItemMagicBuff extends DqmItemMagicBase{
 	    			par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.mahokanta", 1.0F, 1.0F);
 	    		}else
 	    		{
+		    		Random rand_jukuren = new Random();
+					if(DQR.magicTable.getMAptitude(this, par3EntityPlayer) > 0 && rand_jukuren.nextInt(5) == 0)
+					{
+
+						int getJukurenExp = 1 + ExtendedPlayerProperties.get(par3EntityPlayer).getJukurenExp(ExtendedPlayerProperties.get(par3EntityPlayer).getWeapon());
+						ExtendedPlayerProperties.get(par3EntityPlayer).setJukurenExp(ExtendedPlayerProperties.get(par3EntityPlayer).getWeapon(), getJukurenExp);
+					}
+
 	    			int fixTime = 0;
 	    			if(this == DQMagics.itemRemira)
 	    			{
