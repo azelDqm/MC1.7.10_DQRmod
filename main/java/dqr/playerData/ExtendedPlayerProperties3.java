@@ -81,6 +81,7 @@ public class ExtendedPlayerProperties3 implements IExtendedEntityProperties {
     private int[] C_RuraSinY = new int[10];
     private int[] C_RuraSinZ = new int[10];
     private int[] C_RuraSinDim = new int[10];
+    private String[] C_RuraSinName = new String[10];
     private int[] C_RuraSinEnable = new int[10];
 
     public boolean tooltipInfoFlg = false;
@@ -88,6 +89,8 @@ public class ExtendedPlayerProperties3 implements IExtendedEntityProperties {
     public boolean tooltipShortRuraSin2 = false;
     public boolean tooltipShortRuraSinC = false;
     //private
+
+    private int Coin;
 
     private static String getSaveKey(EntityPlayer player) {
         return player.getCommandSenderName() + ":" + EXT_PROP_NAME;
@@ -213,6 +216,13 @@ public class ExtendedPlayerProperties3 implements IExtendedEntityProperties {
     		nbt.setInteger("C_RuraSinY_" + cnt, this.C_RuraSinY[cnt]);
     		nbt.setInteger("C_RuraSinZ_" + cnt, this.C_RuraSinZ[cnt]);
     		nbt.setInteger("C_RuraSinDim_" + cnt, this.C_RuraSinDim[cnt]);
+    		if(this.C_RuraSinName[cnt] == null)
+    		{
+    			this.C_RuraSinName[cnt] = "";
+
+    		}
+    		nbt.setString("C_RuraSinName_" + cnt, this.C_RuraSinName[cnt]);
+
     		nbt.setInteger("C_RuraSinEnable_" + cnt, this.C_RuraSinEnable[cnt]);
     	}
 
@@ -224,6 +234,9 @@ public class ExtendedPlayerProperties3 implements IExtendedEntityProperties {
     		nbt.setInteger("W_RuraSinDim_" + cnt, this.W_RuraSinDim[cnt]);
     		nbt.setInteger("W_RuraSinEnable_" + cnt, this.W_RuraSinEnable[cnt]);
     	}
+
+    	nbt.setInteger("Coin", this.Coin);
+
 
         compound.setTag(EXT_PROP_NAME, nbt);
 	}
@@ -354,8 +367,11 @@ public class ExtendedPlayerProperties3 implements IExtendedEntityProperties {
     		C_RuraSinY[cnt] = nbt.getInteger("C_RuraSinY_" + cnt);
     		C_RuraSinZ[cnt] = nbt.getInteger("C_RuraSinZ_" + cnt);
     		C_RuraSinDim[cnt] = nbt.getInteger("C_RuraSinDim_" + cnt);
+    		C_RuraSinName[cnt] = nbt.getString("C_RuraSinName_" + cnt);
     		C_RuraSinEnable[cnt] = nbt.getInteger("C_RuraSinEnable_" + cnt);
     	}
+
+    	this.Coin = nbt.getInteger("Coin");
         //partyTagList.func_150296_c()
 	}
 
@@ -1287,6 +1303,10 @@ public class ExtendedPlayerProperties3 implements IExtendedEntityProperties {
     {
     	this.C_RuraSinEnable = par2;
     }
+    public void setC_RuraSinNameA(String[] par2)
+    {
+    	this.C_RuraSinName = par2;
+    }
 
     public int[] getC_RuraSinXA()
     {
@@ -1307,6 +1327,10 @@ public class ExtendedPlayerProperties3 implements IExtendedEntityProperties {
     public int[] getC_RuraSinEnableA()
     {
     	return this.C_RuraSinEnable;
+    }
+    public String[] getC_RuraSinName()
+    {
+    	return this.C_RuraSinName;
     }
 
 
@@ -1346,6 +1370,15 @@ public class ExtendedPlayerProperties3 implements IExtendedEntityProperties {
     	return this.C_RuraSinDim[par1];
     }
 
+    public void setC_RuraSinName(int par1, String par2)
+    {
+    	this.C_RuraSinName[par1] = par2;
+    }
+    public String getC_RuraSinName(int par1)
+    {
+    	return this.C_RuraSinName[par1];
+    }
+
     public void setC_RuraSinEnable(int par1, int par2)
     {
     	this.C_RuraSinEnable[par1] = par2;
@@ -1354,4 +1387,13 @@ public class ExtendedPlayerProperties3 implements IExtendedEntityProperties {
     {
     	return this.C_RuraSinEnable[par1];
     }
+
+
+    public int getCoin() {
+        return Coin;
+    }
+    public void setCoin(int par1) {
+        this.Coin = par1;
+    }
+
 }

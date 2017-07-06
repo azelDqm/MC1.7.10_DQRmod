@@ -10,6 +10,11 @@ import org.lwjgl.opengl.GL11;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import dqr.entity.npcEntity.npc.DqmEntityNPCKajinoBJ;
+import dqr.entity.npcEntity.npc.DqmEntityNPCKajinoCCR;
+import dqr.entity.npcEntity.npc.DqmEntityNPCKajinoCoin;
+import dqr.entity.npcEntity.npc.DqmEntityNPCKajinoEXC;
+import dqr.entity.npcEntity.npc.DqmEntityNPCKajinoPK;
 import dqr.entity.npcEntity.npc.DqmEntityNPCMedalking;
 import dqr.entity.npcEntity.npc.DqmEntityNPCSinkan;
 import dqr.entity.npcEntity.npc.DqmEntityNPCSinkan2;
@@ -23,6 +28,11 @@ public class DqmRenderNPCBiped extends RenderLiving
 	private static final ResourceLocation DqmMobTextureSinkan2 = new ResourceLocation("dqr:textures/entity/npc/Sinkan2.png");
 	private static final ResourceLocation DqmMobTextureSinkan3 = new ResourceLocation("dqr:textures/entity/npc/Sinkan3.png");
 	private static final ResourceLocation DqmMobTextureMedalking = new ResourceLocation("dqr:textures/entity/npc/Medalking.png");
+	private static final ResourceLocation DqmMobTextureKajinoBJ = new ResourceLocation("dqr:textures/entity/npc/Kajinostive5.png");
+	private static final ResourceLocation DqmMobTextureKajinoCoin = new ResourceLocation("dqr:textures/entity/npc/Kajinostive3.png");
+	private static final ResourceLocation DqmMobTextureKajinoPK = new ResourceLocation("dqr:textures/entity/npc/Kajinostive5.png");
+	private static final ResourceLocation DqmMobTextureKajinoEXC = new ResourceLocation("dqr:textures/entity/npc/Kajinostive6.png");
+	private static final ResourceLocation DqmMobTextureKajinoCCR = new ResourceLocation("dqr:textures/entity/npc/Kajinostive7.png");
 
 	private float scale = 1.0F;
 
@@ -52,6 +62,21 @@ public class DqmRenderNPCBiped extends RenderLiving
 		}else if(par1EntityLiving instanceof DqmEntityNPCMedalking)
 		{
 			return this.DqmMobTextureMedalking;
+		}else if(par1EntityLiving instanceof DqmEntityNPCKajinoBJ)
+		{
+			return this.DqmMobTextureKajinoBJ;
+		}else if(par1EntityLiving instanceof DqmEntityNPCKajinoCoin)
+		{
+			return this.DqmMobTextureKajinoCoin;
+		}else if(par1EntityLiving instanceof DqmEntityNPCKajinoPK)
+		{
+			return this.DqmMobTextureKajinoPK;
+		}else if(par1EntityLiving instanceof DqmEntityNPCKajinoEXC)
+		{
+			return this.DqmMobTextureKajinoEXC;
+		}else if(par1EntityLiving instanceof DqmEntityNPCKajinoCCR)
+		{
+			return this.DqmMobTextureKajinoCCR;
 		}
 
 		return this.DqmMobTexture;

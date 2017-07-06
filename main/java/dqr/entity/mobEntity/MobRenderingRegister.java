@@ -172,6 +172,7 @@ import dqr.entity.mobEntity.monsterHell.DqmEntitySuraimumadyura;
 import dqr.entity.mobEntity.monsterHell.DqmEntityTororuking;
 import dqr.entity.mobEntity.monsterHell.DqmEntityTubokku;
 import dqr.entity.mobEntity.monsterHell.DqmEntityUmibouzu;
+import dqr.entity.mobEntity.monsterHell.DqmEntityWhitepan2;
 import dqr.entity.mobEntity.monsterMetaru.DqmEntityDaiyamondosuraimu;
 import dqr.entity.mobEntity.monsterMetaru.DqmEntityDragometaru;
 import dqr.entity.mobEntity.monsterMetaru.DqmEntityGoldenmetalslime;
@@ -376,6 +377,7 @@ import dqr.entity.mobEntity.render3.DqmRenderOrutega;
 import dqr.entity.mobEntity.render3.DqmRenderShadopan;
 import dqr.entity.mobEntity.render3.DqmRenderShadopan2;
 import dqr.entity.mobEntity.render3.DqmRenderSuraimuemperor;
+import dqr.entity.mobEntity.render3.DqmRenderWhitepan2;
 
 public class MobRenderingRegister {
 
@@ -702,6 +704,7 @@ public class MobRenderingRegister {
 		RenderingRegistry.registerEntityRenderingHandler(DqmEntityShadopan2.class, new DqmRenderShadopan2());
 		RenderingRegistry.registerEntityRenderingHandler(DqmEntityKandata.class, new DqmRenderKandata());
 		RenderingRegistry.registerEntityRenderingHandler(DqmEntityOrutega.class, new DqmRenderOrutega());
+		RenderingRegistry.registerEntityRenderingHandler(DqmEntityWhitepan2.class, new DqmRenderWhitepan2());
 
 
 	}

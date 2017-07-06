@@ -173,6 +173,7 @@ import dqr.entity.mobEntity.monsterHell.DqmEntitySuraimumadyura;
 import dqr.entity.mobEntity.monsterHell.DqmEntityTororuking;
 import dqr.entity.mobEntity.monsterHell.DqmEntityTubokku;
 import dqr.entity.mobEntity.monsterHell.DqmEntityUmibouzu;
+import dqr.entity.mobEntity.monsterHell.DqmEntityWhitepan2;
 import dqr.entity.mobEntity.monsterMetaru.DqmEntityDaiyamondosuraimu;
 import dqr.entity.mobEntity.monsterMetaru.DqmEntityDragometaru;
 import dqr.entity.mobEntity.monsterMetaru.DqmEntityGoldenmetalslime;
@@ -640,6 +641,7 @@ public class MobRegister {
 		EntityRegistry.registerModEntity(DqmEntityKandata.class, "Kandata", idxID + 568, DQR.instance, 250, 1, false);
 
 		EntityRegistry.registerModEntity(DqmEntityOrutega.class, "Orutega", idxID + 569, DQR.instance, 250, 1, false);
+		EntityRegistry.registerModEntity(DqmEntityWhitepan2.class, "Whitepan2", idxID + 570, DQR.instance, 250, 1, false);
 
 	}
 }

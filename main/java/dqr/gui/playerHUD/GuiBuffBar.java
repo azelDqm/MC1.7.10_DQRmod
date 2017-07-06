@@ -280,5 +280,7 @@ public class GuiBuffBar extends Gui
     	}
     }
 
+    mc.fontRenderer.drawStringWithShadow("", 0,0, 0xffffffff);
+
   }
 }

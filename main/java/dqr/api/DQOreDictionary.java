@@ -61,7 +61,7 @@ public class DQOreDictionary {
 		OreDictionary.registerOre("oreMagmastone", new ItemStack(DQOres.BlockOreYougansekinokakera, 1, 0));
 		OreDictionary.registerOre("ingotMagmastone", new ItemStack(DQIngots.itemYougansekinokakera, 1, 0));
 
-		OreDictionary.registerOre("ingotOrichalcum　", new ItemStack(DQIngots.itemOriharukon, 1, 0));
+		OreDictionary.registerOre("ingotOrichalcum", new ItemStack(DQIngots.itemOriharukon, 1, 0));
 	}
 
 }

@@ -37,4 +37,19 @@ public class DQBuilders {
 	public static Item itemBuilderDamaW9;
 
 	public static Item itemBuilderIdoMedal;
+
+	public static Item itemBuilderWhite;
+
+	public static Item itemBuilderCasino1;
+	public static Item itemBuilderCasino2;
+	public static Item itemBuilderCasino3;
+	public static Item itemBuilderCasino4;
+	public static Item itemBuilderCasino5;
+
+	public static Item itemBuilderSekizouZoma;
+	public static Item itemBuilderSekizouDesupisaro1;
+	public static Item itemBuilderSekizouEsterk;
+	public static Item itemBuilderSekizouMasterdoragon;
+	public static Item itemBuilderSekizouRyuuou;
+	public static Item itemBuilderSekizouDarkRamia;
 }

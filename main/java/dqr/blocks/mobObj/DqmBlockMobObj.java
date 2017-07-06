@@ -972,6 +972,9 @@ public class DqmBlockMobObj extends BlockContainer
     	}else if(this == DQMobObjects.BlockObjOrutega)
     	{
     		return new DqmTileEntityObjOrutega();
+    	}else if(this == DQMobObjects.BlockObjWhitepan2)
+    	{
+    		return new DqmTileEntityObjWhitepan2();
     	}
 
     	return new DqmTileEntityObjSura();

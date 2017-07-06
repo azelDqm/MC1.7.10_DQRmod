@@ -32,8 +32,9 @@ public class ComponentSpawnerRoomVanilla extends StructureComponent {
 
 	public ComponentSpawnerRoomVanilla() {}
 
-	public ComponentSpawnerRoomVanilla(int par1, Random par2Random, int par3, int par4) {
+	public ComponentSpawnerRoomVanilla(int par1, Random par2Random2, int par3, int par4) {
 		// 東西南北の方向をランダムに決める
+		Random par2Random = new Random();
 		this.coordBaseMode = par2Random.nextInt(4);
 		int roomSize = par2Random.nextInt(3) * 2;
 		this.xWidth = 6 + roomSize;
@@ -79,8 +80,10 @@ public class ComponentSpawnerRoomVanilla extends StructureComponent {
 	}
 
 	@Override
-	public boolean addComponentParts(World world, Random random, StructureBoundingBox structureboundingbox) {
+	public boolean addComponentParts(World world, Random random2, StructureBoundingBox structureboundingbox) {
 		// 建設予定範囲内に液体があった場合は建設中止
+		Random random = new Random();
+
 		if(this.xWidth < 2 || this.zWidth < 2)
 		{
 			return false;

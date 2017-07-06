@@ -205,7 +205,28 @@ public class MessageServerMGToolModeHandler implements IMessageHandler<MessageSe
 	        		ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
 	        		ep.addChatMessage(new ChatComponentTranslation("msg.basirura.modeInfo." + setIdx + ".txt", new Object[] {}));
 	        		ExtendedPlayerProperties.get(ep).setWeaponMode(EnumDqmWeaponMode.WEAPONMODE_BASIRURA.getId(), setIdx);
-	        	}else if(DQR.conf.partyEnable != 0 && its.getItem() == DQMiscs.itemShinjirukokoro)
+	        	}else if(its.getItem() == DQAccessories.itemAccCanceler)
+		        {
+	        		int itemMode = ExtendedPlayerProperties.get(ep).getWeaponMode(EnumDqmWeaponMode.WEAPONMODE_ACCCanceler.getId());
+
+	        		//itemMode = itemMode + 1;
+
+	        		if(itemMode == EnumDqmMGToolMode.ACCCANCELER_BOTH.getId())
+	        		{
+	        			itemMode = EnumDqmMGToolMode.ACCCANCELER_ACCONLY.getId();
+	        		}else
+	        		{
+	        			itemMode++;
+	        		}
+
+	        		ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
+
+        			if(!ep.worldObj.isRemote)
+        			{
+        				ep.addChatMessage(new ChatComponentTranslation("msg.acccancel.modeInfo." + itemMode + ".txt", new Object[] {}));
+        			}
+        			ExtendedPlayerProperties.get(ep).setWeaponMode(EnumDqmWeaponMode.WEAPONMODE_ACCCanceler.getId(), itemMode);
+		        }else if(DQR.conf.partyEnable != 0 && its.getItem() == DQMiscs.itemShinjirukokoro)
 		        {
 	        		int itemMode = ExtendedPlayerProperties.get(ep).getWeaponMode(EnumDqmWeaponMode.WEAPONMODE_SHINZIRU.getId());
 

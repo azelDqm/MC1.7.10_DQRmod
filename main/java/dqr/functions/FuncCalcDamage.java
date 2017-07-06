@@ -172,7 +172,7 @@ public class FuncCalcDamage {
 						//System.out.println("TEST");
 						return -1.0F;
 					}
-					evb.hurtResistantTime = 0;
+					//evb.hurtResistantTime = 0;
 				}else if (handItem == DQWeapons.itemKisekinoturugi)
 				{
 					int randFix =rand.nextInt(5);
@@ -646,8 +646,6 @@ public class FuncCalcDamage {
 								{
 									target.hurtResistantTime = 0;
 									target.attackEntityFrom(DQR.damageSource.getPlayerSkillDamage(ep), preDamage * 0.5F);
-
-
 								}
 							}
 
@@ -690,7 +688,8 @@ public class FuncCalcDamage {
 								return -1.0F;
 							}
 
-							ret = -1.0F;
+			            	//ばくれつ拳バグってたから修正20170503
+							//ret = -1.0F;
 
 							hitFlg = false;
 							/*

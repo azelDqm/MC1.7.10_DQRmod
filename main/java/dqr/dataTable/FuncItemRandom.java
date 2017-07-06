@@ -2,6 +2,7 @@ package dqr.dataTable;
 
 import java.util.Random;
 
+import net.minecraft.init.Blocks;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -534,6 +535,10 @@ public class FuncItemRandom {
 			case 2:item = DQMagics.itemMinadein; break;
 			case 3:item = DQMagics.itemZarakima; break;
 			case 4:item = DQMagics.itemDorumadon; break;
+			case 5:item = DQMagics.itemMeragaia; break;
+			case 6:item = DQMagics.itemGiragureido; break;
+			case 7:item = DQMagics.itemMahyadodesu; break;
+			case 8:item = DQMagics.itemBagimutyo; break;
 		}
 
 		if(item != null)
@@ -806,6 +811,31 @@ public class FuncItemRandom {
 		}
 	}
 
+	public ItemStack getIngotRank5(int par1, int value)
+	{
+		if(rand.nextInt(par1) != 0)
+		{
+			return null;
+		}
+
+		Item item = null;
+
+
+		switch(rand.nextInt(3))
+		{
+			case 0:item = DQIngots.itemPuratina2; break;
+			case 1:item = DQIngots.itemMisriru2; break;
+			case 3:item = DQIngots.itemOriharukon2; break;
+		}
+
+		if(item != null)
+		{
+			return new ItemStack(item, rand.nextInt(value) + 1, 0);
+		}else
+		{
+			return null;
+		}
+	}
 
 	public ItemStack getMiscsRank1(int par1, int value)
 	{
@@ -1007,6 +1037,32 @@ public class FuncItemRandom {
 			case 13: item = DQMiscs.itemRedoubu; break;
 			case 14: item = DQMiscs.itemRozarinonamida; break;
 			case 15: item = DQMiscs.itemSaigonokagi; break;
+		}
+
+		if(item != null)
+		{
+			return new ItemStack(item, rand.nextInt(value) + 1, 0);
+		}else
+		{
+			return null;
+		}
+	}
+
+	public ItemStack getMiscsRank6(int par1, int value)
+	{
+		if(rand.nextInt(par1) != 0)
+		{
+			return null;
+		}
+
+		Item item = null;
+
+
+		switch(rand.nextInt(3))
+		{
+			case 0: item = DQMiscs.itemSaezurinomitu; break;
+			case 1: item = DQMiscs.itemAmatuyunoito; break;
+			case 2: item = Item.getItemFromBlock(Blocks.emerald_block); break;
 		}
 
 		if(item != null)

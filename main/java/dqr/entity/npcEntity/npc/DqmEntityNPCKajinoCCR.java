@@ -1,0 +1,183 @@
+package dqr.entity.npcEntity.npc;
+
+import net.minecraft.entity.EntityAgeable;
+import net.minecraft.entity.ai.EntityAIFollowOwner;
+import net.minecraft.entity.ai.EntityAILookIdle;
+import net.minecraft.entity.ai.EntityAIMate;
+import net.minecraft.entity.ai.EntityAISwimming;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.util.MathHelper;
+import net.minecraft.world.EnumSkyBlock;
+import net.minecraft.world.World;
+import dqr.DQR;
+import dqr.api.enums.EnumDqmNpcTalk;
+import dqr.entity.npcEntity.DqmNPCBase;
+import dqr.playerData.ExtendedPlayerProperties;
+
+public class DqmEntityNPCKajinoCCR extends DqmNPCBase
+{
+    private int HP = 9999; //********
+
+    private int PW = 100; //********
+    private int DF = 100; //********
+    private float SP = 0.0F; //********
+    private String Name = "スティーブ";//********
+    private String NameE = "Sinkan";//********
+    private boolean Fire = true;//******** true false
+    protected void fall(float par1) {} //********
+    @Override
+    public void setDead()
+    {
+        super.setDead();
+    }
+    @Override
+    public void onLivingUpdate()
+    {
+        int var1 = MathHelper.floor_double(this.posX);
+        int var2 = MathHelper.floor_double(this.boundingBox.minY);
+        int var3 = MathHelper.floor_double(this.posZ);
+
+        /*
+        if (this.worldObj.getBlockId(var1, var2 - 1, var3) == DqmItemList.Shoumetu.blockID)
+        {
+            this.setDead();
+        }
+		*/
+        super.onLivingUpdate();
+    }
+    @Override
+    public boolean getCanSpawnHere()
+    {
+        int i;
+        int j;
+        int k;
+        int var1 = MathHelper.floor_double(this.posX);
+        int var2 = MathHelper.floor_double(this.boundingBox.minY);
+        int var3 = MathHelper.floor_double(this.posZ);
+        return super.getCanSpawnHere() && !(isValidLightLevel());
+
+    }
+    protected boolean isValidLightLevel()
+    {
+        int var1 = MathHelper.floor_double(this.posX);
+        int var2 = MathHelper.floor_double(this.boundingBox.minY);
+        int var3 = MathHelper.floor_double(this.posZ);
+
+        if (this.worldObj.getSavedLightValue(EnumSkyBlock.Sky, var1, var2, var3) > this.rand.nextInt(32))
+        {
+            return false;
+        }
+        else
+        {
+            int var4 = this.worldObj.getBlockLightValue(var1, var2, var3);
+
+            if (this.worldObj.isThundering())
+            {
+                int var5 = this.worldObj.skylightSubtracted;
+                this.worldObj.skylightSubtracted = 2;
+                var4 = this.worldObj.getBlockLightValue(var1, var2, var3);
+                this.worldObj.skylightSubtracted = var5;
+            }
+
+            return var4 <= this.rand.nextInt(8);
+        }
+    }
+
+    @Override
+    protected boolean canDespawn()
+    {
+
+    	return false;
+    }
+
+    public DqmEntityNPCKajinoCCR(World par1World)
+    {
+        super(par1World);
+        setSize(0.8F, 1.5F);
+        moveSpeed = SP;
+        experienceValue = 0;
+        isImmuneToFire = Fire;
+        this.getNavigator().setAvoidsWater(true);
+        this.tasks.addTask(1, new EntityAISwimming(this));
+        this.tasks.addTask(2, this.aiSit);
+        //this.tasks.addTask(3, new EntityAILeapAtTarget(this, 0.4F));
+        //this.tasks.addTask(4, new EntityAIAttackOnCollide(this, this.moveSpeed, true));
+        this.tasks.addTask(5, new EntityAIFollowOwner(this, this.moveSpeed, 3.0F, 2.0F));
+        this.tasks.addTask(6, new EntityAIMate(this, this.moveSpeed));
+        //	this.tasks.addTask(7, new EntityAIWander(this, this.moveSpeed));
+        //this.tasks.addTask(9, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
+        this.tasks.addTask(9, new EntityAILookIdle(this));
+    }
+
+    private int flag2;
+    private int flag3;
+
+    private int flag10;
+    private int Nedan;
+    private int ID;
+
+    /*
+    @Override
+    protected void dropFewItems(boolean par1, int par2)
+    {
+        if (rand.nextInt(1) == 0)
+        {
+            this.dropItem(DqmItemList.Se.itemID, 1);   //1
+        }
+    }
+    */
+
+    @Override	public int getTotalArmorValue()
+    {
+        return DF;
+    }
+    /*
+    @Override	public int getAttackStrength(Entity par1Entity)
+    {
+        return PW;
+    }
+    */
+    @Override	public boolean isAIEnabled()
+    {
+        return true;
+    }
+    @Override	public int getMaxSpawnedInChunk()
+    {
+        return 1;
+    }
+    @Override
+    public boolean interact(EntityPlayer ep)
+    {
+		if(!ep.worldObj.isRemote)
+		{
+
+			int talkNo = ExtendedPlayerProperties.get(ep).getNpcTalk(EnumDqmNpcTalk.CASINOCCR.getId());
+
+			//ep.addChatMessage(new ChatComponentTranslation("" + talkNo));
+			if(talkNo == 0)
+			{
+				ep.addChatMessage(new ChatComponentTranslation("msg.casino.dealer.ccr.0.txt" ,new Object[] {}));
+				ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
+				ExtendedPlayerProperties.get(ep).setNpcTalk(EnumDqmNpcTalk.CASINOCCR.getId(), 1);
+			}else
+			{
+				ep.openGui(DQR.instance, DQR.conf.GuiID_CSCCR, ep.worldObj, (int)ep.posX, (int)ep.posY, (int)ep.posZ);
+			}
+			//ep.addChatMessage(new ChatComponentTranslation("msg.Dama2.messages.-1.txt" ,new Object[] {}));
+			//ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
+		}
+
+    	return true;
+    }
+	@Override
+	public EntityAgeable createChild(EntityAgeable p_90011_1_) {
+		// TODO 自動生成されたメソッド・スタブ
+		return null;
+	}
+
+    public boolean canDespawn_CB()
+    {
+        return false;
+    }
+}

@@ -22,12 +22,15 @@ import dqr.blocks.DqBlock;
 import dqr.blocks.DqBlockObj;
 import dqr.blocks.DqItemBlock;
 import dqr.blocks.DqmBlockRenderType;
+import dqr.command.DqrCom;
 import dqr.command.DqrComDebug;
 import dqr.command.DqrComParty;
+import dqr.command.DqrComPet;
 import dqr.creativeTabs.DqmCreativeTabs;
 import dqr.dataTable.FuncArmorSetTable;
 import dqr.dataTable.FuncBiomeBlockTable;
 import dqr.dataTable.FuncBukiyaPriceTable;
+import dqr.dataTable.FuncCasinoCoinItems;
 import dqr.dataTable.FuncExpTable;
 import dqr.dataTable.FuncItemRandom;
 import dqr.dataTable.FuncJobChangeLvTable;
@@ -58,14 +61,19 @@ import dqr.functions.FuncCheckMutation;
 import dqr.functions.FuncCommon;
 import dqr.functions.FuncDamageMessage;
 import dqr.functions.FuncEnchantExtension;
+import dqr.functions.FuncEnderDragonExtension;
 import dqr.functions.FuncEntityRenderExtension;
 import dqr.functions.FuncFarmlandExtension;
+import dqr.functions.FuncFishHookExtension;
 import dqr.functions.FuncPetOperation;
 import dqr.gui.GuiHandler;
+import dqr.handler.BagSlotClickHandler;
 import dqr.handler.ChunkEventHandler;
 import dqr.handler.CraftingEventHandler;
 import dqr.handler.DamageHandler;
+import dqr.handler.EnderDragonHandler;
 import dqr.handler.EntityEventHandler;
+import dqr.handler.FishHookHandler;
 import dqr.handler.LivingDeathHandler;
 import dqr.handler.LivingDropHandler;
 import dqr.handler.LivingEndoraHandler;
@@ -91,7 +99,7 @@ import dqr.potion.DqmPotion;
 import dqr.world.DqmStructureRegister;
 import dqr.world.DqmVillageRegister;
 
-@Mod(modid = "DQMIIINext", name = "DQRespect", version = "0.9.2", useMetadata = true, dependencies = "after:PotionExtension")
+@Mod(modid = "DQMIIINext", name = "DQRespect", version = "0.9.3", useMetadata = true, dependencies = "after:PotionExtension")
 public class DQR {
 
 	@SidedProxy(clientSide = "dqr.ClientProxy", serverSide = "dqr.CommonProxy")
@@ -100,7 +108,7 @@ public class DQR {
 	@Instance("DQMIIINext")
 	public static DQR instance;
 	public static String modID = "DQMIIINext";
-	public static int debug = 1;
+	public static int debug = 0;
 
 	public static FuncCalcMobParam funcMob;
 	public static DQRconfigs conf;
@@ -164,6 +172,7 @@ public class DQR {
 	public static FuncMobRandom randomMob;
 	public static FuncItemRandom randomItem;
 	public static FuncMedalkingItems medalItem;
+	public static FuncCasinoCoinItems casinoItem;
 
 	public static String[] dqmLog;
 
@@ -172,8 +181,12 @@ public class DQR {
 
 	public static FuncEntityRenderExtension entityRenderHook = null;
 	public static FuncFarmlandExtension farmlandHook;
+	public static FuncFishHookExtension fishingHookHook;
+	public static FuncEnderDragonExtension enderdragonHook;
 
 	public static final ArrayList<IModule> modules = new ArrayList<IModule>();
+
+	//public static SimpleNetworkWrapper networkWrapper;
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
@@ -230,6 +243,13 @@ public class DQR {
 		addons = new DqrAddon();
 		modules.add(DqrChunkLoader.getInstance());
 
+		/*
+		networkWrapper = NetworkRegistry.INSTANCE.newSimpleChannel(modID);
+		networkWrapper.registerMessage(PacketHandlerServer.class, CToSMessage.class, 0, Side.SERVER);
+		networkWrapper.registerMessage(PacketHandlerClient.class, SToCMessage.class, 1, Side.CLIENT);
+		*/
+
+
         for (IModule m : modules) {
             m.preInit(event);
         }
@@ -275,6 +295,8 @@ public class DQR {
 		petFunc = new FuncPetOperation();
 
 		farmlandHook = new FuncFarmlandExtension();
+		fishingHookHook = new FuncFishHookExtension();
+		enderdragonHook = new FuncEnderDragonExtension();
 
 		if(this.conf.partyEnable != 0)
 		{
@@ -284,6 +306,7 @@ public class DQR {
 		randomMob = new FuncMobRandom();
 		randomItem = new FuncItemRandom();
 		medalItem = new FuncMedalkingItems();
+		casinoItem = new FuncCasinoCoinItems();
 
 		/*
 		 * EntityRegistry.registerModEntity(EntityMeleeSkeleton.class,
@@ -313,6 +336,10 @@ public class DQR {
 		MinecraftForge.EVENT_BUS.register(new ChunkEventHandler());
 		MinecraftForge.EVENT_BUS.register(new LivingDeathHandler());
 		MinecraftForge.EVENT_BUS.register(new WorldEventHandler());
+		MinecraftForge.EVENT_BUS.register(new FishHookHandler());
+		MinecraftForge.EVENT_BUS.register(new EnderDragonHandler());
+		MinecraftForge.EVENT_BUS.register(new BagSlotClickHandler());
+
 		//MinecraftForge.EVENT_BUS.register(new PartyEventHandler());
 
 //		MinecraftForge.EVENT_BUS.register(new DeathInventoryHandler());
@@ -364,6 +391,8 @@ public class DQR {
 		{
 			event.registerServerCommand(new DqrComParty());
 		}
+		event.registerServerCommand(new DqrComPet());
+		event.registerServerCommand(new DqrCom());
 	}
 
 }

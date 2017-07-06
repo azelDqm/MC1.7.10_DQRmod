@@ -50,7 +50,7 @@ public class DqmToramanaYuka extends Block
     }
     public int quantityDropped(Random random)
     {
-        return 1;
+        return 0;
     }
 
 
@@ -143,5 +143,8 @@ public class DqmToramanaYuka extends Block
             par1World.destroyBlock(par2, par3, par4, true);
         }
     }*/
-
+    protected boolean canSilkHarvest()
+    {
+        return true;
+    }
 }

@@ -23,8 +23,9 @@ public class DqmGenerateSurfaceOre implements IWorldGenerator
     static BiomeGenBase[] swampland = { BiomeGenBase.swampland, BiomeGenBase.river, BiomeGenBase.beach };
 
     @Override
-    public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider par4IChunkProvider, IChunkProvider par5IChunkProvider)
+    public void generate(Random random2, int chunkX, int chunkZ, World world, IChunkProvider par4IChunkProvider, IChunkProvider par5IChunkProvider)
     {
+    	Random random = new Random();
     	int dim = world.provider.dimensionId;
     	String folder = world.provider.getSaveFolder();
     	Block baseBlock = null;

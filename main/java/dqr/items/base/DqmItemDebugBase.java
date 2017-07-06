@@ -4,6 +4,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import dqr.DQR;
 import dqr.api.enums.EnumDqmJob;
 import dqr.playerData.ExtendedPlayerProperties;
 
@@ -97,7 +98,15 @@ public class DqmItemDebugBase extends Item{
     	*/
 
 
-    	//player.openGui(DQR.instance, DQR.conf.GuiID_SkillWeapon, world, (int)player.posX, (int)player.posY, (int)player.posZ);
+    	if(player.isSneaking())
+    	{
+    		player.openGui(DQR.instance, 999, world, (int)player.posX, (int)player.posY, (int)player.posZ);
+    	}else
+    	{
+    		//player.openGui(DQR.instance, DQR.conf.GuiID_CSSlot, world, (int)player.posX, (int)player.posY, (int)player.posZ);
+    		//player.openGui(DQR.instance, DQR.conf.GuiID_CEWeapon, player.worldObj, (int)player.posX, (int)player.posY, (int)player.posZ);
+    		player.openGui(DQR.instance, DQR.conf.GuiID_CSCCR, player.worldObj, (int)player.posX, (int)player.posY, (int)player.posZ);
+    	}
         //player.openGui(DQR.instance, DQR.conf.GuiID_PetBook, world, (int)player.posX, (int)player.posY, (int)player.posZ);
     	//player.openGui(DQR.instance, DQR.conf.GuiID_PetStatus, world, (int)player.posX, (int)player.posY, (int)player.posZ);
     	//System.out.println("TEST" + System.currentTimeMillis());

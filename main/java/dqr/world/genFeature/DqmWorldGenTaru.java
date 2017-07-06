@@ -18,8 +18,9 @@ public class DqmWorldGenTaru implements IWorldGenerator
     public void generate(World par1World, Random rand, int xPos, int yPos, int zPos) {}
 
     @Override
-    public void generate(Random rand, int par1, int par2, World par3World, IChunkProvider par4IChunkProvider, IChunkProvider par5IChunkProvider)
+    public void generate(Random rand2, int par1, int par2, World par3World, IChunkProvider par4IChunkProvider, IChunkProvider par5IChunkProvider)
     {
+    	Random rand = new Random();
         int x = par1 * 16 + rand.nextInt(16);
         int z = par2 * 16 + rand.nextInt(16);
         int y;

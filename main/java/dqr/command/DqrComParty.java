@@ -55,7 +55,7 @@ public class DqrComParty extends CommandBase {
 		        		DQR.partyManager.addPartyMember(ep, var2[1]);
 		        	}else
 		        	{
-		        		ep.addChatMessage(new ChatComponentTranslation(EnumColor.DarkRed + "/dqrpt add <PlayerName>", new Object[] {}));
+		        		ep.addChatMessage(new ChatComponentTranslation(EnumColor.DarkRed.getChatColor() + "/dqrpt add <PlayerName>", new Object[] {}));
 		        	}
 		        }else if(var2[0].equalsIgnoreCase("kick"))
 		        {
@@ -80,7 +80,7 @@ public class DqrComParty extends CommandBase {
 		        		}
 		        	}else
 		        	{
-		        		ep.addChatMessage(new ChatComponentTranslation(EnumColor.DarkRed + "/dqrpt kick <PlayerName>|$pet|$pets", new Object[] {}));
+		        		ep.addChatMessage(new ChatComponentTranslation(EnumColor.DarkRed.getChatColor() + "/dqrpt kick <PlayerName>|$pet|$pets", new Object[] {}));
 		        	}
 		        }else if(var2[0].equalsIgnoreCase("leave"))
 		        {
@@ -111,15 +111,15 @@ public class DqrComParty extends CommandBase {
 			        	}
 		        	}else
 		        	{
-		        		ep.addChatMessage(new ChatComponentTranslation(EnumColor.DarkRed + "/dqrpt change <PlayerName>", new Object[] {}));
+		        		ep.addChatMessage(new ChatComponentTranslation(EnumColor.DarkRed.getChatColor() + "/dqrpt change <PlayerName>", new Object[] {}));
 		        	}
 		        }else
 		        {
-		        	ep.addChatMessage(new ChatComponentTranslation(EnumColor.DarkRed + "/dqrpt <add|kick|leave|change>", new Object[] {}));
+		        	ep.addChatMessage(new ChatComponentTranslation(EnumColor.DarkRed.getChatColor() + "/dqrpt <add|kick|leave|change>", new Object[] {}));
 		        }
 			}else
 	        {
-	        	ep.addChatMessage(new ChatComponentTranslation(EnumColor.DarkRed + "/dqrpt <add|kick|leave|change>", new Object[] {}));
+	        	ep.addChatMessage(new ChatComponentTranslation(EnumColor.DarkRed.getChatColor() + "/dqrpt <add|kick|leave|change>", new Object[] {}));
 	        }
 		}
 	}

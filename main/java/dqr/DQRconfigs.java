@@ -78,6 +78,22 @@ public class DQRconfigs {
 	public static int GuiID_SubEquip = 20;
 	public static int GuiID_SubItemBag = 21;
 	public static int GuiID_MKAccessory = 22;
+	public static int GuiID_CSBlackJack = 23;
+	public static int GuiID_CSPoker = 24;
+	public static int GuiID_CSSlot = 25;
+	public static int GuiID_CSBBGame = 26;
+	public static int GuiID_CSCCR = 27;
+
+	public static int GuiID_CEAccessory = 30;
+	public static int GuiID_CEWeapon = 31;
+	public static int GuiID_CEArmor = 32;
+	public static int GuiID_CEMagic = 33;
+	public static int GuiID_CEJob = 34;
+	public static int GuiID_CEMisc = 35;
+	public static int GuiID_CEBuilder = 36;
+	public static int GuiID_CEDecorate = 37;
+	public static int GuiID_CEDecorateD = 38;
+	public static int GuiID_CEDecorateH = 39;
 
 	public static int CLGuiLogWindowOff = 1;
 
@@ -425,6 +441,25 @@ public class DQRconfigs {
     public static int partyEnable = 1;
     public static int partyRefreshInterval = 500;
 
+    public static int fukuroLimitTagCount = 15;
+    public static int chestLimitTagCount = 15;
+
+
+    public static String[] fukuroRejectItems = new String[]
+    		{
+		    	"DQMIIINext:ItemMahounoTutu11",
+		    	"DQMIIINext:ItemOokinaFukuro",
+		    	"DQMIIINext:ItemOokinaFukuroR",
+		    	"DQMIIINext:ItemOokinaFukuroG",
+		    	"DQMIIINext:ItemOokinaFukuroB",
+		    	"DQMIIINext:ItemOokinaFukuroY"
+    		};
+
+
+    public static int casinoCoinRate = 100;
+
+    public static int fishingMode = 1;
+
     public DQRconfigs()
 	{
         cfg_core = new Configuration(new File(DQR.proxy.getDir(), "config/DQMIIINext_Core.cfg"));
@@ -632,6 +667,9 @@ public class DQRconfigs {
 		offDeadPetSound = config.get("Silent settings","Dead pet sound(0:sound OFF 1:sound ON)", offDeadPetSound).getInt();
 		offMobNotEnoughMP = config.get("Silent settings","monster miss magic sound (0:sound OFF 1:sound ON)", offMobNotEnoughMP).getInt();
 
+		config.setCategoryComment("Casino settings", "this setting is casino properties");
+		casinoCoinRate = config.get("Casino settings","Exchange CasinoCoin rate", casinoCoinRate ,"Value Gold = 1coin").getInt();
+
 		config.setCategoryComment("Monstar taming limit settings", "this setting is Max number of taming pets");
 		petLimit = config.get("Monstar taming limit settings","Max number of taming pets limit", petLimit).getInt();
 		petLimitPlayer = config.get("Monstar taming limit settings","Limit players", petLimitPlayer, "limit target Players (0:prohibit 1:limit without OP 2:limit for all players)").getInt();
@@ -648,6 +686,9 @@ public class DQRconfigs {
 		petPermUseMonsterMix = config.get("Monstar taming permission settings","Use monster mix magic(0:allow only owner 1:allow for all player 2:allow owner and OP)", petPermUseMonsterMix).getInt();
 		petPermPetSitting = config.get("Monstar taming permission settings","Pet sitting (0:allow only owner 1:allow for all player 2:allow owner and OP)", petPermPetSitting).getInt();
 		petPermOpenInventory = config.get("Monstar taming permission settings","Pet inventorty open (0:allow only owner 2:allow owner and OP)", petPermOpenInventory).getInt();
+
+		config.setCategoryComment("DQR Fishing setting", "DQR Fishing settings");
+		fishingMode = config.get("DQR Fishing setting","FishingMode", fishingMode, "setting (0:disable 1:hooking for item 2:hooking fishing system)").getInt();
 
 		config.setCategoryComment("Item use permission", "this setting is Item using permission");
 		permBuilder1 = config.get("Item use permission","BuilderDama", permBuilder1, "allow use BuilderDama (0:prohibit 1:allow only OP 2:allow for all player)").getInt();
@@ -672,6 +713,13 @@ public class DQRconfigs {
 		config.setCategoryComment("Clearing for respawn", "this setting is width of clearing area");
 		deadClearWidth = config.get("Clearing for respawn","Clearing width (radius)", deadClearWidth).getInt();
 		deadClearHeight = config.get("Clearing for respawn","Clearing height (radius)", deadClearHeight).getInt();
+
+		config.setCategoryComment("NBTTagCount limit for Sub Inventory", "this setting is NBTTagCount limit for ItemFukuro and EnderChest");
+		fukuroLimitTagCount = config.get("NBTTagCount limit for Sub Inventory","ItemFukuro", fukuroLimitTagCount, "0 is no limit").getInt();
+		chestLimitTagCount = config.get("NBTTagCount limit for Sub Inventory","DqrEnderChest", chestLimitTagCount, "0 is no limit").getInt();
+
+		config.setCategoryComment("Reject items for backpack", "can't in backpack items");
+		fukuroRejectItems  = config.get("Reject items for backpack","reject items", fukuroRejectItems , "add items (write format  modName:rejectItemname(1line 1item)   ex.  hogehoget:hogeleave1)").getStringList();
 
 
 		config.setCategoryComment("Model render size", "this setting is Model render magnification");
@@ -1055,6 +1103,22 @@ public class DQRconfigs {
 		GuiID_ItemBag =  config.get("GUI ID","ItemBag", GuiID_ItemBag).getInt();
 		GuiID_SubEquip =  config.get("GUI ID","MainInventory SubEquip", GuiID_SubEquip).getInt();
 		GuiID_SubItemBag =  config.get("GUI ID","ItemBag on SubEquip", GuiID_SubItemBag).getInt();
+
+		GuiID_CSBlackJack =  config.get("GUI ID","CASINO(BlackJack)", GuiID_CSBlackJack).getInt();
+		GuiID_CSPoker =  config.get("GUI ID","CASINO(Poker)", GuiID_CSPoker).getInt();
+		GuiID_CSSlot =  config.get("GUI ID","CASINO(Slot)", GuiID_CSSlot).getInt();
+		GuiID_CSBBGame =  config.get("GUI ID","CASINO(MiniBattleGame)", GuiID_CSBBGame).getInt();
+		GuiID_CSCCR =  config.get("GUI ID","CASINO(Chin-Chiro-Rin)", GuiID_CSCCR).getInt();
+
+		GuiID_CEAccessory =  config.get("GUI ID","CASINO_Exchange(Accessory)", GuiID_CEAccessory).getInt();
+		GuiID_CEWeapon =  config.get("GUI ID","CASINO_Exchange(Weapon)", GuiID_CEWeapon).getInt();
+		GuiID_CEArmor =  config.get("GUI ID","CASINO_Exchange(Armor)", GuiID_CEArmor).getInt();
+		GuiID_CEMagic =  config.get("GUI ID","CASINO_Exchange(Magic)", GuiID_CEMagic).getInt();
+		GuiID_CEMisc =  config.get("GUI ID","CASINO_Exchange(Misc)", GuiID_CEMisc).getInt();
+		GuiID_CEBuilder =  config.get("GUI ID","CASINO_Exchange(Sekizou)", GuiID_CEBuilder).getInt();
+		GuiID_CEDecorate =  config.get("GUI ID","CASINO_Exchange(Decorate)", GuiID_CEDecorate).getInt();
+		GuiID_CEDecorateD =  config.get("GUI ID","CASINO_Exchange(Decorate Daiza)", GuiID_CEDecorateD).getInt();
+		GuiID_CEDecorateH =  config.get("GUI ID","CASINO_Exchange(Decorate Hasira)", GuiID_CEDecorateH).getInt();
 		config.save();
 
 	}
@@ -1101,12 +1165,12 @@ public class DQRconfigs {
 
 		for(int cnt = 0; cnt < 9; cnt++)
 		{
-			config.setCategoryComment("RuraSinC(" + (cnt + 1) +") Coordinates", "RuraSinC(" + (cnt + 1) +") Cordinates settings");
-			RuraSinC_X[cnt] = config.get("RuraSinC(" + (cnt + 1) +") Coordinates","RuraSinC" + (cnt + 1) +"_X", RuraSinC_X[cnt], "jump to posX setting").getInt();
-			RuraSinC_Y[cnt] = config.get("RuraSinC(" + (cnt + 1) +") Coordinates","RuraSinC" + (cnt + 1) +"_Y", RuraSinC_Y[cnt] ,"jump to posY setting").getInt();
-			RuraSinC_Z[cnt] = config.get("RuraSinC(" + (cnt + 1) +") Coordinates","RuraSinC" + (cnt + 1) +"_Z", RuraSinC_Z[cnt] ,"jump to posZ setting").getInt();
-			RuraSinC_Dim[cnt] = config.get("RuraSinC(" + (cnt + 1) +") Coordinates","RuraSinC" + (cnt + 1) +"_Dim", RuraSinC_Dim[cnt] ,"only use dimension setting. You can use this magic at this setting Dimension").getInt();
-			RuraSinC_Name[cnt] = config.get("RuraSinC(" + (cnt + 1) +") Coordinates","RuraSinC" + (cnt + 1) +"_PositionName", RuraSinC_Name[cnt] ,"Position name.").getString();
+			config.setCategoryComment("RuraSinC Coordinates", "RuraSinC(" + (cnt + 1) +") Cordinates settings");
+			RuraSinC_X[cnt] = config.get("RuraSinC Coordinates","RuraSinC" + (cnt + 1) +"_X", RuraSinC_X[cnt], "jump to posX setting").getInt();
+			RuraSinC_Y[cnt] = config.get("RuraSinC Coordinates","RuraSinC" + (cnt + 1) +"_Y", RuraSinC_Y[cnt] ,"jump to posY setting").getInt();
+			RuraSinC_Z[cnt] = config.get("RuraSinC Coordinates","RuraSinC" + (cnt + 1) +"_Z", RuraSinC_Z[cnt] ,"jump to posZ setting").getInt();
+			RuraSinC_Dim[cnt] = config.get("RuraSinC Coordinates","RuraSinC" + (cnt + 1) +"_Dim", RuraSinC_Dim[cnt] ,"only use dimension setting. You can use this magic at this setting Dimension").getInt();
+			RuraSinC_Name[cnt] = config.get("RuraSinC Coordinates","RuraSinC" + (cnt + 1) +"_PositionName", RuraSinC_Name[cnt] ,"Position name.").getString();
 		}
 
 
@@ -1489,22 +1553,29 @@ public class DQRconfigs {
 		cfg_rura.load();
 
 		cfg_rura.setCategoryComment("RuraSinC(" + select + ") Coordinates", "RuraSinC Cordinates settings");
-		cfg_rura.get("RuraSinC(" + select + ") Coordinates","RuraSinC" + (select + 1) +"_X", RuraSinC_X[select], "jump to posX setting").set(x);
-		cfg_rura.get("RuraSinC(" + select + ") Coordinates","RuraSinC" + (select + 1) +"_Y", RuraSinC_Y[select] ,"jump to posY setting").set(y);
-		cfg_rura.get("RuraSinC(" + select + ") Coordinates","RuraSinC" + (select + 1) +"_Z", RuraSinC_Z[select] ,"jump to posZ setting").set(z);
-		cfg_rura.get("RuraSinC(" + select + ") Coordinates","RuraSinC" + (select + 1) +"_Dim", RuraSinC_Dim[select] ,"only use dimension setting. You can use this magic at this setting Dimension").set(dim);
+		cfg_rura.get("RuraSinC Coordinates","RuraSinC" + (select + 1) +"_X", RuraSinC_X[select], "jump to posX setting").set(x);
+		cfg_rura.get("RuraSinC Coordinates","RuraSinC" + (select + 1) +"_Y", RuraSinC_Y[select] ,"jump to posY setting").set(y);
+		cfg_rura.get("RuraSinC Coordinates","RuraSinC" + (select + 1) +"_Z", RuraSinC_Z[select] ,"jump to posZ setting").set(z);
+		cfg_rura.get("RuraSinC Coordinates","RuraSinC" + (select + 1) +"_Dim", RuraSinC_Dim[select] ,"only use dimension setting. You can use this magic at this setting Dimension").set(dim);
 
 		cfg_rura.save();
 
 		cfg_rura.load();
-		RuraSinC_X[select] = cfg_rura.get("RuraSinC(" + (select + 1) + ") Coordinates","RuraSinC" + (select + 1) +"_X", RuraSinC_X[EnumDqmMagic.RuraSinC.getType()], "jump to posX setting").getInt();
-		RuraSinC_Y[select] = cfg_rura.get("RuraSinC(" + (select + 1) + ") Coordinates","RuraSinC" + (select + 1) +"_Y", RuraSinC_Y[EnumDqmMagic.RuraSinC.getType()] ,"jump to posY setting").getInt();
-		RuraSinC_Z[select] = cfg_rura.get("RuraSinC(" + (select + 1) + ") Coordinates","RuraSinC" + (select + 1) +"_Z", RuraSinC_Z[EnumDqmMagic.RuraSinC.getType()] ,"jump to posZ setting").getInt();
-		RuraSinC_Dim[select] = cfg_rura.get("RuraSinC(" + (select + 1) + ") Coordinates","RuraSinC" + (select + 1) +"_Dim", RuraSinC_Dim[EnumDqmMagic.RuraSinC.getType()] ,"only use dimension setting. You can use this magic at this setting Dimension").getInt();
+		RuraSinC_X[select] = cfg_rura.get("RuraSinC Coordinates","RuraSinC" + (select + 1) +"_X", RuraSinC_X[select], "jump to posX setting").getInt();
+		RuraSinC_Y[select] = cfg_rura.get("RuraSinC Coordinates","RuraSinC" + (select + 1) +"_Y", RuraSinC_Y[select] ,"jump to posY setting").getInt();
+		RuraSinC_Z[select] = cfg_rura.get("RuraSinC Coordinates","RuraSinC" + (select + 1) +"_Z", RuraSinC_Z[select] ,"jump to posZ setting").getInt();
+		RuraSinC_Dim[select] = cfg_rura.get("RuraSinC Coordinates","RuraSinC" + (select + 1) +"_Dim", RuraSinC_Dim[select] ,"only use dimension setting. You can use this magic at this setting Dimension").getInt();
 
 	}
 
+	public void setFisshingMode(int var1)
+	{
+		cfg_option.load();
+		fishingMode = var1;
+		cfg_option.get("DQR Fishing setting","FishingMode", fishingMode, "setting (0:disable 1:hooking for item 2:hooking fishing system)").set(var1);
+		cfg_option.save();
 
+	}
 }
 
 

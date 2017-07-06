@@ -140,6 +140,18 @@
       }
     ]
   },
+  "mob.boss": {
+    "category":"hostile",
+    "sounds": [
+      {
+        "name": "mob/Boss",
+        "stream": false,
+        "weight": 1,
+        "volume": 1,
+        "pitch": 1
+      }
+    ]
+  },
   "player.kaisin": {
     "category":"player",
     "sounds": [
@@ -416,11 +428,167 @@
       }
     ]
   },
+  "player.casinowin": {
+    "category":"player",
+    "sounds": [
+      {
+        "name": "player/Kajino",
+        "stream": false,
+        "weight": 1,
+        "volume": 1,
+        "pitch": 1
+      }
+    ]
+  },
+  "player.casinolose": {
+    "category":"player",
+    "sounds": [
+      {
+        "name": "player/Bubu",
+        "stream": false,
+        "weight": 1,
+        "volume": 1,
+        "pitch": 1
+      }
+    ]
+  },
   "player.itetuku": {
     "category":"player",
     "sounds": [
       {
         "name": "player/Itetuku",
+        "stream": false,
+        "weight": 1,
+        "volume": 1,
+        "pitch": 1
+      }
+    ]
+  },
+  "player.sl_start": {
+    "category":"player",
+    "sounds": [
+      {
+        "name": "player/Sl_start",
+        "stream": false,
+        "weight": 1,
+        "volume": 1,
+        "pitch": 1
+      }
+    ]
+  },
+  "player.sl_stop": {
+    "category":"player",
+    "sounds": [
+      {
+        "name": "player/Sl_stop",
+        "stream": false,
+        "weight": 1,
+        "volume": 1,
+        "pitch": 1
+      }
+    ]
+  },
+  "player.sl_koyaku": {
+    "category":"player",
+    "sounds": [
+      {
+        "name": "player/Sl_koyaku",
+        "stream": false,
+        "weight": 1,
+        "volume": 1,
+        "pitch": 1
+      }
+    ]
+  },
+  "player.sl_hit": {
+    "category":"player",
+    "sounds": [
+      {
+        "name": "player/Sl_hit",
+        "stream": false,
+        "weight": 1,
+        "volume": 1,
+        "pitch": 1
+      }
+    ]
+  },
+  "player.sl_hit_reg": {
+    "category":"player",
+    "sounds": [
+      {
+        "name": "player/Sl_hit_reg",
+        "stream": false,
+        "weight": 1,
+        "volume": 1,
+        "pitch": 1
+      }
+    ]
+  },
+  "player.sl_hit_big": {
+    "category":"player",
+    "sounds": [
+      {
+        "name": "player/Sl_hit_big",
+        "stream": false,
+        "weight": 1,
+        "volume": 1,
+        "pitch": 1
+      }
+    ]
+  },
+  "player.sl_koyaku_bonus": {
+    "category":"player",
+    "sounds": [
+      {
+        "name": "player/Sl_koyaku_bonus",
+        "stream": false,
+        "weight": 1,
+        "volume": 1,
+        "pitch": 1
+      }
+    ]
+  },
+  "player.kiseki": {
+    "category":"player",
+    "sounds": [
+      {
+        "name": "player/Kiseki",
+        "stream": false,
+        "weight": 1,
+        "volume": 1,
+        "pitch": 1
+      }
+    ]
+  },
+  "player.damage": {
+    "category":"player",
+    "sounds": [
+      {
+        "name": "player/Damage",
+        "stream": false,
+        "weight": 1,
+        "volume": 1,
+        "pitch": 1
+      }
+    ]
+  },
+  "player.bbg_over": {
+    "category":"player",
+    "sounds": [
+      {
+        "name": "player/Bbg_over",
+        "stream": false,
+        "weight": 1,
+        "volume": 1,
+        "pitch": 1
+      }
+    ]
+  },
+  "player.bbg_clear": {
+    "category":"player",
+    "sounds": [
+      {
+        "name": "player/Bbg_clear",
         "stream": false,
         "weight": 1,
         "volume": 1,

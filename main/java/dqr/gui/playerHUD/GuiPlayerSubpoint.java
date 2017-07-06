@@ -15,6 +15,7 @@ import org.lwjgl.opengl.GL11;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import dqr.DQR;
 import dqr.playerData.ExtendedPlayerProperties;
+import dqr.playerData.ExtendedPlayerProperties3;
 
 public class GuiPlayerSubpoint extends Gui
 {
@@ -170,7 +171,7 @@ public class GuiPlayerSubpoint extends Gui
           y0 =y0 + DQR.conf.CLGuiSubpointsPosY;
 
           int MEDAL = ExtendedPlayerProperties.get(ep).getMedal();
-          int COIN = ExtendedPlayerProperties.get(ep).getCoin();
+          int COIN = ExtendedPlayerProperties3.get(ep).getCoin();
 
           String sMedal = I18n.format("gui.status.medal", new Object[]{MEDAL});
           String sCoin = I18n.format("gui.status.coin", new Object[]{COIN});

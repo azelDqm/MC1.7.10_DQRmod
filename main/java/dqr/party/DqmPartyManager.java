@@ -19,7 +19,7 @@ import dqr.playerData.MessagePlayerProperties3;
 public class DqmPartyManager {
 
 	//キーはメンバー名：値がリーダー名
-	public static Map<Entity, Entity> partySet = new HashMap();
+	public static Map<Entity, String> partySet = new HashMap();
 
 	public DqmPartyManager(){}
 
@@ -30,7 +30,7 @@ public class DqmPartyManager {
 		if(!partySet.containsValue(ep))
 		{
 			//System.out.println("TEST_LINE_A2");
-			partySet.put(ep, ep);
+			partySet.put(ep, ep.getCommandSenderName());
 
 			((EntityPlayer)ep).addChatMessage(new ChatComponentTranslation("msg.party.create.txt",new Object[] {}));
 
@@ -53,6 +53,7 @@ public class DqmPartyManager {
 		if(!ep.worldObj.isRemote)
 		{
 			MinecraftServer minecraftserver = MinecraftServer.getServer();
+
 			Entity er = minecraftserver.getConfigurationManager().func_152612_a(newMember);
 			//minecraftserver.getConfigurationManager().playerEntityList
 			//partySet.put(ep, er);
@@ -88,7 +89,7 @@ public class DqmPartyManager {
 			{
 				//System.out.println("TEST_LINE3");
 				this.sendPartyMessage(newMember, "msg.party.join2.txt", new Object[] {newMember.getCommandSenderName()});
-				partySet.put(newMember, ep);
+				partySet.put(newMember, ep.getCommandSenderName());
 			}
 		}else
 		{
@@ -98,6 +99,8 @@ public class DqmPartyManager {
 			}
 		}
 	}
+
+
 
 	public boolean changePartyLeader(String newLeader, Entity oldLeader)
 	{
@@ -128,9 +131,11 @@ public class DqmPartyManager {
         while (iterator.hasNext())
         {
         	Entity s = (Entity)iterator.next();
-        	if(partySet.get(s).getCommandSenderName().equalsIgnoreCase(oldLeader.getCommandSenderName()))
+        	MinecraftServer minecraftserver = MinecraftServer.getServer();
+        	Entity er = minecraftserver.getConfigurationManager().func_152612_a(partySet.get(s));
+        	if(er.getCommandSenderName().equalsIgnoreCase(oldLeader.getCommandSenderName()))
         	{
-        		partySet.put(s, newLeader);
+        		partySet.put(s, newLeader.getCommandSenderName());
 
         		ret = true;
         	}
@@ -178,19 +183,20 @@ public class DqmPartyManager {
 
         Iterator iterator = partySet.keySet().iterator();
 
-        /*
+
         while (iterator.hasNext())
         {
         	Entity s = (Entity)iterator.next();
-        	if(s.getCommandSenderName().equalsIgnoreCase(par1.getCommandSenderName()))
+        	if(s.getUniqueID().toString().equalsIgnoreCase(par1.getUniqueID().toString()))
         	{
         		leaderFlg = this.isPartyLeader(s);
         		ret = true;
-        		partySet.remove(s);
+        		//partySet.remove(s);
+        		removeKeys.add(s);
         	}
         }
-        */
 
+        /*
         if(partySet.containsKey(par1))
         {
         	removeKeys.add(par1);
@@ -198,6 +204,7 @@ public class DqmPartyManager {
         	ret = true;
 
         }
+        */
 
 
         for(int cnt = 0; cnt < removeKeys.size(); cnt++)
@@ -217,23 +224,6 @@ public class DqmPartyManager {
 
         if(leaderFlg)
         {
-        	/*
-        	Entity newLeader = null;
-
-            Iterator iterator2 = partySet.keySet().iterator();
-
-            while (iterator2.hasNext())
-            {
-            	Entity s = (Entity)iterator2.next();
-            	if(s instanceof EntityPlayer)
-            	{
-            		if(!this.changePartyLeader(s, par1))
-            		{
-            			this.closeParty(par1);
-            		}
-            		return true;
-            	}
-            }*/
 
             //リーダーになれるEntityがいない場合PT解散
         	if(!changePartyLeaderForce(par1))
@@ -254,18 +244,21 @@ public class DqmPartyManager {
         while (iterator.hasNext())
         {
             Entity s = (Entity)iterator.next();
-            if(s.getCommandSenderName().equalsIgnoreCase(par1) && partySet.get(s) != null &&
-            		partySet.get(s).getCommandSenderName().equalsIgnoreCase(ep.getCommandSenderName()))
+        	MinecraftServer minecraftserver = MinecraftServer.getServer();
+        	Entity er = minecraftserver.getConfigurationManager().func_152612_a(partySet.get(s));
+
+            if(er.getCommandSenderName().equalsIgnoreCase(par1) && partySet.get(er) != null &&
+            		partySet.get(er).equalsIgnoreCase(ep.getCommandSenderName()))
             {
             	partySet.remove(s);
             	if(s instanceof EntityPlayer)
             	{
-            		ExtendedPlayerProperties3.get((EntityPlayer)s).setPartyMemberData(null);
+            		ExtendedPlayerProperties3.get((EntityPlayer)er).setPartyMemberData(null);
                 	if(!ep.worldObj.isRemote)
                 	{
-                		PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties3((EntityPlayer)s), (EntityPlayerMP)s);
+                		PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties3((EntityPlayer)er), (EntityPlayerMP)s);
                 	}
-            		((EntityPlayer)s).addChatMessage(new ChatComponentTranslation("msg.party.leave.txt",new Object[] {}));
+            		((EntityPlayer)er).addChatMessage(new ChatComponentTranslation("msg.party.leave.txt",new Object[] {}));
 
             		/*
             		ExtendedPlayerProperties3.get((EntityPlayer)s).setPartyMemberData(null);
@@ -296,7 +289,7 @@ public class DqmPartyManager {
             //System.out.println("NAME" + partySet.get(s).getCommandSenderName() + " / " + ep.getCommandSenderName());
             //System.out.println("NAME" + s.getCommandSenderName() + " / " + s.getClass().getName());
             if(s instanceof DqmPetBase &&  partySet.get(s) != null &&
-            		partySet.get(s).getCommandSenderName().equalsIgnoreCase(ep.getCommandSenderName()))
+            		partySet.get(s).equalsIgnoreCase(ep.getCommandSenderName()))
             {
 
 
@@ -327,13 +320,12 @@ public class DqmPartyManager {
         boolean removeFlg = false;
 
         if(pet instanceof DqmPetBase && partySet.get(pet) != null &&
-        		partySet.get(pet).getCommandSenderName().equalsIgnoreCase(ep.getCommandSenderName()))
+        		partySet.get(pet).equalsIgnoreCase(ep.getCommandSenderName()))
         {
         	partySet.remove(pet);
 
         	removeFlg = true;
         }
-
 
 		return removeFlg;
 	}
@@ -346,7 +338,11 @@ public class DqmPartyManager {
         while (iterator.hasNext())
         {
         	 Entity s = (Entity)iterator.next();
-        	 if(partySet.get(s).getUniqueID().toString().equalsIgnoreCase(ep.getUniqueID().toString()))
+
+         	MinecraftServer minecraftserver = MinecraftServer.getServer();
+         	Entity er = minecraftserver.getConfigurationManager().func_152612_a(partySet.get(s));
+
+        	 if(partySet.get(er).equalsIgnoreCase(ep.getCommandSenderName()))
         	 {
         		 //partySet.remove(s);
         		 removeKeys.add(s);
@@ -378,7 +374,7 @@ public class DqmPartyManager {
 
 	public boolean isPartyLeader(Entity ep)
 	{
-		return partySet.containsValue(ep);
+		return partySet.containsValue(ep.getCommandSenderName());
 		//return partySet.get(ep).getCommandSenderName().equalsIgnoreCase(ep.getCommandSenderName());
 	}
 
@@ -408,7 +404,7 @@ public class DqmPartyManager {
             */
             //System.out.println(s.getCommandSenderName());
             //if(partySet.get(s).getCommandSenderName().equalsIgnoreCase(epx.getCommandSenderName()))
-            if(partySet.get(s).getCommandSenderName().equalsIgnoreCase(epx.getCommandSenderName()))
+            if(partySet.get(s).equalsIgnoreCase(epx.getCommandSenderName()))
             {
             	dataMap.put((Entity)s, (Entity)epx);
             }
@@ -417,9 +413,9 @@ public class DqmPartyManager {
 		return dataMap;
 	}
 
-	public Entity getPartyLeaderFromMember(Entity ep)
+	public String getPartyLeaderFromMember(Entity ep)
 	{
-		Entity ret = null;
+		String ret = null;
 
 		if(partySet.containsKey(ep))
 		{
@@ -458,14 +454,15 @@ public class DqmPartyManager {
         while (iterator.hasNext())
         {
         	 Entity s = (Entity)iterator.next();
-        	 if(partySet.get(s).getCommandSenderName().equalsIgnoreCase(reader.getCommandSenderName()))
+          	Entity er = minecraftserver.getConfigurationManager().func_152612_a(partySet.get(s));
+        	 if(er.getCommandSenderName().equalsIgnoreCase(reader.getCommandSenderName()))
         	 {
         		 if(s instanceof EntityPlayer)
         		 {
-        			 EntityPlayer er = minecraftserver.getConfigurationManager().func_152612_a(s.getCommandSenderName());
-        			 if(er != null)
+        			 EntityPlayer er2 = minecraftserver.getConfigurationManager().func_152612_a(s.getCommandSenderName());
+        			 if(er2 != null)
         			 {
-        				 er.addChatMessage(new ChatComponentTranslation(keys,new Object[] {reader.getCommandSenderName()}));
+        				 er2.addChatMessage(new ChatComponentTranslation(keys,new Object[] {reader.getCommandSenderName()}));
         			 }
         		 }
         	 }

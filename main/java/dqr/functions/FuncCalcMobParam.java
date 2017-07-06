@@ -48,7 +48,7 @@ public class FuncCalcMobParam {
 			case 3: ret = par1; break;
 			case 4: ret = par1 + (par1 / 2); break;
 			case 5: ret = par1 * 2; break;
-			case 6: ret = par1 * 2 +  + (par1 / 2); break;
+			case 6: ret = par1 * 2 + (par1 / 2); break;
 			case 10:  ret = par1; break;
 		}
 

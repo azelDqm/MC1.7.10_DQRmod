@@ -10,6 +10,12 @@ import dqr.blocks.decorate.tileEntity.*;
 import dqr.blocks.mobFigure.tileEntity.*;
 import dqr.blocks.mobObj.tileEntity.*;
 import dqr.blocks.mobSpawner.tileEntity.DqmTileEntityMobSpawner;
+import dqr.blocks.sekizou.tileEntity.DqmTileEntitySekizouDarkRamia;
+import dqr.blocks.sekizou.tileEntity.DqmTileEntitySekizouDesupisaro1;
+import dqr.blocks.sekizou.tileEntity.DqmTileEntitySekizouEsterk;
+import dqr.blocks.sekizou.tileEntity.DqmTileEntitySekizouMasterdoragon;
+import dqr.blocks.sekizou.tileEntity.DqmTileEntitySekizouRyuuou;
+import dqr.blocks.sekizou.tileEntity.DqmTileEntitySekizouZoma;
 
 public class BlockTileEntityRegister {
 
@@ -785,5 +791,15 @@ public class BlockTileEntityRegister {
 
 		GameRegistry.registerTileEntity(DqmTileEntityObjOrutega.class, "dqmTileEntityObjOrutega");
 		GameRegistry.registerTileEntity(DqmTileEntityFigureOrutega.class, "dqmTileEntityFigureOrutega");
+
+		GameRegistry.registerTileEntity(DqmTileEntityObjWhitepan2.class, "dqmTileEntityObjWhitepan2");
+		GameRegistry.registerTileEntity(DqmTileEntityFigureWhitepan2.class, "dqmTileEntityFigureWhitepan2");
+
+		GameRegistry.registerTileEntity(DqmTileEntitySekizouZoma.class, "dqmTileEntitySekizouZoma");
+		GameRegistry.registerTileEntity(DqmTileEntitySekizouDesupisaro1.class, "dqmTileEntitySekizouDesupisaro1");
+		GameRegistry.registerTileEntity(DqmTileEntitySekizouEsterk.class, "dqmTileEntitySekizouEsterk");
+		GameRegistry.registerTileEntity(DqmTileEntitySekizouMasterdoragon.class, "dqmTileEntitySekizouMasterdoragon");
+		GameRegistry.registerTileEntity(DqmTileEntitySekizouRyuuou.class, "dqmTileEntitySekizouRyuuou");
+		GameRegistry.registerTileEntity(DqmTileEntitySekizouDarkRamia.class, "dqmTileEntitySekizouDarkRamia");
 	}
 }

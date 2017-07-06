@@ -25,6 +25,32 @@ public class DqmItemRecipeMagic {
                                    'V', Rura, 'W', DQIngots.itemHikarinoisi
                                });
                                */
+        GameRegistry.addRecipe(new ItemStack(DQMagics.itemRurasin, 1), new Object[]
+                {
+                    "BXC",
+                    "XAX",
+                    "DXE",
+                    'X', DQMiscs.itemSeireiseki, 'A', DQMagics.itemRura, 'B', DQMagics.itemRuraR,
+                    'C', DQMagics.itemRuraG, 'D', DQMagics.itemRuraB, 'E', DQMagics.itemRuraY
+                });
+
+        GameRegistry.addRecipe(new ItemStack(DQMagics.itemRurasinC, 1), new Object[]
+                {
+                    "BXC",
+                    "XAX",
+                    "DXE",
+                    'X', DQMiscs.itemSinkanohiseki, 'A', DQMagics.itemRuraC, 'B', DQMagics.itemRuraRC,
+                    'C', DQMagics.itemRuraGC, 'D', DQMagics.itemRuraBC, 'E', DQMagics.itemRuraYC
+                });
+
+        GameRegistry.addRecipe(new ItemStack(DQMagics.itemRurasin2, 1), new Object[]
+                {
+                    "BXC",
+                    "XAX",
+                    "DXE",
+                    'X', DQMiscs.itemGenmaseki, 'A', DQMagics.itemRura2, 'B', DQMagics.itemRuraR2,
+                    'C', DQMagics.itemRuraG2, 'D', DQMagics.itemRuraB2, 'E', DQMagics.itemRuraY2
+                });
 
         GameRegistry.addRecipe(new ItemStack(DQMagics.itemZaoraru , 1), new Object[]
                                {
@@ -1229,5 +1255,38 @@ public class DqmItemRecipeMagic {
         GameRegistry.addShapelessRecipe(new ItemStack(DQMagics.itemBasirura , 1), new Object[] {new ItemStack(DQMagics.itemRura, 1), new ItemStack(DQMiscs.itemUraminohouju, 1)});
         GameRegistry.addShapelessRecipe(new ItemStack(DQMagics.itemBasiruraC , 1), new Object[] {new ItemStack(DQMagics.itemBasirura, 1), new ItemStack(DQIngots.itemOriharukon, 1)});
         GameRegistry.addShapelessRecipe(new ItemStack(DQMagics.itemBasiruraC2 , 1), new Object[] {new ItemStack(DQMagics.itemBasirura, 1), new ItemStack(DQMiscs.itemRyuunonamida, 1)});
+
+
+        GameRegistry.addRecipe(new ItemStack(DQMagicTools.itemDqrFishRod_Diamond), new Object[]
+        {
+            "  A",
+            " AB",
+            "A B",
+            'A', Items.diamond, 'B', Items.string
+        });
+
+        GameRegistry.addRecipe(new ItemStack(DQMagicTools.itemDqrFishRod_Oriharukon), new Object[]
+        {
+            "  A",
+            " AB",
+            "C B",
+            'A', DQWeapons.itemOriharukonbou, 'B', Items.string, 'C', DQMagicTools.itemDqrFishRod_Diamond
+        });
+
+        GameRegistry.addRecipe(new ItemStack(DQMagicTools.itemDqrFishRod_Roto), new Object[]
+        {
+            "  A",
+            " AB",
+            "C B",
+            'A', DQWeapons.itemRotonoturugi, 'B', DQMiscs.itemAmatuyunoito, 'C', DQMagicTools.itemDqrFishRod_Oriharukon
+        });
+
+        GameRegistry.addRecipe(new ItemStack(DQMagicTools.itemDqrFishRod_Densetu), new Object[]
+        {
+            "DDA",
+            "DAB",
+            "CBB",
+            'A', DQWeapons.itemSinken, 'B', DQMiscs.itemGenmasekiB, 'C', DQMagicTools.itemDqrFishRod_Roto, 'D', DQMiscs.itemGenmasekiG
+        });
 	}
 }

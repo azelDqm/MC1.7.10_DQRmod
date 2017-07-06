@@ -3,6 +3,10 @@ package dqr;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.relauncher.Side;
+import dqr.network.CToSMessage;
+import dqr.network.PacketHandlerClient;
+import dqr.network.PacketHandlerServer;
+import dqr.network.SToCMessage;
 import dqr.packetMessage.MessageClientCleatSlotItem;
 import dqr.packetMessage.MessageClientCleatSlotItemHandler;
 import dqr.packetMessage.MessageClientPetEntityData;
@@ -54,5 +58,7 @@ public class PacketHandler {
         INSTANCE.registerMessage(MessageClientPetEntityDataHandler.class, MessageClientPetEntityData.class, 10, Side.CLIENT);
         INSTANCE.registerMessage(MessageServerFunctionHandler.class, MessageServerFunction.class, 11, Side.SERVER);
 
+        INSTANCE.registerMessage(PacketHandlerServer.class, CToSMessage.class, 12, Side.SERVER);
+        INSTANCE.registerMessage(PacketHandlerClient.class, SToCMessage.class, 13, Side.CLIENT);
     }
 }

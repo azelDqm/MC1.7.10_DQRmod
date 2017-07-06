@@ -32,7 +32,7 @@ public class DqmItemUsingAccessories extends DqmItemAccessoryBase{
 
 		Random rand = new Random();
 
-		if(this == DQAccessories.itemInotinoyubiwa)
+		if(this == DQAccessories.itemInotinoyubiwa && !par3EntityPlayer.isSneaking())
 		{
 	    	if(par3EntityPlayer.getHealth() + 50 > par3EntityPlayer.getMaxHealth())
 	    	{
@@ -41,7 +41,7 @@ public class DqmItemUsingAccessories extends DqmItemAccessoryBase{
 	    	{
 	    		par3EntityPlayer.heal(50.0F);
 	    	}
-		}else if(this == DQAccessories.itemInorinoyubiwa)
+		}else if(this == DQAccessories.itemInorinoyubiwa && !par3EntityPlayer.isSneaking())
 		{
 			int playerMP = ExtendedPlayerProperties.get(par3EntityPlayer).getMP();
 			int playerMaxMP = ExtendedPlayerProperties.get(par3EntityPlayer).getMaxMP();

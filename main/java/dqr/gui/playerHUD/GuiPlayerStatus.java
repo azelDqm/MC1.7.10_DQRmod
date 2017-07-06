@@ -81,6 +81,10 @@ public class GuiPlayerStatus extends Gui
     	  return;
       }
 
+      if(!ep.getCommandSenderName().equalsIgnoreCase(ExtendedPlayerProperties.get(ep).getPlayerName()))
+      {
+    	  return;
+      }
 
       if (DQR.conf.CLGuiVis2 == 1)
       {
@@ -188,7 +192,7 @@ public class GuiPlayerStatus extends Gui
           int INT = ExtendedPlayerProperties.get(ep).getKasikosa();
           int GOLD = ExtendedPlayerProperties.get(ep).getGold();
           int MEDAL = ExtendedPlayerProperties.get(ep).getMedal();
-          int COIN = ExtendedPlayerProperties.get(ep).getCoin();
+          //int COIN = ExtendedPlayerProperties3.get(ep).getCoin();
           int Jukuren = ExtendedPlayerProperties.get(ep).getJukurenLv(Weapon);
           int JukurenEXP = ExtendedPlayerProperties.get(ep).getJukurenExp(Weapon);
           int JukurenWP = ExtendedPlayerProperties.get(ep).getJukurenWP(Weapon);

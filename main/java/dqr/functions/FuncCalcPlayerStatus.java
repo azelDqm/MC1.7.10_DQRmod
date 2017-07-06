@@ -1251,7 +1251,7 @@ public class FuncCalcPlayerStatus {
 		{
 			ep.removePotionEffect(DQPotionPlus.buffHoshihuru.id);
 		}
-
+		equipment.markDirty();
 		equipment.closeInventory();
     }
 

@@ -33,6 +33,7 @@ public class FuncPetOperation {
 			petData.setDouble("posZ", pet.posZ);
 			petData.setString("petRoot", pet.type.PetRoot);
 			petData.setBoolean("enable", false);
+			//petData.setString("puuid", pet.getUniqueID().toString());
 
 			if(playerPet.hasKey(pet.getUniqueID().toString()))
 			{
@@ -52,6 +53,7 @@ public class FuncPetOperation {
 			playerPet.removeTag(uuid);
 			ExtendedPlayerProperties3.get(ep).setNBTPlayerPetList(playerPet);
 		}
+
 	}
 
 	public void clearPetdata(EntityPlayer ep)
@@ -86,6 +88,7 @@ public class FuncPetOperation {
 			petData.setDouble("posZ", pet.posZ);
 			petData.setString("petRoot", pet.type.PetRoot);
 			petData.setBoolean("enable", true);
+			//petData.setString("puuid", pet.getUniqueID().toString());
 
 			if(playerPet.hasKey(pet.getUniqueID().toString()))
 			{

@@ -258,6 +258,11 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
         this.playSound("mob.wolf.step", 0.15F, 1.0F);
     }
 
+    public boolean getIsDeath()
+    {
+    	return this.deathFlg || this.getHealth() <= 0.1F;
+    }
+
     public void onLivingUpdate()
     {
         super.onLivingUpdate();
@@ -379,6 +384,7 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
             }
             else if(this.getHealth() - p_70097_2_ <= 0.0F)
             {
+            	if(DQR.debug == 3)System.out.println("DEBUG_LINE1");
             	this.setHealth(0.05F);
             	return false;
             }
@@ -577,12 +583,21 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
         	{
         		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(type.HPDEF);
         		this.setMaxHP(type.HPDEF);
+        		//fix1
+        		this.setHealth(this.HP);
+        		//Debugline1
+        		//System.out.println("TEST1");
         	}else
         	{
         		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(this.getMaxHP());
+        		//fix1
+        		this.setHealth(this.HP);
+        		//Debugline1
+        		//ystem.out.println("TEST2");
         	}
         	//this.setHealth(this.getMaxHP());
-        	this.setHealth(this.getMaxHealth());
+        	//if(DQR.debug == 3)System.out.println("DEBUG_LINE2");
+        	//this.setHealth(this.getMaxHealth());
         }
         else
         {
@@ -597,11 +612,21 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
             	{
             		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(type.HPDEF);
             		this.setMaxHP(type.HPDEF);
+            		//fix1
+            		this.setHealth(this.HP);
+            		//Debugline1
+            		//System.out.println("TEST3");
             	}else
             	{
             		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(this.getMaxHP());
+            		//fix1
+            		this.setHealth(this.HP);
+            		//Debugline1
+            		//System.out.println("TEST4");
             	}
-            	this.setHealth(this.getMaxHP());
+
+            	//if(DQR.debug == 3)System.out.println("DEBUG_LINE3");
+            	//this.setHealth(this.getMaxHP());
         	}else
         	{
         		//System.out.println("AAAAA:" + this.getMaxHP() + " / " + this.getMaxHealth());
@@ -609,12 +634,20 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
         		{
         			//System.out.println("LINE2");
         			this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(this.getMaxHealth());
+        			if(DQR.debug == 3)System.out.println("DEBUG_LINE4");
         			this.setHealth(this.getMaxHealth());
+
+            		//Debugline1
+            		//System.out.println("TEST5");
         		}else
         		{
         			//System.out.println("LINE3");
         			this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(10.0D);
+        			if(DQR.debug == 3)System.out.println("DEBUG_LINE5");
         			this.setHealth(10.0f);
+
+            		//Debugline1
+            		//System.out.println("TEST6");
         		}
         	}
         }
@@ -661,6 +694,18 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
         {
 
         	boolean opFlg = false;
+
+        	if(this.getOwner() != null && this.getOwner() instanceof EntityPlayer)
+        	{
+        		NBTTagCompound ownerNBT = ExtendedPlayerProperties3.get((EntityPlayer)this.getOwner()).getNBTPlayerPetList();
+
+        		if(ownerNBT != null && !ownerNBT.hasKey(this.getUniqueID().toString()))
+        		{
+        			//System.out.println("TESTTEST");
+        			ExtendedPlayerProperties3.get((EntityPlayer)this.getOwner()).plusPetCount(1);
+                    DQR.petFunc.setNewPetdata(this);
+        		}
+        	}
 
         	if(!ep.worldObj.isRemote)
         	{
@@ -832,11 +877,11 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 	        				NBTTagCompound haigouPet1 = ExtendedPlayerProperties3.get(ep).getHaigouPet1();
 	        				NBTTagCompound haigouPet2 = ExtendedPlayerProperties3.get(ep).getHaigouPet2();
 
-	        				if(haigouPet1 == null || haigouPet1.hasNoTags())
+	        				if((haigouPet1 == null || haigouPet1.hasNoTags()) && (haigouPet2 == null || !haigouPet2.getString("PetUUID").equalsIgnoreCase(this.getUniqueID().toString())))
 	        				{
 	        					ExtendedPlayerProperties3.get(ep).setHaigouPet1(this.makeTutuNBT(new NBTTagCompound()));
 	        					ep.addChatMessage(new ChatComponentTranslation("dqm.iteminfo.petHaigou1",new Object[] {this.getCommandSenderName(), this.JobLv[0]}));
-	        				}else if(haigouPet2 == null || haigouPet2.hasNoTags())
+	        				}else if((haigouPet2 == null || haigouPet2.hasNoTags()) && (haigouPet2 == null || !haigouPet2.getString("PetUUID").equalsIgnoreCase(this.getUniqueID().toString())))
 	        				{
 	        					ep.addChatMessage(new ChatComponentTranslation("dqm.iteminfo.petHaigou1",new Object[] {haigouPet1.getString("PetName"), haigouPet1.getInteger("JobLv_0")}));
 	        					ExtendedPlayerProperties3.get(ep).setHaigouPet2(this.makeTutuNBT(new NBTTagCompound()));
@@ -861,6 +906,7 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 	                        //tutu.setStackDisplayName((new ChatComponentTranslation("item.dqm.MahounoTutu2.name",new Object[] { this.getCommandSenderName()})).getFormattedText());
 
 	                        this.worldObj.playSoundAtEntity(this, "dqr:player.haigouin", 0.6F, 3.0F);
+	                        /*
 	                        if(!ep.worldObj.isRemote)
 	                        {
 		                        if(chestOn)
@@ -877,6 +923,8 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 			                        }
 		                        }
 	                        }
+	                        */
+	                        ExtendedPlayerProperties3.get(ep).minusPetCount(1);
 	                    	this.setDead();
 	        			}
 
@@ -930,9 +978,11 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 
     				if(itemMode == EnumDqmMGToolMode.SHINZIRU_MEMBER_ADD.getId())
     				{
-    					if(DQR.partyManager.getPartyLeaderFromMember(ep) != null)
+    					MinecraftServer minecraftserver = MinecraftServer.getServer();
+    					EntityPlayer er2 = minecraftserver.getConfigurationManager().func_152612_a(DQR.partyManager.getPartyLeaderFromMember(ep));
+    					if(er2 != null)
     					{
-    						DQR.partyManager.addPartyMember(DQR.partyManager.getPartyLeaderFromMember(ep), this);
+    						DQR.partyManager.addPartyMember(er2, this);
     					}else
     					{
     						DQR.partyManager.addPartyMember(ep, this);
@@ -987,6 +1037,9 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 			                        	if(inventory.getStackInSlot(cnt) != null)
 			                        	{
 			                        		this.entityDropItem(inventory.getStackInSlot(cnt), 0.0F);
+			                        		//inventory.getStackInSlot(cnt) = null;
+			                        		inventory.setInventorySlotContents(cnt, null);
+			                        		inventory.markDirty();
 			                        	}
 			                        }
 		                        }
@@ -1390,6 +1443,7 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 		                    //this.setJobTikara(this.getJob(), type.TIKARADEF);
 		                    //this.setJobKasikosa(this.getJob(), type.KASIKOSADEF);
 		                    this.setHealth(this.getMaxHealth());
+		                    if(DQR.debug == 3)System.out.println("DEBUG_LINE6");
 		                    this.setMP(this.getMaxMP());
 		                    //System.out.println("TEST2");
 		                    //this.func_110226_cD();
@@ -1441,10 +1495,20 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
         	{
         		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(type.HPDEF);
         		this.setMaxHP(type.HPDEF);
+
+        		//fix1
+        		this.setHealth(this.HP);
+        		//Debugline1
+        		//System.out.println("TEST_A1");
         	}else
         	{
         		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(this.getMaxHP());
+        		//Debugline1
+        		//System.out.println("TEST_A2");
+        		//fix1
+        		this.setHealth(this.HP);
         	}
+        	if(DQR.debug == 3)System.out.println("DEBUG_LINE7");
         	this.setHealth(this.getMaxHP());
         }
         else
@@ -1458,20 +1522,42 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
             	{
             		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(type.HPDEF);
             		this.setMaxHP(type.HPDEF);
+            		//fix1
+            		this.setHealth(this.HP);
+            		//Debugline1
+            		//System.out.println("TEST_A3");
             	}else
             	{
             		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(this.getMaxHP());
+
+            		//Debugline1
+            		//System.out.println("TEST_A4");
+            		//fix1
+            		this.setHealth(this.HP);
             	}
+            	if(DQR.debug == 3)System.out.println("DEBUG_LINE8");
             	this.setHealth(this.getMaxHP());
+
+        		//Debugline1
+        		//System.out.println("TEST_A5");
         	}else
         	{
         		//System.out.println("FAAAA:" + this.getMaxHP() + " / " + this.getMaxHealth());
         		if(this.getMaxHealth() > 0)
         		{
         			this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(this.getMaxHealth());
+        			//this.setHealth(this.HP);
+            		//fix1
+            		this.setHealth(this.HP);
+            		//Debugline1
+            		//System.out.println("TEST_A6");
         		}else
         		{
         			this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(10.0D);
+            		//fix1
+            		this.setHealth(this.HP);
+            		//Debugline1
+            		//System.out.println("TEST_A7");
         		}
         	}
         	//System.out.println("TEST");
@@ -1572,7 +1658,7 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 
     public void writeEntityToNBT(NBTTagCompound p_70014_1_)
     {
-        //super.writeEntityToNBT(p_70014_1_);
+        super.writeEntityToNBT(p_70014_1_);
         p_70014_1_.setInteger("Job", this.Job);
         for(int cnt = 0; cnt < 32; cnt++)
         {
@@ -1812,7 +1898,7 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 
     public void readEntityFromNBT(NBTTagCompound p_70037_1_)
     {
-        //super.readEntityFromNBT(p_70037_1_);
+        super.readEntityFromNBT(p_70037_1_);
 
         this.Job = p_70037_1_.getInteger("Job");
         for(int cnt = 0; cnt < 32; cnt++)
@@ -2766,6 +2852,8 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
         //System.out.println("Name1" + this.getEntityString());
 
         nbt.setString("PetMobName", this.type.getPetname());
+
+        nbt.setString("PetUUID", this.getUniqueID().toString());
         /*
         if(chestOn)
         {

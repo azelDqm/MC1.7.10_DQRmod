@@ -58,7 +58,8 @@ public class ThreadBuilderDamaW extends Thread{
         //int yyy = par3World.getHeightValue(xxx, zzz);
 		if(nbt.getInteger("buildReady") == 1)
 		{
-	        for (int x = (this.size * -1) - 1; x <= this.size + 1; ++x)
+	        //for (int x = (this.size * -1) - 1; x <= this.size + 1; ++x)
+	        for (int x = (this.size * -1); x <= this.size; ++x)
 	        {
 	        	if(par3World.getBlock(xxx + x, yyy + this.height, zzz + this.size) == DQBlocks.DqmBlockBuilderFrame)
 	        		par3World.setBlock(xxx + x, yyy + this.height, zzz + this.size, Blocks.air, 0, 2);
@@ -80,7 +81,8 @@ public class ThreadBuilderDamaW extends Thread{
 				e.printStackTrace();
 			}
 
-	        for (int z = (this.size * -1) - 1; z <= this.size + 1; ++z)
+	        //for (int z = (this.size * -1) - 1; z <= this.size + 1; ++z)
+			for (int z = (this.size * -1); z <= this.size; ++z)
 	        {
 	        	if(par3World.getBlock(xxx + this.size, yyy + this.height, zzz + z) == DQBlocks.DqmBlockBuilderFrame)
 	        		par3World.setBlock(xxx + this.size, yyy + this.height, zzz + z, Blocks.air, 0, 2);
@@ -104,6 +106,7 @@ public class ThreadBuilderDamaW extends Thread{
 
 	        for (int y = this.under; y <= this.height; ++y)
 	        {
+	        	/*
 	        	if(par3World.getBlock(xxx + this.size + 1, yyy + y, zzz + this.size + 1) == DQBlocks.DqmBlockBuilderFrame)
 	        		par3World.setBlock(xxx + this.size + 1, yyy + y, zzz + this.size + 1,Blocks.air, 0, 2);
 
@@ -115,6 +118,18 @@ public class ThreadBuilderDamaW extends Thread{
 
 	        	if(par3World.getBlock(xxx + (this.size * -1) - 1, yyy + y, zzz + (this.size * -1) - 1) == DQBlocks.DqmBlockBuilderFrame)
 	        		par3World.setBlock(xxx + (this.size * -1) - 1, yyy + y, zzz + (this.size * -1 - 1), Blocks.air, 0, 2);
+	        		*/
+	        	if(par3World.getBlock(xxx + this.size, yyy + y, zzz + this.size) == DQBlocks.DqmBlockBuilderFrame)
+	        		par3World.setBlock(xxx + this.size, yyy + y, zzz + this.size,Blocks.air, 0, 2);
+
+	        	if(par3World.getBlock(xxx + this.size, yyy + y, zzz + (this.size * -1)) == DQBlocks.DqmBlockBuilderFrame)
+	        		par3World.setBlock(xxx + this.size, yyy + y, zzz + (this.size * -1), Blocks.air, 0, 2);
+
+	        	if(par3World.getBlock(xxx + (this.size * -1), yyy + y, zzz + this.size) == DQBlocks.DqmBlockBuilderFrame)
+	        		par3World.setBlock(xxx + (this.size * -1), yyy + y, zzz + this.size, Blocks.air, 0, 2);
+
+	        	if(par3World.getBlock(xxx + (this.size * -1), yyy + y, zzz + (this.size * -1)) == DQBlocks.DqmBlockBuilderFrame)
+	        		par3World.setBlock(xxx + (this.size * -1), yyy + y, zzz + (this.size * -1), Blocks.air, 0, 2);
 	        }
 		}
 

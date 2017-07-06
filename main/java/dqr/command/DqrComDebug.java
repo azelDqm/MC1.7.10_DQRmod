@@ -5,13 +5,19 @@ import java.util.List;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
+import dqr.PacketHandler;
+import dqr.playerData.ExtendedPlayerProperties;
+import dqr.playerData.ExtendedPlayerProperties3;
+import dqr.playerData.MessagePlayerProperties3;
+import dqr.thread.ThreadLvUp;
 
 
 public class DqrComDebug extends CommandBase {
 	@Override
 	public String getCommandName() {
-		return "dqr";
+		return "dqr2";
 	}
 
 	@Override
@@ -25,11 +31,35 @@ public class DqrComDebug extends CommandBase {
 
         if("debug".equalsIgnoreCase(var2[0]))
         {
-        	System.out.println(var1.getEntityWorld().getBlock(Integer.parseInt(var2[1]), Integer.parseInt(var2[2]), Integer.parseInt(var2[3])).getUnlocalizedName());
+        	if(var2.length == 1)
+        	{
+	        	System.out.println(var1.getEntityWorld().getBlock(Integer.parseInt(var2[1]), Integer.parseInt(var2[2]), Integer.parseInt(var2[3])).getUnlocalizedName());
 
-        	System.out.println("DIMNAME" + var1.getEntityWorld().provider.getDimensionName());
-        	System.out.println("DIMID" + var1.getEntityWorld().provider.dimensionId);
-        	System.out.println("DIMSAVE" + var1.getEntityWorld().provider.getSaveFolder());
+	        	System.out.println("DIMNAME" + var1.getEntityWorld().provider.getDimensionName());
+	        	System.out.println("DIMID" + var1.getEntityWorld().provider.dimensionId);
+	        	System.out.println("DIMSAVE" + var1.getEntityWorld().provider.getSaveFolder());
+        	}else if(var2.length > 1)
+        	{
+        		if("coin".equalsIgnoreCase(var2[1]))
+        		{
+        			ExtendedPlayerProperties3.get(ep).setCoin(Integer.parseInt(var2[2]));
+        			PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties3((EntityPlayer)ep), (EntityPlayerMP)ep);
+        		}else if("gold".equalsIgnoreCase(var2[1]))
+        		{
+        			ExtendedPlayerProperties.get(ep).setGold(Integer.parseInt(var2[2]));
+        			//PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties3((EntityPlayer)ep), (EntityPlayerMP)ep);
+        		}else if("job".equalsIgnoreCase(var2[1]))
+        		{
+        			ExtendedPlayerProperties.get(ep).setJob(Integer.parseInt(var2[2]));
+        			//PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties3((EntityPlayer)ep), (EntityPlayerMP)ep);
+        		}else if("exp".equalsIgnoreCase(var2[1]))
+        		{
+        			ExtendedPlayerProperties.get(ep).setJobExp(ExtendedPlayerProperties.get(ep).getJob(), Integer.parseInt(var2[2]));
+        			ThreadLvUp lvup = new ThreadLvUp(ep);
+	            	lvup.start();
+        			//PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties3((EntityPlayer)ep), (EntityPlayerMP)ep);
+        		}
+        	}
         	/*
         	RegistryNamespaced rnB = Item.itemRegistry;
         	RegistryNamespaced rnX = Block.blockRegistry;
@@ -43,6 +73,27 @@ public class DqrComDebug extends CommandBase {
         	}else
         	{
         		//System.out.println( rnX.getNameForObject(        							(Block.getBlockFromItem(ep.inventory.mainInventory[0].getItem()))        							));
+        	}
+        	*/
+        }else if("debug2".equalsIgnoreCase(var2[0]))
+        {
+
+        	/*
+        	ItemStack stack = ep.getHeldItem();
+
+        	if(stack != null)
+        	{
+        		NBTTagCompound nbt = stack.getTagCompound();
+
+        		if(nbt != null)
+        		{
+        			Set set = nbt.func_150296_c();
+
+        			for (Iterator itr = set.iterator(); itr.hasNext();) {
+        			    //System.out.println(itr.next().getClass().getName());
+        				System.out.println((String)itr.next());
+        			}
+        		}
         	}
         	*/
         }

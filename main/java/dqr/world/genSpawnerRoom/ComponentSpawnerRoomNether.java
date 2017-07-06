@@ -31,8 +31,9 @@ public class ComponentSpawnerRoomNether extends StructureComponent {
 
 	public ComponentSpawnerRoomNether() {}
 
-	public ComponentSpawnerRoomNether(int par1, Random par2Random, int par3, int par4) {
+	public ComponentSpawnerRoomNether(int par1, Random par2Random2, int par3, int par4) {
 		// 東西南北の方向をランダムに決める
+		Random par2Random = new Random();
 		this.coordBaseMode = par2Random.nextInt(4);
 		int roomSize = par2Random.nextInt(3) * 2;
 		this.xWidth = 6 + roomSize;
@@ -78,9 +79,9 @@ public class ComponentSpawnerRoomNether extends StructureComponent {
 	}
 
 	@Override
-	public boolean addComponentParts(World world, Random random, StructureBoundingBox structureboundingbox) {
+	public boolean addComponentParts(World world, Random random2, StructureBoundingBox structureboundingbox) {
 		// 建設予定範囲内に液体があった場合は建設中止
-
+		Random random = new Random();
 		/*
 		if(world.isAirBlock(this.xPos, this.yPos, this.zPos) && world.isAirBlock(this.xPos + this.xWidth, this.yPos + 5, this.zPos + this.zWidth) ||
 		  (world.getBlock(this.xPos, this.yPos, this.zPos).getMaterial() == Material.lava && world.isAirBlock(this.xPos + this.xWidth, this.yPos + 5, this.zPos + this.zWidth)))

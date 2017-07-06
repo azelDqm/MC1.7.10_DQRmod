@@ -35,6 +35,7 @@ public class DQBlocks {
     public static Block DqmBlockKowareru8;
     public static Block DqmBlockKowareru9;
     public static Block DqmBlockToramanaYuka;
+    public static Block DqmBlockToramanaYuka2;
 
     public static Block DqmBlockKowarenaiKaidan;
     public static Block DqmBlockJampBlock;
@@ -89,5 +90,7 @@ public class DQBlocks {
     public static Block DqmBlockS2;
     public static Block DqmBlockE2;
     public static Block DqmBlockW2;
+
+    public static Block DqmQuartzBlock;
 
 }

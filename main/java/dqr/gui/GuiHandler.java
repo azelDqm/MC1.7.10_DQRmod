@@ -4,10 +4,32 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import cpw.mods.fml.common.network.IGuiHandler;
 import dqr.DQR;
+import dqr.gui.casino.GuiCasinoBBGContainer;
+import dqr.gui.casino.GuiCasinoBBGGuiContainer;
+import dqr.gui.casino.GuiCasinoBJContainer;
+import dqr.gui.casino.GuiCasinoBJGuiContainer;
+import dqr.gui.casino.GuiCasinoCCRContainer;
+import dqr.gui.casino.GuiCasinoCCRGuiContainer;
+import dqr.gui.casino.GuiCasinoPKContainer;
+import dqr.gui.casino.GuiCasinoPKGuiContainer;
+import dqr.gui.casino.GuiCasinoSLContainer;
+import dqr.gui.casino.GuiCasinoSLGuiContainer;
+import dqr.gui.casinoExchange.GuiCasinoExchangeContainer;
+import dqr.gui.casinoExchange.GuiCasinoExchangeGuiAccessory;
+import dqr.gui.casinoExchange.GuiCasinoExchangeGuiArmor;
+import dqr.gui.casinoExchange.GuiCasinoExchangeGuiBuilder;
+import dqr.gui.casinoExchange.GuiCasinoExchangeGuiDecorate;
+import dqr.gui.casinoExchange.GuiCasinoExchangeGuiDecorateD;
+import dqr.gui.casinoExchange.GuiCasinoExchangeGuiDecorateH;
+import dqr.gui.casinoExchange.GuiCasinoExchangeGuiMagic;
+import dqr.gui.casinoExchange.GuiCasinoExchangeGuiMisc;
+import dqr.gui.casinoExchange.GuiCasinoExchangeGuiWeapon;
 import dqr.gui.dama.GuiJobChangeContainer;
 import dqr.gui.dama.GuiJobChangeGuiContainer;
 import dqr.gui.dama.GuiSkillWeaponContainer;
 import dqr.gui.dama.GuiSkillWeaponGuiContainer;
+import dqr.gui.debug.GuiDebugContainer;
+import dqr.gui.debug.GuiDebugGuiContainer;
 import dqr.gui.dqrEnderChest.GuiDqrEnderChestContainer;
 import dqr.gui.dqrEnderChest.GuiDqrEnderChestGuiContainer;
 import dqr.gui.farmBook.GuiFarmBookContainer;
@@ -75,7 +97,44 @@ public class GuiHandler implements IGuiHandler {
         }else if (ID == DQR.conf.GuiID_SubItemBag){
         	ExtendedPlayerProperties2.get(player).setFukuroOpen(true);
         	return new GuiItemBagContainer(player.inventory, player);
+        }else if (ID == DQR.conf.GuiID_CSBlackJack){
+        	//ExtendedPlayerProperties2.get(player).setFukuroOpen(true);
+        	return new GuiCasinoBJContainer( player);
+        }else if (ID == DQR.conf.GuiID_CSPoker){
+        	//ExtendedPlayerProperties2.get(player).setFukuroOpen(true);
+        	return new GuiCasinoPKContainer(player);
+        }else if (ID == DQR.conf.GuiID_CSSlot){
+        	//ExtendedPlayerProperties2.get(player).setFukuroOpen(true);
+        	return new GuiCasinoSLContainer(player);
+        }else if (ID == 999){
+        	//ExtendedPlayerProperties2.get(player).setFukuroOpen(true);
+        	return new GuiDebugContainer(player);
+        }else if (ID == DQR.conf.GuiID_CEWeapon) {
+	        return new GuiCasinoExchangeContainer(player.inventory, DQR.conf.GuiID_CEWeapon);
+	    }else if (ID == DQR.conf.GuiID_CEArmor) {
+	        return new GuiCasinoExchangeContainer(player.inventory, DQR.conf.GuiID_CEArmor);
+	    }else if (ID == DQR.conf.GuiID_CEMagic) {
+	        return new GuiCasinoExchangeContainer(player.inventory, DQR.conf.GuiID_CEMagic);
+	    }else if (ID == DQR.conf.GuiID_CEMisc) {
+	        return new GuiCasinoExchangeContainer(player.inventory, DQR.conf.GuiID_CEMisc);
+	    }else if (ID == DQR.conf.GuiID_CEAccessory) {
+	        return new GuiCasinoExchangeContainer(player.inventory, DQR.conf.GuiID_CEAccessory);
+	    }else if (ID == DQR.conf.GuiID_CEBuilder) {
+	        return new GuiCasinoExchangeContainer(player.inventory, DQR.conf.GuiID_CEBuilder);
+	    }else if (ID == DQR.conf.GuiID_CEDecorate) {
+	        return new GuiCasinoExchangeContainer(player.inventory, DQR.conf.GuiID_CEDecorate);
+	    }else if (ID == DQR.conf.GuiID_CEDecorateD) {
+	        return new GuiCasinoExchangeContainer(player.inventory, DQR.conf.GuiID_CEDecorateD);
+	    }else if (ID == DQR.conf.GuiID_CEDecorateH) {
+	        return new GuiCasinoExchangeContainer(player.inventory, DQR.conf.GuiID_CEDecorateH);
+	    }else if (ID == DQR.conf.GuiID_CSBBGame){
+        	//ExtendedPlayerProperties2.get(player).setFukuroOpen(true);
+        	return new GuiCasinoBBGContainer(player);
+        }else if (ID == DQR.conf.GuiID_CSCCR){
+        	//ExtendedPlayerProperties2.get(player).setFukuroOpen(true);
+        	return new GuiCasinoCCRContainer(player);
         }
+
 
         return null;
     }
@@ -119,8 +178,43 @@ public class GuiHandler implements IGuiHandler {
         }else if (ID == DQR.conf.GuiID_SubItemBag){
         	ExtendedPlayerProperties2.get(player).setFukuroOpen(true);
         	return new GuiItemBagGuiContainer(player.inventory, player);
+        }else if (ID == DQR.conf.GuiID_CSBlackJack){
+        	//ExtendedPlayerProperties2.get(player).setFukuroOpen(true);
+        	return new GuiCasinoBJGuiContainer(player);
+        }else if (ID == DQR.conf.GuiID_CSPoker){
+        	//ExtendedPlayerProperties2.get(player).setFukuroOpen(true);
+        	return new GuiCasinoPKGuiContainer(player);
+        }else if (ID == DQR.conf.GuiID_CSSlot){
+        	//ExtendedPlayerProperties2.get(player).setFukuroOpen(true);
+        	return new GuiCasinoSLGuiContainer(player);
+        }else if (ID == 999){
+        	//ExtendedPlayerProperties2.get(player).setFukuroOpen(true);
+        	return new GuiDebugGuiContainer(player);
+        }else if (ID == DQR.conf.GuiID_CEWeapon) {
+            return new GuiCasinoExchangeGuiWeapon(player);
+        }else if (ID == DQR.conf.GuiID_CEArmor) {
+            return new GuiCasinoExchangeGuiArmor(player);
+        }else if (ID == DQR.conf.GuiID_CEMagic) {
+            return new GuiCasinoExchangeGuiMagic(player);
+        }else if (ID == DQR.conf.GuiID_CEMisc) {
+            return new GuiCasinoExchangeGuiMisc(player);
+        }else if (ID == DQR.conf.GuiID_CEAccessory) {
+            return new GuiCasinoExchangeGuiAccessory(player);
+        }else if (ID == DQR.conf.GuiID_CEBuilder) {
+            return new GuiCasinoExchangeGuiBuilder(player);
+        }else if (ID == DQR.conf.GuiID_CEDecorate) {
+            return new GuiCasinoExchangeGuiDecorate(player);
+        }else if (ID == DQR.conf.GuiID_CEDecorateD) {
+            return new GuiCasinoExchangeGuiDecorateD(player);
+        }else if (ID == DQR.conf.GuiID_CEDecorateH) {
+            return new GuiCasinoExchangeGuiDecorateH(player);
+        }else if (ID == DQR.conf.GuiID_CSBBGame){
+        	//ExtendedPlayerProperties2.get(player).setFukuroOpen(true);
+        	return new GuiCasinoBBGGuiContainer(player);
+        }else if (ID == DQR.conf.GuiID_CSCCR){
+        	//ExtendedPlayerProperties2.get(player).setFukuroOpen(true);
+        	return new GuiCasinoCCRGuiContainer(player);
         }
-
 
         return null;
     }

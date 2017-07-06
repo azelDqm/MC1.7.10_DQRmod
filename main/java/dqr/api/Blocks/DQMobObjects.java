@@ -309,4 +309,5 @@ public class DQMobObjects {
 	public static Block BlockObjShadopan2;
 
 	public static Block BlockObjOrutega;
+	public static Block BlockObjWhitepan2;
 }

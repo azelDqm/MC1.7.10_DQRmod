@@ -7,6 +7,7 @@ import net.minecraft.potion.Potion;
 import cpw.mods.fml.common.registry.GameRegistry;
 import dqr.DQR;
 import dqr.api.Blocks.DQPlants;
+import dqr.api.Blocks.DQSekizous;
 import dqr.api.Items.DQAccessories;
 import dqr.api.Items.DQArmors;
 import dqr.api.Items.DQBuilders;
@@ -47,10 +48,12 @@ import dqr.items.base.DqmItemSeedBase;
 import dqr.items.base.DqmItemSkillWBase;
 import dqr.items.base.DqmItemThrowBase;
 import dqr.items.base.DqmItemWeaponBase;
+import dqr.items.builder.DqmItemBuilderCasino;
 import dqr.items.builder.DqmItemBuilderDama;
 import dqr.items.builder.DqmItemBuilderDamaS;
 import dqr.items.builder.DqmItemBuilderDamaW;
 import dqr.items.builder.DqmItemBuilderIdoMedal;
+import dqr.items.builder.DqmItemBuilderSekizou;
 import dqr.items.fukuro.DqmItemFukuro;
 import dqr.items.magic.DqmItemMagicBagi;
 import dqr.items.magic.DqmItemMagicBasiRura;
@@ -82,6 +85,7 @@ import dqr.items.magic.DqmItemMagicRuraSinC;
 import dqr.items.magic.DqmItemMagicWorld;
 import dqr.items.magic.DqmItemMagicZaki;
 import dqr.items.magic.DqmItemMagicZaoriku;
+import dqr.items.magicTool.DqmItemFishingRod;
 import dqr.items.magicTool.DqmItemMGTBreak1;
 import dqr.items.magicTool.DqmItemMGTBreak2;
 import dqr.items.magicTool.DqmItemMGTFarm1;
@@ -444,7 +448,12 @@ public class DqItem {
 		DQBuilders.itemBuilderDamaW9 = new DqmItemMiscBase().setCreativeTab(DQR.tabs.DqmTabBuilder).setUnlocalizedName("dqm.BuilderDamaW9").setTextureName("dqr:BuilderDama39");
 
 		DQBuilders.itemBuilderIdoMedal = new DqmItemBuilderIdoMedal(EnumDqmBuilder.IDOMEDAL).setCreativeTab(DQR.tabs.DqmTabBuilder).setUnlocalizedName("dqm.BuilderIdoMedal").setMaxStackSize(1).setTextureName("dqr:BuilderIdoMedal");
-
+		DQBuilders.itemBuilderSekizouZoma = new DqmItemBuilderSekizou(EnumDqmBuilder.SEKIZOU, DQSekizous.BlockSekizouZoma).setCreativeTab(DQR.tabs.DqmTabBuilder).setUnlocalizedName("dqm.BuilderSekizouZoma").setMaxStackSize(1).setTextureName("dqr:Builder_Sekizou_Zoma");
+		DQBuilders.itemBuilderSekizouRyuuou = new DqmItemBuilderSekizou(EnumDqmBuilder.SEKIZOU, DQSekizous.BlockSekizouRyuuou).setCreativeTab(DQR.tabs.DqmTabBuilder).setUnlocalizedName("dqm.BuilderSekizouRyuuou").setMaxStackSize(1).setTextureName("dqr:Builder_Sekizou_Ryuuou");
+		DQBuilders.itemBuilderSekizouDesupisaro1 = new DqmItemBuilderSekizou(EnumDqmBuilder.SEKIZOU, DQSekizous.BlockSekizouDesupisaro1).setCreativeTab(DQR.tabs.DqmTabBuilder).setUnlocalizedName("dqm.BuilderSekizouDesupisaro").setMaxStackSize(1).setTextureName("dqr:Builder_Sekizou_Desupisaro");
+		DQBuilders.itemBuilderSekizouEsterk = new DqmItemBuilderSekizou(EnumDqmBuilder.SEKIZOU, DQSekizous.BlockSekizouEsterk).setCreativeTab(DQR.tabs.DqmTabBuilder).setUnlocalizedName("dqm.BuilderSekizouEsterk").setMaxStackSize(1).setTextureName("dqr:Builder_Sekizou_Esterk");
+		DQBuilders.itemBuilderSekizouDarkRamia = new DqmItemBuilderSekizou(EnumDqmBuilder.SEKIZOU, DQSekizous.BlockSekizouDarkRamia).setCreativeTab(DQR.tabs.DqmTabBuilder).setUnlocalizedName("dqm.BuilderSekizouDarkRamia").setMaxStackSize(1).setTextureName("dqr:Builder_Sekizou_DarkRamia");
+		DQBuilders.itemBuilderSekizouMasterdoragon = new DqmItemBuilderSekizou(EnumDqmBuilder.SEKIZOU, DQSekizous.BlockSekizouMasterdoragon).setCreativeTab(DQR.tabs.DqmTabBuilder).setUnlocalizedName("dqm.BuilderSekizouMasterdoragon").setMaxStackSize(1).setTextureName("dqr:Builder_Sekizou_Masterdoragon");
 
 		//転職証
 		DQEmblems.itemEmbCivilian = new DqmItemEmblemBase(EnumDqmJob.Asobinin).setCreativeTab(DQR.tabs.DqmTabMisc).setUnlocalizedName("dqm.itemEmbCivilian").setTextureName("dqr:EmbCivilian");
@@ -1215,5 +1224,17 @@ public class DqItem {
 		DQMonsters.itemMonsterTokusyu = new DqmItemMonster().setUnlocalizedName("dqm.itemMonsterTokusyu").setTextureName("dqr:FigTokusyu");
 		DQMonsters.itemMonsterUndead = new DqmItemMonster().setUnlocalizedName("dqm.itemMonsterUndead").setTextureName("dqr:FigUndead");
 		DQMonsters.itemMonsterUnknown = new DqmItemMonster().setUnlocalizedName("dqm.itemMonsterUnknown").setTextureName("dqr:FigUnknown");
+
+		DQBuilders.itemBuilderCasino1 = new DqmItemBuilderCasino(EnumDqmBuilder.CASINO).setCreativeTab(DQR.tabs.DqmTabBuilder).setUnlocalizedName("dqm.BuilderCasino1").setMaxStackSize(1).setTextureName("dqr:Builder_Casino1");
+		DQBuilders.itemBuilderCasino2 = new DqmItemBuilderCasino(EnumDqmBuilder.CASINO).setCreativeTab(DQR.tabs.DqmTabBuilder).setUnlocalizedName("dqm.BuilderCasino2").setMaxStackSize(1).setTextureName("dqr:Builder_Casino2");
+		DQBuilders.itemBuilderCasino3 = new DqmItemBuilderCasino(EnumDqmBuilder.CASINO).setCreativeTab(DQR.tabs.DqmTabBuilder).setUnlocalizedName("dqm.BuilderCasino3").setMaxStackSize(1).setTextureName("dqr:Builder_Casino3");
+		DQBuilders.itemBuilderCasino4 = new DqmItemBuilderCasino(EnumDqmBuilder.CASINO).setCreativeTab(DQR.tabs.DqmTabBuilder).setUnlocalizedName("dqm.BuilderCasino4").setMaxStackSize(1).setTextureName("dqr:Builder_Casino4");
+		DQBuilders.itemBuilderCasino5 = new DqmItemBuilderCasino(EnumDqmBuilder.CASINO).setCreativeTab(DQR.tabs.DqmTabBuilder).setUnlocalizedName("dqm.BuilderCasino5").setMaxStackSize(1).setTextureName("dqr:Builder_Casino5");
+
+		DQMagicTools.itemDqrFishRod_Diamond = (DqmItemFishingRod)new DqmItemFishingRod().setMaxStrain(80).setStrength(0.08).setEnchantability(5).setMaxDamage(256).setUnlocalizedName("dqm.itemTurizao_Diamond").setTextureName("dqr:Turizao_Diamond").setCreativeTab(DQR.tabs.DqmTabWeapon);
+		DQMagicTools.itemDqrFishRod_Oriharukon = (DqmItemFishingRod)new DqmItemFishingRod().setMaxStrain(80).setStrength(0.08).setEnchantability(5).setMaxDamage(500).setUnlocalizedName("dqm.itemTurizao_Oriharukon").setTextureName("dqr:Turizao_Oriharukon").setCreativeTab(DQR.tabs.DqmTabWeapon);
+		DQMagicTools.itemDqrFishRod_Roto = (DqmItemFishingRod)new DqmItemFishingRod().setMaxStrain(80).setStrength(0.08).setEnchantability(5).setMaxDamage(1000).setUnlocalizedName("dqm.itemTurizao_Roto").setTextureName("dqr:Turizao_Roto").setCreativeTab(DQR.tabs.DqmTabWeapon);
+		DQMagicTools.itemDqrFishRod_Densetu = (DqmItemFishingRod)new DqmItemFishingRod().setMaxStrain(80).setStrength(0.08).setEnchantability(5).setMaxDamage(2000).setUnlocalizedName("dqm.itemTurizao_Densetu").setTextureName("dqr:Turizao_Sinken").setCreativeTab(DQR.tabs.DqmTabWeapon);
+		//DQMagicTools.itemDqrFishRod = new ItemFishingRod().setMaxDamage(100).setUnlocalizedName("wooden_fishing_rod").setTextureName("jaff:hooked_fishing_rod").setCreativeTab(DQR.tabs.DqmTabWeapon);
 	}
 }

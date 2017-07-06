@@ -305,7 +305,8 @@ public enum EnumDqmMonster {
 	DARKDORIADO(301, "DqmEntityDarkdoriado", "Darkdoriado", "HELL", 165, 22, 120, 70, 30, 7, 30, 0.25F, true, 128, 500, 0, 1, 0, EnumDqmMobRoot.SIZEN, null, 1, 1, null, EnumDqmMonsterAI.DARKDORIADO, EnumDqmMonsterAIrate.DARKDORIADO, "PetDarkdoriado"),
 	SHADOPAN(302, "DqmEntityShadopan", "Shadopan", "HELL", 650, 95, 385, 0, 65, 0, 30, 0.4F, true, 128, 500, 0, 1, 0, EnumDqmMobRoot.BEAST, null, 1, 1, null, EnumDqmMonsterAI.SHADOPAN, EnumDqmMonsterAIrate.SHADOPAN, "PetShadopan"),
 	SHADOPAN2(303, "DqmEntityShadopan2", "Shadopan2", "END", 1100, 120, 550, 0, 80, 0, 50, 0.45F, true, 256, 300, 0, 1, 0, EnumDqmMobRoot.BEAST, null, 1, 1, null, EnumDqmMonsterAI.SHADOPAN2, EnumDqmMonsterAIrate.SHADOPAN2, "PetShadopan2"),
-	ORUTEGA(304, "DqmEntityOrutega", "Orutega", "SP", 1000, 1000, 13500, 999, 135, 5, 500, 0.375F, true, 1024, 1000, 0, 1, 0, EnumDqmMobRoot.UNKNOWN, null, 1, 1, null, EnumDqmMonsterAI.ORUTEGA, EnumDqmMonsterAIrate.ORUTEGA, "PetOrutega");
+	ORUTEGA(304, "DqmEntityOrutega", "Orutega", "SP", 1000, 1000, 13500, 999, 135, 5, 500, 0.375F, true, 1024, 1000, 0, 1, 0, EnumDqmMobRoot.UNKNOWN, null, 1, 1, null, EnumDqmMonsterAI.ORUTEGA, EnumDqmMonsterAIrate.ORUTEGA, "PetOrutega"),
+	WHITEPAN2(305, "DqmEntityWhitepan2", "Whitepan2", "HELL", 700, 105, 420, 0, 75, 0, 30, 0.45F, true, 128, 500, 0, 1, 0, EnumDqmMobRoot.BEAST, null, 1, 1, null, EnumDqmMonsterAI.WHITEPAN2, EnumDqmMonsterAIrate.WHITEPAN2, "PetWhitepan2");
 
 
 	private final int id;

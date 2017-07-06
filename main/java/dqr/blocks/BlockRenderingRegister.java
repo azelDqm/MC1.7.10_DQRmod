@@ -21,6 +21,18 @@ import dqr.blocks.mobObj.tileEntity.*;
 import dqr.blocks.mobSpawner.tileEntity.DqmTileEntityMobSpawner;
 import dqr.blocks.mobSpawner.tileEntity.DqmTileEntityMobSpawnerRenderer;
 import dqr.blocks.render.RenderOreBlock;
+import dqr.blocks.sekizou.render.DqmTileEntityRenderSekizouDarkRamia;
+import dqr.blocks.sekizou.render.DqmTileEntityRenderSekizouDesupisaro1;
+import dqr.blocks.sekizou.render.DqmTileEntityRenderSekizouEsterk;
+import dqr.blocks.sekizou.render.DqmTileEntityRenderSekizouMasterdoragon;
+import dqr.blocks.sekizou.render.DqmTileEntityRenderSekizouRyuuou;
+import dqr.blocks.sekizou.render.DqmTileEntityRenderSekizouZoma;
+import dqr.blocks.sekizou.tileEntity.DqmTileEntitySekizouDarkRamia;
+import dqr.blocks.sekizou.tileEntity.DqmTileEntitySekizouDesupisaro1;
+import dqr.blocks.sekizou.tileEntity.DqmTileEntitySekizouEsterk;
+import dqr.blocks.sekizou.tileEntity.DqmTileEntitySekizouMasterdoragon;
+import dqr.blocks.sekizou.tileEntity.DqmTileEntitySekizouRyuuou;
+import dqr.blocks.sekizou.tileEntity.DqmTileEntitySekizouZoma;
 
 public class BlockRenderingRegister {
 
@@ -801,5 +813,15 @@ public class BlockRenderingRegister {
 
 		ClientRegistry.bindTileEntitySpecialRenderer(DqmTileEntityObjOrutega.class, new DqmTileEntityRenderObjOrutega());
 		ClientRegistry.bindTileEntitySpecialRenderer(DqmTileEntityFigureOrutega.class, new DqmTileEntityRenderFigureOrutega());
+		ClientRegistry.bindTileEntitySpecialRenderer(DqmTileEntityFigureWhitepan2.class, new DqmTileEntityRenderFigureWhitepan2());
+		ClientRegistry.bindTileEntitySpecialRenderer(DqmTileEntityObjWhitepan2.class, new DqmTileEntityRenderObjWhitepan2());
+
+		ClientRegistry.bindTileEntitySpecialRenderer(DqmTileEntitySekizouZoma.class, new DqmTileEntityRenderSekizouZoma());
+		ClientRegistry.bindTileEntitySpecialRenderer(DqmTileEntitySekizouDesupisaro1.class, new DqmTileEntityRenderSekizouDesupisaro1());
+		ClientRegistry.bindTileEntitySpecialRenderer(DqmTileEntitySekizouRyuuou.class, new DqmTileEntityRenderSekizouRyuuou());
+		ClientRegistry.bindTileEntitySpecialRenderer(DqmTileEntitySekizouEsterk.class, new DqmTileEntityRenderSekizouEsterk());
+		ClientRegistry.bindTileEntitySpecialRenderer(DqmTileEntitySekizouMasterdoragon.class, new DqmTileEntityRenderSekizouMasterdoragon());
+		ClientRegistry.bindTileEntitySpecialRenderer(DqmTileEntitySekizouDarkRamia.class, new DqmTileEntityRenderSekizouDarkRamia());
+
 	}
 }

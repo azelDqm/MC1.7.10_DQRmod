@@ -42,7 +42,7 @@ public class MagicEntityDoruma extends MagicEntity implements IProjectile{
     protected boolean inGround;
 
     /* この弾を撃ったエンティティ */
-    public Entity shootingEntity;
+    //public Entity shootingEntity;
 
     /* 地中・空中にいる時間 */
     protected int ticksInGround;

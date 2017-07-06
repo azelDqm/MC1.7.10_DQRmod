@@ -309,4 +309,5 @@ public class DQMobFigures {
 	public static Block BlockFigureShadopan2;
 
 	public static Block BlockFigureOrutega;
+	public static Block BlockFigureWhitepan2;
 }

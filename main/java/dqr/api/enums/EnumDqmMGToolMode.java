@@ -32,7 +32,11 @@ public enum EnumDqmMGToolMode {
 	SHINZIRU_MEMBER_KICK(1, "Shinziru_Member_Kick"),
 	SHINZIRU_PET_KICK(2, "Shinziru_Pet_Kick"),
 	SHINZIRU_LEAVE(3, "Shinziru_Leave"),
-	SHINZIRU_CLOSE(4, "Shinziru_Close")
+	SHINZIRU_CLOSE(4, "Shinziru_Close"),
+
+	ACCCANCELER_ACCONLY(0, "AccCanceler_AccOnly"),
+	ACCCANCELER_ARMORONLY(1, "AccCanceler_ArmorOnly"),
+	ACCCANCELER_BOTH(2, "AccCanceler_Both"),
 	;
 
 

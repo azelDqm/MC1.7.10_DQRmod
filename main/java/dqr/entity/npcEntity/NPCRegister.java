@@ -6,6 +6,11 @@ import dqr.entity.npcEntity.npc.DqmEntityNPCBank;
 import dqr.entity.npcEntity.npc.DqmEntityNPCBukiya;
 import dqr.entity.npcEntity.npc.DqmEntityNPCGuntai;
 import dqr.entity.npcEntity.npc.DqmEntityNPCKaitoriya;
+import dqr.entity.npcEntity.npc.DqmEntityNPCKajinoBJ;
+import dqr.entity.npcEntity.npc.DqmEntityNPCKajinoCCR;
+import dqr.entity.npcEntity.npc.DqmEntityNPCKajinoCoin;
+import dqr.entity.npcEntity.npc.DqmEntityNPCKajinoEXC;
+import dqr.entity.npcEntity.npc.DqmEntityNPCKajinoPK;
 import dqr.entity.npcEntity.npc.DqmEntityNPCMedalking;
 import dqr.entity.npcEntity.npc.DqmEntityNPCSinkan;
 import dqr.entity.npcEntity.npc.DqmEntityNPCSinkan2;
@@ -35,5 +40,10 @@ public class NPCRegister {
 		EntityRegistry.registerModEntity(DqmEntityNPCMedalking.class, "NPCMedalking", idxID + 7, DQR.instance, 250, 1, false);
 
 		EntityRegistry.registerModEntity(DqmEntityNPCGuntai.class, "NPCGuntai", idxID + 8, DQR.instance, 250, 1, false);
+		EntityRegistry.registerModEntity(DqmEntityNPCKajinoBJ.class, "NPCKajinoBJ", idxID + 9, DQR.instance, 250, 1, false);
+		EntityRegistry.registerModEntity(DqmEntityNPCKajinoCoin.class, "NPCKajinoCoin", idxID + 10, DQR.instance, 250, 1, false);
+		EntityRegistry.registerModEntity(DqmEntityNPCKajinoPK.class, "NPCKajinoPK", idxID + 11, DQR.instance, 250, 1, false);
+		EntityRegistry.registerModEntity(DqmEntityNPCKajinoEXC.class, "NPCKajinoEXC", idxID + 12, DQR.instance, 250, 1, false);
+		EntityRegistry.registerModEntity(DqmEntityNPCKajinoCCR.class, "NPCKajinoCCR", idxID + 13, DQR.instance, 250, 1, false);
 	}
 }

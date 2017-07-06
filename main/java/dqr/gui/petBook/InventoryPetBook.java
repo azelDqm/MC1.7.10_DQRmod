@@ -58,8 +58,9 @@ public class InventoryPetBook implements IInventory
 
         			if(petData != null)
         			{
+        				String uid = (String)tagArray[cnt + (54 * par1)];
         				items[cnt] = new ItemStack(getMobTypeItem(petData.getString("petRoot")), 1);
-
+        				petData.setString("uuid", uid);
         				items[cnt].setTagCompound(petData);
         				items[cnt].setStackDisplayName(petData.getString("PetName"));
         			}

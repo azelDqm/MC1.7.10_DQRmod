@@ -1,9 +1,11 @@
 package dqr.items;
 
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 import cpw.mods.fml.common.registry.GameRegistry;
+import dqr.api.Blocks.DQDecorates;
 import dqr.api.Blocks.DQOres;
 import dqr.api.Items.DQAccessories;
 import dqr.api.Items.DQMagics;
@@ -112,17 +114,6 @@ public class DqmItemRecipeAccessory {
                     'A', DQSeeds.itemMahounomiI3, 'B', new ItemStack(DQOres.DqmOreBlocks, 1, 2)
                 });
 
-        for(int cnt = 0; cnt < OreDictionary.getOres("ingotCopper").size(); cnt++)
-        {
-        	GameRegistry.addRecipe(new ItemStack(DQAccessories.itemSeidounotate , 1), new Object[]
-        		{
-                    "ABA",
-                    "ABA",
-                    " A ",
-                    'A', OreDictionary.getOres("ingotCopper").get(cnt), 'B', Items.iron_ingot
-                });
-        }
-
         GameRegistry.addRecipe(new ItemStack(DQAccessories.itemFuujinnnotate2 , 1), new Object[]
                 {
                     "ABC",
@@ -133,7 +124,24 @@ public class DqmItemRecipeAccessory {
                     'E', DQAccessories.itemFuujinnnotate,
                     'F', DQMiscs.itemKimeranotubasaCG, 'G', DQMiscs.itemKimeranotubasaCR,
                     'H', DQMiscs.itemKimeranotubasaCY, 'I', DQMiscs.itemKimeranotubasaCB
+                });
 
+        GameRegistry.addRecipe(new ItemStack(DQAccessories.itemMegaminotate , 1), new Object[]
+                {
+                    "ABA",
+                    "CDC",
+                    "EFG",
+                    'A', DQMiscs.itemTensinosoma, 'B', DQMiscs.itemBuruoubu, 'C', DQMiscs.itemTensinohane, 'D', DQAccessories.itemMikagaminotate,
+                    'E', DQMiscs.itemTenkuu, 'F', DQMiscs.itemSeireiseki, 'G', DQMiscs.itemBougu
+                });
+
+        GameRegistry.addRecipe(new ItemStack(DQAccessories.itemUroborosunotate , 1), new Object[]
+                {
+                    "ABC",
+                    "DEF",
+                    "GHI",
+                    'A', DQMiscs.itemBougu, 'B', DQAccessories.itemTenkuunotate, 'C', DQMiscs.itemHakai, 'D', DQAccessories.itemMegaminotate,
+                    'E', Item.getItemFromBlock(DQDecorates.DqmBlockRotomon), 'F', DQAccessories.itemMetarukingnotate, 'G', DQMiscs.itemMaJu, 'H', DQAccessories.itemRotonotate, 'I', DQMiscs.itemDensetu
                 });
 
         GameRegistry.addRecipe(new ItemStack(DQAccessories.itemFuujinnnotate3 , 1), new Object[]
@@ -145,5 +153,16 @@ public class DqmItemRecipeAccessory {
                     'B', DQMiscs.itemGenmaseki, 'C', DQAccessories.itemFuujinnnotate2
 
                 });
+
+        for(int cnt = 0; cnt < OreDictionary.getOres("ingotCopper").size(); cnt++)
+        {
+        	GameRegistry.addRecipe(new ItemStack(DQAccessories.itemSeidounotate , 1), new Object[]
+        		{
+                    "ABA",
+                    "ABA",
+                    " A ",
+                    'A', OreDictionary.getOres("ingotCopper").get(cnt), 'B', Items.iron_ingot
+                });
+        }
 	}
 }

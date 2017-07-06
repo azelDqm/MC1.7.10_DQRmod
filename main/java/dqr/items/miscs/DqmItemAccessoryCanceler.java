@@ -26,6 +26,7 @@ public class DqmItemAccessoryCanceler extends DqmItemMiscBase{
         InventorySubEquip inventory = new InventorySubEquip(par3EntityPlayer);
         inventory.openInventory();
         inventory.dropAllItems(par3EntityPlayer);
+        inventory.markDirty();
         inventory.closeInventory();
 
     	return par1ItemStack;
@@ -37,9 +38,12 @@ public class DqmItemAccessoryCanceler extends DqmItemMiscBase{
 
     	super.addInformation(p_77624_1_, p_77624_2_, p_77624_3_, p_77624_4_);
 
-    	for(int cnt = 0; cnt < 4; cnt++)
+    	for(int cnt = 0; cnt < 5; cnt++)
     	{
     		p_77624_3_.add(EnumColor.White.getChatColor() + I18n.format("dqm.iteminfo.accessory.AccessoryCanceler." + cnt + ".txt", new Object[]{}));
     	}
+
+    	String message = I18n.format("dqm.iteminfo.accessory.AccessoryCanceler.5.txt", new Object[]{});
+    	p_77624_3_.add(EnumColor.Aqua.getChatColor() + message);
     }
 }

@@ -21,7 +21,7 @@ public class MessageServerFunctionHandler implements IMessageHandler<MessageServ
     	EntityPlayer ep = ctx.getServerHandler().playerEntity;
 
         int pat = message.data;
-
+        int value = message.data2;
 
         if(pat == EnumDqmFuncPacketCode.SyncWKimera.getId())
         {
@@ -98,7 +98,48 @@ public class MessageServerFunctionHandler implements IMessageHandler<MessageServ
     		ExtendedPlayerProperties3.get(ep).setC_BasiRuraDimA(DQR.conf.BasiRuraC_Dim);
 
     		PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties3((EntityPlayer)ep), (EntityPlayerMP)ep);
+        }else if(pat == EnumDqmFuncPacketCode.SyncWRuraSin.getId())
+        {
+        	//キメラの翼の座標情報をクライアントへコピー
+        	DqrWorldData wd = (DqrWorldData)ep.worldObj.loadItemData(DqrWorldData.class, DQR.modID);
+
+        	if(wd != null)
+        	{
+        		ExtendedPlayerProperties3.get(ep).setW_RuraSinXA(wd.getRuraSinXA());
+        		ExtendedPlayerProperties3.get(ep).setW_RuraSinYA(wd.getRuraSinYA());
+        		ExtendedPlayerProperties3.get(ep).setW_RuraSinZA(wd.getRuraSinZA());
+        		ExtendedPlayerProperties3.get(ep).setW_RuraSinDimA(wd.getRuraSinDimA());
+        		ExtendedPlayerProperties3.get(ep).setW_RuraSinEnableA(wd.getRuraSinEnableA());
+        		//wd.getKimeraDimA()
+        		PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties3((EntityPlayer)ep), (EntityPlayerMP)ep);
+        	}
+        }else if(pat == EnumDqmFuncPacketCode.SyncCRuraSin.getId())
+        {
+        	//キメラの翼の座標情報をクライアントへコピー
+
+    		ExtendedPlayerProperties3.get(ep).setC_RuraSinXA(DQR.conf.RuraSinC_X);
+    		ExtendedPlayerProperties3.get(ep).setC_RuraSinYA(DQR.conf.RuraSinC_Y);
+    		ExtendedPlayerProperties3.get(ep).setC_RuraSinZA(DQR.conf.RuraSinC_Z);
+    		ExtendedPlayerProperties3.get(ep).setC_RuraSinDimA(DQR.conf.RuraSinC_Dim);
+    		ExtendedPlayerProperties3.get(ep).setC_RuraSinNameA(DQR.conf.RuraSinC_Name);
+
+    		PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties3((EntityPlayer)ep), (EntityPlayerMP)ep);
+        }else if(pat == EnumDqmFuncPacketCode.CasinoCoinMinus.getId())
+        {
+
+        	int COIN = ExtendedPlayerProperties3.get(ep).getCoin();
+        	//System.out.println("TEST_Minus : " + value + " / " + COIN);
+        	ExtendedPlayerProperties3.get(ep).setCoin(COIN - value);
+        	PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties3((EntityPlayer)ep), (EntityPlayerMP)ep);
+        }else if(pat == EnumDqmFuncPacketCode.CasinoCoinPlus.getId())
+        {
+        	int COIN = ExtendedPlayerProperties3.get(ep).getCoin();
+        	//System.out.println("TEST_Plus : " + value + " / " + COIN);
+
+        	ExtendedPlayerProperties3.get(ep).setCoin(COIN + value);
+        	PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties3((EntityPlayer)ep), (EntityPlayerMP)ep);
         }
+
 
         //サーバーへ送った際に、EntityPlayerインスタンス（EntityPlayerMPインスタンス）はこのように取れる。
         //EntityPlayer entityPlayer = ctx.getServerHandler().playerEntity;

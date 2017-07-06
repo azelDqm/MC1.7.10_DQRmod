@@ -153,6 +153,9 @@ public class DqmItemMagicRura extends DqmItemMagicBase{
     							ExtendedPlayerProperties.get(par3EntityPlayer).setJukurenExp(ExtendedPlayerProperties.get(par3EntityPlayer).getWeapon(), getJukurenExp);
     						}
 
+    						//最後にルーラした場所登録
+    						ExtendedPlayerProperties.get(par3EntityPlayer).setRuraSin(9, par3EntityPlayer.posX, par3EntityPlayer.posY, par3EntityPlayer.posZ, par3EntityPlayer.dimension, 1);
+
     		    	        if(ruraMode != EnumDqmMGToolMode.RURAMODE0.getId())
     		    	        {
 	    		    	        //まずはペットを飛ばす

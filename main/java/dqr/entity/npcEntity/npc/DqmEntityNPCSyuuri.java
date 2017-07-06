@@ -14,7 +14,9 @@ import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.World;
 import dqr.DQR;
 import dqr.api.Items.DQAccessories;
+import dqr.api.enums.EnumDqmMGToolMode;
 import dqr.api.enums.EnumDqmNpcTalk;
+import dqr.api.enums.EnumDqmWeaponMode;
 import dqr.entity.npcEntity.DqmNPCBase;
 import dqr.gui.subEquip.InventorySubEquip;
 import dqr.items.base.DqmItemMagicBase;
@@ -251,14 +253,36 @@ public class DqmEntityNPCSyuuri extends DqmNPCBase
     		    	InventorySubEquip equipment = new InventorySubEquip(ep);
     		        equipment.openInventory();
 
-    		        for(int cnt = 0; cnt < 12; cnt++)
-    		        {
-    		        	if(equipment.getStackInSlot(cnt) != null && (equipment.getStackInSlot(cnt).getItem() instanceof ISubEquip) && ((ISubEquip)equipment.getStackInSlot(cnt).getItem()).isDamageable2())
-    		        	{
-    		        		//EnumDqmAccessory accParam = DQR.enumGetter.getAccessoryParam(equipment.getStackInSlot(cnt).getItem());
-    		        		ItemStack stack = equipment.getStackInSlot(cnt);
+    		        int syuuriMode = ExtendedPlayerProperties.get(ep).getWeaponMode(EnumDqmWeaponMode.WEAPONMODE_ACCCanceler.getId());
 
-    		        		syuuriPrice = syuuriPrice + DQR.calcPlayerStatus.calcShoninGold(DQR.syuuriPrice.Gold(stack), ep);
+    		        if(syuuriMode == EnumDqmMGToolMode.ACCCANCELER_ACCONLY.getId() || syuuriMode == EnumDqmMGToolMode.ACCCANCELER_BOTH.getId())
+    		        {
+
+	    		        for(int cnt = 0; cnt < 12; cnt++)
+	    		        {
+	    		        	if(equipment.getStackInSlot(cnt) != null && (equipment.getStackInSlot(cnt).getItem() instanceof ISubEquip) && ((ISubEquip)equipment.getStackInSlot(cnt).getItem()).isDamageable2())
+	    		        	{
+	    		        		//EnumDqmAccessory accParam = DQR.enumGetter.getAccessoryParam(equipment.getStackInSlot(cnt).getItem());
+	    		        		ItemStack stack = equipment.getStackInSlot(cnt);
+
+	    		        		syuuriPrice = syuuriPrice + DQR.calcPlayerStatus.calcShoninGold(DQR.syuuriPrice.Gold(stack), ep);
+	    		        	}
+	    		        }
+    		        }
+
+    		        if(syuuriMode == EnumDqmMGToolMode.ACCCANCELER_ARMORONLY.getId() || syuuriMode == EnumDqmMGToolMode.ACCCANCELER_BOTH.getId())
+    		        {
+    		        	ItemStack[] armorList = ep.inventory.armorInventory;
+    		        	for(int cnt = 0; cnt < armorList.length; cnt++)
+    		        	{
+    		        		if(armorList[cnt] != null)
+    		        		{
+    		        			int valPrice = DQR.calcPlayerStatus.calcShoninGold(DQR.syuuriPrice.Gold(armorList[cnt]), ep);
+    		        			if(valPrice > 0)
+    		        			{
+    		        				syuuriPrice = syuuriPrice + valPrice;
+    		        			}
+    		        		}
     		        	}
     		        }
 
@@ -277,19 +301,39 @@ public class DqmEntityNPCSyuuri extends DqmNPCBase
 	    	    				ep.addChatMessage(new ChatComponentTranslation("msg.shopSyuriya.messages.3.txt",new Object[] {syuuriPrice}));
 	    	    				ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
 
-	    	    		        for(int cnt = 0; cnt < 12; cnt++)
+	    	    				if(syuuriMode == EnumDqmMGToolMode.ACCCANCELER_ACCONLY.getId() || syuuriMode == EnumDqmMGToolMode.ACCCANCELER_BOTH.getId())
 	    	    		        {
-	    	    		        	if(equipment.getStackInSlot(cnt) != null && (equipment.getStackInSlot(cnt).getItem() instanceof ISubEquip) && ((ISubEquip)equipment.getStackInSlot(cnt).getItem()).isDamageable2())
-	    	    		        	{
-	    	    		        		//EnumDqmAccessory accParam = DQR.enumGetter.getAccessoryParam(equipment.getStackInSlot(cnt).getItem());
-	    	    		        		ItemStack stack = equipment.getStackInSlot(cnt);
-	    	    		        		stack.setItemDamage(0);
+		    	    		        for(int cnt = 0; cnt < 12; cnt++)
+		    	    		        {
+		    	    		        	if(equipment.getStackInSlot(cnt) != null && (equipment.getStackInSlot(cnt).getItem() instanceof ISubEquip) && ((ISubEquip)equipment.getStackInSlot(cnt).getItem()).isDamageable2())
+		    	    		        	{
+		    	    		        		//EnumDqmAccessory accParam = DQR.enumGetter.getAccessoryParam(equipment.getStackInSlot(cnt).getItem());
+		    	    		        		ItemStack stack = equipment.getStackInSlot(cnt);
+		    	    		        		stack.setItemDamage(0);
 
-	    	    		        		equipment.setInventorySlotContents(cnt, stack);
-	    	    		        		//syuuriPrice = syuuriPrice + DQR.syuuriPrice.Gold(stack);
-	    	    		        	}
+		    	    		        		equipment.setInventorySlotContents(cnt, stack);
+		    	    		        		equipment.markDirty();
+		    	    		        		//syuuriPrice = syuuriPrice + DQR.syuuriPrice.Gold(stack);
+		    	    		        	}
+		    	    		        }
 	    	    		        }
 
+	    	    		        if(syuuriMode == EnumDqmMGToolMode.ACCCANCELER_ARMORONLY.getId() || syuuriMode == EnumDqmMGToolMode.ACCCANCELER_BOTH.getId())
+	    	    		        {
+	    	    		        	ItemStack[] armorList = ep.inventory.armorInventory;
+	    	    		        	for(int cnt = 0; cnt < armorList.length; cnt++)
+	    	    		        	{
+	    	    		        		if(armorList[cnt] != null)
+	    	    		        		{
+	    	    		        			int valPrice = DQR.calcPlayerStatus.calcShoninGold(DQR.syuuriPrice.Gold(armorList[cnt]), ep);
+	    	    		        			if(valPrice > 0)
+	    	    		        			{
+	    	    		        				armorList[cnt].setItemDamage(0);
+	    	    		        				ep.inventory.markDirty();
+	    	    		        			}
+	    	    		        		}
+	    	    		        	}
+	    	    		        }
 
 	    	    				ep.inventory.getCurrentItem().setItemDamage(0);
 	    	    				ExtendedPlayerProperties.get(ep).setGold(epGold - syuuriPrice);

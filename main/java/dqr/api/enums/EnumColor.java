@@ -16,7 +16,9 @@ public enum EnumColor {
     Red("§c"),
     LightPurple("§d"),
     Yellow("§e"),
-    White("§f");
+    White("§f"),
+    BOLD("§l"),
+    ITALIC("§o");
 
     private String chatColor;
 

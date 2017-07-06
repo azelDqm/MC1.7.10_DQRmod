@@ -12,6 +12,7 @@ import net.minecraft.world.World;
 import dqr.api.enums.EnumDqmMonsterAI;
 import dqr.api.enums.EnumDqmMonsterAIrate;
 import dqr.entity.mobEntity.DqmMobBase;
+import dqr.entity.petEntity.DqmPetBase;
 
 public class EntityAIAttackOnCollideJump extends EntityAIBase
 {
@@ -108,7 +109,15 @@ public class EntityAIAttackOnCollideJump extends EntityAIBase
         	return false;
         }else
         {
-        	return entitylivingbase == null ? false : (!entitylivingbase.isEntityAlive() ? false : (!this.longMemory ? !this.attacker.getNavigator().noPath() : this.attacker.isWithinHomeDistance(MathHelper.floor_double(entitylivingbase.posX), MathHelper.floor_double(entitylivingbase.posY), MathHelper.floor_double(entitylivingbase.posZ))));
+        	//return entitylivingbase == null ? false : (!entitylivingbase.isEntityAlive() ? false : (!this.longMemory ? !this.attacker.getNavigator().noPath() : this.attacker.isWithinHomeDistance(MathHelper.floor_double(entitylivingbase.posX), MathHelper.floor_double(entitylivingbase.posY), MathHelper.floor_double(entitylivingbase.posZ))));
+        	if(entitylivingbase instanceof DqmPetBase)
+        	{
+        		//System.out.println("TEST" + ((DqmPetBase)entitylivingbase).getIsDeath());
+        		return entitylivingbase == null ? false : (((DqmPetBase)entitylivingbase).getIsDeath() ? false : (!this.longMemory ? !this.attacker.getNavigator().noPath() : this.attacker.isWithinHomeDistance(MathHelper.floor_double(entitylivingbase.posX), MathHelper.floor_double(entitylivingbase.posY), MathHelper.floor_double(entitylivingbase.posZ))));
+        	}else
+        	{
+        		return entitylivingbase == null ? false : (!entitylivingbase.isEntityAlive() ? false : (!this.longMemory ? !this.attacker.getNavigator().noPath() : this.attacker.isWithinHomeDistance(MathHelper.floor_double(entitylivingbase.posX), MathHelper.floor_double(entitylivingbase.posY), MathHelper.floor_double(entitylivingbase.posZ))));
+        	}
         }
     }
 

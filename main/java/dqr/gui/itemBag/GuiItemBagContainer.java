@@ -6,6 +6,10 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.common.MinecraftForge;
+import dqr.DQR;
+import dqr.api.event.DqmBagSlotClickEvent;
 import dqr.gui.subEquip.InventorySubEquip;
 import dqr.items.base.DqmItemFukuroBase;
 import dqr.items.fukuro.DqmItemFukuro;
@@ -15,7 +19,7 @@ import dqr.playerData.ExtendedPlayerProperties2;
 public class GuiItemBagContainer extends Container
 {
     private InventoryItemBag inventory;
-    private InventoryPlayer epInventory;
+    public InventoryPlayer epInventory;
     private int openFlg = 1;
     private InventorySubEquip subEquip;
 
@@ -145,6 +149,7 @@ public class GuiItemBagContainer extends Container
             //シフトクリック時に、このアイテムだったら動かさない。
             else if(slot.getStack() != null && slot.getStack().getItem() instanceof DqmItemFukuro)
             {
+            	//System.out.println("TESTLINE222");
                 return null;
             }
             else if (!this.mergeItemStack(itemstack1, 0, this.inventory.getSizeInventory(), false))
@@ -168,20 +173,68 @@ public class GuiItemBagContainer extends Container
     {
     	//System.out.println("TESTLINE222 : " + p_75144_1_ + "/" + p_75144_2_ + "/" + p_75144_3_);
 
-    	if(p_75144_3_ == 2 && this.epInventory.getStackInSlot(p_75144_2_) != null && this.epInventory.getStackInSlot(p_75144_2_).getItem() instanceof DqmItemFukuroBase)
+    	//p_75144_3_ == 1 : Shiftクリック 6:ダブルクリック
+    	//System.out.println("TEST_XXX : " + p_75144_1_ + " / " + p_75144_2_ + " / " + p_75144_3_);
+
+
+    	DqmBagSlotClickEvent event = new DqmBagSlotClickEvent(this, p_75144_1_, p_75144_2_, p_75144_3_, p_75144_4_);
+		MinecraftForge.EVENT_BUS.post(event);
+
+		if (event.isCanceled()) {
+			return null;
+		}
+
+
+    	if(p_75144_3_ == 2 && this.epInventory.getStackInSlot(p_75144_2_) != null)
     	{
-    		return null;
+    		if(p_75144_1_ <= 153 && p_75144_1_ >= 0)
+    		{
+	    		ItemStack sl1 = (ItemStack)(this.epInventory.getStackInSlot(p_75144_2_));
+	    		if(sl1.getItem() instanceof DqmItemFukuroBase)
+	    		{
+	    			//System.out.println("TESTLIN_AAA");
+	    			return null;
+	    		}
+
+	    		if(sl1.getTagCompound() != null)
+	    		{
+	    			NBTTagCompound nbt = sl1.getTagCompound();
+
+	    			if(nbt != null && nbt.func_150296_c().size() > DQR.conf.fukuroLimitTagCount && DQR.conf.fukuroLimitTagCount > 0)
+	    			{
+	    				//System.out.println("TESTLIN_BBB");
+	    				return null;
+	    			}
+	    			//System.out.println("TESTLINE = " + nbt.func_150296_c().size());
+	    		}
+    		}
     	}
 
-    	if(this.getInventory() != null && this.getInventory().size() < p_75144_1_ && p_75144_1_ >= 0)
+    	//System.out.println("TESTLINE222 : " + p_75144_1_ + " / " + this.getInventory().size() + " / " + (this.getInventory() != null)  + "/ " +  (this.getInventory().size() < p_75144_1_) + "/" + (p_75144_1_ >= 0));
+    	//System.out.println("LINT1B : " + p_75144_1_);
+    	if(this.getInventory() != null && 153 < p_75144_1_ && p_75144_1_ >= 0)
     	{
-	    	ItemStack sl = (ItemStack)(this.getInventory().get(p_75144_1_));
-	    	//if(sl != null && sl.getStack() != null && sl.getStack().getItem() instanceof DqmItemFukuroBase)
-	    	if(sl != null &&  sl.getItem() instanceof DqmItemFukuroBase)
-	    	{
-	    		return null;
-	    	}
+    		ItemStack sl2 = (ItemStack)(this.getInventory().get(p_75144_1_));
+    		//if(sl != null && sl.getStack() != null && sl.getStack().getItem() instanceof DqmItemFukuroBase)
+    		if(sl2 != null && sl2.getTagCompound() != null)
+    		{
+    			NBTTagCompound nbt = sl2.getTagCompound();
+    			//System.out.println("LINT1:" + nbt.func_150296_c().size());
+    			if(nbt != null && nbt.func_150296_c().size() > DQR.conf.fukuroLimitTagCount && DQR.conf.fukuroLimitTagCount > 0)
+    			{
+    				//System.out.println("LINT1");
+    				return null;
+    			}
+
+    	    	if(sl2 != null &&  sl2.getItem() instanceof DqmItemFukuroBase)
+    	    	{
+    	    		//System.out.println("TESTLIN444");
+    	    		return null;
+    	    	}
+    			//System.out.println("TESTLINE = " + nbt.func_150296_c().size());
+    		}
     	}
+
     	return super.slotClick(p_75144_1_, p_75144_2_, p_75144_3_, p_75144_4_);
     }
 

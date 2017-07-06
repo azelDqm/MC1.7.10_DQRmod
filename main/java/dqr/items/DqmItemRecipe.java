@@ -3042,6 +3042,33 @@ ver1.20ADD-<*/
                     "AAA",
                     'A', Blocks.cobblestone, 'B', DQDecorates.DqmBlockHasira
                 });
+
+
+        GameRegistry.addRecipe(new ItemStack(DQDecorates.DqmBlockOokiihasiranakaNB , 1), new Object[]
+                {
+                    "AAA",
+                    "ABA",
+                    "AAA",
+                    'A', Blocks.nether_brick, 'B', DQDecorates.DqmBlockHasiranakaNB
+                });
+        GameRegistry.addRecipe(new ItemStack(DQDecorates.DqmBlockOokiihasiraueNB , 1), new Object[]
+                {
+                    "AAA",
+                    "ABA",
+                    "AAA",
+                    'A', Blocks.nether_brick, 'B', DQDecorates.DqmBlockHasiraueNB
+                });
+        GameRegistry.addRecipe(new ItemStack(DQDecorates.DqmBlockOokiihasirasitaNB , 1), new Object[]
+                {
+                    "AAA",
+                    "ABA",
+                    "AAA",
+                    'A', Blocks.nether_brick, 'B', DQDecorates.DqmBlockHasiraNB
+                });
+
+
+
+
         GameRegistry.addRecipe(new ItemStack(DQDecorates.DqmBlockOokiihasiranakaQ , 1), new Object[]
                 {
                     "AAA",
@@ -3294,6 +3321,32 @@ ver1.20ADD-<*/
                     "AAA",
                     'A', Blocks.stone
                 });
+
+
+        GameRegistry.addRecipe(new ItemStack(DQDecorates.DqmBlockHasiranakaNB , 1), new Object[]
+                {
+                    " A ",
+                    " A ",
+                    " A ",
+                    'A', Blocks.nether_brick
+                });
+        GameRegistry.addRecipe(new ItemStack(DQDecorates.DqmBlockHasiraueNB , 1), new Object[]
+                {
+                    "AAA",
+                    " A ",
+                    " A ",
+                    'A', Blocks.nether_brick
+                });
+        GameRegistry.addRecipe(new ItemStack(DQDecorates.DqmBlockHasiraNB , 1), new Object[]
+                {
+                    " A ",
+                    " A ",
+                    "AAA",
+                    'A', Blocks.nether_brick
+                });
+
+
+
         GameRegistry.addRecipe(new ItemStack(DQDecorates.DqmBlockHasiranakaQ , 1), new Object[]
                 {
                     " A ",
@@ -4094,7 +4147,7 @@ ver1.20ADD-<*/
             "ABA",
             "BCB",
             "ABA",
-            'C', Items.ender_pearl, 'A', DQSeeds.itemSubayasanotane3, 'B', Blocks.redstone_block
+            'C', Items.ender_pearl, 'A', DQSeeds.itemSubayasanotane, 'B', Blocks.redstone_block
         });
 
         GameRegistry.addRecipe(new ItemStack(DQBlocks.DqmBlockN2, 4), new Object[]
@@ -4102,7 +4155,7 @@ ver1.20ADD-<*/
             "ABA",
             "BCB",
             "ABA",
-            'C', Items.ender_eye, 'A', DQSeeds.itemSubayasanotane3, 'B', Blocks.redstone_block
+            'C', Items.ender_eye, 'A', DQSeeds.itemSubayasanotane, 'B', Blocks.redstone_block
         });
 
         GameRegistry.addShapelessRecipe(new ItemStack(DQBlocks.DqmBlockS , 1), new Object[] {new ItemStack(DQBlocks.DqmBlockN, 1)});
@@ -4221,6 +4274,7 @@ ver1.20ADD-<*/
             " A ",
             'A', DQIngots.itemHikarinoisi, 'B', DQPlants.BlockWaterBlock
         });
+
 
 	}
 }

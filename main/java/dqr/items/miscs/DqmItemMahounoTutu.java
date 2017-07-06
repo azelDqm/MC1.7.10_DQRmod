@@ -345,7 +345,7 @@ public class DqmItemMahounoTutu extends DqmItemMiscBase{
             pet.func_152115_b(ep.getUniqueID().toString());
             ep.worldObj.setEntityState(pet, (byte)7);
             //ExtendedPlayerProperties3.get(ep).plusPetCount(1);
-            DQR.petFunc.setNewPetdata(pet);
+            //DQR.petFunc.setNewPetdata(pet);
 
 	        return pet;
 	    }

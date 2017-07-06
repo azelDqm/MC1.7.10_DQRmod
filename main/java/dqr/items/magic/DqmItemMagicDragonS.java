@@ -66,14 +66,14 @@ public class DqmItemMagicDragonS extends DqmItemMagicBase{
         	int hitCnt = 0;
         	*/
 
-    		int sneakFlg = par3EntityPlayer.isSneaking()? 1 : 0;
+    		//int sneakFlg = par3EntityPlayer.isSneaking()? 1 : -1;
 
     		if(par1ItemStack.getItem() == DQMagics.itemBreathS1)
     		{
 
     			magic = new MagicEntityHyadoB[1];
     			magic[0] = new MagicEntityHyadoB(par2World, par3EntityPlayer, 1.5F, 1.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
-    			((MagicEntityHyadoB) magic[0]).setWorldFlg(0);
+    			if(par3EntityPlayer.isSneaking())((MagicEntityHyadoB) magic[0]).setWorldFlg(0);
     			//magic[0].setMaxTicksRange(this.getEnumMagic().getTickRange());
 
     			/*
@@ -89,7 +89,7 @@ public class DqmItemMagicDragonS extends DqmItemMagicBase{
     			for(int cnt = 0;cnt < 3; cnt++)
     			{
     				magic[cnt] = new MagicEntityHyadoB(par2World, par3EntityPlayer, 1.5F, 1.0F, (float)(-1 + cnt), 0.0F, 0.0F);
-    				((MagicEntityHyadoB) magic[cnt]).setWorldFlg(1);
+    				if(par3EntityPlayer.isSneaking())((MagicEntityHyadoB) magic[cnt]).setWorldFlg(1);
     				//magic[cnt].setMaxTicksRange(this.getEnumMagic().getTickRange());
     				//((MagicEntityMeramiB) magic[cnt]).setWorldFlg(DQR.conf.magicSpHonoo == 1 && rand.nextInt(10) == 0);
     			}
@@ -108,7 +108,7 @@ public class DqmItemMagicDragonS extends DqmItemMagicBase{
     			for(int cnt = 0;cnt < 7; cnt++)
     			{
     				magic[cnt] = new MagicEntityHyadoB(par2World, par3EntityPlayer, 1.5F, 1.0F, (float)(-2 + cnt), 0.0F, 0.0F);
-    				((MagicEntityHyadoB) magic[cnt]).setWorldFlg(2);
+    				if(par3EntityPlayer.isSneaking())((MagicEntityHyadoB) magic[cnt]).setWorldFlg(2);
     				//magic[cnt].setMaxTicksRange(this.getEnumMagic().getTickRange());
     			}
 
@@ -125,7 +125,7 @@ public class DqmItemMagicDragonS extends DqmItemMagicBase{
     			for(int cnt = 0;cnt < 16; cnt++)
     			{
     				magic[cnt] = new MagicEntityHyadoB(par2World, par3EntityPlayer, 1.5F, 1.0F, 0.0F, 0.0F, 0.0F, (float)(-157.5F + (22.5F * cnt)), 0.0F);
-    				((MagicEntityHyadoB) magic[cnt]).setWorldFlg(3);
+    				if(par3EntityPlayer.isSneaking())((MagicEntityHyadoB) magic[cnt]).setWorldFlg(3);
     				//magic[cnt].setMaxTicksRange(this.getEnumMagic().getTickRange());
     			}
     			/*
@@ -141,7 +141,7 @@ public class DqmItemMagicDragonS extends DqmItemMagicBase{
     			for(int cnt = 0;cnt < 32; cnt++)
     			{
     				magic[cnt] = new MagicEntityHyadoB(par2World, par3EntityPlayer, 1.5F, 1.0F, 0.0F, 0.0F, 0.0F, (float)(-157.5F + (11.25F * cnt)), 0.0F);
-    				((MagicEntityHyadoB) magic[cnt]).setWorldFlg(4);
+    				if(par3EntityPlayer.isSneaking())((MagicEntityHyadoB) magic[cnt]).setWorldFlg(4);
     				//magic[cnt].setMaxTicksRange(this.getEnumMagic().getTickRange());
     			}
     			/*

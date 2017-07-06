@@ -34,6 +34,7 @@ gui.container.dama.title=転職
 gui.container.dama.page=Page. %f / %f
 gui.container.TamingPets.title=ペットモンスター
 
+death.attack.PlayerSpcial=不思議な力により力尽きた
 death.attack.DqmDamageBlock=ダメージ床により力尽きた
 msg.toDamage.txt=%sに%dダメージを与えた
 msg.toDamage2.txt=%sに%.3fダメージを与えた
@@ -112,6 +113,8 @@ msg.magic.ruraNoPos0.txt=座標が登録されていません。
 msg.magic.ruraNoPos1.txt=まずは座標を登録して下さい。
 msg.magic.ruraNoDim.txt=次元を跨いでの移動はできません。
 msg.magic.ruraNoPerm.txt=座標を変更する権限がありません。
+msg.magic.ruraMissSlot.txt=この番号には登録できません。
+
 msg.magic.callcloud.clear=!player.%sで晴れになるようにセットしました。
 msg.magic.callcloud.rain=!player.%sで雨になるようにセットしました。
 msg.magic.callcloud.thunder=!player.%sで雷雨になるようにセットしました。
@@ -712,6 +715,11 @@ item.dqm.itemKimeranotubasaCR.name=キメラのつばさ(改/レッド)
 item.dqm.itemKimeranotubasaCY.name=キメラのつばさ(改/イエロー)
 item.dqm.itemDyeWhite2.name=超･骨粉
 
+item.dqm.itemTurizao_Diamond.name=ダイヤモンドの釣竿
+item.dqm.itemTurizao_Oriharukon.name=オリハルコンの釣竿
+item.dqm.itemTurizao_Roto.name=ロトの釣竿
+item.dqm.itemTurizao_Densetu.name=伝説の釣竿
+
 item.dqm.itemFukuro.name=アイテム袋
 item.dqm.itemFukuroR.name=アイテム袋(赤)
 item.dqm.itemFukuroG.name=アイテム袋(緑)
@@ -1097,7 +1105,6 @@ item.dqm.itemRotonotate.name=ロトの盾
 item.dqm.itemSabitatate.name=錆びた盾
 item.dqm.itemMegaminotate.name=女神の盾
 item.dqm.itemUroborosunotate.name=ウロボロスの盾
-item.dqm.itemAccCanceler.name=補助装備全解除
 
 item.dqm.ItemAccCanceler.name=補助装備一括解除
 
@@ -1630,6 +1637,9 @@ dqm.iteminfo.petLocation2=§fDimension: %d
 dqm.iteminfo.petLocation3=§fLocation x:%d ,y:%d ,z:%d
 dqm.iteminfo.petLocation0=取得失敗
 
+dqm.iteminfo.petCommand.s0=水晶データから%sを削除しました。
+dqm.iteminfo.petCommand.s1=水晶データを削除しました。
+
 dqm.iteminfo.petHaigou0=配合に失敗しました。
 dqm.iteminfo.petHaigou1=配合モンスター1匹目：%s Lv.%d
 dqm.iteminfo.petHaigou01=配合モンスター1匹目：なし
@@ -1679,9 +1689,11 @@ dqm.iteminfo.kimeraLoc.2.txt=§6登録座標を DIM:%d§6, X:%d§6, Y:%d§6, Z:%
 dqm.iteminfo.RurasinNoLoc.txt=登録座標%d [未登録]
 dqm.iteminfo.RurasinNoLoc2.txt=%s [未登録]
 dqm.iteminfo.RurasinLoc.txt=登録座標%d [DIM:%d, X:%d, Y:%d, Z:%d]
-dqm.iteminfo.RurasinLoc.txt=%s [DIM:%d, X:%d, Y:%d, Z:%d]
-dqm.iteminfo.RurasinLastLoc.txt=最後にルーラを使用した場所 [DIM:%d, X:%d, Y:%d, Z:%d]
-dqm.iteminfo.RurasinLastNoLoc.txt=最後にルーラを使用した場所 [未登録]
+dqm.iteminfo.RurasinLoc2.txt=%s [DIM:%d, X:%d, Y:%d, Z:%d]
+dqm.iteminfo.RurasinLastLoc.txt=前回のルーラ使用 [DIM:%d, X:%d, Y:%d, Z:%d]
+dqm.iteminfo.RurasinLastNoLoc.txt=前回のルーラ使用 [未登録]
+dqm.iteminfo.RurasinLocHid.txt=[%s]で登録座標表示
+dqm.iteminfo.RurasinLocVis.txt=[%s]で登録座標非表示
 
 dqm.iteminfo.builderDama.0.txt=(使用方法)
 dqm.iteminfo.builderDama.1.txt=アイテム使用でガイドフレーム生成
@@ -1710,6 +1722,10 @@ dqm.iteminfo.mahounoTutuA.2.txt=格納されているペットを取り出すこ
 
 dqm.iteminfo.PetSuisyou.1.txt=アイテムを使用すると
 dqm.iteminfo.PetSuisyou.2.txt=自分のペットの現在座標を調べることができる。
+dqm.iteminfo.PetSuisyou.3.txt=スニークしながらジャンプ中に使用すると
+dqm.iteminfo.PetSuisyou.4.txt=座標取得失敗データの削除ができます。
+dqm.iteminfo.PetSuisyou.5.txt=水中でスニークしながら使用すると
+dqm.iteminfo.PetSuisyou.6.txt=全座標データの削除ができます。
 
 dqm.iteminfo.accessory.base.txt=[特殊効果]
 dqm.iteminfo.accessory.Hosifurupiasu.0.txt=移動速度上昇
@@ -1800,8 +1816,10 @@ dqm.iteminfo.accessory.HaraherazuYubiwa.ss2.txt=スタミナが減らなくな�
 
 dqm.iteminfo.accessory.AccessoryCanceler.0.txt=使用すると補助装備をその場にばらまく。
 dqm.iteminfo.accessory.AccessoryCanceler.1.txt=
-dqm.iteminfo.accessory.AccessoryCanceler.2.txt=修理屋に修理依頼すると、装備している全ての補助装備の
-dqm.iteminfo.accessory.AccessoryCanceler.3.txt=修理をまとめて依頼することができる。
+dqm.iteminfo.accessory.AccessoryCanceler.2.txt=修理屋に修理依頼すると、装備している補助装備・防具を
+dqm.iteminfo.accessory.AccessoryCanceler.3.txt=まとめて依頼することができる。
+dqm.iteminfo.accessory.AccessoryCanceler.4.txt=
+dqm.iteminfo.accessory.AccessoryCanceler.5.txt=アイテム モード切替キーで一括修理対象を変更できます。
 
 dqm.iteminfo.setEffect.armorDansa=ダンサーセット
 dqm.iteminfo.setEffect.armorOdoriko=踊り子セット
@@ -1895,6 +1913,7 @@ dqm.magicinfo.rura.txt=座標登録：スニーク+魔法使用＄※設定は�
 dqm.magicinfo.rura2.txt=座標登録：スニーク+魔法使用＄※設定は個人専用
 dqm.magicinfo.ruraC.txt=座標登録：スニーク+魔法使用(OP権限者のみ)＄設定はconfig依存
 dqm.magicinfo.rura_all.txt=アイテム モード切替キーで効果対象を変更できます。
+dqm.magicinfo.rura_sin.txt=スニーク＋アイテム モード切替キーで使用座標変更
 
 dqm.magicinfo.kiari.txt=LV6～:毒のみ＄Lv25～:毒＋バニラ状態異常＄Lv60～:かなりの状態異常
 dqm.magicinfo.basirura.txt=[効果範囲]＄初期:モンスター・ペット＄Lv40～:動物など＄Lv50～:プレイヤー(PVP有効の場合)＋村人＄Lv60～:？？？
@@ -2087,12 +2106,21 @@ msg.Builder.messages.lowHeight.txt=!player.建築するための高度が不足�
 msg.Builder.messages.notDim.txt=!player.この世界には生成することができません。
 
 msg.medalking.item.txt=§e[%d枚]
+msg.casinocoin.item.txt=§e[%s枚]
 msg.medalking.talk.1.txt=!player.わしは世界中のちいさなメダルをあつめておる。
 msg.medalking.talk.2.txt=!player.メダルを見つけてきた者には褒美をとらせようぞ！
 msg.medalking.talk.3.txt=!player.ほほうメダルを持ってきたな。望みの褒美はあるかね？
 msg.medalking.talk.4.txt=うーむ……。もっとメダルを集めなくてはそれはやれんのう。
 msg.medalking.talk.5.txt=!player.またいつでも来るがよい！
 msg.medalking.talk.6.txt=!player.もちものがいっぱいではないか！
+
+msg.casinoexchange.item.txt=§e[%d枚]
+msg.casinoexchange.talk.1.txt=!player.ここでは、コインを景品と交換致しております。
+msg.casinoexchange.talk.2.txt=!player.ご希望の景品をお選びください。。
+
+msg.casinoexchange.talk.4.txt=それを交換するにはコインが足りていないようです。。
+msg.casinoexchange.talk.5.txt=!player.ありがとうございました。またのお越しをお待ち致しております。
+msg.casinoexchange.talk.6.txt=!player.もちものがいっぱいのようです。
 
 msg.rura.modeInfo.0.txt=!player.移動対象：自分のみ
 msg.rura.modeInfo.1.txt=!player.移動対象：自分 + ペット
@@ -2104,6 +2132,10 @@ msg.rurasin.modeInfo.1.txt=!player.モード：移動先指定
 
 msg.basirura.modeInfo.0.txt=!player.移動先：ランダムテレポート
 msg.basirura.modeInfo.1.txt=!player.移動先：指定座標テレポート
+
+msg.acccancel.modeInfo.0.txt=!player.モード：アクセサリのみ修理
+msg.acccancel.modeInfo.1.txt=!player.モード：防具のみ修理
+msg.acccancel.modeInfo.2.txt=!player.モード：アクセサリと防具全て修理
 
 msg.shinziru.modeInfo.0.0.txt=!player.[メンバー追加モード]に切り替えた
 msg.shinziru.modeInfo.0.1.txt=!player.他プレイヤー/ペットモンスターに使用するとパーティに追加します
@@ -2260,6 +2292,8 @@ tile.dqm.blockDqmbed2.name=DQMベッドⅡ
 tile.dqm.blockDqmbed3.name=DQMベッドⅢ
 tile.dqm.blockTue.name=杖(ブロック)
 tile.dqm.blockSikabane.name=屍(ブロック)
+tile.blockCasinoSlot1.name=カジノブロック(スロット)
+tile.blockCasinoAbg1.name=カジノブロック(ミニバトルゲーム)
 
 tile.dqm.blockKowareru5.name=ラピスの装飾石
 tile.dqm.blockKowareru6.name=金の装飾石
@@ -2346,6 +2380,11 @@ tile.dqm.blockHasiranaka.name=石柱中(建材)
 tile.dqm.blockHasiranakaQ.name=ネザー水晶柱中(建材)
 tile.dqm.blockHasiraue.name=石柱上(建材)
 tile.dqm.blockHasiraueQ.name=ネザー水晶柱上(建材)
+
+tile.dqm.blockHasiraNB.name=ネザーブロック柱下(建材)
+tile.dqm.blockHasiranakaNB.name=ネザーブロック柱中(建材)
+tile.dqm.blockHasiraueNB.name=ネザーブロック柱上(建材)
+
 tile.dqm.blockSwordMob.name=剣(敵)
 tile.dqm.blockSword2Mob.name=強剣(敵)
 tile.dqm.blockKen2.name=強剣(装飾品)
@@ -2376,6 +2415,11 @@ tile.dqm.blockOokiihasiranakaQ.name=大きいネザー水晶柱中(建材)
 tile.dqm.blockOokiihasiraueS.name=大きい石柱上(建材)
 tile.dqm.blockOokiihasirasitaS.name=大きい石柱下(建材)
 tile.dqm.blockOokiihasiranakaS.name=大きい石柱中(建材)
+
+tile.dqm.blockOokiihasiraueNB.name=大きいネザーブロック柱上(建材)
+tile.dqm.blockOokiihasirasitaNB.name=大きいネザーブロック柱下(建材)
+tile.dqm.blockOokiihasiranakaNB.name=大きいネザーブロック柱中(建材)
+
 tile.dqm.blockTokusyutaimatu.name=星の照明(装飾品)
 tile.dqm.blockEntotu.name=レンガの煙突(装飾品)
 tile.dqm.blockEntotuS.name=石の煙突(装飾品)
@@ -2415,6 +2459,7 @@ tile.dqm.blockWaterBlock.name=水ブロック
 tile.dqm.blockWaterBlockLight.name=水ブロック(光)
 
 tile.dqm.blockToramanaYuka.name=ダメージ床
+tile.dqm.blockToramanaYuka2.name=ダメージ床
 tile.dqm.blockMobSpawner.name=DQRモブスポナー
 tile.dqm.blockHakoHakoK.name=箱(装飾品)
 tile.dqm.blockHakoBlock.name=箱(装飾品)
@@ -2432,6 +2477,10 @@ dqm.guin.tab.medalking.job=転職証
 dqm.guin.tab.medalking.Misc=アイテム
 dqm.guin.tab.medalking.Medal=小さなメダル
 dqm.guin.tab.medalking.accessories=アクセサリー
+dqm.guin.tab.medalking.Builder=設計図
+dqm.guin.tab.medalking.Decorate=装飾品
+dqm.guin.tab.medalking.DecorateD=装飾品(台座)
+dqm.guin.tab.medalking.DecorateH=装飾品(柱)
 
 dqm.guin.tab.petstatus.status=ステータス
 dqm.guin.tab.petstatus.inv=道具袋
@@ -2743,6 +2792,8 @@ tile.blockObjSuraimuemperor.name=スライムエンペラー(オブジェクト)
 tile.blockObjDarkdoriado.name=ダークドリアード(オブジェクト)
 tile.blockObjShadopan.name=シャドウベビー(オブジェクト)
 tile.blockObjShadopan2.name=シャドウパンサー(オブジェクト)
+tile.blockObjWhitepan2.name=ホワイトパンサー(オブジェクト)
+tile.blockObjOrutega.name=オルテガ(オブジェクト)
 
 tile.blockFigAkairai.name=アカイライ(フィギュア)
 tile.blockFigAkumanosyo.name=あくまの書(フィギュア)
@@ -3048,6 +3099,8 @@ tile.blockFigSuraimuemperor.name=スライムエンペラー(フィギュア)
 tile.blockFigDarkdoriado.name=ダークドリアード(フィギュア)
 tile.blockFigShadopan.name=シャドウベビー(フィギュア)
 tile.blockFigShadopan2.name=シャドウパンサー(フィギュア)
+tile.blockFigWhitepan2.name=ホワイトパンサー(フィギュア)
+tile.blockFigOrutega.name=オルテガ(フィギュア)
 
 msg.farmerDiary.title=エンダードラゴン育成日記
 msg.farmerDiary.author=農夫スティーブ
@@ -3132,3 +3185,230 @@ msg.party.hasparty.txt=§e%sは既に参加しているパーティがあるよ�
 item.dqm.itemTwilightFigureDummy.name=TwilightForest実績証
 dqm.iteminfo.twilightForestDummy1=名前 : %s
 dqm.iteminfo.twilightForestDummy2=エディション : %s
+
+msg.casino.poker.info.0.txt=RoyalSF       *%d
+msg.casino.poker.info.1.txt=5Cards        *%d
+msg.casino.poker.info.2.txt=StraightFlush  *%d
+msg.casino.poker.info.3.txt=4Cards        *%d
+msg.casino.poker.info.4.txt=FullHouse      *%d
+msg.casino.poker.info.5.txt=Flush         *%d
+msg.casino.poker.info.6.txt=Straight       *%d
+msg.casino.poker.info.7.txt=3Cards        *%d
+msg.casino.poker.info.8.txt=TwoPair       *%d
+msg.casino.poker.info.9.txt=OnePair       *%d
+
+
+msg.casino.blackjack.info.0.txt=Ato6          *%d
+msg.casino.blackjack.info.1.txt=7Cards        *%d
+msg.casino.blackjack.info.2.txt=6Cards        *%d
+msg.casino.blackjack.info.3.txt=777           *%d
+msg.casino.blackjack.info.4.txt=PureBJ        *%d
+msg.casino.blackjack.info.5.txt=BlackJack     *%d
+msg.casino.blackjack.info.6.txt=Win           *%d
+
+msg.casino.blackjack.button.hit.txt=HIT
+msg.casino.blackjack.button.stand.txt=STAND
+msg.casino.blackjack.button.double.txt=DOUBLE
+msg.casino.blackjack.button.split.txt=SPLIT
+msg.casino.blackjack.button.salender.txt=SURRENDER
+msg.casino.blackjack.button.ready.txt=Ready!
+
+msg.casino.blackjack.info.bet.txt=BET
+msg.casino.blackjack.info.mycoin.txt=現在の所持コイン
+msg.casino.blackjack.info.odds.txt=配当表
+
+msg.casino.blackjack.message.burst.txt=BURST!!
+msg.casino.blackjack.message.val.txt=%d
+msg.casino.blackjack.message.blackjack.txt=BlackJack!!
+msg.casino.blackjack.message.nice21.txt=Nice 21!
+
+msg.casino.bbg.info.comboCount.txt=継 続 数
+msg.casino.bbg.info.totalgetcoin.txt=獲得枚数
+msg.casino.bbg.button.start.txt=BATTLE!!
+msg.casino.bbg.button.attack.txt=攻 撃
+msg.casino.bbg.button.next.txt=NEXT!!
+msg.casino.bbg.info.life.txt=HP : %d/180
+
+msg.casino.bbg.info.monster.0.txt=スライムが現れた！
+msg.casino.bbg.info.monster.1.txt=スライムベスが現れた！
+msg.casino.bbg.info.monster.2.txt=メタルスライムが現れた！
+msg.casino.bbg.info.monster.3.txt=スライムナイトが現れた！
+msg.casino.bbg.info.monster.5.txt=ゾーマが現れた！
+
+msg.casino.bbg.info.attack.0.txt=%sの攻撃
+
+msg.casino.bbg.info.monsterD.0.txt=スライムを倒した！
+msg.casino.bbg.info.monsterD.1.txt=スライムベスを倒した！
+msg.casino.bbg.info.monsterD.2.txt=メタルスライムを倒した！
+msg.casino.bbg.info.monsterD.3.txt=スライムナイトを倒した！
+msg.casino.bbg.info.monsterD.5.txt=ゾーマを倒した！
+
+msg.casino.bbg.info.zoma2.0.txt=ゾーマの攻撃を耐えろ！！
+msg.casino.bbg.info.zoma2.1.txt=ゾーマの攻撃を耐えた！！
+msg.casino.bbg.info.zoma2.2.txt=ゾーマはすばやくみをかわした！
+msg.casino.bbg.button.d_guard.txt=防 御
+msg.casino.bbg.button.d_breath.txt=マジックバリア
+msg.casino.bbg.button.d_magic.txt=フバーハ
+
+msg.casino.bbg.info.reverse.0.txt=どこからともなく声が聞こえる
+msg.casino.bbg.info.reverse.1.txt=%sよ、目覚めなさい。
+msg.casino.bbg.info.reverse.2.txt=%sは不思議な力により蘇った！
+
+msg.casino.bbg.info.attack.1.txt=かいしんのいちげき！
+
+msg.casino.bbg.button.z_attack.txt=ゾーマのこうげき！
+msg.casino.bbg.button.z_breath.txt=ゾーマは灼熱の炎をはいた！
+msg.casino.bbg.button.z_magic.txt=ゾーマはメラゾーマをとなえた！
+msg.casino.bbg.button.z_damage.txt=%sは%dのダメージを受けた
+msg.casino.bbg.button.z_dead.txt=%sは死んでしまった
+
+msg.casino.dialog.info.1.txt=ゲーム進行中ですが終了しますか？
+msg.casino.dialog.info.2.txt=
+msg.casino.dialog.yes.txt=YES
+msg.casino.dialog.no.txt=NO
+msg.casino.dialog.ok.txt=OK
+
+msg.casino.bbg.info.d_guard.txt=%sは身を守っている！
+msg.casino.bbg.info.d_breath.txt=%sはフバーハをとなえた！
+msg.casino.bbg.info.d_magic.txt=%sはマジックバリアをとなえた！
+
+msg.casino.chinchiro.button.stop.txt=STOP
+msg.casino.chinchiro.info.rateChil.txt=～
+msg.casino.chinchiro.info.mycoin.txt=所持コイン
+msg.casino.chinchiro.info.dealer.txt=親
+
+msg.casino.chinchiro.rate.1.txt=*5
+msg.casino.chinchiro.rate.2.txt=*3
+msg.casino.chinchiro.rate.3.txt=*2
+msg.casino.chinchiro.rate.4.txt=*1
+msg.casino.chinchiro.rate.5.txt=§c*-2
+msg.casino.chinchiro.rate.6.txt=§c§lPENALTY
+
+msg.casino.chinchiro.alart.1txt=[注意]
+msg.casino.chinchiro.alart.2txt=このゲームでは敗北時支払いのために
+msg.casino.chinchiro.alart.3txt=BET枚数の5倍のコインが必要です。
+
+msg.casino.chinchiro.sysinfo.0.txt=CPUの手番です
+msg.casino.chinchiro.sysinfo.1.txt=あなたの手番です
+msg.casino.chinchiro.sysinfo.2.txt=もう一度振り直して下さい
+msg.casino.chinchiro.sysinfo.3.txt=あなたの勝ちです
+msg.casino.chinchiro.sysinfo.4.txt=あなたの負けです
+msg.casino.chinchiro.sysinfo.5.txt=引き分けです
+
+msg.casino.slot.button.stop.txt=STOP
+msg.casino.slot.button.stop0.txt=
+msg.casino.slot.button.start.txt=START
+
+msg.casino.slot.rotate.txt=回転数
+msg.casino.slot.totalrotate.txt=総回転数
+msg.casino.slot.info.speed.txt=SPEED
+
+msg.casino.poker.button.hold.txt=HOLD
+msg.casino.poker.button.change.txt=CHANGE
+msg.casino.poker.button.next.txt=NEXT
+
+
+
+msg.casino.dealer.blackjack.0.txt=!player.ブラックジャックに挑戦するかい？
+msg.casino.dealer.poker.0.txt=!player.ポーカーに挑戦するかい？
+msg.casino.dealer.ccr.0.txt=!player.チンチロリンに挑戦するかい？
+
+msg.Casino.coin.messages.0.txt=!player.ここはカジノコイン販売所です。
+msg.Casino.coin.messages.1.txt=!player.ゴールドでカジノコインを購入頂けます。
+msg.Casino.coin.messages.2.txt=!player.また、金貨類を持ってこられましたら、対応した枚数のカジノコインと
+msg.Casino.coin.messages.3.txt=!player.交換も致しております。
+msg.Casino.coin.messages.4.txt=!player.銅貨は50枚、銀貨は150枚、金貨は300枚の交換となっております。
+msg.Casino.coin.messages.5.txt=!player.購入希望の場合は、スニーク＆右クリックで購入枚数を指定後
+msg.Casino.coin.messages.6.txt=!player.素手で右クリックして頂けますと購入いただけます。
+msg.Casino.coin.messages.7.txt=!player.購入枚数を選んで下さい。
+msg.Casino.coin.messages.10.txt=!player.[10枚購入する(%sG)]
+msg.Casino.coin.messages.11.txt=!player.[100枚購入する(%sG)]
+msg.Casino.coin.messages.12.txt=!player.[1,000枚購入する(%sG)]
+msg.Casino.coin.messages.13.txt=!player.[10,000枚購入する(%sG)]
+
+msg.Casino.coin.messages.30.txt=!player.カジノコイン10枚を受け取った。
+msg.Casino.coin.messages.31.txt=!player.カジノコイン100枚を受け取った。
+msg.Casino.coin.messages.32.txt=!player.カジノコイン1,000枚を受け取った。
+msg.Casino.coin.messages.33.txt=!player.カジノコイン10,000枚を受け取った。
+msg.Casino.coin.messages.34.txt=!player.カジノコイン100,000枚を受け取った。
+msg.Casino.coin.messages.39.txt=!player.お金が足らないようです・・・。
+
+msg.Casino.coin.messages.40.txt=!player.カジノコイン50枚を受け取った。
+msg.Casino.coin.messages.41.txt=!player.カジノコイン150枚を受け取った。
+msg.Casino.coin.messages.42.txt=!player.カジノコイン300枚を受け取った。
+
+item.dqm.BuilderCasino1.name=カジノ設計図の切れ端(BJディーラー)
+item.dqm.BuilderCasino2.name=カジノ設計図の切れ端(カジノコイン販売)
+item.dqm.BuilderCasino3.name=カジノ設計図の切れ端(PKディーラー)
+item.dqm.BuilderCasino4.name=カジノ設計図の切れ端(カジノ景品交換)
+item.dqm.BuilderCasino5.name=カジノ設計図の切れ端(チンチロリン)
+
+tile.dqm.chest.name=*チェスト
+tile.dqm.quartzBlock.name=ネザー水晶の装飾石
+
+tile.blockSekizouZoma.name=ゾーマの石像
+tile.blockSekizouDesupisaro1.name=デスピサロの石像
+tile.blockSekizouEsterk.name=エスタークの石像
+tile.blockSekizouMasterdoragon.name=マスタードラゴンの石像
+tile.blockSekizouRyuuou.name=竜王の石像
+tile.blockSekizouDarkRamia.name=レティスの石像
+
+tile.blockSekizouZomaNo.name=ゾーマの力を失った石像
+tile.blockSekizouDesupisaro1No.name=デスピサロの力を失った石像
+tile.blockSekizouEsterkNo.name=エスタークの力を失った石像
+tile.blockSekizouMasterdoragonNo.name=マスタードラゴンの力を失った石像
+tile.blockSekizouRyuuouNo.name=竜王の力を失った石像
+tile.blockSekizouDarkRamiaNo.name=レティスの力を失った石像
+
+item.dqm.BuilderSekizouZoma.name=ゾーマの祭壇の設計図
+item.dqm.BuilderSekizouRyuuou.name=竜王の祭壇の設計図
+item.dqm.BuilderSekizouDesupisaro.name=デスピサロの祭壇の設計図
+item.dqm.BuilderSekizouEsterk.name=エスタークの祭壇の設計図
+item.dqm.BuilderSekizouDarkRamia.name=レティスの祭壇の設計図
+item.dqm.BuilderSekizouMasterdoragon.name=マスタードラゴンの祭壇の設計図
+
+msg.sekizou.zoma.talk.1.txt=!player.人間よ！
+msg.sekizou.zoma.talk.2.txt=!player.なにゆえもがき生きるのか？
+msg.sekizou.zoma.talk.3.txt=!player.ほろびこそわがよろこび。
+msg.sekizou.zoma.talk.4.txt=!player.死にゆく者こそ美しい。
+msg.sekizou.zoma.talk.5.txt=!player.さあ・・！
+msg.sekizou.zoma.talk.6.txt=!player.わがうでの中で息絶えるがよい！
+
+msg.sekizou.ryuuou.talk.1.txt=!player.よくぞ来た人間よ！
+msg.sekizou.ryuuou.talk.2.txt=!player.わしが王のなかの王、竜王である。
+msg.sekizou.ryuuou.talk.3.txt=!player.わしは待っておった。
+msg.sekizou.ryuuou.talk.4.txt=!player.そなたのような若者があらわれることを。
+msg.sekizou.ryuuou.talk.5.txt=!player.もしわしの味方になれば世界の半分を貴様にやろう。
+msg.sekizou.ryuuou.talk.6.txt=!player.おろか者め！思い知るがよいっ！
+
+msg.sekizou.masterdoragon.talk.1.txt=!player.私は天空の城を納めるマスタードラゴン。
+msg.sekizou.masterdoragon.talk.2.txt=!player.竜の神と呼ばれているものだ。
+msg.sekizou.masterdoragon.talk.3.txt=!player.私はこの世界の全てを知ることができる。
+msg.sekizou.masterdoragon.talk.4.txt=!player.お前がなぜ私に会いに来たかも、すでに解っている。
+msg.sekizou.masterdoragon.talk.5.txt=!player.人間というものは不思議な生き物だな。
+msg.sekizou.masterdoragon.talk.6.txt=!player.か弱い人間が時として、思わぬ力を出すときがある。
+msg.sekizou.masterdoragon.talk.7.txt=!player.さぁ・・その力、みせてもらおう！
+
+msg.sekizou.darkramia.talk.1.txt=!player.私はかつて、光の世界をもわが物にせんとする暗黒神の封印にチカラを貸しました
+msg.sekizou.darkramia.talk.2.txt=!player.そのため私は暗黒神の配下である魔物たちから恨みを買っており
+msg.sekizou.darkramia.talk.3.txt=!player.私の子……卵が眠る巣が魔物の手に落ち、卵は人質にとられてしまったのです。
+msg.sekizou.darkramia.talk.4.txt=!player.卵を人質にされては手が出せません。
+msg.sekizou.darkramia.talk.5.txt=!player.私に代わって戦ってくれる勇気とチカラを持つ者を探していました。
+msg.sekizou.darkramia.talk.6.txt=!player.あなた方は私に臆することなく私の石像を作りました。その勇気は称賛に価します。
+msg.sekizou.darkramia.talk.7.txt=!player.最後に、実際に手合わせをしてあなたたちの強さを見せて下さい！
+
+msg.sekizou.desupisaro.talk.1.txt=!player.ぐはあああ……！
+msg.sekizou.desupisaro.talk.2.txt=!player.何ものだお前たちは？
+msg.sekizou.desupisaro.talk.3.txt=!player.私はデスピサロ。
+msg.sekizou.desupisaro.talk.4.txt=!player.魔族の王として目覚めたばかりだ。
+msg.sekizou.desupisaro.talk.5.txt=!player.うぐおおお……！私には何も思い出せぬ……。
+msg.sekizou.desupisaro.talk.6.txt=!player.しかし何をやるべきかはわかっている。
+msg.sekizou.desupisaro.talk.7.txt=!player.お前たち人間どもを根絶やしにしてくれるわっ！
+
+msg.sekizou.esterk.talk.1.txt=!player.グゴゴゴゴ……。
+msg.sekizou.esterk.talk.2.txt=!player.誰だ？わが眠りをさまたげる者は？
+msg.sekizou.esterk.talk.3.txt=!player.わが名はエスターク……。今はそれしか思い出せぬ……。
+msg.sekizou.esterk.talk.4.txt=!player.はたして自分が善なのか悪なのかそれすらもわからぬのだ……。
+msg.sekizou.esterk.talk.5.txt=!player.その私になに用だ？私をほろぼすためにやって来たのか？
+msg.sekizou.esterk.talk.6.txt=!player.ならばしかたがないな。私はほろぼされるわけにはいかぬ。
+msg.sekizou.esterk.talk.7.txt=!player.さあ来るがよい！

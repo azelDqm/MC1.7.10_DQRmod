@@ -24,6 +24,7 @@ import dqr.api.enums.EnumDqmPet;
 import dqr.api.enums.EnumDqmPetHaigouSP;
 import dqr.api.potion.DQPotionMinus;
 import dqr.entity.petEntity.DqmPetBase;
+import dqr.entity.petEntity.InventoryPetInventory;
 import dqr.playerData.ExtendedPlayerProperties;
 import dqr.playerData.ExtendedPlayerProperties3;
 
@@ -104,6 +105,56 @@ public class FuncPetHaigou {
 						int[] inheritKasikosa = this.calcInheritKasikosa(entityPet1, entityPet2);
 
 						//System.out.println("HaigouResult : " + haigouResult.PetName);
+                    	InventoryPetInventory inventory1 = null;
+                    	InventoryPetInventory inventory2 = null;
+
+                        if(entityPet1.chestOn)
+                        {
+	                        inventory1 = new InventoryPetInventory(entityPet1);
+	                        /*
+	                        inventory.openInventory();
+
+	                        for(int cnt = 0; cnt < inventory.getSizeInventory(); cnt++)
+	                        {
+	                        	if(inventory.getStackInSlot(cnt) != null)
+	                        	{
+	                        		entityPet1.entityDropItem(inventory.getStackInSlot(cnt), 0.0F);
+	                        	}
+	                        }
+	                        */
+                        }
+
+                        if(entityPet2.chestOn)
+                        {
+	                        inventory2 = new InventoryPetInventory(entityPet2);
+	                        /*
+	                        inventory.openInventory();
+
+	                        for(int cnt = 0; cnt < inventory.getSizeInventory(); cnt++)
+	                        {
+	                        	if(inventory.getStackInSlot(cnt) != null)
+	                        	{
+	                        		entityPet1.entityDropItem(inventory.getStackInSlot(cnt), 0.0F);
+	                        	}
+	                        }
+	                        */
+                        }
+
+                        if(entityPet1.getOwner() != null && entityPet1.getOwner() instanceof EntityPlayer)
+                        {
+                        	EntityPlayer owner = (EntityPlayer)entityPet1.getOwner();
+                        	ExtendedPlayerProperties3.get(owner).minusPetCount(1);
+                        	DQR.petFunc.removePetdata(owner, entityPet1.getUniqueID().toString());
+                        }
+
+                        if(entityPet2.getOwner() != null && entityPet2.getOwner() instanceof EntityPlayer)
+                        {
+                        	EntityPlayer owner = (EntityPlayer)entityPet2.getOwner();
+                        	ExtendedPlayerProperties3.get(owner).minusPetCount(1);
+                        	DQR.petFunc.removePetdata(owner, entityPet2.getUniqueID().toString());
+                        }
+
+                        //removePetdata
 						entityPet1 = null;
 						entityPet2 = null;
 						EnumDqmMonster parentType =  DQR.enumGetter.getMonsterFromName(haigouResult.PetName);
@@ -171,6 +222,36 @@ public class FuncPetHaigou {
 		                    	newPet.worldObj.playSoundAtEntity(newPet, "dqr:mob.inoti", 0.5F, 2.0F);
 		                    }
 		                    newPet.worldObj.setEntityState(newPet, (byte)7);
+
+		                    if(inventory1 != null)
+		                    {
+		                        inventory1.openInventory();
+
+		                        for(int cnt = 0; cnt < inventory1.getSizeInventory(); cnt++)
+		                        {
+		                        	if(inventory1.getStackInSlot(cnt) != null)
+		                        	{
+		                        		newPet.entityDropItem(inventory1.getStackInSlot(cnt), 0.0F);
+		                        		inventory1.markDirty();
+		                        	}
+		                        }
+		                        inventory1.closeInventory();
+		                    }
+		                    if(inventory2 != null)
+		                    {
+		                        inventory2.openInventory();
+
+		                        for(int cnt = 0; cnt < inventory2.getSizeInventory(); cnt++)
+		                        {
+		                        	if(inventory2.getStackInSlot(cnt) != null)
+		                        	{
+		                        		newPet.entityDropItem(inventory2.getStackInSlot(cnt), 0.0F);
+		                        		inventory2.markDirty();
+		                        	}
+		                        }
+		                        inventory2.closeInventory();
+		                    }
+
 		                    ExtendedPlayerProperties3.get(ep).plusPetCount(1);
 		                    DQR.petFunc.setNewPetdata(newPet);
 

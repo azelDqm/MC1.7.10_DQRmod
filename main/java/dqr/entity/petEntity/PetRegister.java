@@ -172,6 +172,7 @@ import dqr.entity.petEntity.petHell.DqmPetEntitySuraimumadyura;
 import dqr.entity.petEntity.petHell.DqmPetEntityTororuking;
 import dqr.entity.petEntity.petHell.DqmPetEntityTubokku;
 import dqr.entity.petEntity.petHell.DqmPetEntityUmibouzu;
+import dqr.entity.petEntity.petHell.DqmPetEntityWhitepan2;
 import dqr.entity.petEntity.petMetaru.DqmPetEntityDaiyamondosuraimu;
 import dqr.entity.petEntity.petMetaru.DqmPetEntityDragometaru;
 import dqr.entity.petEntity.petMetaru.DqmPetEntityGoldenmetalslime;
@@ -638,5 +639,7 @@ public class PetRegister {
 
 		EntityRegistry.registerModEntity(DqmPetEntityKandata.class, "PetKandata", idxID + 568, DQR.instance, 250, 1, false);
 		EntityRegistry.registerModEntity(DqmPetEntityOrutega.class, "PetOrutega", idxID + 569, DQR.instance, 250, 1, false);
+
+		EntityRegistry.registerModEntity(DqmPetEntityWhitepan2.class, "PetWhitepan2", idxID + 570, DQR.instance, 250, 1, false);
 	}
 }

@@ -1,9 +1,13 @@
 package dqr.api.enums;
 
+import java.util.Random;
 import java.util.TreeMap;
 
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemFishingRod;
 import dqr.api.Items.DQAccessories;
+import dqr.api.Items.DQMagicTools;
+import dqr.items.magicTool.DqmItemFishingRod;
 
 public class EnumDqmGetter {
 
@@ -29,6 +33,36 @@ public class EnumDqmGetter {
 
 		return endoraParamMax;
 	}
+
+    public EnumDqmCasinoPKOdds getCasinoPKOddsFromId(int par1)
+    {
+    	EnumDqmCasinoPKOdds[] data = EnumDqmCasinoPKOdds.values();
+
+    	for(int cnt = 0; cnt < data.length; cnt++)
+    	{
+    		if(data[cnt].getId() == par1)
+    		{
+    			return data[cnt];
+    		}
+    	}
+
+    	return null;
+    }
+
+    public EnumDqmCasinoBJOdds getCasinoBJOddsFromId(int par1)
+    {
+    	EnumDqmCasinoBJOdds[] data = EnumDqmCasinoBJOdds.values();
+
+    	for(int cnt = 0; cnt < data.length; cnt++)
+    	{
+    		if(data[cnt].getId() == par1)
+    		{
+    			return data[cnt];
+    		}
+    	}
+
+    	return null;
+    }
 
     public EnumDqmJob getJobFromId(int par1)
     {
@@ -535,6 +569,96 @@ public class EnumDqmGetter {
 		{
 			return EnumDqmAccessory.FUUJINNNOTATE3;
 		}
+		return null;
+	}
+
+	public EnumDqmFishingRate getFishingRateFromRodType(Item item)
+	{
+		if(item == DQMagicTools.itemDqrFishRod_Diamond)
+		{
+			return EnumDqmFishingRate.DIAMOND_ROD;
+		}else if(item == DQMagicTools.itemDqrFishRod_Oriharukon)
+		{
+			return EnumDqmFishingRate.ORIHARUKON_ROD;
+		}else if(item == DQMagicTools.itemDqrFishRod_Roto)
+		{
+			return EnumDqmFishingRate.ROTO_ROD;
+		}else if(item == DQMagicTools.itemDqrFishRod_Densetu)
+		{
+			return EnumDqmFishingRate.DENSETU_ROD;
+		}
+
+		return EnumDqmFishingRate.VANILLA_ROD;
+	}
+
+	public EnumDqmFishingCateg getFishingCategFromRandom(Item item)
+	{
+		//System.out.println("TEST1");
+		if(item instanceof DqmItemFishingRod || item instanceof ItemFishingRod)
+		{
+			int[] VanillaRod = {8, 5, 6, 16, 66, 316, 0, 316};
+			int[] DiamondRod = {4, 5, 6, 16, 66, 266, 0, 266};
+			int[] OriharukonRod = {4, 20, 35, 45, 95, 245, 0, 245};
+			int[] RotoRod = {2, 25, 45, 65, 95, 175, 0, 175};
+			int[] DensetuRod = {1, 1, 2, 3, 4, 9, 0, 9};
+
+			int[] rotPat = null;
+			Random rand = new Random();
+
+			//System.out.println("TEST2");
+			if(item == DQMagicTools.itemDqrFishRod_Diamond)
+			{
+				rotPat = DiamondRod;
+			}else if(item == DQMagicTools.itemDqrFishRod_Oriharukon)
+			{
+				rotPat = OriharukonRod;
+			}else if(item == DQMagicTools.itemDqrFishRod_Roto)
+			{
+				rotPat = RotoRod;
+			}else if(item == DQMagicTools.itemDqrFishRod_Densetu)
+			{
+				rotPat = DensetuRod;
+			}else if(item instanceof ItemFishingRod)
+			{
+				rotPat = VanillaRod;
+			}
+
+			//System.out.println("TEST3");
+			if(rotPat != null)
+			{
+				//System.out.println("TEST4 : " + rotPat[0] + " / " + rotPat[1]);
+				if(rand.nextInt(rotPat[0]) == 0)
+				{
+					//System.out.println("TEST5");
+					rand = new Random();
+					int categRand = rand.nextInt(rotPat[7]);
+
+					if(categRand < rotPat[1])
+					{
+						return EnumDqmFishingCateg.DQWEAPON;
+					}else if(categRand < rotPat[2])
+					{
+						return EnumDqmFishingCateg.DQMAGIC;
+					}else if(categRand < rotPat[3])
+					{
+						return EnumDqmFishingCateg.DQEMB;
+					}else if(categRand < rotPat[4])
+					{
+						return EnumDqmFishingCateg.DQORE;
+					}else if(categRand < rotPat[5])
+					{
+						return EnumDqmFishingCateg.DQMISC;
+					}
+				}else
+				{
+					return EnumDqmFishingCateg.VANILLA_FISH;
+				}
+			}
+
+			//System.out.println("TEST6");
+		}
+		//System.out.println("TEST7");
+
 		return null;
 	}
 }

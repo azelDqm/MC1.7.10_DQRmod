@@ -8,6 +8,7 @@ import dqr.api.Blocks.DQMobFigures;
 import dqr.api.Blocks.DQMobObjects;
 import dqr.api.Blocks.DQOres;
 import dqr.api.Blocks.DQPlants;
+import dqr.api.Blocks.DQSekizous;
 import dqr.api.Items.DQAccessories;
 import dqr.api.Items.DQArmors;
 import dqr.api.Items.DQBuilders;
@@ -95,6 +96,7 @@ public class DqrItemRegister {
     	GameRegistry.registerBlock(DQBlocks.DqmBlockBuilderFrame ,"DqmBlockBuilderFrame");
 
     	//decorateBlocks
+    	/*
 		GameRegistry.registerBlock(DQDecorates.DqmBlockMinidama, "DqmBlockMinidama");
 		GameRegistry.registerBlock(DQDecorates.DqmBlockTubo, "DqmBlockTubo ");
 		GameRegistry.registerBlock(DQDecorates.DqmBlockTubokku, "DqmBlockTubokku ");
@@ -240,6 +242,147 @@ public class DqrItemRegister {
 		GameRegistry.registerBlock(DQDecorates.DqmBlockSSuraimunaito, "DqmBlockSSuraimunaito ");
 		GameRegistry.registerBlock(DQDecorates.DqmBlockSZukkinya, "DqmBlockSZukkinya ");
 		GameRegistry.registerBlock(DQDecorates.DqmBlockFarmBookShelf, "DqmBlockFarmBookShelf ");
+		*/
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockMinidama, DQItemBlocks.itemBlockMinidama.getClass(), "DqmBlockMinidama");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockTubo, DQItemBlocks.itemBlockTubo.getClass(), "DqmBlockTubo ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockTubokku, DQItemBlocks.itemBlockTubokku.getClass(), "DqmBlockTubokku ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockAkumanotubo, DQItemBlocks.itemBlockAkumanotubo.getClass(), "DqmBlockAkumanotubo ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockTubo2, DQItemBlocks.itemBlockTubo2.getClass(), "DqmBlockTubo2 ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockTubokku2, DQItemBlocks.itemBlockTubokku2.getClass(), "DqmBlockTubokku2 ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockAkumanotubo2, DQItemBlocks.itemBlockAkumanotubo2.getClass(), "DqmBlockAkumanotubo2 ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockSword, DQItemBlocks.itemBlockSword.getClass(), "DqmBlockSword ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockSword2, DQItemBlocks.itemBlockSword2.getClass(), "DqmBlockSword2 ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockTue, DQItemBlocks.itemBlockTue.getClass(), "DqmBlockTue ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockSikabane, DQItemBlocks.itemBlockSikabane.getClass(), "DqmBlockSikabane ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockHikariB2, DQItemBlocks.itemBlockHikariB2.getClass(), "DqmBlockHikariB2 ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockYajirusidaidai, DQItemBlocks.itemBlockYajirusidaidai.getClass(), "DqmBlockYajirusidaidai ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockYajirusihai, DQItemBlocks.itemBlockYajirusihai.getClass(), "DqmBlockYajirusihai ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockYajirusisiro, DQItemBlocks.itemBlockYajirusisiro.getClass(), "DqmBlockYajirusisiro ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockYajirusiaka, DQItemBlocks.itemBlockYajirusiaka.getClass(), "DqmBlockYajirusiaka ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockYajirusikuro, DQItemBlocks.itemBlockYajirusikuro.getClass(), "DqmBlockYajirusikuro ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockYajirusitya, DQItemBlocks.itemBlockYajirusitya.getClass(), "DqmBlockYajirusitya ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockYajirusikoimidori, DQItemBlocks.itemBlockYajirusikoimidori.getClass(), "DqmBlockYajirusikoimidori ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockYajirusimurasaki, DQItemBlocks.itemBlockYajirusimurasaki.getClass(), "DqmBlockYajirusimurasaki ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockYajirusiao, DQItemBlocks.itemBlockYajirusiao.getClass(), "DqmBlockYajirusiao ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockYajirusikiiro, DQItemBlocks.itemBlockYajirusikiiro.getClass(), "DqmBlockYajirusikiiro ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockYajirusimidori, DQItemBlocks.itemBlockYajirusimidori.getClass(), "DqmBlockYajirusimidori ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockYajirusipink, DQItemBlocks.itemBlockYajirusipink.getClass(), "DqmBlockYajirusipink ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockYajirusiusuao, DQItemBlocks.itemBlockYajirusiusuao.getClass(), "DqmBlockYajirusiusuao ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockYajirusikon, DQItemBlocks.itemBlockYajirusikon.getClass(), "DqmBlockYajirusikon ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockWakanai, DQItemBlocks.itemBlockWakanai.getClass(), "DqmBlockWakanai ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockYajirusidaidai2, DQItemBlocks.itemBlockYajirusidaidai2.getClass(), "DqmBlockYajirusidaidai2 ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockYajirusihai2, DQItemBlocks.itemBlockYajirusihai2.getClass(), "DqmBlockYajirusihai2 ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockYajirusisiro2, DQItemBlocks.itemBlockYajirusisiro2.getClass(), "DqmBlockYajirusisiro2 ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockYajirusiaka2, DQItemBlocks.itemBlockYajirusiaka2.getClass(), "DqmBlockYajirusiaka2 ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockYajirusikuro2, DQItemBlocks.itemBlockYajirusikuro2.getClass(), "DqmBlockYajirusikuro2 ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockYajirusitya2, DQItemBlocks.itemBlockYajirusitya2.getClass(), "DqmBlockYajirusitya2 ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockYajirusikoimidori2, DQItemBlocks.itemBlockYajirusikoimidori2.getClass(), "DqmBlockYajirusikoimidori2 ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockYajirusimurasaki2, DQItemBlocks.itemBlockYajirusimurasaki2.getClass(), "DqmBlockYajirusimurasaki2 ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockYajirusiao2, DQItemBlocks.itemBlockYajirusiao2.getClass(), "DqmBlockYajirusiao2 ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockYajirusikiiro2, DQItemBlocks.itemBlockYajirusikiiro2.getClass(), "DqmBlockYajirusikiiro2 ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockYajirusimidori2, DQItemBlocks.itemBlockYajirusimidori2.getClass(), "DqmBlockYajirusimidori2 ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockYajirusipink2, DQItemBlocks.itemBlockYajirusipink2.getClass(), "DqmBlockYajirusipink2 ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockYajirusiusuao2, DQItemBlocks.itemBlockYajirusiusuao2.getClass(), "DqmBlockYajirusiusuao2 ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockYajirusikon2, DQItemBlocks.itemBlockYajirusikon2.getClass(), "DqmBlockYajirusikon2 ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockYajirusiUe, DQItemBlocks.itemBlockYajirusiUe.getClass(), "DqmBlockYajirusiUe ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockYajirusiSita, DQItemBlocks.itemBlockYajirusiSita.getClass(), "DqmBlockYajirusiSita ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockYajirusiMaru, DQItemBlocks.itemBlockYajirusiMaru.getClass(), "DqmBlockYajirusiMaru ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockYajirusiBatu, DQItemBlocks.itemBlockYajirusiBatu.getClass(), "DqmBlockYajirusiBatu ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockDaizaQ, DQItemBlocks.itemBlockDaizaQ.getClass(), "DqmBlockDaizaQ ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockDaizaQG, DQItemBlocks.itemBlockDaizaQG.getClass(), "DqmBlockDaizaQG ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockDaizaB, DQItemBlocks.itemBlockDaizaB.getClass(), "DqmBlockDaizaB ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockDaizaBG, DQItemBlocks.itemBlockDaizaBG.getClass(), "DqmBlockDaizaBG ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockDaizaD, DQItemBlocks.itemBlockDaizaD.getClass(), "DqmBlockDaizaD ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockDaizaDG, DQItemBlocks.itemBlockDaizaDG.getClass(), "DqmBlockDaizaDG ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockDaizaE, DQItemBlocks.itemBlockDaizaE.getClass(), "DqmBlockDaizaE ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockDaizaEG, DQItemBlocks.itemBlockDaizaEG.getClass(), "DqmBlockDaizaEG ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockDaizaG, DQItemBlocks.itemBlockDaizaG.getClass(), "DqmBlockDaizaG ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockDaizaGG, DQItemBlocks.itemBlockDaizaGG.getClass(), "DqmBlockDaizaGG ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockDaizaI, DQItemBlocks.itemBlockDaizaI.getClass(), "DqmBlockDaizaI ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockDaizaIG, DQItemBlocks.itemBlockDaizaIG.getClass(), "DqmBlockDaizaIG ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockDaizaL, DQItemBlocks.itemBlockDaizaL.getClass(), "DqmBlockDaizaL ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockDaizaLG, DQItemBlocks.itemBlockDaizaLG.getClass(), "DqmBlockDaizaLG ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockDaizaN, DQItemBlocks.itemBlockDaizaN.getClass(), "DqmBlockDaizaN ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockDaizaNG, DQItemBlocks.itemBlockDaizaNG.getClass(), "DqmBlockDaizaNG ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockDaizaO, DQItemBlocks.itemBlockDaizaO.getClass(), "DqmBlockDaizaO ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockDaizaOG, DQItemBlocks.itemBlockDaizaOG.getClass(), "DqmBlockDaizaOG ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockDaizaR, DQItemBlocks.itemBlockDaizaR.getClass(), "DqmBlockDaizaR ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockDaizaRG, DQItemBlocks.itemBlockDaizaRG.getClass(), "DqmBlockDaizaRG ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockDaizaS, DQItemBlocks.itemBlockDaizaS.getClass(), "DqmBlockDaizaS ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockDaizaSG, DQItemBlocks.itemBlockDaizaSG.getClass(), "DqmBlockDaizaSG ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockDaizaW, DQItemBlocks.itemBlockDaizaW.getClass(), "DqmBlockDaizaW ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockDaizaWG, DQItemBlocks.itemBlockDaizaWG.getClass(), "DqmBlockDaizaWG ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockHepaitosu, DQItemBlocks.itemBlockHepaitosu.getClass(), "DqmBlockHepaitosu ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockRotomon, DQItemBlocks.itemBlockRotomon.getClass(), "DqmBlockRotomon ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockRotonoturugiOb, DQItemBlocks.itemBlockRotonoturugiOb.getClass(), "DqmBlockRotonoturugiOb ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockRotonoturugiOb2, DQItemBlocks.itemBlockRotonoturugiOb2.getClass(), "DqmBlockRotonoturugiOb2 ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockRotonoturugiF, DQItemBlocks.itemBlockRotonoturugiF.getClass(), "DqmBlockRotonoturugiF ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockRotonoturugiF2, DQItemBlocks.itemBlockRotonoturugiF2.getClass(), "DqmBlockRotonoturugiF2 ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockIsu, DQItemBlocks.itemBlockIsu.getClass(), "DqmBlockIsu ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockTaimatu, DQItemBlocks.itemBlockTaimatu.getClass(), "DqmBlockTaimatu ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockTaimatu2, DQItemBlocks.itemBlockTaimatu2.getClass(), "DqmBlockTaimatu2 ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockTaru, DQItemBlocks.itemBlockTaru.getClass(), "DqmBlockTaru ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockHasiraNB, DQItemBlocks.itemBlockHasiraNB.getClass(), "DqmBlockHasiraNB");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockHasiranakaNB, DQItemBlocks.itemBlockHasiranakaNB.getClass(), "DqmBlockHasiranakaNB");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockHasiraueNB, DQItemBlocks.itemBlockHasiraueNB.getClass(), "DqmBlockHasiraueNB");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockHasira, DQItemBlocks.itemBlockHasira.getClass(), "DqmBlockHasira ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockHasiraQ, DQItemBlocks.itemBlockHasiraQ.getClass(), "DqmBlockHasiraQ ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockHasiranaka, DQItemBlocks.itemBlockHasiranaka.getClass(), "DqmBlockHasiranaka ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockHasiranakaQ, DQItemBlocks.itemBlockHasiranakaQ.getClass(), "DqmBlockHasiranakaQ ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockHasiraue, DQItemBlocks.itemBlockHasiraue.getClass(), "DqmBlockHasiraue ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockHasiraueQ, DQItemBlocks.itemBlockHasiraueQ.getClass(), "DqmBlockHasiraueQ ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockSwordMob, DQItemBlocks.itemBlockSwordMob.getClass(), "DqmBlockSwordMob ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockSword2Mob, DQItemBlocks.itemBlockSword2Mob.getClass(), "DqmBlockSword2Mob ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockKen2, DQItemBlocks.itemBlockKen2.getClass(), "DqmBlockKen2 ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockKen, DQItemBlocks.itemBlockKen.getClass(), "DqmBlockKen ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockTueK, DQItemBlocks.itemBlockTueK.getClass(), "DqmBlockTueK ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockSikabaneK, DQItemBlocks.itemBlockSikabaneK.getClass(), "DqmBlockSikabaneK ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockTaruMob, DQItemBlocks.itemBlockTaruMob.getClass(), "DqmBlockTaruMob ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockSikabaneMob, DQItemBlocks.itemBlockSikabaneMob.getClass(), "DqmBlockSikabaneMob ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockJuujika, DQItemBlocks.itemBlockJuujika.getClass(), "DqmBlockJuujika ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockJuujika2, DQItemBlocks.itemBlockJuujika2.getClass(), "DqmBlockJuujika2 ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockKagaribidai, DQItemBlocks.itemBlockKagaribidai.getClass(), "DqmBlockKagaribidai ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockOokiiisizukue, DQItemBlocks.itemBlockOokiiisizukue.getClass(), "DqmBlockOokiiisizukue ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockIdooke, DQItemBlocks.itemBlockIdooke.getClass(), "DqmBlockIdooke ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockOokiitukue, DQItemBlocks.itemBlockOokiitukue.getClass(), "DqmBlockOokiitukue ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockMaki, DQItemBlocks.itemBlockMaki.getClass(), "DqmBlockMaki ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockOke, DQItemBlocks.itemBlockOke.getClass(), "DqmBlockOke ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockIdo, DQItemBlocks.itemBlockIdo.getClass(), "DqmBlockIdo ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockKinoisi, DQItemBlocks.itemBlockKinoisi.getClass(), "DqmBlockKinoisi ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockTiisaitukue, DQItemBlocks.itemBlockTiisaitukue.getClass(), "DqmBlockTiisaitukue ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockHondana, DQItemBlocks.itemBlockHondana.getClass(), "DqmBlockHondana ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockOokiihasiraue, DQItemBlocks.itemBlockOokiihasiraue.getClass(), "DqmBlockOokiihasiraue ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockOokiihasirasita, DQItemBlocks.itemBlockOokiihasirasita.getClass(), "DqmBlockOokiihasirasita ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockOokiihasiranaka, DQItemBlocks.itemBlockOokiihasiranaka.getClass(), "DqmBlockOokiihasiranaka ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockOokiihasiraueQ, DQItemBlocks.itemBlockOokiihasiraueQ.getClass(), "DqmBlockOokiihasiraueQ ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockOokiihasirasitaQ, DQItemBlocks.itemBlockOokiihasirasitaQ.getClass(), "DqmBlockOokiihasirasitaQ ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockOokiihasiranakaQ, DQItemBlocks.itemBlockOokiihasiranakaQ.getClass(), "DqmBlockOokiihasiranakaQ ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockOokiihasiraueS, DQItemBlocks.itemBlockOokiihasiraueS.getClass(), "DqmBlockOokiihasiraueS ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockOokiihasirasitaS, DQItemBlocks.itemBlockOokiihasirasitaS.getClass(), "DqmBlockOokiihasirasitaS ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockOokiihasiranakaS, DQItemBlocks.itemBlockOokiihasiranakaS.getClass(), "DqmBlockOokiihasiranakaS ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockOokiihasiraueNB, DQItemBlocks.itemBlockOokiihasiraueNB.getClass(), "DqmBlockOokiihasiraueNB ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockOokiihasirasitaNB, DQItemBlocks.itemBlockOokiihasirasitaNB.getClass(), "DqmBlockOokiihasirasitaNB ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockOokiihasiranakaNB, DQItemBlocks.itemBlockOokiihasiranakaNB.getClass(), "DqmBlockOokiihasiranakaNB ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockTokusyutaimatu, DQItemBlocks.itemBlockTokusyutaimatu.getClass(), "DqmBlockTokusyutaimatu ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockEntotu, DQItemBlocks.itemBlockEntotu.getClass(), "DqmBlockEntotu ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockEntotuS, DQItemBlocks.itemBlockEntotuS.getClass(), "DqmBlockEntotuS ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockEntotuN, DQItemBlocks.itemBlockEntotuN.getClass(), "DqmBlockEntotuN ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockEntotuG, DQItemBlocks.itemBlockEntotuG.getClass(), "DqmBlockEntotuG ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockEntotuO, DQItemBlocks.itemBlockEntotuO.getClass(), "DqmBlockEntotuO ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockYadoya, DQItemBlocks.itemBlockYadoya.getClass(), "DqmBlockYadoya ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockDouguya, DQItemBlocks.itemBlockDouguya.getClass(), "DqmBlockDouguya ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockBouguya, DQItemBlocks.itemBlockBouguya.getClass(), "DqmBlockBouguya ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockBukiya, DQItemBlocks.itemBlockBukiya.getClass(), "DqmBlockBukiya ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockTaruK, DQItemBlocks.itemBlockTaruK.getClass(), "DqmBlockTaruK ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockTuboK, DQItemBlocks.itemBlockTuboK.getClass(), "DqmBlockTuboK ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockSBatorurex, DQItemBlocks.itemBlockSBatorurex.getClass(), "DqmBlockSBatorurex ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockSBoureikensi, DQItemBlocks.itemBlockSBoureikensi.getClass(), "DqmBlockSBoureikensi ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockSGoremu, DQItemBlocks.itemBlockSGoremu.getClass(), "DqmBlockSGoremu ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockSKirapan, DQItemBlocks.itemBlockSKirapan.getClass(), "DqmBlockSKirapan ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockSSura, DQItemBlocks.itemBlockSSura.getClass(), "DqmBlockSSura ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockSSuraimunaito, DQItemBlocks.itemBlockSSuraimunaito.getClass(), "DqmBlockSSuraimunaito ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockSZukkinya, DQItemBlocks.itemBlockSZukkinya.getClass(), "DqmBlockSZukkinya ");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockFarmBookShelf, DQItemBlocks.itemBlockFarmBookShelf.getClass(), "DqmBlockFarmBookShelf ");
 
 
 		//blocksOre
@@ -1206,7 +1349,7 @@ public class DqrItemRegister {
 		GameRegistry.registerItem(DQBuilders.itemBuilderDamaW9, "ItemBuilderDamaW9");
 
 		GameRegistry.registerBlock(DQDecorates.DqmBlockDqmbed, DQItemBlocks.itemBlockDqmBed.getClass(), "DqmBlockDqmbed");
-		GameRegistry.registerBlock(DQDecorates.DqmBlockDqmbed2, "DqmBlockDqmbed2");
+		//GameRegistry.registerBlock(DQDecorates.DqmBlockDqmbed2, "DqmBlockDqmbed2");
 
     	GameRegistry.registerBlock(DQBlocks.DqmBlockKowareru8 ,"DqmBlockKowareru8");
     	GameRegistry.registerBlock(DQBlocks.DqmBlockKowareru9 ,"DqmBlockKowareru9");
@@ -1219,7 +1362,7 @@ public class DqrItemRegister {
 		GameRegistry.registerItem(DQMiscs.itemKimeranotubasa2Y, "ItemKimeranotubasa2Y");
 
 		GameRegistry.registerItem(DQMiscs.itemKimeranotubasaC, "ItemKimeranotubasaC");
-		GameRegistry.registerBlock(DQDecorates.DqmBlockDqmbed3, "DqmBlockDqmbed3");
+		//GameRegistry.registerBlock(DQDecorates.DqmBlockDqmbed3, "DqmBlockDqmbed3");
 
 		GameRegistry.registerItem(DQWeapons.itemTetunosoroban, "ItemTetunosoroban");
 		GameRegistry.registerItem(DQWeapons.itemMahounosoroban, "ItemMahounosoroban");
@@ -2011,6 +2154,53 @@ public class DqrItemRegister {
     	GameRegistry.registerBlock(DQMobObjects.BlockObjOrutega, "BlockObjOrutega");
 
     	GameRegistry.registerItem(DQMagics.itemRurasinC, "ItemRurasinC");
+
+    	GameRegistry.registerItem(DQBuilders.itemBuilderCasino1, "itemBuilderCasino1");
+    	GameRegistry.registerItem(DQBuilders.itemBuilderCasino2, "itemBuilderCasino2");
+    	GameRegistry.registerItem(DQBuilders.itemBuilderCasino3, "itemBuilderCasino3");
+
+    	GameRegistry.registerBlock(DQMobFigures.BlockFigureWhitepan2, "BlockFigureWhitepan2 ");
+    	GameRegistry.registerBlock(DQMobObjects.BlockObjWhitepan2, "BlockObjWhitepan2");
+
+    	GameRegistry.registerBlock(DQChests.DqmChest, "DqmChest");
+    	GameRegistry.registerBlock(DQBlocks.DqmQuartzBlock, "DqmQuartzBlock");
+
+    	GameRegistry.registerItem(DQMagicTools.itemDqrFishRod_Diamond, "itemDqrFishRod_Diamond");
+    	GameRegistry.registerItem(DQMagicTools.itemDqrFishRod_Oriharukon, "itemDqrFishRod_Oriharukon");
+    	GameRegistry.registerItem(DQMagicTools.itemDqrFishRod_Roto, "itemDqrFishRod_Roto");
+    	GameRegistry.registerItem(DQMagicTools.itemDqrFishRod_Densetu, "itemDqrFishRod_Densetu");
+
+    	GameRegistry.registerBlock(DQSekizous.BlockSekizouZoma, "BlockSekizouZoma");
+    	GameRegistry.registerBlock(DQSekizous.BlockSekizouDesupisaro1, "BlockSekizouDesupisaro1");
+    	GameRegistry.registerBlock(DQSekizous.BlockSekizouEsterk, "BlockSekizouEsterk");
+    	GameRegistry.registerBlock(DQSekizous.BlockSekizouMasterdoragon, "BlockSekizouMasterdoragon");
+    	GameRegistry.registerBlock(DQSekizous.BlockSekizouRyuuou, "BlockSekizouRyuuou");
+    	GameRegistry.registerBlock(DQSekizous.BlockSekizouDarkRamia, "BlockSekizouDarkRamia");
+
+    	GameRegistry.registerBlock(DQSekizous.BlockSekizouZomaNo, "BlockSekizouZomaNo");
+    	GameRegistry.registerBlock(DQSekizous.BlockSekizouDesupisaro1No, "BlockSekizouDesupisaro1No");
+    	GameRegistry.registerBlock(DQSekizous.BlockSekizouEsterkNo, "BlockSekizouEsterkNo");
+    	GameRegistry.registerBlock(DQSekizous.BlockSekizouMasterdoragonNo, "BlockSekizouMasterdoragonNo");
+    	GameRegistry.registerBlock(DQSekizous.BlockSekizouRyuuouNo, "BlockSekizouRyuuouNo");
+    	GameRegistry.registerBlock(DQSekizous.BlockSekizouDarkRamiaNo, "BlockSekizouDarkRamiaNo");
+
+    	GameRegistry.registerBlock(DQBlocks.DqmBlockToramanaYuka2, "DqmBlockToramanaYuka2");
+    	GameRegistry.registerItem(DQBuilders.itemBuilderSekizouZoma, "itemBuilderSekizouZoma");
+    	GameRegistry.registerItem(DQBuilders.itemBuilderSekizouDarkRamia, "itemBuilderSekizouDarkRamia");
+    	GameRegistry.registerItem(DQBuilders.itemBuilderSekizouDesupisaro1, "itemBuilderSekizouDesupisaro1");
+    	GameRegistry.registerItem(DQBuilders.itemBuilderSekizouRyuuou, "itemBuilderSekizouRyuuou");
+    	GameRegistry.registerItem(DQBuilders.itemBuilderSekizouMasterdoragon, "itemBuilderSekizouMasterdoragon");
+    	GameRegistry.registerItem(DQBuilders.itemBuilderSekizouEsterk, "itemBuilderSekizouEsterk");
+
+    	//GameRegistry.registerBlock(DQDecorates.DqmBlockCasinoSlot1, "DqmBlockCasinoSlot1");
+
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockDqmbed2, DQItemBlocks.itemBlockDqmBed2.getClass(), "DqmBlockDqmbed2");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockDqmbed3, DQItemBlocks.itemBlockDqmBed3.getClass(), "DqmBlockDqmbed3");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockCasinoSlot1, DQItemBlocks.itemBlockCasinoSlot1.getClass(), "DqmBlockCasinoSlot1");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockCasinoAbg1, DQItemBlocks.itemBlockCasinoAbg1.getClass(), "DqmBlockCasinoAbg1");
+
+    	GameRegistry.registerItem(DQBuilders.itemBuilderCasino4, "itemBuilderCasino4");
+    	GameRegistry.registerItem(DQBuilders.itemBuilderCasino5, "itemBuilderCasino5");
 	}
 }
 

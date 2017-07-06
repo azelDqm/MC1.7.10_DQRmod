@@ -26,6 +26,7 @@ import dqr.entity.throwingEntity.ThrowingRegister;
 import dqr.entity.throwingEntity.ThrowingRenderingRegister;
 import dqr.entity.villagerEntity.DqmVillagerSkinRegister;
 import dqr.functions.FuncEntityRenderExtension;
+import dqr.gui.casinoExchange.tab.CasinoExchangeTabs;
 import dqr.gui.medalKing.tab.MedalKingTabs;
 import dqr.gui.petStatus.tab.PetStatusTabs;
 import dqr.gui.playerHUD.GuiBuffBar;
@@ -104,6 +105,7 @@ public class ClientProxy extends CommonProxy
 
     	MedalKingTabs.initRecipes();
     	PetStatusTabs.initRecipes();
+    	CasinoExchangeTabs.initRecipes();
 
     	MinecraftForge.EVENT_BUS.register(new GuiBuffBar(Minecraft.getMinecraft()));
     	MinecraftForge.EVENT_BUS.register(new GuiLogger(Minecraft.getMinecraft()));

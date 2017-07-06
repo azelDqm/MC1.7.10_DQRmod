@@ -11,7 +11,6 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
 import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAITasks;
 import net.minecraft.entity.ai.EntityAIWander;
@@ -76,7 +75,9 @@ import dqr.entity.mobEntity.ai.EntityAIMagicAttack;
 import dqr.entity.mobEntity.ai.EntityAIMagicBuff;
 import dqr.entity.mobEntity.ai.EntityAIMagicDebuff;
 import dqr.entity.mobEntity.ai.EntityAIMagicMegante;
+import dqr.entity.mobEntity.ai.EntityAINearestAttackableTarget2;
 import dqr.entity.mobEntity.ai.EntityAINearestTargetHeavyFire;
+import dqr.entity.mobEntity.ai.EntityAIWatchClosest3;
 import dqr.entity.npcEntity.npc.DqmEntityNPCGuntai;
 import dqr.entity.petEntity.DqmPetBase;
 import dqr.playerData.ExtendedPlayerProperties;
@@ -178,23 +179,23 @@ public class DqmMobBase extends EntityMob
         //this.tasks.addTask(4, new EntityAIMoveTwardsRestriction(this, this.moveSpeed));
         //this.tasks.addTask(6, new EntityAIWander(this, this.moveSpeed));
         this.tasks.addTask(7, new EntityAIWatchClosest(this, EntityPlayer.class, 3.0F));
-        this.tasks.addTask(8, new EntityAIWatchClosest(this, DqmPetBase.class, 3.0F));
+        this.tasks.addTask(8, new EntityAIWatchClosest3(this, DqmPetBase.class, 3.0F));
         //this.tasks.addTask(7, new EntityAILookIdle(this));
         this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false));
 
         if(this.mobAI.getHeavyFire() > 0)
         {
         	this.targetTasks.addTask(2, new EntityAINearestTargetHeavyFire(this, EntityPlayer.class, 20, true));
-        	this.targetTasks.addTask(4, new EntityAINearestTargetHeavyFire(this, DqmPetBase.class, 20, true));
+        	this.targetTasks.addTask(2, new EntityAINearestTargetHeavyFire(this, DqmPetBase.class, 20, true));
         }
         else
         {
-        	this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityPlayer.class, 25, true));
-        	this.targetTasks.addTask(4, new EntityAINearestAttackableTarget(this, DqmPetBase.class, 25, true));
+        	this.targetTasks.addTask(2, new EntityAINearestAttackableTarget2(this, EntityPlayer.class, 25, true));
+        	this.targetTasks.addTask(2, new EntityAINearestAttackableTarget2(this, DqmPetBase.class, 25, true));
         }
 
-        this.targetTasks.addTask(3, new EntityAINearestAttackableTarget(this, EntityPlayer.class, 0, true));
-        this.targetTasks.addTask(5, new EntityAINearestAttackableTarget(this, DqmPetBase.class, 0, true));
+        this.targetTasks.addTask(3, new EntityAINearestAttackableTarget2(this, EntityPlayer.class, 0, true));
+        this.targetTasks.addTask(3, new EntityAINearestAttackableTarget2(this, DqmPetBase.class, 0, true));
 		/*
 		 * 近接攻撃を行うAIを追加する.
 		 * EntityAIAttackOnCollideの引数のうち, 末尾2つは(攻撃距離, ずっと追い続けるかどうか)
@@ -298,16 +299,16 @@ public class DqmMobBase extends EntityMob
         if(this.mobAI.getHeavyFire() > 0)
         {
         	this.targetTasks.addTask(2, new EntityAINearestTargetHeavyFire(this, EntityPlayer.class, 20, true));
-        	this.targetTasks.addTask(4, new EntityAINearestTargetHeavyFire(this, DqmPetBase.class, 20, true));
+        	this.targetTasks.addTask(2, new EntityAINearestTargetHeavyFire(this, DqmPetBase.class, 20, true));
         }
         else
         {
-        	this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityPlayer.class, 25, true));
-        	this.targetTasks.addTask(4, new EntityAINearestAttackableTarget(this, DqmPetBase.class, 25, true));
+        	this.targetTasks.addTask(2, new EntityAINearestAttackableTarget2(this, EntityPlayer.class, 25, true));
+        	this.targetTasks.addTask(2, new EntityAINearestAttackableTarget2(this, DqmPetBase.class, 25, true));
         }
 
-        this.targetTasks.addTask(3, new EntityAINearestAttackableTarget(this, EntityPlayer.class, 0, true));
-        this.targetTasks.addTask(5, new EntityAINearestAttackableTarget(this, DqmPetBase.class, 0, true));
+        this.targetTasks.addTask(3, new EntityAINearestAttackableTarget2(this, EntityPlayer.class, 0, true));
+        this.targetTasks.addTask(3, new EntityAINearestAttackableTarget2(this, DqmPetBase.class, 0, true));
 		/*
 		 * 近接攻撃を行うAIを追加する.
 		 * EntityAIAttackOnCollideの引数のうち, 末尾2つは(攻撃距離, ずっと追い続けるかどうか)
@@ -344,7 +345,7 @@ public class DqmMobBase extends EntityMob
     	}else
     	{
     		this.tasks.addTask(1, new EntityAIAttackOnCollide2(this, EntityPlayer.class, 1.5D, true));
-    		this.tasks.addTask(3, new EntityAIAttackOnCollide2(this, DqmPetBase.class, 1.5D, true));
+    		this.tasks.addTask(1, new EntityAIAttackOnCollide2(this, DqmPetBase.class, 1.5D, true));
     	}
 
     	if(this.mobAI.getHonoo() > 0)
@@ -943,6 +944,7 @@ public class DqmMobBase extends EntityMob
     		if(source.getEntity() instanceof EntityPlayer)
     		{
     			EntityPlayer ep = (EntityPlayer)source.getEntity();
+
     			int weapon = ExtendedPlayerProperties.get(ep).getWeapon();
     			int weaponSkill = ExtendedPlayerProperties3.get(ep).getWeaponSkillSet(weapon);
     			int skillPerm = ExtendedPlayerProperties3.get(ep).getWeaponSkillPermission(weapon, weaponSkill);
@@ -986,7 +988,7 @@ public class DqmMobBase extends EntityMob
 	    					//ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
 	    					this.dqmBypassArmor = true;
 	    					source.setDamageBypassesArmor();
-	    					ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
+	    					if(!ep.getCommandSenderName().equalsIgnoreCase("[Minecraft]"))ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
 	    					skillFlg = true;
 	    				}
 	    			}else if(weapon == EnumDqmWeapon.DqmAxe.getId() && weaponSkill == 6 && skillPerm != 0)
@@ -1003,7 +1005,7 @@ public class DqmMobBase extends EntityMob
     						p_70665_2_ = 0.0F;
     					}
     					skillFlg = true;
-    					ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
+    					if(!ep.getCommandSenderName().equalsIgnoreCase("[Minecraft]"))ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
 
 	    			}else if(weapon == EnumDqmWeapon.DqmLance.getId() && weaponSkill == 6 && skillPerm != 0)
 	    			{
@@ -1019,7 +1021,7 @@ public class DqmMobBase extends EntityMob
     					}
 
     					skillFlg = true;
-    					ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
+    					if(!ep.getCommandSenderName().equalsIgnoreCase("[Minecraft]"))ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
 	    			}else if(weapon == EnumDqmWeapon.DqmSoroban.getId() && weaponSkill == 3 && skillPerm != 0)
 	    			{
 
@@ -1030,7 +1032,7 @@ public class DqmMobBase extends EntityMob
 
     					p_70665_2_ = p_70665_2_ * 2.0F;
     					skillFlg = true;
-    					ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
+    					if(!ep.getCommandSenderName().equalsIgnoreCase("[Minecraft]"))ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
 
 						if(!ep.worldObj.isRemote)
 						{
@@ -1154,10 +1156,10 @@ public class DqmMobBase extends EntityMob
 						//System.out.println("TEST" + DQR.conf.damageDigits);
 						if (DQR.conf.damageDigits == 1)
 						{
-							ep.addChatMessage(new ChatComponentTranslation("msg.toDamage2.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), p_70665_2_}));
+							if(!ep.getCommandSenderName().equalsIgnoreCase("[Minecraft]"))ep.addChatMessage(new ChatComponentTranslation("msg.toDamage2.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), p_70665_2_}));
 						}else
 						{
-							ep.addChatMessage(new ChatComponentTranslation("msg.toDamage.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), (int)p_70665_2_}));
+							if(!ep.getCommandSenderName().equalsIgnoreCase("[Minecraft]"))ep.addChatMessage(new ChatComponentTranslation("msg.toDamage.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), (int)p_70665_2_}));
 						}
 						/*
 						if(DQR.conf.damageDigits == 1)
@@ -1191,10 +1193,10 @@ public class DqmMobBase extends EntityMob
 					{
 						if (DQR.conf.damageDigits == 1)
 						{
-							ep.addChatMessage(new ChatComponentTranslation("msg.toDamage2.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), p_70665_2_}));
+							if(!ep.getCommandSenderName().equalsIgnoreCase("[Minecraft]"))ep.addChatMessage(new ChatComponentTranslation("msg.toDamage2.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), p_70665_2_}));
 						}else
 						{
-							ep.addChatMessage(new ChatComponentTranslation("msg.toDamage.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), (int)p_70665_2_}));
+							if(!ep.getCommandSenderName().equalsIgnoreCase("[Minecraft]"))ep.addChatMessage(new ChatComponentTranslation("msg.toDamage.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), (int)p_70665_2_}));
 						}
 						//ep.addChatMessage(new ChatComponentTranslation("msg.toDamage.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), (int)p_70665_2_}));
 					}
@@ -1231,12 +1233,12 @@ public class DqmMobBase extends EntityMob
 						//ep.addChatMessage(new ChatComponentTranslation("msg.toDamage.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), (int)p_70665_2_}));
 						if (DQR.conf.damageDigits == 1)
 						{
-							ep.addChatMessage(new ChatComponentTranslation("msg.toDamage2P.txt",new Object[] {petName, EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), p_70665_2_}));
+							if(!ep.getCommandSenderName().equalsIgnoreCase("[Minecraft]"))ep.addChatMessage(new ChatComponentTranslation("msg.toDamage2P.txt",new Object[] {petName, EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), p_70665_2_}));
 						}else
 						{
 							if(ep != null)
 							{
-								ep.addChatMessage(new ChatComponentTranslation("msg.toDamageP.txt",new Object[] {petName, EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), (int)p_70665_2_}));
+								if(!ep.getCommandSenderName().equalsIgnoreCase("[Minecraft]"))ep.addChatMessage(new ChatComponentTranslation("msg.toDamageP.txt",new Object[] {petName, EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), (int)p_70665_2_}));
 							}
 						}
 					}
@@ -1272,10 +1274,10 @@ public class DqmMobBase extends EntityMob
 						//ep.addChatMessage(new ChatComponentTranslation("msg.toDamage.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), (int)p_70665_2_}));
 						if (DQR.conf.damageDigits == 1)
 						{
-							ep.addChatMessage(new ChatComponentTranslation("msg.toDamage2P.txt",new Object[] {petName, EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), p_70665_2_}));
+							if(!ep.getCommandSenderName().equalsIgnoreCase("[Minecraft]"))ep.addChatMessage(new ChatComponentTranslation("msg.toDamage2P.txt",new Object[] {petName, EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), p_70665_2_}));
 						}else
 						{
-							ep.addChatMessage(new ChatComponentTranslation("msg.toDamagePtxt",new Object[] {petName, EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), (int)p_70665_2_}));
+							if(!ep.getCommandSenderName().equalsIgnoreCase("[Minecraft]"))ep.addChatMessage(new ChatComponentTranslation("msg.toDamagePtxt",new Object[] {petName, EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), (int)p_70665_2_}));
 						}
 					}
 
@@ -1291,10 +1293,10 @@ public class DqmMobBase extends EntityMob
 						{
 							if (DQR.conf.damageDigits == 1)
 							{
-								ep.addChatMessage(new ChatComponentTranslation("msg.toDamage2.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), p_70665_2_}));
+								if(!ep.getCommandSenderName().equalsIgnoreCase("[Minecraft]"))ep.addChatMessage(new ChatComponentTranslation("msg.toDamage2.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), p_70665_2_}));
 							}else
 							{
-								ep.addChatMessage(new ChatComponentTranslation("msg.toDamage.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), (int)p_70665_2_}));
+								if(!ep.getCommandSenderName().equalsIgnoreCase("[Minecraft]"))ep.addChatMessage(new ChatComponentTranslation("msg.toDamage.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), (int)p_70665_2_}));
 							}
 							//ep.addChatMessage(new ChatComponentTranslation("msg.toDamage.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), (int)p_70665_2_}));
 						}
@@ -1304,6 +1306,9 @@ public class DqmMobBase extends EntityMob
     	            	setDamageHT(ep, p_70665_2_, prevHp);
             		}
 
+            	}else
+            	{
+            		//System.out.println("TEST");
             	}
 
 				if(!this.worldObj.isRemote && p_70665_2_ <= 0.0F)
@@ -3621,8 +3626,11 @@ public class DqmMobBase extends EntityMob
                     {
                         this.recentlyHit = 100;
                         this.attackingPlayer = (EntityPlayer)entity;
-                    }
-                    else if (entity instanceof net.minecraft.entity.passive.EntityTameable)
+                    }else if(entity instanceof DqmPetBase && ((DqmPetBase)entity).isTamed())
+                    {
+                    	this.recentlyHit = 100;
+
+                    }else if (entity instanceof net.minecraft.entity.passive.EntityTameable)
                     {
                         net.minecraft.entity.passive.EntityTameable entitywolf = (net.minecraft.entity.passive.EntityTameable)entity;
 
@@ -3631,6 +3639,17 @@ public class DqmMobBase extends EntityMob
                             this.recentlyHit = 100;
                             this.attackingPlayer = null;
                         }
+                    }else if(entity instanceof MagicEntity)
+                    {
+                    	//System.out.println("TEST111");
+                    	MagicEntity magic = (MagicEntity)entity;
+                    	//System.out.println("TEST222" + magic.shootingEntity.getCommandSenderName());
+                    	if(magic.shootingEntity instanceof EntityPlayer)
+                    	{
+                    		//System.out.println("TEST222");
+                    		this.recentlyHit = 100;
+                            this.attackingPlayer = (EntityPlayer)magic.shootingEntity;
+                    	}
                     }
                 }
 
@@ -3694,4 +3713,49 @@ public class DqmMobBase extends EntityMob
     {
     	return this.getEntityString();
     }
+
+    /*
+    protected int getExperiencePoints(EntityPlayer p_70693_1_)
+    {
+    	System.out.println("TEST : " + this.getCommandSenderName());
+    	return this.experienceValue;
+    }
+    */
+
+    /*
+    protected void onDeathUpdate()
+    {
+        ++this.deathTime;
+        //System.out.println("TEST1 : " + this.getCommandSenderName());
+
+        if (this.deathTime == 20)
+        {
+            int i;
+
+            //if (!this.worldObj.isRemote && (this.recentlyHit > 0 || this.isPlayer()) && this.func_146066_aG() && this.worldObj.getGameRules().getGameRuleBooleanValue("doMobLoot"))
+            if (!this.worldObj.isRemote  && this.func_146066_aG() && this.worldObj.getGameRules().getGameRuleBooleanValue("doMobLoot"))
+            {
+            	//System.out.println("TEST2 : " + this.getCommandSenderName());
+                i = this.getExperiencePoints(this.attackingPlayer);
+
+                while (i > 0)
+                {
+                    int j = EntityXPOrb.getXPSplit(i);
+                    i -= j;
+                    this.worldObj.spawnEntityInWorld(new EntityXPOrb(this.worldObj, this.posX, this.posY, this.posZ, j));
+                }
+            }
+
+            this.setDead();
+            //System.out.println("TEST3 : " + this.getCommandSenderName());
+            for (i = 0; i < 20; ++i)
+            {
+                double d2 = this.rand.nextGaussian() * 0.02D;
+                double d0 = this.rand.nextGaussian() * 0.02D;
+                double d1 = this.rand.nextGaussian() * 0.02D;
+                this.worldObj.spawnParticle("explode", this.posX + (double)(this.rand.nextFloat() * this.width * 2.0F) - (double)this.width, this.posY + (double)(this.rand.nextFloat() * this.height), this.posZ + (double)(this.rand.nextFloat() * this.width * 2.0F) - (double)this.width, d2, d0, d1);
+            }
+        }
+    }
+    */
 }

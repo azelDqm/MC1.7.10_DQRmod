@@ -6,6 +6,8 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import dqr.DQR;
 import dqr.blocks.chest.InventoryDqmEnderChest;
 import dqr.blocks.chest.tileEntity.DqmTileEntityEnderChest;
 import dqr.playerData.ExtendedPlayerProperties2;
@@ -120,6 +122,32 @@ public class GuiDqrEnderChestContainer extends Container
         }
 
         return itemstack;
+    }
+
+    @Override
+    public ItemStack slotClick(int p_75144_1_, int p_75144_2_, int p_75144_3_, EntityPlayer p_75144_4_)
+    {
+    	//System.out.println("TESTLINE222 : " + p_75144_1_ + "/" + p_75144_2_ + "/" + p_75144_3_);
+
+    	if(this.getInventory() != null && this.getInventory().size() > p_75144_1_ && p_75144_1_ >= 0)
+    	{
+    		ItemStack sl2 = (ItemStack)(this.getInventory().get(p_75144_1_));
+    		//if(sl != null && sl.getStack() != null && sl.getStack().getItem() instanceof DqmItemFukuroBase)
+    		//System.out.println("LINT1");
+    		if(sl2 != null && sl2.getTagCompound() != null)
+    		{
+    			NBTTagCompound nbt = sl2.getTagCompound();
+
+    			if((p_75144_1_ >= 153 || p_75144_3_ == 2) && nbt != null && nbt.func_150296_c().size() > DQR.conf.chestLimitTagCount && DQR.conf.chestLimitTagCount > 0)
+    			{
+    				//System.out.println("LINT1");
+    				return null;
+    			}
+    			//System.out.println("TESTLINE = " + nbt.func_150296_c().size());
+    		}
+    	}
+
+    	return super.slotClick(p_75144_1_, p_75144_2_, p_75144_3_, p_75144_4_);
     }
 
     /*

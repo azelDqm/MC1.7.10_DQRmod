@@ -19,8 +19,9 @@ public class DqmWorldGenIdo2 implements IWorldGenerator
     public void setScale(int i, int j, int k) {	}
 
     @Override
-    public void generate(Random rand, int par1, int par2, World par3World, IChunkProvider par4IChunkProvider, IChunkProvider par5IChunkProvider)
+    public void generate(Random rand2, int par1, int par2, World par3World, IChunkProvider par4IChunkProvider, IChunkProvider par5IChunkProvider)
     {
+    	Random rand = new Random();
         int xxx = par1 * 16 + rand.nextInt(16);
         int zzz = par2 * 16 + rand.nextInt(16);
         int yyy = par3World.getHeightValue(xxx, zzz);

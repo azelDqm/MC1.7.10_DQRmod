@@ -2,6 +2,7 @@ package dqr.api.event;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
+import cpw.mods.fml.common.eventhandler.Cancelable;
 import cpw.mods.fml.common.eventhandler.Event;
 
 /**
@@ -9,6 +10,8 @@ import cpw.mods.fml.common.eventhandler.Event;
  * キャンセル不可。
  * */
 
+@Cancelable
+@Event.HasResult
 public class DqrArmorSetEvent extends Event{
 
 	public EntityPlayer player;

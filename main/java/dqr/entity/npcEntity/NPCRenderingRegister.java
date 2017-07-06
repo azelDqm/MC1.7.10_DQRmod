@@ -5,6 +5,11 @@ import dqr.entity.npcEntity.npc.DqmEntityNPCBank;
 import dqr.entity.npcEntity.npc.DqmEntityNPCBukiya;
 import dqr.entity.npcEntity.npc.DqmEntityNPCGuntai;
 import dqr.entity.npcEntity.npc.DqmEntityNPCKaitoriya;
+import dqr.entity.npcEntity.npc.DqmEntityNPCKajinoBJ;
+import dqr.entity.npcEntity.npc.DqmEntityNPCKajinoCCR;
+import dqr.entity.npcEntity.npc.DqmEntityNPCKajinoCoin;
+import dqr.entity.npcEntity.npc.DqmEntityNPCKajinoEXC;
+import dqr.entity.npcEntity.npc.DqmEntityNPCKajinoPK;
 import dqr.entity.npcEntity.npc.DqmEntityNPCMedalking;
 import dqr.entity.npcEntity.npc.DqmEntityNPCSinkan;
 import dqr.entity.npcEntity.npc.DqmEntityNPCSinkan2;
@@ -30,6 +35,10 @@ public class NPCRenderingRegister {
 		RenderingRegistry.registerEntityRenderingHandler(DqmEntityNPCMedalking.class, new DqmRenderNPCBiped());
 
 		RenderingRegistry.registerEntityRenderingHandler(DqmEntityNPCGuntai.class, new DqmRenderNPC());
-
+		RenderingRegistry.registerEntityRenderingHandler(DqmEntityNPCKajinoBJ.class, new DqmRenderNPCBiped());
+		RenderingRegistry.registerEntityRenderingHandler(DqmEntityNPCKajinoCoin.class, new DqmRenderNPCBiped());
+		RenderingRegistry.registerEntityRenderingHandler(DqmEntityNPCKajinoPK.class, new DqmRenderNPCBiped());
+		RenderingRegistry.registerEntityRenderingHandler(DqmEntityNPCKajinoEXC.class, new DqmRenderNPCBiped());
+		RenderingRegistry.registerEntityRenderingHandler(DqmEntityNPCKajinoCCR.class, new DqmRenderNPCBiped());
 	}
 }

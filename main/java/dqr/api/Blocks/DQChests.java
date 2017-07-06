@@ -8,4 +8,6 @@ public class DQChests {
 	public static Block DqmEnderChest3;
 	public static Block DqmEnderChest4;
 	public static Block DqmEnderChest5;
+
+	public static Block DqmChest;
 }

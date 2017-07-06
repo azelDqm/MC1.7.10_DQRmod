@@ -319,6 +319,7 @@ public class DqBlockObj {
 		DQMobObjects.BlockObjShadopan = new DqmBlockMobObj(Material.ground).setBlockName("blockObjShadopan").setStepSound(Block.soundTypeGlass).setHardness(0.2f).setCreativeTab(DQR.tabs.DqmTabMobObj).setBlockTextureName("dqr:ObjBeast");
 		DQMobObjects.BlockObjShadopan2 = new DqmBlockMobObj(Material.ground).setBlockName("blockObjShadopan2").setStepSound(Block.soundTypeGlass).setHardness(0.2f).setCreativeTab(DQR.tabs.DqmTabMobObj).setBlockTextureName("dqr:ObjBeast");
 		DQMobObjects.BlockObjOrutega = new DqmBlockMobObj(Material.ground).setBlockName("blockObjOrutega").setStepSound(Block.soundTypeGlass).setHardness(0.2f).setCreativeTab(DQR.tabs.DqmTabMobObj).setBlockTextureName("dqr:ObjUnknown");
+		DQMobObjects.BlockObjWhitepan2 = new DqmBlockMobObj(Material.ground).setBlockName("blockObjWhitepan2").setStepSound(Block.soundTypeGlass).setHardness(0.2f).setCreativeTab(DQR.tabs.DqmTabMobObj).setBlockTextureName("dqr:ObjBeast");
 
 		DQMobFigures.BlockFigureAkairai = new DqmBlockMobFigure(Material.ground).setBlockName("blockFigAkairai").setStepSound(Block.soundTypeGlass).setHardness(0.2f).setCreativeTab(DQR.tabs.DqmTabMobOFigure).setBlockTextureName("dqr:FigSizen");
 		DQMobFigures.BlockFigureAkumanosyo = new DqmBlockMobFigure(Material.ground).setBlockName("blockFigAkumanosyo").setStepSound(Block.soundTypeGlass).setHardness(0.2f).setCreativeTab(DQR.tabs.DqmTabMobOFigure).setBlockTextureName("dqr:FigAkuma");
@@ -626,5 +627,6 @@ public class DqBlockObj {
 		DQMobFigures.BlockFigureShadopan2 = new DqmBlockMobFigure(Material.ground).setBlockName("blockFigShadopan2").setStepSound(Block.soundTypeGlass).setHardness(0.2f).setCreativeTab(DQR.tabs.DqmTabMobOFigure).setBlockTextureName("dqr:FigBeast");
 
 		DQMobFigures.BlockFigureOrutega = new DqmBlockMobFigure(Material.ground).setBlockName("blockFigOrutega").setStepSound(Block.soundTypeGlass).setHardness(0.2f).setCreativeTab(DQR.tabs.DqmTabMobOFigure).setBlockTextureName("dqr:FigUnknown");
+		DQMobFigures.BlockFigureWhitepan2 = new DqmBlockMobFigure(Material.ground).setBlockName("blockFigWhitepan2").setStepSound(Block.soundTypeGlass).setHardness(0.2f).setCreativeTab(DQR.tabs.DqmTabMobOFigure).setBlockTextureName("dqr:FigBeast");
 	}
 }

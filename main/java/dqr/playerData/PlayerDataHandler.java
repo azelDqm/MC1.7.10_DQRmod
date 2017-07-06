@@ -52,6 +52,8 @@ public class PlayerDataHandler {
         if (!event.entity.worldObj.isRemote && event.entity instanceof EntityPlayer) {
         	EntityPlayer ep = (EntityPlayer)event.entity;
 
+           	ExtendedPlayerProperties.get(ep).setPlayerName(ep.getCommandSenderName());
+        	ExtendedPlayerProperties.get(ep).setPlayerUUID(ep.getUniqueID().toString());
         	ExtendedPlayerProperties2.get(ep).setPlayerName(ep.getDisplayName());
         	ExtendedPlayerProperties3.get(ep).setPartyMemberData(null);
 
@@ -106,6 +108,9 @@ public class PlayerDataHandler {
                 storeEntityData(event.entity.getCommandSenderName(), playerData, playerData2, playerData3);                //(event.entity.getExtendedProperties(ExtendedPlayerProperties.EXT_PROP_NAME)).loadNBTData(playerData);
                 //((ExtendedPlayerProperties)(event.entity.getExtendedProperties(ExtendedPlayerProperties.EXT_PROP_NAME))).loadProxyData((EntityPlayer)event.entity);
         	}
+
+
+
 
         	//ExtendedPlayerProperties3.get(ep).setPartyMemberData(null);
         	//PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties3(ep), (EntityPlayerMP)ep);

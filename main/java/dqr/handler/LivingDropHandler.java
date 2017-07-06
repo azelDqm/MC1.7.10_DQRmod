@@ -188,6 +188,7 @@ import dqr.entity.mobEntity.monsterHell.DqmEntitySuraimumadyura;
 import dqr.entity.mobEntity.monsterHell.DqmEntityTororuking;
 import dqr.entity.mobEntity.monsterHell.DqmEntityTubokku;
 import dqr.entity.mobEntity.monsterHell.DqmEntityUmibouzu;
+import dqr.entity.mobEntity.monsterHell.DqmEntityWhitepan2;
 import dqr.entity.mobEntity.monsterHell.DqmMobBaseHell;
 import dqr.entity.mobEntity.monsterMetaru.DqmEntityDaiyamondosuraimu;
 import dqr.entity.mobEntity.monsterMetaru.DqmEntityDragometaru;
@@ -288,6 +289,7 @@ import dqr.entity.mobEntity.monsterSP.DqmEntityKiramajinga;
 import dqr.entity.mobEntity.monsterSP.DqmEntityKiratoti;
 import dqr.entity.mobEntity.monsterSP.DqmEntityMashougumo;
 import dqr.entity.mobEntity.monsterSP.DqmEntityMasso;
+import dqr.entity.mobEntity.monsterSP.DqmEntityOrutega;
 import dqr.entity.mobEntity.monsterSP.DqmEntityPisaronaito;
 import dqr.entity.mobEntity.monsterSP.DqmEntityPuremiasuraimu;
 import dqr.entity.mobEntity.monsterSP.DqmEntitySirubamanto;
@@ -1563,6 +1565,12 @@ public class LivingDropHandler {
 			else if(event.entityLiving instanceof DqmEntityShadopan2){
 				event.entityLiving.dropItem(Item.getItemFromBlock(DQMobFigures.BlockFigureShadopan2), 1);
 			}
+			else if(event.entityLiving instanceof DqmEntityOrutega){
+				event.entityLiving.dropItem(Item.getItemFromBlock(DQMobFigures.BlockFigureOrutega), 1);
+			}
+			else if(event.entityLiving instanceof DqmEntityWhitepan2){
+				event.entityLiving.dropItem(Item.getItemFromBlock(DQMobFigures.BlockFigureWhitepan2), 1);
+			}
 		}
 
 		if(event.entityLiving instanceof DqmMobBase && rand.nextInt(60) == 0)
@@ -2476,7 +2484,12 @@ public class LivingDropHandler {
 			else if(event.entityLiving instanceof DqmEntityShadopan2){
 				event.entityLiving.dropItem(Item.getItemFromBlock(DQMobObjects.BlockObjShadopan2), 1);
 			}
-
+			else if(event.entityLiving instanceof DqmEntityOrutega){
+				event.entityLiving.dropItem(Item.getItemFromBlock(DQMobObjects.BlockObjOrutega), 1);
+			}
+			else if(event.entityLiving instanceof DqmEntityWhitepan2){
+				event.entityLiving.dropItem(Item.getItemFromBlock(DQMobObjects.BlockObjWhitepan2), 1);
+			}
 
 		}
 	}

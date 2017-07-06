@@ -14,4 +14,8 @@ public class DQMagicTools {
 
 	public static Item itemMagicToolSet;
 
+	public static Item itemDqrFishRod_Diamond;
+	public static Item itemDqrFishRod_Oriharukon;
+	public static Item itemDqrFishRod_Roto;
+	public static Item itemDqrFishRod_Densetu;
 }

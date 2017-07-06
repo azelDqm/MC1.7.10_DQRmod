@@ -8,6 +8,7 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import dqr.DQR;
 import dqr.api.Items.DQMonsters;
 import dqr.playerData.ExtendedPlayerProperties3;
 
@@ -119,7 +120,34 @@ public class GuiPetBookContainer extends Container
     @Override
     public ItemStack slotClick(int par1, int par2, int par3, EntityPlayer ep)
     {
+    	boolean flg = false;
 
+    	if(par1 >= 0 && par1 < 54)
+    	{
+	    	Slot slot = (Slot)this.inventorySlots.get(par1);
+
+	    	if(slot != null && slot.getStack() != null)
+	    	{
+
+	    		//System.out.println(slot.getStack().getDisplayName());
+	    		NBTTagCompound nbt = slot.getStack().getTagCompound();
+
+	    		int locX = nbt.getInteger("posX");
+				int locY = nbt.getInteger("posY");
+				int locZ = nbt.getInteger("posZ");
+				int locDim = nbt.getInteger("dimension");
+
+				if(locX == 0 && locY == 0 && locZ == 0 && locDim == 0)
+				{
+					ExtendedPlayerProperties3.get(ep).minusPetCount(1);
+		        	DQR.petFunc.removePetdata(ep, nbt.getString("uuid"));
+		        	flg = true;
+				}
+	    		//System.out.println("TEST" + nbt.getString("uuid"));
+
+
+	    	}
+    	}
     	//System.out.println(par1 + "/" + par2 + "/" + par3);
     	//System.out.println("0:" + ep.worldObj.isRemote + ":");
     	/*
@@ -157,7 +185,7 @@ public class GuiPetBookContainer extends Container
     	NBTTagCompound playerPet = ExtendedPlayerProperties3.get(this.ep).getNBTPlayerPetList();
     	Set tags = playerPet.func_150296_c();
 
-    	boolean flg = false;
+
 
     	//System.out.println("TEST:" + this.pageNo + "/" + par1);
     	if(par1 == 54 && this.pageNo > 0)

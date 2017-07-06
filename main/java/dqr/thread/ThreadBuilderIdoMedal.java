@@ -56,12 +56,22 @@ public class ThreadBuilderIdoMedal extends Thread{
         	case 0: zzz = zzz + 5; break;
         }
 		*/
+		/*
         switch(this.Hougaku)
         {
         	case 1: xxx = xxx - (this.size + 1); break;
         	case 2: zzz = zzz - (this.size + 1); break;
         	case 3: xxx = xxx + (this.size + 1); break;
         	case 0: zzz = zzz + (this.size + 1); break;
+        }
+        */
+        switch(this.Hougaku)
+        {
+        	//ここ 要微調整
+        	case 1: xxx = xxx - (this.size) + 1; break;
+        	case 2: zzz = zzz - (this.size) + 1; break;
+        	case 3: xxx = xxx + (this.size) - 1; break;
+        	case 0: zzz = zzz + (this.size) - 1; break;
         }
 
         //int takasa = 0;
@@ -234,7 +244,12 @@ public class ThreadBuilderIdoMedal extends Thread{
         {
             par3World.setBlock(xxx - 1, yyy, zzz, DQDecorates.DqmBlockIdooke, 0, 2);
         }
-
+		try {
+			this.sleep(DQR.conf.cfg_build_sleep);
+		} catch (InterruptedException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
         for (int y = -32; y <= -1; ++y)
         {
             par3World.setBlock(xxx, yyy + y, zzz, Blocks.air, 0, 2);
@@ -267,7 +282,12 @@ public class ThreadBuilderIdoMedal extends Thread{
                 }
             }
         }
-
+		try {
+			this.sleep(DQR.conf.cfg_build_sleep);
+		} catch (InterruptedException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
 
         for (int x = -5; x <= 5; ++x)
         {
@@ -325,7 +345,12 @@ public class ThreadBuilderIdoMedal extends Thread{
             }
         }
 
-
+		try {
+			this.sleep(DQR.conf.cfg_build_sleep);
+		} catch (InterruptedException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
         for (int x = -4; x <= 4; ++x)
         {
             for (int z = -4; z <= 4; ++z)
@@ -352,7 +377,12 @@ public class ThreadBuilderIdoMedal extends Thread{
         par3World.setBlock(xxx, yyy - 36, zzz + 1, Blocks.flowing_water, 0, 2);
         par3World.setBlock(xxx, yyy - 36, zzz - 1, Blocks.flowing_water, 0, 2);
         par3World.setBlock(xxx, yyy - 35, zzz - 3, DQBlocks.DqmBlockJampBlock, 0, 2);
-
+		try {
+			this.sleep(DQR.conf.cfg_build_sleep);
+		} catch (InterruptedException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
         DqmEntityNPCMedalking entitysilverfish = new DqmEntityNPCMedalking(par3World);
         entitysilverfish.setLocationAndAngles(xxx , yyy -34, zzz + 5, 0.0F, 0.0F);
         if(!par3World.isRemote)

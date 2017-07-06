@@ -8,7 +8,9 @@ public enum EnumDqmFuncPacketCode {
 	SyncCRura(5, "SyncCRura"),
 	SyncCBasirura(6, "SyncCBasirura"),
 	SyncWRuraSin(7, "SyncWRuraSin"),
-	SyncCRuraSin(8, "SyncCRuraSin");
+	SyncCRuraSin(8, "SyncCRuraSin"),
+	CasinoCoinPlus(9, "CasinoCoinPlus"),
+	CasinoCoinMinus(10, "CasinoCoinMinus");
 
     private final int id;      //威力(攻撃力・回復量)
     private final String name;   //飛距離tick

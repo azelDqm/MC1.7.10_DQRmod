@@ -9,7 +9,12 @@ public enum EnumDqmNpcTalk {
 	SINKAN(5, "SINKAN"),
 	MEDALKING(6, "MedalKing"),
 	SINKAN3(7, "SINKAN3"),
-	BANKMP(8, "BankMP");
+	BANKMP(8, "BankMP"),
+	CASINOBJ(9, "CasinoBJ"),
+	CASINOCOIN(10, "CasinoCoin"),
+	CASINOPK(11, "CasinoPK"),
+	CASINOEXC(12, "CasinoEXC"),
+	CASINOCCR(13, "CasinoCCR");
 
 	private int id;
 	private String name;

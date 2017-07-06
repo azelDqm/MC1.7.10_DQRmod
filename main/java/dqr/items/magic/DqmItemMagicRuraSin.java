@@ -18,7 +18,9 @@ import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.world.World;
 import dqr.DQR;
 import dqr.DqrWorldData;
+import dqr.PacketHandler;
 import dqr.api.enums.EnumColor;
+import dqr.api.enums.EnumDqmFuncPacketCode;
 import dqr.api.enums.EnumDqmMGToolMode;
 import dqr.api.enums.EnumDqmMagic;
 import dqr.api.enums.EnumDqmWeaponMode;
@@ -26,6 +28,7 @@ import dqr.api.event.DqrRuraEvent;
 import dqr.api.potion.DQPotionMinus;
 import dqr.entity.petEntity.DqmPetBase;
 import dqr.items.base.DqmItemMagicBase;
+import dqr.packetMessage.MessageServerFunction;
 import dqr.playerData.ExtendedPlayerProperties;
 import dqr.playerData.ExtendedPlayerProperties3;
 
@@ -78,18 +81,25 @@ public class DqmItemMagicRuraSin extends DqmItemMagicBase{
 	    			DqrWorldData wd = (DqrWorldData)par2World.loadItemData(DqrWorldData.class, DQR.modID);
 	    			int select = ExtendedPlayerProperties.get(par3EntityPlayer).getRuraSinSelectX(this);
 
-	    	        if (wd == null)
-	    	        {
-	    	        	wd = new DqrWorldData(DQR.modID);
-	    	        }
+	    			if(select == 9)
+    				{
+    					par3EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.magic.ruraMissSlot.txt",new Object[] {}));
+        				par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.pi", 1.0F, 1.0F);
+    				}else
+    				{
+		    	        if (wd == null)
+		    	        {
+		    	        	wd = new DqrWorldData(DQR.modID);
+		    	        }
 
-	    	        wd.setRuraSin(select, par3EntityPlayer.posX, par3EntityPlayer.posY, par3EntityPlayer.posZ, par3EntityPlayer.dimension, 1);
-	    	        par3EntityPlayer.addChatMessage(new ChatComponentTranslation("dqm.iteminfo.kimeraLoc.2.txt",new Object[] {par3EntityPlayer.dimension,
-	    	        		Math.floor(par3EntityPlayer.posX),
-	    	        		Math.floor(par3EntityPlayer.posY),
-	    	        		Math.floor(par3EntityPlayer.posZ)}));
-	    	        wd.markDirty();
-	    	        par2World.setItemData(DQR.modID, wd);
+		    	        wd.setRuraSin(select, par3EntityPlayer.posX, par3EntityPlayer.posY, par3EntityPlayer.posZ, par3EntityPlayer.dimension, 1);
+		    	        par3EntityPlayer.addChatMessage(new ChatComponentTranslation("dqm.iteminfo.kimeraLoc.2.txt",new Object[] {par3EntityPlayer.dimension,
+		    	        		Math.floor(par3EntityPlayer.posX),
+		    	        		Math.floor(par3EntityPlayer.posY),
+		    	        		Math.floor(par3EntityPlayer.posZ)}));
+		    	        wd.markDirty();
+		    	        par2World.setItemData(DQR.modID, wd);
+    				}
     			}
 
     	        par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.mira", 0.9F, 0.9F);
@@ -120,28 +130,48 @@ public class DqmItemMagicRuraSin extends DqmItemMagicBase{
     		    	        	wd = new DqrWorldData(DQR.modID);
     		    	        }
 
-    		    	        if(wd.getRuraSinEnable(select) == 0)
-    		    	        {
-    	        				par3EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.magic.RuraNoPos0.txt",new Object[] {}));
-    	        				par3EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.magic.RuraNoPos1.txt",new Object[] {}));
-    	        				par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.pi", 1.0F, 1.0F);
-    	        				return par1ItemStack;
-    		    	        }else if(wd.getRuraSinDim(select) != par3EntityPlayer.dimension)
-    		    	        {
-    	        				par3EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.magic.RuraNoDim.txt",new Object[] {}));
-    	        				par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.pi", 1.0F, 1.0F);
-    	        				return par1ItemStack;
-    		    	        }
 
-    		    	        ExtendedPlayerProperties.get(par3EntityPlayer).setMP(epMP - this.getEnumMagic().getMP());
     		    	        /*
     		    	        double setX = Math.floor(wd.getRuraSinX(xxx) - par3EntityPlayer.posX);
     		    	        double setY = Math.floor(wd.getRuraSinY(xxx) - par3EntityPlayer.posY);
     		    	        double setZ = Math.floor(wd.getRuraSinZ(xxx) - par3EntityPlayer.posZ);;
     		    	        */
-    		    	        double setX = Math.floor(wd.getRuraSinX(select));
-    		    	        double setY = Math.floor(wd.getRuraSinY(select));
-    		    	        double setZ = Math.floor(wd.getRuraSinZ(select));
+    		    	        double setX;
+    		    	        double setY;
+    		    	        double setZ;
+    		    	        int setDim;
+    		    	        int setEnable;
+
+    		    	        if(select != 9)
+    		    	        {
+    		    	        	setX = Math.floor(wd.getRuraSinX(select));
+    		    	        	setY = Math.floor(wd.getRuraSinY(select));
+    		    	        	setZ = Math.floor(wd.getRuraSinZ(select));
+    		    	        	setDim = wd.getRuraSinDim(select);
+    		    	        	setEnable = wd.getRuraSinEnable(select);
+    		    	        }else
+    		    	        {
+        		    	        setX = Math.floor(ExtendedPlayerProperties.get(par3EntityPlayer).getRuraSinX(9));
+        		    	        setY = Math.floor(ExtendedPlayerProperties.get(par3EntityPlayer).getRuraSinY(9));
+        		    	        setZ = Math.floor(ExtendedPlayerProperties.get(par3EntityPlayer).getRuraSinZ(9));
+        		    	        setDim = ExtendedPlayerProperties.get(par3EntityPlayer).getRuraSinDim(9);
+        		    	        setEnable = ExtendedPlayerProperties.get(par3EntityPlayer).getRuraSinEnable(9);
+    		    	        }
+
+    		    	        if(setEnable == 0)
+    		    	        {
+    	        				par3EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.magic.ruraNoPos0.txt",new Object[] {}));
+    	        				par3EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.magic.ruraNoPos1.txt",new Object[] {}));
+    	        				par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.pi", 1.0F, 1.0F);
+    	        				return par1ItemStack;
+    		    	        }else if(setDim != par3EntityPlayer.dimension)
+    		    	        {
+    	        				par3EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.magic.ruraNoDim.txt",new Object[] {}));
+    	        				par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.pi", 1.0F, 1.0F);
+    	        				return par1ItemStack;
+    		    	        }
+
+    		    	        ExtendedPlayerProperties.get(par3EntityPlayer).setMP(epMP - this.getEnumMagic().getMP());
 		    	        	//par3EntityPlayer.setPosition(Math.floor(wd.getRuraSinX(xxx)), Math.floor(wd.getRuraSinY(xxx)), Math.floor(wd.getRuraSinZ(xxx)));
     		    	        //par3EntityPlayer.moveEntity(0, 2, 0);
     		    	        //System.out.println(setX + "/" + setY + "/" + setZ);
@@ -153,6 +183,9 @@ public class DqmItemMagicRuraSin extends DqmItemMagicBase{
     							int getJukurenExp = 1 + ExtendedPlayerProperties.get(par3EntityPlayer).getJukurenExp(ExtendedPlayerProperties.get(par3EntityPlayer).getWeapon());
     							ExtendedPlayerProperties.get(par3EntityPlayer).setJukurenExp(ExtendedPlayerProperties.get(par3EntityPlayer).getWeapon(), getJukurenExp);
     						}
+
+    						//最後にルーラした場所登録
+    						ExtendedPlayerProperties.get(par3EntityPlayer).setRuraSin(9, par3EntityPlayer.posX, par3EntityPlayer.posY, par3EntityPlayer.posZ, par3EntityPlayer.dimension, 1);
 
     		    	        if(RuraSinMode != EnumDqmMGToolMode.RURAMODE0.getId())
     		    	        {
@@ -227,7 +260,7 @@ public class DqmItemMagicRuraSin extends DqmItemMagicBase{
     		    	        }
 
     		    	        par3EntityPlayer.setPositionAndUpdate(setX, setY + 0.5D, setZ);
-		    	        	par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.RuraSin", 1.0F, 1.0F);
+		    	        	par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.rura", 1.0F, 1.0F);
 
     		    	        //System.out.println(wd.getRuraSinDim(0) + "/" + wd.getRuraSinX(0) + "/" + wd.getRuraSinY(0) + "/" + wd.getRuraSinZ(0));
 
@@ -280,47 +313,76 @@ public class DqmItemMagicRuraSin extends DqmItemMagicBase{
     		ExtendedPlayerProperties3.get(p_77624_2_).tooltipShortRuraSin = !ExtendedPlayerProperties3.get(p_77624_2_).tooltipShortRuraSin;
     	}
 
+    	PacketHandler.INSTANCE.sendToServer(new MessageServerFunction(EnumDqmFuncPacketCode.SyncWRuraSin));
 
-    	//ExtendedPlayerProperties3.get(p_77624_2_).tooltipInfoFlg = true;
-    	//ExtendedPlayerProperties3
-    	//System.out.println("IsSneak:" + p_77624_2_.isSneaking());
-    	//PacketHandler.INSTANCE.sendToServer(new MessageServerFunction(EnumDqmFuncPacketCode.SyncWRuraSin));
+    	int select = ExtendedPlayerProperties.get(p_77624_2_).getRuraSinSelectX(this);
 
-    	//System.out.println(settings.isKeyDown(settings.keyBindSneak));
-    	/*
-    	if(ExtendedPlayerProperties3.get(p_77624_2_).getW_RuraSinEnable(xxx) != 0)
-    	{
-	    	int setDim = (int)ExtendedPlayerProperties3.get(p_77624_2_).getW_RuraSinDim(xxx);
-	        double setX = Math.floor(ExtendedPlayerProperties3.get(p_77624_2_).getW_RuraSinX(xxx));
-	        double setY = Math.floor(ExtendedPlayerProperties3.get(p_77624_2_).getW_RuraSinY(xxx));
-	        double setZ = Math.floor(ExtendedPlayerProperties3.get(p_77624_2_).getW_RuraSinZ(xxx));
-	    	p_77624_3_.add(EnumColor.Gold.getChatColor() + I18n.format("dqm.iteminfo.kimeraLoc.1.txt", new Object[]{setDim, setX, setY, setZ}));
-    	}
-    	*/
+    	String sneakKey = GameSettings.getKeyDisplayString(settings.keyBindSneak.getKeyCode());
 
     	if(ExtendedPlayerProperties3.get(p_77624_2_).tooltipShortRuraSin)
     	{
-    		p_77624_3_.add("できたよ！！！");
+    		p_77624_3_.add(EnumColor.Gold.getChatColor() + I18n.format("dqm.iteminfo.RurasinLocHid.txt", new Object[]{sneakKey}));
+    		//p_77624_3_.add("できたよ！！！");
     	}else
     	{
-    		p_77624_3_.add("てすとよ！！！");
+    		for(int cnt = 0;cnt < 9; cnt++)
+    		{
+	        	if(ExtendedPlayerProperties3.get(p_77624_2_).getW_RuraSinEnable(cnt) != 0)
+	        	{
+	    	    	int setDim = (int)ExtendedPlayerProperties3.get(p_77624_2_).getW_RuraSinDim(cnt);
+	    	        double setX = Math.floor(ExtendedPlayerProperties3.get(p_77624_2_).getW_RuraSinX(cnt));
+	    	        double setY = Math.floor(ExtendedPlayerProperties3.get(p_77624_2_).getW_RuraSinY(cnt));
+	    	        double setZ = Math.floor(ExtendedPlayerProperties3.get(p_77624_2_).getW_RuraSinZ(cnt));
+	    	    	p_77624_3_.add(EnumColor.Gold.getChatColor() + I18n.format("dqm.iteminfo.RurasinLoc.txt", new Object[]{(cnt + 1), setDim, setX, setY, setZ}));
+	        	}else
+	        	{
+	        		p_77624_3_.add(EnumColor.Gold.getChatColor() + I18n.format("dqm.iteminfo.RurasinNoLoc.txt", new Object[]{(cnt + 1)}));
+	        	}
+    		}
+
+    		if(ExtendedPlayerProperties.get(p_77624_2_).getRuraSinEnable(9) != 0)
+        	{
+    	    	int setDim = (int)ExtendedPlayerProperties.get(p_77624_2_).getRuraSinDim(9);
+    	        double setX = Math.floor(ExtendedPlayerProperties.get(p_77624_2_).getRuraSinX(9));
+    	        double setY = Math.floor(ExtendedPlayerProperties.get(p_77624_2_).getRuraSinY(9));
+    	        double setZ = Math.floor(ExtendedPlayerProperties.get(p_77624_2_).getRuraSinZ(9));
+    	    	p_77624_3_.add(EnumColor.Gold.getChatColor() + I18n.format("dqm.iteminfo.RurasinLastLoc.txt", new Object[]{setDim, setX, setY, setZ}));
+        	}else
+        	{
+        		p_77624_3_.add(EnumColor.Gold.getChatColor() + I18n.format("dqm.iteminfo.RurasinLastNoLoc.txt", new Object[]{}));
+        	}
+    		/*
+        	if(ExtendedPlayerProperties3.get(p_77624_2_).getW_RuraSinEnable(9) != 0)
+        	{
+    	    	int setDim = (int)ExtendedPlayerProperties3.get(p_77624_2_).getW_RuraSinDim(9);
+    	        double setX = Math.floor(ExtendedPlayerProperties3.get(p_77624_2_).getW_RuraSinX(9));
+    	        double setY = Math.floor(ExtendedPlayerProperties3.get(p_77624_2_).getW_RuraSinY(9));
+    	        double setZ = Math.floor(ExtendedPlayerProperties3.get(p_77624_2_).getW_RuraSinZ(9));
+    	    	p_77624_3_.add(EnumColor.Gold.getChatColor() + I18n.format("dqm.iteminfo.RurasinLastLoc.txt", new Object[]{setDim, setX, setY, setZ}));
+        	}else
+        	{
+        		p_77624_3_.add(EnumColor.Gold.getChatColor() + I18n.format("dqm.iteminfo.RurasinLastNoLoc.txt", new Object[]{}));
+        	}
+        	*/
+
+        	p_77624_3_.add(EnumColor.Gold.getChatColor() + I18n.format("dqm.iteminfo.RurasinLocVis.txt", new Object[]{sneakKey}));
     	}
 
-
-
     	p_77624_3_.add("");
-    	String message = I18n.format("dqm.magicinfo.Rura.txt", new Object[]{});
+    	String message = I18n.format("dqm.magicinfo.rura.txt", new Object[]{});
     	String[] addLine = message.split("＄");
     	for(int cnt = 0; cnt < addLine.length; cnt++)
     	{
     		p_77624_3_.add(EnumColor.Aqua.getChatColor() + addLine[cnt]);
     	}
-    	p_77624_3_.add("");
 
-    	message = I18n.format("dqm.magicinfo.Rura_all.txt", new Object[]{});
+    	message = I18n.format("dqm.magicinfo.rura_all.txt", new Object[]{});
     	p_77624_3_.add(EnumColor.Aqua.getChatColor() + message);
 
-    	p_77624_3_.add(I18n.format("dqm.magicinfo.noimplemented"));
+    	message = I18n.format("dqm.magicinfo.rura_sin.txt", new Object[]{});
+    	p_77624_3_.add(EnumColor.Aqua.getChatColor() + message);
+
+    	//p_77624_3_.add(I18n.format("dqm.magicinfo.noimplemented"));
 
     }
 }

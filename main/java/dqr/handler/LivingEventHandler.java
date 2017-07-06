@@ -524,7 +524,7 @@ public class LivingEventHandler {
 
 		            //ThreadLvUp lvup = new ThreadLvUp(killer);
 		            //lvup.start();
-		            if(DQR.conf.cfg_NoThreadUse == 1)
+		            if(DQR.conf.cfg_NoThreadUse != 1)
 		            {
 		            	ThreadLvUp lvup = new ThreadLvUp(killer);
 		            	lvup.start();
@@ -690,7 +690,8 @@ public class LivingEventHandler {
     			//2秒処理
         		if(event.entityLiving.ticksExisted % 41 == 0)
         		{
-
+        			ExtendedPlayerProperties.get(ep).setPlayerName(ep.getCommandSenderName());
+        			ExtendedPlayerProperties.get(ep).setPlayerUUID(ep.getUniqueID().toString());
         		}
 
 
@@ -1009,6 +1010,7 @@ public class LivingEventHandler {
 	    				}
 			    	}
     			}
+    			subEquip.markDirty();
 		    	subEquip.closeInventory();
 			}
 

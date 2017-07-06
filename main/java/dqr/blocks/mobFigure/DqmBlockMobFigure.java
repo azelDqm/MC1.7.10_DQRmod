@@ -972,6 +972,9 @@ public class DqmBlockMobFigure extends BlockContainer
     	}else if(this == DQMobFigures.BlockFigureOrutega)
     	{
     		return new DqmTileEntityFigureOrutega();
+    	}else if(this == DQMobFigures.BlockFigureWhitepan2)
+    	{
+    		return new DqmTileEntityFigureWhitepan2();
     	}
 
     	return new DqmTileEntityFigureSura();

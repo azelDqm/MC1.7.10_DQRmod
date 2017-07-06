@@ -1,6 +1,7 @@
 package dqr.blocks;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockQuartz;
 import net.minecraft.block.material.Material;
 import dqr.DQR;
 import dqr.api.Blocks.DQBlocks;
@@ -8,11 +9,13 @@ import dqr.api.Blocks.DQChests;
 import dqr.api.Blocks.DQDecorates;
 import dqr.api.Blocks.DQOres;
 import dqr.api.Blocks.DQPlants;
+import dqr.api.Blocks.DQSekizous;
 import dqr.blocks.base.DqmBlockBase;
 import dqr.blocks.base.DqmBlockBase2;
 import dqr.blocks.base.DqmBlockOreBase;
 import dqr.blocks.base.DqmBlockOreBlockBase;
 import dqr.blocks.base.DqmBlockSeedBase;
+import dqr.blocks.chest.DqmBlockChest;
 import dqr.blocks.chest.DqmBlockEnderChest;
 import dqr.blocks.decorate.DqmBlockAkumanotubo;
 import dqr.blocks.decorate.DqmBlockAkumanotubo2;
@@ -26,6 +29,8 @@ import dqr.blocks.decorate.DqmBlockBlockSwordMob;
 import dqr.blocks.decorate.DqmBlockBlockTue;
 import dqr.blocks.decorate.DqmBlockBouguya;
 import dqr.blocks.decorate.DqmBlockBukiya;
+import dqr.blocks.decorate.DqmBlockCasinoAbg1;
+import dqr.blocks.decorate.DqmBlockCasinoSlot1;
 import dqr.blocks.decorate.DqmBlockDaiza;
 import dqr.blocks.decorate.DqmBlockDouguya;
 import dqr.blocks.decorate.DqmBlockEntotu;
@@ -86,6 +91,7 @@ import dqr.blocks.decorate.DqmBlockYajirusisita;
 import dqr.blocks.decorate.DqmBlockYajirusiue;
 import dqr.blocks.decorate.DqmFarmBookshelf;
 import dqr.blocks.mobSpawner.DqmBlockMobSpawner;
+import dqr.blocks.sekizou.DqmBlockSekizou;
 import dqr.blocks.standard.DQmBlockWaterBlock;
 import dqr.blocks.standard.DqmBlockBuildFrame;
 import dqr.blocks.standard.DqmGansekiBlock;
@@ -110,6 +116,7 @@ import dqr.blocks.standard.DqmOneBlock2;
 import dqr.blocks.standard.DqmSetBlock1;
 import dqr.blocks.standard.DqmSyoumetu;
 import dqr.blocks.standard.DqmToramanaYuka;
+
 
 public class DqBlock {
 
@@ -340,7 +347,8 @@ public class DqBlock {
     	DQBlocks.DqmBlockHako13 = new DqmHakoBlock13().setBlockName("dqm.blockHakoBlock13").setHardness(10.0f).setStepSound(Block.soundTypeWood).setCreativeTab(DQR.tabs.DqmTabBlock).setBlockTextureName("dqr:DqmHakoBlock13");
     	DQBlocks.DqmBlockHakoK = new DqmHakoBlockK().setBlockName("dqm.blockHakoHakoK").setHardness(0.5f).setStepSound(Block.soundTypeWood).setCreativeTab(DQR.tabs.DqmTabBlock).setBlockTextureName("dqr:HakoK");
     	//ダメージ床
-    	DQBlocks.DqmBlockToramanaYuka = new DqmToramanaYuka().setBlockName("dqm.blockToramanaYuka").setBlockUnbreakable().setResistance(2000.0F).setStepSound(Block.soundTypeGlass).setCreativeTab(DQR.tabs.DqmTabBlock).setBlockTextureName("dqr:ToramanaYuka");;
+    	DQBlocks.DqmBlockToramanaYuka = new DqmToramanaYuka().setBlockName("dqm.blockToramanaYuka").setBlockUnbreakable().setResistance(2000.0F).setStepSound(Block.soundTypeGlass).setCreativeTab(DQR.tabs.DqmTabBlock).setBlockTextureName("dqr:ToramanaYuka");
+    	DQBlocks.DqmBlockToramanaYuka2 = new DqmToramanaYuka().setBlockName("dqm.blockToramanaYuka").setHardness(10.0f).setResistance(2000.0F).setStepSound(Block.soundTypeGlass).setCreativeTab(DQR.tabs.DqmTabBlock).setBlockTextureName("dqr:ToramanaYuka");;
     	DQBlocks.DqmBlockN = new DqmKyouseiMoveBlock(0).setBlockName("dqm.blockN").setHardness(3.0f).setResistance(2000.0F).setStepSound(Block.soundTypeStone).setCreativeTab(DQR.tabs.DqmTabBlock).setBlockTextureName("dqr:KyouseiMoveN");
     	DQBlocks.DqmBlockS = new DqmKyouseiMoveBlock(1).setBlockName("dqm.blockS").setHardness(3.0f).setResistance(2000.0F).setStepSound(Block.soundTypeStone).setCreativeTab(DQR.tabs.DqmTabBlock).setBlockTextureName("dqr:KyouseiMoveS");
     	DQBlocks.DqmBlockW = new DqmKyouseiMoveBlock(3).setBlockName("dqm.blockW").setHardness(3.0f).setResistance(2000.0F).setStepSound(Block.soundTypeStone).setCreativeTab(DQR.tabs.DqmTabBlock).setBlockTextureName("dqr:KyouseiMoveW");
@@ -439,5 +447,26 @@ public class DqBlock {
 
     	DQPlants.BlockWaterBlock = new DQmBlockWaterBlock(Material.water).setBlockName("dqm.blockWaterBlock").setHardness(5.0f).setResistance(2000.0F).setStepSound(Block.soundTypeGlass).setCreativeTab(DQR.tabs.DqmTabBlock).setBlockTextureName("dqr:water_flow");
     	DQPlants.BlockWaterBlockLight = new DQmBlockWaterBlock(Material.water).setLightLevel(1.0F).setBlockName("dqm.blockWaterBlockLight").setHardness(5.0f).setResistance(2000.0F).setStepSound(Block.soundTypeGlass).setCreativeTab(DQR.tabs.DqmTabBlock).setBlockTextureName("dqr:water_flow");
+
+    	DQChests.DqmChest = new DqmBlockChest(0).setHardness(2.5F).setStepSound(Block.soundTypeWood).setBlockName("dqm.chest").setCreativeTab(DQR.tabs.DqmTabBackPack);
+    	DQBlocks.DqmQuartzBlock = new BlockQuartz().setStepSound(Block.soundTypePiston).setHardness(0.8F).setBlockName("dqm.quartzBlock").setBlockTextureName("quartz_block").setCreativeTab(DQR.tabs.DqmTabBlock);
+
+    	//DQSekizous.BlockSekizouZoma = new BlockQuartz().setStepSound(Block.soundTypePiston).setHardness(0.8F).setBlockName("dqm.quartzBlock").setBlockTextureName("quartz_block").setCreativeTab(DQR.tabs.DqmTabBlock);
+    	DQSekizous.BlockSekizouZoma = new DqmBlockSekizou(Material.ground, 1, "zoma").setBlockName("blockSekizouZoma").setStepSound(Block.soundTypeGlass).setHardness(7.0f).setCreativeTab(DQR.tabs.DqmTabMobObj).setBlockTextureName("dqr:ObjUnknown");
+    	DQSekizous.BlockSekizouDesupisaro1 = new DqmBlockSekizou(Material.ground, 1, "desupisaro").setBlockName("blockSekizouDesupisaro1").setStepSound(Block.soundTypeGlass).setHardness(0.2f).setCreativeTab(DQR.tabs.DqmTabMobObj).setBlockTextureName("dqr:ObjUnknown");
+    	DQSekizous.BlockSekizouEsterk = new DqmBlockSekizou(Material.ground, 1, "esterk").setBlockName("blockSekizouEsterk").setStepSound(Block.soundTypeGlass).setHardness(7.0f).setCreativeTab(DQR.tabs.DqmTabMobObj).setBlockTextureName("dqr:ObjUnknown");
+    	DQSekizous.BlockSekizouMasterdoragon = new DqmBlockSekizou(Material.ground, 1, "masterdoragon").setBlockName("blockSekizouMasterdoragon").setStepSound(Block.soundTypeGlass).setHardness(7.0f).setCreativeTab(DQR.tabs.DqmTabMobObj).setBlockTextureName("dqr:ObjUnknown");
+    	DQSekizous.BlockSekizouRyuuou = new DqmBlockSekizou(Material.ground, 1, "ryuuou").setBlockName("blockSekizouRyuuou").setStepSound(Block.soundTypeGlass).setHardness(7.0f).setCreativeTab(DQR.tabs.DqmTabMobObj).setBlockTextureName("dqr:ObjUnknown");
+    	DQSekizous.BlockSekizouDarkRamia = new DqmBlockSekizou(Material.ground, 1, "darkramia").setBlockName("blockSekizouDarkRamia").setStepSound(Block.soundTypeGlass).setHardness(7.0f).setCreativeTab(DQR.tabs.DqmTabMobObj).setBlockTextureName("dqr:ObjUnknown");
+
+    	DQSekizous.BlockSekizouZomaNo = new DqmBlockSekizou(Material.ground, 0, null).setBlockName("blockSekizouZomaNo").setStepSound(Block.soundTypeGlass).setHardness(0.2f).setCreativeTab(DQR.tabs.DqmTabMobObj).setBlockTextureName("dqr:ObjUnknown");
+    	DQSekizous.BlockSekizouDesupisaro1No = new DqmBlockSekizou(Material.ground, 0, null).setBlockName("blockSekizouDesupisaro1No").setStepSound(Block.soundTypeGlass).setHardness(0.2f).setCreativeTab(DQR.tabs.DqmTabMobObj).setBlockTextureName("dqr:ObjUnknown");
+    	DQSekizous.BlockSekizouEsterkNo = new DqmBlockSekizou(Material.ground, 0, null).setBlockName("blockSekizouEsterkNo").setStepSound(Block.soundTypeGlass).setHardness(0.2f).setCreativeTab(DQR.tabs.DqmTabMobObj).setBlockTextureName("dqr:ObjUnknown");
+    	DQSekizous.BlockSekizouMasterdoragonNo = new DqmBlockSekizou(Material.ground, 0, null).setBlockName("blockSekizouMasterdoragonNo").setStepSound(Block.soundTypeGlass).setHardness(0.2f).setCreativeTab(DQR.tabs.DqmTabMobObj).setBlockTextureName("dqr:ObjUnknown");
+    	DQSekizous.BlockSekizouRyuuouNo = new DqmBlockSekizou(Material.ground, 0, null).setBlockName("blockSekizouRyuuouNo").setStepSound(Block.soundTypeGlass).setHardness(0.2f).setCreativeTab(DQR.tabs.DqmTabMobObj).setBlockTextureName("dqr:ObjUnknown");
+    	DQSekizous.BlockSekizouDarkRamiaNo = new DqmBlockSekizou(Material.ground, 0, null).setBlockName("blockSekizouDarkRamiaNo").setStepSound(Block.soundTypeGlass).setHardness(0.2f).setCreativeTab(DQR.tabs.DqmTabMobObj).setBlockTextureName("dqr:ObjUnknown");
+
+    	DQDecorates.DqmBlockCasinoSlot1 = new DqmBlockCasinoSlot1(Material.iron).setBlockName("blockCasinoSlot1").setStepSound(Block.soundTypeGlass).setHardness(1.0f).setCreativeTab(DQR.tabs.DqmTabDecorate).setBlockTextureName("dqr:KajinoA3");
+    	DQDecorates.DqmBlockCasinoAbg1 = new DqmBlockCasinoAbg1(Material.iron).setBlockName("blockCasinoAbg1").setStepSound(Block.soundTypeGlass).setHardness(1.0f).setCreativeTab(DQR.tabs.DqmTabDecorate).setBlockTextureName("dqr:KajinoB3");
 	}
 }

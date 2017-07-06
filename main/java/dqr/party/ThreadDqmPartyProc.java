@@ -26,7 +26,7 @@ public class ThreadDqmPartyProc extends Thread{
 
 	public void run()
 	{
-
+		MinecraftServer minecraftserver = MinecraftServer.getServer();
 		//int cnt = 0;
 		while(true)
 		{
@@ -52,7 +52,9 @@ public class ThreadDqmPartyProc extends Thread{
 					//System.out.println("TEST : " + key.getCommandSenderName());
 					if(key instanceof EntityPlayer)
 					{
-						EntityPlayer xEp = (EntityPlayer)key;
+						//System.out.println("TEST : " + key.getCommandSenderName());
+						//EntityPlayer xEp = (EntityPlayer)key;
+						EntityPlayer xEp = minecraftserver.getConfigurationManager().func_152612_a(key.getCommandSenderName());
 						boolean flgLeader = DQR.partyManager.isPartyLeader(xEp);
 						sideNBT.setInteger("sHP", (int)ExtendedPlayerProperties.get(xEp).getHP());
 						sideNBT.setInteger("sMaxHP", (int)ExtendedPlayerProperties.get(xEp).getMaxHP());
@@ -98,7 +100,7 @@ public class ThreadDqmPartyProc extends Thread{
 					{
 						if(key instanceof EntityPlayer)
 						{
-							MinecraftServer minecraftserver = MinecraftServer.getServer();
+
 							//System.out.println("TEST : " + key.getCommandSenderName());
 							cntPlayer++;
 							//EntityPlayer rEp = (EntityPlayer)key;

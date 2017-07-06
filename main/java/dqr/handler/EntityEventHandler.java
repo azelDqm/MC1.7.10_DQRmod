@@ -1,11 +1,16 @@
 package dqr.handler;
 
+import java.util.Iterator;
 import java.util.Random;
+import java.util.Set;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.RegistryNamespaced;
 import net.minecraftforge.event.entity.player.EntityInteractEvent;
 import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
 import cpw.mods.fml.common.eventhandler.EventPriority;
@@ -127,31 +132,37 @@ public class EntityEventHandler {
 
 		if(event.item.getEntityItem() != null && !(event.item.getEntityItem().getItem() instanceof DqmItemFukuroBase) && !ExtendedPlayerProperties2.get(ep).getFukuroOpen())
 		{
-	    	InventorySubEquip subEquip = new InventorySubEquip(ep);
-	    	subEquip.openInventory();
 
-	    	if(subEquip != null && subEquip.getStackInSlot(12) != null)
-	    	{
-	    		ItemStack bag = subEquip.getStackInSlot(12);
-	    		InventoryItemBag bagInventory = new InventoryItemBag(ep.inventory, bag);
-	    		bagInventory.openInventory();
+			if(this.checkBagIn(event.item.getEntityItem()))
+			{
+		    	InventorySubEquip subEquip = new InventorySubEquip(ep);
+		    	subEquip.openInventory();
 
-	    		if(event.item.getEntityItem() != null && bagInventory.addItemStackToInventory(event.item.getEntityItem()))
-	    		{
-	    			Random rand = new Random();
-	        		bagInventory.closeInventory2(subEquip);
+		    	if(subEquip != null && subEquip.getStackInSlot(12) != null)
+		    	{
+		    		ItemStack bag = subEquip.getStackInSlot(12);
+		    		InventoryItemBag bagInventory = new InventoryItemBag(ep.inventory, bag);
+		    		bagInventory.openInventory();
 
-	        		if(!ep.worldObj.isRemote) ep.worldObj.playSoundAtEntity(ep, "random.pop", 0.2F, ((rand.nextFloat() - rand.nextFloat()) * 0.7F + 1.0F) * 2.0F);
-	            	//ep.worldObj.playSoundAtEntity(ep, "random.pop", 0.2F, ((rand.nextFloat() - rand.nextFloat()) * 0.7F + 1.0F) * 2.0F);
-	            	PacketHandler.INSTANCE.sendTo(new MessageClientSound((byte)3), (EntityPlayerMP)ep);
+		    		if(event.item.getEntityItem() != null && bagInventory.addItemStackToInventory(event.item.getEntityItem()))
+		    		{
+		    			Random rand = new Random();
+		    			bagInventory.markDirty();
+		        		bagInventory.closeInventory2(subEquip);
 
-	    			event.item.setDead();
-	    			event.setCanceled(true);
-	    			return;
-	    		}
-	    		bagInventory.closeInventory2(subEquip);
+		        		if(!ep.worldObj.isRemote) ep.worldObj.playSoundAtEntity(ep, "random.pop", 0.2F, ((rand.nextFloat() - rand.nextFloat()) * 0.7F + 1.0F) * 2.0F);
+		            	//ep.worldObj.playSoundAtEntity(ep, "random.pop", 0.2F, ((rand.nextFloat() - rand.nextFloat()) * 0.7F + 1.0F) * 2.0F);
+		            	PacketHandler.INSTANCE.sendTo(new MessageClientSound((byte)3), (EntityPlayerMP)ep);
 
-	    	}
+		    			event.item.setDead();
+		    			event.setCanceled(true);
+		    			return;
+		    		}
+		    		bagInventory.markDirty();
+		    		bagInventory.closeInventory2(subEquip);
+
+		    	}
+			}
 		}
 
 	}
@@ -214,5 +225,80 @@ public class EntityEventHandler {
 				}
 			}
 		}
+	}
+
+	public boolean checkBagIn(ItemStack stack)
+	{
+		boolean ret = true;
+
+		if(stack != null)
+		{
+			if(stack.getTagCompound() != null)
+			{
+				//System.out.println("TEST?????2 : ");
+				NBTTagCompound nbt = stack.getTagCompound();
+
+				Set set = nbt.func_150296_c();
+				for (Iterator itr = set.iterator(); itr.hasNext();)
+				{
+					Object obj = itr.next();
+					//System.out.println("TEST????? : " + (obj instanceof String));
+					if(obj instanceof String && ((String)obj).equalsIgnoreCase("Items"))
+					{
+						//System.out.println("TEST?????5 : ");
+						return false;
+					}
+				}
+				//System.out.println("TEST?????4 : ");
+				if(nbt != null && nbt.func_150296_c().size() > DQR.conf.fukuroLimitTagCount && DQR.conf.fukuroLimitTagCount > 0)
+				{
+					//System.out.println("LINT1");
+					return false;
+				}
+
+
+			}
+
+
+	    	RegistryNamespaced rnb = Block.blockRegistry;
+	    	RegistryNamespaced rni = Item.itemRegistry;
+
+//	    	System.out.println("LINT1" + rni.getNameForObject(stack.getItem()));
+	    	for(int cnt = 0; cnt < DQR.conf.fukuroRejectItems.length; cnt++)
+	    	{
+	    		try
+	    		{
+	    			Block blc = (Block)rnb.getObject(DQR.conf.fukuroRejectItems[cnt].trim().replace(" ", ""));
+
+	    			if(blc != null)
+	    			{
+	    				if(stack.getItem() == Item.getItemFromBlock(blc))
+	    				{
+	    					return false;
+	    				}
+	    			}
+	    		}catch (Exception e){}
+	    	}
+
+	    	for(int cnt = 0; cnt < DQR.conf.fukuroRejectItems.length; cnt++)
+	    	{
+	    		try
+	    		{
+	    			Item itm = (Item)rni.getObject(DQR.conf.fukuroRejectItems[cnt].trim().replace(" ", ""));
+	    			//System.out.println("LINT2");
+	    			if(itm != null)
+	    			{
+	    				if(stack.getItem() == itm)
+	    				{
+	    					//System.out.println("LINT3");
+	    					return false;
+	    				}
+	    			}
+	    		}catch (Exception e){}
+	    	}
+		}
+
+		return ret;
+
 	}
 }

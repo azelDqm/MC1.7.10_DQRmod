@@ -21,6 +21,7 @@ public class LivingDeathHandler {
 	        	InventorySubEquip inventory = new InventorySubEquip(ep);
 	        	inventory.openInventory();
 	        	inventory.dropAllItems(ep);
+	        	inventory.markDirty();
 	        	inventory.closeInventory();
 	        }
 	    }

@@ -8,6 +8,7 @@ import dqr.entity.throwingEntity.throwItem.ThrowItemEntityNiku;
 import dqr.entity.throwingEntity.throwItem.ThrowItemEntitySeisui;
 import dqr.entity.throwingEntity.throwItem.ThrowItemEntitySinkanohiseki;
 import dqr.entity.throwingEntity.throwing.ThrowingEntityBumeran;
+import dqr.entity.throwingEntity.throwing.ThrowingEntityFishHook;
 import dqr.entity.throwingEntity.throwing.ThrowingEntityHaipanova;
 import dqr.entity.throwingEntity.throwing.ThrowingEntityHaipanova2;
 import dqr.entity.throwingEntity.throwing.ThrowingEntityHonoonobumeran;
@@ -45,5 +46,6 @@ public class ThrowingRegister {
 		EntityRegistry.registerModEntity(ThrowItemEntityIshitubute.class, "dqr.ThrowItemEntityIshitubute", idxID + 15, DQR.instance, 128, 5, true);
 
 		EntityRegistry.registerModEntity(ThrowItemEntityIshitubute.class, "dqr.DqrArrow", idxID + 16, DQR.instance, 128, 5, true);
+		EntityRegistry.registerModEntity(ThrowingEntityFishHook.class, "dqr.ThrowingEntityFishHook", idxID + 17, DQR.instance, 64, 5, true);
 	}
 }

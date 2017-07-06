@@ -15,6 +15,7 @@ import dqr.DQR;
 import dqr.addons.mceconomy2.ComponentVillageBankMPHouse;
 import dqr.addons.mceconomy2.DqrEntityNPCBankMP;
 import dqr.addons.mceconomy2.VillageCreationHandleBankMP;
+import dqr.addons.tConstruct.FuncDropItemsHook;
 import dqr.addons.twilightForest.DqmItemTwilightFigureDummy;
 import dqr.addons.twilightForest.FuncRejectUncraft;
 import dqr.addons.twilightForest.FuncUncraftHook;
@@ -75,6 +76,9 @@ public class DqrAddon {
 
 	public static FuncRejectUncraft funcUncraft;
 	public static FuncUncraftHook funcUncraftHook;
+	public static FuncDropItemsHook funcDropItemsHook;
+
+
 	public static String[] rejectUncraft = new String[]
 			{
 				"DQMIIINext:ItemMegaminoinori0",
@@ -135,7 +139,9 @@ public class DqrAddon {
 				tconstIsEnable = cfg_addons.get("Addon enabler","addon for TinkersConstruct", 1 , "0:disable 1:enable").getInt();;
 				if(tconstIsEnable > 0)
 				{
+					funcDropItemsHook = new FuncDropItemsHook();
 					System.out.println("adding TinkersConstructAddon");
+
 				}
 			}
 
@@ -193,6 +199,7 @@ public class DqrAddon {
 				rejectUncraft  = cfg_addons.get("Advanced Settings (TwilightForest)","Reject list for TFUncraftingTable", rejectUncraft , "add Items (write format  modName:Itemname(1line 1item)   ex.  hogehoget:hogelog1)").getStringList();
 				funcUncraft = new FuncRejectUncraft();
 				funcUncraftHook = new FuncUncraftHook();
+
 
 
 				tasogareIsEnable = cfg_addons.get("Addon enabler","addon for TwilightForest", 1 , "0:disable 1:enable").getInt();

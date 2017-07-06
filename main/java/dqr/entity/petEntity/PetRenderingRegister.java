@@ -171,6 +171,7 @@ import dqr.entity.petEntity.petHell.DqmPetEntitySuraimumadyura;
 import dqr.entity.petEntity.petHell.DqmPetEntityTororuking;
 import dqr.entity.petEntity.petHell.DqmPetEntityTubokku;
 import dqr.entity.petEntity.petHell.DqmPetEntityUmibouzu;
+import dqr.entity.petEntity.petHell.DqmPetEntityWhitepan2;
 import dqr.entity.petEntity.petMetaru.DqmPetEntityDaiyamondosuraimu;
 import dqr.entity.petEntity.petMetaru.DqmPetEntityDragometaru;
 import dqr.entity.petEntity.petMetaru.DqmPetEntityGoldenmetalslime;
@@ -374,6 +375,7 @@ import dqr.entity.petEntity.render3.DqmRenderPetOrutega;
 import dqr.entity.petEntity.render3.DqmRenderPetShadopan;
 import dqr.entity.petEntity.render3.DqmRenderPetShadopan2;
 import dqr.entity.petEntity.render3.DqmRenderPetSuraimuemperor;
+import dqr.entity.petEntity.render3.DqmRenderPetWhitepan2;
 
 public class PetRenderingRegister {
 
@@ -701,5 +703,7 @@ public class PetRenderingRegister {
 
 		RenderingRegistry.registerEntityRenderingHandler(DqmPetEntityKandata.class, new DqmRenderPetKandata());
 		RenderingRegistry.registerEntityRenderingHandler(DqmPetEntityOrutega.class, new DqmRenderPetOrutega());
+
+		RenderingRegistry.registerEntityRenderingHandler(DqmPetEntityWhitepan2.class, new DqmRenderPetWhitepan2());
 	}
 }

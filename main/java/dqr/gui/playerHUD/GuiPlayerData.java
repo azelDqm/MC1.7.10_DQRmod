@@ -41,6 +41,7 @@ public class GuiPlayerData extends Gui
 		  return;
 		}
 
+
 	  //ScaledResolution sr = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
 	  //int w = sr.getScaledWidth();
 	  int padW = 2;
@@ -74,6 +75,13 @@ public class GuiPlayerData extends Gui
       EntityPlayer ep = DQR.proxy.getEntityPlayerInstance();
 
       if(ep == null)
+      {
+    	  return;
+      }
+
+      //System.out.println(ExtendedPlayerProperties.get(ep).getPlayerName());
+      //System.out.println(ep.getCommandSenderName());
+      if(!ep.getCommandSenderName().equalsIgnoreCase(ExtendedPlayerProperties.get(ep).getPlayerName()))
       {
     	  return;
       }

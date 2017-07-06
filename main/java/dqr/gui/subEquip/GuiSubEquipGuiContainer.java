@@ -132,6 +132,11 @@ public class GuiSubEquipGuiContainer extends InventoryEffectRenderer {
     }
 
     public static void func_147046_a(int p_147046_0_, int p_147046_1_, int p_147046_2_, float p_147046_3_, float p_147046_4_, EntityLivingBase p_147046_5_) {
+
+
+    	/*
+			p_147046_5_ =
+    	 */
         GL11.glEnable(GL11.GL_COLOR_MATERIAL);
         GL11.glPushMatrix();
         GL11.glTranslatef(p_147046_0_, p_147046_1_, 50.0F);

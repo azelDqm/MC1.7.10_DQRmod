@@ -14,6 +14,7 @@ import net.minecraft.world.gen.structure.StructureComponent;
 import net.minecraftforge.common.DungeonHooks;
 import dqr.DQR;
 import dqr.api.Blocks.DQBlocks;
+import dqr.api.Blocks.DQChests;
 import dqr.blocks.mobSpawner.tileEntity.DqmTileEntityMobSpawner;
 
 public class ComponentSpawnerRoomEnd extends StructureComponent {
@@ -31,7 +32,8 @@ public class ComponentSpawnerRoomEnd extends StructureComponent {
 
 	public ComponentSpawnerRoomEnd() {}
 
-	public ComponentSpawnerRoomEnd(int par1, Random par2Random, int par3, int par4) {
+	public ComponentSpawnerRoomEnd(int par1, Random par2Random2, int par3, int par4) {
+		Random par2Random = new Random();
 		// 東西南北の方向をランダムに決める
 		this.coordBaseMode = par2Random.nextInt(4);
 		int roomSize = par2Random.nextInt(3) * 2;
@@ -78,7 +80,8 @@ public class ComponentSpawnerRoomEnd extends StructureComponent {
 	}
 
 	@Override
-	public boolean addComponentParts(World world, Random random, StructureBoundingBox structureboundingbox) {
+	public boolean addComponentParts(World world, Random random2, StructureBoundingBox structureboundingbox) {
+		Random random = new Random();
 		// 建設予定範囲内に液体があった場合は建設中止
 
 		if(this.xWidth < 2 || this.zWidth < 2)
@@ -123,7 +126,7 @@ public class ComponentSpawnerRoomEnd extends StructureComponent {
 			{
 				int blockSet = random.nextInt(21);
 				int metaSet = 0;
-				Block blc = Blocks.quartz_block;
+				Block blc = DQBlocks.DqmQuartzBlock;
 				if(blockSet < 2)
 				{
 					blc = Blocks.end_stone;
@@ -154,7 +157,7 @@ public class ComponentSpawnerRoomEnd extends StructureComponent {
 			{
 				int blockSet = random.nextInt(21);
 				int metaSet = 0;
-				Block blc = Blocks.quartz_block;
+				Block blc = DQBlocks.DqmQuartzBlock;
 				if(blockSet < 2)
 				{
 					blc = Blocks.end_stone;
@@ -188,7 +191,7 @@ public class ComponentSpawnerRoomEnd extends StructureComponent {
 			{
 				int blockSet = random.nextInt(21);
 				int metaSet = 0;
-				Block blc = Blocks.quartz_block;
+				Block blc = DQBlocks.DqmQuartzBlock;
 				if(blockSet < 2)
 				{
 					blc = Blocks.end_stone;
@@ -270,7 +273,7 @@ public class ComponentSpawnerRoomEnd extends StructureComponent {
 
 		        	if(world.getTileEntity(offX, offY, offZ) == null)
 		        	{
-			        	world.setBlock(offX, offY, offZ, Blocks.chest, 0, 2);
+			        	world.setBlock(offX, offY, offZ, DQChests.DqmChest, 0, 2);
 			            TileEntityChest tileentitychest = (TileEntityChest)world.getTileEntity(offX, offY, offZ);
 
 			            if (tileentitychest != null)

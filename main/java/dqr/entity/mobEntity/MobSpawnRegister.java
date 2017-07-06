@@ -157,6 +157,7 @@ import dqr.entity.mobEntity.monsterHell.DqmEntitySuraimuhaitawa;
 import dqr.entity.mobEntity.monsterHell.DqmEntitySuraimumadyura;
 import dqr.entity.mobEntity.monsterHell.DqmEntityTororuking;
 import dqr.entity.mobEntity.monsterHell.DqmEntityUmibouzu;
+import dqr.entity.mobEntity.monsterHell.DqmEntityWhitepan2;
 import dqr.entity.mobEntity.monsterMetaru.DqmEntityDaiyamondosuraimu;
 import dqr.entity.mobEntity.monsterMetaru.DqmEntityDragometaru;
 import dqr.entity.mobEntity.monsterMetaru.DqmEntityHagumeta;
@@ -874,6 +875,7 @@ public class MobSpawnRegister {
 		this.addSpawn(DqmEntityEriminator.class, 20, 1, 2, DQR.dqmCreatureType.DqmMonster, nether);
 		this.addSpawn(DqmEntityDarkdoriado.class, 20, 1, 2, DQR.dqmCreatureType.DqmMonster, nether);
 		this.addSpawn(DqmEntityShadopan.class, 20, 1, 2, DQR.dqmCreatureType.DqmMonster, nether);
+		this.addSpawn(DqmEntityWhitepan2.class, 20, 1, 2, DQR.dqmCreatureType.DqmMonster, nether);
 
 		this.addSpawn(DqmEntityAkairai.class, 20, 1, 2, DQR.dqmCreatureType.DqmMonster, end);
 		this.addSpawn(DqmEntityBassaimasin.class, 20, 1, 2, DQR.dqmCreatureType.DqmMonster, end);

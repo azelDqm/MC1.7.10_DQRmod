@@ -3,6 +3,7 @@ package dqr.dataTable;
 import net.minecraft.item.ItemStack;
 import dqr.DQR;
 import dqr.api.Items.DQArmors;
+import dqr.api.Items.DQMagicTools;
 import dqr.api.Items.DQWeapons;
 import dqr.api.enums.EnumDqmAccessory;
 import dqr.items.interfaceBase.ISubEquip;
@@ -1922,6 +1923,29 @@ public class FuncSyuuriPriceTable
             return fixPrice;
         }
 
+        if (par1ItemStack.getItem() == DQMagicTools.itemDqrFishRod_Diamond)
+        {
+            fixPrice = 1000;
+            return fixPrice;
+        }
+
+        if (par1ItemStack.getItem() == DQMagicTools.itemDqrFishRod_Oriharukon)
+        {
+            fixPrice = 2000;
+            return fixPrice;
+        }
+
+        if (par1ItemStack.getItem() == DQMagicTools.itemDqrFishRod_Roto)
+        {
+            fixPrice = 4000;
+            return fixPrice;
+        }
+
+        if (par1ItemStack.getItem() == DQMagicTools.itemDqrFishRod_Densetu)
+        {
+            fixPrice = 20000;
+            return fixPrice;
+        }
         if(par1ItemStack.getItem() instanceof ISubEquip)
         {
         	EnumDqmAccessory param = DQR.enumGetter.getAccessoryParam(par1ItemStack.getItem());

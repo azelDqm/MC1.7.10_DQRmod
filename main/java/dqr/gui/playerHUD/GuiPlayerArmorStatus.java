@@ -272,8 +272,16 @@ public class GuiPlayerArmorStatus extends Gui
     		  itemRenderer.renderItemAndEffectIntoGUI(mc.fontRenderer, mc.getTextureManager(), ep.inventory.armorInventory[0], x+4, y5);
     		  itemRenderer.renderItemIntoGUI(mc.fontRenderer, mc.getTextureManager(), ep.inventory.armorInventory[0], x+4, y5);
     	  }
+
+
     	  RenderHelper.disableStandardItemLighting();
 
+    	  //GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+    	  //GL11.glEnd();
+    	  //GL11.glFinish();
+    	  //GL11.glFlush();
+
+    	  mc.fontRenderer.drawStringWithShadow("", 0,0, 0xffffffff);
     	  //RenderHelper.disableStandardItemLighting();
     	  /*
     	  GL11.glDisable(GL12.GL_RESCALE_NORMAL);

@@ -64,7 +64,7 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
 
     private int Gold;
     private int Medal;
-    private int Coin;
+    //private int Coin;
     private int KillCount;
     private int DeathCount;
 
@@ -115,6 +115,9 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
     private int MaxItemUserCnt = 0;
 
     private int preFoodLevel = -1;
+
+    private String playerName = null;
+    private String playerUUID = null;
 
 /*
     private int sampleInt = 0;
@@ -316,7 +319,7 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
 
         nbt.setInteger("Gold", this.Gold);
         nbt.setInteger("Medal", this.Medal);
-        nbt.setInteger("Coin", this.Coin);
+//        nbt.setInteger("Coin", this.Coin);
         nbt.setInteger("KillCount", this.KillCount);
         nbt.setInteger("DeathCount", this.DeathCount);
 
@@ -361,6 +364,15 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
         nbt.setTag("Items", itemsTagList);
          */
 
+        if(this.playerName != null)
+        {
+        	nbt.setString("playerName", this.playerName);
+        }
+
+        if(this.playerUUID != null)
+        {
+        	nbt.setString("playerUUID", this.playerUUID);
+        }
         compound.setTag(EXT_PROP_NAME, nbt);
     }
 
@@ -542,7 +554,7 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
 
         this.Gold = nbt.getInteger("Gold");
         this.Medal = nbt.getInteger("Medal");
-        this.Coin = nbt.getInteger("Coin");
+//        this.Coin = nbt.getInteger("Coin");
         this.KillCount = nbt.getInteger("KillCount");
         this.DeathCount = nbt.getInteger("DeathCount");
 
@@ -561,6 +573,10 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
         {
         	rarihoLoc[cnt] = nbt.getDouble("rarihoLoc_" + cnt);
         }
+
+        this.playerName = nbt.getString("playerName");
+        this.playerUUID = nbt.getString("playerUUID");
+
         /*
         this.sampleInt = nbt.getInteger("sampleInt");
         this.sampleDouble = nbt.getDouble("sampleDouble");
@@ -1097,12 +1113,14 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
         this.Medal = par1;
     }
 
+    /*
     public int getCoin() {
         return Coin;
     }
     public void setCoin(int par1) {
         this.Coin = par1;
     }
+    */
 
     public int getKillCount() {
         return KillCount;
@@ -1241,7 +1259,6 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
     	{
     		this.RuraSinSelectC = par1;
     	}
-
     }
 
     public int getRuraSinSelect()
@@ -1492,6 +1509,20 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
     }
     public void setPreFoodLevel(int par1) {
         this.preFoodLevel = par1;
+    }
+
+    public String getPlayerName() {
+        return this.playerName;
+    }
+    public void setPlayerName(String par1) {
+        this.playerName = par1;
+    }
+
+    public String getPlayerUUID() {
+        return this.playerUUID;
+    }
+    public void setPlayerUUID(String par1) {
+        this.playerUUID = par1;
     }
     /*
     public int getSampleInt() {

@@ -114,7 +114,10 @@ public class ExtendedPlayerProperties2 implements IExtendedEntityProperties {
         nbt.setInteger("ToolBreak2Area", ToolBreak2Area);
         nbt.setInteger("BreakBlockMode", BreakBlockMode);
 
-        nbt.setString("PlayerName", PlayerName);
+        if(PlayerName != null)
+        {
+        	nbt.setString("PlayerName", PlayerName);
+        }
 
         nbt.setTag("enderChestTagList1", enderChestTagList1);
         nbt.setTag("enderChestTagList2", enderChestTagList2);

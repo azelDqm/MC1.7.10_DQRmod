@@ -1,5 +1,6 @@
 package dqr.items.base;
 
+import java.text.NumberFormat;
 import java.util.List;
 import java.util.Map;
 
@@ -423,12 +424,23 @@ public class DqmItemBowBase extends ItemBow{
     	NBTTagCompound nbt = p_77624_1_.getTagCompound();
     	if(nbt != null)
     	{
+    		NumberFormat nfNum = NumberFormat.getNumberInstance();
     		int medalVal = nbt.getInteger("medalking");
     		//System.out.println("TEST:" + medalVal);
     		if(medalVal > 0)
     		{
 
         		String medalValue = I18n.format("msg.medalking.item.txt", new Object[]{medalVal});
+
+    			p_77624_3_.add(medalValue);
+    		}
+
+    		int coinVal = nbt.getInteger("casinocoin");
+    		//System.out.println("TEST:" + medalVal);
+    		if(coinVal > 0)
+    		{
+
+        		String medalValue = I18n.format("msg.casinocoin.item.txt", new Object[]{nfNum.format(coinVal)});
 
     			p_77624_3_.add(medalValue);
     		}

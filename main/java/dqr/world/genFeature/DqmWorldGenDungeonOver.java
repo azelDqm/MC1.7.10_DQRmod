@@ -18,8 +18,10 @@ public class DqmWorldGenDungeonOver extends WorldGenerator
 
     private static final String __OBFID = "CL_00000425";
 
-    public boolean generate(World world, Random random, int xPos, int yPos, int zPos)
+    public boolean generate(World world, Random random2, int xPos, int yPos, int zPos)
     {
+    	Random random = new Random();
+
 		int xWidth = 6 + random.nextInt(3) * 2;
 		int zWidth = 6 + random.nextInt(3) * 2;
 

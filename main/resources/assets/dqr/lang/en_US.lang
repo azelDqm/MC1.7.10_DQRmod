@@ -64,6 +64,7 @@ msg.fromDamage.PlayerSkill.txt=%d damage cause Player Skill
 msg.fromDamage.PlayerSkillCri.txt=%d damage cause Player Skill
 msg.fromDamage.DqmDamageBlock.txt=%d damage from DamageTile;
 
+death.attack.PlayerSpcial=Killed by player special power
 death.attack.DqmDamageBlock=Dead on DamageTile
 msg.fromDamageNo2.txt=%2ddamage from %1s
 msg.fromDamage2.txt=%2ddamage from %1s
@@ -108,6 +109,8 @@ msg.magic.ruraNoPos0.txt=not set Coordinates.
 msg.magic.ruraNoPos1.txt=please set Coordinates first.
 msg.magic.ruraNoDim.txt=Can not jump to other dimensions.
 msg.magic.ruraNoPerm.txt=You don't have permission. can't change Coordinates
+msg.magic.ruraMissSlot.txt=Can not set coordinate this slot!
+
 msg.magic.callcloud.clear=!player.%s : set Fine
 msg.magic.callcloud.rain=!player.%s : set Rain
 msg.magic.callcloud.thunder=!player.%s : setThunder
@@ -137,6 +140,9 @@ amplider.level.12=XII
 amplider.level.13=XIII
 amplider.level.14=XIV
 amplider.level.15=XV
+amplider.level.16=XVI
+amplider.level.17=XVII
+amplider.level.18=XVIII
 
 gui.pet.status.name=%s 
 gui.pet.status.EXP=Lv.%1$d  EXP %2$d / %3$d
@@ -200,8 +206,13 @@ gui.position.guiname.3=ArmorStatus
 gui.position.guiname.4=PlayerLog
 gui.position.guiname.5=medal/coin
 gui.position.guiname.6=PotionEffect
+gui.position.guiname.7=PartyStatus
 gui.position.line.1=TargetGUI : %s
 gui.position.line.2=MoveSpeed : %dpixels
+gui.position.line.3=Party disp/line : %d
+
+gui.party.hp=HP
+gui.party.mp=MP
 
 gui.weapon.0=empHand
 gui.weapon.1=Vanilla
@@ -225,6 +236,7 @@ gui.weapon.18=Magic(HER)
 gui.weapon.19=Magic(ETC)
 gui.weapon.20=Magic(PAR)
 gui.weapon.21=Magic(AKK)
+gui.weapon.23=Magic(TAM)
 gui.weapon.24=Abacus 
 gui.weapon.25=Fan
 gui.weapon.26=Monster
@@ -244,6 +256,11 @@ key.setting.GuiLogVis=Show PlayerLog
 key.setting.GuiArmorStatusVis=Show ArmorStatus
 key.setting.GuiSubpointsVis=Show Subpoints
 key.setting.GuiBuffBar=Show PotionEffectBar
+key.setting.GuiPartyVis=Show PartyStatus
+
+key.setting.GuiPartyLinePlus=Party disp+
+key.setting.GuiPartyLineMinus=Party disp-
+
 key.setting.magictoolMode=Tool Mode change
 key.setting.ookinaFukuroOpen=Open ItemBag
 key.setting.shieldUse=Shield power using
@@ -705,6 +722,11 @@ item.dqm.itemKimeranotubasaCG.name=WinfOgKimeraG(Config)
 item.dqm.itemKimeranotubasaCR.name=WinfOgKimeraR(Config)
 item.dqm.itemKimeranotubasaCY.name=WinfOgKimeraY(Config)
 item.dqm.itemDyeWhite2.name=Super Bone Meal
+
+item.dqm.itemTurizao_Diamond.name=Diamond fishing rod
+item.dqm.itemTurizao_Oriharukon.name=Orichalcum fishing rod
+item.dqm.itemTurizao_Roto.name=Hero fishing rod
+item.dqm.itemTurizao_Densetu.name=Legendfishing rod
 
 item.dqm.itemFukuro.name=ItemPack
 item.dqm.itemFukuroR.name=ItemPack(RED)
@@ -1971,6 +1993,7 @@ msg.medalking.talk.4.txt=You need correct more medals
 msg.medalking.talk.5.txt=!player.
 msg.medalking.talk.6.txt=!player.you have many items
 msg.medalking.item.txt=§e[%dmedals]
+msg.casinocoin.item.txt=§e[%scoins]
 
 msg.magictool.farm.mode.0.txt=!player.Mode:Plowing
 msg.magictool.farm.mode.1.txt=!player.Mode : Planting
@@ -2934,3 +2957,179 @@ msg.farmerDiary.page9.4.txt=この命の木の実に、エンドラも非常に�
 msg.farmerDiary.page9.5.txt=せっかくなので与えてみたところ、無事体力が増えたようだ。
 msg.farmerDiary.page10.0.txt=[〇月30日]
 msg.farmerDiary.page10.1.txt=最近、エンドラに黄金の実を与えたい衝動に駆られる。
+
+msg.party.noplayer.txt=not found player
+msg.party.create.txt=§ecreate party
+msg.party.leave.txt=§eleave party
+msg.party.join.txt=§ejoin party
+msg.party.join2.txt=§e%s join party
+msg.party.changeleader.txt=§e%s is new party leader
+msg.party.hasparty.txt=§e%s joined other party 
+
+item.dqm.itemTwilightFigureDummy.name=TwilightForestDummyArchive
+dqm.iteminfo.twilightForestDummy1=name : %s
+dqm.iteminfo.twilightForestDummy2=edition : %s
+
+msg.casino.poker.info.0.txt=RoyalSF       *%d
+msg.casino.poker.info.1.txt=5Cards        *%d
+msg.casino.poker.info.2.txt=StraightFlush  *%d
+msg.casino.poker.info.3.txt=4Cards        *%d
+msg.casino.poker.info.4.txt=FullHouse      *%d
+msg.casino.poker.info.5.txt=Flush         *%d
+msg.casino.poker.info.6.txt=Straight       *%d
+msg.casino.poker.info.7.txt=3Cards        *%d
+msg.casino.poker.info.8.txt=TwoPair       *%d
+msg.casino.poker.info.9.txt=OnePair       *%d
+
+msg.casino.blackjack.info.0.txt=Ato6          *%d
+msg.casino.blackjack.info.1.txt=7Cards        *%d
+msg.casino.blackjack.info.2.txt=6Cards        *%d
+msg.casino.blackjack.info.3.txt=777           *%d
+msg.casino.blackjack.info.4.txt=PureBJ        *%d
+msg.casino.blackjack.info.5.txt=BlackJack     *%d
+msg.casino.blackjack.info.6.txt=Win           *%d
+
+msg.casino.blackjack.button.hit.txt=HIT
+msg.casino.blackjack.button.stand.txt=STAND
+msg.casino.blackjack.button.double.txt=DOUBLE
+msg.casino.blackjack.button.split.txt=SPLIT
+msg.casino.blackjack.button.salender.txt=SURRENDER
+msg.casino.blackjack.button.ready.txt=Ready!
+
+msg.casino.blackjack.info.bet.txt=BET
+msg.casino.blackjack.info.mycoin.txt=MyCoins
+msg.casino.blackjack.info.odds.txt=ODDS
+
+msg.casino.blackjack.message.burst.txt=BURST!!
+msg.casino.blackjack.message.val.txt=%d
+msg.casino.blackjack.message.blackjack.txt=BlackJack!!
+msg.casino.blackjack.message.nice21.txt=Nice 21!
+
+
+msg.casino.bbg.info.comboCount.txt=Combo
+msg.casino.bbg.info.totalgetcoin.txt=Getcoin
+msg.casino.bbg.button.start.txt=BATTLE!!
+msg.casino.bbg.button.attack.txt=Attack
+msg.casino.bbg.button.next.txt=NEXT!!
+msg.casino.bbg.info.life.txt=HP : %d/180
+
+msg.casino.bbg.info.monster.0.txt=encount an suraimu!
+msg.casino.bbg.info.monster.1.txt=encount an suraimubesu!
+msg.casino.bbg.info.monster.2.txt=encount an meralsuraimu!
+msg.casino.bbg.info.monster.3.txt=encount an suraimuknight
+msg.casino.bbg.info.monster.5.txt=encount an ZOMA
+
+msg.casino.bbg.info.attack.0.txt=%s attacked
+
+msg.casino.bbg.info.monsterD.0.txt=suraim is down.
+msg.casino.bbg.info.monsterD.1.txt=suraimbesu is down.
+msg.casino.bbg.info.monsterD.2.txt=metalsuraim is down.
+msg.casino.bbg.info.monsterD.3.txt=suraimknight is down.
+msg.casino.bbg.info.monsterD.5.txt=You won the ZOMA!
+
+msg.casino.bbg.info.zoma2.0.txt=deffence!
+msg.casino.bbg.info.zoma2.1.txt=O.K!
+msg.casino.bbg.info.zoma2.2.txt=miss!
+msg.casino.bbg.button.d_guard.txt=Attack?
+msg.casino.bbg.button.d_breath.txt=Magic?
+msg.casino.bbg.button.d_magic.txt=Breath?
+
+msg.casino.bbg.info.reverse.0.txt=????????
+msg.casino.bbg.info.reverse.1.txt=%s should continue!!
+msg.casino.bbg.info.reverse.2.txt=%s is revive!
+
+msg.casino.bbg.info.attack.1.txt=Hit!
+
+msg.casino.bbg.button.z_attack.txt=Zoma attacked you!
+msg.casino.bbg.button.z_breath.txt=Zoma breathed you!
+msg.casino.bbg.button.z_magic.txt=Zoma magiced you!
+msg.casino.bbg.button.z_damage.txt=%s : %ddamage
+msg.casino.bbg.button.z_dead.txt=%s is dead
+
+msg.casino.dialog.info.1.txt=Close this game?
+msg.casino.dialog.info.2.txt=
+msg.casino.dialog.yes.txt=YES
+msg.casino.dialog.no.txt=NO
+msg.casino.dialog.ok.txt=OK
+
+msg.casino.bbg.info.d_guard.txt=%s is deffence for attack
+msg.casino.bbg.info.d_breath.txt=%s is deffence for breath
+msg.casino.bbg.info.d_magic.txt=%s is deffence for magic
+
+msg.casino.chinchiro.button.stop.txt=STOP
+msg.casino.chinchiro.info.rateChil.txt=～
+msg.casino.chinchiro.info.mycoin.txt=MyCoin
+msg.casino.chinchiro.info.dealer.txt= D
+
+msg.casino.chinchiro.rate.1.txt=*5
+msg.casino.chinchiro.rate.2.txt=*3
+msg.casino.chinchiro.rate.3.txt=*2
+msg.casino.chinchiro.rate.4.txt=*1
+msg.casino.chinchiro.rate.5.txt=§c*-2
+msg.casino.chinchiro.rate.6.txt=§c§lPENALTY
+
+msg.casino.chinchiro.alart.1txt=[Caution]
+msg.casino.chinchiro.alart.2txt=This game need
+msg.casino.chinchiro.alart.3txt=BET * 5 coin!
+
+msg.casino.chinchiro.sysinfo.0.txt=CPU turn
+msg.casino.chinchiro.sysinfo.1.txt=Your turn
+msg.casino.chinchiro.sysinfo.2.txt=Retry!
+msg.casino.chinchiro.sysinfo.3.txt=You win!
+msg.casino.chinchiro.sysinfo.4.txt=You lose...
+msg.casino.chinchiro.sysinfo.5.txt=Draw
+
+msg.casino.slot.button.stop.txt=STOP
+msg.casino.slot.button.stop0.txt=
+msg.casino.slot.button.start.txt=START
+
+msg.casino.slot.rotate.txt=GameCount
+msg.casino.slot.totalrotate.txt=TotalCount
+msg.casino.slot.info.speed.txt=SPEED
+
+msg.casino.poker.button.hold.txt=HOLD
+msg.casino.poker.button.change.txt=CHANGE
+msg.casino.poker.button.next.txt=NEXT
+
+
+
+
+
+msg.casino.dealer.blackjack.0.txt=!player.Challenge blackjack?
+msg.casino.dealer.poker.0.txt=!player.Challenge porker?
+msg.casino.dealer.ccr.0.txt=!player.Challenge Chin-chiro-rin?
+
+msg.Casino.coin.messages.0.txt=!player.I'm exchanger
+msg.Casino.coin.messages.1.txt=!player.exchange your Gold for CasinoCoin!
+msg.Casino.coin.messages.2.txt=!player.and exchange "Kinka","Ginka","Douka" for CasinoCoin!
+msg.Casino.coin.messages.3.txt=!player.
+msg.Casino.coin.messages.4.txt=!player.douka is 50coins, Ginka is 150coins,、Kinka is 300coins
+msg.Casino.coin.messages.5.txt=!player.you can change buy values => sneak and right click
+msg.Casino.coin.messages.6.txt=!player.and you can buy with free hand after selected value
+msg.Casino.coin.messages.7.txt=!player.select value!!
+msg.Casino.coin.messages.10.txt=!player.[Buy 10coins(%sG)]
+msg.Casino.coin.messages.11.txt=!player.[Buy 100coins%sG)]
+msg.Casino.coin.messages.12.txt=!player.[Buy 1,000coins(%sG)]
+msg.Casino.coin.messages.13.txt=!player.[Buy 10,000coins(%sG)]
+
+msg.Casino.coin.messages.30.txt=!player.get 10coins
+msg.Casino.coin.messages.31.txt=!player.get 100coins
+msg.Casino.coin.messages.32.txt=!player.get 1,000coins
+msg.Casino.coin.messages.33.txt=!player.get 10,000coins
+msg.Casino.coin.messages.34.txt=!player.get 100,000coins
+msg.Casino.coin.messages.39.txt=!player.need more money!!
+
+msg.Casino.coin.messages.40.txt=!player.get 50coins
+msg.Casino.coin.messages.41.txt=!player.get 150coins
+msg.Casino.coin.messages.42.txt=!player.get 300coins
+
+item.dqm.BuilderCasino1.name=BuilderCasino_parts(BJ Dealer)
+item.dqm.BuilderCasino2.name=BuilderCasino_parts(CoinExchanger)
+
+mahouken.name.20=(Poison1)
+mahouken.name.21=(Poison2)
+mahouken.name.22=(Poison3)
+mahouken.name.23=(Slow)
+mahouken.name.24=(Fire)
+mahouken.name.25=(MP drain)
+mahouken.name.26=(HP drain)

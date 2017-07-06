@@ -1,6 +1,7 @@
 package dqr.handler;
 
 import net.minecraft.client.resources.I18n;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -14,10 +15,22 @@ public class ChatReceivedEventHandler {
 
 		String chatMessage = "";
 
+		boolean chatComponentType = true;
 
-		//System.out.println("TEST:" + event.message.getUnformattedText());
+		/*
+		System.out.println("TEST:" + event.message.getUnformattedText());
+		System.out.println("TEST2:" + event.message.getFormattedText());
+		System.out.println("TEST3:" + event.message.getUnformattedTextForChat());
+		System.out.println("TEST4:" + (event.message instanceof ChatComponentText));
+		System.out.println("TEST5:" + (event.message instanceof ChatComponentTranslation));
+		*/
+
+		chatComponentType = !(event.message instanceof ChatComponentText);
+
+
         if (event.message != null)
         {
+
         	if(event.message.getFormattedText().length() <= 8)
         	{
         		chatMessage = event.message.getFormattedText() + "        ";
@@ -134,13 +147,26 @@ public class ChatReceivedEventHandler {
 	        	}
         	}else if(DQR.conf.CLGuiLogWindowOff == 1)
         	{
-        		event.message = new ChatComponentTranslation(chatMessage,new Object[] {});
+        		if(chatComponentType)
+        		{
+        			event.message = new ChatComponentTranslation(chatMessage,new Object[] {});
+        		}else
+        		{
+        			event.message = new ChatComponentText(chatMessage);
+        		}
+
         	}
 
         	if(chatMessage.substring(0, 8).equalsIgnoreCase("!player."))
 			{
         		//System.out.println("DEBUGLINE:");
-        		event.message = new ChatComponentTranslation(chatMessage.replace("!player.", ""),new Object[] {});
+        		if(chatComponentType)
+        		{
+        			event.message = new ChatComponentTranslation(chatMessage.replace("!player.", ""),new Object[] {});
+        		}else
+        		{
+        			event.message = new ChatComponentText(chatMessage.replace("!player.", ""));
+        		}
 			}else if(DQR.conf.CLGuiLogWindowOff == 2)
         	{
         		event.setCanceled(true);

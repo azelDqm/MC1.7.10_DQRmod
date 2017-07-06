@@ -1,6 +1,7 @@
 package dqr.handler;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraftforge.event.entity.player.EntityInteractEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -24,14 +25,17 @@ public class PartyEventHandler {
 			{
 				int itemMode = ExtendedPlayerProperties.get(ep).getWeaponMode(EnumDqmWeaponMode.WEAPONMODE_SHINZIRU.getId());
 
+				MinecraftServer minecraftserver = MinecraftServer.getServer();
+
 				if(itemMode == EnumDqmMGToolMode.SHINZIRU_MEMBER_ADD.getId())
 				{
-					if(DQR.partyManager.getPartyLeaderFromMember(ep) != null)
+					EntityPlayer er2 = minecraftserver.getConfigurationManager().func_152612_a(DQR.partyManager.getPartyLeaderFromMember(ep));
+					if(er2 != null)
 					{
-						DQR.partyManager.addPartyMember(DQR.partyManager.getPartyLeaderFromMember(ep), targetEp);
+						DQR.partyManager.addPartyMember(er2, targetEp.getCommandSenderName());
 					}else
 					{
-						DQR.partyManager.addPartyMember(ep, targetEp);
+						DQR.partyManager.addPartyMember(ep, targetEp.getCommandSenderName());
 					}
 				}else if(itemMode == EnumDqmMGToolMode.SHINZIRU_MEMBER_KICK.getId())
 				{

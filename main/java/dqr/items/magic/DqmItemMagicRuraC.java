@@ -135,6 +135,8 @@ public class DqmItemMagicRuraC extends DqmItemMagicBase{
 	    		    	        }
 
 	    		    	        ExtendedPlayerProperties.get(par3EntityPlayer).setMP(epMP - this.getEnumMagic().getMP());
+	    						//最後にルーラした場所登録
+	    						ExtendedPlayerProperties.get(par3EntityPlayer).setRuraSin(9, par3EntityPlayer.posX, par3EntityPlayer.posY, par3EntityPlayer.posZ, par3EntityPlayer.dimension, 1);
 
 	    		    	        if(ruraMode != EnumDqmMGToolMode.RURAMODE0.getId())
 	    		    	        {
