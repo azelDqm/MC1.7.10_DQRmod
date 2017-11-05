@@ -6,7 +6,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.ChatComponentTranslation;
 import dqr.DQR;
 import dqr.api.Items.DQEmblems;
 import dqr.api.enums.EnumDqmJob;
@@ -225,7 +224,8 @@ public class InventoryJobChange implements IInventory
 
 	     	        if(!DQR.jobChangeTable.getCheckJobChange(ep, job.getId()))
 	     	        {
-	     	        	ep.addChatMessage(new ChatComponentTranslation("msg.Dama1.messages.25.txt" ,new Object[] {}));
+	     	        	DQR.func.debugString("LinrR : ", this.getClass());
+	     	        	//ep.addChatMessage(new ChatComponentTranslation("msg.Dama1.messages.25.txt" ,new Object[] {}));
 	     	        	ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
 	     	        	return 1;
 	     	        }

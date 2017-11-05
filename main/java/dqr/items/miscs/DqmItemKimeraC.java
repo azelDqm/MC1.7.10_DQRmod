@@ -37,6 +37,11 @@ public class DqmItemKimeraC extends DqmItemMiscBase{
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
 
+		if(DQR.conf.enableKimeraC == 0)
+		{
+			return par1ItemStack;
+		}
+
     	if(DQR.func.isBind(par3EntityPlayer) && par3EntityPlayer.worldObj.isRemote)
 		{
 	  		par3EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.magic.rariho.txt",new Object[] {}));

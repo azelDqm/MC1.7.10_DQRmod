@@ -12,8 +12,10 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
 import dqr.DQR;
 import dqr.DqrWorldData;
 import dqr.PacketHandler;
@@ -45,6 +47,11 @@ public class DqmItemMagicRura extends DqmItemMagicBase{
      */
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
+		if(DQR.conf.enableRura == 0)
+		{
+			return par1ItemStack;
+		}
+
 		PotionEffect pe;
 		pe = par3EntityPlayer.getActivePotionEffect(DQPotionMinus.debuffMahoton);
 		if(pe != null && par3EntityPlayer.worldObj.isRemote)
@@ -76,20 +83,28 @@ public class DqmItemMagicRura extends DqmItemMagicBase{
 			{
     			if(!par2World.isRemote)
     			{
-	    			DqrWorldData wd = (DqrWorldData)par2World.loadItemData(DqrWorldData.class, DQR.modID);
+    				boolean flg = MinecraftServer.getServer().getConfigurationManager().func_152596_g(par3EntityPlayer.getGameProfile());
+    				if(DQR.conf.Rura_CordSet == 2 || (DQR.conf.Rura_CordSet == 1 && flg))
+    				{
+		    			DqrWorldData wd = (DqrWorldData)par2World.loadItemData(DqrWorldData.class, DQR.modID);
 
-	    	        if (wd == null)
-	    	        {
-	    	        	wd = new DqrWorldData(DQR.modID);
-	    	        }
+		    	        if (wd == null)
+		    	        {
+		    	        	wd = new DqrWorldData(DQR.modID);
+		    	        }
 
-	    	        wd.setRura(this.getEnumMagic().getType(), par3EntityPlayer.posX, par3EntityPlayer.posY, par3EntityPlayer.posZ, par3EntityPlayer.dimension, 1);
-	    	        par3EntityPlayer.addChatMessage(new ChatComponentTranslation("dqm.iteminfo.kimeraLoc.2.txt",new Object[] {par3EntityPlayer.dimension,
-	    	        		Math.floor(par3EntityPlayer.posX),
-	    	        		Math.floor(par3EntityPlayer.posY),
-	    	        		Math.floor(par3EntityPlayer.posZ)}));
-	    	        wd.markDirty();
-	    	        par2World.setItemData(DQR.modID, wd);
+		    	        wd.setRura(this.getEnumMagic().getType(), par3EntityPlayer.posX, par3EntityPlayer.posY, par3EntityPlayer.posZ, par3EntityPlayer.dimension, 1);
+		    	        par3EntityPlayer.addChatMessage(new ChatComponentTranslation("dqm.iteminfo.kimeraLoc.2.txt",new Object[] {par3EntityPlayer.dimension,
+		    	        		Math.floor(par3EntityPlayer.posX),
+		    	        		Math.floor(par3EntityPlayer.posY),
+		    	        		Math.floor(par3EntityPlayer.posZ)}));
+		    	        wd.markDirty();
+		    	        par2World.setItemData(DQR.modID, wd);
+    				}else
+    				{
+        				par3EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.magic.ruraNoPerm.txt",new Object[] {}));
+        				par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.pi", 1.0F, 1.0F);
+    				}
     			}
 
     	        par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.mira", 0.9F, 0.9F);
@@ -222,6 +237,7 @@ public class DqmItemMagicRura extends DqmItemMagicBase{
 				    															  target,
 		    		                											  par1ItemStack,
 				    															  setX, setY, setZ);
+		    		                		MinecraftForge.EVENT_BUS.post(event);
 	    		                		}
 	    		                	}
 

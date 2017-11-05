@@ -6,6 +6,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.world.World;
 import dqr.DQR;
@@ -32,25 +33,38 @@ public class DqmItemKimera extends DqmItemMiscBase{
 	@Override
    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
+		if(DQR.conf.enableKimera == 0)
+		{
+			return par1ItemStack;
+		}
+
 		if(par3EntityPlayer.isSneaking())
     	{
 			if(!par2World.isRemote)
 			{
-    			DqrWorldData wd = (DqrWorldData)par2World.loadItemData(DqrWorldData.class, DQR.modID);
+				boolean flg = MinecraftServer.getServer().getConfigurationManager().func_152596_g(par3EntityPlayer.getGameProfile());
+				if(DQR.conf.Kimera_CordSet == 2 || (DQR.conf.Kimera_CordSet == 1 && flg))
+				{
+	    			DqrWorldData wd = (DqrWorldData)par2World.loadItemData(DqrWorldData.class, DQR.modID);
 
-    	        if (wd == null)
-    	        {
-    	        	wd = new DqrWorldData(DQR.modID);
-    	        }
+	    	        if (wd == null)
+	    	        {
+	    	        	wd = new DqrWorldData(DQR.modID);
+	    	        }
 
-    	        wd.setKimera(this.getEnumMagic().getType(), par3EntityPlayer.posX, par3EntityPlayer.posY, par3EntityPlayer.posZ, par3EntityPlayer.dimension, 1);
-    	        par3EntityPlayer.addChatMessage(new ChatComponentTranslation("dqm.iteminfo.kimeraLoc.2.txt",new Object[] {par3EntityPlayer.dimension,
-    	        		Math.floor(par3EntityPlayer.posX),
-    	        		Math.floor(par3EntityPlayer.posY),
-    	        		Math.floor(par3EntityPlayer.posZ)}));
+	    	        wd.setKimera(this.getEnumMagic().getType(), par3EntityPlayer.posX, par3EntityPlayer.posY, par3EntityPlayer.posZ, par3EntityPlayer.dimension, 1);
+	    	        par3EntityPlayer.addChatMessage(new ChatComponentTranslation("dqm.iteminfo.kimeraLoc.2.txt",new Object[] {par3EntityPlayer.dimension,
+	    	        		Math.floor(par3EntityPlayer.posX),
+	    	        		Math.floor(par3EntityPlayer.posY),
+	    	        		Math.floor(par3EntityPlayer.posZ)}));
 
-    	        wd.markDirty();
-    	        par2World.setItemData(DQR.modID, wd);
+	    	        wd.markDirty();
+	    	        par2World.setItemData(DQR.modID, wd);
+				}else
+				{
+    				par3EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.magic.ruraNoPerm.txt",new Object[] {}));
+    				par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.pi", 1.0F, 1.0F);
+				}
 			}
 
 	        par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.mira", 0.9F, 0.9F);

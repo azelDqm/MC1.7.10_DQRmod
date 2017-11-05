@@ -7,6 +7,7 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ChatComponentTranslation;
 import net.minecraftforge.event.entity.EntityEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
@@ -39,9 +40,11 @@ public class PlayerDataHandler {
             NBTTagCompound playerData = new NBTTagCompound();
             NBTTagCompound playerData2 = new NBTTagCompound();
             NBTTagCompound playerData3 = new NBTTagCompound();
-            (event.entity.getExtendedProperties(ExtendedPlayerProperties.EXT_PROP_NAME)).saveNBTData(playerData);
-            (event.entity.getExtendedProperties(ExtendedPlayerProperties2.EXT_PROP_NAME)).saveNBTData(playerData2);
-            (event.entity.getExtendedProperties(ExtendedPlayerProperties3.EXT_PROP_NAME)).saveNBTData(playerData3);
+
+	            (event.entity.getExtendedProperties(ExtendedPlayerProperties.EXT_PROP_NAME)).saveNBTData(playerData);
+	            (event.entity.getExtendedProperties(ExtendedPlayerProperties2.EXT_PROP_NAME)).saveNBTData(playerData2);
+	            (event.entity.getExtendedProperties(ExtendedPlayerProperties3.EXT_PROP_NAME)).saveNBTData(playerData3);
+
             storeEntityData(event.entity.getCommandSenderName(), playerData, playerData2, playerData3);
         }
     }
@@ -56,58 +59,51 @@ public class PlayerDataHandler {
         	ExtendedPlayerProperties.get(ep).setPlayerUUID(ep.getUniqueID().toString());
         	ExtendedPlayerProperties2.get(ep).setPlayerName(ep.getDisplayName());
         	ExtendedPlayerProperties3.get(ep).setPartyMemberData(null);
+            if(DQR.conf.dqrHardcore != 1)
+            {
+	        	 if(!ep.isDead && ep.getHealth() > 0)
+	        	{
+	                    NBTTagCompound playerData = getEntityData(event.entity.getCommandSenderName());
+	                    if (playerData != null) {
+	                        (event.entity.getExtendedProperties(ExtendedPlayerProperties.EXT_PROP_NAME)).loadNBTData(playerData);
+	                    }
+	                    NBTTagCompound playerData2 = getEntityData2(event.entity.getCommandSenderName());
+	                    if (playerData != null) {
+	                        (event.entity.getExtendedProperties(ExtendedPlayerProperties2.EXT_PROP_NAME)).loadNBTData(playerData2);
+	                    }
+	                    NBTTagCompound playerData3 = getEntityData3(event.entity.getCommandSenderName());
+	                    if (playerData != null) {
+	                        (event.entity.getExtendedProperties(ExtendedPlayerProperties3.EXT_PROP_NAME)).loadNBTData(playerData3);
+	                    }
+	                    ((ExtendedPlayerProperties)(event.entity.getExtendedProperties(ExtendedPlayerProperties.EXT_PROP_NAME))).loadProxyData((EntityPlayer)event.entity);
+	                    ((ExtendedPlayerProperties2)(event.entity.getExtendedProperties(ExtendedPlayerProperties2.EXT_PROP_NAME))).loadProxyData((EntityPlayer)event.entity);
+	                    ((ExtendedPlayerProperties3)(event.entity.getExtendedProperties(ExtendedPlayerProperties3.EXT_PROP_NAME))).loadProxyData((EntityPlayer)event.entity);
 
-        	 if(!ep.isDead && ep.getHealth() > 0)
-        	{
-                    NBTTagCompound playerData = getEntityData(event.entity.getCommandSenderName());
-                    if (playerData != null) {
-                        (event.entity.getExtendedProperties(ExtendedPlayerProperties.EXT_PROP_NAME)).loadNBTData(playerData);
-                    }
-                    NBTTagCompound playerData2 = getEntityData2(event.entity.getCommandSenderName());
-                    if (playerData != null) {
-                        (event.entity.getExtendedProperties(ExtendedPlayerProperties2.EXT_PROP_NAME)).loadNBTData(playerData2);
-                    }
-                    NBTTagCompound playerData3 = getEntityData3(event.entity.getCommandSenderName());
-                    if (playerData != null) {
-                        (event.entity.getExtendedProperties(ExtendedPlayerProperties3.EXT_PROP_NAME)).loadNBTData(playerData3);
-                    }
-                    ((ExtendedPlayerProperties)(event.entity.getExtendedProperties(ExtendedPlayerProperties.EXT_PROP_NAME))).loadProxyData((EntityPlayer)event.entity);
-                    ((ExtendedPlayerProperties2)(event.entity.getExtendedProperties(ExtendedPlayerProperties2.EXT_PROP_NAME))).loadProxyData((EntityPlayer)event.entity);
-                    ((ExtendedPlayerProperties3)(event.entity.getExtendedProperties(ExtendedPlayerProperties3.EXT_PROP_NAME))).loadProxyData((EntityPlayer)event.entity);
-        	//PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties(ep), (EntityPlayerMP)ep);
-        		/*
-	        	//System.out.println("CCCC");
-	            NBTTagCompound playerData = getEntityData(event.entity.getCommandSenderName());
-	            if (playerData != null) {
-	            	//System.out.println("XCCC");
-	                //(event.entity.getExtendedProperties(ExtendedPlayerProperties.EXT_PROP_NAME)).loadNBTData(playerData);
-	            	playerData = new NBTTagCompound();
+	        	}else
+	        	{
+	        		//System.out.println("DDDD");
+	                NBTTagCompound playerData = new NBTTagCompound();
+	                NBTTagCompound playerData2 = new NBTTagCompound();
+	                NBTTagCompound playerData3 = new NBTTagCompound();
 	                (event.entity.getExtendedProperties(ExtendedPlayerProperties.EXT_PROP_NAME)).saveNBTData(playerData);
-	                storeEntityData(event.entity.getCommandSenderName(), playerData);
-	                (event.entity.getExtendedProperties(ExtendedPlayerProperties.EXT_PROP_NAME)).loadNBTData(playerData);
-	            }else
-	            {
-	            	//System.out.println("YCCC");
-	            	playerData = new NBTTagCompound();
-	                (event.entity.getExtendedProperties(ExtendedPlayerProperties.EXT_PROP_NAME)).saveNBTData(playerData);
-	                storeEntityData(event.entity.getCommandSenderName(), playerData);
-	                (event.entity.getExtendedProperties(ExtendedPlayerProperties.EXT_PROP_NAME)).loadNBTData(playerData);
-	            }
-
-	            ((ExtendedPlayerProperties)(event.entity.getExtendedProperties(ExtendedPlayerProperties.EXT_PROP_NAME))).loadProxyData((EntityPlayer)event.entity);
-	            */
-        	}else
-        	{
-        		//System.out.println("DDDD");
-                NBTTagCompound playerData = new NBTTagCompound();
-                NBTTagCompound playerData2 = new NBTTagCompound();
-                NBTTagCompound playerData3 = new NBTTagCompound();
-                (event.entity.getExtendedProperties(ExtendedPlayerProperties.EXT_PROP_NAME)).saveNBTData(playerData);
-                (event.entity.getExtendedProperties(ExtendedPlayerProperties2.EXT_PROP_NAME)).saveNBTData(playerData2);
-                (event.entity.getExtendedProperties(ExtendedPlayerProperties3.EXT_PROP_NAME)).saveNBTData(playerData3);
-                storeEntityData(event.entity.getCommandSenderName(), playerData, playerData2, playerData3);                //(event.entity.getExtendedProperties(ExtendedPlayerProperties.EXT_PROP_NAME)).loadNBTData(playerData);
-                //((ExtendedPlayerProperties)(event.entity.getExtendedProperties(ExtendedPlayerProperties.EXT_PROP_NAME))).loadProxyData((EntityPlayer)event.entity);
-        	}
+	                (event.entity.getExtendedProperties(ExtendedPlayerProperties2.EXT_PROP_NAME)).saveNBTData(playerData2);
+	                (event.entity.getExtendedProperties(ExtendedPlayerProperties3.EXT_PROP_NAME)).saveNBTData(playerData3);
+	                storeEntityData(event.entity.getCommandSenderName(), playerData, playerData2, playerData3);                //(event.entity.getExtendedProperties(ExtendedPlayerProperties.EXT_PROP_NAME)).loadNBTData(playerData);
+	                //((ExtendedPlayerProperties)(event.entity.getExtendedProperties(ExtendedPlayerProperties.EXT_PROP_NAME))).loadProxyData((EntityPlayer)event.entity);
+	        	}
+            }else
+            {
+            	if(ep != null)
+            	{
+            		if(ExtendedPlayerProperties.get(ep).getHardcoreInfo() == 0)
+            		{
+            			//ep.addChatComponentMessage("TEST");
+            			ep.addChatMessage(new ChatComponentTranslation("msg.hardcore.messages.1.txt",new Object[] {}));
+            			ep.addChatMessage(new ChatComponentTranslation("msg.hardcore.messages.2.txt",new Object[] {}));
+            			ExtendedPlayerProperties.get(ep).setHardcoreInfo(1);
+            		}
+            	}
+            }
 
 
 

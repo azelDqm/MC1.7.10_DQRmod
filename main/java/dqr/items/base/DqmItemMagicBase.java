@@ -16,6 +16,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.common.MinecraftForge;
 
 import com.google.common.collect.Multimap;
 
@@ -25,6 +26,7 @@ import dqr.DQR;
 import dqr.api.enums.EnumDqmMagic;
 import dqr.api.enums.EnumDqmMagicCateg;
 import dqr.api.enums.EnumDqmWeapon;
+import dqr.api.event.DqrMagicCoolTimeEvent;
 import dqr.playerData.ExtendedPlayerProperties;
 
 public class DqmItemMagicBase extends Item{
@@ -70,23 +72,74 @@ public class DqmItemMagicBase extends Item{
     {
     	if(var3 instanceof EntityPlayer)
     	{
-    		EntityPlayer ep = (EntityPlayer)var3;
-	    	EnumDqmWeapon enumWeapon = EnumDqmWeapon.valueOf(this.getMaterial().name());
-	    	int jukurenLv = ExtendedPlayerProperties.get(ep).getJukurenLv(enumWeapon.getId());
-
-	    	if(var1.getItemDamage() < 0)
+	    	if(var1.getItemDamage() > 0)
 	    	{
+	    		int lastItemDamage = var1.getItemDamage();
+	    		int fixItemDamage = 0;
 
-	    	}else if(var1.getItemDamage() > 0)
-	    	{
-	    		if(var1.getItemDamage() - 10 - (jukurenLv * 10) < 0)
-	    		{
-	    			var1.setItemDamage(0);
-	    		}else
-	    		{
-	    			var1.setItemDamage(var1.getItemDamage() - 10 - (jukurenLv * 10));
-	    		}
-	    	}
+	    		DqrMagicCoolTimeEvent event = new DqrMagicCoolTimeEvent.preCoolTimeDecrease(var1, var2, var3, par4, par5, enumMagic);
+				event.setCanceled(false);
+				MinecraftForge.EVENT_BUS.post(event);
+				if(event.isCanceled())
+				{
+					return;
+				}
+
+
+	    		EntityPlayer ep = (EntityPlayer)var3;
+		    	EnumDqmWeapon enumWeapon = EnumDqmWeapon.valueOf(this.getMaterial().name());
+		    	int jukurenLv = ExtendedPlayerProperties.get(ep).getJukurenLv(enumWeapon.getId());
+
+		    	if(DQR.conf.bug_magicCoolTimeFix == 0)
+		    	{
+		    		fixItemDamage = 10 + (jukurenLv * 10);
+		    		DqrMagicCoolTimeEvent.calcCoolTimeDecrease event2 = new DqrMagicCoolTimeEvent.calcCoolTimeDecrease(var1, var2, var3, par4, par5, enumMagic, fixItemDamage);
+					event.setCanceled(false);
+					MinecraftForge.EVENT_BUS.post(event2);
+
+					fixItemDamage = event2.getFixDamage();
+
+					if(!event.isCanceled())
+					{
+			    		if(var1.getItemDamage() - fixItemDamage < 0)
+			    		{
+			    			var1.setItemDamage(0);
+			    		}else
+			    		{
+			    			var1.setItemDamage(var1.getItemDamage() - fixItemDamage);
+			    		}
+					}
+
+		    	}else
+		    	{
+		    		if(var2.getWorldTime() % 5 == 0)
+		    		{
+			    		fixItemDamage = 2 + jukurenLv;
+			    		DqrMagicCoolTimeEvent.calcCoolTimeDecrease event2 = new DqrMagicCoolTimeEvent.calcCoolTimeDecrease(var1, var2, var3, par4, par5, enumMagic, fixItemDamage);
+						event.setCanceled(false);
+						MinecraftForge.EVENT_BUS.post(event2);
+
+						fixItemDamage = event2.getFixDamage();
+						if(!event.isCanceled())
+						{
+				    		if(var1.getItemDamage() - fixItemDamage < 0)
+				    		{
+				    			var1.setItemDamage(0);
+				    		}else
+				    		{
+				    			var1.setItemDamage(var1.getItemDamage() - fixItemDamage);
+				    		}
+						}
+		    		}
+		    	}
+
+	    		DqrMagicCoolTimeEvent event3 = new DqrMagicCoolTimeEvent.postCoolTimeDecrease(var1, var2, var3, par4, par5, enumMagic, fixItemDamage, lastItemDamage);
+				MinecraftForge.EVENT_BUS.post(event3);
+				if(!event.isCanceled())
+				{
+					return;
+				}
+		    }
     	}
 
     }

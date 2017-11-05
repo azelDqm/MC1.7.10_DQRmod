@@ -30,6 +30,8 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import dqr.DQR;
 import dqr.api.potion.DQPotionPlus;
+import dqr.entity.mobEntity.DqmMobBase;
+import dqr.entity.petEntity.DqmPetBase;
 
 /*
  * 発射されるエンティティのクラス。
@@ -378,6 +380,12 @@ public class MagicEntityZaki extends MagicEntity implements IProjectile{
 	                        	//対象が撃った本人の場合も当たらない
 	                        	entityList.remove(n);
 	                        }
+	                    }else if(target instanceof DqmPetBase)
+	                    {
+	                    	if(!(DQR.func.canAttackPetMonster((DqmPetBase)target, ((EntityPlayer)this.shootingEntity))))
+	                    	{
+	                    		entityList.remove(n);
+	                    	}
 	                    }
 	                    else if (target instanceof EntityTameable ||
 	                                 target instanceof EntityHorse)
@@ -400,12 +408,16 @@ public class MagicEntityZaki extends MagicEntity implements IProjectile{
 
             //当たったあとの処理
             //まずはリストから
+            DQR.func.debugString("Hit2!!!!!!!!!!!!", this.getClass());
+            //System.out.println();
             if (entityList != null && !entityList.isEmpty())
             {
+            	DQR.func.debugString("Hit3!!!!!!!!!!!!", this.getClass());
             	for (MovingObjectPosition target : entityList)
             	{
             		if (target != null && target.entityHit != null)
             		{
+            			DQR.func.debugString("Hit4!!!!!!!!!!!!", this.getClass());
             			//衝突時の弾の速度を計算
                         f2 = MathHelper.sqrt_double(this.motionX * this.motionX + this.motionY * this.motionY +
                                 this.motionZ * this.motionZ);
@@ -452,20 +464,24 @@ public class MagicEntityZaki extends MagicEntity implements IProjectile{
                         else */if (target.entityHit instanceof IProjectile)
                         {
                         	//対象が矢などの飛翔Entityの場合、打ち消すことが出来る
+                        	DQR.func.debugString("Hit5!!!!!!!!!!!!" + target.entityHit.getCommandSenderName(), this.getClass());
                         	target.entityHit.setDead();
                         }
                         else
                         {
                         	PotionEffect pe = null;
-
+                        	DQR.func.debugString("Hit6!!!!!!!!!!!!" + target.entityHit.getCommandSenderName(), this.getClass());
                     		if(target.entityHit instanceof EntityLiving)
                     		{
                     			EntityLiving elv2 = (EntityLiving)target.entityHit;
                     			pe = elv2.getActivePotionEffect(DQPotionPlus.buffMahokanta);
                     		}
 
+                    		//DQR.func.debugString("Hit7 : " + this.shootingEntity.getCommandSenderName(), this.getClass());
+
                     		if(pe != null && this.shootingEntity != null && this.shootingEntity instanceof EntityLivingBase)
                     		{
+                    			//System.out.println("Hit!!!!!!!!!!!!");
                             	EntityLiving elv = (EntityLiving)this.shootingEntity;
                             	float fixRate = DQR.calcDamage.applyDamageResistMagic2(0, elv, damagesource);
                             	Random rand2 = new Random();
@@ -476,6 +492,7 @@ public class MagicEntityZaki extends MagicEntity implements IProjectile{
 
 	                            	DamageSource ds = damagesource;
 
+	                            	/*
 	                            	if(this.shootingEntity instanceof EntityPlayer)
 	                            	{
 	                            		ds = DQR.damageSource.getPlayerSkillDamage((EntityPlayer)this.shootingEntity);
@@ -485,6 +502,26 @@ public class MagicEntityZaki extends MagicEntity implements IProjectile{
 	                            	}else if(damagesource.getSourceOfDamage() instanceof EntityPlayer)
 	                            	{
 	                            		ds = DQR.damageSource.getPlayerSkillDamage((EntityPlayer)damagesource.getSourceOfDamage());
+	                            	}
+	                            	*/
+	                            	if(this.shootingEntity instanceof EntityPlayer)
+	                            	{
+	                            		ds = DQR.damageSource.getPlayerSkillDamageDeath((EntityPlayer)this.shootingEntity);
+	                            	}else if(damagesource.getEntity() instanceof EntityPlayer)
+	                            	{
+	                            		ds = DQR.damageSource.getPlayerSkillDamageDeath((EntityPlayer)damagesource.getEntity());
+	                            	}else if(damagesource.getSourceOfDamage() instanceof EntityPlayer)
+	                            	{
+	                            		ds = DQR.damageSource.getPlayerSkillDamageDeath((EntityPlayer)damagesource.getSourceOfDamage());
+	                            	}else if(this.shootingEntity instanceof DqmMobBase)
+	                            	{
+	                            		ds = DQR.damageSource.getMonsterSkillDamageDeath((DqmMobBase)this.shootingEntity);
+	                            	}else if(damagesource.getEntity() instanceof DqmMobBase)
+	                            	{
+	                            		ds = DQR.damageSource.getMonsterSkillDamageDeath((DqmMobBase)damagesource.getEntity());
+	                            	}else if(damagesource.getSourceOfDamage() instanceof DqmMobBase)
+	                            	{
+	                            		ds = DQR.damageSource.getMonsterSkillDamageDeath((DqmMobBase)damagesource.getSourceOfDamage());
 	                            	}
 
 	                            	ds.setDamageBypassesArmor();
@@ -566,16 +603,30 @@ public class MagicEntityZaki extends MagicEntity implements IProjectile{
 	                        	//村人以外なら、ダメージを与える処理を呼ぶ
                             	float fixRate = DQR.calcDamage.applyDamageResistMagic2(0, target.entityHit, damagesource);
                             	Random rand2 = new Random();
+                            	//DQR.func.debugString("Hit7 : " + this.shootingEntity.getCommandSenderName(), this.getClass());
+                            	if(this.shootingEntity instanceof DqmMobBase)
+                            	{
+                            		damagesource = DQR.damageSource.getMonsterSkillDamageDeath(this.shootingEntity);
+                            	}else if(this.shootingEntity instanceof EntityPlayer)
+                            	{
+                            		DQR.damageSource.getPlayerSkillDamageDeath(this.shootingEntity);
+                            	}
+                            	DQR.func.debugString("Hit8 : " +  this.rate + " : " + fixRate);
                             	damagesource.setDamageBypassesArmor();
+
                             	if(rand.nextInt(100) < this.rate && (fixRate * 100) > rand2.nextInt(100))
 	                            {
-	                    			if(target.entityHit instanceof EntityLiving)
+                            		DQR.func.debugString("Hit9");
+	                    			if(target.entityHit instanceof EntityLivingBase)
 		                    		{
-	                    				EntityLiving tagEntity = (EntityLiving)target.entityHit;
+	                    				DQR.func.debugString("Hit10");
+	                    				EntityLivingBase tagEntity = (EntityLivingBase)target.entityHit;
 	                    				i1 = (int)tagEntity.getMaxHealth() + 10;
 
+	                    				DQR.func.debugString("Hit_R : " + damagesource.getDamageType() + " : " + i1);
 			                        	if (target.entityHit.attackEntityFrom(damagesource, (float)i1))
 			                            {
+			                        		DQR.func.debugString("Hit11");
 			                        		//ダメージを与えることに成功したら以下の処理を行う
 			                                if (target.entityHit instanceof EntityLivingBase)
 			                                {

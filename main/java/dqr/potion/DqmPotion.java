@@ -41,8 +41,8 @@ public class DqmPotion {
 		DQPotionEtc.buffCallMagma =  new DqmPotionNoEffect(idx + 27, false, 0xFFFFFF).setIconIndex2(6, 5).setIconIndex(7, 1).setPotionName("dqm.potion.callMagma");
 		DQPotionEtc.buffMahoizun =  new DqmPotionNoEffect(idx + 36, false, 0xFFFFFF).setIconIndex2(6, 2).setIconIndex(2, 2).setPotionName("dqm.potion.mahoizun");
 
-		DQPotionMinus.debuffBomie =  new DqmPotionNoEffect(idx + 28, true, 0xFFFFFF).setIconIndex2(6, 6).setIconIndex(1, 0).setPotionName("dqm.potion.bomie").func_111184_a(SharedMonsterAttributes.movementSpeed, "7107DE5E-7CE8-4030-940E-514C1F160891", -0.15000000596046448D, 2);;
-		DQPotionMinus.debuffRariho =  new DqmPotionNoEffect(idx + 29, true, 0xFFFFFF).setIconIndex2(6, 6).setIconIndex(5, 1).setPotionName("dqm.potion.rariho");
+		DQPotionMinus.debuffBomie =  new DqmPotionNoEffect(idx + 28, true, 0xFFFFFF).setIconIndex2(6, 6).setIconIndex(1, 0).setPotionName("dqm.potion.bomie").func_111184_a(SharedMonsterAttributes.movementSpeed, "7107DE5E-7CE8-4030-940E-514C1F160891", -0.15000000596046448D, 2);
+		DQPotionMinus.debuffRariho =  new DqmPotionNoEffect(idx + 29, true, 0xFFFFFF).setIconIndex2(6, 6).setIconIndex(5, 1).setPotionName("dqm.potion.rariho").func_111184_a(SharedMonsterAttributes.movementSpeed, "7107DE5E-7CE8-4030-940E-514C1F160814", -10.15000000596046448D, 2);
 		DQPotionMinus.debuffManusa =  new DqmPotionNoEffect(idx + 30, true, 0xFFFFFF).setIconIndex2(4, 14).setIconIndex(0, 2).setPotionName("dqm.potion.manusa");
 		DQPotionMinus.debuffMahoton =  new DqmPotionNoEffect(idx + 31, true, 0xFFFFFF).setIconIndex2(7, 6).setIconIndex(0, 2).setPotionName("dqm.potion.mahoton");
 		DQPotionMinus.debuffRukani =  new DqmPotionNoEffect(idx + 32, true, 0xFFFFFF).setIconIndex2(0, 6).setIconIndex(5, 0).setPotionName("dqm.potion.rukani");
@@ -54,7 +54,7 @@ public class DqmPotion {
 		DQPotionEtc.buffMonsterNiku = new DqmPotionNoEffect(idx + 39, false, 0xFFAAAA).setIconIndex2(0, 11).setIconIndex(0, 7).setPotionName("dqm.potion.monsterNiku");
 		DQPotionEtc.buffShinkanoHiseki = new DqmPotionNoEffect(idx + 40, false, 0x000000).setIconIndex2(1, 11).setIconIndex(1, 7).setPotionName("dqm.potion.shinkanoHiseki");
 
-		DQPotionMinus.debuffStop = new DqmPotionNoEffect(idx + 41, true, 0x000000).setIconIndex2(7, 1).setIconIndex(3, 2).setPotionName("dqm.potion.stop");
+		DQPotionMinus.debuffStop = new DqmPotionNoEffect(idx + 41, true, 0x000000).setIconIndex2(7, 1).setIconIndex(3, 2).setPotionName("dqm.potion.stop").func_111184_a(SharedMonsterAttributes.movementSpeed, "7107DE5E-7CE8-4030-940E-514C1F160815", -10.15000000596046448D, 2);
 		DQPotionPlus.buffKaihiUp = new DqmPotionNoEffect(idx + 42, false, 0x000000).setIconIndex2(3, 1).setIconIndex(0, 0).setPotionName("dqm.potion.kaihiUp");
 		DQPotionPlus.buffBreathReflect = new DqmPotionNoEffect(idx + 43, false, 0x000000).setIconIndex2(2, 6).setIconIndex(7, 1).setPotionName("dqm.potion.breathReflect");
 

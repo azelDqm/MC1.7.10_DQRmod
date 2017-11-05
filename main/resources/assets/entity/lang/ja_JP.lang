@@ -288,7 +288,7 @@ entity.DQMIIINext.Tumurinmama.name=つむりんママ
 entity.DQMIIINext.Uragirikozou.name=うらぎりこぞう
 entity.DQMIIINext.Madrainbow.name=マッドレインボー
 entity.DQMIIINext.Sweetbag.name=スウィートバッグ
-entity.DQMIIINext.Shuvaluts.name=シュバルツシュルト
+entity.DQMIIINext.Shuvaluts.name=シュヴァルツシュルト
 entity.DQMIIINext.Bebingosatan.name=ベビンゴサタン
 entity.DQMIIINext.Kinghidora.name=キングヒドラ
 entity.DQMIIINext.Kingbesu.name=ベスキングもどき
@@ -365,6 +365,7 @@ entity.DQMIIINext.dqm.MagicEntityBuffDummy.name=補助系
 entity.DQMIIINext.dqm.MagicEntityHoimiDummy.name=回復系
 entity.DQMIIINext.dqm.MagicEntityMahoimiDummy.name=魔力回復系
 
+entity.DQMIIINext.NPCBankMP.name=MP両替スティーブ
 entity.DQMIIINext.NPCSyuuri.name=修理屋スティーブ
 entity.DQMIIINext.NPCBukiya.name=武器屋スティーブ
 entity.DQMIIINext.NPCKaitoriya.name=買取屋スティーブ
@@ -686,3 +687,8 @@ entity.DQMIIINext.PetShadopan.name=[PET]シャドウベビー
 entity.DQMIIINext.PetShadopan2.name=[PET]シャドウパンサー
 entity.DQMIIINext.PetWhitepan2.name=[PET]ホワイトパンサー
 entity.DQMIIINext.PetOrutega.name=[PET]オルテガ
+
+entity.TwilightForest.tfthrownaxe.name=投斧
+entity.TwilightForest.tfthrownpick.name=投ピッケル
+entity.TwilightForest.tfhydramortar.name=火炎球
+entity.TwilightForest.tficesnowball.name=雪球

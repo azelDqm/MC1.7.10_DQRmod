@@ -9,7 +9,10 @@ public enum EnumDqmSubEquipType {
 	Sonota(3, "Sonota"),
 	Udewa(4, "Udewa"),
 	Yubiwa(5, "Yubiwa"),
-	Fukuro(6, "Fukuro");
+	Fukuro(6, "Fukuro"),
+	PWEAPON(7, "PetWeapon"),
+	PARMOR(8, "PetArmor"),
+	PSHIELD(9, "PetShield");
 
 
 	private final int id;

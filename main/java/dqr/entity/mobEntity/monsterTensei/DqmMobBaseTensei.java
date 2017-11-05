@@ -1,6 +1,7 @@
 package dqr.entity.mobEntity.monsterTensei;
 
 import net.minecraft.world.World;
+import dqr.DQR;
 import dqr.api.enums.EnumDqmMonster;
 import dqr.entity.mobEntity.DqmMobBase;
 
@@ -20,5 +21,13 @@ public class DqmMobBaseTensei extends DqmMobBase
 
 		//System.out.println("!!!!!!!!!!!!!!!!!!!" + this.getCommandSenderName());
         return super.getCanSpawnHere();
+    }
+
+    @Override
+    protected boolean canDespawn()
+    {
+
+    	return DQR.conf.canDespawnTENSEI == 1;
+        //return true;
     }
 }

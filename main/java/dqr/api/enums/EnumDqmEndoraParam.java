@@ -76,5 +76,6 @@ public enum EnumDqmEndoraParam {
 	{
 		return this.Exp;
 	}
+
 }
 

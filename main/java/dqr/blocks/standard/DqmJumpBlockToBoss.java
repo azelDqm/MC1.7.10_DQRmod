@@ -37,7 +37,7 @@ public class DqmJumpBlockToBoss extends Block
         if (par5Entity instanceof EntityPlayer)
         {
             EntityPlayer ep = (EntityPlayer)par5Entity;
-
+            ep.fallDistance = 0;
             for (int y = 1; y <= 15; ++y)
             {
                 par1World.setBlockToAir(par2, par3 + y, par4);

@@ -12,6 +12,7 @@ import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.World;
+import dqr.api.Items.DQBuilders;
 import dqr.api.Items.DQMiscs;
 import dqr.api.enums.EnumDqmNpcTalk;
 import dqr.entity.npcEntity.DqmNPCBase;
@@ -119,6 +120,11 @@ public class DqmEntityNPCBank extends DqmNPCBase
             return false;
         }
         */
+
+        if(this.getTameMode() != 0)
+        {
+        	return false;
+        }
 
         return true;
     }
@@ -228,6 +234,13 @@ public class DqmEntityNPCBank extends DqmNPCBase
     	if(!ep.worldObj.isRemote)
     	{
     		//ep.addChatMessage(new ChatComponentTranslation("testTESTtest"));
+    		ItemStack its = ep.inventory.getCurrentItem();
+    		if(its != null && its.getItem() == DQBuilders.itemBuilderKaikosyo && ep.isSneaking() && this.tameMode != 0)
+    		{
+    			ep.worldObj.playSoundAtEntity(ep, "dqr:mob.petmob", 1.0F, 0.5F);
+    			this.setDead();
+    			return true;
+    		}
 
     		int flg = ExtendedPlayerProperties.get(ep).getNpcTalk(EnumDqmNpcTalk.BANK.getId());
     		int epMoney = ExtendedPlayerProperties.get(ep).getGold();

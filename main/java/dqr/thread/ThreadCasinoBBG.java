@@ -3,6 +3,7 @@ package dqr.thread;
 import java.util.Random;
 
 import net.minecraft.entity.player.EntityPlayer;
+import dqr.DQR;
 import dqr.PacketHandler;
 import dqr.api.enums.EnumDqmFuncPacketCode;
 import dqr.gui.casino.GuiCasinoBBGGuiContainer;
@@ -34,7 +35,7 @@ public class ThreadCasinoBBG extends Thread{
 		if(gui.gamePhase == 2)
 		{
 			try {
-				this.sleep(500);
+				this.sleep((long)(500 / DQR.conf.MBG_highSpeed));
 			} catch (InterruptedException e) {
 				// TODO 自動生成された catch ブロック
 				e.printStackTrace();
@@ -42,7 +43,7 @@ public class ThreadCasinoBBG extends Thread{
 			gui.mobCode = gui.suraBox[gui.mobNumber];
 
 			try {
-				this.sleep(300);
+				this.sleep((long)(300 / DQR.conf.MBG_highSpeed));
 			} catch (InterruptedException e) {
 				// TODO 自動生成された catch ブロック
 				e.printStackTrace();
@@ -52,7 +53,7 @@ public class ThreadCasinoBBG extends Thread{
 		}else if(gui.gamePhase == 3)
 		{
 			try {
-				this.sleep(300);
+				this.sleep((long)(300 / DQR.conf.MBG_highSpeed));
 			} catch (InterruptedException e) {
 				// TODO 自動生成された catch ブロック
 				e.printStackTrace();
@@ -60,7 +61,7 @@ public class ThreadCasinoBBG extends Thread{
 			gui.msgPattern = 1;
 
 			try {
-				this.sleep(500);
+				this.sleep((long)(500 / DQR.conf.MBG_highSpeed));
 			} catch (InterruptedException e) {
 				// TODO 自動生成された catch ブロック
 				e.printStackTrace();
@@ -69,7 +70,7 @@ public class ThreadCasinoBBG extends Thread{
 			gui.attackPattern = 1;
 
 			try {
-				this.sleep(100);
+				this.sleep((long)(100 / DQR.conf.MBG_highSpeed));
 			} catch (InterruptedException e) {
 				// TODO 自動生成された catch ブロック
 			}
@@ -77,7 +78,7 @@ public class ThreadCasinoBBG extends Thread{
 			gui.attackPattern = 2;
 
 			try {
-				this.sleep(200);
+				this.sleep((long)(200 / DQR.conf.MBG_highSpeed));
 			} catch (InterruptedException e) {
 				// TODO 自動生成された catch ブロック
 			}
@@ -98,7 +99,7 @@ public class ThreadCasinoBBG extends Thread{
 			gui.myCoin = gui.myCoin + getCoinVal;
 			//gui.getTotalCoin = gui.getTotalCoin + getCoinVal;
 			try {
-				this.sleep(250);
+				this.sleep((long)(250 / DQR.conf.MBG_highSpeed));
 			} catch (InterruptedException e) {
 				// TODO 自動生成された catch ブロック
 			}
@@ -113,7 +114,7 @@ public class ThreadCasinoBBG extends Thread{
 			if(gui.mobNumber < 5)
 			{
 				try {
-					this.sleep(400);
+					this.sleep((long)(400 / DQR.conf.MBG_highSpeed));
 				} catch (InterruptedException e) {
 					// TODO 自動生成された catch ブロック
 					e.printStackTrace();
@@ -121,7 +122,7 @@ public class ThreadCasinoBBG extends Thread{
 				gui.mobCode = gui.suraBox[gui.mobNumber];
 
 				try {
-					this.sleep(300);
+					this.sleep((long)(300 / DQR.conf.MBG_highSpeed));
 				} catch (InterruptedException e) {
 					// TODO 自動生成された catch ブロック
 					e.printStackTrace();
@@ -131,7 +132,7 @@ public class ThreadCasinoBBG extends Thread{
 			{
 				//ゾーマ戦
 				try {
-					this.sleep(400);
+					this.sleep((long)(400 / DQR.conf.MBG_highSpeed));
 				} catch (InterruptedException e) {
 					// TODO 自動生成された catch ブロック
 					e.printStackTrace();
@@ -150,7 +151,7 @@ public class ThreadCasinoBBG extends Thread{
 			{
 				//System.out.println("TEST:B");
 				try {
-					this.sleep(300);
+					this.sleep((long)(300 / DQR.conf.MBG_highSpeed));
 				} catch (InterruptedException e) {
 					// TODO 自動生成された catch ブロック
 					e.printStackTrace();
@@ -200,7 +201,7 @@ public class ThreadCasinoBBG extends Thread{
 			{
 				//System.out.println("TEST:B");
 				try {
-					this.sleep(300);
+					this.sleep((long)(300 / DQR.conf.MBG_highSpeed));
 				} catch (InterruptedException e) {
 					// TODO 自動生成された catch ブロック
 				}
@@ -210,7 +211,7 @@ public class ThreadCasinoBBG extends Thread{
 			{
 				//System.out.println("TEST:C");
 				try {
-					this.sleep(300);
+					this.sleep((long)(300 / DQR.conf.MBG_highSpeed));
 				} catch (InterruptedException e) {
 					// TODO 自動生成された catch ブロック
 					e.printStackTrace();
@@ -223,7 +224,7 @@ public class ThreadCasinoBBG extends Thread{
 					gui.msgPattern = 10;
 					gui.gamePhase = 50;
 					try {
-						this.sleep(300);
+						this.sleep((long)(300 / DQR.conf.MBG_highSpeed));
 					} catch (InterruptedException e) {
 						// TODO 自動生成された catch ブロック
 						e.printStackTrace();
@@ -232,7 +233,7 @@ public class ThreadCasinoBBG extends Thread{
 					//gui.msgPattern = 8;
 
 					try {
-						this.sleep(500);
+						this.sleep((long)(500 / DQR.conf.MBG_highSpeed));
 					} catch (InterruptedException e) {
 						// TODO 自動生成された catch ブロック
 						e.printStackTrace();
@@ -242,7 +243,7 @@ public class ThreadCasinoBBG extends Thread{
 					gui.soundPlay = 9;
 					gui.gamePhase = 51;
 					try {
-						this.sleep(100);
+						this.sleep((long)(100 / DQR.conf.MBG_highSpeed));
 					} catch (InterruptedException e) {
 						// TODO 自動生成された catch ブロック
 					}
@@ -250,7 +251,7 @@ public class ThreadCasinoBBG extends Thread{
 					gui.attackPattern = 2;
 
 					try {
-						this.sleep(200);
+						this.sleep((long)(200 / DQR.conf.MBG_highSpeed));
 					} catch (InterruptedException e) {
 						// TODO 自動生成された catch ブロック
 					}
@@ -258,7 +259,7 @@ public class ThreadCasinoBBG extends Thread{
 					gui.attackPattern = 0;
 
 					try {
-						this.sleep(250);
+						this.sleep((long)(250 / DQR.conf.MBG_highSpeed));
 					} catch (InterruptedException e) {
 						// TODO 自動生成された catch ブロック
 					}
@@ -267,7 +268,7 @@ public class ThreadCasinoBBG extends Thread{
 					gui.mobCode = -1;
 
 					try {
-						this.sleep(300);
+						this.sleep((long)(300 / DQR.conf.MBG_highSpeed));
 					} catch (InterruptedException e) {
 						// TODO 自動生成された catch ブロック
 					}
@@ -313,7 +314,7 @@ public class ThreadCasinoBBG extends Thread{
 			gui.buttonPattern = -1;
 			//プレイヤダメージ
 			try {
-				this.sleep(400);
+				this.sleep((long)(400 / DQR.conf.MBG_highSpeed));
 			} catch (InterruptedException e) {
 				// TODO 自動生成された catch ブロック
 				e.printStackTrace();
@@ -323,7 +324,7 @@ public class ThreadCasinoBBG extends Thread{
 			gui.life = 0;
 
 			try {
-				this.sleep(1500);
+				this.sleep((long)(1500 / DQR.conf.MBG_highSpeed));
 			} catch (InterruptedException e) {
 				// TODO 自動生成された catch ブロック
 				e.printStackTrace();
@@ -339,7 +340,7 @@ public class ThreadCasinoBBG extends Thread{
 			gui.buttonPattern = -1;
 			//プレイヤダメージ
 			try {
-				this.sleep(400);
+				this.sleep((long)(400 / DQR.conf.MBG_highSpeed));
 			} catch (InterruptedException e) {
 				// TODO 自動生成された catch ブロック
 				e.printStackTrace();
@@ -349,7 +350,7 @@ public class ThreadCasinoBBG extends Thread{
 			gui.life = 180 - gui.damage;
 
 			try {
-				this.sleep(1000);
+				this.sleep((long)(1000 / DQR.conf.MBG_highSpeed));
 			} catch (InterruptedException e) {
 				// TODO 自動生成された catch ブロック
 				e.printStackTrace();
@@ -373,7 +374,7 @@ public class ThreadCasinoBBG extends Thread{
 			gui.buttonPattern = -1;
 			//プレイヤダメージ
 			try {
-				this.sleep(400);
+				this.sleep((long)(400 / DQR.conf.MBG_highSpeed));
 			} catch (InterruptedException e) {
 				// TODO 自動生成された catch ブロック
 				e.printStackTrace();
@@ -383,7 +384,7 @@ public class ThreadCasinoBBG extends Thread{
 			gui.life = 0;
 
 			try {
-				this.sleep(1500);
+				this.sleep((long)(1500 / DQR.conf.MBG_highSpeed));
 			} catch (InterruptedException e) {
 				// TODO 自動生成された catch ブロック
 				e.printStackTrace();
@@ -404,7 +405,7 @@ public class ThreadCasinoBBG extends Thread{
 		}else if(gui.gamePhase == 8)
 		{
 			try {
-				this.sleep(300);
+				this.sleep((long)(300 / DQR.conf.MBG_highSpeed));
 			} catch (InterruptedException e) {
 				// TODO 自動生成された catch ブロック
 				e.printStackTrace();
@@ -439,7 +440,7 @@ public class ThreadCasinoBBG extends Thread{
 			gui.buttonPattern = -1;
 			//プレイヤダメージ
 			try {
-				this.sleep(400);
+				this.sleep((long)(400 / DQR.conf.MBG_highSpeed));
 			} catch (InterruptedException e) {
 				// TODO 自動生成された catch ブロック
 				e.printStackTrace();
@@ -451,7 +452,7 @@ public class ThreadCasinoBBG extends Thread{
 			gui.life = 180 - gui.damage;
 
 			try {
-				this.sleep(1000);
+				this.sleep((long)(1000 / DQR.conf.MBG_highSpeed));
 			} catch (InterruptedException e) {
 				// TODO 自動生成された catch ブロック
 				e.printStackTrace();
@@ -471,7 +472,7 @@ public class ThreadCasinoBBG extends Thread{
 		}else if(gui.gamePhase == 9)
 		{
 			try {
-				this.sleep(300);
+				this.sleep((long)(300 / DQR.conf.MBG_highSpeed));
 			} catch (InterruptedException e) {
 				// TODO 自動生成された catch ブロック
 				e.printStackTrace();
@@ -503,7 +504,7 @@ public class ThreadCasinoBBG extends Thread{
 			gui.buttonPattern = -1;
 			//プレイヤダメージ
 			try {
-				this.sleep(400);
+				this.sleep((long)(400 / DQR.conf.MBG_highSpeed));
 			} catch (InterruptedException e) {
 				// TODO 自動生成された catch ブロック
 				e.printStackTrace();
@@ -513,7 +514,7 @@ public class ThreadCasinoBBG extends Thread{
 			gui.life = 0;
 
 			try {
-				this.sleep(1000);
+				this.sleep((long)(1000 / DQR.conf.MBG_highSpeed));
 			} catch (InterruptedException e) {
 				// TODO 自動生成された catch ブロック
 				e.printStackTrace();
@@ -526,7 +527,7 @@ public class ThreadCasinoBBG extends Thread{
 		{
 			//死亡からの復活勝利
 			try {
-				this.sleep(1800);
+				this.sleep((long)(1800 / DQR.conf.MBG_highSpeed));
 			} catch (InterruptedException e) {
 				// TODO 自動生成された catch ブロック
 				e.printStackTrace();
@@ -536,7 +537,7 @@ public class ThreadCasinoBBG extends Thread{
 			gui.cartainFlg = 4;
 
 			try {
-				this.sleep(1800);
+				this.sleep((long)(1800 / DQR.conf.MBG_highSpeed));
 			} catch (InterruptedException e) {
 				// TODO 自動生成された catch ブロック
 				e.printStackTrace();
@@ -544,7 +545,7 @@ public class ThreadCasinoBBG extends Thread{
 			gui.gamePhase = 41;
 
 			try {
-				this.sleep(1800);
+				this.sleep((long)(1800 / DQR.conf.MBG_highSpeed));
 			} catch (InterruptedException e) {
 				// TODO 自動生成された catch ブロック
 				e.printStackTrace();
@@ -552,7 +553,7 @@ public class ThreadCasinoBBG extends Thread{
 			gui.gamePhase = 42;
 			gui.soundPlay = 4;
 			try {
-				this.sleep(1800);
+				this.sleep((long)(1800 / DQR.conf.MBG_highSpeed));
 			} catch (InterruptedException e) {
 				// TODO 自動生成された catch ブロック
 				e.printStackTrace();
@@ -572,7 +573,7 @@ public class ThreadCasinoBBG extends Thread{
 			//gui.getTotalCoin = gui.getTotalCoin + getCoinVal;
 
 			try {
-				this.sleep(1200);
+				this.sleep((long)(1200 / DQR.conf.MBG_highSpeed));
 			} catch (InterruptedException e) {
 				// TODO 自動生成された catch ブロック
 				e.printStackTrace();
@@ -582,7 +583,7 @@ public class ThreadCasinoBBG extends Thread{
 		{
 
 			try {
-				this.sleep(500);
+				this.sleep((long)(500 / DQR.conf.MBG_highSpeed));
 			} catch (InterruptedException e) {
 				// TODO 自動生成された catch ブロック
 				e.printStackTrace();
@@ -611,7 +612,7 @@ public class ThreadCasinoBBG extends Thread{
 		}else if(gui.gamePhase == 34)
 		{
 			try {
-				this.sleep(300);
+				this.sleep((long)(300 / DQR.conf.MBG_highSpeed));
 			} catch (InterruptedException e) {
 				// TODO 自動生成された catch ブロック
 				e.printStackTrace();
@@ -619,7 +620,7 @@ public class ThreadCasinoBBG extends Thread{
 			//gui.msgPattern = 8;
 
 			try {
-				this.sleep(500);
+				this.sleep((long)(500 / DQR.conf.MBG_highSpeed));
 			} catch (InterruptedException e) {
 				// TODO 自動生成された catch ブロック
 				e.printStackTrace();
@@ -630,7 +631,7 @@ public class ThreadCasinoBBG extends Thread{
 			//gui.epa.playSound("dqr:player.miss", 0.9F, 1.0F);
 
 			try {
-				this.sleep(100);
+				this.sleep((long)(100 / DQR.conf.MBG_highSpeed));
 			} catch (InterruptedException e) {
 				// TODO 自動生成された catch ブロック
 			}
@@ -638,7 +639,7 @@ public class ThreadCasinoBBG extends Thread{
 			gui.attackPattern = 2;
 
 			try {
-				this.sleep(200);
+				this.sleep((long)(200 / DQR.conf.MBG_highSpeed));
 			} catch (InterruptedException e) {
 				// TODO 自動生成された catch ブロック
 			}
@@ -647,14 +648,14 @@ public class ThreadCasinoBBG extends Thread{
 			gui.posMissFix = 0;
 
 			try {
-				this.sleep(250);
+				this.sleep((long)(250 / DQR.conf.MBG_highSpeed));
 			} catch (InterruptedException e) {
 				// TODO 自動生成された catch ブロック
 			}
 			gui.gamePhase = 35;
 
 			try {
-				this.sleep(300);
+				this.sleep((long)(300 / DQR.conf.MBG_highSpeed));
 			} catch (InterruptedException e) {
 				// TODO 自動生成された catch ブロック
 			}
@@ -678,7 +679,7 @@ public class ThreadCasinoBBG extends Thread{
 		{
 			gui.msgPattern = 10;
 			try {
-				this.sleep(300);
+				this.sleep((long)(300 / DQR.conf.MBG_highSpeed));
 			} catch (InterruptedException e) {
 				// TODO 自動生成された catch ブロック
 				e.printStackTrace();
@@ -687,7 +688,7 @@ public class ThreadCasinoBBG extends Thread{
 			//gui.msgPattern = 8;
 
 			try {
-				this.sleep(500);
+				this.sleep((long)(500 / DQR.conf.MBG_highSpeed));
 			} catch (InterruptedException e) {
 				// TODO 自動生成された catch ブロック
 				e.printStackTrace();
@@ -697,7 +698,7 @@ public class ThreadCasinoBBG extends Thread{
 			gui.soundPlay = 9;
 			gui.gamePhase = 51;
 			try {
-				this.sleep(100);
+				this.sleep((long)(100 / DQR.conf.MBG_highSpeed));
 			} catch (InterruptedException e) {
 				// TODO 自動生成された catch ブロック
 			}
@@ -705,7 +706,7 @@ public class ThreadCasinoBBG extends Thread{
 			gui.attackPattern = 2;
 
 			try {
-				this.sleep(200);
+				this.sleep((long)(200 / DQR.conf.MBG_highSpeed));
 			} catch (InterruptedException e) {
 				// TODO 自動生成された catch ブロック
 			}
@@ -713,7 +714,7 @@ public class ThreadCasinoBBG extends Thread{
 			gui.attackPattern = 0;
 
 			try {
-				this.sleep(250);
+				this.sleep((long)(250 / DQR.conf.MBG_highSpeed));
 			} catch (InterruptedException e) {
 				// TODO 自動生成された catch ブロック
 			}
@@ -722,7 +723,7 @@ public class ThreadCasinoBBG extends Thread{
 			gui.mobCode = -1;
 
 			try {
-				this.sleep(300);
+				this.sleep((long)(300 / DQR.conf.MBG_highSpeed));
 			} catch (InterruptedException e) {
 				// TODO 自動生成された catch ブロック
 			}
@@ -756,13 +757,13 @@ public class ThreadCasinoBBG extends Thread{
 	{
 		gui.soundPlay = 3;
 		try {
-			this.sleep(100);
+			this.sleep((long)(100 / DQR.conf.MBG_highSpeed));
 		} catch (InterruptedException e) {
 			// TODO 自動生成された catch ブロック
 		}
 		gui.soundPlay = 3;
 		try {
-			this.sleep(100);
+			this.sleep((long)(100 / DQR.conf.MBG_highSpeed));
 		} catch (InterruptedException e) {
 			// TODO 自動生成された catch ブロック
 		}

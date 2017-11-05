@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Random;
 
 import net.minecraft.entity.player.EntityPlayer;
+import dqr.DQR;
 import dqr.PacketHandler;
 import dqr.api.enums.EnumDqmCasinoCCROdds;
 import dqr.api.enums.EnumDqmFuncPacketCode;
@@ -38,7 +39,7 @@ public class ThreadCasinoCCR extends Thread{
 		{
 			gui.msgPattern = 1;
 			try {
-				this.sleep(1000);
+				this.sleep(DQR.conf.CCR_turnStart_wait);
 			} catch (InterruptedException e) {
 				// TODO 自動生成された catch ブロック
 				e.printStackTrace();
@@ -47,7 +48,7 @@ public class ThreadCasinoCCR extends Thread{
 			this.doCPU();
 
 			try {
-				this.sleep(1500);
+				this.sleep(DQR.conf.CCR_turnChange_wait);
 			} catch (InterruptedException e) {
 				// TODO 自動生成された catch ブロック
 				e.printStackTrace();
@@ -72,7 +73,7 @@ public class ThreadCasinoCCR extends Thread{
 
 
 			try {
-				this.sleep(1500);
+				this.sleep(DQR.conf.CCR_turnStart_wait);
 			} catch (InterruptedException e) {
 				// TODO 自動生成された catch ブロック
 				e.printStackTrace();
@@ -105,7 +106,7 @@ public class ThreadCasinoCCR extends Thread{
     				gui.gamePhase = 1;
     				gui.msgPattern = 1;
     				try {
-    					this.sleep(1000);
+    					this.sleep(DQR.conf.CCR_turnChange_wait);
     				} catch (InterruptedException e) {
     					// TODO 自動生成された catch ブロック
     					e.printStackTrace();
@@ -131,7 +132,7 @@ public class ThreadCasinoCCR extends Thread{
 		{
 			//gui.gamePhase = 4;
 			try {
-				this.sleep(100);
+				this.sleep(DQR.conf.CCR_result_wait);
 			} catch (InterruptedException e) {
 				// TODO 自動生成された catch ブロック
 				e.printStackTrace();
@@ -259,7 +260,7 @@ public class ThreadCasinoCCR extends Thread{
 				gui.soundPlay = 2;
 			}
 			try {
-				this.sleep(700);
+				this.sleep(DQR.conf.CCR_end_wait);
 			} catch (InterruptedException e) {
 				// TODO 自動生成された catch ブロック
 				e.printStackTrace();
@@ -368,7 +369,7 @@ public class ThreadCasinoCCR extends Thread{
 			gui.dice3 = -1;
 
 			try {
-				this.sleep(1500);
+				this.sleep(DQR.conf.CCR_cpuDice_wait);
 			} catch (InterruptedException e) {
 				// TODO 自動生成された catch ブロック
 				e.printStackTrace();
@@ -380,7 +381,7 @@ public class ThreadCasinoCCR extends Thread{
 			gui.soundPlay = 1;
 
 			try {
-				this.sleep(1500);
+				this.sleep(DQR.conf.CCR_cpuCheck_wait);
 			} catch (InterruptedException e) {
 				// TODO 自動生成された catch ブロック
 				e.printStackTrace();

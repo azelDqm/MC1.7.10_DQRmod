@@ -2,7 +2,6 @@ package dqr.handler;
 
 import java.util.Random;
 
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.MathHelper;
@@ -17,7 +16,6 @@ import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import dqr.DQR;
 import dqr.api.potion.DQPotionMinus;
-import dqr.entity.mobEntity.DqmMobBase;
 import dqr.playerData.ExtendedPlayerProperties;
 
 public class RarihoEventHandler {
@@ -76,15 +74,23 @@ public class RarihoEventHandler {
     			}
 
     		}
-    	}else if(event.entityLiving instanceof EntityLivingBase && !(event.entityLiving instanceof DqmMobBase))
+    	}
+    	/*
+    	else if(event.entityLiving instanceof EntityLivingBase && !(event.entityLiving instanceof DqmMobBase))
     	{
 
     		if(DQR.func.isBind(event.entityLiving))
     		{
-    			event.setCanceled(true);
+    			event.entityLiving.moveForward = 0;
+    			event.entityLiving.moveStrafing = 0;
+    			//event.entityLiving.randomYawVelocity = 0;
+    			event.entityLiving.setJumping(false);
+
+    			//event.setCanceled(true);
     		}
 
     	}
+    	*/
 	}
 
 	@SubscribeEvent(priority = EventPriority.HIGHEST)

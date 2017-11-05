@@ -6,8 +6,10 @@ import java.util.Random;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.potion.Potion;
-import net.minecraft.util.MathHelper;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
+import dqr.DQR;
 import dqr.api.enums.EnumDqmMagic;
 import dqr.entity.mobEntity.DqmMobBase;
 
@@ -36,38 +38,42 @@ public class EntityAIMagicBehomara extends EntityAIBase
      */
     public boolean shouldExecute()
     {
-    	/*
-        if (this.field_151500_b.getRNG().nextInt(this.field_151500_b.isChild() ? 50 : 1000) != 0)
-        {
-            return false;
-        }
-        else
-        {
-            int i = MathHelper.floor_double(this.field_151500_b.posX);
-            int j = MathHelper.floor_double(this.field_151500_b.posY);
-            int k = MathHelper.floor_double(this.field_151500_b.posZ);
-            return this.field_151501_c.getBlock(i, j, k) == Blocks.tallgrass && this.field_151501_c.getBlockMetadata(i, j, k) == 1 ? true : this.field_151501_c.getBlock(i, j - 1, k) == Blocks.grass;
-        }
-        */
 
-    	List list = field_151501_c.getEntitiesWithinAABBExcludingEntity(field_151500_b,
-    			field_151500_b.boundingBox.addCoord(field_151500_b.motionX, field_151500_b.motionY, field_151500_b.motionZ).expand(10.0D, 5.0D, 10.0D));
-
-        if (list != null && !list.isEmpty())
+        if(!this.field_151500_b.worldObj.isRemote)
         {
-        	for (int n = 0 ; n < list.size() ; n++)
-        	{
-        		Entity target = (Entity)list.get(n);
+            WorldServer worldserver = MinecraftServer.getServer().worldServers[0];
 
-        		if(target instanceof DqmMobBase)
-        		{
-        			if(((DqmMobBase) target).getHealth() < ((DqmMobBase) target).getMaxHealth())
-        			{
-        				this.tagetMob = (DqmMobBase)target;
-        				return true;
-        			}
-        		}
-        	}
+            long setTime = worldserver.getWorldTime();
+
+            //if(DQR.debug == 4) System.out.println("shouldExecute(Time) : " + this.field_151500_b.skillCoolTime + "(" + (this.parentEntity.skillCoolTime + 5) +  ") / " + setTime );
+            if(this.field_151500_b.skillCoolTimeHeal + DQR.func.xRandom(this.field_151500_b.skillCoolTimeHealMin, this.field_151500_b.skillCoolTimeHealMax) < setTime)
+            {
+		    	if(this.field_151500_b.getMaxHealth() > this.field_151500_b.getHealth())
+		    	{
+		    		this.tagetMob = this.field_151500_b;
+		    		return true;
+		    	}
+
+		    	List list = field_151501_c.getEntitiesWithinAABBExcludingEntity(field_151500_b,
+		    			field_151500_b.boundingBox.addCoord(field_151500_b.motionX, field_151500_b.motionY, field_151500_b.motionZ).expand(10.0D, 5.0D, 10.0D));
+
+		        if (list != null && !list.isEmpty())
+		        {
+		        	for (int n = 0 ; n < list.size() ; n++)
+		        	{
+		        		Entity target = (Entity)list.get(n);
+
+		        		if(target instanceof DqmMobBase)
+		        		{
+		        			if(((DqmMobBase) target).getHealth() < ((DqmMobBase) target).getMaxHealth())
+		        			{
+		        				this.tagetMob = (DqmMobBase)target;
+		        				return true;
+		        			}
+		        		}
+		        	}
+		        }
+            }
         }
 
         return false;
@@ -124,9 +130,7 @@ public class EntityAIMagicBehomara extends EntityAIBase
         //if (d0 <= (double)5.0F && this.field_75318_f >= 20)
         if (this.field_75318_f >= 40)
         {
-            this.field_151500_b.getNavigator().clearPathEntity();
-            field_151500_b.attackEntityWithBehomara(this.field_151500_b, 0, this.enumMagic);
-            this.tagetMob = null;
+
         }
         else
         {
@@ -136,25 +140,18 @@ public class EntityAIMagicBehomara extends EntityAIBase
         if(this.tagetMob != null){
         	this.field_151500_b.getLookHelper().setLookPositionWithEntity(this.tagetMob, 30.0F, 30.0F);
         }
-        float f;
 
+        field_151500_b.attackEntityWithBehomara(this.field_151500_b, 0, this.enumMagic);
+        this.tagetMob = null;
 
-        if (d0 > (double)20.0F || !flag)
+        if(!this.field_151500_b.worldObj.isRemote)
         {
-            return;
-        }
+            WorldServer worldserver = MinecraftServer.getServer().worldServers[0];
 
-        f = MathHelper.sqrt_double(d0) / 5.0F;
-        float f1 = f;
+            long setTime = worldserver.getWorldTime();
 
-        if (f < 0.1F)
-        {
-            f1 = 0.1F;
-        }
 
-        if (f1 > 1.0F)
-        {
-            f1 = 1.0F;
+            this.field_151500_b.skillCoolTimeHeal = setTime;
         }
 
 

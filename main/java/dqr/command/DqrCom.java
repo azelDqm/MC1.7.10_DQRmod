@@ -32,7 +32,7 @@ public class DqrCom extends CommandBase {
         	if(var2.length >= 2 && var2[1].equalsIgnoreCase("fishingMode"))
         	{
         		//System.out.println("TEST2");
-        		if(var2.length >= 3 && (var2[2].equalsIgnoreCase("0") || var2[2].equalsIgnoreCase("1") || var2[2].equalsIgnoreCase("2")))
+        		if(var2.length >= 3 && (var2[2].equalsIgnoreCase("0") || var2[2].equalsIgnoreCase("1")))
         		{
         			DQR.conf.setFisshingMode(Integer.parseInt(var2[2]));
         			flg = true;
@@ -43,7 +43,7 @@ public class DqrCom extends CommandBase {
 
         if(!flg)
         {
-        	ep.addChatMessage(new ChatComponentTranslation(EnumColor.DarkRed.getChatColor() + "/dqr <conf> <fishMode> [0-2]", new Object[] {}));
+        	ep.addChatMessage(new ChatComponentTranslation(EnumColor.DarkRed.getChatColor() + "/dqr <conf> <fishMode> [0-1]", new Object[] {}));
         }else
         {
 

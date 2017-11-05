@@ -47,6 +47,7 @@ public class DqmItemBuilderCasino extends DqmItemBuilderBase{
 
 			if(newEntity != null)
 			{
+				newEntity.setTameMode(1);
 				newEntity.setLocationAndAngles((double)par4 + 0.5D, (double)par5 + 1.5D, (double)par6 + 0.5D, 0.0F, 0.0F);
 	        	par3World.spawnEntityInWorld(newEntity);
 	        	par1ItemStack.stackSize--;

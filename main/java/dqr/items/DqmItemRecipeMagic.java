@@ -525,21 +525,21 @@ public class DqmItemRecipeMagic {
                     "BCA",
                     "BDC",
                     "DBB",
-                    'A', DQIngots.itemTaiyounoisi2, 'B', DQMiscs.itemRengokunohane, 'C', DQIngots.itemYougansekinokakera, 'D', Items.stick
+                    'A', DQIngots.itemTaiyounoisi, 'B', DQMiscs.itemRengokunohane, 'C', DQIngots.itemYougansekinokakera, 'D', Items.stick
                 });
         GameRegistry.addRecipe(new ItemStack(DQMagics.itemBegirama , 1), new Object[]
                 {
                     "BCA",
                     "BDC",
                     "DBB",
-                    'A', DQIngots.itemPuratina2, 'B', DQIngots.itemRubinogenseki, 'C', DQMiscs.itemTukinomegumi, 'D', DQMagics.itemGira
+                    'A', DQIngots.itemTaiyounoisi2, 'B', DQIngots.itemRubinogenseki, 'C', DQMiscs.itemTukinomegumi, 'D', DQMagics.itemGira
                 });
         GameRegistry.addRecipe(new ItemStack(DQMagics.itemBegiragon , 1), new Object[]
                 {
                     "BCA",
                     "BDC",
                     "DBB",
-                    'A', DQIngots.itemMisriru2, 'B', DQMiscs.itemRyuunonamida, 'C', DQMiscs.itemToukonekisu, 'D', DQMagics.itemBegirama
+                    'A', DQIngots.itemPuratina2, 'B', DQMiscs.itemRyuunonamida, 'C', DQMiscs.itemToukonekisu, 'D', DQMagics.itemBegirama
                 });
         GameRegistry.addRecipe(new ItemStack(DQMagics.itemGiragureido , 1), new Object[]
                 {
@@ -589,6 +589,14 @@ public class DqmItemRecipeMagic {
                     "CBC",
                     "BC ",
                     'A', DQMiscs.itemSeireiseki, 'B', DQMiscs.itemUraminohouju, 'C', DQMiscs.itemTensinosoma
+                });
+
+        GameRegistry.addRecipe(new ItemStack(DQMagics.itemMahoton , 1), new Object[]
+                {
+                    " CA",
+                    "CBC",
+                    "BC ",
+                    'A', DQMiscs.itemSeireiseki, 'B', DQSeeds.itemMaryokunotaneI, 'C', DQSeeds.itemMahounomiI
                 });
 /*
         GameRegistry.addRecipe(new ItemStack(DQMagics.itemGiragureido , 1), new Object[]
@@ -1154,7 +1162,7 @@ public class DqmItemRecipeMagic {
                     "DAA",
                     'A', DQIngots.itemMigakizuna, 'B', DQMagicTools.itemMagicToolFarm1, 'C', DQIngots.itemMisriru, 'D', DQIngots.itemOriharukon
                 });
-
+/*
         GameRegistry.addRecipe(new ItemStack(DQMagicTools.itemMagicToolFarm1, 1), new Object[]
                 {
                     "AAB",
@@ -1162,7 +1170,7 @@ public class DqmItemRecipeMagic {
                     "BVB",
                     'A', DQMiscs.itemHaganenoobane, 'B', DQMiscs.itemKinkai, 'V', DQMiscs.itemKyodaihigetokage
                 });
-
+*/
         GameRegistry.addRecipe(new ItemStack(DQMagicTools.itemMagicToolBreak1, 1), new Object[]
                 {
                     "ABC",

@@ -1,6 +1,7 @@
 package dqr.command;
 
 import java.util.List;
+import java.util.Random;
 
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
@@ -57,6 +58,12 @@ public class DqrComDebug extends CommandBase {
         			ExtendedPlayerProperties.get(ep).setJobExp(ExtendedPlayerProperties.get(ep).getJob(), Integer.parseInt(var2[2]));
         			ThreadLvUp lvup = new ThreadLvUp(ep);
 	            	lvup.start();
+        			//PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties3((EntityPlayer)ep), (EntityPlayerMP)ep);
+        		}else if("sound".equalsIgnoreCase(var2[1]))
+        		{
+        			Random rand = new Random();
+        			ep.worldObj.playSoundAtEntity(ep, var2[2], 1.0F, ((rand.nextFloat() - rand.nextFloat()) * 0.7F + 1.0F) * 2.0F);
+        			//ExtendedPlayerProperties.get(ep).setJobExp(ExtendedPlayerProperties.get(ep).getJob(), Integer.parseInt(var2[2]));
         			//PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties3((EntityPlayer)ep), (EntityPlayerMP)ep);
         		}
         	}

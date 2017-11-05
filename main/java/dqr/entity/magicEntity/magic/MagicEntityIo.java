@@ -26,10 +26,13 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import dqr.DQR;
+import dqr.api.event.DqrExplosionEvent;
 import dqr.api.potion.DQPotionPlus;
+import dqr.entity.petEntity.DqmPetBase;
 
 /*
  * 発射されるエンティティのクラス。
@@ -258,8 +261,14 @@ public class MagicEntityIo extends MagicEntity implements IProjectile{
                             }
                     	}
 
-                    	this.worldObj.createExplosion(this, this.posX, this.posY, this.posZ, 3.0F, true);
-                        this.setDead();
+                    	DqrExplosionEvent event = new DqrExplosionEvent(this.worldObj, shootingEntity, this, this.posX, this.posY, this.posZ, 3.0F);
+            			event.setCanceled(false);
+            			event.setExplode(true);
+            			MinecraftForge.EVENT_BUS.post(event);
+            			if(!event.isCanceled())
+            			{
+                        	this.worldObj.createExplosion(this, this.posX, this.posY, this.posZ, 3.0F, event.isExplode());
+            			}
                 		//this.worldObj.createExplosion(this, this.posX, this.posY, this.posZ, 3.0F, true);
                 	}
                     this.setDead();
@@ -368,6 +377,12 @@ public class MagicEntityIo extends MagicEntity implements IProjectile{
 	                        	//対象が撃った本人の場合も当たらない
 	                        	entityList.remove(n);
 	                        }
+	                    }else if(target instanceof DqmPetBase)
+	                    {
+	                    	if(!(DQR.func.canAttackPetMonster((DqmPetBase)target, ((EntityPlayer)this.shootingEntity))))
+	                    	{
+	                    		entityList.remove(n);
+	                    	}
 	                    }
 	                    else if (target instanceof EntityTameable ||
 	                                 target instanceof EntityHorse)
@@ -408,7 +423,7 @@ public class MagicEntityIo extends MagicEntity implements IProjectile{
 
                         //別メソッドでダメージソースを確認
                         damagesource = this.thisDamageSource(this.shootingEntity);
-
+                        damagesource.setDamageBypassesArmor();
                         //バニラ矢と同様、このエンティティが燃えているなら対象に着火することも出来る
                         if (this.isBurning() && !(target.entityHit instanceof EntityEnderman))
                         {

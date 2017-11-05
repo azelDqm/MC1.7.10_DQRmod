@@ -4,24 +4,33 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import dqr.DQR;
-import dqr.api.enums.EnumDqmJob;
-import dqr.playerData.ExtendedPlayerProperties;
 
 public class DqmItemDebugBase extends Item{
 
 	@Override
     public boolean onItemUse(ItemStack par1ItemStack, EntityPlayer ep, World par3World, int p_77648_4_, int p_77648_5_, int p_77648_6_, int p_77648_7_, float p_77648_8_, float p_77648_9_, float p_77648_10_)
     {
-		System.out.println("TEST-1 : " + p_77648_4_ + "/" + p_77648_5_ + "/" + p_77648_6_ + "/" + p_77648_7_);
-		System.out.println("TEST-2 : " + p_77648_8_ + "/" + p_77648_9_ + "/" + p_77648_10_);
+		//System.out.println("TEST-1 : " + p_77648_4_ + "/" + p_77648_5_ + "/" + p_77648_6_ + "/" + p_77648_7_);
+		//System.out.println("TEST-2 : " + p_77648_8_ + "/" + p_77648_9_ + "/" + p_77648_10_);
 
+		System.out.println("TEST-2 : " + par3World.getBlock(p_77648_4_, p_77648_5_, p_77648_6_).getUnlocalizedName());
+		System.out.println("TEST-3 : " + par3World.getBlockMetadata(p_77648_4_, p_77648_5_, p_77648_6_));
+		/*
+		if (p_77648_7_ != 0 && par3World.getBlock(p_77648_4_, p_77648_5_ + 1, p_77648_6_))
+		{
+
+		}
+		*/
 		return true;
     }
 
     @Override
     public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player)
     {
+
+		EntityPlayer ep = player;
+
+		//System.out.println("TEST1 : " + ep.serverPosX + " / " + ep.serverPosZ + " : " + ep.worldObj);
     	/*
     	if(!world.isRemote)
     	{
@@ -75,7 +84,71 @@ public class DqmItemDebugBase extends Item{
 	    		//System.out.println("TEST3");
 	    	}
 	    	*/
+
+
+
+
     	}
+
+    	/*
+        List list = world.getEntitiesWithinAABBExcludingEntity(player,
+        		player.boundingBox.addCoord(player.motionX, player.motionY, player.motionZ).expand(10.0D, 5.0D, 10.0D));
+
+        if (list != null && !list.isEmpty())
+        {
+        	for (int n = 0 ; n < list.size() ; n++)
+        	{
+        		Entity target = (Entity)list.get(n);
+        		if(target instanceof EntityLivingBase)
+        		{
+    				EntityLivingBase elv = (EntityLivingBase)target;
+    				if(player.isWet())
+    				{
+	        			if(player.isSneaking())
+	        			{
+
+	        				//System.out.println("TET4 : " + elv.getCommandSenderName());
+	        				//elv.addPotionEffect(new PotionEffect(DQPotionMinus.debuffRariho.id, 100, 0));
+	        				//elv.addPotionEffect(new PotionEffect( .id, 100, 1));
+
+	        			}else
+	        			{
+
+	        				System.out.println("TET3 : " + elv.getCommandSenderName());
+	        				//elv.addPotionEffect(new PotionEffect(DQPotionMinus.debuffRariho.id, 100, 0));
+	        				elv.addPotionEffect(new PotionEffect(DQPotionMinus.debuffMahoton.id, 100, 1));
+	        			}
+    				}else
+    				{
+	        			if(player.isSneaking())
+	        			{
+	        				System.out.println("TET2 : " + elv.getCommandSenderName());
+	        				elv.clearActivePotions();
+	        			}else
+	        			{
+
+	        				System.out.println("TET : " + elv.getCommandSenderName());
+	        				//elv.addPotionEffect(new PotionEffect(DQPotionMinus.debuffRariho.id, 100, 0));
+	        				elv.addPotionEffect(new PotionEffect(DQPotionMinus.debuffRariho.id, 100, 1));
+	        			}
+    				}
+        		}
+        	}
+        }
+        */
+    	/*
+    	if(player.isSneaking())
+    	{
+    		player.openGui(DQR.instance, 999, world, (int)player.posX, (int)player.posY, (int)player.posZ);
+    	}else
+    	{
+    		//player.openGui(DQR.instance, DQR.conf.GuiID_CSSlot, world, (int)player.posX, (int)player.posY, (int)player.posZ);
+    		//player.openGui(DQR.instance, DQR.conf.GuiID_CEWeapon, player.worldObj, (int)player.posX, (int)player.posY, (int)player.posZ);
+    		player.openGui(DQR.instance, DQR.conf.GuiID_CSCCR, player.worldObj, (int)player.posX, (int)player.posY, (int)player.posZ);
+    	}
+    	*/
+
+
 
         /*
             GUIを開く。インスタンス, GUIのID, World, X, Y, Z
@@ -98,15 +171,8 @@ public class DqmItemDebugBase extends Item{
     	*/
 
 
-    	if(player.isSneaking())
-    	{
-    		player.openGui(DQR.instance, 999, world, (int)player.posX, (int)player.posY, (int)player.posZ);
-    	}else
-    	{
-    		//player.openGui(DQR.instance, DQR.conf.GuiID_CSSlot, world, (int)player.posX, (int)player.posY, (int)player.posZ);
-    		//player.openGui(DQR.instance, DQR.conf.GuiID_CEWeapon, player.worldObj, (int)player.posX, (int)player.posY, (int)player.posZ);
-    		player.openGui(DQR.instance, DQR.conf.GuiID_CSCCR, player.worldObj, (int)player.posX, (int)player.posY, (int)player.posZ);
-    	}
+
+
         //player.openGui(DQR.instance, DQR.conf.GuiID_PetBook, world, (int)player.posX, (int)player.posY, (int)player.posZ);
     	//player.openGui(DQR.instance, DQR.conf.GuiID_PetStatus, world, (int)player.posX, (int)player.posY, (int)player.posZ);
     	//System.out.println("TEST" + System.currentTimeMillis());
@@ -139,6 +205,7 @@ public class DqmItemDebugBase extends Item{
     	*/
 
 
+    	/*
     	int job = ExtendedPlayerProperties.get(player).getJob();
 
     	if(job == EnumDqmJob.MASTERDRAGON.getId())
@@ -148,6 +215,7 @@ public class DqmItemDebugBase extends Item{
     	{
     		ExtendedPlayerProperties.get(player).setJob(job + 1);
     	}
+    	*/
 
     	//int job = ExtendedPlayerProperties.get(player).getJob();
     	//int exp = ExtendedPlayerProperties.get(player).getJobExp(job);

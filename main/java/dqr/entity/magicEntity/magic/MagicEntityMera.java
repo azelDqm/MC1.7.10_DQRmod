@@ -33,6 +33,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import dqr.DQR;
 import dqr.api.potion.DQPotionPlus;
+import dqr.entity.petEntity.DqmPetBase;
 
 /*
  * 発射されるエンティティのクラス。
@@ -77,6 +78,7 @@ public class MagicEntityMera extends MagicEntity implements IProjectile{
             float adjustX, float adjustZ, float adjustY, float fixX, float fixZ)
    {
    	super(par1World);
+
        this.renderDistanceWeight = 10.0D;
        this.shootingEntity = par2EntityLivingBase;
        this.yOffset = 0.0F;
@@ -220,6 +222,8 @@ public class MagicEntityMera extends MagicEntity implements IProjectile{
     public void onUpdate()
     {
         super.onUpdate();
+
+        DQR.func.debugString("Mera motion : " + this.motionX + " / " + this.motionY + " / " + this.motionZ);
 
         if(this.isDoSetDead(this, shootingEntity))
         {
@@ -384,6 +388,12 @@ public class MagicEntityMera extends MagicEntity implements IProjectile{
 		                        	//対象が撃った本人の場合も当たらない
 		                        	entityList.remove(n);
 		                        }
+		                    }else if(target instanceof DqmPetBase)
+		                    {
+		                    	if(!(DQR.func.canAttackPetMonster((DqmPetBase)target, ((EntityPlayer)this.shootingEntity))))
+		                    	{
+		                    		entityList.remove(n);
+		                    	}
 		                    }
 		                    else if (target instanceof EntityTameable ||
 		                                 target instanceof EntityHorse)
@@ -425,7 +435,7 @@ public class MagicEntityMera extends MagicEntity implements IProjectile{
 
                         //別メソッドでダメージソースを確認
                         damagesource = this.thisDamageSource(this.shootingEntity);
-
+                        damagesource.setDamageBypassesArmor();
                         //バニラ矢と同様、このエンティティが燃えているなら対象に着火することも出来る
                         if (this.isBurning() && !(target.entityHit instanceof EntityEnderman))
                         {

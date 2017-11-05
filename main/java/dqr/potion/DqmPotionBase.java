@@ -45,4 +45,14 @@ public class DqmPotionBase extends Potion {
 		return this;
 	}
 
+	/*
+	@Override
+    @SideOnly(Side.CLIENT)
+    public void renderInventoryEffect(int x, int y, PotionEffect effect, net.minecraft.client.Minecraft mc) {
+
+        mc.getTextureManager().bindTexture(field_147001_a);
+        mc.currentScreen.drawTexturedModalRect(x + 6, y + 7, (iconID % 14) * 18, (iconID / 14) * 18, 18, 18);
+
+    }
+    */
 }

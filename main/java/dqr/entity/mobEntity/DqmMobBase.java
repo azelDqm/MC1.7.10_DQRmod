@@ -26,6 +26,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
@@ -40,6 +41,7 @@ import dqr.api.Items.DQWeapons;
 import dqr.api.enums.EnumDqmMagic;
 import dqr.api.enums.EnumDqmMessageConv;
 import dqr.api.enums.EnumDqmMobRoot;
+import dqr.api.enums.EnumDqmMobSkilProp;
 import dqr.api.enums.EnumDqmMonster;
 import dqr.api.enums.EnumDqmMonsterAI;
 import dqr.api.enums.EnumDqmMonsterAIrate;
@@ -49,8 +51,12 @@ import dqr.api.potion.DQPotionMinus;
 import dqr.api.potion.DQPotionPlus;
 import dqr.entity.magicEntity.magic.MagicEntity;
 import dqr.entity.magicEntity.magic.MagicEntityBagi;
+import dqr.entity.magicEntity.magic.MagicEntityBegiragon;
+import dqr.entity.magicEntity.magic.MagicEntityBegirama;
 import dqr.entity.magicEntity.magic.MagicEntityDebuff;
 import dqr.entity.magicEntity.magic.MagicEntityDoruma;
+import dqr.entity.magicEntity.magic.MagicEntityGira;
+import dqr.entity.magicEntity.magic.MagicEntityGiragureido;
 import dqr.entity.magicEntity.magic.MagicEntityHyado;
 import dqr.entity.magicEntity.magic.MagicEntityHyadoB;
 import dqr.entity.magicEntity.magic.MagicEntityIo;
@@ -70,10 +76,13 @@ import dqr.entity.magicEntity.magicDummy.MagicEntityMahoimiDummy;
 import dqr.entity.mobEntity.ai.EntityAIArrowAttack2;
 import dqr.entity.mobEntity.ai.EntityAIAttackOnCollide2;
 import dqr.entity.mobEntity.ai.EntityAIAttackOnCollideJump;
+import dqr.entity.mobEntity.ai.EntityAIAvoidEntity2;
 import dqr.entity.mobEntity.ai.EntityAIBind;
-import dqr.entity.mobEntity.ai.EntityAIMagicAttack;
+import dqr.entity.mobEntity.ai.EntityAIMagicAttack4;
 import dqr.entity.mobEntity.ai.EntityAIMagicBuff;
 import dqr.entity.mobEntity.ai.EntityAIMagicDebuff;
+import dqr.entity.mobEntity.ai.EntityAIMagicHoimi;
+import dqr.entity.mobEntity.ai.EntityAIMagicMahoimi;
 import dqr.entity.mobEntity.ai.EntityAIMagicMegante;
 import dqr.entity.mobEntity.ai.EntityAINearestAttackableTarget2;
 import dqr.entity.mobEntity.ai.EntityAINearestTargetHeavyFire;
@@ -97,6 +106,7 @@ public class DqmMobBase extends EntityMob
 	public int DqmMobGOLD;
 	public double DqmMobHP;
 	public int DqmMobMP;
+	public int DqmMobMaxMP;
 	public double DqmMobPW;
 	public int DqmMobDEF;
 	//public float SPEED;
@@ -142,6 +152,13 @@ public class DqmMobBase extends EntityMob
 	public boolean isOverKill = false;
 	public float absoluteDam = -1.0F;
 
+	public long skillCoolTime = 0;
+	public int skillCoolTimeMin = 10;
+	public int skillCoolTimeMax = 15;
+	public long skillCoolTimeHeal = 0;
+	public int skillCoolTimeHealMin = 60;
+	public int skillCoolTimeHealMax = 150;
+
 	public DqmMobBase(World world, EnumDqmMonster mobType)
 	{
 		super(world);
@@ -153,7 +170,12 @@ public class DqmMobBase extends EntityMob
 		this.MobCateg = this.monsterType.getMobCateg();
 		this.DqmMobEXP = DQR.funcMob.getCalcEXP(this.monsterType.getEXP());
 		this.DqmMobGOLD = DQR.funcMob.getCalcGOLD(this.monsterType.getGOLD());
-		this.DqmMobMP = this.monsterType.getMP();
+		//this.DqmMobMP = this.monsterType.getMP();
+		this.DqmMobMaxMP = this.monsterType.getMaxMP();
+		if(this.monsterType.getMaxMP() != -1)
+		{
+			this.DqmMobMP = this.monsterType.getMaxMP();
+		}
 		this.DqmMobPW = DQR.funcMob.getCalcPW(this.monsterType.getPW());
 		this.DqmMobDEF = this.monsterType.getDF();
 		this.CFIRE = this.monsterType.isCFIRE();
@@ -168,6 +190,15 @@ public class DqmMobBase extends EntityMob
 		this.MobRoot = this.monsterType.getMobRoot();
 		this.KakuseiMob = this.monsterType.getKakuseiMob();
 
+		EnumDqmMobSkilProp skillProp = DQR.enumGetter.getEnumDqmMobSkilProp(this.MobName);
+		if(skillProp != null)
+		{
+			//System.out.println("magicPropSet!!");
+			skillCoolTimeMin = skillProp.getCoolTimeMin();
+			skillCoolTimeMax = skillProp.getCoolTimeMax();
+			skillCoolTimeHealMin = skillProp.getCTHealMin();
+			skillCoolTimeHealMax = skillProp.getCTHealMax();
+		}
 
 		this.experienceValue = this.monsterType.getXPS();
 		this.mobAI = this.monsterType.getMonsterAI();
@@ -178,6 +209,15 @@ public class DqmMobBase extends EntityMob
         //this.tasks.addTask(2, new EntityAIAttackOnCollide(this, EntityPlayer.class, this.moveSpeed, false));
         //this.tasks.addTask(4, new EntityAIMoveTwardsRestriction(this, this.moveSpeed));
         //this.tasks.addTask(6, new EntityAIWander(this, this.moveSpeed));
+
+
+		if(this.mobAI.getAvoid() > 0)
+		{
+			this.tasks.addTask(this.mobAIrate.getAvoid(), new EntityAIAvoidEntity2(this, EntityPlayer.class, (float)this.mobAI.getAvoid(), 1.0D, 2.0D));
+		}
+
+
+
         this.tasks.addTask(7, new EntityAIWatchClosest(this, EntityPlayer.class, 3.0F));
         this.tasks.addTask(8, new EntityAIWatchClosest3(this, DqmPetBase.class, 3.0F));
         //this.tasks.addTask(7, new EntityAILookIdle(this));
@@ -296,6 +336,11 @@ public class DqmMobBase extends EntityMob
     	this.tasks.addTask(7, new EntityAIWatchClosest(this, EntityPlayer.class, 3.0F));
         this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false));
 
+		if(this.mobAI.getAvoid() > 0)
+		{
+			this.tasks.addTask(this.mobAIrate.getAvoid(), new EntityAIAvoidEntity2(this, EntityPlayer.class, (float)this.mobAI.getAvoid(), 1.0D, 2.0D));
+		}
+
         if(this.mobAI.getHeavyFire() > 0)
         {
         	this.targetTasks.addTask(2, new EntityAINearestTargetHeavyFire(this, EntityPlayer.class, 20, true));
@@ -352,11 +397,11 @@ public class DqmMobBase extends EntityMob
 		{
     		switch(this.mobAI.getHonoo())
     		{
-    			case 1:this.tasks.addTask(this.mobAIrate.getHonoo(), new EntityAIMagicAttack(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Hinoiki)); break;
-    			case 2:this.tasks.addTask(this.mobAIrate.getHonoo(), new EntityAIMagicAttack(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Kaeniki)); break;
-    			case 3:this.tasks.addTask(this.mobAIrate.getHonoo(), new EntityAIMagicAttack(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.HagesiiHonoo)); break;
-    			case 4:this.tasks.addTask(this.mobAIrate.getHonoo(), new EntityAIMagicAttack(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Syakunetu)); break;
-    			case 5:this.tasks.addTask(this.mobAIrate.getHonoo(), new EntityAIMagicAttack(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.RengokuHonoo)); break;
+    			case 1:this.tasks.addTask(this.mobAIrate.getHonoo(), new EntityAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Hinoiki)); break;
+    			case 2:this.tasks.addTask(this.mobAIrate.getHonoo(), new EntityAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Kaeniki)); break;
+    			case 3:this.tasks.addTask(this.mobAIrate.getHonoo(), new EntityAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.HagesiiHonoo)); break;
+    			case 4:this.tasks.addTask(this.mobAIrate.getHonoo(), new EntityAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Syakunetu)); break;
+    			case 5:this.tasks.addTask(this.mobAIrate.getHonoo(), new EntityAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.RengokuHonoo)); break;
     		}
 		}
 
@@ -370,11 +415,11 @@ public class DqmMobBase extends EntityMob
 		{
     		switch(this.mobAI.getHubuki())
     		{
-    			case 1:this.tasks.addTask(this.mobAIrate.getHubuki(), new EntityAIMagicAttack(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Tumetaiiki)); break;
-    			case 2:this.tasks.addTask(this.mobAIrate.getHubuki(), new EntityAIMagicAttack(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Koorinoiki)); break;
-    			case 3:this.tasks.addTask(this.mobAIrate.getHubuki(), new EntityAIMagicAttack(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Kogoeruhubuki)); break;
-    			case 4:this.tasks.addTask(this.mobAIrate.getHubuki(), new EntityAIMagicAttack(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Kagayakuiki)); break;
-    			case 5:this.tasks.addTask(this.mobAIrate.getHubuki(), new EntityAIMagicAttack(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Zettaireido)); break;
+    			case 1:this.tasks.addTask(this.mobAIrate.getHubuki(), new EntityAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Tumetaiiki)); break;
+    			case 2:this.tasks.addTask(this.mobAIrate.getHubuki(), new EntityAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Koorinoiki)); break;
+    			case 3:this.tasks.addTask(this.mobAIrate.getHubuki(), new EntityAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Kogoeruhubuki)); break;
+    			case 4:this.tasks.addTask(this.mobAIrate.getHubuki(), new EntityAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Kagayakuiki)); break;
+    			case 5:this.tasks.addTask(this.mobAIrate.getHubuki(), new EntityAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Zettaireido)); break;
     		}
 		}
 
@@ -382,10 +427,10 @@ public class DqmMobBase extends EntityMob
 		{
     		switch(this.mobAI.getGira())
     		{
-    			case 1:this.tasks.addTask(this.mobAIrate.getGira(), new EntityAIMagicAttack(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Gira)); break;
-    			case 2:this.tasks.addTask(this.mobAIrate.getGira(), new EntityAIMagicAttack(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Begirama)); break;
-    			case 3:this.tasks.addTask(this.mobAIrate.getGira(), new EntityAIMagicAttack(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Begiragon)); break;
-    			case 4:this.tasks.addTask(this.mobAIrate.getGira(), new EntityAIMagicAttack(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Giragureido)); break;
+    			case 1:this.tasks.addTask(this.mobAIrate.getGira(), new EntityAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Gira)); break;
+    			case 2:this.tasks.addTask(this.mobAIrate.getGira(), new EntityAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Begirama)); break;
+    			case 3:this.tasks.addTask(this.mobAIrate.getGira(), new EntityAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Begiragon)); break;
+    			case 4:this.tasks.addTask(this.mobAIrate.getGira(), new EntityAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Giragureido)); break;
     		}
 		}
 
@@ -393,93 +438,94 @@ public class DqmMobBase extends EntityMob
 		{
     		switch(this.mobAI.getMera())
     		{
-    			case 1:this.tasks.addTask(this.mobAIrate.getMera(), new EntityAIMagicAttack(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Mera)); break;
-    			case 2:this.tasks.addTask(this.mobAIrate.getMera(), new EntityAIMagicAttack(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Merami)); break;
-    			case 3:this.tasks.addTask(this.mobAIrate.getMera(), new EntityAIMagicAttack(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Merazoma)); break;
-    			case 4:this.tasks.addTask(this.mobAIrate.getMera(), new EntityAIMagicAttack(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Meragaia)); break;
+    			case 1:this.tasks.addTask(this.mobAIrate.getMera(), new EntityAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Mera)); break;
+    			case 2:this.tasks.addTask(this.mobAIrate.getMera(), new EntityAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Merami)); break;
+    			case 3:this.tasks.addTask(this.mobAIrate.getMera(), new EntityAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Merazoma)); break;
+    			case 4:this.tasks.addTask(this.mobAIrate.getMera(), new EntityAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Meragaia)); break;
     		}
-			//this.tasks.addTask(this.mobAIrate.getMera(), new EntityAIMagicAttack(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Mera));
+			//this.tasks.addTask(this.mobAIrate.getMera(), new EntityAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Mera));
 		}
 
 		if(this.mobAI.getIo() > 0)
 		{
 	   		switch(this.mobAI.getIo())
     		{
-    			case 1:this.tasks.addTask(this.mobAIrate.getIo(), new EntityAIMagicAttack(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Io)); break;
-    			case 2:this.tasks.addTask(this.mobAIrate.getIo(), new EntityAIMagicAttack(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Iora)); break;
-    			case 3:this.tasks.addTask(this.mobAIrate.getIo(), new EntityAIMagicAttack(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Ionazun)); break;
-    			case 4:this.tasks.addTask(this.mobAIrate.getIo(), new EntityAIMagicAttack(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Iogurande)); break;
+    			case 1:this.tasks.addTask(this.mobAIrate.getIo(), new EntityAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Io)); break;
+    			case 2:this.tasks.addTask(this.mobAIrate.getIo(), new EntityAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Iora)); break;
+    			case 3:this.tasks.addTask(this.mobAIrate.getIo(), new EntityAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Ionazun)); break;
+    			case 4:this.tasks.addTask(this.mobAIrate.getIo(), new EntityAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Iogurande)); break;
     		}
-			//this.tasks.addTask(this.mobAIrate.getIo(), new EntityAIMagicAttack(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Io));
+			//this.tasks.addTask(this.mobAIrate.getIo(), new EntityAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Io));
 		}
 
 		if(this.mobAI.getRaidein() > 0)
 		{
 	   		switch(this.mobAI.getRaidein())
     		{
-    			case 1:this.tasks.addTask(this.mobAIrate.getRaidein(), new EntityAIMagicAttack(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Raidein)); break;
-    			case 2:this.tasks.addTask(this.mobAIrate.getRaidein(), new EntityAIMagicAttack(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Gigadein)); break;
-    			case 3:this.tasks.addTask(this.mobAIrate.getRaidein(), new EntityAIMagicAttack(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Minadein)); break;
+    			case 1:this.tasks.addTask(this.mobAIrate.getRaidein(), new EntityAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Raidein)); break;
+    			case 2:this.tasks.addTask(this.mobAIrate.getRaidein(), new EntityAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Gigadein)); break;
+    			case 3:this.tasks.addTask(this.mobAIrate.getRaidein(), new EntityAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Minadein)); break;
     		}
-			//this.tasks.addTask(this.mobAIrate.getRaidein(), new EntityAIMagicAttack(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Raidein));
+			//this.tasks.addTask(this.mobAIrate.getRaidein(), new EntityAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Raidein));
 		}
 
 		if(this.mobAI.getBagi() > 0)
 		{
 	   		switch(this.mobAI.getBagi())
     		{
-    			case 1:this.tasks.addTask(this.mobAIrate.getBagi(), new EntityAIMagicAttack(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Bagi)); break;
-    			case 2:this.tasks.addTask(this.mobAIrate.getBagi(), new EntityAIMagicAttack(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Bagima)); break;
-    			case 3:this.tasks.addTask(this.mobAIrate.getBagi(), new EntityAIMagicAttack(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Bagikurosu)); break;
-    			case 4:this.tasks.addTask(this.mobAIrate.getBagi(), new EntityAIMagicAttack(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Bagimutyo)); break;
+    			case 1:this.tasks.addTask(this.mobAIrate.getBagi(), new EntityAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Bagi)); break;
+    			case 2:this.tasks.addTask(this.mobAIrate.getBagi(), new EntityAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Bagima)); break;
+    			case 3:this.tasks.addTask(this.mobAIrate.getBagi(), new EntityAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Bagikurosu)); break;
+    			case 4:this.tasks.addTask(this.mobAIrate.getBagi(), new EntityAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Bagimutyo)); break;
     		}
-			//this.tasks.addTask(this.mobAIrate.getBagi(), new EntityAIMagicAttack(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Bagi));
+			//this.tasks.addTask(this.mobAIrate.getBagi(), new EntityAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Bagi));
 		}
 
 		if(this.mobAI.getDoruma() > 0)
 		{
 	   		switch(this.mobAI.getDoruma())
     		{
-    			case 1:this.tasks.addTask(this.mobAIrate.getDoruma(), new EntityAIMagicAttack(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Doruma)); break;
-    			case 2:this.tasks.addTask(this.mobAIrate.getDoruma(), new EntityAIMagicAttack(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Dorukuma)); break;
-    			case 3:this.tasks.addTask(this.mobAIrate.getDoruma(), new EntityAIMagicAttack(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Dorumoa)); break;
-    			case 4:this.tasks.addTask(this.mobAIrate.getDoruma(), new EntityAIMagicAttack(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Dorumadon)); break;
+    			case 1:this.tasks.addTask(this.mobAIrate.getDoruma(), new EntityAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Doruma)); break;
+    			case 2:this.tasks.addTask(this.mobAIrate.getDoruma(), new EntityAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Dorukuma)); break;
+    			case 3:this.tasks.addTask(this.mobAIrate.getDoruma(), new EntityAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Dorumoa)); break;
+    			case 4:this.tasks.addTask(this.mobAIrate.getDoruma(), new EntityAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Dorumadon)); break;
     		}
-			//this.tasks.addTask(this.mobAIrate.getDoruma(), new EntityAIMagicAttack(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Doruma));
+			//this.tasks.addTask(this.mobAIrate.getDoruma(), new EntityAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Doruma));
 		}
 
 		if(this.mobAI.getHyado() > 0)
 		{
 	   		switch(this.mobAI.getHyado())
     		{
-    			case 1:this.tasks.addTask(this.mobAIrate.getHyado(), new EntityAIMagicAttack(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Hyado)); break;
-    			case 2:this.tasks.addTask(this.mobAIrate.getHyado(), new EntityAIMagicAttack(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Hyadaruko)); break;
-    			case 3:this.tasks.addTask(this.mobAIrate.getHyado(), new EntityAIMagicAttack(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Mahyado)); break;
-    			case 4:this.tasks.addTask(this.mobAIrate.getHyado(), new EntityAIMagicAttack(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Mahyadodesu)); break;
+    			case 1:this.tasks.addTask(this.mobAIrate.getHyado(), new EntityAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Hyado)); break;
+    			case 2:this.tasks.addTask(this.mobAIrate.getHyado(), new EntityAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Hyadaruko)); break;
+    			case 3:this.tasks.addTask(this.mobAIrate.getHyado(), new EntityAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Mahyado)); break;
+    			case 4:this.tasks.addTask(this.mobAIrate.getHyado(), new EntityAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Mahyadodesu)); break;
     		}
-			//this.tasks.addTask(this.mobAIrate.getHyado(), new EntityAIMagicAttack(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Hyado));
+			//this.tasks.addTask(this.mobAIrate.getHyado(), new EntityAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Hyado));
 		}
 
 		if(this.mobAI.getHoimi() > 0)
 		{
 	   		switch(this.mobAI.getHoimi())
     		{
-    			case 1:this.tasks.addTask(this.mobAIrate.getHoimi(), new EntityAIMagicAttack(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Hoimi)); break;
-    			case 2:this.tasks.addTask(this.mobAIrate.getHoimi(), new EntityAIMagicAttack(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Behoimi)); break;
-    			case 3:this.tasks.addTask(this.mobAIrate.getHoimi(), new EntityAIMagicAttack(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Behoma)); break;
+    			case 1:this.tasks.addTask(this.mobAIrate.getHoimi(), new EntityAIMagicHoimi(this, EnumDqmMagic.Hoimi, null)); break;
+    			case 2:this.tasks.addTask(this.mobAIrate.getHoimi(), new EntityAIMagicHoimi(this, EnumDqmMagic.Behoimi, null)); break;
+    			case 3:this.tasks.addTask(this.mobAIrate.getHoimi(), new EntityAIMagicHoimi(this, EnumDqmMagic.Behoma, null)); break;
     		}
-			//this.tasks.addTask(this.mobAIrate.getHoimi(), new EntityAIMagicAttack(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Hoimi));
+			//this.tasks.addTask(this.mobAIrate.getHoimi(), new EntityAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Hoimi));
 		}
 
 		if(this.mobAI.getZaki() > 0)
 		{
+			//System.out.println("GetZaki");
 	   		switch(this.mobAI.getZaki())
     		{
-    			case 1:this.tasks.addTask(this.mobAIrate.getZaki(), new EntityAIMagicAttack(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Zaki)); break;
-    			case 2:this.tasks.addTask(this.mobAIrate.getZaki(), new EntityAIMagicAttack(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Zaraki)); break;
-    			case 3:this.tasks.addTask(this.mobAIrate.getZaki(), new EntityAIMagicAttack(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Zarakima)); break;
+    			case 1:this.tasks.addTask(this.mobAIrate.getZaki(), new EntityAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Zaki)); break;
+    			case 2:this.tasks.addTask(this.mobAIrate.getZaki(), new EntityAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Zaraki)); break;
+    			case 3:this.tasks.addTask(this.mobAIrate.getZaki(), new EntityAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Zarakima)); break;
     		}
-			//this.tasks.addTask(this.mobAIrate.getZaki(), new EntityAIMagicAttack(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Zaki));
+			//this.tasks.addTask(this.mobAIrate.getZaki(), new EntityAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Zaki));
 		}
 
 		if(this.mobAI.getBaikiruto() > 0)
@@ -581,21 +627,21 @@ public class DqmMobBase extends EntityMob
 		{
 	   		switch(this.mobAI.getBehomara())
     		{
-    			case 1:this.tasks.addTask(this.mobAIrate.getBehomara(), new EntityAIMagicAttack(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Behomara)); break;
-    			case 2:this.tasks.addTask(this.mobAIrate.getBehomara(), new EntityAIMagicAttack(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Behomazun)); break;
+    			case 1:this.tasks.addTask(this.mobAIrate.getBehomara(), new EntityAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Behomara)); break;
+    			case 2:this.tasks.addTask(this.mobAIrate.getBehomara(), new EntityAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Behomazun)); break;
     		}
-			//this.tasks.addTask(this.mobAIrate.getBehomara(), new EntityAIMagicAttack(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Behomara));
+			//this.tasks.addTask(this.mobAIrate.getBehomara(), new EntityAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Behomara));
 		}
 
 		if(this.mobAI.getMahoimi() > 0)
 		{
 	   		switch(this.mobAI.getMahoimi())
     		{
-    			case 1:this.tasks.addTask(this.mobAIrate.getMahoimi(), new EntityAIMagicAttack(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Mahoimi)); break;
-    			case 2:this.tasks.addTask(this.mobAIrate.getMahoimi(), new EntityAIMagicAttack(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Mahoriku)); break;
-    			case 3:this.tasks.addTask(this.mobAIrate.getMahoimi(), new EntityAIMagicAttack(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Mahoizun)); break;
+    			case 1:this.tasks.addTask(this.mobAIrate.getMahoimi(), new EntityAIMagicMahoimi(this, EnumDqmMagic.Mahoimi, null)); break;
+    			case 2:this.tasks.addTask(this.mobAIrate.getMahoimi(), new EntityAIMagicMahoimi(this, EnumDqmMagic.Mahoriku, null)); break;
+    			case 3:this.tasks.addTask(this.mobAIrate.getMahoimi(), new EntityAIMagicMahoimi(this, EnumDqmMagic.Mahoizun, null)); break;
     		}
-			//this.tasks.addTask(this.mobAIrate.getMahoimi(), new EntityAIMagicAttack(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Mahoimi));
+			//this.tasks.addTask(this.mobAIrate.getMahoimi(), new EntityAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Mahoimi));
 		}
     }
 
@@ -730,38 +776,44 @@ public class DqmMobBase extends EntityMob
         	Object element = htKey.nextElement();
         	if(element instanceof EntityPlayer)
 	        {
-	            ep = (EntityPlayer)element;
-	            //DQR.func.debugString("doExp:" + ep.getDisplayName());
-	            hitDamage = (float)damageHT.get(ep);
-	            //DQR.func.debugString("doExp2:" + hitDamage);
-	            sharePercent = hitDamage * 1000 / this.getMaxHealth();
-	            //DQR.func.debugString("doExp3:" + sharePercent);
-	            getExpVal = DQR.funcMob.getCalcEXP(this.DqmMobEXP) * (int)(sharePercent + 0.9F) / 1000;
-	            //DQR.func.debugString("doExp4:" + getExpVal);
-	            ItemStack handItem = null;
+	            //ep = (EntityPlayer)element;
+				MinecraftServer minecraftserver = MinecraftServer.getServer();
+				ep = minecraftserver.getConfigurationManager().func_152612_a(((EntityPlayer) element).getCommandSenderName());
 
-	            if(ep.inventory.getCurrentItem() != null)
-	            {
-	            	handItem = ep.inventory.getCurrentItem();
-	            }
+				if(ep != null)
+				{
+		            //DQR.func.debugString("doExp:" + ep.getDisplayName());
+		            hitDamage = (float)damageHT.get(ep);
+		            //DQR.func.debugString("doExp2:" + hitDamage);
+		            sharePercent = hitDamage * 1000 / this.getMaxHealth();
+		            //DQR.func.debugString("doExp3:" + sharePercent);
+		            getExpVal = DQR.funcMob.getCalcEXP(this.DqmMobEXP) * (int)(sharePercent + 0.9F) / 1000;
+		            //DQR.func.debugString("doExp4:" + getExpVal);
+		            ItemStack handItem = null;
 
-	            if(getExpVal < 1)
-	            {
-	            	getExpVal = 1;
-	            }
-	            getExpVal = getExpVal + ExtendedPlayerProperties.get(ep).getJobExp(ExtendedPlayerProperties.get(ep).getJob());
-	            //DQR.func.debugString("doExp5:" + getExpVal);
-	            ExtendedPlayerProperties.get(ep).setJobExp(ExtendedPlayerProperties.get(ep).getJob(), getExpVal);
+		            if(ep.inventory.getCurrentItem() != null)
+		            {
+		            	handItem = ep.inventory.getCurrentItem();
+		            }
 
-	            if(DQR.conf.cfg_NoThreadUse == 1)
-	            {
-	            	ThreadLvUp lvup = new ThreadLvUp(ep);
-	            	lvup.start();
-	            }else
-	            {
-	            	NoThreadProcess proc = new NoThreadProcess();
-	            	proc.doLevelUp(ep);
-	            }
+		            if(getExpVal < 1)
+		            {
+		            	getExpVal = 1;
+		            }
+		            getExpVal = getExpVal + ExtendedPlayerProperties.get(ep).getJobExp(ExtendedPlayerProperties.get(ep).getJob());
+		            //DQR.func.debugString("doExp5:" + getExpVal);
+		            ExtendedPlayerProperties.get(ep).setJobExp(ExtendedPlayerProperties.get(ep).getJob(), getExpVal);
+
+		            if(DQR.conf.cfg_NoThreadUse == 1)
+		            {
+		            	ThreadLvUp lvup = new ThreadLvUp(ep);
+		            	lvup.start();
+		            }else
+		            {
+		            	NoThreadProcess proc = new NoThreadProcess();
+		            	proc.doLevelUp(ep);
+		            }
+				}
 
 	        }else if(element instanceof DqmPetBase)
 	        {
@@ -1326,7 +1378,7 @@ public class DqmMobBase extends EntityMob
     {
 
 		//PotionEffect pe = this.getActivePotionEffect(DQPotionMinus.debuffRariho);
-		//if(pe != null && this.worldObj.isRemote)
+		//if(pe != null && !this.worldObj.isRemote)
 		if(DQR.func.isBind(this))
 		{
 			return false;
@@ -1384,7 +1436,7 @@ public class DqmMobBase extends EntityMob
     {
 
 		//PotionEffect pe = this.getActivePotionEffect(DQPotionMinus.debuffRariho);
-		//if(pe != null && this.worldObj.isRemote)
+		//if(pe != null && !this.worldObj.isRemote)
 		if(DQR.func.isBind(this))
 		{
 			return;
@@ -1432,7 +1484,7 @@ public class DqmMobBase extends EntityMob
     public void attackEntityWithRangedAttack(EntityLivingBase p_82196_1_, float p_82196_2_)
     {
 		//PotionEffect pe = this.getActivePotionEffect(DQPotionMinus.debuffRariho);
-		//if(pe != null && this.worldObj.isRemote)
+		//if(pe != null && !this.worldObj.isRemote)
     	if(DQR.func.isBind(this))
 		{
 			return;
@@ -1474,12 +1526,12 @@ public class DqmMobBase extends EntityMob
     {
 		PotionEffect pe;
 		pe = this.getActivePotionEffect(DQPotionMinus.debuffMahoton);
-		if(pe != null && this.worldObj.isRemote)
+		if(pe != null && !this.worldObj.isRemote)
 		{
 			return;
 		}
 		//pe = this.getActivePotionEffect(DQPotionMinus.debuffRariho);
-		//if(pe != null && this.worldObj.isRemote)
+		//if(pe != null && !this.worldObj.isRemote)
 		if(DQR.func.isBind(this))
 		{
 			return;
@@ -1583,7 +1635,7 @@ public class DqmMobBase extends EntityMob
 		if(magic != null)
 		{
 
-			if(this.DqmMobMP >= grade.getMP() || DQR.debug > 0)
+			if(this.DqmMobMP >= grade.getMP() || this.DqmMobMaxMP == -1 || DQR.debug > 0)
 			{
 				int attackDam = grade.getAttack();
 
@@ -1602,7 +1654,7 @@ public class DqmMobBase extends EntityMob
 			{
 				magic = null;
 
-				if(!this.worldObj.isRemote && DQR.conf.offMobNotEnoughMP > 0) this.worldObj.playSoundAtEntity(this, "dqr:player.pi", 0.1F, 1.0F);
+				if(DQR.conf.offMobNotEnoughMP > 0 && !this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.pi", 0.1F, 1.0F);
 			}
 		}
     }
@@ -1611,20 +1663,20 @@ public class DqmMobBase extends EntityMob
     {
 		PotionEffect pe;
 		pe = this.getActivePotionEffect(DQPotionMinus.debuffMahoton);
-		if(pe != null && this.worldObj.isRemote)
+		if(pe != null && !this.worldObj.isRemote)
 		{
 			return ;
 		}
 		//pe = this.getActivePotionEffect(DQPotionMinus.debuffRariho);
-		//if(pe != null && this.worldObj.isRemote)
+		//if(pe != null && !this.worldObj.isRemote)
 		if(DQR.func.isBind(this))
 		{
 			return;
 		}
 
-		if(this.DqmMobMP < grade.getMP())
+		if(this.DqmMobMP < grade.getMP() &&  this.DqmMobMaxMP != -1)
 		{
-			if(!this.worldObj.isRemote && DQR.conf.offMobNotEnoughMP > 0) this.worldObj.playSoundAtEntity(this, "dqr:player.pi", 0.1F, 1.0F);
+			if(DQR.conf.offMobNotEnoughMP > 0 && !this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.pi", 0.1F, 1.0F);
 			return;
 		}else
 		{
@@ -1686,14 +1738,17 @@ public class DqmMobBase extends EntityMob
             		}
             		else
             		{
-                    	if(elb.getHealth() + attackDam > elb.getMaxHealth())
-                    	{
-                    		elb.setHealth(elb.getMaxHealth());
-                    	}else
-                    	{
-                    		elb.setHealth(elb.getHealth() + (float)attackDam);
-                    	}
-                    	if(!elb.worldObj.isRemote) elb.worldObj.playSoundAtEntity(elb, "dqr:player.hoimi", 1.0F, 1.0F);
+            			if(elb.getHealth() > 0)
+            			{
+	                    	if(elb.getHealth() + attackDam > elb.getMaxHealth())
+	                    	{
+	                    		elb.setHealth(elb.getMaxHealth());
+	                    	}else
+	                    	{
+	                    		elb.setHealth(elb.getHealth() + (float)attackDam);
+	                    	}
+	                    	if(!elb.worldObj.isRemote) elb.worldObj.playSoundAtEntity(elb, "dqr:player.hoimi", 1.0F, 1.0F);
+            			}
             		}
 
         		}
@@ -1706,21 +1761,21 @@ public class DqmMobBase extends EntityMob
     	PotionEffect pe;
 
 		pe = this.getActivePotionEffect(DQPotionMinus.debuffMahoton);
-		if(pe != null && this.worldObj.isRemote)
+		if(pe != null && !this.worldObj.isRemote)
 		{
 			return;
 		}
 		//pe = this.getActivePotionEffect(DQPotionMinus.debuffRariho);
-		//if(pe != null && this.worldObj.isRemote)
+		//if(pe != null && !this.worldObj.isRemote)
 		if(DQR.func.isBind(this))
 		{
 			return;
 		}
 
 
-		if(this.DqmMobMP < grade.getMP() && DQR.debug == 0)
+		if(this.DqmMobMP < grade.getMP() && this.DqmMobMaxMP != -1)
 		{
-			if(!this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.pi", 0.1F, 1.0F);
+			if(!this.worldObj.isRemote && DQR.conf.offMobNotEnoughMP > 0) this.worldObj.playSoundAtEntity(this, "dqr:player.pi", 0.1F, 1.0F);
 			return;
 		}else
 		{
@@ -1819,21 +1874,21 @@ public class DqmMobBase extends EntityMob
     {
     	PotionEffect pe;
 		pe = this.getActivePotionEffect(DQPotionMinus.debuffMahoton);
-		if(pe != null && this.worldObj.isRemote)
+		if(pe != null && !this.worldObj.isRemote)
 		{
 			return;
 		}
 		//pe = this.getActivePotionEffect(DQPotionMinus.debuffRariho);
-		//if(pe != null && this.worldObj.isRemote)
+		//if(pe != null && !this.worldObj.isRemote)
 		if(DQR.func.isBind(this))
 		{
 			return;
 		}
 
 
-		if(this.DqmMobMP < grade.getMP() && DQR.debug == 0)
+		if(this.DqmMobMP < grade.getMP() && this.DqmMobMaxMP != -1)
 		{
-			if(!this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.pi", 0.25F, 1.0F);
+			if(!this.worldObj.isRemote && DQR.conf.offMobNotEnoughMP > 0) this.worldObj.playSoundAtEntity(this, "dqr:player.pi", 0.25F, 1.0F);
 			return;
 		}else
 		{
@@ -1918,12 +1973,12 @@ public class DqmMobBase extends EntityMob
     {
 		PotionEffect pe;
 		pe = this.getActivePotionEffect(DQPotionMinus.debuffMahoton);
-		if(pe != null && this.worldObj.isRemote)
+		if(pe != null && !this.worldObj.isRemote)
 		{
 			return;
 		}
 		//pe = this.getActivePotionEffect(DQPotionMinus.debuffRariho);
-		//if(pe != null && this.worldObj.isRemote)
+		//if(pe != null && !this.worldObj.isRemote)
 		if(DQR.func.isBind(this))
 		{
 
@@ -2028,7 +2083,7 @@ public class DqmMobBase extends EntityMob
 		{
 
 
-			if(this.DqmMobMP >= grade.getMP() || DQR.debug > 0)
+			if(this.DqmMobMP >= grade.getMP() || this.DqmMobMaxMP == -1)
 			{
 				int attackDam = grade.getAttack();
 
@@ -2047,7 +2102,7 @@ public class DqmMobBase extends EntityMob
 			}else
 			{
 				magic = null;
-				if(!this.worldObj.isRemote && DQR.conf.offMobNotEnoughMP > 0) this.worldObj.playSoundAtEntity(this, "dqr:player.pi", 0.1F, 1.0F);
+				if(DQR.conf.offMobNotEnoughMP > 0 && !this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.pi", 0.1F, 1.0F);
 			}
 		}
     }
@@ -2056,12 +2111,12 @@ public class DqmMobBase extends EntityMob
     {
     	PotionEffect pe;
 		pe = this.getActivePotionEffect(DQPotionMinus.debuffMahoton);
-		if(pe != null && this.worldObj.isRemote)
+		if(pe != null && !this.worldObj.isRemote)
 		{
 			return;
 		}
 		//pe = this.getActivePotionEffect(DQPotionMinus.debuffRariho);
-		//if(pe != null && this.worldObj.isRemote)
+		//if(pe != null && !this.worldObj.isRemote)
 		if(DQR.func.isBind(this))
 		{
 			return;
@@ -2082,7 +2137,7 @@ public class DqmMobBase extends EntityMob
 			magic = new MagicEntity[3];
 			for(int cnt = 0;cnt < 3; cnt++)
 			{
-				magic[cnt] = new MagicEntityMera(this.worldObj, this, 1.5F, 1.0F, (float)(-1 + cnt), 0.0F, 0.0F);
+				magic[cnt] = new MagicEntityGira(this.worldObj, this, 1.5F, 1.0F, (float)(-1 + cnt), 0.0F, 0.0F);
 				magic[cnt].shootingEntity = this;
 			}
 			/*
@@ -2097,7 +2152,7 @@ public class DqmMobBase extends EntityMob
 			magic = new MagicEntity[5];
 			for(int cnt = 0;cnt < 5; cnt++)
 			{
-				magic[cnt] = new MagicEntityMera(this.worldObj, this, 1.5F, 1.0F, (float)(-2 + cnt), 0.0F, 0.0F);
+				magic[cnt] = new MagicEntityBegirama(this.worldObj, this, 1.5F, 1.0F, (float)(-2 + cnt), 0.0F, 0.0F);
 				magic[cnt].shootingEntity = this;
 			}
 			/*
@@ -2112,7 +2167,7 @@ public class DqmMobBase extends EntityMob
 			magic = new MagicEntity[7];
 			for(int cnt = 0;cnt < 7; cnt++)
 			{
-				magic[cnt] = new MagicEntityMera(this.worldObj, this, 1.5F, 1.0F, (float)(-3 + cnt), 0.0F, 0.0F);
+				magic[cnt] = new MagicEntityBegiragon(this.worldObj, this, 1.5F, 1.0F, (float)(-3 + cnt), 0.0F, 0.0F);
 				magic[cnt].shootingEntity = this;
 			}
 			/*
@@ -2127,7 +2182,7 @@ public class DqmMobBase extends EntityMob
 			magic = new MagicEntity[9];
 			for(int cnt = 0;cnt < 9; cnt++)
 			{
-				magic[cnt] = new MagicEntityMera(this.worldObj, this, 1.5F, 1.0F, (float)(-4 + cnt), 0.0F, 0.0F);
+				magic[cnt] = new MagicEntityGiragureido(this.worldObj, this, 1.5F, 1.0F, (float)(-4 + cnt), 0.0F, 0.0F);
 				magic[cnt].shootingEntity = this;
 			}
 			/*
@@ -2150,7 +2205,7 @@ public class DqmMobBase extends EntityMob
 		if(magic != null)
 		{
 
-			if(this.DqmMobMP >= grade.getMP() || DQR.debug > 0)
+			if(this.DqmMobMP >= grade.getMP() || this.DqmMobMaxMP == -1)
 			{
 				int attackDam = grade.getAttack();
 
@@ -2169,7 +2224,7 @@ public class DqmMobBase extends EntityMob
 			}else
 			{
 				magic = null;
-				if(!this.worldObj.isRemote && DQR.conf.offMobNotEnoughMP > 0) this.worldObj.playSoundAtEntity(this, "dqr:player.pi", 0.1F, 1.0F);
+				if(DQR.conf.offMobNotEnoughMP > 0 && !this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.pi", 0.1F, 1.0F);
 			}
 
 		}
@@ -2180,12 +2235,25 @@ public class DqmMobBase extends EntityMob
 
     	if(tag == 1)
     	{
-
+    		if(DQR.debug == 4){System.out.println("attackEntityWithHoimi 1");}
+	    	MagicEntity magic = null;
+			PotionEffect pe;
+			pe = this.getActivePotionEffect(DQPotionMinus.debuffMahoton);
+			if(pe != null && !this.worldObj.isRemote)
+			{
+				return;
+			}
+			//pe = this.getActivePotionEffect(DQPotionMinus.debuffRariho);
+			//if(pe != null && !this.worldObj.isRemote)
+			if(DQR.func.isBind(this))
+			{
+				return;
+			}
 
     		if(!this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.jumon", 1.0F, 1.0F);
 
 
-			if(this.DqmMobMP >= grade.getMP() || DQR.debug > 0)
+			if(this.DqmMobMP >= grade.getMP()|| this.DqmMobMaxMP == -1)
 			{
 				int attackDam = grade.getAttack();
 
@@ -2212,21 +2280,22 @@ public class DqmMobBase extends EntityMob
 				}
 			}else
 			{
-				if(!this.worldObj.isRemote && DQR.conf.offMobNotEnoughMP > 0) this.worldObj.playSoundAtEntity(this, "dqr:player.pi", 0.1F, 1.0F);
+				if(DQR.conf.offMobNotEnoughMP > 0 && !this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.pi", 0.1F, 1.0F);
 				return;
 			}
 
     	}else
-	    	{
+	    {
+    		if(DQR.debug == 4){System.out.println("attackEntityWithHoimi 2");}
 	    	MagicEntity magic = null;
 			PotionEffect pe;
 			pe = this.getActivePotionEffect(DQPotionMinus.debuffMahoton);
-			if(pe != null && this.worldObj.isRemote)
+			if(pe != null && !this.worldObj.isRemote)
 			{
 				return;
 			}
 			//pe = this.getActivePotionEffect(DQPotionMinus.debuffRariho);
-			//if(pe != null && this.worldObj.isRemote)
+			//if(pe != null && !this.worldObj.isRemote)
 			if(DQR.func.isBind(this))
 			{
 				return;
@@ -2239,7 +2308,7 @@ public class DqmMobBase extends EntityMob
 			{
 
 
-				if(this.DqmMobMP >= grade.getMP() || DQR.debug > 0)
+				if(this.DqmMobMP >= grade.getMP()|| this.DqmMobMaxMP == -1)
 				{
 					int attackDam = grade.getAttack();
 
@@ -2267,19 +2336,22 @@ public class DqmMobBase extends EntityMob
 	                	this.playSound("dqr:player.hoimi", 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
 	        		}else
 	        		{
-	                	if(tagMob.getHealth() + attackDam > tagMob.getMaxHealth())
-	                	{
-	                		tagMob.setHealth(tagMob.getMaxHealth());
-	                	}else
-	                	{
-	                		tagMob.setHealth(tagMob.getHealth() + (float)attackDam);
-	                	}
-	                	if(!tagMob.worldObj.isRemote) tagMob.playSound("dqr:player.hoimi", 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
+	        			if(tagMob.getHealth() > 0)
+	        			{
+		                	if(tagMob.getHealth() + attackDam > tagMob.getMaxHealth())
+		                	{
+		                		tagMob.setHealth(tagMob.getMaxHealth());
+		                	}else
+		                	{
+		                		tagMob.setHealth(tagMob.getHealth() + (float)attackDam);
+		                	}
+		                	if(!tagMob.worldObj.isRemote) tagMob.playSound("dqr:player.hoimi", 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
+	        			}
 	        		}
 				}else
 				{
 					magic = null;
-					if(!this.worldObj.isRemote && DQR.conf.offMobNotEnoughMP > 0) this.worldObj.playSoundAtEntity(this, "dqr:player.pi", 0.1F, 1.0F);
+					if(DQR.conf.offMobNotEnoughMP > 0 && !this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.pi", 0.1F, 1.0F);
 				}
 			}
 	    }
@@ -2290,12 +2362,12 @@ public class DqmMobBase extends EntityMob
     	PotionEffect pe;
 
 		pe = this.getActivePotionEffect(DQPotionMinus.debuffMahoton);
-		if(pe != null && this.worldObj.isRemote)
+		if(pe != null && !this.worldObj.isRemote)
 		{
 			return;
 		}
 		//pe = this.getActivePotionEffect(DQPotionMinus.debuffRariho);
-		//if(pe != null && this.worldObj.isRemote)
+		//if(pe != null && !this.worldObj.isRemote)
 		if(DQR.func.isBind(this))
 		{
 			return;
@@ -2383,7 +2455,7 @@ public class DqmMobBase extends EntityMob
 		if(magic != null)
 		{
 
-			if(this.DqmMobMP >= grade.getMP() || DQR.debug > 0)
+			if(this.DqmMobMP >= grade.getMP()|| this.DqmMobMaxMP == -1)
 			{
 				int attackDam = grade.getAttack();
 
@@ -2402,7 +2474,7 @@ public class DqmMobBase extends EntityMob
 			}else
 			{
 				magic = null;
-				if(!this.worldObj.isRemote && DQR.conf.offMobNotEnoughMP > 0) this.worldObj.playSoundAtEntity(this, "dqr:player.pi", 0.1F, 1.0F);
+				if(DQR.conf.offMobNotEnoughMP > 0 && !this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.pi", 0.1F, 1.0F);
 			}
 		}
 
@@ -2412,12 +2484,12 @@ public class DqmMobBase extends EntityMob
     {
     	PotionEffect pe;
 		pe = this.getActivePotionEffect(DQPotionMinus.debuffMahoton);
-		if(pe != null && this.worldObj.isRemote)
+		if(pe != null && !this.worldObj.isRemote)
 		{
 			return;
 		}
 		//pe = this.getActivePotionEffect(DQPotionMinus.debuffRariho);
-		//if(pe != null && this.worldObj.isRemote)
+		//if(pe != null && !this.worldObj.isRemote)
 		if(DQR.func.isBind(this))
 		{
 			return;
@@ -2511,7 +2583,7 @@ public class DqmMobBase extends EntityMob
 		if(magic != null)
 		{
 
-			if(this.DqmMobMP >= grade.getMP() || DQR.debug > 0)
+			if(this.DqmMobMP >= grade.getMP()|| this.DqmMobMaxMP == -1)
 			{
 				int attackDam = grade.getAttack();
 
@@ -2532,7 +2604,7 @@ public class DqmMobBase extends EntityMob
 			}else
 			{
 				magic = null;
-				if(!this.worldObj.isRemote && DQR.conf.offMobNotEnoughMP > 0) this.worldObj.playSoundAtEntity(this, "dqr:player.pi", 0.1F, 1.0F);
+				if(DQR.conf.offMobNotEnoughMP > 0 && !this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.pi", 0.1F, 1.0F);
 			}
 		}
     }
@@ -2541,12 +2613,12 @@ public class DqmMobBase extends EntityMob
     {
 		PotionEffect pe;
 		pe = this.getActivePotionEffect(DQPotionMinus.debuffMahoton);
-		if(pe != null && this.worldObj.isRemote)
+		if(pe != null && !this.worldObj.isRemote)
 		{
 			return;
 		}
 		//pe = this.getActivePotionEffect(DQPotionMinus.debuffRariho);
-		//if(pe != null && this.worldObj.isRemote)
+		//if(pe != null && !this.worldObj.isRemote)
 		if(DQR.func.isBind(this))
 		{
 			return;
@@ -2563,7 +2635,7 @@ public class DqmMobBase extends EntityMob
 		{
 
 
-			if(this.DqmMobMP >= grade.getMP() || DQR.debug > 0)
+			if(this.DqmMobMP >= grade.getMP()|| this.DqmMobMaxMP == -1)
 			{
 				int attackDam = grade.getAttack();
 				//magic.setDamage(attackDam);
@@ -2590,7 +2662,7 @@ public class DqmMobBase extends EntityMob
 			}else
 			{
 				magic = null;
-				if(!this.worldObj.isRemote && DQR.conf.offMobNotEnoughMP > 0) this.worldObj.playSoundAtEntity(this, "dqr:player.pi", 0.1F, 1.0F);
+				if(DQR.conf.offMobNotEnoughMP > 0 && !this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.pi", 0.1F, 1.0F);
 			}
 		}
     }
@@ -2600,12 +2672,12 @@ public class DqmMobBase extends EntityMob
 
     	PotionEffect pe;
 		pe = this.getActivePotionEffect(DQPotionMinus.debuffMahoton);
-		if(pe != null && this.worldObj.isRemote)
+		if(pe != null && !this.worldObj.isRemote)
 		{
 			return;
 		}
 		//pe = this.getActivePotionEffect(DQPotionMinus.debuffRariho);
-		//if(pe != null && this.worldObj.isRemote)
+		//if(pe != null && !this.worldObj.isRemote)
 		if(DQR.func.isBind(this))
 		{
 			return;
@@ -2675,7 +2747,7 @@ public class DqmMobBase extends EntityMob
 		{
 
 
-			if(this.DqmMobMP >= grade.getMP() || DQR.debug > 0)
+			if(this.DqmMobMP >= grade.getMP()|| this.DqmMobMaxMP == -1)
 			{
 				int attackDam = grade.getAttack();
 
@@ -2691,7 +2763,7 @@ public class DqmMobBase extends EntityMob
 			}else
 			{
 				magic = null;
-				if(!this.worldObj.isRemote && DQR.conf.offMobNotEnoughMP > 0) this.worldObj.playSoundAtEntity(this, "dqr:player.pi", 0.1F, 1.0F);
+				if(DQR.conf.offMobNotEnoughMP > 0 && !this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.pi", 0.1F, 1.0F);
 			}
 		}
     }
@@ -2701,12 +2773,12 @@ public class DqmMobBase extends EntityMob
 
     	PotionEffect pe;
 		pe = this.getActivePotionEffect(DQPotionMinus.debuffMahoton);
-		if(pe != null && this.worldObj.isRemote)
+		if(pe != null && !this.worldObj.isRemote)
 		{
 			return;
 		}
 		//pe = this.getActivePotionEffect(DQPotionMinus.debuffRariho);
-		//if(pe != null && this.worldObj.isRemote)
+		//if(pe != null && !this.worldObj.isRemote)
 		if(DQR.func.isBind(this))
 		{
 			return;
@@ -2774,7 +2846,7 @@ public class DqmMobBase extends EntityMob
 		if(magic != null)
 		{
 
-			if(this.DqmMobMP >= grade.getMP() || DQR.debug > 0)
+			if(this.DqmMobMP >= grade.getMP()|| this.DqmMobMaxMP == -1)
 			{
 				int attackDam = grade.getAttack();
 
@@ -2794,7 +2866,7 @@ public class DqmMobBase extends EntityMob
 			}else
 			{
 				magic = null;
-				if(!this.worldObj.isRemote && DQR.conf.offMobNotEnoughMP > 0) this.worldObj.playSoundAtEntity(this, "dqr:player.pi", 0.1F, 1.0F);
+				if(DQR.conf.offMobNotEnoughMP > 0 && !this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.pi", 0.1F, 1.0F);
 			}
 		}
     }
@@ -2803,12 +2875,12 @@ public class DqmMobBase extends EntityMob
     {
     	PotionEffect pe;
 		pe = this.getActivePotionEffect(DQPotionMinus.debuffMahoton);
-		if(pe != null && this.worldObj.isRemote)
+		if(pe != null && !this.worldObj.isRemote)
 		{
 			return;
 		}
 		//pe = this.getActivePotionEffect(DQPotionMinus.debuffRariho);
-		//if(pe != null && this.worldObj.isRemote)
+		//if(pe != null && !this.worldObj.isRemote)
 		if(DQR.func.isBind(this))
 		{
 			return;
@@ -2843,25 +2915,28 @@ public class DqmMobBase extends EntityMob
 
 		}
 
-		if(this.DqmMobMP < grade.getMP() && DQR.debug == 0)
+		//System.out.println("TEST MP : " + this.DqmMobMP + " : " + grade.getMP() + " : " + this.DqmMobMaxMP);
+		if(this.DqmMobMP < grade.getMP() && this.DqmMobMaxMP != -1)
 		{
-			if(!this.worldObj.isRemote && DQR.conf.offMobNotEnoughMP > 0) this.worldObj.playSoundAtEntity(this, "dqr:player.pi", 0.1F, 1.0F);
+			if(DQR.conf.offMobNotEnoughMP > 0 && !this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.pi", 0.1F, 1.0F);
 			return;
 		}else
 		{
 			this.DqmMobMP = this.DqmMobMP - grade.getMP();
 		}
-
+		//System.out.println("TEST MPX");
     	//magic = new MagicEntityZaki(this.worldObj, this, 1.5F, 1.0F, 0.0F, 0.0F, 0.0F,   0.0F, 0.0F);
 
 		if(magic != null)
 		{
+			//System.out.println("TEST MPR : " + magic.length);
 			//int epMP = ExtendedPlayerProperties.get(this).getMP();
 
 			for(int cnt = 0; cnt < magic.length; cnt ++ )
 			{
 				magic[cnt].setDamage(0);
 				magic[cnt].setRate(grade.getRate());
+				//magic[cnt].setRate(90);
 				//magic.setPotionEffect(new PotionEffect(this.pot.id, grade.getAttack(), 0));
 				if(!this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.jumon", 1.0F, 1.0F);
 
@@ -2881,7 +2956,7 @@ public class DqmMobBase extends EntityMob
        	PotionEffect pe;
 
 		//pe = this.getActivePotionEffect(DQPotionMinus.debuffRariho);
-		//if(pe != null && this.worldObj.isRemote)
+		//if(pe != null && !this.worldObj.isRemote)
 		if(DQR.func.isBind(this))
 		{
 			return;
@@ -3008,7 +3083,7 @@ public class DqmMobBase extends EntityMob
        	PotionEffect pe;
 
 		//pe = this.getActivePotionEffect(DQPotionMinus.debuffRariho);
-		//if(pe != null && this.worldObj.isRemote)
+		//if(pe != null && !this.worldObj.isRemote)
 		if(DQR.func.isBind(this))
 		{
 			return;
@@ -3480,7 +3555,8 @@ public class DqmMobBase extends EntityMob
     {
         super.writeEntityToNBT(p_70014_1_);
 
-        p_70014_1_.setInteger("DqmMobMP", this.DqmMobMP);
+        //p_70014_1_.setInteger("DqmMobMP", this.DqmMobMP);
+        //p_70014_1_.setInteger("DqmMobMaxMP", this.DqmMobMaxMP);
         p_70014_1_.setInteger("MeganteCnt", this.MeganteCnt);
         p_70014_1_.setBoolean("MeganteFlg", this.MeganteFlg);
         p_70014_1_.setBoolean("IsBind", this.isBind);
@@ -3494,7 +3570,8 @@ public class DqmMobBase extends EntityMob
     {
         super.readEntityFromNBT(p_70037_1_);
 
-        this.DqmMobMP = p_70037_1_.getInteger("DqmMobMP");
+        //this.DqmMobMP = p_70037_1_.getInteger("DqmMobMP");
+        //this.DqmMobMaxMP = p_70037_1_.getInteger("DqmMobMaxMP");
         this.MeganteCnt = p_70037_1_.getInteger("MeganteCnt");
         this.MeganteFlg = p_70037_1_.getBoolean("MeganteFlg");
         this.isBind = p_70037_1_.getBoolean("IsBind");

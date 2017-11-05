@@ -1171,7 +1171,7 @@ public class FuncItemRandom {
 		Item item = null;
 
 
-		switch(rand.nextInt(10))
+		switch(rand.nextInt(14))
 		{
 			case 0: item = DQBuilders.itemBuilderDamaS1; break;
 			case 1: item = DQBuilders.itemBuilderDamaS2; break;
@@ -1183,6 +1183,10 @@ public class FuncItemRandom {
 			case 7: item = DQBuilders.itemBuilderDamaS8; break;
 			case 8: item = DQBuilders.itemBuilderDamaS9; break;
 			case 9: item = DQBuilders.itemBuilderIdoMedal; break;
+			case 10: item = DQBuilders.itemBuilderShopSyuuriya; break;
+			case 11: item = DQBuilders.itemBuilderShopBank; break;
+			case 12: item = DQBuilders.itemBuilderShopKaitoriya; break;
+			case 13: item = DQBuilders.itemBuilderShopBukiya; break;
 		}
 
 		if(item != null)
@@ -1204,7 +1208,7 @@ public class FuncItemRandom {
 		Item item = null;
 
 
-		switch(rand.nextInt(10))
+		switch(rand.nextInt(14))
 		{
 			case 0: item = DQBuilders.itemBuilderDamaW1; break;
 			case 1: item = DQBuilders.itemBuilderDamaW2; break;
@@ -1216,6 +1220,10 @@ public class FuncItemRandom {
 			case 7: item = DQBuilders.itemBuilderDamaW8; break;
 			case 8: item = DQBuilders.itemBuilderDamaW9; break;
 			case 9: item = DQBuilders.itemBuilderIdoMedal; break;
+			case 10: item = DQBuilders.itemBuilderShopSyuuriya; break;
+			case 11: item = DQBuilders.itemBuilderShopBank; break;
+			case 12: item = DQBuilders.itemBuilderShopKaitoriya; break;
+			case 13: item = DQBuilders.itemBuilderShopBukiya; break;
 		}
 
 		if(item != null)

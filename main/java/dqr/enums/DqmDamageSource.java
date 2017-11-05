@@ -29,7 +29,7 @@ public class DqmDamageSource{
 	public static DamageSource DqmPlayerSpecial = new EntityDamageSource("PlayerSpecial", null);
 	public static DamageSource DqmPlayerSpecialCri = new EntityDamageSource("PlayerSpecialCri", null);
 	public static DamageSource DqmPlayerSpecialDeath = new EntityDamageSource("PlayerSpecialDeath", null);
-
+	public static DamageSource DqmMonsterSkillDeath = new EntityDamageSource("MonsterSkillDeath", null);
 	public DqmDamageSource() {
 	}
 
@@ -46,6 +46,11 @@ public class DqmDamageSource{
 	public DamageSource getPlayerSkillDamageDeath(Entity ent)
 	{
 		return new EntityDamageSource("PlayerSkillDeath" , ent);
+	}
+
+	public DamageSource getMonsterSkillDamageDeath(Entity ent)
+	{
+		return new EntityDamageSource("MonsterSkillDeath" , ent);
 	}
 
 	public DamageSource getPlayerSpecialDamage(Entity ent)

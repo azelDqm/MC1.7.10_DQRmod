@@ -157,6 +157,8 @@ public class DqItemBlock {
 		DQItemBlocks.itemBlockSZukkinya = new ItemBlockDecorates(DQDecorates.DqmBlockSZukkinya);
 		DQItemBlocks.itemBlockFarmBookShelf = new ItemBlockDecorates(DQDecorates.DqmBlockFarmBookShelf);
 
+		DQItemBlocks.itemBlockSyuuriya = new ItemBlockDecorates(DQDecorates.DqmBlockSyuuriya);
+		DQItemBlocks.itemBlockBank = new ItemBlockDecorates(DQDecorates.DqmBlockBank);
 	}
 
 }

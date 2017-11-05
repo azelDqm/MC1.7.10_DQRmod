@@ -490,7 +490,18 @@ public class FuncMagicLvTable {
 								      -1, -1, -1, -1, -1, -1, -1, -1,
 								      -1, -1, -1, -1, -1, -1, -1, -1};
 
+	public static int[] BomiosJobLv = {-1, -1, -1, -1, 32, -1, -1, -1,
+								      -1, -1, -1, -1, -1, -1, -1, -1,
+								      -1, -1, -1, -1, -1, -1, -1, -1,
+								      -1, -1, -1, -1, -1, -1, -1, -1};
+
+
 	public static int[] RarihoJobLv = {-1, -1, -1, -1, -1, 11, -1, -1,
+								       -1, -1, -1, -1, -1, -1, -1, -1,
+								       -1, -1, -1, -1, -1, -1, -1, -1,
+								       -1, -1, -1, -1, -1, -1, -1, -1};
+
+	public static int[] RarihomaJobLv = {-1, -1, -1, -1, -1, 34, -1, -1,
 								       -1, -1, -1, -1, -1, -1, -1, -1,
 								       -1, -1, -1, -1, -1, -1, -1, -1,
 								       -1, -1, -1, -1, -1, -1, -1, -1};
@@ -512,6 +523,11 @@ public class FuncMagicLvTable {
 
 	public static int[] RukaniJobLv = {-1, -1, -1, -1, -1, -1, -1, -1,
 								       -1, 25, -1, -1, -1, -1, -1, -1,
+								       -1, -1, -1, -1, -1, -1, -1, -1,
+								       -1, -1, -1, -1, -1, -1, -1, -1};
+
+	public static int[] RukananJobLv = {-1, -1, -1, -1, -1, -1, -1, -1,
+								       -1, 34, -1, -1, -1, -1, -1, -1,
 								       -1, -1, -1, -1, -1, -1, -1, -1,
 								       -1, -1, -1, -1, -1, -1, -1, -1};
 
@@ -846,8 +862,12 @@ public class FuncMagicLvTable {
 	    	lvTable = PioraJobLv;
 	    }else if(itm == DQMagics.itemBomie){
 	    	lvTable = BomieJobLv;
+	    }else if(itm == DQMagics.itemBomiosu){
+	    	lvTable = BomiosJobLv;
 	    }else if(itm == DQMagics.itemRariho){
 	    	lvTable = RarihoJobLv;
+	    }else if(itm == DQMagics.itemRarihoma){
+	    	lvTable = RarihomaJobLv;
 	    }else if(itm == DQMagics.itemManusa){
 	    	lvTable = ManusaJobLv;
 	    }else if(itm == DQMagics.itemKiari){
@@ -856,6 +876,8 @@ public class FuncMagicLvTable {
 	    	lvTable = MahotonJobLv;
 	    }else if(itm == DQMagics.itemRukani){
 	    	lvTable = RukaniJobLv;
+	    }else if(itm == DQMagics.itemRukanan){
+	    	lvTable = RukananJobLv;
 	    }else if(itm == DQMagics.itemMedapani){
 	    	lvTable = MedapaniJobLv;
 	    }else if(itm == DQMagics.itemHenatosu){
@@ -1296,8 +1318,12 @@ public class FuncMagicLvTable {
 	    	lvTable = PioraJobLv;
 	    }else if(itm == DQMagics.itemBomie){
 	    	lvTable = BomieJobLv;
+	    }else if(itm == DQMagics.itemBomiosu){
+	    	lvTable = BomiosJobLv;
 	    }else if(itm == DQMagics.itemRariho){
 	    	lvTable = RarihoJobLv;
+	    }else if(itm == DQMagics.itemRarihoma){
+	    	lvTable = RarihomaJobLv;
 	    }else if(itm == DQMagics.itemManusa){
 	    	lvTable = ManusaJobLv;
 	    }else if(itm == DQMagics.itemKiari){
@@ -1306,6 +1332,8 @@ public class FuncMagicLvTable {
 	    	lvTable = MahotonJobLv;
 	    }else if(itm == DQMagics.itemRukani){
 	    	lvTable = RukaniJobLv;
+	    }else if(itm == DQMagics.itemRukanan){
+	    	lvTable = RukananJobLv;
 	    }else if(itm == DQMagics.itemMedapani){
 	    	lvTable = MedapaniJobLv;
 	    }else if(itm == DQMagics.itemHenatosu){

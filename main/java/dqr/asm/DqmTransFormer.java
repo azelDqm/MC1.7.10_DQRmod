@@ -38,7 +38,14 @@ public class DqmTransFormer implements IClassTransformer, Opcodes
 	private static final String TARGET_CLASS_NAME9 = "net.minecraft.entity.projectile.EntityFishHook";
 	private static final String TARGET_CLASS_NAME10 = "net.minecraftforge.common.FishingHooks";
 	private static final String TARGET_CLASS_NAME11 = "net.minecraft.entity.boss.EntityDragon";
+	private static final String TARGET_CLASS_NAME12 = "net.minecraft.world.gen.feature.WorldGeneratorBonusChest";
 
+	private static final String TARGET_CLASS_NAME13 = "twilightforest.entity.boss.EntityTFLich";
+	private static final String TARGET_CLASS_NAME14 = "twilightforest.entity.boss.EntityTFYetiAlpha";
+	private static final String TARGET_CLASS_NAME15 = "twilightforest.entity.boss.EntityTFIceBomb";
+
+	private static final String TARGET_CLASS_NAME16 = "net.minecraft.entity.EntityLiving";
+	private static final String TARGET_CLASS_NAME17 = "twilightforest.entity.boss.EntityTFFallingIce";
     // クラスがロードされる際に呼び出されるメソッドです。
     @Override
     public byte[] transform(String name, String transformedName, byte[] bytes)
@@ -55,7 +62,10 @@ public class DqmTransFormer implements IClassTransformer, Opcodes
     		!transformedName.equals(TARGET_CLASS_NAME2) && !transformedName.equals(TARGET_CLASS_NAME5) &&
     		!transformedName.equals(TARGET_CLASS_NAME6) && !transformedName.equals(TARGET_CLASS_NAME7) &&
     		!transformedName.equals(TARGET_CLASS_NAME8) && !transformedName.equals(TARGET_CLASS_NAME9) &&
-    		!transformedName.equals(TARGET_CLASS_NAME10) && !transformedName.equals(TARGET_CLASS_NAME11))
+    		!transformedName.equals(TARGET_CLASS_NAME10) && !transformedName.equals(TARGET_CLASS_NAME11) &&
+    		!transformedName.equals(TARGET_CLASS_NAME12) && !transformedName.equals(TARGET_CLASS_NAME13) &&
+    		!transformedName.equals(TARGET_CLASS_NAME14) && !transformedName.equals(TARGET_CLASS_NAME15) &&
+    		!transformedName.equals(TARGET_CLASS_NAME17) && !transformedName.equals(TARGET_CLASS_NAME16))
         {
             // 処理対象外なので何もしない
             return bytes;
@@ -95,11 +105,29 @@ public class DqmTransFormer implements IClassTransformer, Opcodes
         		return hookEntityFishHook(bytes);
         	}else if(transformedName.equals(TARGET_CLASS_NAME10))
         	{
-        		return hookGetRandomFishable(bytes);
+        		//return hookGetRandomFishable(bytes);
+        		return bytes;
         	}else if(transformedName.equals(TARGET_CLASS_NAME11))
         	{
-        		//byte[] bytes2 = hookGetRandomFishable(bytes);
         		return hookCreateEnderPortal(hookDestroyBlocksInAABB(bytes));
+        	}else if(transformedName.equals(TARGET_CLASS_NAME12))
+        	{
+        		return hookBonusChestGenerate(bytes);
+        	}else if(transformedName.equals(TARGET_CLASS_NAME13))
+        	{
+        		return hookTFEntityLich(bytes);
+        	}else if(transformedName.equals(TARGET_CLASS_NAME14))
+        	{
+        		return hookTFYetiAlpha(bytes);
+        	}else if(transformedName.equals(TARGET_CLASS_NAME15))
+        	{
+        		return hookTFIceBomb(bytes);
+        	}else if(transformedName.equals(TARGET_CLASS_NAME16))
+        	{
+        		return hookCanDespawn(bytes);
+        	}else if(transformedName.equals(TARGET_CLASS_NAME17))
+        	{
+        		return hookTFFallingIce(bytes);
         	}else
         	{
         		return bytes;
@@ -118,6 +146,664 @@ public class DqmTransFormer implements IClassTransformer, Opcodes
 
     }
 
+
+    private byte[] hookTFFallingIce(byte[] bytes)
+    {
+        // ASMで、bytesに格納されたクラスファイルを解析します。
+    	System.out.println("twilight forest TFFallingIce patching START");
+        ClassNodeDum cnode = new ClassNodeDum();
+        ClassReader reader = new ClassReader(bytes);
+        reader.accept(cnode, 0);
+
+        // 改変対象のメソッド名です
+        String targetMethodName = "fall";
+        String targetMethodName2 = "fall";
+
+        // 改変対象メソッドの戻り値型および、引数型をあらわします
+        String targetMethoddesc = "(F)V";
+        String targetMethoddesc2 = "(F)V";
+        String targetMethoddesc3 = "(F)V";
+        String targetMethoddesc4 = "(F)V";
+
+        // 対象のメソッドを検索取得します。
+        MethodNode mnode = null;
+        for (MethodNode curMnode : (List<MethodNode>) cnode.methods)
+        {
+        	boolean flag = false;
+
+        	//System.out.println("twilight forest TFIceBomb patching : name:" + curMnode.name + " / desc:" + curMnode.desc + " / " + curMnode.signature);
+            if ((targetMethodName.equals(curMnode.name) || targetMethodName2.equals(curMnode.name)) &&
+            		(targetMethoddesc.equals(curMnode.desc) || targetMethoddesc2.equals(curMnode.desc) ||
+            		 targetMethoddesc3.equals(curMnode.desc) || targetMethoddesc4.equals(curMnode.desc))
+            	)
+            {
+                mnode = curMnode;
+                break;
+            }
+        }
+
+        if (mnode != null)
+        {
+            try
+            {
+	        	System.out.println("TFFallingIce patching");
+	            InsnList overrideList = new InsnList();
+	            LabelNode l2 = new LabelNode();
+
+	            overrideList.add(new FieldInsnNode(GETSTATIC, "dqr/DQR", "addons", "Ldqr/addons/DqrAddon;"));
+	            overrideList.add(new InsnNode(POP));
+	            overrideList.add(new FieldInsnNode(GETSTATIC, "dqr/addons/DqrAddon", "tasogareIsEnable", "I"));
+	            overrideList.add(new JumpInsnNode(IFEQ, l2));
+	            overrideList.add(new VarInsnNode(ALOAD, 0));
+	            overrideList.add(new FieldInsnNode(GETSTATIC, "dqr/DQR", "addons", "Ldqr/addons/DqrAddon;"));
+	            overrideList.add(new InsnNode(POP));
+	            overrideList.add(new FieldInsnNode(GETSTATIC, "dqr/addons/DqrAddon", "tfFallingIceHurtAmount", "F"));
+	            overrideList.add(new FieldInsnNode(PUTFIELD, "twilightforest/entity/boss/EntityTFFallingIce", "hurtAmount", "F"));
+	            overrideList.add(new VarInsnNode(ALOAD, 0));
+	            overrideList.add(new FieldInsnNode(GETSTATIC, "dqr/DQR", "addons", "Ldqr/addons/DqrAddon;"));
+	            overrideList.add(new InsnNode(POP));
+	            overrideList.add(new FieldInsnNode(GETSTATIC, "dqr/addons/DqrAddon", "tfFallingIceHurtMax", "I"));
+	            overrideList.add(new FieldInsnNode(PUTFIELD, "twilightforest/entity/boss/EntityTFFallingIce", "hurtMax", "I"));
+
+
+	            overrideList.add(l2);
+	            /*
+	            LabelNode l5 = new LabelNode();
+
+	            // メソッドコールを、バイトコードであらわした例です。
+	            overrideList.add(new FieldInsnNode(GETSTATIC, "dqr/DQR", "farmlandHook", "Ldqr/functions/FuncFarmlandExtension;"));
+	            overrideList.add(new VarInsnNode(ALOAD, 1));
+	            overrideList.add(new VarInsnNode(ILOAD, 2));
+	            overrideList.add(new VarInsnNode(ILOAD, 3));
+	            overrideList.add(new VarInsnNode(ILOAD, 4));
+	            overrideList.add(new VarInsnNode(ALOAD, 0));
+	            overrideList.add(new MethodInsnNode(INVOKEVIRTUAL, "dqr/functions/FuncFarmlandExtension", "hookUpdateTick", "(Lahb;IIILaji;)Z"));
+	            overrideList.add(new JumpInsnNode(IFEQ, l5));
+	            //overrideList.add(new InsnNode(ICONST_1));
+	            overrideList.add(new InsnNode(RETURN));
+	            overrideList.add(l5);
+	            */
+
+	            // mnode.instructions.get(1)で、対象のメソッドの先頭を取得
+	            // mnode.instructions.insertで、指定した位置にバイトコードを挿入します。
+	            mnode.instructions.insert(mnode.instructions.get(1), overrideList);
+	            // 改変したクラスファイルをバイト列に書き出します
+	            ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
+	            System.out.println("TFFallingIce patching:" + cnode.name);
+	            cnode.accept(cw);
+	            bytes = cw.toByteArray();
+
+	            System.out.println("TFFallingIce patching success!!:");
+            } catch (Exception e) {
+                throw new RuntimeException("failed : TFIceBomb patching ", e);
+            }
+        }
+
+        return bytes;
+    }
+
+    private byte[] hookCanDespawn(byte[] bytes)
+    {
+        // ASMで、bytesに格納されたクラスファイルを解析します。
+    	System.out.println("CanDespawn patching START");
+        ClassNodeDum cnode = new ClassNodeDum();
+        ClassReader reader = new ClassReader(bytes);
+        reader.accept(cnode, 0);
+
+
+        String TARGET_TRANSFORMED_NAME = "canDespawn";
+        String TARGET_TRANSFORMED_NAME2 = "func_70692_ba";
+        //String TARGET_Original_NAME = "destroyBlocksInAABB";
+        String TARGET_Original_NAME = "v";
+        String TARGET_DESC = "()Z";
+        String curMnodeName_wk = "";
+
+        // 対象のメソッドを検索取得します。
+        MethodNode mnode = null;
+        System.out.println("CanDespawn check");
+        for (MethodNode curMnode : (List<MethodNode>) cnode.methods)
+        {
+        	//System.out.println("CHECK : " + curMnode.desc + " / " + curMnode.name);
+        	boolean flag = false;
+        	if(TARGET_DESC.equals(curMnode.desc) && (TARGET_Original_NAME.equals(curMnode.name) || TARGET_TRANSFORMED_NAME.equals(curMnode.name) || TARGET_TRANSFORMED_NAME2.equals(curMnode.name)))
+ 			{
+ 				System.out.println("CanDespawn find");
+ 				curMnodeName_wk = curMnode.name;
+ 				mnode = curMnode;
+                break;
+ 			}
+        }
+
+        if (mnode != null)
+        {
+        	System.out.println("CanDespawn patching");
+            try
+            {
+	        	System.out.println("CanDespawn patching patching");
+	            InsnList overrideList = new InsnList();
+	            LabelNode l2 = new LabelNode();
+	            LabelNode l3 = new LabelNode();
+	            String name = new String();
+
+	            overrideList.add(new FieldInsnNode(GETSTATIC, "dqr/DQR", "entityLivingHook", "Ldqr/functions/FuncEntityLivingExtension;"));
+	            overrideList.add(new VarInsnNode(ALOAD, 0));
+
+	            if(TARGET_TRANSFORMED_NAME.equals(curMnodeName_wk) || TARGET_TRANSFORMED_NAME2.equals(curMnodeName_wk))
+	            {
+	            	//System.out.println("TargetName : " + curMnodeName_wk);
+	            	overrideList.add(new MethodInsnNode(INVOKEVIRTUAL, "dqr/functions/FuncEntityLivingExtension", "hookCanDespawn", "(Lnet/minecraft/entity/EntityLiving;)I"));
+	            }else
+	            {
+	            	//System.out.println("TargetName2 : " + curMnodeName_wk);
+	            	overrideList.add(new MethodInsnNode(INVOKEVIRTUAL, "dqr/functions/FuncEntityLivingExtension", "hookCanDespawn", "(Lsw;)I"));
+
+	            }
+	            overrideList.add(new VarInsnNode(ISTORE, 1));
+	            overrideList.add(new VarInsnNode(ILOAD, 1));
+	            overrideList.add(new InsnNode(ICONST_1));
+	            overrideList.add(new JumpInsnNode(IF_ICMPNE, l2));
+	            overrideList.add(new InsnNode(ICONST_1));
+	            overrideList.add(new InsnNode(IRETURN));
+	            overrideList.add(l2);
+
+	            overrideList.add(new VarInsnNode(ILOAD, 1));
+	            overrideList.add(new JumpInsnNode(IFNE, l3));
+	            overrideList.add(new InsnNode(ICONST_0));
+	            overrideList.add(new InsnNode(IRETURN));
+
+	            overrideList.add(l3);
+
+
+
+	            // mnode.instructions.get(1)で、対象のメソッドの先頭を取得
+	            // mnode.instructions.insertで、指定した位置にバイトコードを挿入します。
+	            mnode.instructions.insert(mnode.instructions.get(1), overrideList);
+	            // 改変したクラスファイルをバイト列に書き出します
+	            ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
+	            System.out.println("CanDespawn patching :" + cnode.name);
+	            cnode.accept(cw);
+	            bytes = cw.toByteArray();
+
+	            System.out.println("CanDespawn patching success!!:");
+            } catch (Exception e) {
+                throw new RuntimeException("failed : CanDespawn patching ", e);
+            }
+        }
+
+        return bytes;
+    }
+
+
+    /*
+    private byte[] hookTFSnowQueenA(byte[] bytes)
+    {
+    	System.out.println("twilight forest TFSnowQueen patching START");
+        try
+        {
+	    	ClassReader cr = new ClassReader(bytes);
+	    	ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
+	    	ClassVisitor cv = new ClassVisitor(ASM4, cw) {
+	    		@Override
+	    		public void visitEnd() {
+	    			// メソッドを新しくつくる
+	    			// ACC_PUBLICの部分を変えるとアクセサが変わる
+	    			MethodVisitor mv = cv.visitMethod(ACC_PUBLIC, "canDespawn", "()Z", null, null);
+	    			mv.visitFieldInsn(GETSTATIC, "dqr/DQR", "addons", "Ldqr/addons/DqrAddon;");
+	    			mv.visitInsn(POP);
+	    			mv.visitFieldInsn(GETSTATIC, "dqr/addons/DqrAddon", "funcTFMobHook", "Ldqr/addons/twilightForest/coreHook/FuncTFMobHook;");
+	    			mv.visitVarInsn(ALOAD, 0);
+	    			mv.visitMethodInsn(INVOKEVIRTUAL, "dqr/addons/twilightForest/coreHook/FuncTFMobHook", "hookTFSnowQueenCanDespawn", "(Ltwilightforest/entity/boss/EntityTFSnowQueen;)Z");
+	    			mv.visitInsn(IRETURN);
+	    			mv.visitMaxs(0, 0);// ClassWriterのCOMPUTE_MAXSのフラグをたてているので勝手に計算してくれる
+	    			super.visitEnd();
+	    		}
+	    	};
+
+	    	System.out.println("twilight forest TFSnowQueen patching");
+	    	cr.accept(cw, 0);
+
+	    	bytes = cw.toByteArray();
+        } catch (Exception e) {
+            throw new RuntimeException("failed : TFSnowQueen patching ", e);
+        }
+
+        System.out.println("twilight forest TFSnowQueen patching END");
+        return bytes;
+    }
+
+    private byte[] hookTFSnowQueenB(byte[] bytes)
+    {
+    	System.out.println("twilight forest TFSnowQueen patching START");
+        try
+        {
+	    	ClassReader cr = new ClassReader(bytes);
+	    	ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
+	    	ClassVisitor cv = new ClassVisitor(ASM4, cw) {
+	    		@Override
+	    		public void visitEnd() {
+	    			// メソッドを新しくつくる
+	    			// ACC_PUBLICの部分を変えるとアクセサが変わる
+	    			MethodVisitor mv = cv.visitMethod(ACC_PUBLIC, "func_70692_ba", "()Z", null, null);
+	    			mv.visitMaxs(0, 0);// ClassWriterのCOMPUTE_MAXSのフラグをたてているので勝手に計算してくれる
+	    			mv.visitFieldInsn(GETSTATIC, "dqr/DQR", "addons", "Ldqr/addons/DqrAddon;");
+	    			mv.visitInsn(POP);
+	    			mv.visitFieldInsn(GETSTATIC, "dqr/addons/DqrAddon", "funcTFMobHook", "Ldqr/addons/twilightForest/coreHook/FuncTFMobHook;");
+	    			mv.visitVarInsn(ALOAD, 0);
+	    			mv.visitMethodInsn(INVOKEVIRTUAL, "dqr/addons/twilightForest/coreHook/FuncTFMobHook", "hookTFSnowQueenCanDespawn", "(Ltwilightforest/entity/boss/EntityTFSnowQueen;)Z");
+	    			mv.visitInsn(IRETURN);
+
+	    			super.visitEnd();
+	    		}
+	    	};
+
+	    	cr.accept(cw, 0);
+
+	    	bytes = cw.toByteArray();
+        } catch (Exception e) {
+            throw new RuntimeException("failed : TFSnowQueen patching ", e);
+        }
+
+        System.out.println("twilight forest TFSnowQueen patching END");
+        return bytes;
+    }
+    */
+
+    private byte[] hookTFIceBomb(byte[] bytes)
+    {
+        // ASMで、bytesに格納されたクラスファイルを解析します。
+    	System.out.println("twilight forest TFIceBomb patching START");
+        ClassNodeDum cnode = new ClassNodeDum();
+        ClassReader reader = new ClassReader(bytes);
+        reader.accept(cnode, 0);
+
+        // 改変対象のメソッド名です
+        String targetMethodName = "hitNearbyEntities";
+        String targetMethodName2 = "hitNearbyEntities";
+
+        // 改変対象メソッドの戻り値型および、引数型をあらわします
+        String targetMethoddesc = "()V";
+        String targetMethoddesc2 = "()V";
+        String targetMethoddesc3 = "()V";
+        String targetMethoddesc4 = "()V";
+
+        // 対象のメソッドを検索取得します。
+        MethodNode mnode = null;
+        for (MethodNode curMnode : (List<MethodNode>) cnode.methods)
+        {
+        	boolean flag = false;
+
+        	//System.out.println("twilight forest TFIceBomb patching : name:" + curMnode.name + " / desc:" + curMnode.desc + " / " + curMnode.signature);
+            if ((targetMethodName.equals(curMnode.name) || targetMethodName2.equals(curMnode.name)) &&
+            		(targetMethoddesc.equals(curMnode.desc) || targetMethoddesc2.equals(curMnode.desc) ||
+            		 targetMethoddesc3.equals(curMnode.desc) || targetMethoddesc4.equals(curMnode.desc))
+            	)
+            {
+                mnode = curMnode;
+                break;
+            }
+        }
+
+        if (mnode != null)
+        {
+            try
+            {
+	        	System.out.println("TFIceBomb patching");
+	            InsnList overrideList = new InsnList();
+	            LabelNode l2 = new LabelNode();
+
+	            overrideList.add(new FieldInsnNode(GETSTATIC, "dqr/DQR", "addons", "Ldqr/addons/DqrAddon;"));
+	            overrideList.add(new InsnNode(POP));
+	            overrideList.add(new FieldInsnNode(GETSTATIC, "dqr/addons/DqrAddon", "funcTFMobHook", "Ldqr/addons/twilightForest/coreHook/FuncTFMobHook;"));
+	            overrideList.add(new VarInsnNode(ALOAD, 0));
+	            overrideList.add(new MethodInsnNode(INVOKEVIRTUAL, "dqr/addons/twilightForest/coreHook/FuncTFMobHook", "hookTFIceBombHitNearbyEntities", "(Ltwilightforest/entity/boss/EntityTFIceBomb;)Z"));
+	            overrideList.add(new JumpInsnNode(IFEQ, l2));
+	            overrideList.add(new InsnNode(RETURN));
+
+	            overrideList.add(l2);
+	            /*
+	            LabelNode l5 = new LabelNode();
+
+	            // メソッドコールを、バイトコードであらわした例です。
+	            overrideList.add(new FieldInsnNode(GETSTATIC, "dqr/DQR", "farmlandHook", "Ldqr/functions/FuncFarmlandExtension;"));
+	            overrideList.add(new VarInsnNode(ALOAD, 1));
+	            overrideList.add(new VarInsnNode(ILOAD, 2));
+	            overrideList.add(new VarInsnNode(ILOAD, 3));
+	            overrideList.add(new VarInsnNode(ILOAD, 4));
+	            overrideList.add(new VarInsnNode(ALOAD, 0));
+	            overrideList.add(new MethodInsnNode(INVOKEVIRTUAL, "dqr/functions/FuncFarmlandExtension", "hookUpdateTick", "(Lahb;IIILaji;)Z"));
+	            overrideList.add(new JumpInsnNode(IFEQ, l5));
+	            //overrideList.add(new InsnNode(ICONST_1));
+	            overrideList.add(new InsnNode(RETURN));
+	            overrideList.add(l5);
+	            */
+
+	            // mnode.instructions.get(1)で、対象のメソッドの先頭を取得
+	            // mnode.instructions.insertで、指定した位置にバイトコードを挿入します。
+	            mnode.instructions.insert(mnode.instructions.get(1), overrideList);
+	            // 改変したクラスファイルをバイト列に書き出します
+	            ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
+	            System.out.println("TFIceBomb patching:" + cnode.name);
+	            cnode.accept(cw);
+	            bytes = cw.toByteArray();
+
+	            System.out.println("TFIceBomb patching success!!:");
+            } catch (Exception e) {
+                throw new RuntimeException("failed : TFIceBomb patching ", e);
+            }
+        }
+
+        return bytes;
+    }
+
+    private byte[] hookTFYetiAlpha(byte[] bytes)
+    {
+        // ASMで、bytesに格納されたクラスファイルを解析します。
+    	System.out.println("twilight forest TFYetiAlpha patching START");
+        ClassNodeDum cnode = new ClassNodeDum();
+        ClassReader reader = new ClassReader(bytes);
+        reader.accept(cnode, 0);
+
+        // 改変対象のメソッド名です
+        String targetMethodName = "hitNearbyEntities";
+        String targetMethodName2 = "hitNearbyEntities";
+
+        // 改変対象メソッドの戻り値型および、引数型をあらわします
+        String targetMethoddesc = "()V";
+        String targetMethoddesc2 = "()V";
+        String targetMethoddesc3 = "()V";
+        String targetMethoddesc4 = "()V";
+
+        // 対象のメソッドを検索取得します。
+        MethodNode mnode = null;
+        for (MethodNode curMnode : (List<MethodNode>) cnode.methods)
+        {
+        	boolean flag = false;
+
+        	//System.out.println("twilight forest TFEntityLich patching : name:" + curMnode.name + " / desc:" + curMnode.desc + " / " + curMnode.signature);
+            if ((targetMethodName.equals(curMnode.name) || targetMethodName2.equals(curMnode.name)) &&
+            		(targetMethoddesc.equals(curMnode.desc) || targetMethoddesc2.equals(curMnode.desc) ||
+            		 targetMethoddesc3.equals(curMnode.desc) || targetMethoddesc4.equals(curMnode.desc))
+            	)
+            {
+                mnode = curMnode;
+                break;
+            }
+        }
+
+        if (mnode != null)
+        {
+            try
+            {
+	        	System.out.println("TFYetiAlpha patching");
+	            InsnList overrideList = new InsnList();
+	            LabelNode l2 = new LabelNode();
+
+	            overrideList.add(new FieldInsnNode(GETSTATIC, "dqr/DQR", "addons", "Ldqr/addons/DqrAddon;"));
+	            overrideList.add(new InsnNode(POP));
+	            overrideList.add(new FieldInsnNode(GETSTATIC, "dqr/addons/DqrAddon", "funcTFMobHook", "Ldqr/addons/twilightForest/coreHook/FuncTFMobHook;"));
+	            overrideList.add(new VarInsnNode(ALOAD, 0));
+	            overrideList.add(new MethodInsnNode(INVOKEVIRTUAL, "dqr/addons/twilightForest/coreHook/FuncTFMobHook", "hookTFYetiAlphaHitNearbyEntities", "(Ltwilightforest/entity/boss/EntityTFYetiAlpha;)Z"));
+	            overrideList.add(new JumpInsnNode(IFEQ, l2));
+	            overrideList.add(new InsnNode(RETURN));
+
+	            overrideList.add(l2);
+	            /*
+	            LabelNode l5 = new LabelNode();
+
+	            // メソッドコールを、バイトコードであらわした例です。
+	            overrideList.add(new FieldInsnNode(GETSTATIC, "dqr/DQR", "farmlandHook", "Ldqr/functions/FuncFarmlandExtension;"));
+	            overrideList.add(new VarInsnNode(ALOAD, 1));
+	            overrideList.add(new VarInsnNode(ILOAD, 2));
+	            overrideList.add(new VarInsnNode(ILOAD, 3));
+	            overrideList.add(new VarInsnNode(ILOAD, 4));
+	            overrideList.add(new VarInsnNode(ALOAD, 0));
+	            overrideList.add(new MethodInsnNode(INVOKEVIRTUAL, "dqr/functions/FuncFarmlandExtension", "hookUpdateTick", "(Lahb;IIILaji;)Z"));
+	            overrideList.add(new JumpInsnNode(IFEQ, l5));
+	            //overrideList.add(new InsnNode(ICONST_1));
+	            overrideList.add(new InsnNode(RETURN));
+	            overrideList.add(l5);
+	            */
+
+	            // mnode.instructions.get(1)で、対象のメソッドの先頭を取得
+	            // mnode.instructions.insertで、指定した位置にバイトコードを挿入します。
+	            mnode.instructions.insert(mnode.instructions.get(1), overrideList);
+	            // 改変したクラスファイルをバイト列に書き出します
+	            ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
+	            System.out.println("TFYetiAlpha patching:" + cnode.name);
+	            cnode.accept(cw);
+	            bytes = cw.toByteArray();
+
+	            System.out.println("TFYetiAlpha patching success!!:");
+            } catch (Exception e) {
+                throw new RuntimeException("failed : TFYetiAlpha patching ", e);
+            }
+        }
+
+        return bytes;
+    }
+
+
+
+    private byte[] hookTFEntityLich(byte[] bytes)
+    {
+        // ASMで、bytesに格納されたクラスファイルを解析します。
+    	System.out.println("twilight forest TFEntityLich patching START");
+        ClassNodeDum cnode = new ClassNodeDum();
+        ClassReader reader = new ClassReader(bytes);
+        reader.accept(cnode, 0);
+
+        // 改変対象のメソッド名です
+        String targetMethodName = "func_70097_a";
+        String targetMethodName2 = "attackEntityFrom";
+
+        // 改変対象メソッドの戻り値型および、引数型をあらわします
+        String targetMethoddesc = "(Lro;F)Z";
+        String targetMethoddesc2 = "(Lnet/minecraft/util/DamageSource;F)Z";
+        String targetMethoddesc3 = "(Lro;F)Z";
+        String targetMethoddesc4 = "(Lnet/minecraft/util/DamageSource;F)Z";
+
+        // 対象のメソッドを検索取得します。
+        MethodNode mnode = null;
+        for (MethodNode curMnode : (List<MethodNode>) cnode.methods)
+        {
+        	boolean flag = false;
+
+        	//System.out.println("twilight forest TFEntityLich patching : name:" + curMnode.name + " / desc:" + curMnode.desc);
+            if ((targetMethodName.equals(curMnode.name) || targetMethodName2.equals(curMnode.name)) &&
+            		(targetMethoddesc.equals(curMnode.desc) || targetMethoddesc2.equals(curMnode.desc) ||
+            		 targetMethoddesc3.equals(curMnode.desc) || targetMethoddesc4.equals(curMnode.desc))
+            	)
+            {
+                mnode = curMnode;
+                break;
+            }
+        }
+
+        if (mnode != null)
+        {
+            try
+            {
+	        	System.out.println("TFEntityLich patching");
+	            InsnList overrideList = new InsnList();
+	            LabelNode l2 = new LabelNode();
+
+	            overrideList.add(new FieldInsnNode(GETSTATIC, "dqr/DQR", "addons", "Ldqr/addons/DqrAddon;"));
+	            overrideList.add(new InsnNode(POP));
+	            overrideList.add(new FieldInsnNode(GETSTATIC, "dqr/addons/DqrAddon", "funcTFMobHook", "Ldqr/addons/twilightForest/coreHook/FuncTFMobHook;"));
+	            overrideList.add(new VarInsnNode(ALOAD, 0));
+	            overrideList.add(new VarInsnNode(ALOAD, 1));
+	            overrideList.add(new VarInsnNode(FLOAD, 2));
+	            overrideList.add(new MethodInsnNode(INVOKEVIRTUAL, "dqr/addons/twilightForest/coreHook/FuncTFMobHook", "hookTFLichAttackEntityFrom", "(Ltwilightforest/entity/boss/EntityTFLich;Lnet/minecraft/util/DamageSource;F)Z"));
+	            overrideList.add(new JumpInsnNode(IFNE, l2));
+	            overrideList.add(new InsnNode(ICONST_0));
+	            overrideList.add(new InsnNode(IRETURN));
+	            overrideList.add(l2);
+	            /*
+	            LabelNode l5 = new LabelNode();
+
+	            // メソッドコールを、バイトコードであらわした例です。
+	            overrideList.add(new FieldInsnNode(GETSTATIC, "dqr/DQR", "farmlandHook", "Ldqr/functions/FuncFarmlandExtension;"));
+	            overrideList.add(new VarInsnNode(ALOAD, 1));
+	            overrideList.add(new VarInsnNode(ILOAD, 2));
+	            overrideList.add(new VarInsnNode(ILOAD, 3));
+	            overrideList.add(new VarInsnNode(ILOAD, 4));
+	            overrideList.add(new VarInsnNode(ALOAD, 0));
+	            overrideList.add(new MethodInsnNode(INVOKEVIRTUAL, "dqr/functions/FuncFarmlandExtension", "hookUpdateTick", "(Lahb;IIILaji;)Z"));
+	            overrideList.add(new JumpInsnNode(IFEQ, l5));
+	            //overrideList.add(new InsnNode(ICONST_1));
+	            overrideList.add(new InsnNode(RETURN));
+	            overrideList.add(l5);
+	            */
+
+	            // mnode.instructions.get(1)で、対象のメソッドの先頭を取得
+	            // mnode.instructions.insertで、指定した位置にバイトコードを挿入します。
+	            mnode.instructions.insert(mnode.instructions.get(1), overrideList);
+	            // 改変したクラスファイルをバイト列に書き出します
+	            ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
+	            System.out.println("TFEntityLich patching:" + cnode.name);
+	            cnode.accept(cw);
+	            bytes = cw.toByteArray();
+
+	            System.out.println("TFEntityLich patching success!!:");
+            } catch (Exception e) {
+                throw new RuntimeException("failed : TFEntityLich patching ", e);
+            }
+        }
+
+        return bytes;
+    }
+
+
+
+
+    private byte[] hookBonusChestGenerate(byte[] bytes)
+    {
+        // ASMで、bytesに格納されたクラスファイルを解析します。
+    	System.out.println("BonusChestGenerate patching START");
+        ClassNodeDum cnode = new ClassNodeDum();
+        ClassReader reader = new ClassReader(bytes);
+        reader.accept(cnode, 0);
+
+
+        String TARGET_TRANSFORMED_NAME = "a";
+        //String TARGET_Original_NAME = "destroyBlocksInAABB";
+        String TARGET_Original_NAME = "a";
+        String TARGET_DESC = "(Lahb;Ljava/util/Random;III)Z";
+
+
+        // 対象のメソッドを検索取得します。
+        MethodNode mnode = null;
+        System.out.println("BonusChestGenerate check");
+        for (MethodNode curMnode : (List<MethodNode>) cnode.methods)
+        {
+        	//System.out.println("CHECK : " + curMnode.desc + " / " + curMnode.name);
+        	boolean flag = false;
+        	if(TARGET_DESC.equals(curMnode.desc) && (TARGET_Original_NAME.equals(curMnode.name) || TARGET_TRANSFORMED_NAME.equals(curMnode.name)))
+ 			{
+ 				System.out.println("BonusChestGenerate find");
+ 				mnode = curMnode;
+                break;
+ 			}
+        }
+
+        if (mnode != null)
+        {
+        	System.out.println("BonusChestGenerate patching");
+            try
+            {
+	        	System.out.println("BonusChestGenerate patching patching");
+	            InsnList overrideList = new InsnList();
+	            LabelNode l2 = new LabelNode();
+	            String name = new String();
+
+	            overrideList.add(new FieldInsnNode(GETSTATIC, "dqr/DQR", "bonuschestHook", "Ldqr/functions/FuncBonusChestExtension;"));
+	            overrideList.add(new VarInsnNode(ALOAD, 1));
+	            overrideList.add(new VarInsnNode(ALOAD, 2));
+	            overrideList.add(new VarInsnNode(ILOAD, 3));
+	            overrideList.add(new VarInsnNode(ILOAD, 4));
+	            overrideList.add(new VarInsnNode(ILOAD, 5));
+	            overrideList.add(new VarInsnNode(ALOAD, 0));
+	            overrideList.add(new VarInsnNode(ALOAD, 0));
+	            overrideList.add(new FieldInsnNode(GETFIELD, "arg", "a", "[Lqx;"));
+	            overrideList.add(new VarInsnNode(ALOAD, 0));
+	            overrideList.add(new FieldInsnNode(GETFIELD, "arg", "b", "I"));
+	            overrideList.add(new MethodInsnNode(INVOKEVIRTUAL, "dqr/functions/FuncBonusChestExtension", "hookGenerate", "(Lahb;Ljava/util/Random;IIILarg;[Lqx;I)Ljava/lang/Boolean;"));
+	            overrideList.add(new VarInsnNode(ASTORE, 6));
+	            overrideList.add(new VarInsnNode(ALOAD, 6));
+	            overrideList.add(new JumpInsnNode(IFNULL, l2));
+	            overrideList.add(new VarInsnNode(ALOAD, 6));
+	            overrideList.add(new MethodInsnNode(INVOKEVIRTUAL, "java/lang/Boolean", "booleanValue", "()Z"));
+	            overrideList.add(new InsnNode(IRETURN));
+
+	            overrideList.add(l2);
+	            /*
+	            overrideList.add(new InsnNode(ICONST_0));
+	            overrideList.add(new MethodInsnNode(INVOKESTATIC, "java/lang/Boolean", "valueOf", "(Z)Ljava/lang/Boolean;"));
+	            overrideList.add(new VarInsnNode(ASTORE, 6));
+	            overrideList.add(new FieldInsnNode(GETSTATIC, "dqr/DQR", "bonuschestHook", "Ldqr/functions/FuncBonusChestExtension;"));
+	            overrideList.add(new VarInsnNode(ALOAD, 1));
+	            overrideList.add(new VarInsnNode(ALOAD, 2));
+	            overrideList.add(new VarInsnNode(ILOAD, 3));
+	            overrideList.add(new VarInsnNode(ILOAD, 4));
+	            overrideList.add(new VarInsnNode(ILOAD, 5));
+	            overrideList.add(new VarInsnNode(ALOAD, 0));
+	            overrideList.add(new VarInsnNode(ALOAD, 6));
+	            overrideList.add(new VarInsnNode(ALOAD, 0));
+	            overrideList.add(new FieldInsnNode(GETFIELD, "arg", "a", "[Lqx;"));
+	            overrideList.add(new VarInsnNode(ALOAD, 0));
+	            overrideList.add(new FieldInsnNode(GETFIELD, "arg", "b", "I"));
+
+	            overrideList.add(new MethodInsnNode(INVOKEVIRTUAL, "dqr/functions/FuncBonusChestExtension", "hookGenerate", "(Lahb;Ljava/util/Random;IIILarg;Ljava/lang/Boolean;[Lqx;I)Z"));
+
+	            overrideList.add(new JumpInsnNode(IFEQ, l2));
+	            */
+
+
+	            //debug用
+
+	            /*
+	            overrideList.add(new FieldInsnNode(GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;"));
+	            overrideList.add(new TypeInsnNode(NEW, "java/lang/StringBuilder"));
+	            overrideList.add(new InsnNode(DUP));
+	            overrideList.add(new MethodInsnNode(INVOKESPECIAL, "java/lang/StringBuilder", "<init>", "()V"));
+	            overrideList.add(new LdcInsnNode(name));
+	            overrideList.add(new MethodInsnNode(INVOKEVIRTUAL, "java/lang/StringBuilder", "append", "(Ljava/lang/String;)Ljava/lang/StringBuilder;"));
+	            overrideList.add(new VarInsnNode(ALOAD, 6));
+
+
+	            overrideList.add(new MethodInsnNode(INVOKEVIRTUAL, "java/lang/Boolean", "toString", "()Ljava/lang/String;"));
+	            overrideList.add(new MethodInsnNode(INVOKEVIRTUAL, "java/lang/StringBuilder", "append", "(Ljava/lang/String;)Ljava/lang/StringBuilder;"));
+	            overrideList.add(new MethodInsnNode(INVOKEVIRTUAL, "java/lang/StringBuilder", "toString", "()Ljava/lang/String;"));
+	            overrideList.add(new MethodInsnNode(INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/String;)V"));
+
+
+	            overrideList.add(new VarInsnNode(ALOAD, 6));
+	            overrideList.add(new MethodInsnNode(INVOKEVIRTUAL, "java/lang/Boolean", "booleanValue", "()Z"));
+	            overrideList.add(new InsnNode(IRETURN));
+	            overrideList.add(new VarInsnNode(ALOAD, 6));
+	            overrideList.add(new MethodInsnNode(INVOKEVIRTUAL, "java/lang/Boolean", "booleanValue", "()Z"));
+	            overrideList.add(new InsnNode(IRETURN));
+
+	            overrideList.add(l2);
+	            */
+
+	            // mnode.instructions.get(1)で、対象のメソッドの先頭を取得
+	            // mnode.instructions.insertで、指定した位置にバイトコードを挿入します。
+	            mnode.instructions.insert(mnode.instructions.get(1), overrideList);
+	            // 改変したクラスファイルをバイト列に書き出します
+	            ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
+	            System.out.println("BonusChestGenerate patching :" + cnode.name);
+	            cnode.accept(cw);
+	            bytes = cw.toByteArray();
+
+	            System.out.println("BonusChestGenerate patching success!!:");
+            } catch (Exception e) {
+                throw new RuntimeException("failed : BonusChestGenerate patching ", e);
+            }
+        }
+
+        return bytes;
+    }
 
     private byte[] hookDestroyBlocksInAABB(byte[] bytes)
     {
@@ -261,6 +947,88 @@ public class DqmTransFormer implements IClassTransformer, Opcodes
         String TARGET_TRANSFORMED_NAME = "getRandomFishable";
         String TARGET_Original_NAME = "getRandomFishable";
         String TARGET_DESC = "(Ljava/util/Random;FII)Ladd;";
+        String TARGET_DESC2 = "(Ljava/util/Random;FII)Lnet/minecraft/item/ItemStack;";
+        boolean debugAreaFlg = false;
+
+        // 対象のメソッドを検索取得します。
+        MethodNode mnode = null;
+        System.out.println("FishHook check");
+        for (MethodNode curMnode : (List<MethodNode>) cnode.methods)
+        {
+        	//System.out.println("CHECK : " + curMnode.desc + " / " + curMnode.name);
+        	boolean flag = false;
+        	if(TARGET_DESC.equals(curMnode.desc) && TARGET_TRANSFORMED_NAME.equals(curMnode.name))
+ 			{
+ 				System.out.println("FishHook find");
+ 				mnode = curMnode;
+                break;
+ 			}else if(TARGET_DESC2.equals(curMnode.desc) && TARGET_TRANSFORMED_NAME.equals(curMnode.name))
+ 			{
+ 				System.out.println("FishHook find2");
+ 				mnode = curMnode;
+ 				debugAreaFlg = true;
+                break;
+ 			}
+        }
+
+        if (mnode != null)
+        {
+        	System.out.println("EntityFishHook patching");
+            try
+            {
+	        	System.out.println("FishHook patching patching");
+	            InsnList overrideList = new InsnList();
+	            LabelNode l2 = new LabelNode();
+
+	            overrideList.add(new FieldInsnNode(GETSTATIC, "dqr/DQR", "fishingHookHook", "Ldqr/functions/FuncFishHookExtension;"));
+	            overrideList.add(new VarInsnNode(FLOAD, 1));
+	            overrideList.add(new VarInsnNode(ILOAD, 2));
+	            overrideList.add(new VarInsnNode(ILOAD, 3));
+	            if(debugAreaFlg)
+	            {
+	            	overrideList.add(new MethodInsnNode(INVOKEVIRTUAL, "dqr/functions/FuncFishHookExtension", "hookGetRandomFishable", "(FII)Lnet/minecraft/item/ItemStack;"));
+	            }else
+	            {
+	            	overrideList.add(new MethodInsnNode(INVOKEVIRTUAL, "dqr/functions/FuncFishHookExtension", "hookGetRandomFishable", "(FII)Ladd;"));
+	            }
+	            overrideList.add(new VarInsnNode(ASTORE, 4));
+	            overrideList.add(new VarInsnNode(ALOAD, 4));
+	            overrideList.add(new JumpInsnNode(IFNULL, l2));
+	            overrideList.add(new VarInsnNode(ALOAD, 4));
+	            overrideList.add(new InsnNode(ARETURN));
+	            overrideList.add(l2);
+
+
+	            // mnode.instructions.get(1)で、対象のメソッドの先頭を取得
+	            // mnode.instructions.insertで、指定した位置にバイトコードを挿入します。
+	            mnode.instructions.insert(mnode.instructions.get(1), overrideList);
+	            // 改変したクラスファイルをバイト列に書き出します
+	            ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
+	            System.out.println("FishHook patching :" + cnode.name);
+	            cnode.accept(cw);
+	            bytes = cw.toByteArray();
+
+	            System.out.println("FishHook patching success!!:");
+            } catch (Exception e) {
+                throw new RuntimeException("failed : FishHook patching ", e);
+            }
+        }
+
+        return bytes;
+    }
+/*
+    private byte[] hookGetRandomFishable(byte[] bytes)
+    {
+        // ASMで、bytesに格納されたクラスファイルを解析します。
+    	System.out.println("FishHook patching START");
+        ClassNodeDum cnode = new ClassNodeDum();
+        ClassReader reader = new ClassReader(bytes);
+        reader.accept(cnode, 0);
+
+
+        String TARGET_TRANSFORMED_NAME = "getRandomFishable";
+        String TARGET_Original_NAME = "getRandomFishable";
+        String TARGET_DESC = "(Ljava/util/Random;FII)Ladd;";
 
 
         // 対象のメソッドを検索取得します。
@@ -316,8 +1084,100 @@ public class DqmTransFormer implements IClassTransformer, Opcodes
 
         return bytes;
     }
+*/
+    private byte[] hookEntityFishHook(byte[] bytes)
+    {
+        // ASMで、bytesに格納されたクラスファイルを解析します。
+    	System.out.println("EntityFishHook patching START");
+        ClassNodeDum cnode = new ClassNodeDum();
+        ClassReader reader = new ClassReader(bytes);
+        reader.accept(cnode, 0);
 
 
+        String TARGET_TRANSFORMED_NAME = "f";
+        String TARGET_Original_NAME = "func_146033_f";
+        String TARGET_DESC = "()Ladd;";
+        String TARGET_DESC2 = "()Lnet/minecraft/item/ItemStack;";
+        boolean debugAreaFlg = false;
+
+        // 対象のメソッドを検索取得します。
+        MethodNode mnode = null;
+        System.out.println("EntityFishHook check");
+        for (MethodNode curMnode : (List<MethodNode>) cnode.methods)
+        {
+        	boolean flag = false;
+        	//System.out.println("CHECK : " + curMnode.desc + " / " + curMnode.name);
+
+ 			flag |= TARGET_TRANSFORMED_NAME.equals(mapMethodName(TARGET_CLASS_NAME, curMnode.name, curMnode.desc));
+ 			flag |= TARGET_Original_NAME.equals(mapMethodName(TARGET_CLASS_NAME, curMnode.name, curMnode.desc));
+ 			flag |= TARGET_TRANSFORMED_NAME.equals(curMnode.name);
+ 			if(flag && TARGET_DESC.equals(curMnode.desc))
+ 			{
+ 				System.out.println("EntityFishHook find");
+ 				mnode = curMnode;
+                break;
+ 			}else if(flag && TARGET_DESC2.equals(curMnode.desc))
+ 			{
+ 				System.out.println("EntityFishHook find2");
+ 				mnode = curMnode;
+ 				debugAreaFlg = true;
+                break;
+ 			}
+        }
+
+        if (mnode != null)
+        {
+        	System.out.println("EntityFishHook patching");
+            try
+            {
+	        	System.out.println("EntityFishHook patching patching");
+	            InsnList overrideList = new InsnList();
+	            LabelNode l2 = new LabelNode();
+
+	            overrideList.add(new FieldInsnNode(GETSTATIC, "dqr/DQR", "fishingHookHook", "Ldqr/functions/FuncFishHookExtension;"));
+	            overrideList.add(new VarInsnNode(ALOAD, 0));
+
+	            if(debugAreaFlg)
+	            {
+		            overrideList.add(new FieldInsnNode(GETFIELD, "net/minecraft/entity/projectile/EntityFishHook", "worldObj", "Lnet/minecraft/world/World;"));
+		            overrideList.add(new VarInsnNode(ALOAD, 0));
+		            overrideList.add(new FieldInsnNode(GETFIELD, "net/minecraft/entity/projectile/EntityFishHook", "field_146042_b", "Lnet/minecraft/entity/player/EntityPlayer;"));
+		            overrideList.add(new MethodInsnNode(INVOKEVIRTUAL, "dqr/functions/FuncFishHookExtension", "hookFunc_146033_f", "(Lnet/minecraft/world/World;Lnet/minecraft/entity/player/EntityPlayer;)Lnet/minecraft/item/ItemStack;"));
+	            }else
+	            {
+		            overrideList.add(new FieldInsnNode(GETFIELD, "xe", "o", "Lahb;"));
+		            overrideList.add(new VarInsnNode(ALOAD, 0));
+		            overrideList.add(new FieldInsnNode(GETFIELD, "xe", "b", "Lyz;"));
+		            overrideList.add(new MethodInsnNode(INVOKEVIRTUAL, "dqr/functions/FuncFishHookExtension", "hookFunc_146033_f", "(Lahb;Lyz;)Ladd;"));
+	            }
+
+	            overrideList.add(new VarInsnNode(ASTORE, 1));
+	            overrideList.add(new VarInsnNode(ALOAD, 1));
+	            overrideList.add(new JumpInsnNode(IFNULL, l2));
+	            overrideList.add(new VarInsnNode(ALOAD, 1));
+	            overrideList.add(new InsnNode(ARETURN));
+	            overrideList.add(l2);
+
+
+	            // mnode.instructions.get(1)で、対象のメソッドの先頭を取得
+	            // mnode.instructions.insertで、指定した位置にバイトコードを挿入します。
+	            mnode.instructions.insert(mnode.instructions.get(1), overrideList);
+	            // 改変したクラスファイルをバイト列に書き出します
+	            ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
+	            System.out.println("EntityFishHook patching :" + cnode.name);
+	            cnode.accept(cw);
+	            bytes = cw.toByteArray();
+
+	            System.out.println("EntityFishHook patching success!!:");
+            } catch (Exception e) {
+                throw new RuntimeException("failed : EntityFishHook patching ", e);
+            }
+        }
+
+        return bytes;
+    }
+
+/*
     private byte[] hookEntityFishHook(byte[] bytes)
     {
         // ASMで、bytesに格納されたクラスファイルを解析します。
@@ -390,7 +1250,7 @@ public class DqmTransFormer implements IClassTransformer, Opcodes
 
         return bytes;
     }
-
+*/
 
     private byte[] hookTconArmorDrop(byte[] bytes)
     {
@@ -513,9 +1373,9 @@ public class DqmTransFormer implements IClassTransformer, Opcodes
 
 	            overrideList.add(new FieldInsnNode(GETSTATIC, "dqr/DQR", "addons", "Ldqr/addons/DqrAddon;"));
 	            overrideList.add(new InsnNode(POP));
-	            overrideList.add(new FieldInsnNode(GETSTATIC, "dqr/addons/DqrAddon", "funcUncraftHook", "Ldqr/addons/twilightForest/FuncUncraftHook;"));
+	            overrideList.add(new FieldInsnNode(GETSTATIC, "dqr/addons/DqrAddon", "funcUncraftHook", "Ldqr/addons/twilightForest/coreHook/FuncUncraftHook;"));
 	            overrideList.add(new VarInsnNode(ALOAD, 1));
-	            overrideList.add(new MethodInsnNode(INVOKEVIRTUAL, "dqr/addons/twilightForest/FuncUncraftHook", "hookTFUncraft", "(Ladd;)Lafg;"));
+	            overrideList.add(new MethodInsnNode(INVOKEVIRTUAL, "dqr/addons/twilightForest/coreHook/FuncUncraftHook", "hookTFUncraft", "(Ladd;)Lafg;"));
 	            overrideList.add(new InsnNode(ARETURN));
 
 	            /*

@@ -17,6 +17,7 @@ import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.RegistryNamespaced;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.ArrowLooseEvent;
 import net.minecraftforge.event.entity.player.PlayerDropsEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -24,6 +25,7 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import dqr.DQR;
 import dqr.PacketHandler;
+import dqr.api.Items.DQIngots;
 import dqr.api.Items.DQWeapons;
 import dqr.api.enums.EnumDqmMessageConv;
 import dqr.api.enums.EnumDqmSkillW;
@@ -39,6 +41,45 @@ import dqr.playerData.ExtendedPlayerProperties2;
 import dqr.playerData.ExtendedPlayerProperties3;
 
 public class PlayerEventHandler {
+
+	@SubscribeEvent
+	public void onSokusiDamageEvent(LivingHurtEvent event) {
+
+
+		if(event.entityLiving instanceof EntityPlayer)
+		{
+			EntityPlayer ep = (EntityPlayer)event.entityLiving;
+
+			/*
+			System.out.println("TEST1 : " + event.source.isExplosion());
+			System.out.println("TEST2 : " + event.source.damageType);
+			System.out.println("TEST3 : " + event.source.getDamageType());
+			*/
+			ItemStack[] stack = ep.inventory.mainInventory;
+
+			if(event.source.isExplosion() || event.source.getDamageType().equalsIgnoreCase("MonsterSkillDeath"))
+			{
+				for(int cnt = 0; cnt < ep.inventory.getHotbarSize(); cnt++)
+				{
+					if(stack[cnt] != null && stack[cnt].getItem() == DQIngots.itemInotinoisi)
+					{
+						//System.out.println("TEST1 : ");
+						event.ammount = 0;
+						ep.inventory.mainInventory[cnt].stackSize = ep.inventory.mainInventory[cnt].stackSize - 1;
+						if(ep.inventory.mainInventory[cnt].stackSize <= 0)
+						{
+							ep.inventory.mainInventory[cnt] = null;
+						}
+						//ep.playSound("random.glass", 1.0F, 1.5F);
+						ep.addChatMessage(new ChatComponentTranslation("msg.escapeDamage.inotinoIshi.txt",new Object[] {}));
+						ep.worldObj.playSoundAtEntity(ep, "dig.glass", 4.0F, 1.1F);
+						break;
+					}
+				}
+			}
+		}
+
+	}
 
     @SubscribeEvent
     public void onPlayerDropsEvent(PlayerDropsEvent event) {}

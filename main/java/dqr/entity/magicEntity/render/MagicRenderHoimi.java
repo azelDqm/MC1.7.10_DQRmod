@@ -10,7 +10,7 @@ import org.lwjgl.opengl.GL12;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import dqr.entity.magicEntity.magic.MagicEntityHoimi;
+import dqr.entity.magicEntity.magic.MagicEntity;
 import dqr.entity.magicEntity.model.MagicEntityModel1;
 
 @SideOnly(Side.CLIENT)
@@ -26,7 +26,7 @@ public class MagicRenderHoimi extends Render
 		this.shadowSize = 0.0F;
 	}
 
-	public void renderArrow(MagicEntityHoimi par1Entity, double par2, double par4, double par6, float par8, float par9)
+	public void renderArrow(MagicEntity par1Entity, double par2, double par4, double par6, float par8, float par9)
     {
         MagicEntityModel1 model = (MagicEntityModel1) this.modelBullet;
 
@@ -45,18 +45,18 @@ public class MagicRenderHoimi extends Render
         GL11.glPopMatrix();
     }
 
-    protected ResourceLocation getArrowTextures(MagicEntityHoimi par1EntityArrow)
+    protected ResourceLocation getArrowTextures(MagicEntity par1EntityArrow)
     {
         return textureLocation;
     }
 
     protected ResourceLocation getEntityTexture(Entity par1Entity)
     {
-        return this.getArrowTextures((MagicEntityHoimi)par1Entity);
+        return this.getArrowTextures((MagicEntity)par1Entity);
     }
 
     public void doRender(Entity par1Entity, double par2, double par4, double par6, float par8, float par9)
     {
-        this.renderArrow((MagicEntityHoimi)par1Entity, par2, par4, par6, par8, par9);
+        this.renderArrow((MagicEntity)par1Entity, par2, par4, par6, par8, par9);
     }
 }

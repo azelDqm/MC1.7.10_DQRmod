@@ -8,6 +8,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import dqr.api.Items.DQBuilders;
 import dqr.api.Items.DQMiscs;
 import dqr.api.enums.EnumColor;
 import dqr.api.enums.EnumDqmMagic;
@@ -38,6 +39,13 @@ public class DqmItemMiscBase extends Item{
 			p_77624_3_.add("");
 			p_77624_3_.add(EnumColor.Aqua.getChatColor() + I18n.format("dqm.iteminfo.mahounoTutu.1.txt", new Object[]{}));
 			p_77624_3_.add(EnumColor.Aqua.getChatColor() + I18n.format("dqm.iteminfo.mahounoTutu.2.txt", new Object[]{}));
+		}
+
+		if(this == DQBuilders.itemBuilderKaikosyo)
+		{
+			p_77624_3_.add("");
+			p_77624_3_.add(EnumColor.Aqua.getChatColor() + I18n.format("dqm.iteminfo.kaikosyo.1.txt", new Object[]{}));
+			p_77624_3_.add(EnumColor.Aqua.getChatColor() + I18n.format("dqm.iteminfo.kaikosyo.2.txt", new Object[]{}));
 		}
 
 		NBTTagCompound nbt = p_77624_1_.getTagCompound();

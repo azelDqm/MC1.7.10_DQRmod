@@ -45,6 +45,8 @@ msg.toDamage2P.txt=%sが%sに%.3fダメージを与えた
 msg.causeBasirura.txt=%sをx:%f, y:%f, z:%fに吹き飛ばした
 msg.causeNihuramu.txt=%sは光のかなたに消え去った
 
+msg.hardcore.messages.1.txt=§c[注意]§e現在DQRハードコアモードで動作しています。
+msg.hardcore.messages.2.txt=§eDQRハードコアモードでは、死亡時にプレイヤーデータがリセットされます。
 msg.toSkillHit.txt=%s§e発動！
 msg.epCritical.txt=%sに会心の一撃
 msg.mobCritical.txt=%sの痛恨の一撃
@@ -96,6 +98,7 @@ msg.fromDamage2.Poison.txt=毒により%.3dダメージを受けた
 msg.fromDamage2.PoisonX.txt=猛毒により%.3dダメージを受けた
 msg.fromDamage2.HeavyFire.txt=高熱により%.3dダメージを受けた
 msg.fromDamage2.Suffocation.txt=窒息により%.3dダメージを受けた
+msg.escapeDamage.inotinoIshi.txt=命の石が身代わりとなって砕け散った
 
 msg.petTame.maxnumber.txt=これ以上ペットを増やすことができないようだ。
 msg.pet.status1.txt=!player.%1$s(飼主:%2$s) Lv.%3$d(%4$d/%5$d)  HP:%6$d/%7$d  MP:%8$d/%9$d
@@ -108,6 +111,7 @@ msg.pet.taming4.txt=(仲間にする=右クリック/追い返す=スニーク+�
 
 msg.magic.noct.txt=魔法を使う準備が整っていない
 msg.magic.nomp.txt=しかしMPが足りない
+msg.subequipUse.noDamage.txt=アイテムを使用できるだけの耐久力が残っていない
 msg.magic.noLv.txt=魔法を使うにはレベルが足りない
 msg.magic.ruraNoPos0.txt=座標が登録されていません。
 msg.magic.ruraNoPos1.txt=まずは座標を登録して下さい。
@@ -891,6 +895,8 @@ tile.dqm.blockOreBlock15_15.name=溶岩石ブロック
 tile.dqm.HoujyouDirt.name=豊穣の土
 tile.dqm.blockFarmBookShelf.name=農業用研究本棚
 
+tile.dqm.blockToumei.name=透明ブロック(建材)
+
 tile.dqm.blockEnderChest1.name=エンダーチェスト(スライムナイト)
 tile.dqm.blockEnderChest2.name=エンダーチェスト(ベビーパンサー)
 tile.dqm.blockEnderChest3.name=エンダーチェスト(ベビーサタン)
@@ -1152,10 +1158,10 @@ item.dqm.itemRuraB.name=ルーラの杖(ブルー)
 item.dqm.itemRuraY.name=ルーラの杖(イエロー)
 
 item.dqm.itemRuraC.name=ルーラの杖(改)
-item.dqm.itemRuraRC.name=ルーラの杖(改)(レッド)
-item.dqm.itemRuraGC.name=ルーラの杖(改)(グリーン)
-item.dqm.itemRuraBC.name=ルーラの杖(改)(ブルー)
-item.dqm.itemRuraYC.name=ルーラの杖(改)(イエロー)
+item.dqm.itemRuraRC.name=ルーラの杖(改/レッド)
+item.dqm.itemRuraGC.name=ルーラの杖(改/グリーン)
+item.dqm.itemRuraBC.name=ルーラの杖(改/ブルー)
+item.dqm.itemRuraYC.name=ルーラの杖(改/イエロー)
 
 item.dqm.itemRura2.name=ルーラの杖(個人用)
 item.dqm.itemRuraR2.name=ルーラの杖(個人用)(レッド)
@@ -1191,13 +1197,13 @@ item.dqm.itemKiari.name=キアリーの杖
 item.dqm.itemUminarinotue.name=海鳴りの杖
 item.dqm.itemCallMagma.name=マグマの杖
 item.dqm.itemCallCloud.name=あまぐもの杖
-item.dqm.itemHikarinotue.name=ラナルータ
+item.dqm.itemHikarinotue.name=ラナルータの杖
 
-item.dqm.itemBehomara.name=ベホマラー
-item.dqm.itemBehomazun.name=ベホマズン
-item.dqm.itemMahoimi.name=マホイミ
-item.dqm.itemMahoriku.name=マホリク
-item.dqm.itemMahoizun.name=マホイズン
+item.dqm.itemBehomara.name=ベホマラーのロザリオ
+item.dqm.itemBehomazun.name=ベホマズンのロザリオ
+item.dqm.itemMahoimi.name=マホイミの杖
+item.dqm.itemMahoriku.name=マホリクの杖
+item.dqm.itemMahoizun.name=マホイズンの杖
 
 item.dqm.itemBreathF1.name=ドラゴンオーブ(火の息)
 item.dqm.itemBreathF2.name=ドラゴンオーブ(火炎息)
@@ -1218,9 +1224,9 @@ item.dqm.itemZaoriku.name=ザオリクの杖
 item.dqm.itemHaigou.name=配合の杖
 item.dqm.itemHaigou2.name=配合の杖(改)
 item.dqm.itemParupunte.name=パルプンテの書
-item.dqm.itemRurasin.name=真・ルーラ
-item.dqm.itemRurasin2.name=真・ルーラ(個人用)
-item.dqm.itemRurasinC.name=真・ルーラ(改)
+item.dqm.itemRurasin.name=真・ルーラの杖
+item.dqm.itemRurasin2.name=真・ルーラの杖(個人用)
+item.dqm.itemRurasinC.name=真・ルーラの杖(改)
 item.dqm.itemRaidein.name=ライデインの杖
 item.dqm.itemGigadein.name=ギガデインの杖
 item.dqm.itemMinadein.name=ミナデインの杖
@@ -1278,6 +1284,24 @@ item.dqm.BuilderDamaW8.name=武器特技ダーマ神殿設計図の切れ端
 item.dqm.BuilderDamaW9.name=武器特技ダーマ神殿設計図の切れ端
 
 item.dqm.BuilderIdoMedal.name=謎の井戸計図
+
+item.dqm.BuilderShopBukiya.name=武器屋設計図
+item.dqm.BuilderShopBank.name=銀行設計図
+item.dqm.BuilderShopBankMP.name=MP銀行設計図
+item.dqm.BuilderShopSyuuriya.name=修理屋設計図
+item.dqm.BuilderShopKaitoriya.name=買取屋設計図
+
+item.dqm.BuilderShopBukiW.name=武器屋スティーブ召喚書
+item.dqm.BuilderShopBankW.name=銀行スティーブ召喚書
+item.dqm.BuilderShopSyuuriW.name=修理屋スティーブ召喚書
+item.dqm.BuilderShopKaitoriW.name=買取屋スティーブ召喚書
+item.dqm.BuilderShopBankMPW.name=MP銀行スティーブ召喚書
+
+item.dqm.BuilderDamaTW.name=転職ダーマ神官召喚書
+item.dqm.BuilderDamaSW.name=職業特技ダーマ神官召喚書
+item.dqm.BuilderDamaWW.name=武器特技ダーマ神官召喚書
+item.dqm.Kaikosyo.name=NPC解雇書
+
 
 item.dqm.mahounoTutu_1.name=魔法の筒
 item.dqm.mahounoTutu_3.name=魔法の筒X(仮)
@@ -1717,8 +1741,11 @@ dqm.iteminfo.throw.Sinkanohiseki.txt=一定時間、転生する確率が上昇�
 dqm.iteminfo.mahounoTutu.1.txt=ペットモンスターに使用すると
 dqm.iteminfo.mahounoTutu.2.txt=ペットをアイテム化することができます。
 
-dqm.iteminfo.mahounoTutuA.1.txt=アイテムを使用すると
-dqm.iteminfo.mahounoTutuA.2.txt=格納されているペットを取り出すことができます。
+dqm.iteminfo.mahounoTutu.1.txt=ペットモンスターに使用すると
+dqm.iteminfo.mahounoTutu.2.txt=ペットをアイテム化することができます。
+
+dqm.iteminfo.kaikosyo.1.txt=召喚されたNPCに向かってスニーク＋アイテム使用で
+dqm.iteminfo.kaikosyo.2.txt=対象NPCを消滅させることができます。
 
 dqm.iteminfo.PetSuisyou.1.txt=アイテムを使用すると
 dqm.iteminfo.PetSuisyou.2.txt=自分のペットの現在座標を調べることができる。
@@ -2430,6 +2457,9 @@ tile.dqm.blockYadoya.name=宿屋の看板(装飾品)
 tile.dqm.blockDouguya.name=道具屋の看板(装飾品)
 tile.dqm.blockBouguya.name=防具屋の看板(装飾品)
 tile.dqm.blockBukiya.name=武器屋の看板(装飾品)
+tile.dqm.blockBank.name=銀行の看板(装飾品)
+tile.dqm.blockBankMP.name=MP銀行の看板(装飾品)
+tile.dqm.blockSyuuriya.name=修理屋の看板(装飾品)
 tile.dqm.blockTaruK.name=タル(装飾品)
 tile.dqm.blockTuboK.name=壷(装飾品)
 tile.dqm.blockSBatorurex.name=バトルレックスの黄金像(装飾品)
@@ -2444,6 +2474,23 @@ tile.dqm.blockGenkotu.name=げんこつダケ
 tile.dqm.blockBuilderFrame.name=建築予定地枠
 tile.dqm.blockJumpBlock.name=ハイジャンプブロック
 tile.dqm.blockJumpBlock2.name=ジャンプブロック
+
+
+tile.dqm.blockJampBlockTerepo2.name=ジャンプブロック(テレポート)(仮)
+tile.dqm.blockJumpBlockTerepoBoss1.name=ジャンプブロック(ボス1)(未実装)
+tile.dqm.blockJumpBlockTerepoBoss2.name=ジャンプブロック(ボス2)(未実装)
+tile.dqm.blockJumpBlockTerepoBoss3.name=ジャンプブロック(ボス3)(未実装)
+tile.dqm.blockJumpBlockTerepoBoss4.name=ジャンプブロック(ボス4)(未実装)
+tile.dqm.blockJumpBlockTerepoBoss5.name=ジャンプブロック(ボス5)(未実装)
+tile.dqm.blockJumpBlockTerepoBoss6.name=ジャンプブロック(ボス6)(未実装)
+tile.dqm.blockJumpBlockTerepoBoss6.name=ジャンプブロック(ボス6)(未実装)
+
+tile.dqm.blockKieru.name=ダンジョン破壊ブロック(未実装)
+tile.dqm.blockSet1.name=ボス部屋床ブロック(未実装)
+tile.dqm.blockShoumetu.name=消滅ブロック(未実装)
+tile.dqm.blockHikariB.name=ダンジョン用光源ブロック(未実装)
+tile.dqm.blockGanseki.name=岩石ブロック(未実装)
+
 
 tile.dqm.blockN.name=強制移動床(北)
 tile.dqm.blockS.name=強制移動床(南)
@@ -2466,6 +2513,7 @@ tile.dqm.blockHakoBlock.name=箱(装飾品)
 tile.dqm.blockHakoBlock2.name=箱(装飾品)
 tile.dqm.blockHakoBlock3.name=箱(装飾品)
 tile.dqm.blockHakoBlock1.name=箱(敵)
+tile.dqm.blockHakoBlock11.name=箱(敵)
 tile.dqm.blockHakoBlock12.name=箱(敵)
 tile.dqm.blockHakoBlock13.name=箱(敵)
 
@@ -2721,7 +2769,7 @@ tile.blockObjSaikuropusu.name=サイクロプス(オブジェクト)
 tile.blockObjSamayoutamasii.name=さまようたましい(オブジェクト)
 tile.blockObjSamayouyoroi.name=さまようよろい(オブジェクト)
 tile.blockObjSeigin.name=聖銀のどくろあらい(オブジェクト)
-tile.blockObjShuvaluts.name=シュヴァルツバルト(オブジェクト)
+tile.blockObjShuvaluts.name=シュヴァルツシュルト(オブジェクト)
 tile.blockObjSibireageha.name=しびれあげは(オブジェクト)
 tile.blockObjSibiredanbira.name=しびれだんびら(オブジェクト)
 tile.blockObjSibirekurage.name=しびれくらげ(オブジェクト)
@@ -3028,7 +3076,7 @@ tile.blockFigSaikuropusu.name=サイクロプス(フィギュア)
 tile.blockFigSamayoutamasii.name=さまようたましい(フィギュア)
 tile.blockFigSamayouyoroi.name=さまようよろい(フィギュア)
 tile.blockFigSeigin.name=聖銀のどくろあらい(フィギュア)
-tile.blockFigShuvaluts.name=シュヴァルツバルト(フィギュア)
+tile.blockFigShuvaluts.name=シュヴァルツシュルト(フィギュア)
 tile.blockFigSibireageha.name=しびれあげは(フィギュア)
 tile.blockFigSibiredanbira.name=しびれだんびら(フィギュア)
 tile.blockFigSibirekurage.name=しびれくらげ(フィギュア)
@@ -3337,11 +3385,11 @@ msg.Casino.coin.messages.40.txt=!player.カジノコイン50枚を受け取っ�
 msg.Casino.coin.messages.41.txt=!player.カジノコイン150枚を受け取った。
 msg.Casino.coin.messages.42.txt=!player.カジノコイン300枚を受け取った。
 
-item.dqm.BuilderCasino1.name=カジノ設計図の切れ端(BJディーラー)
-item.dqm.BuilderCasino2.name=カジノ設計図の切れ端(カジノコイン販売)
-item.dqm.BuilderCasino3.name=カジノ設計図の切れ端(PKディーラー)
-item.dqm.BuilderCasino4.name=カジノ設計図の切れ端(カジノ景品交換)
-item.dqm.BuilderCasino5.name=カジノ設計図の切れ端(チンチロリン)
+item.dqm.BuilderCasino1.name=ディーラー召喚書(ブラックジャック)
+item.dqm.BuilderCasino2.name=ディーラー召喚書(カジノコイン販売)
+item.dqm.BuilderCasino3.name=ディーラー召喚書(ポーカー)
+item.dqm.BuilderCasino4.name=ディーラー召喚書(カジノ景品交換)
+item.dqm.BuilderCasino5.name=ディーラー召喚書(チンチロリン)
 
 tile.dqm.chest.name=*チェスト
 tile.dqm.quartzBlock.name=ネザー水晶の装飾石
@@ -3412,3 +3460,5 @@ msg.sekizou.esterk.talk.4.txt=!player.はたして自分が善なのか悪なの
 msg.sekizou.esterk.talk.5.txt=!player.その私になに用だ？私をほろぼすためにやって来たのか？
 msg.sekizou.esterk.talk.6.txt=!player.ならばしかたがないな。私はほろぼされるわけにはいかぬ。
 msg.sekizou.esterk.talk.7.txt=!player.さあ来るがよい！
+
+commands.dqredit.usage=/dqredit [player] <status> <value>

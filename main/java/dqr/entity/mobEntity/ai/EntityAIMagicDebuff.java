@@ -1,14 +1,15 @@
 package dqr.entity.mobEntity.ai;
 
 import java.util.List;
-import java.util.Random;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
-import net.minecraft.util.MathHelper;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
+import dqr.DQR;
 import dqr.api.enums.EnumDqmMagic;
 import dqr.entity.mobEntity.DqmMobBase;
 
@@ -50,25 +51,35 @@ public class EntityAIMagicDebuff extends EntityAIBase
             return this.field_151501_c.getBlock(i, j, k) == Blocks.tallgrass && this.field_151501_c.getBlockMetadata(i, j, k) == 1 ? true : this.field_151501_c.getBlock(i, j - 1, k) == Blocks.grass;
         }
         */
-
-    	List list = field_151501_c.getEntitiesWithinAABBExcludingEntity(field_151500_b,
-    			field_151500_b.boundingBox.addCoord(field_151500_b.motionX, field_151500_b.motionY, field_151500_b.motionZ).expand(10.0D, 5.0D, 10.0D));
-
-        if (list != null && !list.isEmpty())
+        if(!this.field_151500_b.worldObj.isRemote)
         {
-        	for (int n = 0 ; n < list.size() ; n++)
-        	{
-        		Entity target = (Entity)list.get(n);
+            WorldServer worldserver = MinecraftServer.getServer().worldServers[0];
 
-        		if(target instanceof EntityPlayer)
-        		{
-        			if(!((EntityPlayer) target).isPotionActive(this.pot))
-        			{
-        				this.tagetMob = (EntityPlayer)target;
-        				return true;
-        			}
-        		}
-        	}
+            long setTime = worldserver.getWorldTime();
+
+            //if(DQR.debug == 4) System.out.println("shouldExecute(Time) : " + this.parentEntity.skillCoolTime + "(" + (this.parentEntity.skillCoolTime + 5) +  ") / " + setTime );
+            if(this.field_151500_b.skillCoolTime + DQR.func.xRandom(this.field_151500_b.skillCoolTimeMin, this.field_151500_b.skillCoolTimeMax) < setTime)
+            {
+		    	List list = field_151501_c.getEntitiesWithinAABBExcludingEntity(field_151500_b,
+		    			field_151500_b.boundingBox.addCoord(field_151500_b.motionX, field_151500_b.motionY, field_151500_b.motionZ).expand(10.0D, 5.0D, 10.0D));
+
+		        if (list != null && !list.isEmpty())
+		        {
+		        	for (int n = 0 ; n < list.size() ; n++)
+		        	{
+		        		Entity target = (Entity)list.get(n);
+
+		        		if(target instanceof EntityPlayer)
+		        		{
+		        			if(!((EntityPlayer) target).isPotionActive(this.pot))
+		        			{
+		        				this.tagetMob = (EntityPlayer)target;
+		        				return true;
+		        			}
+		        		}
+		        	}
+		        }
+            }
         }
 
         return false;
@@ -88,6 +99,7 @@ public class EntityAIMagicDebuff extends EntityAIBase
     /**
      * Returns whether an in-progress EntityAIBase should continue executing
      */
+    /*
     public boolean continueExecuting()
     {
     	Random rand = new Random();
@@ -95,6 +107,7 @@ public class EntityAIMagicDebuff extends EntityAIBase
     	//System.out.println(this.tagetMob);
     	return !(this.tagetMob == null) && rand.nextInt(5) == 0;
     }
+    */
 
     /**
      * Updates the task
@@ -120,9 +133,7 @@ public class EntityAIMagicDebuff extends EntityAIBase
         if (this.field_75318_f >= 40)
         {
         	//System.out.println("SMASH");
-        	field_151500_b.attackEntityWithDebuff(this.field_151500_b, 0, this.pot, this.enumMagic, this.tagetMob);
             //this.field_151500_b.getNavigator().clearPathEntity();
-        	this.tagetMob = null;
         }
         else
         {
@@ -133,25 +144,19 @@ public class EntityAIMagicDebuff extends EntityAIBase
         {
         	this.field_151500_b.getLookHelper().setLookPositionWithEntity(this.tagetMob, 30.0F, 30.0F);
         }
-        float f;
 
+    	field_151500_b.attackEntityWithDebuff(this.field_151500_b, 0, this.pot, this.enumMagic, this.tagetMob);
+        //this.field_151500_b.getNavigator().clearPathEntity();
+    	this.tagetMob = null;
 
-        if (d0 > (double)20.0F || !flag)
+        if(!this.field_151500_b.worldObj.isRemote)
         {
-            return;
-        }
+            WorldServer worldserver = MinecraftServer.getServer().worldServers[0];
 
-        f = MathHelper.sqrt_double(d0) / 5.0F;
-        float f1 = f;
+            long setTime = worldserver.getWorldTime();
 
-        if (f < 0.1F)
-        {
-            f1 = 0.1F;
-        }
 
-        if (f1 > 1.0F)
-        {
-            f1 = 1.0F;
+            this.field_151500_b.skillCoolTime = setTime;
         }
 
         //field_151500_b.attackEntityWithDebuff(this.field_151500_b, 0, this.pot, this.enumMagic, this.tagetMob);

@@ -3,12 +3,14 @@ package dqr.entity.mobEntity.ai;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Random;
 
 import net.minecraft.command.IEntitySelector;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAITarget;
+import net.minecraft.entity.player.EntityPlayerMP;
 import dqr.entity.petEntity.DqmPetBase;
 
 public class EntityAINearestAttackableTarget2 extends EntityAITarget
@@ -25,6 +27,7 @@ public class EntityAINearestAttackableTarget2 extends EntityAITarget
     private EntityLivingBase targetEntity;
     private static final String __OBFID = "CL_00001620";
 
+    public int field_75298_g = 0;
     public EntityAINearestAttackableTarget2(EntityCreature p_i1663_1_, Class p_i1663_2_, int p_i1663_3_, boolean p_i1663_4_)
     {
         this(p_i1663_1_, p_i1663_2_, p_i1663_3_, p_i1663_4_, false);
@@ -34,6 +37,60 @@ public class EntityAINearestAttackableTarget2 extends EntityAITarget
     {
         this(p_i1664_1_, p_i1664_2_, p_i1664_3_, p_i1664_4_, p_i1664_5_, (IEntitySelector)null);
     }
+
+
+    /**
+     * Returns whether an in-progress EntityAIBase should continue executing
+     */
+    public boolean continueExecuting()
+    {
+    	Random rand = new Random();
+
+    	if(rand.nextInt(15) == 0)
+    	{
+    		return false;
+    	}
+
+
+        EntityLivingBase entitylivingbase = this.taskOwner.getAttackTarget();
+
+        if (entitylivingbase == null)
+        {
+            return false;
+        }
+        else if (!entitylivingbase.isEntityAlive())
+        {
+            return false;
+        }
+        else
+        {
+            double d0 = this.getTargetDistance();
+
+            if (this.taskOwner.getDistanceSqToEntity(entitylivingbase) > d0 * d0)
+            {
+                return false;
+            }
+            else
+            {
+                if (this.shouldCheckSight)
+                {
+                    if (this.taskOwner.getEntitySenses().canSee(entitylivingbase))
+                    {
+                        this.field_75298_g = 0;
+                    }
+                    else if (++this.field_75298_g > 60)
+                    {
+                        return false;
+                    }
+                }
+
+                return !(entitylivingbase instanceof EntityPlayerMP) || !((EntityPlayerMP)entitylivingbase).theItemInWorldManager.isCreative();
+            }
+        }
+
+    }
+
+
 
     public EntityAINearestAttackableTarget2(EntityCreature p_i1665_1_, Class p_i1665_2_, int p_i1665_3_, boolean p_i1665_4_, boolean p_i1665_5_, final IEntitySelector p_i1665_6_)
     {
@@ -104,6 +161,7 @@ public class EntityAINearestAttackableTarget2 extends EntityAITarget
     {
         this.taskOwner.setAttackTarget(this.targetEntity);
         super.startExecuting();
+        this.field_75298_g = 0;
     }
 
     public static class Sorter implements Comparator

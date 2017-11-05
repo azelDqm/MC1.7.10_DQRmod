@@ -39,144 +39,129 @@ public class ThreadCasinoPK extends Thread{
 
 		if(gui.gamePhase == 1)
 		{
-			ArrayList<EnumDqmTrump> trumpDeckCopy = new ArrayList<EnumDqmTrump>();
-
-			gui.trumpSet = new LinkedHashMap<Integer, EnumDqmTrump>();
-			gui.trumpDeck = new ArrayList<EnumDqmTrump>();
-
-			EnumDqmTrump[] data = EnumDqmTrump.values();
-			gui.trumpDeckRev = new int[5];
-	    	for(int cnt = 0; cnt < data.length; cnt++)
-	    	{
-	    		if(14 > data[cnt].getValue()&& data[cnt].getValue() > 0)
-	    		{
-	    			gui.trumpDeck.add(data[cnt]);
-	    		}
-	    	}
-	    	gui.trumpDeck.add(EnumDqmTrump.JK1);
-
-			try {
-				this.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO 自動生成された catch ブロック
-				e.printStackTrace();
-			}
-
-
-			trumpDeckCopy.addAll(gui.trumpDeck);
-
-			int val = rand.nextInt(trumpDeckCopy.size());
-			gui.trumpDeckRev[gui.trumpSet.size()] = 1;
-			if(DQR.debug == 1)
+			try
 			{
+				ArrayList<EnumDqmTrump> trumpDeckCopy = new ArrayList<EnumDqmTrump>();
+
+				gui.trumpSet = new LinkedHashMap<Integer, EnumDqmTrump>();
+				gui.trumpDeck = new ArrayList<EnumDqmTrump>();
+
+				EnumDqmTrump[] data = EnumDqmTrump.values();
+				gui.trumpDeckRev = new int[5];
+		    	for(int cnt = 0; cnt < data.length; cnt++)
+		    	{
+		    		if(14 > data[cnt].getValue()&& data[cnt].getValue() > 0)
+		    		{
+		    			gui.trumpDeck.add(data[cnt]);
+		    		}
+		    	}
+		    	gui.trumpDeck.add(EnumDqmTrump.JK1);
+
+
+				this.sleep(DQR.conf.PK_firstHand_wait);
+
+
+
+				trumpDeckCopy.addAll(gui.trumpDeck);
+
+				int val = rand.nextInt(trumpDeckCopy.size());
+				gui.trumpDeckRev[gui.trumpSet.size()] = 1;
+				if(DQR.debug == 1)
+				{
+					//gui.trumpSet.put(gui.trumpSet.size(), trumpDeckCopy.get(val));
+					gui.trumpSet.put(gui.trumpSet.size(), EnumDqmTrump.D3);
+				}else
+				{
+					gui.trumpSet.put(gui.trumpSet.size(), trumpDeckCopy.get(val));
+				}
+				//this.ep.playSound("gui.button.press", 0.9F, 1.0F);
+				gui.soundPlay = 1;
+				trumpDeckCopy.remove(val);
+
+				this.sleep(DQR.conf.PK_firstHand_wait);
+
+
+
+
+				val = rand.nextInt(trumpDeckCopy.size());
+				gui.trumpDeckRev[gui.trumpSet.size()] = 1;
 				//gui.trumpSet.put(gui.trumpSet.size(), trumpDeckCopy.get(val));
-				gui.trumpSet.put(gui.trumpSet.size(), EnumDqmTrump.D3);
-			}else
-			{
-				gui.trumpSet.put(gui.trumpSet.size(), trumpDeckCopy.get(val));
-			}
-			//this.ep.playSound("gui.button.press", 0.9F, 1.0F);
-			gui.soundPlay = 1;
-			trumpDeckCopy.remove(val);
-			try {
-				this.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO 自動生成された catch ブロック
-				e.printStackTrace();
-			}
+				if(DQR.debug == 1)
+				{
+					gui.trumpSet.put(gui.trumpSet.size(), EnumDqmTrump.D1);
+				}else
+				{
+					gui.trumpSet.put(gui.trumpSet.size(), trumpDeckCopy.get(val));
+				}
+				this.ep.playSound("gui.button.press", 0.9F, 1.0F);
+				trumpDeckCopy.remove(val);
+
+				this.sleep(DQR.conf.PK_firstHand_wait);
 
 
 
-			val = rand.nextInt(trumpDeckCopy.size());
-			gui.trumpDeckRev[gui.trumpSet.size()] = 1;
-			//gui.trumpSet.put(gui.trumpSet.size(), trumpDeckCopy.get(val));
-			if(DQR.debug == 1)
-			{
-				gui.trumpSet.put(gui.trumpSet.size(), EnumDqmTrump.D1);
-			}else
-			{
-				gui.trumpSet.put(gui.trumpSet.size(), trumpDeckCopy.get(val));
-			}
-			this.ep.playSound("gui.button.press", 0.9F, 1.0F);
-			trumpDeckCopy.remove(val);
-			try {
-				this.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO 自動生成された catch ブロック
-				e.printStackTrace();
-			}
-
-
-
-			val = rand.nextInt(trumpDeckCopy.size());
-			gui.trumpDeckRev[gui.trumpSet.size()] = 1;
-			//gui.trumpSet.put(gui.trumpSet.size(), trumpDeckCopy.get(val));
-			if(DQR.debug == 1)
-			{
+				val = rand.nextInt(trumpDeckCopy.size());
+				gui.trumpDeckRev[gui.trumpSet.size()] = 1;
 				//gui.trumpSet.put(gui.trumpSet.size(), trumpDeckCopy.get(val));
-				gui.trumpSet.put(gui.trumpSet.size(), EnumDqmTrump.JK1);
-			}else
-			{
-				gui.trumpSet.put(gui.trumpSet.size(), trumpDeckCopy.get(val));
-			}
-			//this.ep.playSound("gui.button.press", 0.9F, 1.0F);
-			gui.soundPlay = 1;
-			trumpDeckCopy.remove(val);
-			try {
-				this.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO 自動生成された catch ブロック
-				e.printStackTrace();
-			}
+				if(DQR.debug == 1)
+				{
+					//gui.trumpSet.put(gui.trumpSet.size(), trumpDeckCopy.get(val));
+					gui.trumpSet.put(gui.trumpSet.size(), EnumDqmTrump.JK1);
+				}else
+				{
+					gui.trumpSet.put(gui.trumpSet.size(), trumpDeckCopy.get(val));
+				}
+				//this.ep.playSound("gui.button.press", 0.9F, 1.0F);
+				gui.soundPlay = 1;
+				trumpDeckCopy.remove(val);
+
+				this.sleep(DQR.conf.PK_firstHand_wait);
 
 
-			val = rand.nextInt(trumpDeckCopy.size());
-			gui.trumpDeckRev[gui.trumpSet.size()] = 1;
-			//gui.trumpSet.put(gui.trumpSet.size(), trumpDeckCopy.get(val));
-			if(DQR.debug == 1)
-			{
+				val = rand.nextInt(trumpDeckCopy.size());
+				gui.trumpDeckRev[gui.trumpSet.size()] = 1;
 				//gui.trumpSet.put(gui.trumpSet.size(), trumpDeckCopy.get(val));
-				gui.trumpSet.put(gui.trumpSet.size(), EnumDqmTrump.H5);
-			}else
-			{
-				gui.trumpSet.put(gui.trumpSet.size(), trumpDeckCopy.get(val));
-			}
-			//this.ep.playSound("gui.button.press", 0.9F, 1.0F);
-			gui.soundPlay = 1;
-			trumpDeckCopy.remove(val);
-			try {
-				this.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO 自動生成された catch ブロック
-				e.printStackTrace();
-			}
+				if(DQR.debug == 1)
+				{
+					//gui.trumpSet.put(gui.trumpSet.size(), trumpDeckCopy.get(val));
+					gui.trumpSet.put(gui.trumpSet.size(), EnumDqmTrump.H5);
+				}else
+				{
+					gui.trumpSet.put(gui.trumpSet.size(), trumpDeckCopy.get(val));
+				}
+				//this.ep.playSound("gui.button.press", 0.9F, 1.0F);
+				gui.soundPlay = 1;
+				trumpDeckCopy.remove(val);
+
+				this.sleep(DQR.conf.PK_firstHand_wait);
 
 
-			val = rand.nextInt(trumpDeckCopy.size());
-			gui.trumpDeckRev[gui.trumpSet.size()] = 1;
-			//gui.trumpSet.put(gui.trumpSet.size(), trumpDeckCopy.get(val));
-			if(DQR.debug == 1)
-			{
+				val = rand.nextInt(trumpDeckCopy.size());
+				gui.trumpDeckRev[gui.trumpSet.size()] = 1;
 				//gui.trumpSet.put(gui.trumpSet.size(), trumpDeckCopy.get(val));
-				gui.trumpSet.put(gui.trumpSet.size(), EnumDqmTrump.C2);
-			}else
-			{
-				gui.trumpSet.put(gui.trumpSet.size(), trumpDeckCopy.get(val));
-			}
-			//this.ep.playSound("gui.button.press", 0.9F, 1.0F);
-			gui.soundPlay = 1;
-			trumpDeckCopy.remove(val);
-			try {
-				this.sleep(1000);
+				if(DQR.debug == 1)
+				{
+					//gui.trumpSet.put(gui.trumpSet.size(), trumpDeckCopy.get(val));
+					gui.trumpSet.put(gui.trumpSet.size(), EnumDqmTrump.C2);
+				}else
+				{
+					gui.trumpSet.put(gui.trumpSet.size(), trumpDeckCopy.get(val));
+				}
+				//this.ep.playSound("gui.button.press", 0.9F, 1.0F);
+				gui.soundPlay = 1;
+				trumpDeckCopy.remove(val);
+
+				this.sleep(DQR.conf.PK_firstHand_wait);
+
+
+				gui.trumpDeck.clear();
+				gui.trumpDeck.addAll(trumpDeckCopy);
+
+				gui.gamePhase = 2;
 			} catch (InterruptedException e) {
 				// TODO 自動生成された catch ブロック
 				e.printStackTrace();
 			}
-
-			gui.trumpDeck.clear();
-			gui.trumpDeck.addAll(trumpDeckCopy);
-
-			gui.gamePhase = 2;
 		}else if(this.phaseNum == 3)
 		{
 			ArrayList<EnumDqmTrump> trumpDeckCopy = new ArrayList<EnumDqmTrump>();
@@ -186,7 +171,7 @@ public class ThreadCasinoPK extends Thread{
 			if(gui.trumpDeckRev[0] == 0)
 			{
 				try {
-					this.sleep(1000);
+					this.sleep(DQR.conf.PK_change);
 				} catch (InterruptedException e) {
 					// TODO 自動生成された catch ブロック
 					e.printStackTrace();
@@ -204,7 +189,7 @@ public class ThreadCasinoPK extends Thread{
 			if(gui.trumpDeckRev[1] == 0)
 			{
 				try {
-					this.sleep(1000);
+					this.sleep(DQR.conf.PK_change);
 				} catch (InterruptedException e) {
 					// TODO 自動生成された catch ブロック
 					e.printStackTrace();
@@ -221,7 +206,7 @@ public class ThreadCasinoPK extends Thread{
 			if(gui.trumpDeckRev[2] == 0)
 			{
 				try {
-					this.sleep(1000);
+					this.sleep(DQR.conf.PK_change);
 				} catch (InterruptedException e) {
 					// TODO 自動生成された catch ブロック
 					e.printStackTrace();
@@ -238,7 +223,7 @@ public class ThreadCasinoPK extends Thread{
 			if(gui.trumpDeckRev[3] == 0)
 			{
 				try {
-					this.sleep(1000);
+					this.sleep(DQR.conf.PK_change);
 				} catch (InterruptedException e) {
 					// TODO 自動生成された catch ブロック
 					e.printStackTrace();
@@ -255,7 +240,7 @@ public class ThreadCasinoPK extends Thread{
 			if(gui.trumpDeckRev[4] == 0)
 			{
 				try {
-					this.sleep(1000);
+					this.sleep(DQR.conf.PK_change);
 				} catch (InterruptedException e) {
 					// TODO 自動生成された catch ブロック
 					e.printStackTrace();
@@ -586,7 +571,7 @@ public class ThreadCasinoPK extends Thread{
 			}
 
 			try {
-				this.sleep(4000);
+				this.sleep(DQR.conf.PK_end_wait);
 			} catch (InterruptedException e) {
 				// TODO 自動生成された catch ブロック
 				e.printStackTrace();

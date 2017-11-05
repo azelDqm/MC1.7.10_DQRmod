@@ -27,6 +27,20 @@ public class DqmItemTikaranotate extends DqmItemAccessoryBase{
 			return par1ItemStack;
 		}
 
+		//System.out.println("wk :" + par1ItemStack.getItemDamage() + " / " + this.getMaxDamage());
+		if(par1ItemStack.getItemDamage() + (this.getMaxDamage() / 20) > this.getMaxDamage())
+		{
+	  		par3EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.subequipUse.noDamage.txt",new Object[] {}));
+    		par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.pi", 1.0F, 1.0F);
+    		//System.out.println("wk2 :");
+			return par1ItemStack;
+		}else if(par1ItemStack.getItemDamage() >= (this.getMaxDamage() / 10 * 9))
+		{
+	  		par3EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.subequipUse.noDamage.txt",new Object[] {}));
+    		par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.pi", 1.0F, 1.0F);
+    		//System.out.println("wk3 :");
+			return par1ItemStack;
+		}
 		/*
 		int epMP = ExtendedPlayerProperties.get(par3EntityPlayer).getMP();
 
@@ -41,7 +55,7 @@ public class DqmItemTikaranotate extends DqmItemAccessoryBase{
 		}
 		*/
 
-		par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.jumon", 1.0F, 1.0F);
+		//par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.jumon", 1.0F, 1.0F);
 
 		/*
 		int attackDam = (par1ItemStack.getMaxDamage() - par1ItemStack.getItemDamage())* 100

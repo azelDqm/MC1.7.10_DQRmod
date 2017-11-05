@@ -90,8 +90,8 @@ public class ComponentVillageBankMPHouse extends StructureVillagePieces.Village 
 
         this.placeBlockAtCurrentPosition(p_74875_1_, Blocks.glass_pane, 0, 7, 2, 7, p_74875_3_);
 
-        //this.placeBlockAtCurrentPosition(p_74875_1_, DQDecorates.DqmBlockBukiya, this.coordBaseMode, 2, 2, 0, p_74875_3_);
-        //this.placeBlockAtCurrentPosition(p_74875_1_, DQDecorates.DqmBlockBukiya, this.coordBaseMode, 6, 2, 0, p_74875_3_);
+        this.placeBlockAtCurrentPosition(p_74875_1_, DQR.addons.DqmBlockBankMP, this.coordBaseMode, 2, 2, 0, p_74875_3_);
+        this.placeBlockAtCurrentPosition(p_74875_1_, DQR.addons.DqmBlockBankMP, this.coordBaseMode, 6, 2, 0, p_74875_3_);
 
         this.placeBlockAtCurrentPosition(p_74875_1_, DQDecorates.DqmBlockTaimatu2, 0, 2, 1, 4, p_74875_3_);
         this.placeBlockAtCurrentPosition(p_74875_1_, DQDecorates.DqmBlockIsu, 0, 3, 1, 4, p_74875_3_);

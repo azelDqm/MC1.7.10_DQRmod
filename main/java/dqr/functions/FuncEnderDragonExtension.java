@@ -38,7 +38,7 @@ public class FuncEnderDragonExtension {
 
                     if (var13.getMaterial() != Material.air)
                     {
-                        DqrEntityDragonEvent event = new DqrEntityDragonEvent.BlockDestroyEvent(dragon, var13);
+                        DqrEntityDragonEvent event = new DqrEntityDragonEvent.BlockDestroyEvent(dragon, var13, var10, var11, var12);
                 		event.setCanceled(false);
                 		MinecraftForge.EVENT_BUS.post(event);
                 		if (!event.isCanceled())

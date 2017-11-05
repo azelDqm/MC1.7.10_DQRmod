@@ -32,4 +32,12 @@ public class DqmMobBaseMetaru extends DqmMobBase
 
         return super.getCanSpawnHere();
     }
+
+    @Override
+    protected boolean canDespawn()
+    {
+
+    	return DQR.conf.canDespawnMetal == 1;
+        //return true;
+    }
 }

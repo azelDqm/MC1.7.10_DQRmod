@@ -177,6 +177,10 @@ public class FuncCasinoCoinItems {
 		//道具
 		medalItem.put(DQMiscs.itemKimeranotubasa , 100);
 
+		medalItem.put(DQMiscs.itemDouka , 55);
+		medalItem.put(DQMiscs.itemGinka , 165);
+		medalItem.put(DQMiscs.itemKinka , 330);
+
 		medalItem.put(DQIngots.itemTaiyounoisi , 300);
 		medalItem.put(DQIngots.itemHikarinoisi , 300);
 		medalItem.put(DQIngots.itemMisriru , 300);
@@ -204,6 +208,11 @@ public class FuncCasinoCoinItems {
 		medalBuilder.put(DQBuilders.itemBuilderCasino2 , 1000);
 		medalBuilder.put(DQBuilders.itemBuilderCasino3 , 1000);
 		medalBuilder.put(DQBuilders.itemBuilderCasino4 , 1000);
+
+		medalBuilder.put(DQBuilders.itemBuilderShopSyuuriya , 1500);
+		medalBuilder.put(DQBuilders.itemBuilderShopBank , 1500);
+		medalBuilder.put(DQBuilders.itemBuilderShopKaitoriya , 1500);
+		medalBuilder.put(DQBuilders.itemBuilderShopBukiya , 1500);
 
 		medalBuilder.put(DQBuilders.itemBuilderSekizouDarkRamia , 500000);
 		medalBuilder.put(DQBuilders.itemBuilderSekizouDesupisaro1 , 500000);

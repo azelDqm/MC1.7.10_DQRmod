@@ -19,6 +19,7 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.MathHelper;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
@@ -35,6 +36,7 @@ import dqr.api.enums.EnumDqmMonster;
 import dqr.api.enums.EnumDqmSkillW;
 import dqr.api.enums.EnumDqmWeapon;
 import dqr.api.enums.EnumStat;
+import dqr.api.event.DqrMobPrizeEvent;
 import dqr.api.potion.DQPotionEtc;
 import dqr.api.potion.DQPotionMinus;
 import dqr.api.potion.DQPotionPlus;
@@ -415,7 +417,9 @@ public class LivingEventHandler {
 							Entity entity = EntityList.createEntityByName(DQR.modID + "." + petName, mb.worldObj);
 							if(entity != null)
 							{
-								entity.setLocationAndAngles((double)mb.posX + 0.5D, (double)mb.posY + 1.0D, (double)mb.posZ + 0.5D, 0.0F, 0.0F);
+								double[] spawnLocation = DQR.func.serchAirLocation(mb, mb.posX, mb.posY, mb.posZ);
+								//entity.setLocationAndAngles((double)mb.posX + 0.5D, (double)mb.posY + 1.0D, (double)mb.posZ + 0.5D, 0.0F, 0.0F);
+								entity.setLocationAndAngles(spawnLocation[0], spawnLocation[1], spawnLocation[2], 0.0F, 0.0F);
 								mb.worldObj.spawnEntityInWorld(entity);
 							}else
 							{
@@ -494,26 +498,38 @@ public class LivingEventHandler {
 						calcGold = 88888;
 					}else
 					{
-						if(maxHP < 25.0F)
+
+						DqrMobPrizeEvent eventX = new DqrMobPrizeEvent(elb, killer, event);
+						eventX.setCanceled(false);
+						MinecraftForge.EVENT_BUS.post(eventX);
+						if(!eventX.isCanceled())
 						{
-							calcEXP = (int)maxHP / 4;
-							calcGold = (int)maxHP / 8;
-						}else if(maxHP < 100.0F)
-						{
-							calcEXP = (int)maxHP / 2;
-							calcGold = (int)maxHP / 4;
-						}else if(maxHP < 500.0F)
-						{
-							calcEXP = (int)maxHP;
-							calcGold = (int)maxHP/2;
-						}else if(maxHP < 1000.0F)
-						{
-							calcEXP = (int)(maxHP * 1.5);
-							calcGold = (int)maxHP;
+
+							if(maxHP < 25.0F)
+							{
+								calcEXP = (int)maxHP / 4;
+								calcGold = (int)maxHP / 8;
+							}else if(maxHP < 100.0F)
+							{
+								calcEXP = (int)maxHP / 2;
+								calcGold = (int)maxHP / 4;
+							}else if(maxHP < 500.0F)
+							{
+								calcEXP = (int)maxHP;
+								calcGold = (int)maxHP/2;
+							}else if(maxHP < 1000.0F)
+							{
+								calcEXP = (int)(maxHP * 1.5);
+								calcGold = (int)maxHP;
+							}else
+							{
+								calcEXP = (int)(maxHP * 2);
+								calcGold = (int)maxHP;
+							}
 						}else
 						{
-							calcEXP = (int)(maxHP * 2);
-							calcGold = (int)maxHP;
+							calcEXP = eventX.getExp();
+							calcGold = eventX.getGold();
 						}
 					}
 					calcGold = calcGold + ExtendedPlayerProperties.get(killer).getGold();
@@ -785,6 +801,12 @@ public class LivingEventHandler {
 	        		}
         		}
 
+    			//1秒処理
+        		if(event.entityLiving.ticksExisted % 12 == 0)
+        		{
+	        		//アクセサリチェック
+	        		DQR.calcPetStatus.calcAccessory(pet);
+        		}
 
         		int Mp = pet.getMP();
         		int maxMp = pet.getMaxMP();
@@ -795,8 +817,8 @@ public class LivingEventHandler {
         		}
 
         		if (pet.isPotionActive(DQPotionPlus.potionOugonnomi) ||
-        				pet.isPotionActive(DQPotionPlus.potionSubayasanotane) ||
-        				pet.isPotionActive(Potion.jump))
+        			pet.isPotionActive(DQPotionPlus.potionSubayasanotane) ||
+        			pet.isPotionActive(Potion.jump))
         		{
         			pet.fallDistance = 0.0F;
         		}
@@ -1082,10 +1104,13 @@ public class LivingEventHandler {
 	    		pe = ep.getActivePotionEffect(DQPotionMinus.potionPoison);
 	    		if(pe != null)
 	    		{
-	    				if((ep.getHealth() - ((pe.getAmplifier() + 1) * 2)) > 0)
+	    				if((ep.getHealth() - ((pe.getAmplifier() + 1) * 2)) > 1)
 	    				{
 	    					ep.attackEntityFrom(DQR.damageSource.DqmPoison, ((pe.getAmplifier() + 1) * 2));
 	    					//ep.setHealth(ep.getHealth() - ((pe.getAmplifier() + 1) * 2));
+	    				}else if(ep.getHealth() != 1)
+	    				{
+	    					ep.attackEntityFrom(DQR.damageSource.DqmPoison, (ep.getHealth() - 1));
 	    				}
 	    		}
     		}
@@ -1097,7 +1122,15 @@ public class LivingEventHandler {
 	    		if(pe != null)
 	    		{
 	    			//if(ep.worldObj.getWorldTime() % 10 == 0)
-    				if((ep.getHealth() - ((pe.getAmplifier() + 1) * 2)) > 0)
+	    			/*
+    				if((ep.getHealth() - ((pe.getAmplifier() + 1) * 2)) > 1)
+    				{
+    					ep.attackEntityFrom(DQR.damageSource.DqmPoisonX, ((pe.getAmplifier() + 1) * 2));
+    					//ep.setHealth(ep.getHealth() - ((pe.getAmplifier() + 1) * 2));
+    				}
+    				*/
+
+    				if(ep.getHealth() > 0)
     				{
     					ep.attackEntityFrom(DQR.damageSource.DqmPoisonX, ((pe.getAmplifier() + 1) * 2));
     					//ep.setHealth(ep.getHealth() - ((pe.getAmplifier() + 1) * 2));
@@ -1274,9 +1307,13 @@ public class LivingEventHandler {
 	    		pe = ep.getActivePotionEffect(DQPotionMinus.potionPoison);
 	    		if(pe != null)
 	    		{
-    				if((ep.getHealth() - ((pe.getAmplifier() + 1) * 2)) > 0)
+    				if((ep.getHealth() - ((pe.getAmplifier() + 1) * 2)) > 1)
     				{
     					ep.attackEntityFrom(DQR.damageSource.DqmPoison, ((pe.getAmplifier() + 1) * 2));
+    					//ep.setHealth(ep.getHealth() - ((pe.getAmplifier() + 1) * 2));
+    				}else if(ep.getHealth() !=  1)
+    				{
+    					ep.attackEntityFrom(DQR.damageSource.DqmPoison, ep.getHealth() - 1);
     					//ep.setHealth(ep.getHealth() - ((pe.getAmplifier() + 1) * 2));
     				}
 	    		}
@@ -1287,7 +1324,8 @@ public class LivingEventHandler {
 	    		pe = ep.getActivePotionEffect(DQPotionMinus.potionPoisonX);
 	    		if(pe != null)
 	    		{
-	    				if((ep.getHealth() - ((pe.getAmplifier() + 1) * 2)) > 0)
+	    				//if((ep.getHealth() - ((pe.getAmplifier() + 1) * 2)) > 0)
+	    				if(ep.getHealth()  > 0)
 	    				{
 	    					ep.attackEntityFrom(DQR.damageSource.DqmPoisonX, ((pe.getAmplifier() + 1) * 2));
 	    					//ep.setHealth(ep.getHealth() - ((pe.getAmplifier() + 1) * 2));

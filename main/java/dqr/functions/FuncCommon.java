@@ -9,11 +9,27 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import dqr.DQR;
 import dqr.api.potion.DQPotionMinus;
+import dqr.entity.magicEntity.magic.MagicEntity;
+import dqr.entity.magicEntity.magic.MagicEntityBagi;
+import dqr.entity.magicEntity.magic.MagicEntityBegiragon;
+import dqr.entity.magicEntity.magic.MagicEntityBegirama;
+import dqr.entity.magicEntity.magic.MagicEntityDoruma;
+import dqr.entity.magicEntity.magic.MagicEntityGira;
+import dqr.entity.magicEntity.magic.MagicEntityGiragureido;
+import dqr.entity.magicEntity.magic.MagicEntityHyado;
+import dqr.entity.magicEntity.magic.MagicEntityIo;
+import dqr.entity.magicEntity.magic.MagicEntityMera;
+import dqr.entity.magicEntity.magic.MagicEntityMeragaia;
+import dqr.entity.magicEntity.magic.MagicEntityMerami;
+import dqr.entity.magicEntity.magic.MagicEntityMerazoma;
+import dqr.entity.magicEntity.magic.MagicEntityRaidein;
+import dqr.entity.magicEntity.magic.MagicEntityZaki;
 import dqr.entity.mobEntity.DqmMobBase;
 import dqr.entity.petEntity.DqmPetBase;
 import dqr.playerData.ExtendedPlayerProperties;
@@ -225,4 +241,230 @@ public class FuncCommon {
 		return -1;
 	}
 
+	public double[] serchAirLocation(EntityLivingBase par1, double posX, double posY, double posZ)
+	{
+		double[] retLocation = new double[3];
+
+		retLocation[0] = posX + 0.5D;
+		retLocation[1] = posY + 1.0D;
+		retLocation[2] = posZ + 0.5D;
+
+		int locX = (int)(posX + 0.5D);
+		int locY = (int)(posY + 1.0D);
+		int locZ = (int)(posZ + 0.5D);
+
+		if(par1.worldObj.isAirBlock(locX, locY, locZ) && par1.worldObj.isAirBlock(locX, locY + 1, locZ))
+		{
+			retLocation[0] = locX;
+			retLocation[1] = locY;
+			retLocation[2] = locZ;
+		}else
+		{
+			for(int cntY = 0; cntY <= 1; cntY++)
+			{
+				for(int cntX = -1; cntX <= 1; cntX++)
+				{
+					for(int cntZ = -1; cntZ <= 1; cntZ++)
+					{
+						if(par1.worldObj.isAirBlock(locX + cntX, locY + cntY, locZ + cntZ) && par1.worldObj.isAirBlock(locX + cntX, locY + 1 + cntY, locZ + cntZ))
+						{
+							retLocation[0] = locX + cntX;
+							retLocation[1] = locY + cntY;
+							retLocation[2] = locZ + cntZ;
+						}
+					}
+				}
+			}
+		}
+
+		return retLocation;
+	}
+
+	public void forceCastMobMagic(EntityLivingBase par1, MagicEntity par2, String sound, int damageRate)
+	{
+		MagicEntity magic = null;
+		if(par2 instanceof MagicEntityBagi)
+		{
+			magic = new MagicEntityBagi(par1.worldObj, par1, 1.5F, 1.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
+		}else if(par2 instanceof MagicEntityBegiragon)
+		{
+			magic = new MagicEntityBegiragon(par1.worldObj, par1, 1.5F, 1.0F, 0.0F, 0.0F, 0.0F);
+		}else if(par2 instanceof MagicEntityBegirama)
+		{
+			magic = new MagicEntityBegirama(par1.worldObj, par1, 1.5F, 1.0F, 0.0F, 0.0F, 0.0F);
+		}else if(par2 instanceof MagicEntityDoruma)
+		{
+			new MagicEntityDoruma(par1.worldObj, par1, 1.5F, 1.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
+		}else if(par2 instanceof MagicEntityGira)
+		{
+			magic = new MagicEntityGira(par1.worldObj, par1, 1.5F, 1.0F, 0.0F, 0.0F, 0.0F);
+		}else if(par2 instanceof MagicEntityGiragureido)
+		{
+			magic = new MagicEntityGiragureido(par1.worldObj, par1, 1.5F, 1.0F, 0.0F, 0.0F, 0.0F);
+		}else if(par2 instanceof MagicEntityHyado)
+		{
+			magic = new MagicEntityHyado(par1.worldObj, par1, 1.5F, 1.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
+		}else if(par2 instanceof MagicEntityIo)
+		{
+			magic = new MagicEntityIo(par1.worldObj, par1, 1.5F, 1.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
+		}else if(par2 instanceof MagicEntityMera)
+		{
+			magic = new MagicEntityMera(par1.worldObj, par1, 1.5F, 1.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
+		}else if(par2 instanceof MagicEntityMeragaia)
+		{
+			magic = new MagicEntityMeragaia(par1.worldObj, par1, 1.5F, 1.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
+		}else if(par2 instanceof MagicEntityMerami)
+		{
+			magic = new MagicEntityMerami(par1.worldObj, par1, 1.5F, 1.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
+		}else if(par2 instanceof MagicEntityMerazoma)
+		{
+			magic = new MagicEntityMerazoma(par1.worldObj, par1, 1.5F, 1.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
+		}else if(par2 instanceof MagicEntityRaidein)
+		{
+			magic = new MagicEntityRaidein(par1.worldObj, par1, 1.5F, 1.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, ((MagicEntityRaidein)par2).getLightningCnt());
+		}else if(par2 instanceof MagicEntityZaki)
+		{
+			magic = new MagicEntityZaki(par1.worldObj, par1, 1.5F, 1.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
+		}
+
+		magic.shootingEntity = par1;
+
+		magic.setDamage(par2.getDamage() * damageRate);
+		//System.out.println(par2.getDamage());
+		if(sound != null)
+		{
+			par1.worldObj.playSoundAtEntity(par1, sound, 1.0F, 1.0F);
+		}
+		par1.worldObj.spawnEntityInWorld(magic);
+	}
+
+	public boolean canAttackPetMonster(DqmPetBase pet, EntityPlayer attacker)
+	{
+		if(pet.getOwner() != null && pet.getOwner() instanceof EntityPlayer)
+		{
+			if(!attacker.canAttackPlayer((EntityPlayer)pet.getOwner()))
+			{
+				return false;
+			}
+		}else
+		{
+			if(!pet.worldObj.isRemote)
+			{
+				MinecraftServer minecraftserver = MinecraftServer.getServer();
+				if(!minecraftserver.isPVPEnabled() && DQR.conf.offlinePlayerPetAttack == 0)
+				{
+					return false;
+				}
+			}
+		}
+
+
+		return true;
+	}
+
+	public boolean isNoChestAround(World world, int posX, int posY, int posZ)
+	{
+		if(world.getBlock(posX + 1, posY, posZ) == Blocks.chest) return false;
+		if(world.getBlock(posX - 1, posY, posZ) == Blocks.chest) return false;
+		if(world.getBlock(posX, posY, posZ + 1) == Blocks.chest) return false;
+		if(world.getBlock(posX, posY, posZ - 1) == Blocks.chest) return false;
+		return true;
+	}
+
+	public float getFace(EntityLivingBase par1, boolean par2)
+	{
+		float ret = 0;
+
+		float param = par1.rotationYaw;
+
+		if(par2)
+		{
+			if(param >= -23 && param < 22)
+			{
+				ret = 0.0f;
+			}else if(param >= 22 && param < 67)
+			{
+				ret = 0.5f;
+			}else if(param >= 67 && param < 112)
+			{
+				ret = 1.0f;
+			}else if(param >= 112 && param < 157)
+			{
+				ret = 1.5f;
+			}else if(param >= 157 && param < 202)
+			{
+				ret = 2.0f;
+			}else if(param >= 202 && param < 247)
+			{
+				ret = 2.5f;
+			}else if(param >= 247 && param < 292)
+			{
+				ret = 3.0f;
+			}else if(param >= 292 && param < 337)
+			{
+				ret = 3.5f;
+			}else if(param >= 337)
+			{
+				ret = 0;
+			}else if(param < -23 && param >= -68)
+			{
+				ret = 3.5f;
+			}else if(param < -68 && param >= -113)
+			{
+				ret = 3.0f;
+			}else if(param < -113 && param >= -158)
+			{
+				ret = 2.5f;
+			}else if(param < -158 && param >= -203)
+			{
+				ret = 2.0f;
+			}else if(param < -203 && param >= -248)
+			{
+				ret = 1.5f;
+			}else if(param < -248 && param >= -293)
+			{
+				ret = 1.0f;
+			}else if(param < -293 && param >= -338)
+			{
+				ret = 0.5f;
+			}else if(param < -338)
+			{
+				ret = 0.0f;
+			}
+		}else
+		{
+			if(param >= -45 && param < 45)
+			{
+				ret = 0.0f;
+			}else if(param >= 45 && param < 135)
+			{
+				ret = 1.0f;
+			}else if(param >= 135 && param < 225)
+			{
+				ret = 2.0f;
+			}else if(param >= 225 && param < 315)
+			{
+				ret = 3.0f;
+			}else if(param >= 315)
+			{
+				ret = 0.0f;
+			}else if(param < -45 && param >= -135)
+			{
+				ret = 3.0f;
+			}else if(param < -135 && param >= -225)
+			{
+				ret = 2.0f;
+			}else if(param < -225 && param >= -315)
+			{
+				ret = 1.0f;
+			}else if(param < 315)
+			{
+				ret = 0.0f;
+			}
+		}
+
+
+
+		return ret;
+	}
 }

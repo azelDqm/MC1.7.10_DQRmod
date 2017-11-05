@@ -271,6 +271,7 @@ public class DqmEntityNPCSinkan extends DqmNPCBase
 		{
 			if(!ep.worldObj.isRemote)
 			{
+				DQR.func.debugString("Line1",this.getClass());
 				ep.addChatMessage(new ChatComponentTranslation("msg.Dama1.messages." + talkNo + ".txt" ,new Object[] {}));
 				ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
 			}
@@ -294,6 +295,7 @@ public class DqmEntityNPCSinkan extends DqmNPCBase
 			if(!ep.worldObj.isRemote)
 			{
 				DqmItemEmblemBase embItem = (DqmItemEmblemBase)ep.inventory.getCurrentItem().getItem();
+				DQR.func.debugString("Line5 : ",this.getClass());
 				ep.addChatMessage(new ChatComponentTranslation("msg.Dama1.messages.11.txt" ,new Object[] {EnumDqmMessageConv.JobName.getStartS() + embItem.getJobEnum().getId() + EnumDqmMessageConv.JobName.getEndS()}));
 				ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
 			}
@@ -305,12 +307,14 @@ public class DqmEntityNPCSinkan extends DqmNPCBase
 
 				if(!ep.worldObj.isRemote)
 				{
+					DQR.func.debugString("Line6 : ",this.getClass());
 					ep.addChatMessage(new ChatComponentTranslation("msg.Dama1.messages.12.txt" ,new Object[] {EnumDqmMessageConv.JobName.getStartS() + handEmblem.getJobEnum().getId() + EnumDqmMessageConv.JobName.getEndS()}));
 				}
 			}else
 			{
 				if(!ep.worldObj.isRemote)
 				{
+					DQR.func.debugString("Line7 : ",this.getClass());
 					ep.addChatMessage(new ChatComponentTranslation("msg.Dama1.messages.13.txt" ,new Object[] {}));
 				}
 			}
@@ -321,14 +325,17 @@ public class DqmEntityNPCSinkan extends DqmNPCBase
 		{
 			if(!ep.worldObj.isRemote)
 			{
+				DQR.func.debugString("Line2",this.getClass());
 				ep.addChatMessage(new ChatComponentTranslation("msg.Dama1.messages." + talkNo + ".txt" ,new Object[] {}));
 				ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
 			}
 			if(talkNo < 21)
 			{
+				DQR.func.debugString("Line3",this.getClass());
 				ExtendedPlayerProperties.get(ep).setNpcTalk(EnumDqmNpcTalk.SINKAN.getId(), talkNo + 1);
 			}else
 			{
+				DQR.func.debugString("Line4",this.getClass());
 				ExtendedPlayerProperties.get(ep).setNpcTalk(EnumDqmNpcTalk.SINKAN.getId(), 30);
 			}
 
@@ -339,6 +346,7 @@ public class DqmEntityNPCSinkan extends DqmNPCBase
 			ep.openGui(DQR.instance, DQR.conf.GuiID_JobChange, ep.worldObj, (int)ep.posX, (int)ep.posY, (int)ep.posZ);
 			if(ep.worldObj.isRemote) ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
 			ExtendedPlayerProperties.get(ep).setNpcTalk(EnumDqmNpcTalk.SINKAN.getId(), 20);
+			return false;
 		}
 
 

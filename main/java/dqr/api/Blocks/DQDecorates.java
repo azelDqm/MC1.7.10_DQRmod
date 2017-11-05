@@ -153,4 +153,7 @@ public class DQDecorates {
 
 	public static Block DqmBlockCasinoSlot1;
 	public static Block DqmBlockCasinoAbg1;
+
+	public static Block DqmBlockSyuuriya;
+	public static Block DqmBlockBank;
 }

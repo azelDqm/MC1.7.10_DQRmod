@@ -16,11 +16,25 @@ public class DqrEntityDragonEvent extends Event{
 	{
 		public EntityDragon dragon;
 		public Block block;
+		public int posX = -1;
+		public int posY = -1;
+		public int posZ = -1;
 
+		/*
 		public BlockDestroyEvent(EntityDragon dragon, Block var13)
 		{
 			this.block = var13;
 			this.dragon = dragon;
+		}
+		*/
+
+		public BlockDestroyEvent(EntityDragon dragon, Block var13, int posX, int posY, int posZ)
+		{
+			this.block = var13;
+			this.dragon = dragon;
+			this.posX = posX;
+			this.posZ = posZ;
+			this.posY = posY;
 		}
 	}
 

@@ -13,10 +13,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import dqr.DQR;
 import dqr.api.enums.EnumDqmMGToolMode;
+import dqr.api.event.DqrBreakMGTEvent;
 import dqr.items.base.DqmItemMagicToolBase;
 import dqr.playerData.ExtendedPlayerProperties2;
 
@@ -103,6 +105,14 @@ public class DqmItemMGTBreak2 extends DqmItemMagicToolBase{
         						int targetMeta = par3World.getBlockMetadata(par4 + cntZ, par5+ cntY + fixY, par6 + cntX);
         						float blockHardness = targetBlock == null ? -1.0F : targetBlock.getBlockHardness(par3World, par4 + cntZ, par5+ cntY + fixY, par6 + cntX);
 
+        						DqrBreakMGTEvent event = new DqrBreakMGTEvent.unbreakCheck(ep, targetBlock, targetMeta, par4 + cntZ, par5+ cntY + fixY, par6 + cntX);
+        						MinecraftForge.EVENT_BUS.post(event);
+
+        						if(event.isCanceled())
+        						{
+        							return false;
+        						}
+
         						if(blockHardness >= 0.0F && targetBlock != null && targetBlock != Blocks.air)
         						{
 	    							if(mode == EnumDqmMGToolMode.MGBREAK_BREAK.getId())
@@ -178,6 +188,14 @@ public class DqmItemMGTBreak2 extends DqmItemMagicToolBase{
         						int targetMeta = par3World.getBlockMetadata(par4 + cntX, par5+ cntY + fixY, par6 + cntZ);
         						float blockHardness = targetBlock == null ? -1.0F : targetBlock.getBlockHardness(par3World, par4 + cntX, par5+ cntY + fixY, par6 + cntZ);
 
+        						DqrBreakMGTEvent event = new DqrBreakMGTEvent.unbreakCheck(ep, targetBlock, targetMeta, par4 + cntZ, par5+ cntY + fixY, par6 + cntX);
+        						MinecraftForge.EVENT_BUS.post(event);
+
+        						if(event.isCanceled())
+        						{
+        							return false;
+        						}
+
         						if(blockHardness >= 0.0F && targetBlock != null && targetBlock != Blocks.air)
         						{
 	    							if(mode == EnumDqmMGToolMode.MGBREAK_BREAK.getId())
@@ -252,6 +270,14 @@ public class DqmItemMGTBreak2 extends DqmItemMagicToolBase{
         						int targetMeta = par3World.getBlockMetadata(par4 + cntZ, par5+ cntY + fixY, par6 + cntX);
         						float blockHardness = targetBlock == null ? -1.0F : targetBlock.getBlockHardness(par3World, par4 + cntZ, par5+ cntY + fixY, par6 + cntX);
 
+        						DqrBreakMGTEvent event = new DqrBreakMGTEvent.unbreakCheck(ep, targetBlock, targetMeta, par4 + cntZ, par5+ cntY + fixY, par6 + cntX);
+        						MinecraftForge.EVENT_BUS.post(event);
+
+        						if(event.isCanceled())
+        						{
+        							return false;
+        						}
+
         						if(blockHardness >= 0.0F && targetBlock != null && targetBlock != Blocks.air)
         						{
 	    							if(mode == EnumDqmMGToolMode.MGBREAK_BREAK.getId())
@@ -325,6 +351,14 @@ public class DqmItemMGTBreak2 extends DqmItemMagicToolBase{
         						Block targetBlock = par3World.getBlock(par4 + cntX, par5+ cntY + fixY, par6 + cntZ);
         						int targetMeta = par3World.getBlockMetadata(par4 + cntX, par5+ cntY + fixY, par6 + cntZ);
         						float blockHardness = targetBlock == null ? -1.0F : targetBlock.getBlockHardness(par3World, par4 + cntX, par5+ cntY + fixY, par6 + cntZ);
+
+        						DqrBreakMGTEvent event = new DqrBreakMGTEvent.unbreakCheck(ep, targetBlock, targetMeta, par4 + cntZ, par5+ cntY + fixY, par6 + cntX);
+        						MinecraftForge.EVENT_BUS.post(event);
+
+        						if(event.isCanceled())
+        						{
+        							return false;
+        						}
 
         						if(blockHardness >= 0.0F && targetBlock != null && targetBlock != Blocks.air)
         						{

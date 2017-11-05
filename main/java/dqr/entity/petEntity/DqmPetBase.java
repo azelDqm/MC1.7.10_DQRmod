@@ -102,11 +102,14 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 
     private int Tikara;
     private int Mikawasi;
+    private int[] arrayMikawasi = new int[32];
+
     private int Kasikosa;
 
     private int Kaisinritu;
     private int KaisinMax = 4;
     private int KaisinMin = 2;
+    private int[] arrayKaisinritu = new int[32];
 
     private int Gold;
     private int Medal;
@@ -296,16 +299,62 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
         }
         else
         {
-        	if(p_70097_1_.getSourceOfDamage() instanceof EntityPlayer && this.getOwner() instanceof EntityPlayer)
+            //p_70097_1_.
+        	/*
+            if(p_70097_1_.getSourceOfDamage() != null)
+            {
+            	 System.out.println("TEST A : " + p_70097_1_.getSourceOfDamage().getCommandSenderName());
+            }
+            if( this.getOwner() != null)
+            {
+            	System.out.println("TEST B : " + this.getOwner().getCommandSenderName());
+            }
+            if(p_70097_1_.getEntity() != null)
+            {
+            	System.out.println("TEST C : " +p_70097_1_.getEntity() .getCommandSenderName());
+            }
+            */
+
+        	if(p_70097_1_.getSourceOfDamage() instanceof EntityPlayer)
         	{
+        		//System.out.println("TEST 1 : " + p_70097_1_.getSourceOfDamage().getCommandSenderName() +  " / " + this.getOwner().getCommandSenderName());
         		EntityPlayer ep = (EntityPlayer)p_70097_1_.getSourceOfDamage();
+
+        		if(!DQR.func.canAttackPetMonster(this, ep))
+        		{
+        			return false;
+        		}
+        		//EntityPlayer owner = (EntityPlayer)this.getOwner();
+
+        		/*
+        		if(!ep.canAttackPlayer(owner))
+        		{
+        			return false;
+        		}
+        		*/
+        	}
+
+
+        	if(p_70097_1_.getEntity() instanceof EntityPlayer)
+        	{
+        		EntityPlayer ep = (EntityPlayer)p_70097_1_.getEntity();
+
+        		if(!DQR.func.canAttackPetMonster(this, ep))
+        		{
+        			return false;
+        		}
+        		/*
+        		System.out.println("TEST 2 : " + p_70097_1_.getEntity().getCommandSenderName() +  " / " + this.getOwner().getCommandSenderName());
+        		EntityPlayer ep = (EntityPlayer)p_70097_1_.getEntity();
         		EntityPlayer owner = (EntityPlayer)this.getOwner();
 
         		if(!ep.canAttackPlayer(owner))
         		{
         			return false;
         		}
+        		*/
         	}
+
 
             Entity entity = p_70097_1_.getEntity();
             this.aiSit.setSitting(false);
@@ -803,7 +852,17 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 	                        this.isDead = false;
 	                    	this.clearTasks();
 	                    	//this.tasks.removeTask(aiDeaht);
-	                    	this.setCombatTasks();
+
+		                	this.clearTasks();
+		                	this.tasks.addTask(2, this.aiSit);
+
+
+			                this.aiSit.setSitting(true);
+			                this.isJumping = false;
+			                this.setPathToEntity((PathEntity)null);
+			                this.setTarget((Entity)null);
+			                this.setAttackTarget((EntityLivingBase)null);
+	                    	//this.setCombatTasks();
 	                	}
 	                }
                 }else
@@ -1757,11 +1816,20 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 
         p_70014_1_.setInteger("Tikara", this.Tikara);
         p_70014_1_.setInteger("Mikawasi", this.Mikawasi);
+        for(int cnt = 0; cnt < 32; cnt++)
+        {
+        	p_70014_1_.setInteger("arrayMikawasi_" + cnt, arrayMikawasi[cnt]);
+        }
+
         p_70014_1_.setInteger("Kasikosa", this.Kasikosa);
 
         p_70014_1_.setInteger("Kaisinritu", this.Kaisinritu);
         p_70014_1_.setInteger("KaisinMin", this.KaisinMin);
         p_70014_1_.setInteger("KaisinMax", this.KaisinMax);
+        for(int cnt = 0; cnt < 32; cnt++)
+        {
+        	p_70014_1_.setInteger("arrayKaisinritu_" + cnt, arrayKaisinritu[cnt]);
+        }
 
         p_70014_1_.setInteger("Gold", this.Gold);
         p_70014_1_.setInteger("Medal", this.Medal);
@@ -1999,11 +2067,20 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 
         this.Tikara = p_70037_1_.getInteger("Tikara");
         this.Mikawasi = p_70037_1_.getInteger("Mikawasi");
+        for(int cnt = 0; cnt < 32; cnt++)
+        {
+        	arrayMikawasi[cnt] = p_70037_1_.getInteger("arrayMikawasi_" + cnt);
+        }
+
         this.Kasikosa = p_70037_1_.getInteger("Kasikosa");
 
         this.Kaisinritu = p_70037_1_.getInteger("Kaisinritu");
         this.KaisinMin = p_70037_1_.getInteger("KaisinMin");
         this.KaisinMax = p_70037_1_.getInteger("KaisinMax");
+        for(int cnt = 0; cnt < 32; cnt++)
+        {
+        	arrayKaisinritu[cnt] = p_70037_1_.getInteger("arrayKaisinritu_" + cnt);
+        }
 
         this.Gold = p_70037_1_.getInteger("Gold");
         this.Medal = p_70037_1_.getInteger("Medal");
@@ -2694,6 +2771,40 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
     }
     public void setRarihoLoc(double[] par1) {
         this.rarihoLoc = par1;
+    }
+
+    public int[] getArrayMikawasiA() {
+    	if(arrayMikawasi == null) arrayMikawasi = new int[32];
+        return arrayMikawasi;
+    }
+    public void setArrayMikawasiA(int[] par1) {
+    	if(arrayMikawasi == null) arrayMikawasi = new int[32];
+        this.arrayMP = par1;
+    }
+    public int getArrayMikawasi(int par1) {
+    	if(arrayMikawasi == null) arrayMikawasi = new int[32];
+        return arrayMikawasi[par1];
+    }
+    public void setArrayMikawasi(int par1, int par2) {
+    	if(arrayMikawasi == null) arrayMikawasi = new int[32];
+        this.arrayMikawasi[par1] = par2;
+    }
+
+    public int[] getArrayKaisinrituA() {
+    	if(arrayKaisinritu == null) arrayKaisinritu = new int[32];
+        return arrayKaisinritu;
+    }
+    public void setArrayKaisinrituA(int[] par1) {
+    	if(arrayKaisinritu == null) arrayKaisinritu = new int[32];
+        this.arrayMP = par1;
+    }
+    public int getArrayKaisinritu(int par1) {
+    	if(arrayKaisinritu == null) arrayKaisinritu = new int[32];
+        return arrayKaisinritu[par1];
+    }
+    public void setArrayKaisinritu(int par1, int par2) {
+    	if(arrayKaisinritu == null) arrayKaisinritu = new int[32];
+        this.arrayKaisinritu[par1] = par2;
     }
 
     private NBTTagCompound makeTutuNBT(NBTTagCompound tag1)

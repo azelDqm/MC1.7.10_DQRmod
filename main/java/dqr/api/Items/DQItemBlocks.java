@@ -153,4 +153,6 @@ public class DQItemBlocks {
 	public static ItemBlock itemBlockSZukkinya;
 	public static ItemBlock itemBlockFarmBookShelf;
 
+	public static ItemBlock itemBlockSyuuriya;
+	public static ItemBlock itemBlockBank;
 }

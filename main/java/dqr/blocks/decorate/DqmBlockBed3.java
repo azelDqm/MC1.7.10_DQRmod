@@ -164,11 +164,13 @@ public class DqmBlockBed3 extends BlockContainer
 	    	}
 
 	    	//夜かどうかチェック
+	    	/*
             if (!par1World.isRemote && par1World.isDaytime())
             {
             	ep.addChatComponentMessage(new ChatComponentTranslation("tile.bed.noSleep", new Object[0]));
             	return false;
             }
+            */
 
             //寝ることができる
             if (!par1World.provider.canRespawnHere() || par1World.getBiomeGenForCoords(par2, par4) == BiomeGenBase.hell)

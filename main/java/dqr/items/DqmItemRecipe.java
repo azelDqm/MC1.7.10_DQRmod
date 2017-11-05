@@ -156,12 +156,9 @@ public class DqmItemRecipe {
 
         //GameRegistry.addShapelessRecipe(new ItemStack(Wakanai, 8), new Object[] {new ItemStack(Toumei, 1)});
 
-        /*
-        GameRegistry.addShapelessRecipe(new ItemStack(Toumei , 1), new Object[]
-                {
-                    new ItemStack(Blocks.glass, 1)
-                });
-        */
+
+
+
         GameRegistry.addShapelessRecipe(new ItemStack(Items.gold_ingot , 1), new Object[]
                                         {
                                             new ItemStack(DQMiscs.itemNekozuna, 1), new ItemStack(DQIngots.itemKagaminoisi, 1)
@@ -3170,6 +3167,22 @@ ver1.20ADD-<*/
                     'A', Blocks.planks, 'B', Haganenotate
                 });
 */
+        GameRegistry.addRecipe(new ItemStack(DQDecorates.DqmBlockSyuuriya , 1), new Object[]
+                {
+                    "AAA",
+                    "ABA",
+                    "AAA",
+                    'A', Blocks.planks, 'B', Blocks.anvil
+                });
+
+        GameRegistry.addRecipe(new ItemStack(DQDecorates.DqmBlockBank , 1), new Object[]
+                {
+                    "AAA",
+                    "ABA",
+                    "AAA",
+                    'A', Blocks.planks, 'B', DQMiscs.itemOkane
+                });
+
         GameRegistry.addRecipe(new ItemStack(DQDecorates.DqmBlockYadoya , 1), new Object[]
                 {
                     "AAA",
@@ -4275,6 +4288,13 @@ ver1.20ADD-<*/
             'A', DQIngots.itemHikarinoisi, 'B', DQPlants.BlockWaterBlock
         });
 
+        GameRegistry.addRecipe(new ItemStack(DQBlocks.DqmBlockToumei , 2), new Object[]
+        {
+            "A A",
+            " A ",
+            "A A",
+            'A', new ItemStack(Blocks.glass, 1)
+        });
 
 	}
 }

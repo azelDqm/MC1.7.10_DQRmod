@@ -31,6 +31,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import dqr.DQR;
 import dqr.api.potion.DQPotionPlus;
 import dqr.entity.mobEntity.DqmMobBase;
+import dqr.entity.petEntity.DqmPetBase;
 
 /*
  * 発射されるエンティティのクラス。
@@ -368,6 +369,12 @@ public class MagicEntityBagi extends MagicEntity implements IProjectile{
 		                        	//対象が撃った本人の場合も当たらない
 		                        	entityList.remove(n);
 		                        }
+		                    }else if(target instanceof DqmPetBase)
+		                    {
+		                    	if(!(DQR.func.canAttackPetMonster((DqmPetBase)target, ((EntityPlayer)this.shootingEntity))))
+		                    	{
+		                    		entityList.remove(n);
+		                    	}
 		                    }
 		                    else if (target instanceof EntityTameable ||
 		                                 target instanceof EntityHorse)
@@ -467,7 +474,7 @@ public class MagicEntityBagi extends MagicEntity implements IProjectile{
                     		{
                     			EntityLiving elv = (EntityLiving)this.shootingEntity;
                             	//村人以外なら、ダメージを与える処理を呼ぶ
-                            	if (elv.attackEntityFrom(damagesource, (float)i1))
+                            	if (elv.attackEntityFrom(damagesource.setDamageBypassesArmor(), (float)i1))
                                 {
                             		//ダメージを与えることに成功したら以下の処理を行う
                                     if (elv instanceof EntityLivingBase)
@@ -512,7 +519,7 @@ public class MagicEntityBagi extends MagicEntity implements IProjectile{
                     		}else
                     		{
 	                        	//村人以外なら、ダメージを与える処理を呼ぶ
-	                        	if (target.entityHit.attackEntityFrom(damagesource, (float)i1))
+	                        	if (target.entityHit.attackEntityFrom(damagesource.setDamageBypassesArmor(), (float)i1))
 	                            {
 	                        		//ダメージを与えることに成功したら以下の処理を行う
 	                                if (target.entityHit instanceof EntityLivingBase)

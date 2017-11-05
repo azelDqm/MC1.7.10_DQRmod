@@ -53,7 +53,9 @@ import dqr.items.builder.DqmItemBuilderDama;
 import dqr.items.builder.DqmItemBuilderDamaS;
 import dqr.items.builder.DqmItemBuilderDamaW;
 import dqr.items.builder.DqmItemBuilderIdoMedal;
+import dqr.items.builder.DqmItemBuilderNPC;
 import dqr.items.builder.DqmItemBuilderSekizou;
+import dqr.items.builder.DqmItemBuilderShop;
 import dqr.items.fukuro.DqmItemFukuro;
 import dqr.items.magic.DqmItemMagicBagi;
 import dqr.items.magic.DqmItemMagicBasiRura;
@@ -454,6 +456,20 @@ public class DqItem {
 		DQBuilders.itemBuilderSekizouEsterk = new DqmItemBuilderSekizou(EnumDqmBuilder.SEKIZOU, DQSekizous.BlockSekizouEsterk).setCreativeTab(DQR.tabs.DqmTabBuilder).setUnlocalizedName("dqm.BuilderSekizouEsterk").setMaxStackSize(1).setTextureName("dqr:Builder_Sekizou_Esterk");
 		DQBuilders.itemBuilderSekizouDarkRamia = new DqmItemBuilderSekizou(EnumDqmBuilder.SEKIZOU, DQSekizous.BlockSekizouDarkRamia).setCreativeTab(DQR.tabs.DqmTabBuilder).setUnlocalizedName("dqm.BuilderSekizouDarkRamia").setMaxStackSize(1).setTextureName("dqr:Builder_Sekizou_DarkRamia");
 		DQBuilders.itemBuilderSekizouMasterdoragon = new DqmItemBuilderSekizou(EnumDqmBuilder.SEKIZOU, DQSekizous.BlockSekizouMasterdoragon).setCreativeTab(DQR.tabs.DqmTabBuilder).setUnlocalizedName("dqm.BuilderSekizouMasterdoragon").setMaxStackSize(1).setTextureName("dqr:Builder_Sekizou_Masterdoragon");
+
+		DQBuilders.itemBuilderShopBukiya = new DqmItemBuilderShop(EnumDqmBuilder.SHOP).setCreativeTab(DQR.tabs.DqmTabBuilder).setUnlocalizedName("dqm.BuilderShopBukiya").setMaxStackSize(1).setTextureName("dqr:Builder_Shop_Bukiya");
+		DQBuilders.itemBuilderShopBank = new DqmItemBuilderShop(EnumDqmBuilder.SHOP).setCreativeTab(DQR.tabs.DqmTabBuilder).setUnlocalizedName("dqm.BuilderShopBank").setMaxStackSize(1).setTextureName("dqr:Builder_Shop_Bank");
+		DQBuilders.itemBuilderShopSyuuriya = new DqmItemBuilderShop(EnumDqmBuilder.SHOP).setCreativeTab(DQR.tabs.DqmTabBuilder).setUnlocalizedName("dqm.BuilderShopSyuuriya").setMaxStackSize(1).setTextureName("dqr:Builder_Shop_Syuuriya");
+		DQBuilders.itemBuilderShopKaitoriya = new DqmItemBuilderShop(EnumDqmBuilder.SHOP).setCreativeTab(DQR.tabs.DqmTabBuilder).setUnlocalizedName("dqm.BuilderShopKaitoriya").setMaxStackSize(1).setTextureName("dqr:Builder_Shop_Kaitoriya");
+
+		DQBuilders.itemBuilderShopBankW = new DqmItemBuilderNPC(EnumDqmBuilder.SHOP).setCreativeTab(DQR.tabs.DqmTabBuilder).setUnlocalizedName("dqm.BuilderShopBankW").setMaxStackSize(1).setTextureName("dqr:Builder_Shop_BankW");
+		DQBuilders.itemBuilderShopBukiyaW = new DqmItemBuilderNPC(EnumDqmBuilder.SHOP).setCreativeTab(DQR.tabs.DqmTabBuilder).setUnlocalizedName("dqm.BuilderShopBukiW").setMaxStackSize(1).setTextureName("dqr:Builder_Shop_BukiyaW");
+		DQBuilders.itemBuilderShopSyuuriyaW = new DqmItemBuilderNPC(EnumDqmBuilder.SHOP).setCreativeTab(DQR.tabs.DqmTabBuilder).setUnlocalizedName("dqm.BuilderShopSyuuriW").setMaxStackSize(1).setTextureName("dqr:Builder_Shop_SyuuriyaW");
+		DQBuilders.itemBuilderShopKaitoriyaW = new DqmItemBuilderNPC(EnumDqmBuilder.SHOP).setCreativeTab(DQR.tabs.DqmTabBuilder).setUnlocalizedName("dqm.BuilderShopKaitoriW").setMaxStackSize(1).setTextureName("dqr:Builder_Shop_KaitoriyaW");
+
+		DQBuilders.itemBuilderDamaTW = new DqmItemBuilderNPC(EnumDqmBuilder.SHOP).setCreativeTab(DQR.tabs.DqmTabBuilder).setUnlocalizedName("dqm.BuilderDamaTW").setMaxStackSize(1).setTextureName("dqr:BuilderDamaW");
+		DQBuilders.itemBuilderDamaSW = new DqmItemBuilderNPC(EnumDqmBuilder.SHOP).setCreativeTab(DQR.tabs.DqmTabBuilder).setUnlocalizedName("dqm.BuilderDamaSW").setMaxStackSize(1).setTextureName("dqr:BuilderDama20W");
+		DQBuilders.itemBuilderDamaWW = new DqmItemBuilderNPC(EnumDqmBuilder.SHOP).setCreativeTab(DQR.tabs.DqmTabBuilder).setUnlocalizedName("dqm.BuilderDamaWW").setMaxStackSize(1).setTextureName("dqr:BuilderDama30W");
 
 		//転職証
 		DQEmblems.itemEmbCivilian = new DqmItemEmblemBase(EnumDqmJob.Asobinin).setCreativeTab(DQR.tabs.DqmTabMisc).setUnlocalizedName("dqm.itemEmbCivilian").setTextureName("dqr:EmbCivilian");
@@ -1225,16 +1241,21 @@ public class DqItem {
 		DQMonsters.itemMonsterUndead = new DqmItemMonster().setUnlocalizedName("dqm.itemMonsterUndead").setTextureName("dqr:FigUndead");
 		DQMonsters.itemMonsterUnknown = new DqmItemMonster().setUnlocalizedName("dqm.itemMonsterUnknown").setTextureName("dqr:FigUnknown");
 
-		DQBuilders.itemBuilderCasino1 = new DqmItemBuilderCasino(EnumDqmBuilder.CASINO).setCreativeTab(DQR.tabs.DqmTabBuilder).setUnlocalizedName("dqm.BuilderCasino1").setMaxStackSize(1).setTextureName("dqr:Builder_Casino1");
-		DQBuilders.itemBuilderCasino2 = new DqmItemBuilderCasino(EnumDqmBuilder.CASINO).setCreativeTab(DQR.tabs.DqmTabBuilder).setUnlocalizedName("dqm.BuilderCasino2").setMaxStackSize(1).setTextureName("dqr:Builder_Casino2");
-		DQBuilders.itemBuilderCasino3 = new DqmItemBuilderCasino(EnumDqmBuilder.CASINO).setCreativeTab(DQR.tabs.DqmTabBuilder).setUnlocalizedName("dqm.BuilderCasino3").setMaxStackSize(1).setTextureName("dqr:Builder_Casino3");
-		DQBuilders.itemBuilderCasino4 = new DqmItemBuilderCasino(EnumDqmBuilder.CASINO).setCreativeTab(DQR.tabs.DqmTabBuilder).setUnlocalizedName("dqm.BuilderCasino4").setMaxStackSize(1).setTextureName("dqr:Builder_Casino4");
-		DQBuilders.itemBuilderCasino5 = new DqmItemBuilderCasino(EnumDqmBuilder.CASINO).setCreativeTab(DQR.tabs.DqmTabBuilder).setUnlocalizedName("dqm.BuilderCasino5").setMaxStackSize(1).setTextureName("dqr:Builder_Casino5");
+		DQBuilders.itemBuilderCasino1 = new DqmItemBuilderCasino(EnumDqmBuilder.CASINO).setCreativeTab(DQR.tabs.DqmTabBuilder).setUnlocalizedName("dqm.BuilderCasino1").setMaxStackSize(1).setTextureName("dqr:Builder_Casino1W");
+		DQBuilders.itemBuilderCasino2 = new DqmItemBuilderCasino(EnumDqmBuilder.CASINO).setCreativeTab(DQR.tabs.DqmTabBuilder).setUnlocalizedName("dqm.BuilderCasino2").setMaxStackSize(1).setTextureName("dqr:Builder_Casino2W");
+		DQBuilders.itemBuilderCasino3 = new DqmItemBuilderCasino(EnumDqmBuilder.CASINO).setCreativeTab(DQR.tabs.DqmTabBuilder).setUnlocalizedName("dqm.BuilderCasino3").setMaxStackSize(1).setTextureName("dqr:Builder_Casino3W");
+		DQBuilders.itemBuilderCasino4 = new DqmItemBuilderCasino(EnumDqmBuilder.CASINO).setCreativeTab(DQR.tabs.DqmTabBuilder).setUnlocalizedName("dqm.BuilderCasino4").setMaxStackSize(1).setTextureName("dqr:Builder_Casino4W");
+		DQBuilders.itemBuilderCasino5 = new DqmItemBuilderCasino(EnumDqmBuilder.CASINO).setCreativeTab(DQR.tabs.DqmTabBuilder).setUnlocalizedName("dqm.BuilderCasino5").setMaxStackSize(1).setTextureName("dqr:Builder_Casino5W");
 
 		DQMagicTools.itemDqrFishRod_Diamond = (DqmItemFishingRod)new DqmItemFishingRod().setMaxStrain(80).setStrength(0.08).setEnchantability(5).setMaxDamage(256).setUnlocalizedName("dqm.itemTurizao_Diamond").setTextureName("dqr:Turizao_Diamond").setCreativeTab(DQR.tabs.DqmTabWeapon);
 		DQMagicTools.itemDqrFishRod_Oriharukon = (DqmItemFishingRod)new DqmItemFishingRod().setMaxStrain(80).setStrength(0.08).setEnchantability(5).setMaxDamage(500).setUnlocalizedName("dqm.itemTurizao_Oriharukon").setTextureName("dqr:Turizao_Oriharukon").setCreativeTab(DQR.tabs.DqmTabWeapon);
 		DQMagicTools.itemDqrFishRod_Roto = (DqmItemFishingRod)new DqmItemFishingRod().setMaxStrain(80).setStrength(0.08).setEnchantability(5).setMaxDamage(1000).setUnlocalizedName("dqm.itemTurizao_Roto").setTextureName("dqr:Turizao_Roto").setCreativeTab(DQR.tabs.DqmTabWeapon);
 		DQMagicTools.itemDqrFishRod_Densetu = (DqmItemFishingRod)new DqmItemFishingRod().setMaxStrain(80).setStrength(0.08).setEnchantability(5).setMaxDamage(2000).setUnlocalizedName("dqm.itemTurizao_Densetu").setTextureName("dqr:Turizao_Sinken").setCreativeTab(DQR.tabs.DqmTabWeapon);
 		//DQMagicTools.itemDqrFishRod = new ItemFishingRod().setMaxDamage(100).setUnlocalizedName("wooden_fishing_rod").setTextureName("jaff:hooked_fishing_rod").setCreativeTab(DQR.tabs.DqmTabWeapon);
+
+		DQInventorySlots.itemSlotPetYoroi = new Item().setUnlocalizedName("dqm.itemSlotPetYoroi").setTextureName("dqr:slot_PetYoroi").setCreativeTab(DQR.tabs.DqmTabMisc);
+		DQInventorySlots.itemSlotPetBuki = new Item().setUnlocalizedName("dqm.itemSlotPetBuki").setTextureName("dqr:slot_PetBuki").setCreativeTab(DQR.tabs.DqmTabMisc);
+
+		DQBuilders.itemBuilderKaikosyo = new Item().setUnlocalizedName("dqm.Kaikosyo").setTextureName("dqr:Builder_Shop_KaikoW").setCreativeTab(DQR.tabs.DqmTabBuilder);
 	}
 }

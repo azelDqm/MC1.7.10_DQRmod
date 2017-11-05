@@ -25,8 +25,10 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import dqr.api.event.DqrMagicForceDeadEvent;
 import dqr.entity.mobEntity.DqmMobBase;
 
 /*
@@ -734,6 +736,14 @@ public class MagicEntity extends Entity implements IProjectile{
         		}
         	}
         }
+
+        DqrMagicForceDeadEvent event = new DqrMagicForceDeadEvent(magic, shooter);
+		event.setCanceled(false);
+		MinecraftForge.EVENT_BUS.post(event);
+		if(event.isCanceled())
+		{
+			return true;
+		}
 
     	return false;
     }

@@ -119,6 +119,11 @@ public class DqmEntityNPCSyuuri extends DqmNPCBase
         {
         	return false;
         }
+
+        if(this.getTameMode() != 0)
+        {
+        	return false;
+        }
         /*
         if (this.worldObj.getBlockId((int)this.posX, (int)this.posY - 1, (int)this.posZ) == Block.brick.blockID || this.worldObj.getBlockId((int)this.posX, (int)this.posY - 1, (int)this.posZ) == DqmItemList.Kowarenai8.blockID)
         {

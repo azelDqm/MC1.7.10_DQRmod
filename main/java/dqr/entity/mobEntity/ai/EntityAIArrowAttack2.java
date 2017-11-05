@@ -62,6 +62,8 @@ public class EntityAIArrowAttack2 extends EntityAIBase
     {
         EntityLivingBase entitylivingbase = this.entityHost.getAttackTarget();
 
+
+
         if (entitylivingbase == null)
         {
             return false;
@@ -69,7 +71,16 @@ public class EntityAIArrowAttack2 extends EntityAIBase
         else
         {
             this.attackTarget = entitylivingbase;
-            return true;
+
+            double d0 = this.entityHost.getDistance(this.attackTarget.posX, this.attackTarget.boundingBox.minY, this.attackTarget.posZ);
+
+            if(d0 > 3 || d0 < 1)
+            {
+            	return true;
+            }else
+            {
+            	return false;
+            }
         }
     }
 
@@ -80,13 +91,17 @@ public class EntityAIArrowAttack2 extends EntityAIBase
     {
     	Random rand = new Random();
 
-    	if(rand.nextInt(100) == 0)
+    	//System.out.println("TEST : " + this.field_82642_h + " / " + this.field_75318_f);
+
+    	/*
+    	if(rand.nextInt(150) == 0)
     	{
     		return false;
     	}else
     	{
+    	*/
     		return this.shouldExecute() || !this.entityHost.getNavigator().noPath();
-    	}
+    	//}
     }
 
     /**
@@ -96,7 +111,7 @@ public class EntityAIArrowAttack2 extends EntityAIBase
     {
         this.attackTarget = null;
         this.field_75318_f = 0;
-        this.rangedAttackTime = -1;
+        //this.rangedAttackTime = -1;
     }
 
     /**
@@ -129,6 +144,7 @@ public class EntityAIArrowAttack2 extends EntityAIBase
         this.entityHost.getLookHelper().setLookPositionWithEntity(this.attackTarget, 30.0F, 30.0F);
         float f;
 
+        System.out.println("TEST : " + this.rangedAttackTime);
         if (--this.rangedAttackTime == 0)
         {
             if (d0 > (double)this.field_82642_h || !flag)

@@ -6,6 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.Random;
 
 import net.minecraft.entity.player.EntityPlayer;
+import dqr.DQR;
 import dqr.PacketHandler;
 import dqr.api.enums.EnumDqmCasinoBJOdds;
 import dqr.api.enums.EnumDqmFuncPacketCode;
@@ -38,72 +39,62 @@ public class ThreadCasinoBJ extends Thread{
 
 		if(gui.gamePhase == 1)
 		{
-			gui.trumpSet = new LinkedHashMap<Integer, EnumDqmTrump>();
-			gui.trumpSetDeal = new LinkedHashMap<Integer, EnumDqmTrump>();
-			gui.trumpDeck = new ArrayList<EnumDqmTrump>();
+			try
+			{
+				gui.trumpSet = new LinkedHashMap<Integer, EnumDqmTrump>();
+				gui.trumpSetDeal = new LinkedHashMap<Integer, EnumDqmTrump>();
+				gui.trumpDeck = new ArrayList<EnumDqmTrump>();
 
-			EnumDqmTrump[] data = EnumDqmTrump.values();
-	    	for(int cnt = 0; cnt < data.length; cnt++)
-	    	{
-	    		if(14 > data[cnt].getValue()&& data[cnt].getValue() > 0)
-	    		{
-	    			gui.trumpDeck.add(data[cnt]);
-	    		}
-	    	}
+				EnumDqmTrump[] data = EnumDqmTrump.values();
+		    	for(int cnt = 0; cnt < data.length; cnt++)
+		    	{
+		    		if(14 > data[cnt].getValue()&& data[cnt].getValue() > 0)
+		    		{
+		    			gui.trumpDeck.add(data[cnt]);
+		    		}
+		    	}
 
-			try {
-				this.sleep(1000);
+				this.sleep(DQR.conf.BJ_deal_wait);
+
+				int val = rand.nextInt(gui.trumpDeck.size());
+				gui.trumpSet.put(gui.trumpSet.size(), gui.trumpDeck.get(val));
+				//this.ep.playSound("gui.button.press", 0.9F, 1.0F);
+				gui.soundPlay = 1;
+				gui.trumpDeck.remove(val);
+
+				this.sleep(DQR.conf.BJ_deal_wait);
+
+				val = rand.nextInt(gui.trumpDeck.size());
+				gui.trumpSetDeal.put(gui.trumpSetDeal.size(), gui.trumpDeck.get(val));
+				//this.ep.playSound("gui.button.press", 0.9F, 1.0F);
+				gui.soundPlay = 1;
+				gui.trumpDeck.remove(val);
+
+				this.sleep(DQR.conf.BJ_deal_wait);
+
+				val = rand.nextInt(gui.trumpDeck.size());
+				gui.trumpSet.put(gui.trumpSet.size(), gui.trumpDeck.get(val));
+				//this.ep.playSound("gui.button.press", 0.9F, 1.0F);
+				gui.soundPlay = 1;
+				gui.trumpDeck.remove(val);
+
+				this.sleep(DQR.conf.BJ_deal_wait);
+
+				gui.trumpSetDeal.put(gui.trumpSetDeal.size(), EnumDqmTrump.DEF);
+				//this.ep.playSound("gui.button.press", 0.9F, 1.0F);
+				gui.soundPlay = 1;
+
+				gui.gamePhase = 2;
 			} catch (InterruptedException e) {
 				// TODO 自動生成された catch ブロック
 				e.printStackTrace();
 			}
-
-			int val = rand.nextInt(gui.trumpDeck.size());
-			gui.trumpSet.put(gui.trumpSet.size(), gui.trumpDeck.get(val));
-			//this.ep.playSound("gui.button.press", 0.9F, 1.0F);
-			gui.soundPlay = 1;
-			gui.trumpDeck.remove(val);
-			try {
-				this.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO 自動生成された catch ブロック
-				e.printStackTrace();
-			}
-			val = rand.nextInt(gui.trumpDeck.size());
-			gui.trumpSet.put(gui.trumpSet.size(), gui.trumpDeck.get(val));
-			//this.ep.playSound("gui.button.press", 0.9F, 1.0F);
-			gui.soundPlay = 1;
-			gui.trumpDeck.remove(val);
-
-			try {
-				this.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO 自動生成された catch ブロック
-				e.printStackTrace();
-			}
-			val = rand.nextInt(gui.trumpDeck.size());
-			gui.trumpSetDeal.put(gui.trumpSetDeal.size(), gui.trumpDeck.get(val));
-			//this.ep.playSound("gui.button.press", 0.9F, 1.0F);
-			gui.soundPlay = 1;
-			gui.trumpDeck.remove(val);
-
-			try {
-				this.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO 自動生成された catch ブロック
-				e.printStackTrace();
-			}
-			gui.trumpSetDeal.put(gui.trumpSetDeal.size(), EnumDqmTrump.DEF);
-			//this.ep.playSound("gui.button.press", 0.9F, 1.0F);
-			gui.soundPlay = 1;
-
-			gui.gamePhase = 2;
 		}else if(this.phaseNum == 2)
 		{
 			if(this.buttonId == 1 || this.buttonId == 3)
 			{
 				try {
-					this.sleep(1000);
+					this.sleep(DQR.conf.BJ_hit_wait);
 				} catch (InterruptedException e) {
 					// TODO 自動生成された catch ブロック
 					e.printStackTrace();
@@ -180,7 +171,7 @@ public class ThreadCasinoBJ extends Thread{
 					if(gui.trumpSetDeal.get(1) == EnumDqmTrump.DEF)
 					{
 						try {
-							this.sleep(1000);
+							this.sleep(DQR.conf.BJ_dealer_wait);
 						} catch (InterruptedException e) {
 							// TODO 自動生成された catch ブロック
 							e.printStackTrace();
@@ -194,7 +185,7 @@ public class ThreadCasinoBJ extends Thread{
 					}else
 					{
 						try {
-							this.sleep(1000);
+							this.sleep(DQR.conf.BJ_dealer_wait);
 						} catch (InterruptedException e) {
 							// TODO 自動生成された catch ブロック
 							e.printStackTrace();
@@ -463,7 +454,7 @@ public class ThreadCasinoBJ extends Thread{
 			}
 
 			try {
-				this.sleep(4000);
+				this.sleep(DQR.conf.BJ_end_wait);
 			} catch (InterruptedException e) {
 				// TODO 自動生成された catch ブロック
 				e.printStackTrace();

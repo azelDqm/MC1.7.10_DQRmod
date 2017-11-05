@@ -1,13 +1,14 @@
 package dqr.entity.mobEntity.ai;
 
 import java.util.List;
-import java.util.Random;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.potion.Potion;
-import net.minecraft.util.MathHelper;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
+import dqr.DQR;
 import dqr.api.enums.EnumDqmMagic;
 import dqr.entity.mobEntity.DqmMobBase;
 
@@ -50,24 +51,41 @@ public class EntityAIMagicBuff extends EntityAIBase
         }
         */
 
-    	List list = field_151501_c.getEntitiesWithinAABBExcludingEntity(field_151500_b,
-    			field_151500_b.boundingBox.addCoord(field_151500_b.motionX, field_151500_b.motionY, field_151500_b.motionZ).expand(10.0D, 5.0D, 10.0D));
-
-        if (list != null && !list.isEmpty())
+        if(!this.field_151500_b.worldObj.isRemote)
         {
-        	for (int n = 0 ; n < list.size() ; n++)
-        	{
-        		Entity target = (Entity)list.get(n);
+            WorldServer worldserver = MinecraftServer.getServer().worldServers[0];
 
-        		if(target instanceof DqmMobBase)
-        		{
-        			if(!((DqmMobBase) target).isPotionActive(this.pot))
-        			{
-        				this.tagetMob = (DqmMobBase)target;
-        				return true;
-        			}
-        		}
-        	}
+            long setTime = worldserver.getWorldTime();
+
+            //if(DQR.debug == 4) System.out.println("shouldExecute(Time) : " + this.parentEntity.skillCoolTime + "(" + (this.parentEntity.skillCoolTime + 5) +  ") / " + setTime );
+            if(this.field_151500_b.skillCoolTimeHeal + DQR.func.xRandom(this.field_151500_b.skillCoolTimeHealMin, this.field_151500_b.skillCoolTimeHealMax) < setTime)
+            {
+            	if(!field_151500_b.isPotionActive(this.pot))
+            	{
+    				this.tagetMob = (DqmMobBase)field_151500_b;
+    				return true;
+            	}
+
+		    	List list = field_151501_c.getEntitiesWithinAABBExcludingEntity(field_151500_b,
+		    			field_151500_b.boundingBox.addCoord(field_151500_b.motionX, field_151500_b.motionY, field_151500_b.motionZ).expand(10.0D, 5.0D, 10.0D));
+
+		        if (list != null && !list.isEmpty())
+		        {
+		        	for (int n = 0 ; n < list.size() ; n++)
+		        	{
+		        		Entity target = (Entity)list.get(n);
+
+		        		if(target instanceof DqmMobBase)
+		        		{
+		        			if(!((DqmMobBase) target).isPotionActive(this.pot))
+		        			{
+		        				this.tagetMob = (DqmMobBase)target;
+		        				return true;
+		        			}
+		        		}
+		        	}
+		        }
+            }
         }
 
         return false;
@@ -87,6 +105,7 @@ public class EntityAIMagicBuff extends EntityAIBase
     /**
      * Returns whether an in-progress EntityAIBase should continue executing
      */
+    /*
     public boolean continueExecuting()
     {
     	Random rand = new Random();
@@ -98,6 +117,7 @@ public class EntityAIMagicBuff extends EntityAIBase
     		return true;
     	}
     }
+    */
 
     /**
      * Updates the task
@@ -120,9 +140,7 @@ public class EntityAIMagicBuff extends EntityAIBase
 
         if (this.field_75318_f >= 40)
         {
-        	field_151500_b.attackEntityWithBuff(this.field_151500_b, 0, this.pot, this.enumMagic, tag, this.tagetMob);
-            this.field_151500_b.getNavigator().clearPathEntity();
-            this.tagetMob = null;
+            //this.field_151500_b.getNavigator().clearPathEntity();
         }
         else
         {
@@ -133,27 +151,20 @@ public class EntityAIMagicBuff extends EntityAIBase
         {
         	this.field_151500_b.getLookHelper().setLookPositionWithEntity(this.tagetMob, 30.0F, 30.0F);
         }
-        float f;
 
+    	field_151500_b.attackEntityWithBuff(this.field_151500_b, 0, this.pot, this.enumMagic, tag, this.tagetMob);
 
-        if (d0 > (double)20.0F || !flag)
+        this.tagetMob = null;
+
+        if(!this.field_151500_b.worldObj.isRemote)
         {
-            return;
+            WorldServer worldserver = MinecraftServer.getServer().worldServers[0];
+
+            long setTime = worldserver.getWorldTime();
+
+
+            this.field_151500_b.skillCoolTimeHeal = setTime;
         }
-
-        f = MathHelper.sqrt_double(d0) / 5.0F;
-        float f1 = f;
-
-        if (f < 0.1F)
-        {
-            f1 = 0.1F;
-        }
-
-        if (f1 > 1.0F)
-        {
-            f1 = 1.0F;
-        }
-
         //field_151500_b.attackEntityWithBuff(this.field_151500_b, 0, this.pot, this.enumMagic, tag, this.tagetMob);
 
             //this.rangedAttackEntityHost.attackEntityWithRangedAttack(this.attackTarget, f1);

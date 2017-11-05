@@ -52,4 +52,20 @@ public class DQBuilders {
 	public static Item itemBuilderSekizouMasterdoragon;
 	public static Item itemBuilderSekizouRyuuou;
 	public static Item itemBuilderSekizouDarkRamia;
+
+	public static Item itemBuilderShopBukiya;
+	public static Item itemBuilderShopBank;
+	public static Item itemBuilderShopKaitoriya;
+	public static Item itemBuilderShopSyuuriya;
+
+	public static Item itemBuilderShopBukiyaW;
+	public static Item itemBuilderShopBankW;
+	public static Item itemBuilderShopKaitoriyaW;
+	public static Item itemBuilderShopSyuuriyaW;
+
+	public static Item itemBuilderDamaTW;
+	public static Item itemBuilderDamaSW;
+	public static Item itemBuilderDamaWW;
+
+	public static Item itemBuilderKaikosyo;
 }

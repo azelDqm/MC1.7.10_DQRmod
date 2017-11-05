@@ -118,7 +118,7 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
 
     private String playerName = null;
     private String playerUUID = null;
-
+    private int hardcoreInfo = 0;
 /*
     private int sampleInt = 0;
     private double sampleDouble = 0.0D;
@@ -147,7 +147,12 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
     @Override
     public void saveNBTData(NBTTagCompound compound) {
         NBTTagCompound nbt = new NBTTagCompound();
+        if(this.Job >= 32)
+        {
+        	this.Job = 0;
+        }
         nbt.setInteger("Job", this.Job);
+
         for(int cnt = 0; cnt < 32; cnt++)
         {
         	nbt.setInteger("JobLv_" + cnt, JobLv[cnt]);
@@ -380,7 +385,12 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
     public void loadNBTData(NBTTagCompound compound) {
         NBTTagCompound nbt = (NBTTagCompound)compound.getTag(EXT_PROP_NAME);
 
+
         this.Job = nbt.getInteger("Job");
+        if(this.Job >= 32)
+        {
+        	this.Job = 0;
+        }
         for(int cnt = 0; cnt < 32; cnt++)
         {
         	JobLv[cnt] = nbt.getInteger("JobLv_" + cnt);
@@ -1523,6 +1533,14 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
     }
     public void setPlayerUUID(String par1) {
         this.playerUUID = par1;
+    }
+
+
+    public int getHardcoreInfo() {
+        return hardcoreInfo;
+    }
+    public void setHardcoreInfo(int par1) {
+        this.hardcoreInfo = par1;
     }
     /*
     public int getSampleInt() {

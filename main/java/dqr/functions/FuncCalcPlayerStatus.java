@@ -227,7 +227,7 @@ public class FuncCalcPlayerStatus {
 		    		atk = atk + (int)(dqmSword.func_150931_i() * fixAptitude *  (perDam + 100) / 1000);
 		    	}else
 		    	{
-		    		atk = atk + (int)(dqmSword.func_150931_i());
+		    		atk = atk + (int)(dqmSword.func_150931_i() * fixAptitude);
 		    	}
 
 				//武器スキル

@@ -11,7 +11,10 @@ import dqr.api.Items.DQMagics;
 import dqr.api.enums.EnumDqmMagic;
 import dqr.api.potion.DQPotionMinus;
 import dqr.entity.magicEntity.magic.MagicEntity;
-import dqr.entity.magicEntity.magic.MagicEntityMera;
+import dqr.entity.magicEntity.magic.MagicEntityBegiragon;
+import dqr.entity.magicEntity.magic.MagicEntityBegirama;
+import dqr.entity.magicEntity.magic.MagicEntityGira;
+import dqr.entity.magicEntity.magic.MagicEntityGiragureido;
 import dqr.items.base.DqmItemMagicBase;
 import dqr.playerData.ExtendedPlayerProperties;
 
@@ -71,7 +74,7 @@ public class DqmItemMagicGira extends DqmItemMagicBase{
     			magic = new MagicEntity[3];
     			for(int cnt = 0;cnt < 3; cnt++)
     			{
-    				magic[cnt] = new MagicEntityMera(par2World, par3EntityPlayer, 1.5F, 1.0F, (float)(-1 + cnt), 0.0F, 0.0F);
+    				magic[cnt] = new MagicEntityGira(par2World, par3EntityPlayer, 1.5F, 1.0F, (float)(-1 + cnt), 0.0F, 0.0F);
     			}
     			/*
     	   		minusMP = 2;
@@ -85,7 +88,7 @@ public class DqmItemMagicGira extends DqmItemMagicBase{
     			magic = new MagicEntity[5];
     			for(int cnt = 0;cnt < 5; cnt++)
     			{
-    				magic[cnt] = new MagicEntityMera(par2World, par3EntityPlayer, 1.5F, 1.0F, (float)(-2 + cnt), 0.0F, 0.0F);
+    				magic[cnt] = new MagicEntityBegirama(par2World, par3EntityPlayer, 1.5F, 1.0F, (float)(-2 + cnt), 0.0F, 0.0F);
     			}
     			/*
     	   		minusMP = 5;
@@ -99,7 +102,7 @@ public class DqmItemMagicGira extends DqmItemMagicBase{
     			magic = new MagicEntity[7];
     			for(int cnt = 0;cnt < 7; cnt++)
     			{
-    				magic[cnt] = new MagicEntityMera(par2World, par3EntityPlayer, 1.5F, 1.0F, (float)(-3 + cnt), 0.0F, 0.0F);
+    				magic[cnt] = new MagicEntityBegiragon(par2World, par3EntityPlayer, 1.5F, 1.0F, (float)(-3 + cnt), 0.0F, 0.0F);
     			}
     			/*
     	   		minusMP = 10;
@@ -113,7 +116,7 @@ public class DqmItemMagicGira extends DqmItemMagicBase{
     			magic = new MagicEntity[9];
     			for(int cnt = 0;cnt < 9; cnt++)
     			{
-    				magic[cnt] = new MagicEntityMera(par2World, par3EntityPlayer, 1.5F, 1.0F, (float)(-4 + cnt), 0.0F, 0.0F);
+    				magic[cnt] = new MagicEntityGiragureido(par2World, par3EntityPlayer, 1.5F, 1.0F, (float)(-4 + cnt), 0.0F, 0.0F);
     			}
     			/*
     	   		minusMP = 18;
@@ -168,7 +171,6 @@ public class DqmItemMagicGira extends DqmItemMagicBase{
 		    				magic[cnt].setDamage(attackDam);
 		    	        	if (!par2World.isRemote)
 		    	        	{
-
 		    	        		par2World.spawnEntityInWorld(magic[cnt]);
 
 		    	        	}

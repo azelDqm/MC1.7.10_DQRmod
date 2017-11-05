@@ -33,33 +33,42 @@ public class WorldHandler {
 		int dim = event.world.provider.dimensionId;
 		String folder = event.world.provider.getSaveFolder();
 
-		if((DQR.conf.cfg_generateOverSpawnDimType == 0 && DQR.conf.cfg_generateOverSpawn.containsKey(dim)) ||
-		   (DQR.conf.cfg_generateOverSpawnDimType == 1 && DQR.conf.cfg_generateOverSpawnS.containsKey(folder)))
+		if(DQR.conf.SpawnRoomMode1 == 0)
 		{
-			// ８チャンク以内に追加構造物生成に適したチャンクがあるかを調べ、ある場合は生成する追加構造物の構成パーツを決定する
-			mapGenDungeon.func_151539_a(event.chunkProvider, event.world, event.chunkX, event.chunkZ, null);
-			//追加構造物の一部が このチャンク範囲に重複するかどうかを調べ、重複する場合は追加構造物のブロックをチャンク内に設置する
-			mapGenDungeon.generateStructuresInChunk(event.world, event.rand, event.chunkX, event.chunkZ);
+			if((DQR.conf.cfg_generateOverSpawnDimType == 0 && DQR.conf.cfg_generateOverSpawn.containsKey(dim)) ||
+			   (DQR.conf.cfg_generateOverSpawnDimType == 1 && DQR.conf.cfg_generateOverSpawnS.containsKey(folder)))
+			{
+				// ８チャンク以内に追加構造物生成に適したチャンクがあるかを調べ、ある場合は生成する追加構造物の構成パーツを決定する
+				mapGenDungeon.func_151539_a(event.chunkProvider, event.world, event.chunkX, event.chunkZ, null);
+				//追加構造物の一部が このチャンク範囲に重複するかどうかを調べ、重複する場合は追加構造物のブロックをチャンク内に設置する
+				mapGenDungeon.generateStructuresInChunk(event.world, event.rand, event.chunkX, event.chunkZ);
 
-			mapGenDungeon2.func_151539_a(event.chunkProvider, event.world, event.chunkX, event.chunkZ, null);
-			mapGenDungeon2.generateStructuresInChunk(event.world, event.rand, event.chunkX, event.chunkZ);
+				mapGenDungeon2.func_151539_a(event.chunkProvider, event.world, event.chunkX, event.chunkZ, null);
+				mapGenDungeon2.generateStructuresInChunk(event.world, event.rand, event.chunkX, event.chunkZ);
+			}
 		}
 
 		//if(event.world.provider.dimensionId == -1)
-		if((DQR.conf.cfg_generateNetherSpawnDimType == 0 && DQR.conf.cfg_generateNetherSpawn.containsKey(dim)) ||
-		   (DQR.conf.cfg_generateNetherSpawnDimType == 1 && DQR.conf.cfg_generateNetherSpawnS.containsKey(folder)))
+		if(DQR.conf.SpawnRoomMode2 == 0)
 		{
-			mapGenDungeon3.func_151539_a(event.chunkProvider, event.world, event.chunkX, event.chunkZ, null);
-			mapGenDungeon3.generateStructuresInChunk(event.world, event.rand, event.chunkX, event.chunkZ);
+			if((DQR.conf.cfg_generateNetherSpawnDimType == 0 && DQR.conf.cfg_generateNetherSpawn.containsKey(dim)) ||
+			   (DQR.conf.cfg_generateNetherSpawnDimType == 1 && DQR.conf.cfg_generateNetherSpawnS.containsKey(folder)))
+			{
+				mapGenDungeon3.func_151539_a(event.chunkProvider, event.world, event.chunkX, event.chunkZ, null);
+				mapGenDungeon3.generateStructuresInChunk(event.world, event.rand, event.chunkX, event.chunkZ);
 
+			}
 		}
 
 		//if(event.world.provider.dimensionId == 1)
-		if((DQR.conf.cfg_generateEndSpawnDimType == 0 && DQR.conf.cfg_generateEndSpawn.containsKey(dim)) ||
-		   (DQR.conf.cfg_generateEndSpawnDimType == 1 && DQR.conf.cfg_generateEndSpawnS.containsKey(folder)))
+		if(DQR.conf.SpawnRoomMode3 == 0)
 		{
-			mapGenDungeon4.func_151539_a(event.chunkProvider, event.world, event.chunkX, event.chunkZ, null);
-			mapGenDungeon4.generateStructuresInChunk(event.world, event.rand, event.chunkX, event.chunkZ);
+			if((DQR.conf.cfg_generateEndSpawnDimType == 0 && DQR.conf.cfg_generateEndSpawn.containsKey(dim)) ||
+			   (DQR.conf.cfg_generateEndSpawnDimType == 1 && DQR.conf.cfg_generateEndSpawnS.containsKey(folder)))
+			{
+				mapGenDungeon4.func_151539_a(event.chunkProvider, event.world, event.chunkX, event.chunkZ, null);
+				mapGenDungeon4.generateStructuresInChunk(event.world, event.rand, event.chunkX, event.chunkZ);
+			}
 		}
 	}
 
@@ -77,7 +86,46 @@ public class WorldHandler {
 	// ここで生成するなら要塞等を潰さないように注意
 	@SubscribeEvent
 	public void onPopulateChunkEvent(PopulateChunkEvent.Post event) {
+		int dim = event.world.provider.dimensionId;
+		String folder = event.world.provider.getSaveFolder();
 
+		if(DQR.conf.SpawnRoomMode1 != 0)
+		{
+			if((DQR.conf.cfg_generateOverSpawnDimType == 0 && DQR.conf.cfg_generateOverSpawn.containsKey(dim)) ||
+			   (DQR.conf.cfg_generateOverSpawnDimType == 1 && DQR.conf.cfg_generateOverSpawnS.containsKey(folder)))
+			{
+				// ８チャンク以内に追加構造物生成に適したチャンクがあるかを調べ、ある場合は生成する追加構造物の構成パーツを決定する
+				mapGenDungeon.func_151539_a(event.chunkProvider, event.world, event.chunkX, event.chunkZ, null);
+				//追加構造物の一部が このチャンク範囲に重複するかどうかを調べ、重複する場合は追加構造物のブロックをチャンク内に設置する
+				mapGenDungeon.generateStructuresInChunk(event.world, event.rand, event.chunkX, event.chunkZ);
+
+				mapGenDungeon2.func_151539_a(event.chunkProvider, event.world, event.chunkX, event.chunkZ, null);
+				mapGenDungeon2.generateStructuresInChunk(event.world, event.rand, event.chunkX, event.chunkZ);
+			}
+		}
+
+		//if(event.world.provider.dimensionId == -1)
+		if(DQR.conf.SpawnRoomMode2 != 0)
+		{
+			if((DQR.conf.cfg_generateNetherSpawnDimType == 0 && DQR.conf.cfg_generateNetherSpawn.containsKey(dim)) ||
+			   (DQR.conf.cfg_generateNetherSpawnDimType == 1 && DQR.conf.cfg_generateNetherSpawnS.containsKey(folder)))
+			{
+				mapGenDungeon3.func_151539_a(event.chunkProvider, event.world, event.chunkX, event.chunkZ, null);
+				mapGenDungeon3.generateStructuresInChunk(event.world, event.rand, event.chunkX, event.chunkZ);
+
+			}
+		}
+
+		//if(event.world.provider.dimensionId == 1)
+		if(DQR.conf.SpawnRoomMode3 != 0)
+		{
+			if((DQR.conf.cfg_generateEndSpawnDimType == 0 && DQR.conf.cfg_generateEndSpawn.containsKey(dim)) ||
+			   (DQR.conf.cfg_generateEndSpawnDimType == 1 && DQR.conf.cfg_generateEndSpawnS.containsKey(folder)))
+			{
+				mapGenDungeon4.func_151539_a(event.chunkProvider, event.world, event.chunkX, event.chunkZ, null);
+				mapGenDungeon4.generateStructuresInChunk(event.world, event.rand, event.chunkX, event.chunkZ);
+			}
+		}
 	}
 
 }

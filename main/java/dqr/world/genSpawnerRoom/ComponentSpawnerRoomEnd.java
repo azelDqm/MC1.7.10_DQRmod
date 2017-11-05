@@ -14,7 +14,6 @@ import net.minecraft.world.gen.structure.StructureComponent;
 import net.minecraftforge.common.DungeonHooks;
 import dqr.DQR;
 import dqr.api.Blocks.DQBlocks;
-import dqr.api.Blocks.DQChests;
 import dqr.blocks.mobSpawner.tileEntity.DqmTileEntityMobSpawner;
 
 public class ComponentSpawnerRoomEnd extends StructureComponent {
@@ -100,6 +99,23 @@ public class ComponentSpawnerRoomEnd extends StructureComponent {
 			return false;
 		}
 
+		if(DQR.conf.SpawnRoomMode3 == 2)
+		{
+			for(int cntX = -1; cntX <= this.xWidth; cntX++)
+			{
+				for(int cntZ = -1; cntZ <= this.zWidth; cntZ++)
+				{
+					for(int cntY = -1; cntY <= 6; cntY++)
+					{
+						Block block = world.getBlock(this.xPos + cntX, this.yPos + cntY, this.zPos + cntZ);
+						if(block == Blocks.end_portal_frame || block == Blocks.end_portal || block == Blocks.chest)
+						{
+							return false;
+						}
+					}
+				}
+			}
+		}
 		/*
 		if(world.isAirBlock(this.xPos, this.yPos + 6, this.zPos + this.zWidth))
 		{
@@ -271,17 +287,18 @@ public class ComponentSpawnerRoomEnd extends StructureComponent {
 		        	offY = 1 + this.yPos;
 		        	offZ = offZ + this.zPos;
 
-		        	if(world.getTileEntity(offX, offY, offZ) == null)
+		        	if(world.getTileEntity(offX, offY, offZ) == null && world.isAirBlock(offX, offY, offZ) && DQR.func.isNoChestAround(world, offX, offY, offZ))
 		        	{
-			        	world.setBlock(offX, offY, offZ, DQChests.DqmChest, 0, 2);
+			        	world.setBlock(offX, offY, offZ, Blocks.chest, 12, 2);
 			            TileEntityChest tileentitychest = (TileEntityChest)world.getTileEntity(offX, offY, offZ);
 
 			            if (tileentitychest != null)
 			            {
 			            	DQR.randomItem.generateChestContentsRank4(random, tileentitychest);
-
+			            	//tileentitychest.
 			            	setChest = true;
 			            }
+			            world.setBlockMetadataWithNotify(offX, offY, offZ,12, 2);
 		        	}
 	        	}
 	    	}
@@ -316,4 +333,6 @@ public class ComponentSpawnerRoomEnd extends StructureComponent {
     {
         return DungeonHooks.getRandomDungeonMob(p_76543_1_);
     }
+
+
 }

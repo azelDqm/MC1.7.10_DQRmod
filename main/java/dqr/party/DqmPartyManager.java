@@ -455,17 +455,20 @@ public class DqmPartyManager {
         {
         	 Entity s = (Entity)iterator.next();
           	Entity er = minecraftserver.getConfigurationManager().func_152612_a(partySet.get(s));
-        	 if(er.getCommandSenderName().equalsIgnoreCase(reader.getCommandSenderName()))
-        	 {
-        		 if(s instanceof EntityPlayer)
-        		 {
-        			 EntityPlayer er2 = minecraftserver.getConfigurationManager().func_152612_a(s.getCommandSenderName());
-        			 if(er2 != null)
-        			 {
-        				 er2.addChatMessage(new ChatComponentTranslation(keys,new Object[] {reader.getCommandSenderName()}));
-        			 }
-        		 }
-        	 }
+          	if(er != null && reader != null)
+          	{
+	        	 if(er.getCommandSenderName().equalsIgnoreCase(reader.getCommandSenderName()))
+	        	 {
+	        		 if(s instanceof EntityPlayer)
+	        		 {
+	        			 EntityPlayer er2 = minecraftserver.getConfigurationManager().func_152612_a(s.getCommandSenderName());
+	        			 if(er2 != null)
+	        			 {
+	        				 er2.addChatMessage(new ChatComponentTranslation(keys,new Object[] {reader.getCommandSenderName()}));
+	        			 }
+	        		 }
+	        	 }
+          	}
         }
 	}
 }

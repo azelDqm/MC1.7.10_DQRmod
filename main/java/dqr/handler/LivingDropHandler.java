@@ -405,6 +405,11 @@ public class LivingDropHandler {
 			}
 		}
 
+		if(event.entityLiving instanceof DqmMobBaseBoss && rand.nextInt(20) == 0)
+		{
+			event.entityLiving.dropItem(DQEmblems.itemEmbHero, 1);
+		}
+
 		//転生からのアクセサリ
 		if(event.entityLiving instanceof DqmMobBaseTensei && rand.nextInt(500) == 0)
 		{

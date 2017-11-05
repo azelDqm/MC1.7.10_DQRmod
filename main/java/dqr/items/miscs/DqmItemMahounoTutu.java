@@ -308,16 +308,18 @@ public class DqmItemMahounoTutu extends DqmItemMiscBase{
 	        }
 	        */
 
-	        if(pet.chestOn)
-	        {
+	        //if(pet.chestOn)
+	        //{
 	        	if(p_70037_1_.hasKey("sampleItemStack"))
 	        	{
 	        		pet.setChestItem(ItemStack.loadItemStackFromNBT(p_70037_1_.getCompoundTag("sampleItemStack")));
+	        		pet.chestOn = true;
 	        	}else
 	        	{
 	        		pet.setChestItem(null);
+	        		pet.chestOn = false;
 	        	}
-	        }
+	        //}
 	        /*
 	        if(pet.chestOn)
 	        {

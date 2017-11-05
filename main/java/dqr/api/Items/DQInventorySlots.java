@@ -11,4 +11,7 @@ public class DQInventorySlots {
 	public static Item itemSlotUdewa;
 	public static Item itemSlotYubiwa;
 	public static Item itemSlotFukuro;
+
+	public static Item itemSlotPetYoroi;
+	public static Item itemSlotPetBuki;
 }

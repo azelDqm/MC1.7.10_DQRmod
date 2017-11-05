@@ -2201,6 +2201,30 @@ public class DqrItemRegister {
 
     	GameRegistry.registerItem(DQBuilders.itemBuilderCasino4, "itemBuilderCasino4");
     	GameRegistry.registerItem(DQBuilders.itemBuilderCasino5, "itemBuilderCasino5");
+
+    	GameRegistry.registerBlock(DQPlants.BlockWaterFlash, "BlockWaterFlash");
+
+    	GameRegistry.registerItem(DQInventorySlots.itemSlotPetBuki, "ItemSlotPetBuki");
+    	GameRegistry.registerItem(DQInventorySlots.itemSlotPetYoroi, "ItemSlotPetYoroi");
+
+    	GameRegistry.registerItem(DQBuilders.itemBuilderShopBukiya, "itemBuilderShopBukiya");
+    	GameRegistry.registerItem(DQBuilders.itemBuilderShopBank, "itemBuilderShopBank");
+    	GameRegistry.registerItem(DQBuilders.itemBuilderShopSyuuriya, "itemBuilderShopSyuuriya");
+    	GameRegistry.registerItem(DQBuilders.itemBuilderShopKaitoriya, "itemBuilderShopKaitoriya");
+
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockSyuuriya, DQItemBlocks.itemBlockSyuuriya.getClass(), "DqmBlockSyuuriya");
+    	GameRegistry.registerBlock(DQDecorates.DqmBlockBank, DQItemBlocks.itemBlockBank.getClass(), "DqmBlockBank");
+
+    	GameRegistry.registerItem(DQBuilders.itemBuilderShopBankW, "itemBuilderShopBankW");
+    	GameRegistry.registerItem(DQBuilders.itemBuilderShopBukiyaW, "itemBuilderShopBukiyaW");
+    	GameRegistry.registerItem(DQBuilders.itemBuilderShopSyuuriyaW, "itemBuilderShopSyuuriyaW");
+    	GameRegistry.registerItem(DQBuilders.itemBuilderShopKaitoriyaW, "itemBuilderShopKaitoriyaW");
+
+    	GameRegistry.registerItem(DQBuilders.itemBuilderDamaTW, "itemBuilderDamaTW");
+    	GameRegistry.registerItem(DQBuilders.itemBuilderDamaSW, "itemBuilderDamaSW");
+    	GameRegistry.registerItem(DQBuilders.itemBuilderDamaWW, "itemBuilderDamaWW");
+
+    	GameRegistry.registerItem(DQBuilders.itemBuilderKaikosyo, "itemBuilderKaikosyo");
 	}
 }
 

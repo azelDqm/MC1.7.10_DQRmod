@@ -24,6 +24,8 @@ import dqr.blocks.DqItemBlock;
 import dqr.blocks.DqmBlockRenderType;
 import dqr.command.DqrCom;
 import dqr.command.DqrComDebug;
+import dqr.command.DqrComDebug2;
+import dqr.command.DqrComDqredit;
 import dqr.command.DqrComParty;
 import dqr.command.DqrComPet;
 import dqr.creativeTabs.DqmCreativeTabs;
@@ -50,6 +52,7 @@ import dqr.enums.DqmEnumCreatureType;
 import dqr.enums.DqmEnumToolMaterial;
 import dqr.functions.FuncAddGrowthBlock;
 import dqr.functions.FuncAddWoodBlocks;
+import dqr.functions.FuncBonusChestExtension;
 import dqr.functions.FuncBugFix;
 import dqr.functions.FuncCalcDamage;
 import dqr.functions.FuncCalcMobParam;
@@ -62,15 +65,18 @@ import dqr.functions.FuncCommon;
 import dqr.functions.FuncDamageMessage;
 import dqr.functions.FuncEnchantExtension;
 import dqr.functions.FuncEnderDragonExtension;
+import dqr.functions.FuncEntityLivingExtension;
 import dqr.functions.FuncEntityRenderExtension;
 import dqr.functions.FuncFarmlandExtension;
 import dqr.functions.FuncFishHookExtension;
 import dqr.functions.FuncPetOperation;
 import dqr.gui.GuiHandler;
 import dqr.handler.BagSlotClickHandler;
+import dqr.handler.ChestGenHandler;
 import dqr.handler.ChunkEventHandler;
 import dqr.handler.CraftingEventHandler;
 import dqr.handler.DamageHandler;
+import dqr.handler.DebugHandler;
 import dqr.handler.EnderDragonHandler;
 import dqr.handler.EntityEventHandler;
 import dqr.handler.FishHookHandler;
@@ -99,7 +105,7 @@ import dqr.potion.DqmPotion;
 import dqr.world.DqmStructureRegister;
 import dqr.world.DqmVillageRegister;
 
-@Mod(modid = "DQMIIINext", name = "DQRespect", version = "0.9.3", useMetadata = true, dependencies = "after:PotionExtension")
+@Mod(modid = "DQMIIINext", name = "DQRespect", version = "0.9.3.6", useMetadata = true, dependencies = "after:PotionExtension")
 public class DQR {
 
 	@SidedProxy(clientSide = "dqr.ClientProxy", serverSide = "dqr.CommonProxy")
@@ -112,6 +118,7 @@ public class DQR {
 
 	public static FuncCalcMobParam funcMob;
 	public static DQRconfigs conf;
+	public static DQRconfigs2 conf2;
 
 	public static FuncCalcPlayerStatus calcPlayerStatus;
 	public static FuncCalcPetStatus calcPetStatus;
@@ -120,11 +127,13 @@ public class DQR {
 	public static FuncDamageMessage damMessage;
 	public static FuncCalcDamage calcDamage;
 	public static FuncEnchantExtension enchaHook;
+	public static FuncBonusChestExtension bonuschestHook;
 	public static FuncCheckCanSpawn checkCanSpawn;
 	public static FuncCheckBed checkBed;
 	public static FuncBiomeBlockTable BiomeBlock;
 	public static FuncSpecialUseItemTable spUseItems;
 	public static FuncWeaponBoosterTable weaponBooster;
+
 	public static FuncCommon func;
 	public static DQPotionFunc potionFunc;
 	public static DqmPartyManager partyManager;
@@ -183,6 +192,7 @@ public class DQR {
 	public static FuncFarmlandExtension farmlandHook;
 	public static FuncFishHookExtension fishingHookHook;
 	public static FuncEnderDragonExtension enderdragonHook;
+	public static FuncEntityLivingExtension entityLivingHook;
 
 	public static final ArrayList<IModule> modules = new ArrayList<IModule>();
 
@@ -192,6 +202,7 @@ public class DQR {
 	public void preInit(FMLPreInitializationEvent event) {
 		PacketHandler.init();
 		conf = new DQRconfigs();
+		conf2 = new DQRconfigs2();
 
 		dqmLog = new String[8];
 		damageSource = new DqmDamageSource();
@@ -297,6 +308,8 @@ public class DQR {
 		farmlandHook = new FuncFarmlandExtension();
 		fishingHookHook = new FuncFishHookExtension();
 		enderdragonHook = new FuncEnderDragonExtension();
+		bonuschestHook = new FuncBonusChestExtension();
+		entityLivingHook = new FuncEntityLivingExtension();
 
 		if(this.conf.partyEnable != 0)
 		{
@@ -339,6 +352,11 @@ public class DQR {
 		MinecraftForge.EVENT_BUS.register(new FishHookHandler());
 		MinecraftForge.EVENT_BUS.register(new EnderDragonHandler());
 		MinecraftForge.EVENT_BUS.register(new BagSlotClickHandler());
+		MinecraftForge.EVENT_BUS.register(new ChestGenHandler());
+		if(debug != 0)
+		{
+			MinecraftForge.EVENT_BUS.register(new DebugHandler());
+		}
 
 		//MinecraftForge.EVENT_BUS.register(new PartyEventHandler());
 
@@ -386,6 +404,8 @@ public class DQR {
 		if(debug != 0)
 		{
 			event.registerServerCommand(new DqrComDebug());
+			event.registerServerCommand(new DqrComDebug2());
+			event.registerServerCommand(new DqrComDqredit());
 		}
 		if(this.conf.partyEnable != 0)
 		{

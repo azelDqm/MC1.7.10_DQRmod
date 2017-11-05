@@ -95,6 +95,23 @@ public class ComponentSpawnerRoomNether extends StructureComponent {
 			return false;
 		}
 
+		if(DQR.conf.SpawnRoomMode2 == 2)
+		{
+			for(int cntX = -1; cntX <= this.xWidth; cntX++)
+			{
+				for(int cntZ = -1; cntZ <= this.zWidth; cntZ++)
+				{
+					for(int cntY = -1; cntY <= 6; cntY++)
+					{
+						Block block = world.getBlock(this.xPos + cntX, this.yPos + cntY, this.zPos + cntZ);
+						if(block == Blocks.end_portal_frame || block == Blocks.end_portal || block == Blocks.chest)
+						{
+							return false;
+						}
+					}
+				}
+			}
+		}
 
 		int dam = 0;
 		if(world.isAirBlock(this.xPos, this.yPos + 5, this.zPos)) dam++;
@@ -294,7 +311,7 @@ public class ComponentSpawnerRoomNether extends StructureComponent {
 		        	offY = 1 + this.yPos;
 		        	offZ = offZ + this.zPos;
 
-		        	if(world.getTileEntity(offX, offY, offZ) == null)
+		        	if(world.getTileEntity(offX, offY, offZ) == null && DQR.func.isNoChestAround(world, offX, offY, offZ))
 		        	{
 			        	world.setBlock(offX, offY, offZ, Blocks.chest, 0, 2);
 			            TileEntityChest tileentitychest = (TileEntityChest)world.getTileEntity(offX, offY, offZ);

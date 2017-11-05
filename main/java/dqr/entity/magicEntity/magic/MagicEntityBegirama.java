@@ -30,7 +30,9 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import dqr.DQR;
 import dqr.api.potion.DQPotionPlus;
+import dqr.entity.petEntity.DqmPetBase;
 
 /*
  * 発射されるエンティティのクラス。
@@ -341,6 +343,13 @@ public class MagicEntityBegirama extends MagicEntity implements IProjectile{
 		                        	//対象が撃った本人の場合も当たらない
 		                        	entityList.remove(n);
 		                        }
+
+		                    }else if(target instanceof DqmPetBase)
+		                    {
+		                    	if(!(DQR.func.canAttackPetMonster((DqmPetBase)target, ((EntityPlayer)this.shootingEntity))))
+		                    	{
+		                    		entityList.remove(n);
+		                    	}
 		                    }
 		                    else if (target instanceof EntityTameable ||
 		                                 target instanceof EntityHorse)
@@ -382,7 +391,7 @@ public class MagicEntityBegirama extends MagicEntity implements IProjectile{
 
                         //別メソッドでダメージソースを確認
                         damagesource = this.thisDamageSource(this.shootingEntity);
-
+                        damagesource.setDamageBypassesArmor();
                         //バニラ矢と同様、このエンティティが燃えているなら対象に着火することも出来る
                         if (this.isBurning() && !(target.entityHit instanceof EntityEnderman))
                         {

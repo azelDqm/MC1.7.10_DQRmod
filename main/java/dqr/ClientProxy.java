@@ -8,10 +8,13 @@ import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.MinecraftForge;
 import tconstruct.client.tabs.InventoryTabVanilla;
 import tconstruct.client.tabs.TabRegistry;
+import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.Loader;
 import dqr.addons.mceconomy2.DqrEntityNPCBankMP;
 import dqr.addons.mceconomy2.DqrRenderNPCBankMP;
+import dqr.addons.mceconomy2.DqrTileEntityBankMP;
+import dqr.addons.mceconomy2.DqrTileEntityRenderBankMP;
 import dqr.api.Items.DQWeapons;
 import dqr.blocks.BlockRenderingRegister;
 import dqr.entity.magicEntity.MagicRegister;
@@ -162,6 +165,7 @@ public class ClientProxy extends CommonProxy
 	public void registerMCEconomy2Addon()
 	{
 		RenderingRegistry.registerEntityRenderingHandler(DqrEntityNPCBankMP.class, new DqrRenderNPCBankMP());
+		ClientRegistry.bindTileEntitySpecialRenderer(DqrTileEntityBankMP.class, new DqrTileEntityRenderBankMP());
 	}
 
 

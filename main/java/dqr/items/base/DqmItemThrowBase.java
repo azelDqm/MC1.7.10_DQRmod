@@ -62,6 +62,7 @@ public class DqmItemThrowBase extends Item  {
         	if(DQR.conf.permUseBakudanisi == 2 || (DQR.conf.permUseBakudanisi == 1 && flg))
         	{
         		throwEntity = new ThrowItemEntityBakudanisi(p_77659_2_, p_77659_3_);
+        		((ThrowItemEntityBakudanisi)throwEntity).setShootingEntity(p_77659_3_);
         	}
         }else if(this == DQMiscs.itemSeisui)
         {

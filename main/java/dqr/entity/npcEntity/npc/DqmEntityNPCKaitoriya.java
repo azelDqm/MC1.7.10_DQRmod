@@ -122,6 +122,11 @@ public class DqmEntityNPCKaitoriya extends DqmNPCBase
         }
         */
 
+        if(this.getTameMode() != 0)
+        {
+        	return false;
+        }
+
         return true;
     }
 

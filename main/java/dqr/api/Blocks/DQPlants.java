@@ -38,4 +38,5 @@ public class DQPlants {
 	public static Block BlockHoujyouDirt;
 	public static Block BlockWaterBlock;
 	public static Block BlockWaterBlockLight;
+	public static Block BlockWaterFlash;
 }

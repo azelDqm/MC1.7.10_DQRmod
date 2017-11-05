@@ -270,6 +270,11 @@ public class FuncWeaponAptitude {
 
     }
 
+    public int  getWAptitude(int jobId, int weaponType)
+    {
+    	return this.getWAptitude(jobId, weaponType, null);
+    }
+
     public int getWAptitude(int jobId, int weaponType, EntityPlayer ep)
     {
     	int[] table = WAptitudeNull;
@@ -320,7 +325,11 @@ public class FuncWeaponAptitude {
     	}
 
     	//全職使用可能スキルがある場合
-    	int allPerm = ExtendedPlayerProperties3.get(ep).getWeaponSkillPermission(weaponType, 9);
+    	int allPerm = 0;
+    	if(ep != null)
+    	{
+    		allPerm = ExtendedPlayerProperties3.get(ep).getWeaponSkillPermission(weaponType, 9);
+    	}
 
     	if(allPerm != 0 && allPerm >  table[jobId])
     	{

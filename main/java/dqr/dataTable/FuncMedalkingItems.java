@@ -197,6 +197,10 @@ public class FuncMedalkingItems {
 		medalItem.put(DQBuilders.itemBuilderDama , 500);
 		medalItem.put(DQBuilders.itemBuilderDamaS , 500);
 		medalItem.put(DQBuilders.itemBuilderDamaW , 500);
+		medalItem.put(DQBuilders.itemBuilderShopSyuuriya , 350);
+		medalItem.put(DQBuilders.itemBuilderShopBank , 350);
+		medalItem.put(DQBuilders.itemBuilderShopKaitoriya , 350);
+		medalItem.put(DQBuilders.itemBuilderShopBukiya , 350);
 
 		//メダル
 		medalMedal.put(DQMiscs.itemLittlemedal , 1);

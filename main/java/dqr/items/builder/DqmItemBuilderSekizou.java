@@ -54,12 +54,6 @@ public class DqmItemBuilderSekizou extends DqmItemBuilderBase{
 				par2EntityPlayer.worldObj.playSoundAtEntity(par2EntityPlayer, "dqr:player.pi", 1.0F, 1.0F);
 				return false;
 	        }
-	        if(par5 < 42)
-	        {
-				par2EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.Builder.messages.lowHeight.txt",new Object[] {}));
-				par2EntityPlayer.worldObj.playSoundAtEntity(par2EntityPlayer, "dqr:player.pi", 1.0F, 1.0F);
-				return false;
-	        }
 		}
 
         if (par7 == 0)

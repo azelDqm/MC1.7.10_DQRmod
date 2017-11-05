@@ -1,16 +1,19 @@
 package dqr.entity.throwingEntity.throwItem;
 
 import net.minecraft.block.BlockChest;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
 import dqr.DQR;
+import dqr.api.event.DqrExplosionEvent;
 
 public class ThrowItemEntityBakudanisi extends ThrowItemEntity
 {
     private static final String __OBFID = "CL_00001724";
-
+    private Entity shootingEntity;
     public ThrowItemEntityBakudanisi(World p_i1779_1_)
     {
         super(p_i1779_1_);
@@ -89,8 +92,21 @@ public class ThrowItemEntityBakudanisi extends ThrowItemEntity
                 }
         	}
 
-        	this.worldObj.createExplosion(this, this.posX, this.posY, this.posZ, 3.0F, true);
+        	DqrExplosionEvent event = new DqrExplosionEvent(this.worldObj, shootingEntity, this, this.posX, this.posY, this.posZ, 3.0F);
+			event.setCanceled(false);
+			event.setExplode(true);
+			MinecraftForge.EVENT_BUS.post(event);
+			if(!event.isCanceled())
+			{
+				this.worldObj.createExplosion(this, this.posX, this.posY, this.posZ, 3.0F, event.isExplode());
+			}
+
             this.setDead();
         }
+    }
+
+    public void setShootingEntity(Entity par1)
+    {
+    	this.shootingEntity = par1;
     }
 }

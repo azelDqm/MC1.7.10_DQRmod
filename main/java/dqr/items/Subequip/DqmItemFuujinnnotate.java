@@ -33,6 +33,20 @@ public class DqmItemFuujinnnotate extends DqmItemAccessoryBase{
 			return par1ItemStack;
 		}
 
+		if(par1ItemStack.getItemDamage() + (this.getMaxDamage() / 20) > this.getMaxDamage())
+		{
+	  		par3EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.subequipUse.noDamage.txt",new Object[] {}));
+    		par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.pi", 1.0F, 1.0F);
+    		//System.out.println("wk2 :");
+			return par1ItemStack;
+		}else if(par1ItemStack.getItemDamage() >= (this.getMaxDamage() / 10 * 9))
+		{
+	  		par3EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.subequipUse.noDamage.txt",new Object[] {}));
+    		par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.pi", 1.0F, 1.0F);
+    		//System.out.println("wk3 :");
+			return par1ItemStack;
+		}
+
 		if(par3EntityPlayer.isSneaking())
     	{
 			if(!par2World.isRemote)

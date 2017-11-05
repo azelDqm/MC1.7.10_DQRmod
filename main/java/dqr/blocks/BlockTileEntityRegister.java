@@ -801,5 +801,8 @@ public class BlockTileEntityRegister {
 		GameRegistry.registerTileEntity(DqmTileEntitySekizouMasterdoragon.class, "dqmTileEntitySekizouMasterdoragon");
 		GameRegistry.registerTileEntity(DqmTileEntitySekizouRyuuou.class, "dqmTileEntitySekizouRyuuou");
 		GameRegistry.registerTileEntity(DqmTileEntitySekizouDarkRamia.class, "dqmTileEntitySekizouDarkRamia");
+
+		GameRegistry.registerTileEntity(DqmTileEntitySyuuriya.class, "dqmTileEntitySyuriya");
+		GameRegistry.registerTileEntity(DqmTileEntityBank.class, "dqmTileEntityBank");
 	}
 }

@@ -2,7 +2,6 @@ package dqr.handler;
 
 import java.util.Random;
 
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -14,6 +13,7 @@ import dqr.api.event.DqrEntityFishHookEvent;
 
 public class FishHookHandler {
 
+	/*
 	@SubscribeEvent
 	public void onEntityFishHookEvent3(DqrEntityFishHookEvent.hookDqrFunc_146033_f event)
 	{
@@ -23,22 +23,27 @@ public class FishHookHandler {
 		event.setHitItem(setItem);
 
 	}
+	*/
 
+	/*
 	@SubscribeEvent
 	public void onEntityFishHookEvent(DqrEntityFishHookEvent.hookGetRandomFishable event)
 	{
-		if(DQR.conf.fishingMode == 1)
+		if(DQR.conf.fishingMode == 2)
 		{
 			ItemStack setItem = getRandomItem(Items.fishing_rod);
 			event.setHitItem(setItem);
 		}
 	}
+	*/
 
 	@SubscribeEvent
-	public void onEntityFishHookEvent2(DqrEntityFishHookEvent.hookFunc_146033_f event)
+	public void onEntityFishHookEvent2(DqrEntityFishHookEvent.hookDqrFunc_146033_f event)
 	{
-		if(DQR.conf.fishingMode == 2)
+		//System.out.println("root2");
+		if(DQR.conf.fishingMode != 0)
 		{
+			//System.out.println("root1");
 			ItemStack setItem = getRandomItem(event.rodType);
 			event.setHitItem(setItem);
 		}

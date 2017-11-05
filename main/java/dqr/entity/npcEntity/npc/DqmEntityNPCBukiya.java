@@ -145,6 +145,11 @@ public class DqmEntityNPCBukiya extends DqmNPCBase
         }
         */
 
+        if(this.getTameMode() != 0)
+        {
+        	return false;
+        }
+
         return true;
     }
 

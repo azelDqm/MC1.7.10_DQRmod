@@ -17,6 +17,7 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
 import dqr.DQR;
 import dqr.PacketHandler;
 import dqr.api.enums.EnumColor;
@@ -47,6 +48,10 @@ public class DqmItemMagicRuraSinC extends DqmItemMagicBase{
      */
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
+		if(DQR.conf.enableRuraSinC == 0)
+		{
+			return par1ItemStack;
+		}
 
 		PotionEffect pe;
 		pe = par3EntityPlayer.getActivePotionEffect(DQPotionMinus.debuffMahoton);
@@ -232,6 +237,7 @@ public class DqmItemMagicRuraSinC extends DqmItemMagicBase{
 					    															  target,
 			    		                											  par1ItemStack,
 					    															  setX, setY, setZ);
+			    		                		MinecraftForge.EVENT_BUS.post(event);
 		    		                		}
 		    		                	}
 		    		                }

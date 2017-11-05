@@ -87,6 +87,24 @@ public class ComponentSpawnerRoomOver extends StructureComponent {
 			return false;
 		}
 
+		if(DQR.conf.SpawnRoomMode1 == 2)
+		{
+			for(int cntX = -1; cntX <= this.xWidth; cntX++)
+			{
+				for(int cntZ = -1; cntZ <= this.zWidth; cntZ++)
+				{
+					for(int cntY = -1; cntY <= 6; cntY++)
+					{
+						Block block = world.getBlock(this.xPos + cntX, this.yPos + cntY, this.zPos + cntZ);
+						if(block == Blocks.end_portal_frame || block == Blocks.end_portal || block == Blocks.chest)
+						{
+							return false;
+						}
+					}
+				}
+			}
+		}
+
 		if(this.yPos < 50)
 		{
 			int dam = 0;
@@ -324,7 +342,7 @@ public class ComponentSpawnerRoomOver extends StructureComponent {
 		        	offY = 1 + this.yPos;
 		        	offZ = offZ + this.zPos;
 
-		        	if(world.isAirBlock(offX, offY, offZ))
+		        	if(world.isAirBlock(offX, offY, offZ) && DQR.func.isNoChestAround(world, offX, offY, offZ))
 		        	{
 			        	world.setBlock(offX, offY, offZ, Blocks.chest, 0, 2);
 			        	if(world.getTileEntity(offX, offY, offZ) instanceof TileEntityChest)

@@ -295,7 +295,7 @@ public class FuncCalcDamage {
 						//System.out.println("TEST");
 						return -1.0F;
 					}
-					evb.hurtResistantTime = 0;
+					//evb.hurtResistantTime = 0;
 				}else if(handItem == DQWeapons.itemAkumanotume)
 				{
 					if(rand.nextInt(8) == 0)
@@ -1874,6 +1874,10 @@ public class FuncCalcDamage {
 
 	public float applyDamageResistMagic2(float par1, Entity evb, DamageSource source)
 	{
+		if(!(evb instanceof DqmMobBase) && !(evb instanceof DqmPetBase))
+		{
+			return 1.0f;
+		}
 		//成功率耐性
 		float ret = par1;
 		String mobName = null;

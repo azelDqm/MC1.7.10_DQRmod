@@ -142,6 +142,10 @@ public class DQRconfigs {
 	public static int SpawnRoomRate2 = 0;
 	public static int SpawnRoomRate3 = 0;
 
+	public static int SpawnRoomMode1 = 1;
+	public static int SpawnRoomMode2 = 1;
+	public static int SpawnRoomMode3 = 1;
+
 	public static int[] RanalutaStep;
 
     public static Configuration cfg_core;
@@ -152,6 +156,7 @@ public class DQRconfigs {
     public static Configuration cfg_option;
     public static Configuration cfg_magictool;
     public static Configuration cfg_Structure;
+    public static Configuration cfg_Casino;
 
 
     public static int magicSpMegante = 1;
@@ -172,6 +177,8 @@ public class DQRconfigs {
 
     public static int recalcLvStatus1 = 1;
     public static int recalcMP1 = 1;
+
+    public static int bug_magicCoolTimeFix = 1;
 
     public static int cfg_gen_Genkotu = 1;
     public static String[] cfg_gen_Genkotu_type = new String[]{"0"};
@@ -444,7 +451,7 @@ public class DQRconfigs {
     public static int fukuroLimitTagCount = 15;
     public static int chestLimitTagCount = 15;
 
-
+    public static int bonusChestEnable = 1;
     public static String[] fukuroRejectItems = new String[]
     		{
 		    	"DQMIIINext:ItemMahounoTutu11",
@@ -460,6 +467,46 @@ public class DQRconfigs {
 
     public static int fishingMode = 1;
 
+	public static int BJ_deal_wait = 300;
+	public static int BJ_hit_wait = 200;
+	public static int BJ_dealer_wait = 750;
+	public static int BJ_end_wait = 2000;
+
+	public static int PK_firstHand_wait = 150;
+	public static int PK_change = 200;
+	public static int PK_end_wait = 2000;
+
+	public static int CCR_cpuDice_wait = 800;
+	public static int CCR_cpuCheck_wait = 1200;
+	public static int CCR_end_wait = 1500;
+	public static int CCR_result_wait = 150;
+	public static int CCR_turnChange_wait = 600;
+	public static int CCR_turnStart_wait = 600;
+
+	public static double MBG_highSpeed = 1;
+	public static int offlinePlayerPetAttack = 0;
+
+	public static int canDespawnBoss = 1;
+	public static int canDespawnTENSEI = 1;
+	public static int canDespawnSP = 1;
+	public static int canDespawnMetal = 1;
+
+	public static int dqrHardcore = 0;
+
+	public static int enableRura = 1;
+	public static int enableRura2 = 1;
+	public static int enableRuraC = 1;
+	public static int enableKimera = 1;
+	public static int enableKimera2 = 1;
+	public static int enableKimeraC = 1;
+	public static int enableRuraSin = 1;
+	public static int enableRuraSin2 = 1;
+	public static int enableRuraSinC = 1;
+
+	public static int Kimera_CordSet = 2;
+	public static int Rura_CordSet = 2;
+	public static int RuraSin_CordSet = 2;
+
     public DQRconfigs()
 	{
         cfg_core = new Configuration(new File(DQR.proxy.getDir(), "config/DQMIIINext_Core.cfg"));
@@ -470,6 +517,7 @@ public class DQRconfigs {
         cfg_option = new Configuration(new File(DQR.proxy.getDir(), "config/DQMIIINext/DQMIIINext_Option.cfg"));
         cfg_magictool = new Configuration(new File(DQR.proxy.getDir(), "config/DQMIIINext/DQMIIINext_MagicTool.cfg"));
         cfg_Structure = new Configuration(new File(DQR.proxy.getDir(), "config/DQMIIINext/DQMIIINext_Structure.cfg"));
+        cfg_Casino = new Configuration(new File(DQR.proxy.getDir(), "config/DQMIIINext/DQMIIINext_Casino.cfg"));
         //cfg_Dim = new Configuration(new File(DQR.proxy.getDir(), "config/DQRⅢNext/DQRⅢNext_Dimension.cfg"));
 
         getConfigCore(cfg_core);
@@ -480,6 +528,7 @@ public class DQRconfigs {
         getConfigOption(cfg_option);
         getConfigMagicTool(cfg_magictool);
         getConfigStructure(cfg_Structure);
+        getConfigCasino(cfg_Casino);
 
 	}
 
@@ -608,10 +657,39 @@ public class DQRconfigs {
 		//config.setCategoryComment("MagicTool_Farm settings", "");
 	}
 
+
+	public void getConfigCasino(Configuration config)
+	{
+		config.load();
+		config.setCategoryComment("BlackJack wait settings", "value is n/1000 sec");
+		BJ_deal_wait = config.get("BlackJack wait settings","Deal", BJ_deal_wait).getInt();
+		BJ_hit_wait = config.get("BlackJack wait settings","Hit", BJ_hit_wait).getInt();
+		BJ_dealer_wait = config.get("BlackJack wait settings","Dealer turn", BJ_dealer_wait).getInt();
+		BJ_end_wait = config.get("BlackJack wait settings","Game end", BJ_end_wait).getInt();
+
+		config.setCategoryComment("Poker wait settings", "value is n/1000 sec");
+		PK_firstHand_wait = config.get("Poker wait settings","First hand", PK_firstHand_wait).getInt();
+		PK_change = config.get("Poker wait settings","Card change", PK_change).getInt();
+		PK_end_wait = config.get("Poker wait settings","Game end", PK_end_wait).getInt();
+
+		config.setCategoryComment("ChinChiroRin wait settings", "value is n/1000 sec");
+		CCR_cpuDice_wait = config.get("ChinChiroRin wait settings","CPU dice", CCR_cpuDice_wait).getInt();
+		CCR_cpuCheck_wait = config.get("ChinChiroRin wait settings","CPU check", CCR_cpuCheck_wait).getInt();
+		CCR_end_wait = config.get("ChinChiroRin wait settings","Game end", CCR_end_wait).getInt();
+		CCR_result_wait = config.get("ChinChiroRin wait settings","Result check", CCR_result_wait).getInt();
+		CCR_turnChange_wait = config.get("ChinChiroRin wait settings","Turn change", CCR_turnChange_wait).getInt();
+		CCR_turnStart_wait = config.get("ChinChiroRin wait settings","Turn start", CCR_turnStart_wait).getInt();
+
+		config.setCategoryComment("MiniBattleGame HighSpeed settings", "value is normalSpeed multiplied by n");
+		MBG_highSpeed = config.get("MiniBattleGame HighSpeed settings","set speed", MBG_highSpeed).getDouble();
+		config.save();
+	}
+
+
 	public void getConfigMagicTool(Configuration config)
 	{
 		config.load();
-		config.setCategoryComment("MagicTool_Farm settings", "");
+		config.setCategoryComment("MagicTool_Farm settings", "MagicTool(farm) settings");
 		MGFarm_enable = config.get("MagicTool_Farm settings","item enable", MGFarm_enable , "0:disable 1:enable").getInt();
 		MGFarm_Area_X = config.get("MagicTool_Farm settings","Function area X", MGFarm_Area_X , "Any function area X pattern").getIntList();
 		MGFarm_Area_Y = config.get("MagicTool_Farm settings","Function area Y", MGFarm_Area_Y , "Any function area Y pattern").getIntList();
@@ -620,7 +698,7 @@ public class DQRconfigs {
 		MGFarm_addSeeds  = config.get("MagicTool_Farm settings","Add seeds", MGFarm_addSeeds , "add seeds (write format  modName:itemname(1line 1item)   ex.  DQMIIINext:ItemOugonSeed2)").getStringList();
 		MGFarm_addPlantMeta  = config.get("MagicTool_Farm settings","set max meta for plants", MGFarm_addPlantMeta , "set max meta value for MagicTool_Farm2 (write format  modName:blockName/maxmeta(1line 1item)   ex.  DQMIIINext:blockOugonSeed2/7)").getStringList();
 
-		config.setCategoryComment("MagicTool_Break1 settings", "");
+		config.setCategoryComment("MagicTool_Break1 settings", "MagicTool(break)1 settings");
 		MGBreak1_enable = config.get("MagicTool_Break1 settings","item enable", MGBreak1_enable , "0:disable 1:BreakOnly 2:DeleteOnly 3:Both").getInt();
 		MGBreak1_SmoothBreak = config.get("MagicTool_Break1 settings","Smooth break", MGBreak1_SmoothBreak , "0:disable 1:enable").getInt();
 		MGBreak1_damageWeight = config.get("MagicTool_Break1 settings","damage weight", MGBreak1_damageWeight , "using cost for one block break").getInt();
@@ -628,7 +706,7 @@ public class DQRconfigs {
 		MGBreak1_Area_Y = config.get("MagicTool_Break1 settings","Function area Y", MGBreak1_Area_Y , "Any function area Y pattern").getIntList();
 		MGBreak1_Area_Z = config.get("MagicTool_Break1 settings","Function area Z", MGBreak1_Area_Z , "Any function area Z pattern").getIntList();
 
-		config.setCategoryComment("MagicTool_Break2 settings", "");
+		config.setCategoryComment("MagicTool_Break2 settings", "MagicTool(break)2 settings");
 		MGBreak2_enable = config.get("MagicTool_Break2 settings","item enable", MGBreak2_enable , "0:disable 1:BreakOnly 2:DeleteOnly 3:Both").getInt();
 		MGBreak2_SmoothBreak = config.get("MagicTool_Break2 settings","Smooth break", MGBreak2_SmoothBreak , "0:disable 1:enable").getInt();
 		MGBreak2_damageWeight = config.get("MagicTool_Break2 settings","damage weight", MGBreak2_damageWeight , "using cost for one block break").getInt();
@@ -636,13 +714,13 @@ public class DQRconfigs {
 		MGBreak2_Area_Y = config.get("MagicTool_Break2 settings","Function area Y", MGBreak2_Area_Y , "Any function area Y pattern").getIntList();
 		MGBreak2_Area_Z = config.get("MagicTool_Break2 settings","Function area Z", MGBreak2_Area_Z , "Any function area Z pattern").getIntList();
 
-		config.setCategoryComment("MagicTool_Set settings", "");
+		config.setCategoryComment("MagicTool_Set settings", "MagicTool(set) settings");
 		MGSet_enable = config.get("MagicTool_Set settings","item enable", MGSet_enable , "0:disable 1:enable").getInt();
 		MGSet_Area_X = config.get("MagicTool_Set settings","Function area X", MGSet_Area_X , "Any function area X pattern").getIntList();
 		MGSet_Area_Y = config.get("MagicTool_Set settings","Function area Y", MGSet_Area_Y , "Any function area Y pattern").getIntList();
 		MGSet_Area_Z = config.get("MagicTool_Set settings","Function area Z", MGSet_Area_Z , "Any function area Z pattern").getIntList();
 
-		config.setCategoryComment("Destruction of woods settings for DqrAxe", "");
+		config.setCategoryComment("Destruction of woods settings for DqrAxe", "Axe tree cutting settings");
 		CuttingWood  = config.get("Destruction of woods settings for DqrAxe","Add woods", CuttingWood , "add woods (write format  modName:woodblockname(1line 1item)   ex.  hogehoget:hogelog1)").getStringList();
 		CuttingLeave  = config.get("Destruction of woods settings for DqrAxe","Add leaves", CuttingLeave , "add leaves (write format  modName:leaveblockname(1line 1item)   ex.  hogehoget:hogeleave1)").getStringList();
 
@@ -686,9 +764,10 @@ public class DQRconfigs {
 		petPermUseMonsterMix = config.get("Monstar taming permission settings","Use monster mix magic(0:allow only owner 1:allow for all player 2:allow owner and OP)", petPermUseMonsterMix).getInt();
 		petPermPetSitting = config.get("Monstar taming permission settings","Pet sitting (0:allow only owner 1:allow for all player 2:allow owner and OP)", petPermPetSitting).getInt();
 		petPermOpenInventory = config.get("Monstar taming permission settings","Pet inventorty open (0:allow only owner 2:allow owner and OP)", petPermOpenInventory).getInt();
+		offlinePlayerPetAttack = config.get("Monstar taming permission settings","Attack to Offline plater's pet (0:disable 1:enable)", offlinePlayerPetAttack).getInt();
 
 		config.setCategoryComment("DQR Fishing setting", "DQR Fishing settings");
-		fishingMode = config.get("DQR Fishing setting","FishingMode", fishingMode, "setting (0:disable 1:hooking for item 2:hooking fishing system)").getInt();
+		fishingMode = config.get("DQR Fishing setting","FishingMode", fishingMode, "setting (0:disable 1:enable)").getInt();
 
 		config.setCategoryComment("Item use permission", "this setting is Item using permission");
 		permBuilder1 = config.get("Item use permission","BuilderDama", permBuilder1, "allow use BuilderDama (0:prohibit 1:allow only OP 2:allow for all player)").getInt();
@@ -724,6 +803,13 @@ public class DQRconfigs {
 
 		config.setCategoryComment("Model render size", "this setting is Model render magnification");
 		figureMagni = (float)(config.get("Model render size","figure size", 3, "figure size = objSize / thisVal").getInt());
+
+		config.setCategoryComment("Rare monster despawn settings", "setting monster can despawn");
+		canDespawnBoss =  config.get("Rare monster despawn settings","BOSS", canDespawnBoss , "0:disable 1:enable").getInt();
+		canDespawnTENSEI =  config.get("Rare monster despawn settings","TENSEI", canDespawnTENSEI , "0:disable 1:enable").getInt();
+		canDespawnSP =  config.get("Rare monster despawn settings","SP", canDespawnSP , "0:disable 1:enable").getInt();
+		canDespawnMetal =  config.get("Rare monster despawn settings","Metal", canDespawnMetal , "0:disable 1:enable").getInt();
+
 		config.save();
 	}
 
@@ -745,11 +831,18 @@ public class DQRconfigs {
 		cfg_build_sleep = config.get("Core Settings","Build waiting time", cfg_build_sleep ,"setting interval time(msec) for feature building").getInt();
 		cfg_NoThreadUse = config.get("Core Settings","Don't use parallel process for Lv UP", cfg_NoThreadUse ,"0:disable 1:enable").getInt();
 		cfg_NoThreadUseHervest = config.get("Core Settings","Don't use parallel process for Harvest(Farming Magic Tool)", cfg_NoThreadUseHervest ,"0:disable 1:enable").getInt();
+		bonusChestEnable = config.get("Core Settings","DQR bonus chest enable", bonusChestEnable ,"Add dqr item to bonus chest(for only SSP) 0:disable 1:enable").getInt();
+		dqrHardcore = config.get("Core Settings","DQR HARDCORE enable", dqrHardcore ,"all data clear when you dead? 0:disable 1:enable").getInt();
 
 		config.setCategoryComment("SpawnerRoomGenerateRate", "this setting is SpawnerRoom generate Rating Val ");
 		SpawnRoomRate1 = config.get("SpawnerRoomGenerateRate","Overworld value", SpawnRoomRate1 ,"default = 1 / (512) - 0[settingVal]").getInt();
 		SpawnRoomRate2 = config.get("SpawnerRoomGenerateRate","Nether value", SpawnRoomRate2 ,"default = 1 / (256) - 0[settingVal]").getInt();
 		SpawnRoomRate3 = config.get("SpawnerRoomGenerateRate","End value", SpawnRoomRate3 ,"default = 1 / (128) - 0[settingVal]").getInt();
+
+		config.setCategoryComment("SpawnerRoomGenerateMode", "this setting is SpawnerRoom generate mode(timing of generate)\n0:at chunk generate 1:at after world generate 2:at after world generate(with strict check)");
+		SpawnRoomMode1 = config.get("SpawnerRoomGenerateMode","Overworld value", SpawnRoomMode1).getInt();
+		SpawnRoomMode2 = config.get("SpawnerRoomGenerateMode","Nether value", SpawnRoomMode2).getInt();
+		SpawnRoomMode3 = config.get("SpawnerRoomGenerateMode","End value", SpawnRoomMode3).getInt();
 
 		config.setCategoryComment("Monster Spawn", "this setting is monster spawn rate settings");
 		VanillaMobSpawn = config.get("Monster Spawn","Vanilla Monsters", VanillaMobSpawn ).getInt();
@@ -777,7 +870,8 @@ public class DQRconfigs {
 		recalcLvStatus1 = config.get("Status recaluc","cause over Lv99", recalcLvStatus1 , "0:disable 1:enable").getInt();
 		recalcMP1 = config.get("Status recaluc","cause MP reset bug v0.8.0", recalcMP1 , "0:disable 1:enable").getInt();
 
-
+		config.setCategoryComment("fix bug options", "this setting is set bug before fix");
+		bug_magicCoolTimeFix = config.get("fix bug options","magic cool time fix", bug_magicCoolTimeFix , "0:before fix 1:fixed").getInt();
 
 		config.setCategoryComment("Biome base blocks", "this setting is Blockname for BiomeId. BiomeID and Blockname to PAIR");
 		cfg_biomeBlock_biomeId = config.get("Biome base blocks","BiomeID", cfg_biomeBlock_biomeId).getIntList();
@@ -998,8 +1092,6 @@ public class DQRconfigs {
 			}
 		}
 
-		config.save();
-
 		config.setCategoryComment("World gen objects", "this setting is object generate at field settings");
 		cfg_gen_Genkotu = config.get("World gen objects","generate GENKOTUDAKE", cfg_gen_Genkotu , "0:disable 1:enable").getInt();
 		cfg_gen_Tue = config.get("World gen objects","generate TUE object", cfg_gen_Tue , "0:disable 1:enable").getInt();
@@ -1012,6 +1104,7 @@ public class DQRconfigs {
 		cfg_gen_Ido = config.get("World gen objects","generate IDO object", cfg_gen_Ido , "0:disable 1:enable").getInt();
 		cfg_gen_Ido2 = config.get("World gen objects","generate HOME of MEDAL KING and entrance", cfg_gen_Ido2 , "0:disable 1:enable").getInt();
 
+		config.save();
 	}
 
 	public void getConfigGui(Configuration config)
@@ -1126,6 +1219,30 @@ public class DQRconfigs {
 	public void getConfigRura(Configuration config)
 	{
 		config.load();
+
+		config.setCategoryComment("Rura enabler", "Rura item enable settings");
+		enableRura = config.get("Rura enabler","Item:Rura", enableRura, "0:disable 1:enable").getInt();
+		enableRura2 = config.get("Rura enabler","Item:Rura2", enableRura2, "0:disable 1:enable").getInt();
+		enableRuraC = config.get("Rura enabler","Item:RuraC", enableRuraC, "0:disable 1:enable").getInt();
+
+		config.setCategoryComment("RuraSin enabler", "RuraSin item enable settings");
+		enableRuraSin = config.get("RuraSin enabler","Item:RuraSin", enableRuraSin, "0:disable 1:enable").getInt();
+		enableRuraSin2 = config.get("RuraSin enabler","Item:RuraSin2", enableRuraSin2, "0:disable 1:enable").getInt();
+		enableRuraSinC = config.get("RuraSin enabler","Item:RuraSinC", enableRuraSinC, "0:disable 1:enable").getInt();
+
+		config.setCategoryComment("Kimera enabler", "Kimera item enable settings");
+		enableKimera = config.get("Kimera enabler","Item:Kimera", enableKimera, "0:disable 1:enable").getInt();
+		enableKimera2 = config.get("Kimera enabler","Item:Kimera2", enableKimera2, "0:disable 1:enable").getInt();
+		enableKimeraC = config.get("Kimera enabler","Item:KimeraC", enableKimeraC, "0:disable 1:enable").getInt();
+
+		config.setCategoryComment("RuraSin Main", "Rura Main settings");
+		RuraSin_CordSet = config.get("RuraSin Main","RuraSin_change_permission", RuraSin_CordSet, "allow cordinates change (0:prohibit 1:allow only OP 2:allow for all player)").getInt();
+
+		config.setCategoryComment("Rura Main", "Rura Main settings");
+		Rura_CordSet = config.get("Rura Main","Rura_change_permission", Rura_CordSet, "allow cordinates change (0:prohibit 1:allow only OP 2:allow for all player)").getInt();
+
+		config.setCategoryComment("Kimera Main", "Kimera Main settings");
+		Kimera_CordSet = config.get("Kimera Main","Kimera_change_permission", Kimera_CordSet, "allow cordinates change (0:prohibit 1:allow only OP 2:allow for all player)").getInt();
 
 		config.setCategoryComment("RuraC Main", "RuraC Main settings");
 		RuraC_IGF = config.get("RuraC Main","RuraC_InGameFix", RuraC_IGF, "allow in game cordinates fix (0:prohibit 1:allow only OP 2:allow for all player)").getInt();

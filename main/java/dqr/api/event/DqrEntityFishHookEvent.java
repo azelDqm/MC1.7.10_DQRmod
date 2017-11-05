@@ -18,6 +18,7 @@ public class DqrEntityFishHookEvent extends Event{
 		this.item = null;
 	}
 
+	/*
     public static class hookFunc_146033_f extends DqrEntityFishHookEvent {
     	public World world;
     	public EntityPlayer ep;
@@ -30,6 +31,7 @@ public class DqrEntityFishHookEvent extends Event{
     		this.rodType = rodType;
     	}
     }
+    */
 
     public static class hookDqrFunc_146033_f extends DqrEntityFishHookEvent {
     	public World world;
@@ -44,6 +46,7 @@ public class DqrEntityFishHookEvent extends Event{
     	}
     }
 
+    /*
     public static class hookGetRandomFishable extends DqrEntityFishHookEvent {
     	public float chance;
     	public int luck;
@@ -57,6 +60,7 @@ public class DqrEntityFishHookEvent extends Event{
 			this.item = null;
 		}
     }
+    */
 
 	public ItemStack getHitItem()
 	{

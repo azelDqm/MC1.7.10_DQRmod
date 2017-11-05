@@ -14,7 +14,7 @@ public class DqmItemRecipeBuilder {
 	public DqmItemRecipeBuilder()
 	{
 
-        GameRegistry.addRecipe(new ItemStack(DQBuilders.itemBuilderDama , 1), new Object[]
+        GameRegistry.addShapedRecipe(new ItemStack(DQBuilders.itemBuilderDama , 1), new Object[]
         {
             "ABC",
             "DEF",
@@ -62,65 +62,65 @@ public class DqmItemRecipeBuilder {
 
         GameRegistry.addRecipe(new ItemStack(DQBuilders.itemBuilderCasino2), new Object[]
         {
-            " A ",
-            " B ",
+            "   ",
+            "AB ",
             "   ",
             'A', DQMiscs.itemKinka, 'B', Items.paper
         });
 
         GameRegistry.addRecipe(new ItemStack(DQBuilders.itemBuilderCasino2), new Object[]
         {
-            "A A",
-            "ABA",
+            "AAA",
+            " BA",
             "AAA",
             'A', DQMiscs.itemDouka, 'B', Items.paper
         });
 
         GameRegistry.addRecipe(new ItemStack(DQBuilders.itemBuilderCasino3), new Object[]
         {
-            "  A",
+            "   ",
             " B ",
-            "   ",
+            "A  ",
             'A', DQMiscs.itemKinka, 'B', Items.paper
         });
 
         GameRegistry.addRecipe(new ItemStack(DQBuilders.itemBuilderCasino3), new Object[]
         {
-            "AA ",
+            "AAA",
+            "ABA",
+            " AA",
+            'A', DQMiscs.itemDouka, 'B', Items.paper
+        });
+
+        GameRegistry.addRecipe(new ItemStack(DQBuilders.itemBuilderCasino4), new Object[]
+        {
+            " B ",
+            " A ",
+            " B",
+            'A', DQMiscs.itemKinka, 'B', Items.paper
+        });
+
+        GameRegistry.addRecipe(new ItemStack(DQBuilders.itemBuilderCasino4), new Object[]
+        {
             "ABA",
             "AAA",
-            'A', DQMiscs.itemDouka, 'B', Items.paper
-        });
-
-        GameRegistry.addRecipe(new ItemStack(DQBuilders.itemBuilderCasino4), new Object[]
-        {
-            "   ",
-            "AB ",
-            "   ",
-            'A', DQMiscs.itemKinka, 'B', Items.paper
-        });
-
-        GameRegistry.addRecipe(new ItemStack(DQBuilders.itemBuilderCasino4), new Object[]
-        {
-            "AAA",
-            " BA",
-            "AAA",
+            "ABA",
             'A', DQMiscs.itemDouka, 'B', Items.paper
         });
 
         GameRegistry.addRecipe(new ItemStack(DQBuilders.itemBuilderCasino5), new Object[]
         {
             "   ",
-            " BA",
-            "   ",
+            " B ",
+            " A ",
             'A', DQMiscs.itemKinka, 'B', Items.paper
         });
 
         GameRegistry.addRecipe(new ItemStack(DQBuilders.itemBuilderCasino5), new Object[]
         {
             "AAA",
-            "AB ",
-            "AAA",
+            "ABA",
+            "A A",
             'A', DQMiscs.itemDouka, 'B', Items.paper
         });
 
@@ -209,6 +209,20 @@ public class DqmItemRecipeBuilder {
             "ABA",
             "AAA",
             'A', DQMiscs.itemDouka, 'B', Blocks.iron_block
+        });
+
+        GameRegistry.addShapelessRecipe(new ItemStack(DQBuilders.itemBuilderShopBankW, 1), new Object[] {new ItemStack(DQBuilders.itemBuilderShopBank, 1), new ItemStack(DQMiscs.itemIerooubu, 1)});
+        GameRegistry.addShapelessRecipe(new ItemStack(DQBuilders.itemBuilderShopBukiyaW, 1), new Object[] {new ItemStack(DQBuilders.itemBuilderShopBukiya, 1), new ItemStack(DQMiscs.itemIerooubu, 1)});
+        GameRegistry.addShapelessRecipe(new ItemStack(DQBuilders.itemBuilderShopSyuuriyaW, 1), new Object[] {new ItemStack(DQBuilders.itemBuilderShopSyuuriya, 1), new ItemStack(DQMiscs.itemIerooubu, 1)});
+        GameRegistry.addShapelessRecipe(new ItemStack(DQBuilders.itemBuilderShopKaitoriyaW, 1), new Object[] {new ItemStack(DQBuilders.itemBuilderShopKaitoriya, 1), new ItemStack(DQMiscs.itemIerooubu, 1)});
+
+        //GameRegistry.addShapelessRecipe(new ItemStack(DQBuilders.itemBuilderKaikosyo, 1), new Object[] {new ItemStack(Items.paper, 1), new ItemStack(DQMiscs.itemIerooubu, 1)});
+        GameRegistry.addRecipe(new ItemStack(DQBuilders.itemBuilderKaikosyo, 1), new Object[]
+        {
+            "AAA",
+            "ABA",
+            "AAA",
+            'A', Items.paper, 'B', DQMiscs.itemIerooubu
         });
 	}
 }

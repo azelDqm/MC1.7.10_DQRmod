@@ -823,5 +823,7 @@ public class BlockRenderingRegister {
 		ClientRegistry.bindTileEntitySpecialRenderer(DqmTileEntitySekizouMasterdoragon.class, new DqmTileEntityRenderSekizouMasterdoragon());
 		ClientRegistry.bindTileEntitySpecialRenderer(DqmTileEntitySekizouDarkRamia.class, new DqmTileEntityRenderSekizouDarkRamia());
 
+		ClientRegistry.bindTileEntitySpecialRenderer(DqmTileEntitySyuuriya.class, new DqmTileEntityRenderSyuuriya());
+		ClientRegistry.bindTileEntitySpecialRenderer(DqmTileEntityBank.class, new DqmTileEntityRenderBank());
 	}
 }

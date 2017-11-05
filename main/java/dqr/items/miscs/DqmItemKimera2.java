@@ -8,6 +8,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.world.World;
+import dqr.DQR;
 import dqr.api.enums.EnumColor;
 import dqr.api.enums.EnumDqmMGToolMode;
 import dqr.api.enums.EnumDqmMagic;
@@ -27,6 +28,11 @@ public class DqmItemKimera2 extends DqmItemMiscBase{
 
    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
+
+		if(DQR.conf.enableKimera2 == 0)
+		{
+			return par1ItemStack;
+		}
 
 		if(par3EntityPlayer.isSneaking())
     	{

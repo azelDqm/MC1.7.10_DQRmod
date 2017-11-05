@@ -6,6 +6,7 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import dqr.api.enums.EnumDqmSubEquipType;
 import dqr.entity.petEntity.InventoryPetInventory;
 import dqr.playerData.ExtendedPlayerProperties3;
 
@@ -54,6 +55,9 @@ public class GuiPetInventoryContainer extends Container
             this.addSlotToContainer(new SlotPetInventory(inventoryPlayer, j, 8 + j * 18, 142));
         }
 
+        this.addSlotToContainer(new SlotPetEquipment(EnumDqmSubEquipType.PWEAPON, this.inventory, 18, 8, 24));
+        this.addSlotToContainer(new SlotPetEquipment(EnumDqmSubEquipType.PARMOR, this.inventory, 19, 26, 24));
+        this.addSlotToContainer(new SlotPetEquipment(EnumDqmSubEquipType.PSHIELD, this.inventory, 20, 44, 24));
     }
 
     /*
@@ -68,6 +72,7 @@ public class GuiPetInventoryContainer extends Container
     @Override
     public ItemStack transferStackInSlot(EntityPlayer p_82846_1_, int p_82846_2_)
     {
+    	//System.out.println("TEST!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + p_82846_2_);
         ItemStack itemstack = null;
         Slot slot = (Slot)this.inventorySlots.get(p_82846_2_);
 

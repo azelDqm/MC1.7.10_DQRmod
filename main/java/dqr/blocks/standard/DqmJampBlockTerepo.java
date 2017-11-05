@@ -33,7 +33,9 @@ public class DqmJampBlockTerepo extends Block
     {
         if (par5Entity instanceof EntityPlayer)
         {
+        	
             EntityPlayer ep = (EntityPlayer)par5Entity;
+            ep.fallDistance = 0;
             ep.setPosition(par2, par3 + 15, par4);
             //ep.addPotionEffect(new PotionEffect(Potion.Subayasa.id, 20 * 2, 0));
             ep.addPotionEffect(new PotionEffect(DQPotionPlus.potionSubayasanotane.id, 20 * 5, 0));

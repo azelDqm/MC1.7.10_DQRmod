@@ -110,7 +110,7 @@ public class FuncArmorSetTable {
 
 			for(int cnt = 0; cnt < itemArmor.length; cnt++)
 			{
-				if(itemArmor[cnt].getItem() == DQArmors.itemTenkuunoyoroi)
+				if(itemArmor[cnt] != null && itemArmor[cnt].getItem() == DQArmors.itemTenkuunoyoroi)
 				{
 					tenkuFlg = true;
 				}

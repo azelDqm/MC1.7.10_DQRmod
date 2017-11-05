@@ -7,7 +7,8 @@ public enum EnumDqmBuilder {
 	DAMAW(2, "DamaW", 24, 18, -1),
 	IDOMEDAL(3, "IdoMedal", 6, 2, -36),
 	CASINO(4, "Casino", 6, 2, -36),
-	SEKIZOU(5, "Sekizou", 4, 10, 0);
+	SEKIZOU(5, "Sekizou", 4, 10, 0),
+	SHOP(6, "Shop", 5, 3, -1);
 
     private final int id;      //威力(攻撃力・回復量)
     private final String name;   //飛距離tick

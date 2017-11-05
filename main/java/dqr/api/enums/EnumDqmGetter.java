@@ -596,9 +596,9 @@ public class EnumDqmGetter {
 		//System.out.println("TEST1");
 		if(item instanceof DqmItemFishingRod || item instanceof ItemFishingRod)
 		{
-			int[] VanillaRod = {8, 5, 6, 16, 66, 316, 0, 316};
+			int[] VanillaRod = {6, 5, 6, 16, 66, 316, 0, 316};
 			int[] DiamondRod = {4, 5, 6, 16, 66, 266, 0, 266};
-			int[] OriharukonRod = {4, 20, 35, 45, 95, 245, 0, 245};
+			int[] OriharukonRod = {3, 20, 35, 45, 95, 245, 0, 245};
 			int[] RotoRod = {2, 25, 45, 65, 95, 175, 0, 175};
 			int[] DensetuRod = {1, 1, 2, 3, 4, 9, 0, 9};
 
@@ -609,18 +609,23 @@ public class EnumDqmGetter {
 			if(item == DQMagicTools.itemDqrFishRod_Diamond)
 			{
 				rotPat = DiamondRod;
+				//System.out.println("RodType0");
 			}else if(item == DQMagicTools.itemDqrFishRod_Oriharukon)
 			{
 				rotPat = OriharukonRod;
+				//System.out.println("RodType1");
 			}else if(item == DQMagicTools.itemDqrFishRod_Roto)
 			{
 				rotPat = RotoRod;
+				//System.out.println("RodType2");
 			}else if(item == DQMagicTools.itemDqrFishRod_Densetu)
 			{
 				rotPat = DensetuRod;
+				//System.out.println("RodType3");
 			}else if(item instanceof ItemFishingRod)
 			{
 				rotPat = VanillaRod;
+				//System.out.println("RodType4");
 			}
 
 			//System.out.println("TEST3");
@@ -648,6 +653,9 @@ public class EnumDqmGetter {
 					}else if(categRand < rotPat[5])
 					{
 						return EnumDqmFishingCateg.DQMISC;
+					}else if(categRand < rotPat[6])
+					{
+						return EnumDqmFishingCateg.DQACC;
 					}
 				}else
 				{
@@ -659,6 +667,20 @@ public class EnumDqmGetter {
 		}
 		//System.out.println("TEST7");
 
+		return null;
+	}
+
+	public EnumDqmMobSkilProp getEnumDqmMobSkilProp(String par1)
+	{
+		EnumDqmMobSkilProp[] data = EnumDqmMobSkilProp.values();
+
+    	for(int cnt = 0; cnt < data.length; cnt++)
+    	{
+    		if(data[cnt].getName().equalsIgnoreCase(par1))
+    		{
+    			return data[cnt];
+    		}
+    	}
 		return null;
 	}
 }

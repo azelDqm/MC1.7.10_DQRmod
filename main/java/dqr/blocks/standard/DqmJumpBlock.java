@@ -29,7 +29,7 @@ public class DqmJumpBlock extends Block
         if (par5Entity instanceof EntityPlayer)
         {
             EntityPlayer ep = (EntityPlayer)par5Entity;
-
+            ep.fallDistance = 0;
             ep.motionY = 3;
             ep.addPotionEffect(new PotionEffect(DQPotionPlus.potionSubayasanotane.id, 20 * 5, 0));
         }
