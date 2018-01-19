@@ -266,6 +266,66 @@ public class DqrAddon {
 						}
 					}
 
+					//黄昏に鉱石追加
+					Configuration cfg_tasogare = new Configuration(new File(DQR.proxy.getDir(), "config/TwilightForest.cfg"));
+					int tf_dimID = cfg_tasogare.get("dimension","dimensionID", 7, "What ID number to assign to the Twilight Forest dimension.  Change if you are having conflicts with another mod.").getInt();
+					String tf_folName = "DIM" + tf_dimID;
+					boolean serchFlg = false;
+					boolean setchAllFlg = false;
+					//System.out.println("TEST 1 ");
+					for(int cnt = 0; cnt < DQR.conf.cfg_generateOreDimId3.length ;cnt++)
+					{
+						//System.out.println("TEST 2 :" + cnt + " / " + DQR.conf.cfg_generateOreDimId2[cnt]);
+						if(DQR.conf.cfg_generateOreDimId3[cnt] == tf_dimID)
+						{
+							serchFlg = true;
+							setchAllFlg = true;
+						}
+					}
+					if(serchFlg == false)
+					{
+						//System.out.println("TEST 3");
+						DQR.conf.setOre3Settings(tf_dimID, null, null, null);
+					}
+
+					//System.out.println("TEST 1 ");
+					serchFlg = false;
+					//System.out.println("TEST 4");
+					for(int cnt = 0; cnt < DQR.conf.cfg_generateOreDimFolder3.length ;cnt++)
+					{
+						//System.out.println("TEST 5 :" + cnt + " / " + DQR.conf.cfg_generateOreDimFolder2[cnt] + " / " + tf_folName);
+						if(DQR.conf.cfg_generateOreDimFolder3[cnt].equalsIgnoreCase(tf_folName))
+						{
+							//System.out.println("TEST 2 ");
+							serchFlg = true;
+							setchAllFlg = true;
+						}
+					}
+					if(serchFlg == false)
+					{
+						DQR.conf.setOre3Settings(9999, tf_folName, null, null);
+					}
+
+					//System.out.println("TEST 3 ");
+					serchFlg = false;
+					for(int cnt = 0; cnt < DQR.conf.cfg_generateOreDimName3.length ;cnt++)
+					{
+						if(DQR.conf.cfg_generateOreDimName3[cnt].equalsIgnoreCase("TwilightForest"))
+						{
+							//System.out.println("TEST 4 ");
+							serchFlg = true;
+							setchAllFlg = true;
+						}
+					}
+					if(serchFlg == false)
+					{
+						DQR.conf.setOre3Settings(9999, null, "TwilightForest", null);
+					}
+
+					if(!setchAllFlg)
+					{
+						DQR.conf.setOre3Settings(9999, null, null, "stone");
+					}
 					//System.out.println("TEST????");
 					MinecraftForge.EVENT_BUS.register(new TwilightForestHandler());
 				}

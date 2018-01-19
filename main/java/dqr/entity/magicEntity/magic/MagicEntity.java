@@ -62,6 +62,7 @@ public class MagicEntity extends Entity implements IProjectile{
 
     /* ノックバックの大きさ */
     protected int knockbackStrength = 1;
+    public Entity shootingEntityOwner;
 
     public MagicEntity(World par1World)
     {
@@ -762,4 +763,10 @@ public class MagicEntity extends Entity implements IProjectile{
     {
     	return this.rev;
     }
+
+    public void setShootingEntityOwner(Entity par1)
+    {
+    	this.shootingEntityOwner = par1;
+    }
+
 }

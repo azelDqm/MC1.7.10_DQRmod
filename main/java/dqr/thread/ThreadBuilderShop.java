@@ -1,7 +1,7 @@
 package dqr.thread;
 
 import net.minecraft.block.Block;
-import net.minecraft.entity.passive.EntityTameable;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -10,6 +10,7 @@ import dqr.DQR;
 import dqr.api.Blocks.DQBlocks;
 import dqr.api.Blocks.DQDecorates;
 import dqr.api.Items.DQBuilders;
+import dqr.entity.npcEntity.DqmNPCBase;
 import dqr.entity.npcEntity.npc.DqmEntityNPCBank;
 import dqr.entity.npcEntity.npc.DqmEntityNPCBukiya;
 import dqr.entity.npcEntity.npc.DqmEntityNPCKaitoriya;
@@ -29,14 +30,16 @@ public class ThreadBuilderShop extends Thread{
 
 	//private int mode;
 	private ItemStack ist;
+	private EntityPlayer buildPlayer;
 
-	public ThreadBuilderShop(World par1, int size, int height, int under, ItemStack ist)
+	public ThreadBuilderShop(World par1, int size, int height, int under, ItemStack ist, EntityPlayer ep)
 	{
 		this.par3World = par1;
     	this.size = size;
     	this.height = height;
     	this.under = under;
     	this.ist = ist;
+    	this.buildPlayer = ep;
 	}
 
 	public void run()
@@ -44,7 +47,7 @@ public class ThreadBuilderShop extends Thread{
 
 		NBTTagCompound nbt = this.ist.getTagCompound();
 
-		EntityTameable npc = null;
+		DqmNPCBase npc = null;
 		Block kanban = null;
 
 		this.xxx = nbt.getInteger("settingX");
@@ -69,16 +72,16 @@ public class ThreadBuilderShop extends Thread{
 	        for (int x = (this.size * -1); x <= this.size; ++x)
 	        {
 	        	if(par3World.getBlock(xxx + x, yyy + this.height, zzz + this.size) == DQBlocks.DqmBlockBuilderFrame)
-	        		par3World.setBlock(xxx + x, yyy + this.height, zzz + this.size, Blocks.air, 0, 2);
+	        		DQR.func.setBlockAndCheck(par3World, xxx + x, yyy + this.height, zzz + this.size, Blocks.air, 0, 2);
 
 	        	if(par3World.getBlock(xxx + x, yyy + this.height, zzz + (this.size * -1)) == DQBlocks.DqmBlockBuilderFrame)
-	        		par3World.setBlock(xxx + x, yyy + this.height, zzz + (this.size * -1), Blocks.air, 0, 2);
+	        		DQR.func.setBlockAndCheck(par3World, xxx + x, yyy + this.height, zzz + (this.size * -1), Blocks.air, 0, 2);
 
 	        	if(par3World.getBlock(xxx + x, yyy + under, zzz + this.size) == DQBlocks.DqmBlockBuilderFrame)
-	        		par3World.setBlock(xxx + x, yyy + under, zzz + this.size, Blocks.air, 0, 2);
+	        		DQR.func.setBlockAndCheck(par3World, xxx + x, yyy + under, zzz + this.size, Blocks.air, 0, 2);
 
 	        	if(par3World.getBlock(xxx + x, yyy + under, zzz + (this.size * -1)) == DQBlocks.DqmBlockBuilderFrame)
-	        		par3World.setBlock(xxx + x, yyy + under, zzz + (this.size * -1), Blocks.air, 0, 2);
+	        		DQR.func.setBlockAndCheck(par3World, xxx + x, yyy + under, zzz + (this.size * -1), Blocks.air, 0, 2);
 	        }
 
 			for (int x = -6; x <= 6; ++x)
@@ -88,7 +91,7 @@ public class ThreadBuilderShop extends Thread{
 	                for (int y = -1; y <= 6 ; ++y)
 	                {
 	                	if(par3World.getBlock(xxx + x, yyy + y + takasa, zzz + z) == DQBlocks.DqmBlockBuilderFrame)
-	    	        		par3World.setBlock(xxx + x, yyy + y + takasa, zzz + z, Blocks.air, 0, 2);
+	    	        		DQR.func.setBlockAndCheck(par3World, xxx + x, yyy + y + takasa, zzz + z, Blocks.air, 0, 2);
 	                }
 	            }
 	        }
@@ -126,7 +129,7 @@ public class ThreadBuilderShop extends Thread{
 	            {
 	                for (int y = -1; y <= -1 ; ++y)
 	                {
-	                	par3World.setBlock(xxx + x, yyy + y + takasa, zzz + z, topBlock, 0, 2);
+	                	DQR.func.setBlockAndCheck(par3World, xxx + x, yyy + y + takasa, zzz + z, topBlock, 0, 2);
 	                }
 	            }
 	        }
@@ -182,7 +185,7 @@ public class ThreadBuilderShop extends Thread{
 	            {
 	                for (int y = -1; y <= 5; ++y)
 	                {
-	                    par3World.setBlock(xxx + x, yyy + y + takasa, zzz + (z * 1), Blocks.stonebrick, 0, 2);
+	                    DQR.func.setBlockAndCheck(par3World, xxx + x, yyy + y + takasa, zzz + (z * 1), Blocks.stonebrick, 0, 2);
 	                }
 	            }
 	        }
@@ -199,7 +202,7 @@ public class ThreadBuilderShop extends Thread{
 	            {
 	                for (int y = -1; y <= -1; ++y)
 	                {
-	                    par3World.setBlock(xxx + x, yyy + y + takasa, zzz + (z * 1), Blocks.brick_block, 0, 2);
+	                    DQR.func.setBlockAndCheck(par3World, xxx + x, yyy + y + takasa, zzz + (z * 1), Blocks.brick_block, 0, 2);
 	                }
 	            }
 	        }
@@ -216,7 +219,7 @@ public class ThreadBuilderShop extends Thread{
 	            {
 	                for (int y = 0; y <= 5; ++y)
 	                {
-	                    par3World.setBlock(xxx + x, yyy + y + takasa, zzz + (z * 1), Blocks.air, 0, 2);
+	                    DQR.func.setBlockAndCheck(par3World, xxx + x, yyy + y + takasa, zzz + (z * 1), Blocks.air, 0, 2);
 	                }
 	            }
 	        }
@@ -231,14 +234,14 @@ public class ThreadBuilderShop extends Thread{
 				}
 	            for (int z = -4; z <= 4; ++z)
 	            {
-	                par3World.setBlock(xxx + x, yyy + 5 + takasa, zzz + (z * 1), Blocks.stone_slab, 0, 2);
+	                DQR.func.setBlockAndCheck(par3World, xxx + x, yyy + 5 + takasa, zzz + (z * 1), Blocks.stone_slab, 0, 2);
 	            }
 	        }
 
-	        par3World.setBlock(xxx - 3, yyy + 2 + takasa, zzz - 1, Blocks.glass_pane, 0, 2);
-	        par3World.setBlock(xxx - 3, yyy + 2 + takasa, zzz - 2, Blocks.glass_pane, 0, 2);
-	        par3World.setBlock(xxx - 3, yyy + 2 + takasa, zzz  + 1, Blocks.glass_pane, 0, 2);
-	        par3World.setBlock(xxx - 3, yyy + 2 + takasa, zzz + 2, Blocks.glass_pane, 0, 2);
+	        DQR.func.setBlockAndCheck(par3World, xxx - 3, yyy + 2 + takasa, zzz - 1, Blocks.glass_pane, 0, 2);
+	        DQR.func.setBlockAndCheck(par3World, xxx - 3, yyy + 2 + takasa, zzz - 2, Blocks.glass_pane, 0, 2);
+	        DQR.func.setBlockAndCheck(par3World, xxx - 3, yyy + 2 + takasa, zzz  + 1, Blocks.glass_pane, 0, 2);
+	        DQR.func.setBlockAndCheck(par3World, xxx - 3, yyy + 2 + takasa, zzz + 2, Blocks.glass_pane, 0, 2);
 
 			try {
 				this.sleep(DQR.conf.cfg_build_sleep);
@@ -246,16 +249,16 @@ public class ThreadBuilderShop extends Thread{
 				// TODO 自動生成された catch ブロック
 				e.printStackTrace();
 			}
-	        par3World.setBlock(xxx + 3, yyy + 2 + takasa, zzz - 1, Blocks.glass_pane, 0, 2);
-	        par3World.setBlock(xxx + 3, yyy + 2 + takasa, zzz - 2, Blocks.glass_pane, 0, 2);
-	        par3World.setBlock(xxx + 3, yyy + 2 + takasa, zzz  + 1, Blocks.glass_pane, 0, 2);
-	        par3World.setBlock(xxx + 3, yyy + 2 + takasa, zzz + 2, Blocks.glass_pane, 0, 2);
+	        DQR.func.setBlockAndCheck(par3World, xxx + 3, yyy + 2 + takasa, zzz - 1, Blocks.glass_pane, 0, 2);
+	        DQR.func.setBlockAndCheck(par3World, xxx + 3, yyy + 2 + takasa, zzz - 2, Blocks.glass_pane, 0, 2);
+	        DQR.func.setBlockAndCheck(par3World, xxx + 3, yyy + 2 + takasa, zzz  + 1, Blocks.glass_pane, 0, 2);
+	        DQR.func.setBlockAndCheck(par3World, xxx + 3, yyy + 2 + takasa, zzz + 2, Blocks.glass_pane, 0, 2);
 
-	        par3World.setBlock(xxx, yyy + takasa, zzz - (4 * byVal), Blocks.air, 0, 2);
-	        par3World.setBlock(xxx, yyy + 1 + takasa, zzz - (4 * byVal), Blocks.air, 0, 2);
+	        DQR.func.setBlockAndCheck(par3World, xxx, yyy + takasa, zzz - (4 * byVal), Blocks.air, 0, 2);
+	        DQR.func.setBlockAndCheck(par3World, xxx, yyy + 1 + takasa, zzz - (4 * byVal), Blocks.air, 0, 2);
 
-	        par3World.setBlock(xxx - 2, yyy + 1 + takasa, zzz - (5 * byVal), kanban, metaV1, 2);
-	        par3World.setBlock(xxx + 2, yyy + 1 + takasa, zzz - (5 * byVal), kanban, metaV1, 2);
+	        DQR.func.setBlockAndCheck(par3World, xxx - 2, yyy + 1 + takasa, zzz - (5 * byVal), kanban, metaV1, 2);
+	        DQR.func.setBlockAndCheck(par3World, xxx + 2, yyy + 1 + takasa, zzz - (5 * byVal), kanban, metaV1, 2);
 
 	        for (int x = -2; x <= 2; ++x)
 	        {
@@ -266,33 +269,35 @@ public class ThreadBuilderShop extends Thread{
 					e.printStackTrace();
 				}
 
-				par3World.setBlock(xxx + x, yyy + takasa, zzz, Blocks.oak_stairs, metaV2, 2);
+				DQR.func.setBlockAndCheck(par3World, xxx + x, yyy + takasa, zzz, Blocks.oak_stairs, metaV2, 2);
 	        }
 
-	        par3World.setBlock(xxx + 2, yyy + 0 + takasa, zzz - (1 * byVal), DQDecorates.DqmBlockTaimatu2, metaV1, 2);
-	        par3World.setBlock(xxx + 1, yyy + 0 + takasa, zzz - (1 * byVal), DQDecorates.DqmBlockIsu, metaV1, 2);
-	        par3World.setBlock(xxx - 1, yyy + 0 + takasa, zzz - (1 * byVal), DQDecorates.DqmBlockIsu, metaV1, 2);
-	        par3World.setBlock(xxx - 2, yyy + 0 + takasa, zzz - (1 * byVal), DQDecorates.DqmBlockTaimatu2, metaV1, 2);
+	        DQR.func.setBlockAndCheck(par3World, xxx + 2, yyy + 0 + takasa, zzz - (1 * byVal), DQDecorates.DqmBlockTaimatu2, metaV1, 2);
+	        DQR.func.setBlockAndCheck(par3World, xxx + 1, yyy + 0 + takasa, zzz - (1 * byVal), DQDecorates.DqmBlockIsu, metaV1, 2);
+	        DQR.func.setBlockAndCheck(par3World, xxx - 1, yyy + 0 + takasa, zzz - (1 * byVal), DQDecorates.DqmBlockIsu, metaV1, 2);
+	        DQR.func.setBlockAndCheck(par3World, xxx - 2, yyy + 0 + takasa, zzz - (1 * byVal), DQDecorates.DqmBlockTaimatu2, metaV1, 2);
 			try {
 				this.sleep(DQR.conf.cfg_build_sleep);
 			} catch (InterruptedException e) {
 				// TODO 自動生成された catch ブロック
 				e.printStackTrace();
 			}
-	        //par3World.setBlock(xxx - (1 * byVal), yyy + 2 + takasa, zzz, DQDecorates.DqmBlockTaimatu2, metaV1, 2);
-	        par3World.setBlock(xxx, yyy + takasa, zzz + (3 * byVal), DQDecorates.DqmBlockHondana, this.Hougaku, 2);
+	        //DQR.func.setBlockAndCheck(par3World, xxx - (1 * byVal), yyy + 2 + takasa, zzz, DQDecorates.DqmBlockTaimatu2, metaV1, 2);
+	        DQR.func.setBlockAndCheck(par3World, xxx, yyy + takasa, zzz + (3 * byVal), DQDecorates.DqmBlockHondana, this.Hougaku, 2);
 
-	        par3World.setBlock(xxx + (2 * byVal), yyy + takasa, zzz + (3 * byVal), DQDecorates.DqmBlockTaru, 0, 2);
-	        par3World.setBlock(xxx + (-2 * byVal), yyy + takasa, zzz + (3 * byVal), DQDecorates.DqmBlockTubo2, 0, 2);
-	        par3World.setBlock(xxx + (-2 * byVal), yyy + takasa, zzz + (2 * byVal), DQDecorates.DqmBlockTubo2, 0, 2);
-	        par3World.setBlock(xxx + (-2 * byVal), yyy + takasa, zzz + (1 * byVal), DQDecorates.DqmBlockMaki, 1, 2);
+	        DQR.func.setBlockAndCheck(par3World, xxx + (2 * byVal), yyy + takasa, zzz + (3 * byVal), DQDecorates.DqmBlockTaru, 0, 2);
+	        DQR.func.setBlockAndCheck(par3World, xxx + (-2 * byVal), yyy + takasa, zzz + (3 * byVal), DQDecorates.DqmBlockTubo2, 0, 2);
+	        DQR.func.setBlockAndCheck(par3World, xxx + (-2 * byVal), yyy + takasa, zzz + (2 * byVal), DQDecorates.DqmBlockTubo2, 0, 2);
+	        DQR.func.setBlockAndCheck(par3World, xxx + (-2 * byVal), yyy + takasa, zzz + (1 * byVal), DQDecorates.DqmBlockMaki, 1, 2);
 
-	        par3World.setBlock(xxx + (-1 * byVal), yyy + 1 + takasa, zzz, DQDecorates.DqmBlockHepaitosu, 0, 2);
+	        DQR.func.setBlockAndCheck(par3World, xxx + (-1 * byVal), yyy + 1 + takasa, zzz, DQDecorates.DqmBlockHepaitosu, 0, 2);
 
-	        //par3World.setBlock(xxx, yyy + takasa, zzz + (1 * byVal), DQDecorates.DqmBlockMaki, 1, 2);
+	        //DQR.func.setBlockAndCheck(par3World, xxx, yyy + takasa, zzz + (1 * byVal), DQDecorates.DqmBlockMaki, 1, 2);
 	        if(npc != null)
 	        {
 	        	npc.setLocationAndAngles((double)xxx + 0.5D, (double)yyy + takasa, (double)zzz + 0.5D + (1 * byVal), 0.0F, 0.0F);
+	        	npc.setOwnerName2(buildPlayer.getCommandSenderName());
+	        	npc.setOwnerUUID2(buildPlayer.getUniqueID().toString());
 	        	par3World.spawnEntityInWorld(npc);
 	        }
         }if(this.Hougaku == 1 || this.Hougaku == 3)
@@ -323,7 +328,7 @@ public class ThreadBuilderShop extends Thread{
 	            {
 	                for (int y = -1; y <= 5; ++y)
 	                {
-	                    par3World.setBlock(xxx + x, yyy + y + takasa, zzz + (z * 1), Blocks.stonebrick, 0, 2);
+	                    DQR.func.setBlockAndCheck(par3World, xxx + x, yyy + y + takasa, zzz + (z * 1), Blocks.stonebrick, 0, 2);
 	                }
 	            }
 	        }
@@ -340,7 +345,7 @@ public class ThreadBuilderShop extends Thread{
 	            {
 	                for (int y = -1; y <= -1; ++y)
 	                {
-	                    par3World.setBlock(xxx + x, yyy + y + takasa, zzz + (z * 1), Blocks.brick_block, 0, 2);
+	                    DQR.func.setBlockAndCheck(par3World, xxx + x, yyy + y + takasa, zzz + (z * 1), Blocks.brick_block, 0, 2);
 	                }
 	            }
 	        }
@@ -357,7 +362,7 @@ public class ThreadBuilderShop extends Thread{
 	            {
 	                for (int y = 0; y <= 5; ++y)
 	                {
-	                    par3World.setBlock(xxx + x, yyy + y + takasa, zzz + (z * 1), Blocks.air, 0, 2);
+	                    DQR.func.setBlockAndCheck(par3World, xxx + x, yyy + y + takasa, zzz + (z * 1), Blocks.air, 0, 2);
 	                }
 	            }
 	        }
@@ -372,14 +377,14 @@ public class ThreadBuilderShop extends Thread{
 				}
 	            for (int x = -4; x <= 4; ++x)
 	            {
-	                par3World.setBlock(xxx + x, yyy + 5 + takasa, zzz + (z * 1), Blocks.stone_slab, 0, 2);
+	                DQR.func.setBlockAndCheck(par3World, xxx + x, yyy + 5 + takasa, zzz + (z * 1), Blocks.stone_slab, 0, 2);
 	            }
 	        }
 
-	        par3World.setBlock(xxx - 1, yyy + 2 + takasa, zzz - 3, Blocks.glass_pane, 0, 2);
-	        par3World.setBlock(xxx - 2, yyy + 2 + takasa, zzz - 3, Blocks.glass_pane, 0, 2);
-	        par3World.setBlock(xxx + 1, yyy + 2 + takasa, zzz  - 3, Blocks.glass_pane, 0, 2);
-	        par3World.setBlock(xxx + 2, yyy + 2 + takasa, zzz - 3, Blocks.glass_pane, 0, 2);
+	        DQR.func.setBlockAndCheck(par3World, xxx - 1, yyy + 2 + takasa, zzz - 3, Blocks.glass_pane, 0, 2);
+	        DQR.func.setBlockAndCheck(par3World, xxx - 2, yyy + 2 + takasa, zzz - 3, Blocks.glass_pane, 0, 2);
+	        DQR.func.setBlockAndCheck(par3World, xxx + 1, yyy + 2 + takasa, zzz  - 3, Blocks.glass_pane, 0, 2);
+	        DQR.func.setBlockAndCheck(par3World, xxx + 2, yyy + 2 + takasa, zzz - 3, Blocks.glass_pane, 0, 2);
 
 			try {
 				this.sleep(DQR.conf.cfg_build_sleep);
@@ -388,16 +393,16 @@ public class ThreadBuilderShop extends Thread{
 				e.printStackTrace();
 			}
 
-	        par3World.setBlock(xxx - 1, yyy + 2 + takasa, zzz + 3, Blocks.glass_pane, 0, 2);
-	        par3World.setBlock(xxx - 2, yyy + 2 + takasa, zzz + 3, Blocks.glass_pane, 0, 2);
-	        par3World.setBlock(xxx + 1, yyy + 2 + takasa, zzz + 3, Blocks.glass_pane, 0, 2);
-	        par3World.setBlock(xxx + 2, yyy + 2 + takasa, zzz + 3, Blocks.glass_pane, 0, 2);
+	        DQR.func.setBlockAndCheck(par3World, xxx - 1, yyy + 2 + takasa, zzz + 3, Blocks.glass_pane, 0, 2);
+	        DQR.func.setBlockAndCheck(par3World, xxx - 2, yyy + 2 + takasa, zzz + 3, Blocks.glass_pane, 0, 2);
+	        DQR.func.setBlockAndCheck(par3World, xxx + 1, yyy + 2 + takasa, zzz + 3, Blocks.glass_pane, 0, 2);
+	        DQR.func.setBlockAndCheck(par3World, xxx + 2, yyy + 2 + takasa, zzz + 3, Blocks.glass_pane, 0, 2);
 
-	        par3World.setBlock(xxx - (4 * byVal), yyy + takasa, zzz, Blocks.air, 0, 2);
-	        par3World.setBlock(xxx - (4 * byVal), yyy + 1 + takasa, zzz, Blocks.air, 0, 2);
+	        DQR.func.setBlockAndCheck(par3World, xxx - (4 * byVal), yyy + takasa, zzz, Blocks.air, 0, 2);
+	        DQR.func.setBlockAndCheck(par3World, xxx - (4 * byVal), yyy + 1 + takasa, zzz, Blocks.air, 0, 2);
 
-	        par3World.setBlock(xxx - (5 * byVal), yyy + 1 + takasa, zzz + 2, kanban, metaV1, 2);
-	        par3World.setBlock(xxx - (5 * byVal), yyy + 1 + takasa, zzz - 2, kanban, metaV1, 2);
+	        DQR.func.setBlockAndCheck(par3World, xxx - (5 * byVal), yyy + 1 + takasa, zzz + 2, kanban, metaV1, 2);
+	        DQR.func.setBlockAndCheck(par3World, xxx - (5 * byVal), yyy + 1 + takasa, zzz - 2, kanban, metaV1, 2);
 
 	        for (int x = -2; x <= 2; ++x)
 	        {
@@ -408,19 +413,19 @@ public class ThreadBuilderShop extends Thread{
 					e.printStackTrace();
 				}
 
-				par3World.setBlock(xxx, yyy + takasa, zzz + x, Blocks.oak_stairs, metaV2, 2);
+				DQR.func.setBlockAndCheck(par3World, xxx, yyy + takasa, zzz + x, Blocks.oak_stairs, metaV2, 2);
 	        }
 
 	        /*
-	        par3World.setBlock(xxx + 2, yyy + 0 + takasa, zzz - (1 * byVal), DQDecorates.DqmBlockTaimatu2, metaV1, 2);
-	        par3World.setBlock(xxx + 1, yyy + 0 + takasa, zzz - (1 * byVal), DQDecorates.DqmBlockIsu, metaV1, 2);
-	        par3World.setBlock(xxx - 1, yyy + 0 + takasa, zzz - (1 * byVal), DQDecorates.DqmBlockIsu, metaV1, 2);
-	        par3World.setBlock(xxx - 2, yyy + 0 + takasa, zzz - (1 * byVal), DQDecorates.DqmBlockTaimatu2, metaV1, 2);
+	        DQR.func.setBlockAndCheck(par3World, xxx + 2, yyy + 0 + takasa, zzz - (1 * byVal), DQDecorates.DqmBlockTaimatu2, metaV1, 2);
+	        DQR.func.setBlockAndCheck(par3World, xxx + 1, yyy + 0 + takasa, zzz - (1 * byVal), DQDecorates.DqmBlockIsu, metaV1, 2);
+	        DQR.func.setBlockAndCheck(par3World, xxx - 1, yyy + 0 + takasa, zzz - (1 * byVal), DQDecorates.DqmBlockIsu, metaV1, 2);
+	        DQR.func.setBlockAndCheck(par3World, xxx - 2, yyy + 0 + takasa, zzz - (1 * byVal), DQDecorates.DqmBlockTaimatu2, metaV1, 2);
 	        */
-	        par3World.setBlock(xxx - (1 * byVal), yyy + 0 + takasa, zzz + 2, DQDecorates.DqmBlockTaimatu2, metaV1, 2);
-	        par3World.setBlock(xxx - (1 * byVal), yyy + 0 + takasa, zzz + 1, DQDecorates.DqmBlockIsu, metaV1, 2);
-	        par3World.setBlock(xxx - (1 * byVal), yyy + 0 + takasa, zzz - 1, DQDecorates.DqmBlockIsu, metaV1, 2);
-	        par3World.setBlock(xxx - (1 * byVal), yyy + 0 + takasa, zzz - 2, DQDecorates.DqmBlockTaimatu2, metaV1, 2);
+	        DQR.func.setBlockAndCheck(par3World, xxx - (1 * byVal), yyy + 0 + takasa, zzz + 2, DQDecorates.DqmBlockTaimatu2, metaV1, 2);
+	        DQR.func.setBlockAndCheck(par3World, xxx - (1 * byVal), yyy + 0 + takasa, zzz + 1, DQDecorates.DqmBlockIsu, metaV1, 2);
+	        DQR.func.setBlockAndCheck(par3World, xxx - (1 * byVal), yyy + 0 + takasa, zzz - 1, DQDecorates.DqmBlockIsu, metaV1, 2);
+	        DQR.func.setBlockAndCheck(par3World, xxx - (1 * byVal), yyy + 0 + takasa, zzz - 2, DQDecorates.DqmBlockTaimatu2, metaV1, 2);
 
 			try {
 				this.sleep(DQR.conf.cfg_build_sleep);
@@ -428,31 +433,33 @@ public class ThreadBuilderShop extends Thread{
 				// TODO 自動生成された catch ブロック
 				e.printStackTrace();
 			}
-	        //par3World.setBlock(xxx - (1 * byVal), yyy + 2 + takasa, zzz, DQDecorates.DqmBlockTaimatu2, metaV1, 2);
+	        //DQR.func.setBlockAndCheck(par3World, xxx - (1 * byVal), yyy + 2 + takasa, zzz, DQDecorates.DqmBlockTaimatu2, metaV1, 2);
 
 
 			/*
-	        par3World.setBlock(xxx, yyy + takasa, zzz + (3 * byVal), DQDecorates.DqmBlockHondana, this.Hougaku, 2);
+	        DQR.func.setBlockAndCheck(par3World, xxx, yyy + takasa, zzz + (3 * byVal), DQDecorates.DqmBlockHondana, this.Hougaku, 2);
 
-	        par3World.setBlock(xxx + (2 * byVal), yyy + takasa, zzz + (3 * byVal), DQDecorates.DqmBlockTaru, 0, 2);
-	        par3World.setBlock(xxx + (-2 * byVal), yyy + takasa, zzz + (3 * byVal), DQDecorates.DqmBlockTubo2, 0, 2);
-	        par3World.setBlock(xxx + (-2 * byVal), yyy + takasa, zzz + (2 * byVal), DQDecorates.DqmBlockTubo2, 0, 2);
-	        par3World.setBlock(xxx + (-2 * byVal), yyy + takasa, zzz + (1 * byVal), DQDecorates.DqmBlockMaki, 1, 2);
+	        DQR.func.setBlockAndCheck(par3World, xxx + (2 * byVal), yyy + takasa, zzz + (3 * byVal), DQDecorates.DqmBlockTaru, 0, 2);
+	        DQR.func.setBlockAndCheck(par3World, xxx + (-2 * byVal), yyy + takasa, zzz + (3 * byVal), DQDecorates.DqmBlockTubo2, 0, 2);
+	        DQR.func.setBlockAndCheck(par3World, xxx + (-2 * byVal), yyy + takasa, zzz + (2 * byVal), DQDecorates.DqmBlockTubo2, 0, 2);
+	        DQR.func.setBlockAndCheck(par3World, xxx + (-2 * byVal), yyy + takasa, zzz + (1 * byVal), DQDecorates.DqmBlockMaki, 1, 2);
 
-	        par3World.setBlock(xxx + (-1 * byVal), yyy + 1 + takasa, zzz, DQDecorates.DqmBlockHepaitosu, 0, 2);
+	        DQR.func.setBlockAndCheck(par3World, xxx + (-1 * byVal), yyy + 1 + takasa, zzz, DQDecorates.DqmBlockHepaitosu, 0, 2);
 	        */
-	        par3World.setBlock(xxx + (3 * byVal), yyy + takasa, zzz, DQDecorates.DqmBlockHondana, metaV3, 2);
+	        DQR.func.setBlockAndCheck(par3World, xxx + (3 * byVal), yyy + takasa, zzz, DQDecorates.DqmBlockHondana, metaV3, 2);
 
-	        par3World.setBlock(xxx + (3 * byVal), yyy + takasa, zzz + (-2 * byVal), DQDecorates.DqmBlockTaru, 0, 2);
-	        par3World.setBlock(xxx + (3 * byVal), yyy + takasa, zzz + (2 * byVal), DQDecorates.DqmBlockTubo2, 0, 2);
-	        par3World.setBlock(xxx + (2 * byVal), yyy + takasa, zzz + (2 * byVal), DQDecorates.DqmBlockTubo2, 0, 2);
-	        par3World.setBlock(xxx + (1 * byVal), yyy + takasa, zzz + (2 * byVal), DQDecorates.DqmBlockMaki, 2, 2);
+	        DQR.func.setBlockAndCheck(par3World, xxx + (3 * byVal), yyy + takasa, zzz + (-2 * byVal), DQDecorates.DqmBlockTaru, 0, 2);
+	        DQR.func.setBlockAndCheck(par3World, xxx + (3 * byVal), yyy + takasa, zzz + (2 * byVal), DQDecorates.DqmBlockTubo2, 0, 2);
+	        DQR.func.setBlockAndCheck(par3World, xxx + (2 * byVal), yyy + takasa, zzz + (2 * byVal), DQDecorates.DqmBlockTubo2, 0, 2);
+	        DQR.func.setBlockAndCheck(par3World, xxx + (1 * byVal), yyy + takasa, zzz + (2 * byVal), DQDecorates.DqmBlockMaki, 2, 2);
 
-	        par3World.setBlock(xxx, yyy + 1 + takasa, zzz + (-1 * byVal), DQDecorates.DqmBlockHepaitosu, 0, 2);
+	        DQR.func.setBlockAndCheck(par3World, xxx, yyy + 1 + takasa, zzz + (-1 * byVal), DQDecorates.DqmBlockHepaitosu, 0, 2);
 
 	        if(npc != null)
 	        {
 	        	npc.setLocationAndAngles((double)xxx+ (1 * byVal) + 0.5D, (double)yyy + takasa, (double)zzz + 0.5D, 0.0F, 0.0F);
+	        	npc.setOwnerName2(buildPlayer.getCommandSenderName());
+	        	npc.setOwnerUUID2(buildPlayer.getUniqueID().toString());
 	        	par3World.spawnEntityInWorld(npc);
 	        }
         }

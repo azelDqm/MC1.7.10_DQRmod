@@ -183,7 +183,7 @@ public class DqmItemBuilderDamaW extends DqmItemBuilderBase{
 
         	if(!par3World.isRemote)
         	{
-        		ThreadBuilderDamaW builderThread = new ThreadBuilderDamaW(par3World, mSize, mHeight, mUnder, par1ItemStack, 0);
+        		ThreadBuilderDamaW builderThread = new ThreadBuilderDamaW(par3World, mSize, mHeight, mUnder, par1ItemStack, 0, par2EntityPlayer);
         		builderThread.start();
         	}
 

@@ -179,6 +179,8 @@ public class DQRconfigs {
     public static int recalcMP1 = 1;
 
     public static int bug_magicCoolTimeFix = 1;
+    public static int bug_mosSpawnTimeCheck = 1;
+    public static int bug_damageBoostPotionFix = 1;
 
     public static int cfg_gen_Genkotu = 1;
     public static String[] cfg_gen_Genkotu_type = new String[]{"0"};
@@ -244,6 +246,14 @@ public class DQRconfigs {
     public static Map<String, String> cfg_generateOre2S = new HashMap<>();
     public static Map<String, String> cfg_generateOre2N = new HashMap<>();
 
+    public static int cfg_generateOreDimType3 = 0;
+    public static int[] cfg_generateOreDimId3 = new int[]{};
+    public static String[] cfg_generateOreDimFolder3 = new String[]{};
+    public static String[] cfg_generateOreDimName3 = new String[]{};
+    public static String[] cfg_generateOreBlockName3 = new String[]{};
+    public static Map<Integer, String> cfg_generateOre3 = new HashMap<>();
+    public static Map<String, String> cfg_generateOre3S = new HashMap<>();
+    public static Map<String, String> cfg_generateOre3N = new HashMap<>();
 
     public static int cfg_generateOverSpawnDimType = 0;
     public static String[] cfg_generateOverSpawnDimFolder = new String[]{".", "DIM-5"};
@@ -268,6 +278,7 @@ public class DQRconfigs {
     public static int permBuilder2 = 2;
     public static int permBuilder3 = 2;
     public static int permBuilder4 = 2;
+    public static int permBuilder5 = 2;
     public static int needBuilderFrame1 = 1;
     public static int needBuilderFrame2 = 1;
     public static int needBuilderFrame3 = 1;
@@ -492,6 +503,8 @@ public class DQRconfigs {
 	public static int canDespawnMetal = 1;
 
 	public static int dqrHardcore = 0;
+	public static int dqrHardcorePet = 0;
+	public static int dqrHardcorePet2 = 0;
 
 	public static int enableRura = 1;
 	public static int enableRura2 = 1;
@@ -506,6 +519,12 @@ public class DQRconfigs {
 	public static int Kimera_CordSet = 2;
 	public static int Rura_CordSet = 2;
 	public static int RuraSin_CordSet = 2;
+
+	public static int rarihoDuration = 200;
+	public static int rarihomaDuration = 200;
+
+	public static int rarihoFreeDuration = 100;
+	public static int rarihomaFreeDuration = 100;
 
     public DQRconfigs()
 	{
@@ -683,6 +702,7 @@ public class DQRconfigs {
 		config.setCategoryComment("MiniBattleGame HighSpeed settings", "value is normalSpeed multiplied by n");
 		MBG_highSpeed = config.get("MiniBattleGame HighSpeed settings","set speed", MBG_highSpeed).getDouble();
 		config.save();
+
 	}
 
 
@@ -735,6 +755,7 @@ public class DQRconfigs {
 
 		CuttingSmoothBreak = config.get("Destruction of woods settings for DqrAxe","Smooth break", CuttingSmoothBreak , "0:disable 1:enable").getInt();
 		config.save();
+
 	}
 
 	public void getConfigOption(Configuration config)
@@ -774,6 +795,7 @@ public class DQRconfigs {
 		permBuilder2 = config.get("Item use permission","BuilderDamaS", permBuilder2, "allow use BuilderDamaS (0:prohibit 1:allow only OP 2:allow for all player)").getInt();
 		permBuilder3 = config.get("Item use permission","BuilderDamaW", permBuilder3, "allow use BuilderDamaW (0:prohibit 1:allow only OP 2:allow for all player)").getInt();
 		permBuilder4 = config.get("Item use permission","BuilderIdoMedal", permBuilder4, "allow use BuilderIdoMedal (0:prohibit 1:allow only OP 2:allow for all player)").getInt();
+		permBuilder5 = config.get("Item use permission","Kaikosyo", permBuilder5, "allow use Kaikosyo[NPC dismissal item] (0:prohibit 1:allow only OP 2:allow owner and OP 3:allow for all player)").getInt();
 
 		permUseBakudanisi = config.get("Item use permission","Bakudanisi", permUseBakudanisi, "allow use Bakudanisi (0:prohibit 1:allow only OP 2:allow for all player)").getInt();
 
@@ -832,7 +854,36 @@ public class DQRconfigs {
 		cfg_NoThreadUse = config.get("Core Settings","Don't use parallel process for Lv UP", cfg_NoThreadUse ,"0:disable 1:enable").getInt();
 		cfg_NoThreadUseHervest = config.get("Core Settings","Don't use parallel process for Harvest(Farming Magic Tool)", cfg_NoThreadUseHervest ,"0:disable 1:enable").getInt();
 		bonusChestEnable = config.get("Core Settings","DQR bonus chest enable", bonusChestEnable ,"Add dqr item to bonus chest(for only SSP) 0:disable 1:enable").getInt();
-		dqrHardcore = config.get("Core Settings","DQR HARDCORE enable", dqrHardcore ,"all data clear when you dead? 0:disable 1:enable").getInt();
+
+
+		config.setCategoryComment("dqr hardcore settings", "DQR hardcore mode settings");
+
+
+		/*
+		if(categ.containsKey("DQR HARDCORE enable"))
+		{
+			System.out.println("config TEST true!!");
+			//dqrHardcore = config.get("Core Settings","DQR HARDCORE enable", dqrHardcore ,"[WARNING] this parameter is moved and not use").getInt();
+			config.moveProperty("Core Settings","DQR HARDCORE enable", "DQR HARDCORE Settings");
+		}else
+		{
+			System.out.println("config TEST false!!");
+			dqrHardcore = config.get("DQR HARDCORE Settings","DQR HARDCORE enable", dqrHardcore ,"all data clear when you dead? 0:disable 1:enable").getInt();
+		}
+		*/
+		if(config.hasKey("core settings","DQR HARDCORE enable"))
+		{
+			//System.out.println("config TEST1 true!!");
+			//dqrHardcore = config.get("Core Settings","DQR HARDCORE enable", dqrHardcore ,"[WARNING] this parameter is moved and not use").getInt();
+			config.moveProperty("core settings","DQR HARDCORE enable", "dqr hardcore settings");
+		}else
+		{
+			dqrHardcore = config.get("dqr hardcore settings","DQR HARDCORE enable", dqrHardcore ,"all data clear when you dead? 0:disable 1:enable").getInt();
+		}
+
+		//dqrHardcore = config.get("DQR HARDCORE Settings","DQR HARDCORE enable", dqrHardcore ,"all data clear when you dead? 0:disable 1:enable").getInt();
+		dqrHardcorePet = config.get("dqr hardcore settings","DQR HARDCORE inclde petmonster", dqrHardcorePet ,"Petmonster despawn when player dead. 0:disable 1:enable").getInt();
+		dqrHardcorePet2 = config.get("dqr hardcore settings","DQR HARDCORE for Pet", dqrHardcorePet2 ,"Petmonster despawn when no health. 0:disable 1:enable").getInt();
 
 		config.setCategoryComment("SpawnerRoomGenerateRate", "this setting is SpawnerRoom generate Rating Val ");
 		SpawnRoomRate1 = config.get("SpawnerRoomGenerateRate","Overworld value", SpawnRoomRate1 ,"default = 1 / (512) - 0[settingVal]").getInt();
@@ -872,6 +923,8 @@ public class DQRconfigs {
 
 		config.setCategoryComment("fix bug options", "this setting is set bug before fix");
 		bug_magicCoolTimeFix = config.get("fix bug options","magic cool time fix", bug_magicCoolTimeFix , "0:before fix 1:fixed").getInt();
+		bug_mosSpawnTimeCheck = config.get("fix bug options","mob spawner time check fix", bug_mosSpawnTimeCheck , "0:before fix 1:fixed").getInt();
+		bug_damageBoostPotionFix = config.get("fix bug options","DamageBoostPotion value fix", bug_damageBoostPotionFix , "0:before fix 1:fixed").getInt();
 
 		config.setCategoryComment("Biome base blocks", "this setting is Blockname for BiomeId. BiomeID and Blockname to PAIR");
 		cfg_biomeBlock_biomeId = config.get("Biome base blocks","BiomeID", cfg_biomeBlock_biomeId).getIntList();
@@ -992,6 +1045,66 @@ public class DQRconfigs {
 				}else
 				{
 					cfg_generateOre2S.put(dimName, "stone");
+				}
+			}
+		}
+
+		config.setCategoryComment("World gen Ores3", "this setting is generate ALL ores. (DimensionID or WorldFolderName) and Blockname have to PAIR");
+		cfg_generateOreDimType3 = config.get("World gen Ores3","DimensionGetType", cfg_generateOreDimType3, "Dimension get type (0:DimensionID 1:WorldFolderName 2:DimensionName)").getInt();
+		cfg_generateOreDimFolder3 = config.get("World gen Ores3","WorldFolderName", cfg_generateOreDimFolder3, "This setting use DimensionGetType=1").getStringList();
+		cfg_generateOreDimName3 = config.get("World gen Ores3","WorldDimensionName", cfg_generateOreDimName3, "This setting use DimensionGetType=2").getStringList();
+		cfg_generateOreDimId3 = config.get("World gen Ores3","DimensionID", cfg_generateOreDimId3, "This setting use DimensionGetType=0").getIntList();
+		cfg_generateOreBlockName3 = config.get("World gen Ores3","BlockName", cfg_generateOreBlockName3 ).getStringList();
+
+		if(cfg_generateOreDimType3 == 0)
+		{
+			for(int cnt = 0; cnt < cfg_generateOreDimId3.length; cnt++)
+			{
+				if(cfg_generateOreBlockName3 != null &&
+				   cfg_generateOreBlockName3.length >= cnt &&
+				   cfg_generateOreBlockName3[cnt] != null &&
+				   !cfg_generateOreBlockName3[cnt].equalsIgnoreCase(""))
+				{
+					cfg_generateOre3.put(cfg_generateOreDimId3[cnt], cfg_generateOreBlockName3[cnt]);
+				}else
+				{
+					cfg_generateOre3.put(cfg_generateOreDimId3[cnt], "stone");
+				}
+			}
+		}else if(cfg_generateOreDimType3 == 1)
+		{
+			for(int cnt = 0; cnt < cfg_generateOreDimFolder3.length; cnt++)
+			{
+				String folderName = cfg_generateOreDimFolder3[cnt].equalsIgnoreCase(".") ? null : cfg_generateOreDimFolder3[cnt];
+
+				if(cfg_generateOreBlockName3 != null &&
+				   cfg_generateOreBlockName3.length >= cnt &&
+				   cfg_generateOreBlockName3[cnt] != null &&
+				   !cfg_generateOreBlockName3[cnt].equalsIgnoreCase(""))
+				{
+
+					cfg_generateOre3S.put(folderName, cfg_generateOreBlockName3[cnt]);
+				}else
+				{
+					cfg_generateOre3S.put(folderName, "stone");
+				}
+			}
+		}else if(cfg_generateOreDimType3 == 2)
+		{
+			for(int cnt = 0; cnt < cfg_generateOreDimName3.length; cnt++)
+			{
+				String dimName = cfg_generateOreDimName3[cnt].equalsIgnoreCase(".") ? null : cfg_generateOreDimName3[cnt];
+
+				if(cfg_generateOreBlockName3 != null &&
+				   cfg_generateOreBlockName3.length >= cnt &&
+				   cfg_generateOreBlockName3[cnt] != null &&
+				   !cfg_generateOreBlockName3[cnt].equalsIgnoreCase(""))
+				{
+
+					cfg_generateOre3S.put(dimName, cfg_generateOreBlockName3[cnt]);
+				}else
+				{
+					cfg_generateOre3S.put(dimName, "stone");
 				}
 			}
 		}
@@ -1369,10 +1482,16 @@ public class DQRconfigs {
 	public void getConfigMagic(Configuration config)
 	{
 		config.load();
-		config.setCategoryComment("MagicRanaluta", "Ranaluta setp hours settings");
+		config.setCategoryComment("MagicRanaluta", "Ranaluta step hours settings");
 
 		int[] dummy ={4,8,12,16,20,24};
 		RanalutaStep = config.get("MagicRanaluta","Step hours", dummy, "setting setep hours pattern. separate a new line").getIntList();
+
+		config.setCategoryComment("MagicRariho", "Rariho effect duration settings");
+		rarihoDuration = config.get("MagicRariho","Rariho dulation", rarihoDuration, "Rariho effect duration [tick] (1sec = 20tick)").getInt();
+		rarihomaDuration = config.get("MagicRariho","Rarihoma dulation", rarihomaDuration, "Rarihoma effect duration [tick] (1sec = 20tick)").getInt();
+		rarihoFreeDuration = config.get("MagicRariho","Rariho and Rarihoma free dulation", rarihoFreeDuration, "Release and free move duration [tick] (1sec = 20tick)").getInt();
+
 
 		config.save();
 	}
@@ -1692,6 +1811,151 @@ public class DQRconfigs {
 		cfg_option.get("DQR Fishing setting","FishingMode", fishingMode, "setting (0:disable 1:hooking for item 2:hooking fishing system)").set(var1);
 		cfg_option.save();
 
+	}
+
+
+	public void setOre2Settings(int dimID, String folName, String dimName, String stoneName)
+	{
+		cfg_core.load();
+		//System.out.println("TEST A");
+		if(dimID != 9999)
+		{
+			//System.out.println("TEST A1");
+			int[] newBox = new int[cfg_generateOreDimId2.length + 1];
+			for(int cnt = 0; cnt < cfg_generateOreDimId2.length; cnt++)
+			{
+				//System.out.println("TEST A2:" + cnt + " / " + cfg_generateOreDimId2[cnt]);
+				newBox[cnt] = cfg_generateOreDimId2[cnt];
+			}
+
+
+			newBox[newBox.length - 1]= dimID;
+			cfg_generateOreDimId2 = newBox;
+			//System.out.println("TEST A3" + " / " + dimID + " / " + newBox[newBox.length - 1]);
+			cfg_core.get("World gen Ores2","DimensionID", newBox, "This setting use DimensionGetType=0").set(newBox);
+		}
+
+		if(folName != null)
+		{
+			String[] newBox = new String[cfg_generateOreDimFolder2.length + 1];
+			for(int cnt = 0; cnt < cfg_generateOreDimFolder2.length; cnt++)
+			{
+				//System.out.println("TEST A2:" + cnt + " / " + cfg_generateOreDimId2[cnt]);
+				newBox[cnt] = cfg_generateOreDimFolder2[cnt];
+			}
+
+
+			newBox[newBox.length - 1]= folName;
+			cfg_generateOreDimFolder2 = newBox;
+			cfg_core.get("World gen Ores2","WorldFolderName", newBox, "This setting use DimensionGetType=1").set(newBox);
+		}
+
+		if(dimName != null)
+		{
+			String[] newBox = new String[cfg_generateOreDimName2.length + 1];
+			for(int cnt = 0; cnt < cfg_generateOreDimName2.length; cnt++)
+			{
+				//System.out.println("TEST A2:" + cnt + " / " + cfg_generateOreDimId2[cnt]);
+				newBox[cnt] = cfg_generateOreDimName2[cnt];
+			}
+
+
+			newBox[newBox.length - 1]= dimName;
+			cfg_generateOreDimName2 = newBox;
+
+			cfg_core.get("World gen Ores2","WorldDimensionName", newBox, "This setting use DimensionGetType=2").set(newBox);
+		}
+
+		if(stoneName != null)
+		{
+			String[] newBox = new String[cfg_generateOreBlockName2.length + 1];
+			for(int cnt = 0; cnt < cfg_generateOreBlockName2.length; cnt++)
+			{
+				//System.out.println("TEST A2:" + cnt + " / " + cfg_generateOreDimId2[cnt]);
+				newBox[cnt] = cfg_generateOreBlockName2[cnt];
+			}
+
+
+			newBox[newBox.length - 1]= stoneName;
+			cfg_generateOreBlockName2 = newBox;
+
+			cfg_core.get("World gen Ores2","BlockName", cfg_generateOreBlockName2 ).set(newBox);
+
+		}
+
+		cfg_core.save();
+	}
+
+	public void setOre3Settings(int dimID, String folName, String dimName, String stoneName)
+	{
+		cfg_core.load();
+		//System.out.println("TEST A");
+		if(dimID != 9999)
+		{
+			//System.out.println("TEST A1");
+			int[] newBox = new int[cfg_generateOreDimId3.length + 1];
+			for(int cnt = 0; cnt < cfg_generateOreDimId3.length; cnt++)
+			{
+				//System.out.println("TEST A3:" + cnt + " / " + cfg_generateOreDimId3[cnt]);
+				newBox[cnt] = cfg_generateOreDimId3[cnt];
+			}
+
+
+			newBox[newBox.length - 1]= dimID;
+			cfg_generateOreDimId3 = newBox;
+			//System.out.println("TEST A3" + " / " + dimID + " / " + newBox[newBox.length - 1]);
+			cfg_core.get("World gen Ores3","DimensionID", newBox, "This setting use DimensionGetType=0").set(newBox);
+		}
+
+		if(folName != null)
+		{
+			String[] newBox = new String[cfg_generateOreDimFolder3.length + 1];
+			for(int cnt = 0; cnt < cfg_generateOreDimFolder3.length; cnt++)
+			{
+				//System.out.println("TEST A3:" + cnt + " / " + cfg_generateOreDimId3[cnt]);
+				newBox[cnt] = cfg_generateOreDimFolder3[cnt];
+			}
+
+
+			newBox[newBox.length - 1]= folName;
+			cfg_generateOreDimFolder3 = newBox;
+			cfg_core.get("World gen Ores3","WorldFolderName", newBox, "This setting use DimensionGetType=1").set(newBox);
+		}
+
+		if(dimName != null)
+		{
+			String[] newBox = new String[cfg_generateOreDimName3.length + 1];
+			for(int cnt = 0; cnt < cfg_generateOreDimName3.length; cnt++)
+			{
+				//System.out.println("TEST A3:" + cnt + " / " + cfg_generateOreDimId3[cnt]);
+				newBox[cnt] = cfg_generateOreDimName3[cnt];
+			}
+
+
+			newBox[newBox.length - 1]= dimName;
+			cfg_generateOreDimName3 = newBox;
+
+			cfg_core.get("World gen Ores3","WorldDimensionName", newBox, "This setting use DimensionGetType=2").set(newBox);
+		}
+
+		if(stoneName != null)
+		{
+			String[] newBox = new String[cfg_generateOreBlockName3.length + 1];
+			for(int cnt = 0; cnt < cfg_generateOreBlockName3.length; cnt++)
+			{
+				//System.out.println("TEST A3:" + cnt + " / " + cfg_generateOreDimId3[cnt]);
+				newBox[cnt] = cfg_generateOreBlockName3[cnt];
+			}
+
+
+			newBox[newBox.length - 1]= stoneName;
+			cfg_generateOreBlockName3 = newBox;
+
+			cfg_core.get("World gen Ores3","BlockName", cfg_generateOreBlockName3 ).set(newBox);
+
+		}
+
+		cfg_core.save();
 	}
 }
 

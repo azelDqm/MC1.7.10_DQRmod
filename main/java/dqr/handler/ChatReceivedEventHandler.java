@@ -8,6 +8,7 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import dqr.DQR;
 import dqr.api.enums.EnumColor;
 import dqr.api.enums.EnumDqmMessageConv;
+import dqr.api.enums.EnumDqmMobAI;
 
 public class ChatReceivedEventHandler {
 	@SubscribeEvent
@@ -27,7 +28,7 @@ public class ChatReceivedEventHandler {
 
 		chatComponentType = !(event.message instanceof ChatComponentText);
 
-
+		//System.out.println("TEST:");
         if (event.message != null)
         {
 
@@ -37,6 +38,42 @@ public class ChatReceivedEventHandler {
         	}else
         	{
         		chatMessage = event.message.getFormattedText();
+        	}
+
+        	if(chatMessage.indexOf(EnumDqmMessageConv.PetSkill.getStartS()) >= 0 && chatMessage.indexOf(EnumDqmMessageConv.PetSkill.getEndS()) >= 0)
+        	{
+        		//System.out.println("TEST1:");
+        		String[] splitStr = chatMessage.split(",");
+        		String convMessage = "";
+        		int maxLoop = (splitStr.length - 2) / 3;
+
+        		for(int cnt = 0; cnt < maxLoop; cnt++)
+        		{
+        			//System.out.println("TEST2:" + cnt);
+        			int aiId = Integer.parseInt(splitStr[cnt * 3 + 1]);
+        			EnumDqmMobAI aiEnum = DQR.enumGetter.getDqmMobAI(aiId);
+
+        			if(aiEnum != aiEnum.AVOID)
+        			{
+	        			if(cnt != 0)
+	        			{
+	        				convMessage = convMessage + " / ";
+	        			}
+
+
+	        			if(aiEnum.getGradeFlg() == 0)
+	        			{
+	        				int grade = Integer.parseInt(splitStr[cnt * 3 + 2]);
+	        				convMessage = convMessage + splitStr[cnt * 3 + 3] + I18n.format("skill." + aiEnum.getName() + ".name",new Object[] {grade});
+	        			}else
+	        			{
+	        				convMessage = convMessage + splitStr[cnt * 3 + 3] + I18n.format("skill." + aiEnum.getName() + "." + splitStr[cnt * 3 + 2] + ".name",new Object[] {});
+	        			}
+        			}
+        		}
+
+        		//event.message = new ChatComponentText(convMessage);
+        		chatMessage = convMessage + "        ";
         	}
 
         	if(chatMessage.indexOf(EnumDqmMessageConv.MonsterName.getStartS()) >= 0)
@@ -149,10 +186,10 @@ public class ChatReceivedEventHandler {
         	{
         		if(chatComponentType)
         		{
-        			event.message = new ChatComponentTranslation(chatMessage,new Object[] {});
+        			event.message = new ChatComponentTranslation(chatMessage.replace("        ",""),new Object[] {});
         		}else
         		{
-        			event.message = new ChatComponentText(chatMessage);
+        			event.message = new ChatComponentText(chatMessage.replace("        ",""));
         		}
 
         	}

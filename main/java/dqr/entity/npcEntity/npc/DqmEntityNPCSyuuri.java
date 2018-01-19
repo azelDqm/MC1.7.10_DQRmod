@@ -8,12 +8,14 @@ import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.World;
 import dqr.DQR;
 import dqr.api.Items.DQAccessories;
+import dqr.api.Items.DQBuilders;
 import dqr.api.enums.EnumDqmMGToolMode;
 import dqr.api.enums.EnumDqmNpcTalk;
 import dqr.api.enums.EnumDqmWeaponMode;
@@ -239,6 +241,25 @@ public class DqmEntityNPCSyuuri extends DqmNPCBase
     	if(!ep.worldObj.isRemote)
     	{
     		//ep.addChatMessage(new ChatComponentTranslation("testTESTtest"));
+    		ItemStack its = ep.inventory.getCurrentItem();
+    		if(its != null && its.getItem() == DQBuilders.itemBuilderKaikosyo && ep.isSneaking())
+    		{
+    			int confVal = DQR.conf.permBuilder5;
+    			if(confVal != 0)
+    			{
+	    			//  && this.tameMode != 0
+	    			boolean opFlg = MinecraftServer.getServer().getConfigurationManager().func_152596_g(ep.getGameProfile());
+
+	    			if((confVal == 3) ||
+	    			   (confVal == 1 && opFlg) ||
+	    			   (confVal == 2 && (opFlg || ep.getUniqueID().toString().equalsIgnoreCase(this.getOwnerUUID2()))))
+	    			{
+		    			ep.worldObj.playSoundAtEntity(ep, "dqr:mob.petmob", 1.0F, 0.5F);
+		    			this.setDead();
+		    			return true;
+	    			}
+    			}
+    		}
 
     		int flg = ExtendedPlayerProperties.get(ep).getNpcTalk(EnumDqmNpcTalk.SYURIYA.getId());
 
@@ -249,7 +270,7 @@ public class DqmEntityNPCSyuuri extends DqmNPCBase
     			ExtendedPlayerProperties.get(ep).setNpcTalk(EnumDqmNpcTalk.SYURIYA.getId(), 1);
     		}else if(flg == 1)
     		{
-    			ItemStack its = ep.inventory.getCurrentItem();
+    			//ItemStack its = ep.inventory.getCurrentItem();
 
     			if(its != null && its.getItem() == DQAccessories.itemAccCanceler)
     			{

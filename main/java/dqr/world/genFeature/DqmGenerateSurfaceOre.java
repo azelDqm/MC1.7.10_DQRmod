@@ -71,7 +71,222 @@ public class DqmGenerateSurfaceOre implements IWorldGenerator
 
 
         }
+
+
+
+    	if((DQR.conf.cfg_generateOreDimType3 == 0 && DQR.conf.cfg_generateOre3.containsKey(dim)) ||
+    	    (DQR.conf.cfg_generateOreDimType3 == 1 && DQR.conf.cfg_generateOre3S.containsKey(folder)))
+        {
+    		if(DQR.conf.cfg_generateOreDimType3 == 0)
+    		{
+    			baseBlock = Block.getBlockFromName(DQR.conf.cfg_generateOre3.get(dim));
+    		}else if(DQR.conf.cfg_generateOreDimType3 == 1)
+    		{
+    			baseBlock = Block.getBlockFromName(DQR.conf.cfg_generateOre3S.get(folder));
+    			//System.out.println(folder + "/" + DQR.conf.cfg_generateOre2S.get(folder));
+    		}
+
+	    	generateSurfaceAllOre(world, random, chunkX, chunkZ, baseBlock);
+
+        }
     }
+
+
+    public void generateSurfaceAllOre(World var1, Random var2, int var3, int var4, Block baseBlock)
+    {
+
+    	//Block baseBlock = Block.getBlockFromName(DQR.conf.cfg_generateOre2.get(dimId));
+
+    	if(baseBlock == null)
+    	{
+    		//System.out.println("BLOCKNAME:");
+    		return;
+    	}
+
+        int k = var3 * 16;
+        int l = var4 * 16;
+        int i1;
+        int j1;
+        int k1;
+        int l1;
+        int i2;
+        int j2;
+
+        //こおりの結晶
+        WorldGenMinable OreKoorinokessyou = new WorldGenMinable(DQOres.BlockOreKoorinokessyou, 7, baseBlock);
+
+        for (k1 = 0; k1 < 6; ++k1)
+        {
+            l1 = k + var2.nextInt(16);
+            i2 = var2.nextInt(108) + 10;
+            j2 = l + var2.nextInt(16);
+            OreKoorinokessyou.generate(var1, var2, l1, i2, j2);
+        }
+        //ほしのかけら
+        WorldGenMinable OreHosinokakera = new WorldGenMinable(DQOres.BlockOreHosinokakera, 7, baseBlock);
+
+        for (k1 = 0; k1 < 6; ++k1)
+        {
+            l1 = k + var2.nextInt(16);
+            i2 = var2.nextInt(108) + 10;
+            j2 = l + var2.nextInt(16);
+            OreHosinokakera.generate(var1, var2, l1, i2, j2);
+        }
+        //磨き砂
+        WorldGenMinable OreMigakizuna = new WorldGenMinable(DQOres.BlockOreMigakizuna, 7, baseBlock);
+
+        for (k1 = 0; k1 < 6; ++k1)
+        {
+            l1 = k + var2.nextInt(16);
+            i2 = var2.nextInt(108) + 10;
+            j2 = l + var2.nextInt(16);
+            OreMigakizuna.generate(var1, var2, l1, i2, j2);
+        }
+        //鉄鉱石
+        WorldGenMinable OreTekkouseki = new WorldGenMinable(DQOres.BlockOreTekkouseki, 7, baseBlock);
+
+        for (k1 = 0; k1 < 8; ++k1)
+        {
+            l1 = k + var2.nextInt(16);
+            i2 = var2.nextInt(108) + 10;
+            j2 = l + var2.nextInt(16);
+            OreTekkouseki.generate(var1, var2, l1, i2, j2);
+        }
+
+        //かがみ石
+        WorldGenMinable OreKagaminoisi = new WorldGenMinable(DQOres.BlockOreKagaminoisi, 7, baseBlock);
+
+        for (k1 = 0; k1 < 6; ++k1)
+        {
+            l1 = k + var2.nextInt(16);
+            i2 = var2.nextInt(108) + 10;
+            j2 = l + var2.nextInt(16);
+            OreKagaminoisi.generate(var1, var2, l1, i2, j2);
+        }
+
+        //プラチナ
+        WorldGenMinable OrePuratina = new WorldGenMinable(DQOres.BlockOrePuratina, 7, baseBlock);
+
+        for (k1 = 0; k1 < 5; ++k1)
+        {
+            l1 = k + var2.nextInt(16);
+            i2 = var2.nextInt(108) + 10;
+            j2 = l + var2.nextInt(16);
+            OrePuratina.generate(var1, var2, l1, i2, j2);
+        }
+
+        WorldGenMinable OreYougansekinokakera = new WorldGenMinable(DQOres.BlockOreYougansekinokakera, 7, baseBlock);
+
+        for (k1 = 0; k1 < 8; ++k1)
+        {
+            l1 = k + var2.nextInt(16);
+            i2 = var2.nextInt(108) + 10;
+            j2 = l + var2.nextInt(16);
+            OreYougansekinokakera.generate(var1, var2, l1, i2, j2);
+        }
+
+        WorldGenMinable OreMisuriru = new WorldGenMinable(DQOres.BlockOreMisuriru, 7, baseBlock);
+
+        for (k1 = 0; k1 < 3; ++k1)
+        {
+            l1 = k + var2.nextInt(16);
+            i2 = var2.nextInt(108) + 10;
+            j2 = l + var2.nextInt(16);
+            OreMisuriru.generate(var1, var2, l1, i2, j2);
+        }
+
+        WorldGenMinable OreMetaru = new WorldGenMinable(DQOres.BlockOreMetaru, 7, baseBlock);
+
+        for (k1 = 0; k1 < 2; ++k1)
+        {
+            l1 = k + var2.nextInt(16);
+            i2 = var2.nextInt(108) + 10;
+            j2 = l + var2.nextInt(16);
+            OreMetaru.generate(var1, var2, l1, i2, j2);
+        }
+
+        WorldGenMinable OreRubi = new WorldGenMinable(DQOres.BlockOreRubi, 7, baseBlock);
+
+        for (k1 = 0; k1 < 5; ++k1)
+        {
+            l1 = k + var2.nextInt(16);
+            i2 = var2.nextInt(108) + 10;
+            j2 = l + var2.nextInt(16);
+            OreRubi.generate(var1, var2, l1, i2, j2);
+        }
+
+        WorldGenMinable OreMoon = new WorldGenMinable(DQOres.BlockOreMoon, 7, baseBlock);
+
+        for (k1 = 0; k1 < 6; ++k1)
+        {
+            l1 = k + var2.nextInt(16);
+            i2 = var2.nextInt(108) + 10;
+            j2 = l + var2.nextInt(16);
+            OreMoon.generate(var1, var2, l1, i2, j2);
+        }
+
+        WorldGenMinable OreHikarinoisi = new WorldGenMinable(DQOres.BlockOreHikarinoisi, 7, baseBlock);
+
+        for (k1 = 0; k1 < 3; ++k1)
+        {
+            l1 = k + var2.nextInt(16);
+            i2 = var2.nextInt(108) + 10;
+            j2 = l + var2.nextInt(16);
+            OreHikarinoisi.generate(var1, var2, l1, i2, j2);
+        }
+
+        WorldGenMinable OreTokinosuisyou = new WorldGenMinable(DQOres.BlockOreTokinosuisyou, 7, baseBlock);
+
+        for (k1 = 0; k1 < 6; ++k1)
+        {
+            l1 = k + var2.nextInt(16);
+            i2 = var2.nextInt(108) + 10;
+            j2 = l + var2.nextInt(16);
+            OreTokinosuisyou.generate(var1, var2, l1, i2, j2);
+        }
+
+        WorldGenMinable OreLittlemedal = new WorldGenMinable(DQOres.BlockOreLittlemedal, 7, baseBlock);
+
+        for (k1 = 0; k1 < 2; ++k1)
+        {
+            l1 = k + var2.nextInt(16);
+            i2 = var2.nextInt(108) + 10;
+            j2 = l + var2.nextInt(16);
+            OreLittlemedal.generate(var1, var2, l1, i2, j2);
+        }
+
+        WorldGenMinable OreTaiyounoisi = new WorldGenMinable(DQOres.BlockOreTaiyounoisi, 7, baseBlock);
+
+        for (k1 = 0; k1 < 2; ++k1)
+        {
+            l1 = k + var2.nextInt(16);
+            i2 = var2.nextInt(108) + 10;
+            j2 = l + var2.nextInt(16);
+            OreTaiyounoisi.generate(var1, var2, l1, i2, j2);
+        }
+
+        WorldGenMinable OreBakudanisi = new WorldGenMinable(DQOres.BlockOreBakudanisi, 7, baseBlock);
+
+        for (k1 = 0; k1 < 5; ++k1)
+        {
+            l1 = k + var2.nextInt(16);
+            i2 = var2.nextInt(108) + 10;
+            j2 = l + var2.nextInt(16);
+            OreBakudanisi.generate(var1, var2, l1, i2, j2);
+        }
+
+        WorldGenMinable OreInotinoisi = new WorldGenMinable(DQOres.BlockOreInotinoisi, 7, baseBlock);
+
+        for (k1 = 0; k1 < 6; ++k1)
+        {
+            l1 = k + var2.nextInt(16);
+            i2 = var2.nextInt(108) + 10;
+            j2 = l + var2.nextInt(16);
+            OreInotinoisi.generate(var1, var2, l1, i2, j2);
+        }
+    }
+
+
 
     public void generateSurfaceNetherOre(World var1, Random var2, int var3, int var4, Block baseBlock)
     {

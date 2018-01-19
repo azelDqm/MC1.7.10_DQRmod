@@ -28,10 +28,16 @@ public class DqmMobBaseNight extends DqmMobBase
         	return false;
         }
 
+        boolean timeCheck = false;
+        if(DQR.conf.bug_mosSpawnTimeCheck == 1 && this.flgSpawnFromSpawner)
+        {
+        	timeCheck = true;
+        }
+
         return this.worldObj.checkNoEntityCollision(this.boundingBox) &&
           	   this.worldObj.getCollidingBoundingBoxes(this, this.boundingBox).isEmpty() &&
           	   !this.worldObj.isAnyLiquid(this.boundingBox) &&
-          	   (!this.worldObj.isDaytime() || isValidLightLevel2(7)) &&
+          	   (!this.worldObj.isDaytime() || isValidLightLevel2(7) || timeCheck) &&
           	   this.worldObj.difficultySetting != EnumDifficulty.PEACEFUL;
     }
 }

@@ -20,6 +20,7 @@ import net.minecraft.util.WeightedRandom;
 import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import dqr.entity.mobEntity.DqmMobBase;
 
 public abstract class DqmMobSpawnerBaseLogic extends MobSpawnerBaseLogic
 {
@@ -177,7 +178,13 @@ public abstract class DqmMobSpawnerBaseLogic extends MobSpawnerBaseLogic
             p_98265_1_.readFromNBT(nbttagcompound);
             if (p_98265_1_.worldObj != null)
             {
+            	if(p_98265_1_ instanceof DqmMobBase)
+            	{
+            		DqmMobBase mob = (DqmMobBase)p_98265_1_;
+            		mob.flgSpawnFromSpawner = true;
+            	}
                 p_98265_1_.worldObj.spawnEntityInWorld(p_98265_1_);
+
             }
 
             NBTTagCompound nbttagcompound2;
@@ -225,6 +232,12 @@ public abstract class DqmMobSpawnerBaseLogic extends MobSpawnerBaseLogic
         		{	lb = new EntityLightningBolt(p_98265_1_.worldObj, p_98265_1_.posX, p_98265_1_.posY, p_98265_1_.posZ);
         			p_98265_1_.onStruckByLightning(lb);
         		}
+        	}
+
+        	if(p_98265_1_ instanceof DqmMobBase)
+        	{
+        		DqmMobBase mob = (DqmMobBase)p_98265_1_;
+        		mob.flgSpawnFromSpawner = true;
         	}
             this.getSpawnerWorld().spawnEntityInWorld(p_98265_1_);
             if(lb != null)

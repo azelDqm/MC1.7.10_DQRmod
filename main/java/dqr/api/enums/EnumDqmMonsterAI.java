@@ -132,7 +132,7 @@ public enum  EnumDqmMonsterAI {
 	GANIRASU("GANIRASU", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "X"),
 	GOLDMAN("GOLDMAN", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "X"),
 	REDSAIKURON("REDSAIKURON", 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "X"),
-	SURAIMUBEHOMAZUN("SURAIMUBEHOMAZUN", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 9, "X"),
+	SURAIMUBEHOMAZUN("SURAIMUBEHOMAZUN", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 9, "X"),
 	GAMEGONLOAD("GAMEGONLOAD", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, "X"),
 	PUYON("PUYON", 0, 2, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 6, 0, 0, 0, 0, "X"),
 	BABURUKING("BABURUKING", 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, "X"),
@@ -440,6 +440,50 @@ public enum  EnumDqmMonsterAI {
 	public int getHeavyFire(){ return this.HeavyFire;}
 	public int getAvoid(){ return this.Avoid;}
 
+	public int getParamFromIndex(int par1)
+	{
+		if(par1 == 1) return this.Jump;
+		if(par1 == 2) return this.Honoo;
+		if(par1 == 3) return this.Hubuki;
+		if(par1 == 4) return this.Poison;
+		if(par1 == 5) return this.Gira;
+		if(par1 == 6) return this.Mera;
+		if(par1 == 7) return this.Io;
+		if(par1 == 8) return this.Raidein;
+		if(par1 == 9) return this.Bagi;
+		if(par1 == 10) return this.Doruma;
+		if(par1 == 11) return this.Hyado;
+		if(par1 == 12) return this.Hoimi;
+		if(par1 == 13) return this.Zaki;
+		if(par1 == 14) return this.Baikiruto;
+		if(par1 == 15) return this.Sukara;
+		if(par1 == 16) return this.Baha;
+		if(par1 == 17) return this.Piora;
+		if(par1 == 18) return this.Magicbaria;
+		if(par1 == 19) return this.Mahokanta;
+		if(par1 == 20) return this.Bomie;
+		if(par1 == 21) return this.Rariho;
+		if(par1 == 22) return this.Manusa;
+		if(par1 == 23) return this.Mahoton;
+		if(par1 == 24) return this.Rukani;
+		if(par1 == 25) return this.Medapani;
+		if(par1 == 26) return this.Henatosu;
+		if(par1 == 27) return this.Divainsuperu;
+		if(par1 == 28) return this.Rukanan;
+		if(par1 == 29) return this.Rarihoma;
+		if(par1 == 30) return this.Bomiosu;
+		if(par1 == 31) return this.Sukuruto;
+		if(par1 == 32) return this.Piorimu;
+		if(par1 == 33) return this.Behomara;
+		if(par1 == 34) return this.Mahoimi;
+		if(par1 == 35) return this.PoisonX;
+		if(par1 == 36) return this.Teleport;
+		if(par1 == 37) return this.Megante;
+		if(par1 == 38) return this.Arrow;
+		if(par1 == 39) return this.HeavyFire;
+		if(par1 == 40) return this.Avoid;
 
+		return -1;
+	}
 
 }

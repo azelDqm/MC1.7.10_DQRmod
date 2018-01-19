@@ -3,7 +3,9 @@ package dqr.enums;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSource;
+import net.minecraft.util.EntityDamageSourceIndirect;
 import dqr.entity.magicEntity.magic.MagicEntity;
+import dqr.entity.magicEntity.magic.MagicEntityArrow;
 import dqr.entity.magicEntity.magic.MagicEntityHyado;
 import dqr.entity.magicEntity.magic.MagicEntityHyadoB;
 import dqr.entity.magicEntity.magic.MagicEntityMera;
@@ -159,4 +161,9 @@ public class DqmDamageSource{
 
 		return false;
 	}
+
+    public static DamageSource causeArrowDamageDQ(MagicEntityArrow p_76353_0_, Entity p_76353_1_)
+    {
+        return (new EntityDamageSourceIndirect("arrow", p_76353_0_, p_76353_1_)).setProjectile();
+    }
 }

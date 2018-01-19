@@ -95,6 +95,7 @@ import dqr.items.magicTool.DqmItemMGTFarm2;
 import dqr.items.magicTool.DqmItemMGTSet;
 import dqr.items.magicTool.DqmItemPetSuisyou;
 import dqr.items.miscs.DqmItemAccessoryCanceler;
+import dqr.items.miscs.DqmItemAccessoryStopper;
 import dqr.items.miscs.DqmItemDyeWhite2;
 import dqr.items.miscs.DqmItemFarmerDiary;
 import dqr.items.miscs.DqmItemKenjanoisi;
@@ -104,6 +105,7 @@ import dqr.items.miscs.DqmItemKimeraC;
 import dqr.items.miscs.DqmItemLittlemedal;
 import dqr.items.miscs.DqmItemMahounoTutu;
 import dqr.items.miscs.DqmItemMegaminoInori;
+import dqr.items.miscs.DqmItemPetbook;
 import dqr.items.miscs.DqmItemShinjirukokoro;
 import dqr.items.weapon.DqmItemThrowing;
 
@@ -215,6 +217,7 @@ public class DqItem {
 		DQAccessories.itemUroborosunotate = new DqmItemBuffShield(EnumDqmSubEquipType.Shield).setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemUroborosunotate").setTextureName("dqr:Uroborosunotate");
 
 		DQAccessories.itemAccCanceler =  new DqmItemAccessoryCanceler().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemAccCanceler").setTextureName("dqr:Torihazusi");
+		DQAccessories.itemAccStopper =  new DqmItemAccessoryStopper().setCreativeTab(DQR.tabs.DqmTabAcc).setUnlocalizedName("dqm.itemAccStopper").setTextureName("dqr:Stopper");
 		//防具
 
 		DQArmors.itemDansanohanekazaribando = new DqmItemArmorBase(DQR.dqmMaterial.armorDansa, HELMET, 4).setCreativeTab(DQR.tabs.DqmTabArmor).setUnlocalizedName("dqm.itemDansanohanekazaribando").setTextureName("dqr:Dansanohanekazaribando");
@@ -889,6 +892,7 @@ public class DqItem {
 
 		DQMiscs.itemFarmBook = new DqmItemFarmBook().setTextureName("dqr:FarmBook").setUnlocalizedName("dqm.itemFarmBook").setCreativeTab(CreativeTabs.tabMisc);
 		DQMiscs.itemShinjirukokoro = new DqmItemShinjirukokoro().setCreativeTab(DQR.tabs.DqmTabMisc).setUnlocalizedName("dqm.itemShinjirukokoro").setTextureName("dqr:Shinjirukokoro");
+		DQMiscs.itemPetbook = new DqmItemPetbook().setCreativeTab(DQR.tabs.DqmTabMisc).setUnlocalizedName("dqm.itemPetbook").setTextureName("dqr:PetSkillbook");
 
 		//植物
 		DQSeeds.itemYakusouSeed = new DqmItemSeedBase(DQPlants.BlockYakusouSeed1, Blocks.farmland).setCreativeTab(DQR.tabs.DqmTabPlant).setUnlocalizedName("dqm.itemYakusouSeed").setTextureName("dqr:YakusouSeed");

@@ -687,8 +687,9 @@ public class LivingEventHandler {
 	        		DQR.calcPlayerStatus.calcAccessory(ep);
         		}
 
+        		int buffFlg = ExtendedPlayerProperties.get(ep).getAccBuffStop();
     			//1秒処理
-        		if(event.entityLiving.ticksExisted % 4 == 0)
+        		if(event.entityLiving.ticksExisted % 4 == 0 && buffFlg == 0)
         		{
         			PotionEffect pe = event.entityLiving.getActivePotionEffect(DQPotionPlus.potionHonoonomi);
         			if(pe != null)
@@ -1037,7 +1038,7 @@ public class LivingEventHandler {
 			}
 
     		pe = ep.getActivePotionEffect(DQPotionMinus.debuffRariho);
-    		if(pe != null)
+    		if(pe != null && pe.getDuration() > DQR.conf.rarihoFreeDuration)
     		{
     			double[] loc = new double[4];
 

@@ -1,12 +1,12 @@
 package dqr.api.event;
 
-import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import cpw.mods.fml.common.eventhandler.Cancelable;
 import cpw.mods.fml.common.eventhandler.Event;
 
 @Cancelable
 public class DqrCanDespawnEvent extends Event{
-	public final EntityLiving entityLiving;
+	public final EntityLivingBase entityLiving;
 	public int resultCode = -1;
 
 	/**
@@ -17,7 +17,7 @@ public class DqrCanDespawnEvent extends Event{
 	 *  1:Despawn する
 	 */
 
-	public DqrCanDespawnEvent (EntityLiving par1)
+	public DqrCanDespawnEvent (EntityLivingBase par1)
 	{
 		this.entityLiving = par1;
 	}

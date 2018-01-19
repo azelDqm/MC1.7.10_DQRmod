@@ -3,7 +3,8 @@ package dqr.api.enums;
 public enum EnumDqmMessageConv {
 	MonsterName(0, "!revMob.", ".boMver!"),
 	JobName(1, "!revJob.", ".boJver!"),
-	SkillName(2, "!revSkillW.", ".WllikSver!");
+	SkillName(2, "!revSkillW.", ".WllikSver!"),
+	PetSkill(3, "!revPetS,", "StePver!");
 
 
 	private int id;

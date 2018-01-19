@@ -205,4 +205,14 @@ public class DqmItemFoodMiscBase extends ItemFood{
 	 {
 		 return this.maxHP;
 	 }
+
+	 public float getMinMP()
+	 {
+		 return this.minMP;
+	 }
+
+	 public int getMaxMP()
+	 {
+		 return this.maxMP;
+	 }
 }

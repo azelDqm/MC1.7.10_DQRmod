@@ -90,12 +90,11 @@ public class FuncCommon {
 
 		pe = par1.getActivePotionEffect(DQPotionMinus.debuffRariho);
 		//if(pe != null && par1.worldObj.isRemote && pe.getDuration() > 0)
-		if(pe != null && pe.getDuration() > 0)
+		if(pe != null && pe.getDuration() > DQR.conf.rarihoFreeDuration)
 		{
 			//System.out.println("Rariho:" + pe.getDuration());
 			return true;
 		}
-
 		return false;
 	}
 
@@ -340,19 +339,26 @@ public class FuncCommon {
 
 	public boolean canAttackPetMonster(DqmPetBase pet, EntityPlayer attacker)
 	{
+		//System.out.println("TEST3");
 		if(pet.getOwner() != null && pet.getOwner() instanceof EntityPlayer)
 		{
-			if(!attacker.canAttackPlayer((EntityPlayer)pet.getOwner()))
+			//System.out.println("TEST4");
+			if(!attacker.canAttackPlayer((EntityPlayer)pet.getOwner()) || attacker == (EntityPlayer)pet.getOwner() ||
+					attacker.getUniqueID().toString().equalsIgnoreCase(pet.getOwner().getUniqueID().toString()))
 			{
+				//System.out.println("TEST5");
 				return false;
 			}
 		}else
 		{
+			//System.out.println("TEST6");
 			if(!pet.worldObj.isRemote)
 			{
+				//System.out.println("TEST7");
 				MinecraftServer minecraftserver = MinecraftServer.getServer();
 				if(!minecraftserver.isPVPEnabled() && DQR.conf.offlinePlayerPetAttack == 0)
 				{
+					//System.out.println("TEST8");
 					return false;
 				}
 			}
@@ -464,6 +470,18 @@ public class FuncCommon {
 		}
 
 
+
+		return ret;
+	}
+
+	public boolean setBlockAndCheck(World world, int p_147465_1_, int p_147465_2_, int p_147465_3_, Block p_147465_4_, int p_147465_5_, int p_147465_6_)
+	{
+		boolean ret = false;
+		float blockHardness = world.getBlock(p_147465_1_, p_147465_2_, p_147465_3_).getBlockHardness(world, p_147465_1_, p_147465_2_, p_147465_3_);
+		if(blockHardness > -1.0f)
+		{
+			ret = world.setBlock(p_147465_1_, p_147465_2_, p_147465_3_, p_147465_4_, p_147465_5_, p_147465_6_);
+		}
 
 		return ret;
 	}

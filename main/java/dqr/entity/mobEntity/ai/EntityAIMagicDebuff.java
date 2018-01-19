@@ -1,8 +1,6 @@
 package dqr.entity.mobEntity.ai;
 
-import java.util.List;
-
-import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
@@ -51,6 +49,33 @@ public class EntityAIMagicDebuff extends EntityAIBase
             return this.field_151501_c.getBlock(i, j, k) == Blocks.tallgrass && this.field_151501_c.getBlockMetadata(i, j, k) == 1 ? true : this.field_151501_c.getBlock(i, j - 1, k) == Blocks.grass;
         }
         */
+    	EntityLivingBase entitylivingbase = this.field_151500_b.getAttackTarget();
+
+        if (entitylivingbase == null && !(entitylivingbase instanceof EntityPlayer))
+        {
+        	//System.out.println("test11");
+        	this.tagetMob = null;
+            return false;
+        }
+        else
+        {
+            this.tagetMob = (EntityPlayer)entitylivingbase;
+
+
+            if(!this.field_151500_b.worldObj.isRemote)
+            {
+	            WorldServer worldserver = MinecraftServer.getServer().worldServers[0];
+
+	            long setTime = worldserver.getWorldTime();
+	            //System.out.println("TEST_AI_shouldExecute 2 : " + setTime);
+	            //if(DQR.debug != 0) System.out.println("shouldExecute(Time) : " + this.parentEntity.skillCoolTime + "(" + (this.parentEntity.skillCoolTime + 5) +  ") / " + setTime );
+	            if(this.field_151500_b.skillCoolTime + DQR.func.xRandom(this.field_151500_b.skillCoolTimeMin, this.field_151500_b.skillCoolTimeMax) < setTime)
+	            {
+	            	return true;
+	            }
+            }
+        }
+    	/*
         if(!this.field_151500_b.worldObj.isRemote)
         {
             WorldServer worldserver = MinecraftServer.getServer().worldServers[0];
@@ -81,6 +106,7 @@ public class EntityAIMagicDebuff extends EntityAIBase
 		        }
             }
         }
+        */
 
         return false;
     }

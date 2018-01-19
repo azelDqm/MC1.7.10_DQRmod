@@ -2225,6 +2225,8 @@ public class DqrItemRegister {
     	GameRegistry.registerItem(DQBuilders.itemBuilderDamaWW, "itemBuilderDamaWW");
 
     	GameRegistry.registerItem(DQBuilders.itemBuilderKaikosyo, "itemBuilderKaikosyo");
+        GameRegistry.registerItem(DQMiscs.itemPetbook, "itemPetbook");
+        GameRegistry.registerItem(DQAccessories.itemAccStopper, "ItemAccStopper");
 	}
 }
 

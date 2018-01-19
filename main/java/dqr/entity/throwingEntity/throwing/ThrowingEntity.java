@@ -564,14 +564,14 @@ public class ThrowingEntity extends Entity implements IProjectile{
                         }
                         else
                         {
-                    		if(target.entityHit instanceof EntityLiving)
+                    		if(target.entityHit instanceof EntityLivingBase)
                     		{
-                    			EntityLiving elv2 = (EntityLiving)target.entityHit;
+                    			EntityLivingBase elv2 = (EntityLivingBase)target.entityHit;
                     		}
 
-                    		if(this.shootingEntity != null && this.shootingEntity instanceof EntityLiving)
+                    		if(this.shootingEntity != null && this.shootingEntity instanceof EntityLivingBase)
                     		{
-                            	EntityLiving elv = (EntityLiving)this.shootingEntity;
+                            	EntityLivingBase elv = (EntityLivingBase)this.shootingEntity;
                             	//村人以外なら、ダメージを与える処理を呼ぶ
                             	if (elv.attackEntityFrom(damagesource, (float)i1))
                                 {

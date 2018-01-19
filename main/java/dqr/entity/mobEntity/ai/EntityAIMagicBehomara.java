@@ -26,6 +26,7 @@ public class EntityAIMagicBehomara extends EntityAIBase
 
     public EntityAIMagicBehomara(DqmMobBase p_i45314_1_, EnumDqmMagic enumMagic, Potion pot)
     {
+    	DQR.func.debugString("TEST_Z", this.getClass());
         this.field_151500_b = p_i45314_1_;
         this.field_151501_c = p_i45314_1_.worldObj;
         this.enumMagic = enumMagic;
@@ -39,8 +40,10 @@ public class EntityAIMagicBehomara extends EntityAIBase
     public boolean shouldExecute()
     {
 
+    	DQR.func.debugString("TEST_A", this.getClass());
         if(!this.field_151500_b.worldObj.isRemote)
         {
+        	DQR.func.debugString("TEST_B", this.getClass());
             WorldServer worldserver = MinecraftServer.getServer().worldServers[0];
 
             long setTime = worldserver.getWorldTime();
@@ -48,12 +51,14 @@ public class EntityAIMagicBehomara extends EntityAIBase
             //if(DQR.debug == 4) System.out.println("shouldExecute(Time) : " + this.field_151500_b.skillCoolTime + "(" + (this.parentEntity.skillCoolTime + 5) +  ") / " + setTime );
             if(this.field_151500_b.skillCoolTimeHeal + DQR.func.xRandom(this.field_151500_b.skillCoolTimeHealMin, this.field_151500_b.skillCoolTimeHealMax) < setTime)
             {
+            	DQR.func.debugString("TEST_C", this.getClass());
 		    	if(this.field_151500_b.getMaxHealth() > this.field_151500_b.getHealth())
 		    	{
 		    		this.tagetMob = this.field_151500_b;
 		    		return true;
 		    	}
 
+		    	DQR.func.debugString("TEST_D", this.getClass());
 		    	List list = field_151501_c.getEntitiesWithinAABBExcludingEntity(field_151500_b,
 		    			field_151500_b.boundingBox.addCoord(field_151500_b.motionX, field_151500_b.motionY, field_151500_b.motionZ).expand(10.0D, 5.0D, 10.0D));
 
@@ -73,6 +78,7 @@ public class EntityAIMagicBehomara extends EntityAIBase
 		        		}
 		        	}
 		        }
+		        DQR.func.debugString("TEST_E", this.getClass());
             }
         }
 
@@ -113,6 +119,7 @@ public class EntityAIMagicBehomara extends EntityAIBase
      */
     public void updateTask()
     {
+    	DQR.func.debugString("TEST_F", this.getClass());
     	int tag = this.field_151500_b == this.tagetMob? 1 : 0;
 
         double d0 = this.field_151500_b.getDistanceSq(this.tagetMob.posX, this.tagetMob.boundingBox.minY, this.tagetMob.posZ);
@@ -127,6 +134,7 @@ public class EntityAIMagicBehomara extends EntityAIBase
             this.field_75318_f = 0;
         }
 
+        DQR.func.debugString("TEST_G", this.getClass());
         //if (d0 <= (double)5.0F && this.field_75318_f >= 20)
         if (this.field_75318_f >= 40)
         {
@@ -137,6 +145,7 @@ public class EntityAIMagicBehomara extends EntityAIBase
             this.field_151500_b.getNavigator().tryMoveToEntityLiving(this.tagetMob, 1.25D);
         }
 
+        DQR.func.debugString("TEST_H", this.getClass());
         if(this.tagetMob != null){
         	this.field_151500_b.getLookHelper().setLookPositionWithEntity(this.tagetMob, 30.0F, 30.0F);
         }
@@ -154,7 +163,7 @@ public class EntityAIMagicBehomara extends EntityAIBase
             this.field_151500_b.skillCoolTimeHeal = setTime;
         }
 
-
+        DQR.func.debugString("TEST_I", this.getClass());
 
             //this.rangedAttackEntityHost.attackEntityWithRangedAttack(this.attackTarget, f1);
             //this.rangedAttackTime = MathHelper.floor_float(f * (float)(this.maxRangedAttackTime - this.field_96561_g) + (float)this.field_96561_g);

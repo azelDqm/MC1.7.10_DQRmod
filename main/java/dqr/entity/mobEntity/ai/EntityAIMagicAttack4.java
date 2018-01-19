@@ -136,11 +136,14 @@ public class EntityAIMagicAttack4 extends EntityAIBase
         if (entitylivingbase == null)
         {
         	//System.out.println("test11");
+        	//this.parentEntity.setTarget(null);
+        	this.attackTarget = null;
             return false;
         }
         else
         {
             this.attackTarget = entitylivingbase;
+
 
             if(!this.parentEntity.worldObj.isRemote)
             {

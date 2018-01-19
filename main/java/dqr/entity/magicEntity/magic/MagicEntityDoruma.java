@@ -6,7 +6,6 @@ import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IProjectile;
 import net.minecraft.entity.monster.EntityEnderman;
@@ -250,7 +249,7 @@ public class MagicEntityDoruma extends MagicEntity implements IProjectile{
         		                               !((EntityPlayer)this.shootingEntity).canAttackPlayer(epTarget))
         		                    {
         	                        	epTarget = null;
-        		                    }else if(epTarget == (EntityPlayer)this.shootingEntity)
+        		                    }else if(this.shootingEntity instanceof EntityPlayer && epTarget == (EntityPlayer)this.shootingEntity)
         		                    {
         		                    	epTarget = null;
         		                    }
@@ -376,7 +375,7 @@ public class MagicEntityDoruma extends MagicEntity implements IProjectile{
             	{
             		Entity target = entityList.get(n).entityHit;
 
-            		if(this.shootingEntity instanceof EntityPlayer || this.shootingEntity instanceof EntityTameable)
+            		if(this.shootingEntity instanceof EntityPlayer)
             		{
 	            		if (target instanceof EntityPlayer)
 	                    {
@@ -397,6 +396,45 @@ public class MagicEntityDoruma extends MagicEntity implements IProjectile{
 	                    }else if(target instanceof DqmPetBase)
 	                    {
 	                    	if(!(DQR.func.canAttackPetMonster((DqmPetBase)target, ((EntityPlayer)this.shootingEntity))))
+	                    	{
+	                    		entityList.remove(n);
+	                    	}
+	                    }
+	                    else if (target instanceof EntityTameable ||
+	                                 target instanceof EntityHorse)
+	                    {
+	                    	//事故防止の為、EntityTameable（犬や猫などのペット）、馬にも当たらないようにする
+	                    	entityList.remove(n);
+	                    }
+            		}else if(this.shootingEntity instanceof DqmPetBase)
+            		{
+            			EntityPlayer owner = null;
+                    	if(this.shootingEntityOwner != null && this.shootingEntityOwner instanceof EntityPlayer)
+                    	{
+                    		 owner = (EntityPlayer)this.shootingEntityOwner;
+                    	}
+
+
+        				if(target == this.shootingEntity)
+        				{
+        					//対象が撃った本人の場合も当たらない
+                        	entityList.remove(n);
+        				}else if (target instanceof EntityPlayer)
+	                    {
+	                    	//プレイヤーに当たった時
+	                    	EntityPlayer entityplayer = (EntityPlayer)target;
+
+	                        if(owner != null && (entityplayer.capabilities.disableDamage || !owner.canAttackPlayer(entityplayer)))
+	                        {
+	                        	//PvPが許可されていないと当たらない
+	                            entityList.remove(n);
+	                        }else if(owner != null && target == owner)
+	                        {
+	                        	entityList.remove(n);
+	                        }
+	                    }else if(target instanceof DqmPetBase)
+	                    {
+	                    	if(owner != null && !(DQR.func.canAttackPetMonster((DqmPetBase)target, owner)))
 	                    	{
 	                    		entityList.remove(n);
 	                    	}
@@ -466,7 +504,7 @@ public class MagicEntityDoruma extends MagicEntity implements IProjectile{
 	          	            	{
 	          	            		Entity target2 = (Entity)list2.get(n);
 
-	          	            		if(this.shootingEntity instanceof EntityPlayer || this.shootingEntity instanceof EntityTameable)
+	          	            		if(this.shootingEntity instanceof EntityPlayer)
 	          	            		{
 	          		            		if (target2 instanceof EntityPlayer)
 	          		                    {
@@ -486,7 +524,46 @@ public class MagicEntityDoruma extends MagicEntity implements IProjectile{
 	          		                        }
 	          		                    }
 
-	          	            		}else
+	          	            		}else if(this.shootingEntity instanceof DqmPetBase)
+	        	            		{
+	        	            			EntityPlayer owner = null;
+	        	                    	if(this.shootingEntityOwner != null && this.shootingEntityOwner instanceof EntityPlayer)
+	        	                    	{
+	        	                    		 owner = (EntityPlayer)this.shootingEntityOwner;
+	        	                    	}
+
+
+	        	        				if(target2 == this.shootingEntity)
+	        	        				{
+	        	        					//対象が撃った本人の場合も当たらない
+	        	        					list2.remove(n);
+	        	        				}else if (target2 instanceof EntityPlayer)
+	        		                    {
+	        		                    	//プレイヤーに当たった時
+	        		                    	EntityPlayer entityplayer = (EntityPlayer)target2;
+
+	        		                        if(owner != null && (entityplayer.capabilities.disableDamage || !owner.canAttackPlayer(entityplayer)))
+	        		                        {
+	        		                        	//PvPが許可されていないと当たらない
+	        		                        	list2.remove(n);
+	        		                        }else if(owner != null && target2 == owner)
+	        		                        {
+	        		                        	list2.remove(n);
+	        		                        }
+	        		                    }else if(target2 instanceof DqmPetBase)
+	        		                    {
+	        		                    	if(owner != null && !(DQR.func.canAttackPetMonster((DqmPetBase)target2, owner)))
+	        		                    	{
+	        		                    		list2.remove(n);
+	        		                    	}
+	        		                    }
+	        		                    else if (target2 instanceof EntityTameable ||
+	        		                                 target2 instanceof EntityHorse)
+	        		                    {
+	        		                    	//事故防止の為、EntityTameable（犬や猫などのペット）、馬にも当たらないようにする
+	        		                    	list2.remove(n);
+	        		                    }
+	        	            		}else
 	          	            		{
 	          	            			if(target2 == this.shootingEntity)
 	          	            			{
@@ -523,7 +600,7 @@ public class MagicEntityDoruma extends MagicEntity implements IProjectile{
 
 		                            		if(pe != null && this.shootingEntity != null && this.shootingEntity instanceof EntityLivingBase)
 		                            		{
-		                            			EntityLiving elv = (EntityLiving)this.shootingEntity;
+		                            			EntityLivingBase elv = (EntityLivingBase)this.shootingEntity;
 
 			                          			if (elv.attackEntityFrom(damagesource2, (float)i1))
 			      	                            {

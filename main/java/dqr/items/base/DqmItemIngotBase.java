@@ -8,6 +8,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import dqr.api.Items.DQIngots;
+import dqr.api.enums.EnumColor;
 
 public class DqmItemIngotBase extends Item {
 	/*
@@ -45,7 +47,15 @@ public class DqmItemIngotBase extends Item {
 	*/
 
 	 public void addInformation(ItemStack p_77624_1_, EntityPlayer p_77624_2_, List p_77624_3_, boolean p_77624_4_) {
-		NBTTagCompound nbt = p_77624_1_.getTagCompound();
+		if(this == DQIngots.itemInotinoisi)
+        {
+			p_77624_3_.add("");
+        	p_77624_3_.add(EnumColor.Aqua.getChatColor() + I18n.format("dqm.iteminfo.Inochinoishi.1.txt", new Object[]{}));
+        	p_77624_3_.add(EnumColor.Aqua.getChatColor() + I18n.format("dqm.iteminfo.Inochinoishi.2.txt", new Object[]{}));
+        }
+
+		 NBTTagCompound nbt = p_77624_1_.getTagCompound();
+
 		if(nbt != null)
 		{
     		NumberFormat nfNum = NumberFormat.getNumberInstance();

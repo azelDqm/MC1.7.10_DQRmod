@@ -61,7 +61,20 @@ public class RarihoEventHandler {
 	    				{
 	    					//ep.fallDistance
 	    					//ep.setPositionAndUpdate(locOld[0], locOld[1], locOld[2]);
-	    					if(!ep.onGround && ep.worldObj.isAirBlock((int)locOld[0], (int)locOld[1] - 1, (int)locOld[2]))
+	    					//if(!ep.onGround && ep.worldObj.isAirBlock((int)locOld[0], (int)locOld[1] - 1, (int)locOld[2]))
+	    					boolean groundFlg = false;
+
+	    					for(int cntX = -1; cntX <= 1; cntX++)
+	    					{
+	    						for(int cntZ = -1; cntZ <= 1; cntZ++)
+	    						{
+	    							if(!(ep.worldObj.isAirBlock((int)locOld[0]+cntX, (int)locOld[1], (int)locOld[2]+cntZ)))
+	    							{
+	    								groundFlg = true;
+	    							}
+	    						}
+	    					}
+	    					if(!ep.onGround && !groundFlg)
 	    					{
 	    						ep.setPositionAndUpdate(locOld[0], MathHelper.floor_double(ep.posY - 0.2000000029802322D - ep.yOffset), locOld[2]);
 	    					}else
@@ -99,7 +112,7 @@ public class RarihoEventHandler {
 		PotionEffect pe = null;
 
 		pe = event.entityLiving.getActivePotionEffect(DQPotionMinus.debuffRariho);
-		if(pe != null && pe.getDuration() > 0)
+		if(pe != null && pe.getDuration() > DQR.conf.rarihoFreeDuration)
 		{
 			if(event.source.getEntity() != null)
 			{

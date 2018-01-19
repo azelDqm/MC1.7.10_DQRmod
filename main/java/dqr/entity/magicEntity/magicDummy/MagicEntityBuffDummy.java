@@ -362,15 +362,15 @@ public class MagicEntityBuffDummy extends MagicEntity implements IProjectile{
 
                     	PotionEffect pe = null;
 
-                		if(target.entityHit instanceof EntityLiving)
+                		if(target.entityHit instanceof EntityLivingBase)
                 		{
-                			EntityLiving elv2 = (EntityLiving)target.entityHit;
+                			EntityLivingBase elv2 = (EntityLivingBase)target.entityHit;
                 			pe = elv2.getActivePotionEffect(DQPotionPlus.buffMahokanta);
                 		}
 
-                		if(pe != null && this.shootingEntity != null && this.shootingEntity instanceof EntityLiving)
+                		if(pe != null && this.shootingEntity != null && this.shootingEntity instanceof EntityLivingBase)
                 		{
-                    		EntityLiving elv = (EntityLiving)this.shootingEntity;
+                    		EntityLivingBase elv = (EntityLivingBase)this.shootingEntity;
 
                     		//ダメージを与えることに成功したら以下の処理を行う
                             if (elv instanceof EntityLivingBase)

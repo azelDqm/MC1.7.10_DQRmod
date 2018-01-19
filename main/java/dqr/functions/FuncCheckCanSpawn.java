@@ -48,7 +48,14 @@ public class FuncCheckCanSpawn {
     		return false;
     	}
     	*/
+        long safetyTime = (long)DQR.conf2.spawnTimeDelay;
 
+        //DQR.func.debugString("TIME : " + safetyTime + " / " + mob.worldObj.getWorldTime());
+        if(mob.worldObj.getWorldTime() < safetyTime)
+        {
+        	//DQR.func.debugString("TIME2 : ");
+        	return false;
+        }
 
     	//if((world.isAirBlock(par1, par2, par3) && FieldBlockIDTb.containsKey(world.getBlockId(par1, par2 - 1, par3))) || world.getBlockId(par1, par2, par3) == 78)
     	if(world.isAirBlock(par1, par2, par3))

@@ -183,7 +183,7 @@ public class DqmItemBuilderDamaS extends DqmItemBuilderBase{
 
         	if(!par3World.isRemote)
         	{
-        		ThreadBuilderDamaS builderThread = new ThreadBuilderDamaS(par3World, mSize, mHeight, mUnder, par1ItemStack, 0);
+        		ThreadBuilderDamaS builderThread = new ThreadBuilderDamaS(par3World, mSize, mHeight, mUnder, par1ItemStack, 0, par2EntityPlayer);
         		builderThread.start();
         	}
 

@@ -6,7 +6,6 @@ import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IProjectile;
 import net.minecraft.entity.monster.EntityEnderman;
@@ -359,15 +358,15 @@ public class MagicEntityKiari extends MagicEntity implements IProjectile{
 
                     	PotionEffect pe = null;
 
-                		if(target.entityHit instanceof EntityLiving)
+                		if(target.entityHit instanceof EntityLivingBase)
                 		{
-                			EntityLiving elv2 = (EntityLiving)target.entityHit;
+                			EntityLivingBase elv2 = (EntityLivingBase)target.entityHit;
                 			pe = elv2.getActivePotionEffect(DQPotionPlus.buffMahokanta);
                 		}
 
                 		if(pe != null && this.shootingEntity != null && this.shootingEntity instanceof EntityLivingBase)
                 		{
-                        	EntityLiving elv = (EntityLiving)this.shootingEntity;
+                        	EntityLivingBase elv = (EntityLivingBase)this.shootingEntity;
 
                         	//ダメージを与えることに成功したら以下の処理を行う
                             if (elv instanceof EntityLivingBase)

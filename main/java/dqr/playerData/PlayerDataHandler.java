@@ -102,10 +102,28 @@ public class PlayerDataHandler {
             			ep.addChatMessage(new ChatComponentTranslation("msg.hardcore.messages.2.txt",new Object[] {}));
             			ExtendedPlayerProperties.get(ep).setHardcoreInfo(1);
             		}
+
+
+
             	}
             }
 
-
+            if(DQR.conf.dqrHardcore != 0 || DQR.conf.dqrHardcorePet != 0 || DQR.conf.dqrHardcorePet2 != 0)
+            {
+   	        	if(!ep.isDead && ep.getHealth() > 0)
+ 	        	{
+   	        		if(ExtendedPlayerProperties.get(ep).getBirthFlag() == 0)
+   	        		{
+   	        			DQR.func.debugString("Line1Line1Line1Line1Line1Line1Line1Line1Line1Line1Line1Line1");
+   	        			ExtendedPlayerProperties.get(ep).setBirthFlag(1);
+   	        			ExtendedPlayerProperties.get(ep).setBirthTime(ep.worldObj.getWorldTime());
+   	        		}else
+   	        		{
+   	        			DQR.func.debugString("Line2Line2Line2Line2Line2Line2Line2Line2Line2Line2Line2Line2");
+   	        		}
+   	        		 //DQR.func.debugString("Line1Line1Line1Line1Line1Line1Line1Line1Line1Line1Line1Line1");
+            	}
+            }
 
 
         	//ExtendedPlayerProperties3.get(ep).setPartyMemberData(null);

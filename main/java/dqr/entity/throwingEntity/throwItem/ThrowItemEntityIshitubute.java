@@ -7,7 +7,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IProjectile;
 import net.minecraft.entity.monster.EntityEnderman;
@@ -422,15 +421,15 @@ public class ThrowItemEntityIshitubute extends MagicEntity implements IProjectil
                         {
                         	PotionEffect pe = null;
 
-                    		if(target.entityHit instanceof EntityLiving)
+                    		if(target.entityHit instanceof EntityLivingBase)
                     		{
-                    			EntityLiving elv2 = (EntityLiving)target.entityHit;
+                    			EntityLivingBase elv2 = (EntityLivingBase)target.entityHit;
                     			pe = elv2.getActivePotionEffect(DQPotionPlus.buffMahokanta);
                     		}
 
-                    		if(pe != null && this.shootingEntity != null && this.shootingEntity instanceof EntityLiving)
+                    		if(pe != null && this.shootingEntity != null && this.shootingEntity instanceof EntityLivingBase)
                     		{
-                            	EntityLiving elv = (EntityLiving)this.shootingEntity;
+                            	EntityLivingBase elv = (EntityLivingBase)this.shootingEntity;
                             	//村人以外なら、ダメージを与える処理を呼ぶ
                             	if (elv.attackEntityFrom(damagesource, (float)i1))
                                 {

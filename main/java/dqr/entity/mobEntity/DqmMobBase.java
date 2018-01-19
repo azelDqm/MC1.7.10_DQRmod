@@ -47,6 +47,7 @@ import dqr.api.enums.EnumDqmMonsterAI;
 import dqr.api.enums.EnumDqmMonsterAIrate;
 import dqr.api.enums.EnumDqmSkillW;
 import dqr.api.enums.EnumDqmWeapon;
+import dqr.api.event.DqrDamageMobEvent;
 import dqr.api.potion.DQPotionMinus;
 import dqr.api.potion.DQPotionPlus;
 import dqr.entity.magicEntity.magic.MagicEntity;
@@ -79,6 +80,7 @@ import dqr.entity.mobEntity.ai.EntityAIAttackOnCollideJump;
 import dqr.entity.mobEntity.ai.EntityAIAvoidEntity2;
 import dqr.entity.mobEntity.ai.EntityAIBind;
 import dqr.entity.mobEntity.ai.EntityAIMagicAttack4;
+import dqr.entity.mobEntity.ai.EntityAIMagicBehomara;
 import dqr.entity.mobEntity.ai.EntityAIMagicBuff;
 import dqr.entity.mobEntity.ai.EntityAIMagicDebuff;
 import dqr.entity.mobEntity.ai.EntityAIMagicHoimi;
@@ -158,6 +160,8 @@ public class DqmMobBase extends EntityMob
 	public long skillCoolTimeHeal = 0;
 	public int skillCoolTimeHealMin = 60;
 	public int skillCoolTimeHealMax = 150;
+
+	public boolean flgSpawnFromSpawner = false;
 
 	public DqmMobBase(World world, EnumDqmMonster mobType)
 	{
@@ -535,27 +539,27 @@ public class DqmMobBase extends EntityMob
 
 		if(this.mobAI.getSukara() > 0)
 		{
-			this.tasks.addTask(this.mobAIrate.getBaikiruto(), new EntityAIMagicBuff(this, EnumDqmMagic.Sukara, DQPotionPlus.buffSukara));
+			this.tasks.addTask(this.mobAIrate.getSukara(), new EntityAIMagicBuff(this, EnumDqmMagic.Sukara, DQPotionPlus.buffSukara));
 		}
 
 		if(this.mobAI.getBaha() > 0)
 		{
-			this.tasks.addTask(this.mobAIrate.getBaikiruto(), new EntityAIMagicBuff(this, EnumDqmMagic.Baha, DQPotionPlus.buffBaha));
+			this.tasks.addTask(this.mobAIrate.getBaha(), new EntityAIMagicBuff(this, EnumDqmMagic.Baha, DQPotionPlus.buffBaha));
 		}
 
 		if(this.mobAI.getPiora() > 0)
 		{
-			this.tasks.addTask(this.mobAIrate.getBaikiruto(), new EntityAIMagicBuff(this, EnumDqmMagic.Piora, DQPotionPlus.buffPiora));
+			this.tasks.addTask(this.mobAIrate.getPiora(), new EntityAIMagicBuff(this, EnumDqmMagic.Piora, DQPotionPlus.buffPiora));
 		}
 
 		if(this.mobAI.getMagicbaria() > 0)
 		{
-			this.tasks.addTask(this.mobAIrate.getBaikiruto(), new EntityAIMagicBuff(this, EnumDqmMagic.Magicbaria, DQPotionPlus.buffMagicBaria));
+			this.tasks.addTask(this.mobAIrate.getMagicbaria(), new EntityAIMagicBuff(this, EnumDqmMagic.Magicbaria, DQPotionPlus.buffMagicBaria));
 		}
 
 		if(this.mobAI.getMahokanta() > 0)
 		{
-			this.tasks.addTask(this.mobAIrate.getBaikiruto(), new EntityAIMagicBuff(this, EnumDqmMagic.Mahokanta, DQPotionPlus.buffMahokanta));
+			this.tasks.addTask(this.mobAIrate.getMahokanta(), new EntityAIMagicBuff(this, EnumDqmMagic.Mahokanta, DQPotionPlus.buffMahokanta));
 		}
 
 		if(this.mobAI.getBomie() > 0)
@@ -623,12 +627,14 @@ public class DqmMobBase extends EntityMob
 			this.tasks.addTask(this.mobAIrate.getPiorimu(), new EntityAIMagicBuff(this, EnumDqmMagic.Piorimu, DQPotionPlus.buffPiora));
 		}
 
+		//DQR.func.debugString("TEST??1", this.getClass());
 		if(this.mobAI.getBehomara() > 0)
 		{
+			//DQR.func.debugString("TEST??2 : " + this.mobAI.getBehomara(), this.getClass());
 	   		switch(this.mobAI.getBehomara())
     		{
-    			case 1:this.tasks.addTask(this.mobAIrate.getBehomara(), new EntityAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Behomara)); break;
-    			case 2:this.tasks.addTask(this.mobAIrate.getBehomara(), new EntityAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Behomazun)); break;
+    			case 1:this.tasks.addTask(this.mobAIrate.getBehomara(), new EntityAIMagicBehomara(this, EnumDqmMagic.Behomara, null)); break;
+    			case 2:this.tasks.addTask(this.mobAIrate.getBehomara(), new EntityAIMagicBehomara(this, EnumDqmMagic.Behomazun, null)); break;
     		}
 			//this.tasks.addTask(this.mobAIrate.getBehomara(), new EntityAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Behomara));
 		}
@@ -686,6 +692,14 @@ public class DqmMobBase extends EntityMob
         int j = MathHelper.floor_double(this.boundingBox.minY);
         int k = MathHelper.floor_double(this.posZ);
         //return
+        long safetyTime = (long)DQR.conf2.spawnTimeDelay;
+
+        //DQR.func.debugString("TIME : " + safetyTime + " / " + this.worldObj.getWorldTime());
+        if(this.worldObj.getWorldTime() < safetyTime)
+        {
+        	//DQR.func.debugString("TIME2 : ");
+        	return false;
+        }
 
         return this.worldObj.checkNoEntityCollision(this.boundingBox) &&
           	   this.worldObj.getCollidingBoundingBoxes(this, this.boundingBox).isEmpty() &&
@@ -983,14 +997,29 @@ public class DqmMobBase extends EntityMob
 			return;
 		}
 
+		EntityLivingBase attacker = null;
+		if(source.getEntity() instanceof EntityLivingBase)
+		{
+			attacker = (EntityLivingBase)source.getEntity();
+		}else if(source.getSourceOfDamage() instanceof EntityLivingBase)
+		{
+			attacker = (EntityLivingBase)source.getSourceOfDamage();
+		}
+
+
 //DQR.func.debugString("damageEntity1:" + this.hurtResistantTime);
 		this.absoluteDam = -1.0F;
 		boolean skillFlg = false;
+
 		//DQR.func.debugString("damageEntity1:");
     	//System.out.println("testB:" + p_70665_2_);
         //if (!this.isEntityInvulnerable() || source.getDamageType().equalsIgnoreCase(DQR.damageSource.DqmPlayerSkill.getDamageType()))
 		if (!this.isEntityInvulnerable())
         {
+			DqrDamageMobEvent event = new DqrDamageMobEvent(1, attacker, this, source, skillFlg, p_70665_2_, absoluteDam);
+			MinecraftForge.EVENT_BUS.post(event);
+			p_70665_2_ = event.retDamage;
+			absoluteDam = event.retAbsoluteDamage;
 
 			Item handItem = null;
     		if(source.getEntity() instanceof EntityPlayer)
@@ -1108,9 +1137,18 @@ public class DqmMobBase extends EntityMob
         	float prevHp = this.getHealth();
         	//DQR.func.debugString("damageEntity2:" + prevHp + "/" + p_70665_2_);
         	//DQR.func.debugString("DAMTEST1:" + p_70665_2_);
+    		DqrDamageMobEvent event2 = new DqrDamageMobEvent(2, attacker, this, source, skillFlg, p_70665_2_, absoluteDam);
+    		MinecraftForge.EVENT_BUS.post(event2);
+    		p_70665_2_ = event2.retDamage;
+    		absoluteDam = event2.retAbsoluteDamage;
+
             p_70665_2_ = ForgeHooks.onLivingHurt(this, source, p_70665_2_);
             //DQR.func.debugString("DAMTEST2:" + p_70665_2_);
 //DQR.func.debugString("damageEntity3:" + p_70665_2_);
+    		DqrDamageMobEvent event3 = new DqrDamageMobEvent(3, attacker, this, source, skillFlg, p_70665_2_, absoluteDam);
+    		MinecraftForge.EVENT_BUS.post(event3);
+    		p_70665_2_ = event3.retDamage;
+    		absoluteDam = event3.retAbsoluteDamage;
 
             if (p_70665_2_ <= 0) return;
 
@@ -1137,6 +1175,11 @@ public class DqmMobBase extends EntityMob
             	//死亡判定
             	return;
             }
+
+    		DqrDamageMobEvent event4 = new DqrDamageMobEvent(4, attacker, this, source, skillFlg, p_70665_2_, absoluteDam);
+    		MinecraftForge.EVENT_BUS.post(event4);
+    		p_70665_2_ = event4.retDamage;
+    		absoluteDam = event4.retAbsoluteDamage;
 //            DQR.func.debugString("damageEntity4:" + this.hurtResistantTime);
 //DQR.func.debugString("damageEntity3C:" + p_70665_2_);
             if(this.absoluteDam >= 0.0f)
@@ -1179,6 +1222,11 @@ public class DqmMobBase extends EntityMob
             if (p_70665_2_ != 0.0F)
             {
                 float f2 = this.getHealth();
+
+        		DqrDamageMobEvent event5 = new DqrDamageMobEvent(5, attacker, this, source, skillFlg, p_70665_2_, absoluteDam);
+        		MinecraftForge.EVENT_BUS.post(event5);
+        		p_70665_2_ = event5.retDamage;
+
                 this.setHealth(f2 - p_70665_2_);
                 this.func_110142_aN().func_94547_a(source, f2, p_70665_2_);
                 this.setAbsorptionAmount(this.getAbsorptionAmount() - p_70665_2_);
@@ -1187,6 +1235,7 @@ public class DqmMobBase extends EntityMob
 
 //DQR.func.debugString("damageEntity5:" + this.hurtResistantTime);
 
+            //こっからは経験値計算してるとこ
             if(source!= null)
             {
             	//DQR.func.debugString("damageEntity6:");
@@ -1329,7 +1378,7 @@ public class DqmMobBase extends EntityMob
 							if(!ep.getCommandSenderName().equalsIgnoreCase("[Minecraft]"))ep.addChatMessage(new ChatComponentTranslation("msg.toDamage2P.txt",new Object[] {petName, EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), p_70665_2_}));
 						}else
 						{
-							if(!ep.getCommandSenderName().equalsIgnoreCase("[Minecraft]"))ep.addChatMessage(new ChatComponentTranslation("msg.toDamagePtxt",new Object[] {petName, EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), (int)p_70665_2_}));
+							if(!ep.getCommandSenderName().equalsIgnoreCase("[Minecraft]"))ep.addChatMessage(new ChatComponentTranslation("msg.toDamageP.txt",new Object[] {petName, EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), (int)p_70665_2_}));
 						}
 					}
 
@@ -1661,6 +1710,7 @@ public class DqmMobBase extends EntityMob
 
     public void attackEntityWithBehomara(EntityLivingBase p_82196_1_, float p_82196_2_, EnumDqmMagic grade)
     {
+    	DQR.func.debugString("TEST", this.getClass());
 		PotionEffect pe;
 		pe = this.getActivePotionEffect(DQPotionMinus.debuffMahoton);
 		if(pe != null && !this.worldObj.isRemote)
@@ -1904,8 +1954,8 @@ public class DqmMobBase extends EntityMob
 			if(!this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.jumon", 1.0F, 1.0F);
 			//this.worldObj.playSoundAtEntity(this, "dqr:player.up", 1.0F, 1.0F);
 
-            List list = this.worldObj.getEntitiesWithinAABBExcludingEntity(this,
-            		this.boundingBox.addCoord(this.motionX, this.motionY, this.motionZ).expand(10.0D, 5.0D, 10.0D));
+            List list = this.worldObj.getEntitiesWithinAABBExcludingEntity(tagMob,
+            		tagMob.boundingBox.addCoord(tagMob.motionX, tagMob.motionY, tagMob.motionZ).expand(10.0D, 5.0D, 10.0D));
 
             if (list != null && !list.isEmpty())
             {
@@ -3479,7 +3529,6 @@ public class DqmMobBase extends EntityMob
 	        {
 	        	if(MeganteFlg)
 	        	{
-	        		MeganteCnt++;
 	            	//System.out.println("TEST" + MeganteCnt);
 	            	if(MeganteCnt == 0)
 	            	{
@@ -3503,8 +3552,8 @@ public class DqmMobBase extends EntityMob
 		            		this.setDead();
 	            		}
 	            		//Block test = this.worldObj.getBlock((int)this.posX, (int)this.posY, (int)this.posZ).;
-
 	            	}
+	        		MeganteCnt++;
 	        	}else
 	        	{
 	        		if(this.getHealth() < this.getMaxHealth() * 15 / 100)
@@ -3563,6 +3612,7 @@ public class DqmMobBase extends EntityMob
         p_70014_1_.setBoolean("IsClearTasks", this.isClearTasks);
         p_70014_1_.setBoolean("NoAI", this.noAI);
         p_70014_1_.setBoolean("IsFirstAttack", this.isFirstAttack);
+        p_70014_1_.setBoolean("FlgSpawnFromSpawner", this.flgSpawnFromSpawner);
 
     }
 
@@ -3578,6 +3628,7 @@ public class DqmMobBase extends EntityMob
         this.isClearTasks = p_70037_1_.getBoolean("IsClearTasks");
         this.noAI = p_70037_1_.getBoolean("NoAI");
         this.isFirstAttack = p_70037_1_.getBoolean("IsFirstAttack");
+        this.flgSpawnFromSpawner = p_70037_1_.getBoolean("FlgSpawnFromSpawner");
     }
 
     public boolean isValidLightLevel2(int par1)

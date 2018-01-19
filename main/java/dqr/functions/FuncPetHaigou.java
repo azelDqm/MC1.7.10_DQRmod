@@ -20,6 +20,8 @@ import dqr.api.enums.EnumDqmMagic;
 import dqr.api.enums.EnumDqmMobCateg;
 import dqr.api.enums.EnumDqmMobRoot;
 import dqr.api.enums.EnumDqmMonster;
+import dqr.api.enums.EnumDqmMonsterAI;
+import dqr.api.enums.EnumDqmMonsterAIrate;
 import dqr.api.enums.EnumDqmPet;
 import dqr.api.enums.EnumDqmPetHaigouSP;
 import dqr.api.potion.DQPotionMinus;
@@ -155,8 +157,7 @@ public class FuncPetHaigou {
                         }
 
                         //removePetdata
-						entityPet1 = null;
-						entityPet2 = null;
+
 						EnumDqmMonster parentType =  DQR.enumGetter.getMonsterFromName(haigouResult.PetName);
 
 						DqmPetBase newPet = (DqmPetBase)EntityList.createEntityByName(DQR.modID + "." + parentType.getPetClassName(), par3World);
@@ -200,6 +201,7 @@ public class FuncPetHaigou {
 		                    //newPet.setMaxMP(haigouResult.MPDEF);
 		                    //newPet.setJobTikara(newPet.getJob(), haigouResult.TIKARADEF);
 		                    //newPet.setJobKasikosa(newPet.getJob(), haigouResult.KASIKOSADEF);
+		                    this.setAiBox(newPet, entityPet1, entityPet2);
 		                    newPet.setHealth(newPet.getMaxHealth());
 		                    newPet.setMP(newPet.getMaxMP());
 		                    //System.out.println("TEST2");
@@ -207,6 +209,7 @@ public class FuncPetHaigou {
 		                    newPet.setPathToEntity((PathEntity)null);
 		                    newPet.setAttackTarget((EntityLivingBase)null);
 		                    newPet.setSit(true);
+		                    newPet.setTamingTime(newPet.worldObj.getWorldTime());
 		                    //this.setHealth(20.0F);
 		                    newPet.func_152115_b(ep.getUniqueID().toString());
 		                    //newPet.playTameEffect(true);
@@ -260,6 +263,9 @@ public class FuncPetHaigou {
 						{
 							DQR.func.debugString("Haigou Ret is null");
 						}
+
+						entityPet1 = null;
+						entityPet2 = null;
 					}else
 					{
 						//配合不可組み合わせ(戻す)
@@ -289,6 +295,7 @@ public class FuncPetHaigou {
 			            if(!ep.worldObj.isRemote)
 			            {
 			            	entityPet1.setLocationAndAngles((double)par4 + 0.5D, (double)par5 + 1.5D, (double)par6 + 0.5D, 0.0F, 0.0F);
+			            	entityPet1.setTamingTime(entityPet1.worldObj.getWorldTime());
 			            	par3World.spawnEntityInWorld(entityPet1);
 			                ExtendedPlayerProperties3.get(ep).plusPetCount(1);
 			                DQR.petFunc.setNewPetdata(entityPet1);
@@ -316,6 +323,7 @@ public class FuncPetHaigou {
 			            if(!ep.worldObj.isRemote)
 			            {
 			            	entityPet2.setLocationAndAngles((double)par4 + 0.5D, (double)par5 + 1.5D, (double)par6 + 0.5D, 0.0F, 0.0F);
+			            	entityPet2.setTamingTime(entityPet2.worldObj.getWorldTime());
 			            	par3World.spawnEntityInWorld(entityPet2);
 			                ExtendedPlayerProperties3.get(ep).plusPetCount(1);
 			                DQR.petFunc.setNewPetdata(entityPet2);
@@ -962,6 +970,34 @@ public class FuncPetHaigou {
 	        	pet.setJukurenExp(cnt, p_70037_1_.getInteger("JukurenExp_" + cnt));
 	        }
 
+	        for(int cnt = 0; cnt < 64; cnt++)
+	        {
+	        	pet.setArrayAILimit(cnt,  p_70037_1_.getInteger("arrayAILimit_" + cnt));
+	        }
+
+	        for(int cnt = 0; cnt < 64; cnt++)
+	        {
+	        	pet.setArrayAIMaster(cnt, p_70037_1_.getInteger("arrayAIMaster_" + cnt));
+	        }
+
+	        for(int cnt = 0; cnt < 64; cnt++)
+	        {
+	        	pet.setArrayAISets(cnt, p_70037_1_.getInteger("arrayAISets_" + cnt));
+	        }
+
+	        for(int cnt = 0; cnt < 64; cnt++)
+	        {
+	        	pet.setArrayAIRate(cnt, p_70037_1_.getInteger("arrayAIRate_" + cnt));
+	        }
+
+	        for(int cnt = 0; cnt < 64; cnt++)
+	        {
+	        	pet.setArrayAIRateDef(cnt, p_70037_1_.getInteger("arrayAIRateDef_" + cnt));
+	        }
+
+	        pet.setFlgAIextended(p_70037_1_.getInteger("flgAIextended"));
+	        pet.setFlgAIuse(p_70037_1_.getInteger("flgAIuse"));
+
 	        pet.setKougeki(p_70037_1_.getInteger("Kougeki"));
 	        pet.setBougyo(p_70037_1_.getInteger("Bougyo"));
 	        pet.setMaryoku(p_70037_1_.getInteger("Maryoku"));
@@ -1063,11 +1099,112 @@ public class FuncPetHaigou {
 	        pet.setPathToEntity((PathEntity)null);
 	        pet.setAttackTarget((EntityLivingBase)null);
 	        //pet.aiSit.setSitting(true);
-      pet.func_152115_b(ep.getUniqueID().toString());
-      ep.worldObj.setEntityState(pet, (byte)7);
-      //ExtendedPlayerProperties3.get(ep).plusPetCount(1);
-      DQR.petFunc.setNewPetdata(pet);
+			pet.func_152115_b(ep.getUniqueID().toString());
+			ep.worldObj.setEntityState(pet, (byte)7);
+			//ExtendedPlayerProperties3.get(ep).plusPetCount(1);
+            pet.setCustomNameTag(p_70037_1_.getString("PetCustomName"));
+            pet.func_110163_bv();
+			DQR.petFunc.setNewPetdata(pet);
 
 	        return pet;
 	    }
+
+	public void setAiBox(DqmPetBase pet, DqmPetBase entityPet1, DqmPetBase entityPet2)
+	{
+		EnumDqmMonster mobEnum = DQR.enumGetter.getMonsterFromName(pet.type.getPetname());
+		EnumDqmMonsterAI mobAI = mobEnum.getMonsterAI();
+		EnumDqmMonsterAIrate mobAIrate = mobEnum.getMonsterAIrate();
+
+		EnumDqmMonster mobEnum1 = DQR.enumGetter.getMonsterFromName(entityPet1.type.getPetname());
+
+		int[] mobAI1 = entityPet1.getArrayAILimitA();
+		int[] mobAIrateDef1 = entityPet1.getArrayAIRateDefA();
+
+		/*
+		EnumDqmMonster mobEnum2 = DQR.enumGetter.getMonsterFromName(entityPet2.type.getPetname());
+		EnumDqmMonsterAI mobAI2 = mobEnum2.getMonsterAI();
+		EnumDqmMonsterAIrate mobAIrate2 = mobEnum2.getMonsterAIrate();
+		*/
+
+
+		//DQR.func.debugString("TEST4 : " + mobEnum.getMobName() + " / " + mobAI.getClassName() + " / " + mobAIrate.getClassName(), this.getClass());
+		for(int cnt = 0; cnt < 64; cnt++)
+		{
+			pet.setArrayAIRate(cnt ,mobAIrate.getParamFromIndex(cnt));
+			pet.setArrayAIRateDef(cnt, mobAIrate.getParamFromIndex(cnt));
+
+			pet.setArrayAILimit(cnt, mobAI.getParamFromIndex(cnt));
+			pet.setArrayAIMaster(cnt, -1);
+			pet.setArrayAISets(cnt, mobAI.getParamFromIndex(cnt));
+
+			int param1 = DQR.magicTablePet.magicCastGradeFromID(entityPet1, cnt);
+			int param2 = DQR.magicTablePet.magicCastGradeFromID(entityPet2, cnt);
+			int aiRate = -1;
+			int selectFlg = 0;
+			int selectVal = 0;
+
+			if(param1 > 0 || param2 > 0)
+			{
+				if(param1 >= param2)
+				{
+					selectFlg = 1;
+					selectVal = param1;
+					aiRate = entityPet1.getArrayAIRateDef(cnt);
+				}else
+				{
+					selectFlg = 2;
+					selectVal = param2;
+					aiRate = entityPet2.getArrayAIRateDef(cnt);
+				}
+
+				for(int checkCnt = 1; checkCnt <= selectVal; checkCnt++)
+				{
+					Random rand = new Random();
+					if(rand.nextInt(4) == 0 || DQR.debug == 2)
+					{
+						pet.setArrayAIMaster(cnt, checkCnt);
+						if(pet.getArrayAILimit(cnt) < checkCnt)
+						{
+							pet.setArrayAILimit(cnt, checkCnt);
+							pet.setArrayAISets(cnt, checkCnt);
+
+							pet.setArrayAIRate(cnt ,aiRate);
+							pet.setArrayAIRateDef(cnt, aiRate);
+						}
+					}else
+					{
+						break;
+					}
+				}
+			}
+		}
+
+		pet.setFlgAIextended(1);
+		/*
+		int selectFlg = 0;
+		int param1 = DQR.magicTablePet.magicCastGradeFromID(entityPet1, cnt);
+		int param2 = DQR.magicTablePet.magicCastGradeFromID(entityPet2, cnt);
+		*/
+			//if(param1 >)
+			/*
+			if(mobAI.getParamFromIndex(cnt) <= mobAI2[cnt])
+			{
+
+			}
+			*/
+			/*
+			pet.setArrayAIRate[cnt] = mobAIrate.getParamFromIndex(cnt);
+			arrayAIRateDef[cnt] = mobAIrate.getParamFromIndex(cnt);
+
+			arrayAILimit[cnt] = mobAI.getParamFromIndex(cnt);
+			arrayAIMaster[cnt] = -1;
+			arrayAISets[cnt] = mobAI.getParamFromIndex(cnt);
+
+			DQR.func.debugString("TEST5 : [" + cnt + "] " + mobAI.getParamFromIndex(cnt) + " / " + mobAIrate.getParamFromIndex(cnt) , this.getClass());
+			*/
+
+
+		//flgAIextended = 1;
+	}
+
 }

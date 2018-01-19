@@ -193,6 +193,7 @@ public class DQMiscs {
     public static Item itemMagicbook3;
 
     public static Item itemFarmBook;
+    public static Item itemPetbook;
 
     public static Item itemAtkEndora;
     public static Item itemDyeWhite2;

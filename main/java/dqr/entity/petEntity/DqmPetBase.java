@@ -1,5 +1,6 @@
 package dqr.entity.petEntity;
 
+import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
@@ -9,7 +10,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIAttackOnCollide;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.ai.EntityAIFollowOwner;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
@@ -46,23 +46,69 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.management.PreYggdrasilConverter;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import dqr.DQR;
 import dqr.PacketHandler;
 import dqr.api.Items.DQMagics;
 import dqr.api.Items.DQMiscs;
+import dqr.api.enums.EnumColor;
 import dqr.api.enums.EnumDqmMGToolMode;
+import dqr.api.enums.EnumDqmMagic;
+import dqr.api.enums.EnumDqmMessageConv;
+import dqr.api.enums.EnumDqmMobAI;
+import dqr.api.enums.EnumDqmMonster;
+import dqr.api.enums.EnumDqmMonsterAI;
+import dqr.api.enums.EnumDqmMonsterAIrate;
 import dqr.api.enums.EnumDqmPet;
 import dqr.api.enums.EnumDqmWeaponMode;
 import dqr.api.potion.DQPotionMinus;
+import dqr.api.potion.DQPotionPlus;
+import dqr.entity.magicEntity.magic.MagicEntity;
+import dqr.entity.magicEntity.magic.MagicEntityArrow;
+import dqr.entity.magicEntity.magic.MagicEntityBagi;
+import dqr.entity.magicEntity.magic.MagicEntityBegiragon;
+import dqr.entity.magicEntity.magic.MagicEntityBegirama;
+import dqr.entity.magicEntity.magic.MagicEntityDebuff;
+import dqr.entity.magicEntity.magic.MagicEntityDoruma;
+import dqr.entity.magicEntity.magic.MagicEntityGira;
+import dqr.entity.magicEntity.magic.MagicEntityGiragureido;
+import dqr.entity.magicEntity.magic.MagicEntityHyado;
+import dqr.entity.magicEntity.magic.MagicEntityHyadoB;
+import dqr.entity.magicEntity.magic.MagicEntityIo;
+import dqr.entity.magicEntity.magic.MagicEntityMera;
+import dqr.entity.magicEntity.magic.MagicEntityMeraB;
+import dqr.entity.magicEntity.magic.MagicEntityMeragaia;
+import dqr.entity.magicEntity.magic.MagicEntityMeragaiaB;
+import dqr.entity.magicEntity.magic.MagicEntityMerami;
+import dqr.entity.magicEntity.magic.MagicEntityMeramiB;
+import dqr.entity.magicEntity.magic.MagicEntityMerazoma;
+import dqr.entity.magicEntity.magic.MagicEntityMerazomaB;
+import dqr.entity.magicEntity.magic.MagicEntityRaidein;
+import dqr.entity.magicEntity.magic.MagicEntityZaki;
+import dqr.entity.magicEntity.magicDummy.MagicEntityBuffDummy;
+import dqr.entity.magicEntity.magicDummy.MagicEntityHoimiDummy;
+import dqr.entity.magicEntity.magicDummy.MagicEntityMahoimiDummy;
 import dqr.entity.petEntity.ai.EntityAIDeath;
 import dqr.entity.petEntity.ai.EntityAISit2;
+import dqr.entity.petEntity.ai.EntityPetAIAttackOnCollideJump;
+import dqr.entity.petEntity.ai.EntityPetAIMagicAttack4;
+import dqr.entity.petEntity.ai.EntityPetAIMagicBehomara;
+import dqr.entity.petEntity.ai.EntityPetAIMagicBuff;
+import dqr.entity.petEntity.ai.EntityPetAIMagicDebuff;
+import dqr.entity.petEntity.ai.EntityPetAIMagicHoimi;
+import dqr.entity.petEntity.ai.EntityPetAIMagicMahoimi;
+import dqr.entity.petEntity.ai.EntityPetAIMagicMegante;
 import dqr.items.base.DqmItemFoodMiscBase;
 import dqr.items.base.DqmItemFoodSeedBase;
 import dqr.items.base.DqmItemMagicBase;
 import dqr.items.base.DqmItemWeaponBase;
 import dqr.items.miscs.DqmItemMegaminoInori;
+import dqr.items.miscs.DqmItemPetbook;
 import dqr.packetMessage.MessageClientPetEntityData;
 import dqr.playerData.ExtendedPlayerProperties;
 import dqr.playerData.ExtendedPlayerProperties3;
@@ -117,6 +163,7 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
     private int KillCount;
     private int DeathCount;
 
+
     private float HP = 20.0F;
     private float MaxHP = 20.0F;
     private int MP;
@@ -148,6 +195,29 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 
     public ItemStack sampleItemStack = new ItemStack(Items.wooden_sword, 1);
 
+	public long skillCoolTime = 0;
+	public int skillCoolTimeMin = 10;
+	public int skillCoolTimeMax = 15;
+	public long skillCoolTimeHeal = 0;
+	public int skillCoolTimeHealMin = 60;
+	public int skillCoolTimeHealMax = 150;
+
+	public boolean MeganteFlg = false;
+
+	//AI関連パラメータ
+	public float healUseLine = 50.0f; //回復AIで回復魔法を使うHP％
+	public int meganteUseLine = 15; //回復AIで回復魔法を使うHP％
+    private long tamingTime;
+    private int[] arrayAILimit = new int[64];
+    private int[] arrayAIMaster = new int[64];
+    private int[] arrayAISets = new int[64];
+    private int[] arrayAIRate = new int[64];
+    private int[] arrayAIRateDef = new int[64];
+    private int flgAIextended = 0;
+    private int flgAIuse = 0;
+    private int MeganteCnt = 0;
+    protected EntityPetAIMagicMegante aiMegante = new EntityPetAIMagicMegante(this);
+
 	public DqmPetBase(World par1, EnumDqmPet type) {
         super(par1);
         this.type = type;
@@ -157,10 +227,12 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
         this.sampleItemStack = new ItemStack(Items.wooden_sword, 1);
         this.sampleItemStack.setTagCompound(new NBTTagCompound());
         this.sampleItemStack.getTagCompound().setTag("Items", new NBTTagList());
+
         //this.targetTasks.addTask(4, new EntityAITargetNonTamed(this, EntitySheep.class, 200, false));
         //this.setCombatTasks();
 
         this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(10.0D);
+        //this.tasks.addTask(0, new EntityAISwimming(this));
         this.setHealth(10.0F);
         this.setTamed(false);
 
@@ -206,11 +278,12 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 
     public void setCombatTasks()
     {
+    	//this.tasks.addTask(1, new EntityPetAIMagicHoimi(this, EnumDqmMagic.Hoimi, null));
     	//System.out.println("戦闘モードに切り替えました");
-        this.tasks.addTask(1, new EntityAISwimming(this));
+        this.tasks.addTask(0, new EntityAISwimming(this));
         this.tasks.addTask(2, this.aiSit);
         this.tasks.addTask(3, new EntityAILeapAtTarget(this, 0.4F));
-        this.tasks.addTask(4, new EntityAIAttackOnCollide(this, 1.0D, true));
+        //this.tasks.addTask(4, new EntityAIAttackOnCollide(this, 1.0D, true));
         this.tasks.addTask(5, new EntityAIFollowOwner(this, 1.0D, 10.0F, 2.0F));
         this.tasks.addTask(6, new EntityAIMate(this, 1.0D));
         this.tasks.addTask(7, new EntityAIWander(this, 1.0D));
@@ -221,10 +294,320 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
         this.targetTasks.addTask(2, new EntityAIOwnerHurtTarget(this));
         this.targetTasks.addTask(3, new EntityAIHurtByTarget(this, true));
 
+
+
+        if(this.flgAIuse == 0)
+        {
+	        int param = -1;
+	        /*
+	    	if(DQR.magicTablePet.magicCastGrade(this, EnumDqmMobAI.ARROW) > 0)
+	    	{
+	    		//System.out.println("ARROW");
+	    		this.tasks.addTask(2, new EntityPetAIArrowAttack2(this, 1.2D, this.arrayAIRate[EnumDqmMobAI.ARROW.getId()], this.mobAI.getArrow(), 20.0F));
+	    		//this.tasks.addTask(3, new EntityPetAIArrowAttack2(this, 1.0D, 20, 60, 15.0F));
+	    		//this.tasks.removeTask(new EntityPetAIAttackOnCollide2(this, EntityPlayer.class, 1.5D, true));
+	    	}else
+	    	{
+	    		this.tasks.addTask(2, new EntityPetAIAttackOnCollide2(this, 1.5D, true));
+	    		//this.tasks.addTask(1, new EntityPetAIAttackOnCollide2(this, 1.5D, true));
+	    	}
+	    	*/
+
+	        param = DQR.magicTablePet.magicCastGrade(this, EnumDqmMobAI.HONOO);
+	    	if(param > 0)
+			{
+	    		switch(param)
+	    		{
+	    			case 1:this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.HONOO.getId()], new EntityPetAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Hinoiki)); break;
+	    			case 2:this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.HONOO.getId()], new EntityPetAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Kaeniki)); break;
+	    			case 3:this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.HONOO.getId()], new EntityPetAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.HagesiiHonoo)); break;
+	    			case 4:this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.HONOO.getId()], new EntityPetAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Syakunetu)); break;
+	    			case 5:this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.HONOO.getId()], new EntityPetAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.RengokuHonoo)); break;
+	    		}
+			}
+
+	    	param = DQR.magicTablePet.magicCastGrade(this, EnumDqmMobAI.JUMP);
+	        if (param > 0)
+	        {
+	        	this.tasks.addTask(2, new EntityPetAIAttackOnCollideJump(this, 1.5D, true));
+	        }
+
+	        param = DQR.magicTablePet.magicCastGrade(this, EnumDqmMobAI.HUBUKI);
+	    	if(param > 0)
+			{
+	    		switch(param)
+	    		{
+	    			case 1:this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.HUBUKI.getId()], new EntityPetAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Tumetaiiki)); break;
+	    			case 2:this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.HUBUKI.getId()], new EntityPetAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Koorinoiki)); break;
+	    			case 3:this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.HUBUKI.getId()], new EntityPetAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Kogoeruhubuki)); break;
+	    			case 4:this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.HUBUKI.getId()], new EntityPetAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Kagayakuiki)); break;
+	    			case 5:this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.HUBUKI.getId()], new EntityPetAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Zettaireido)); break;
+	    		}
+			}
+
+	    	param = DQR.magicTablePet.magicCastGrade(this, EnumDqmMobAI.GIRA);
+	    	if(param > 0)
+			{
+	    		switch(param)
+	    		{
+	    			case 1:this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.GIRA.getId()], new EntityPetAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Gira)); break;
+	    			case 2:this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.GIRA.getId()], new EntityPetAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Begirama)); break;
+	    			case 3:this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.GIRA.getId()], new EntityPetAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Begiragon)); break;
+	    			case 4:this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.GIRA.getId()], new EntityPetAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Giragureido)); break;
+	    		}
+			}
+
+	    	param = DQR.magicTablePet.magicCastGrade(this, EnumDqmMobAI.MERA);
+			if(param > 0)
+			{
+	    		switch(param)
+	    		{
+	    			case 1:this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.MERA.getId()], new EntityPetAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Mera)); break;
+	    			case 2:this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.MERA.getId()], new EntityPetAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Merami)); break;
+	    			case 3:this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.MERA.getId()], new EntityPetAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Merazoma)); break;
+	    			case 4:this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.MERA.getId()], new EntityPetAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Meragaia)); break;
+	    		}
+				//this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.Mera(), new EntityPetAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Mera));
+			}
+
+			param = DQR.magicTablePet.magicCastGrade(this, EnumDqmMobAI.IO);
+			if(param > 0)
+			{
+		   		switch(param)
+	    		{
+	    			case 1:this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.IO.getId()], new EntityPetAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Io)); break;
+	    			case 2:this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.IO.getId()], new EntityPetAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Iora)); break;
+	    			case 3:this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.IO.getId()], new EntityPetAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Ionazun)); break;
+	    			case 4:this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.IO.getId()], new EntityPetAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Iogurande)); break;
+	    		}
+				//this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.Io(), new EntityPetAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Io));
+			}
+
+			param = DQR.magicTablePet.magicCastGrade(this, EnumDqmMobAI.RAIDEIN);
+			if(param > 0)
+			{
+		   		switch(param)
+	    		{
+	    			case 1:this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.RAIDEIN.getId()], new EntityPetAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Raidein)); break;
+	    			case 2:this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.RAIDEIN.getId()], new EntityPetAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Gigadein)); break;
+	    			case 3:this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.RAIDEIN.getId()], new EntityPetAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Minadein)); break;
+	    		}
+				//this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.Raidein(), new EntityPetAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Raidein));
+			}
+
+			param = DQR.magicTablePet.magicCastGrade(this, EnumDqmMobAI.BAGI);
+			if(param > 0)
+			{
+		   		switch(param)
+	    		{
+	    			case 1:this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.BAGI.getId()], new EntityPetAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Bagi)); break;
+	    			case 2:this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.BAGI.getId()], new EntityPetAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Bagima)); break;
+	    			case 3:this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.BAGI.getId()], new EntityPetAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Bagikurosu)); break;
+	    			case 4:this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.BAGI.getId()], new EntityPetAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Bagimutyo)); break;
+	    		}
+				//this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.Bagi(), new EntityPetAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Bagi));
+			}
+
+			param = DQR.magicTablePet.magicCastGrade(this, EnumDqmMobAI.DORUMA);
+			if(param > 0)
+			{
+		   		switch(param)
+	    		{
+	    			case 1:this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.DORUMA.getId()], new EntityPetAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Doruma)); break;
+	    			case 2:this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.DORUMA.getId()], new EntityPetAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Dorukuma)); break;
+	    			case 3:this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.DORUMA.getId()], new EntityPetAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Dorumoa)); break;
+	    			case 4:this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.DORUMA.getId()], new EntityPetAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Dorumadon)); break;
+	    		}
+				//this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.Doruma(), new EntityPetAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Doruma));
+			}
+
+			param = DQR.magicTablePet.magicCastGrade(this, EnumDqmMobAI.HYADO);
+			if(param > 0)
+			{
+		   		switch(param)
+	    		{
+	    			case 1:this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.HYADO.getId()], new EntityPetAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Hyado)); break;
+	    			case 2:this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.HYADO.getId()], new EntityPetAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Hyadaruko)); break;
+	    			case 3:this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.HYADO.getId()], new EntityPetAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Mahyado)); break;
+	    			case 4:this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.HYADO.getId()], new EntityPetAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Mahyadodesu)); break;
+	    		}
+				//this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.Hyado(), new EntityPetAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Hyado));
+			}
+
+			param = DQR.magicTablePet.magicCastGrade(this, EnumDqmMobAI.HOIMI);
+			DQR.func.debugString("TEST1 : " + param, this.getClass());
+			DQR.func.debugString("TEST2 : " + this.arrayAIRate[EnumDqmMobAI.HOIMI.getId()], this.getClass());
+			if(param > 0)
+			{
+		   		switch(param)
+	    		{
+	    			case 1:this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.HOIMI.getId()], new EntityPetAIMagicHoimi(this, EnumDqmMagic.Hoimi, null)); break;
+	    			case 2:this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.HOIMI.getId()], new EntityPetAIMagicHoimi(this, EnumDqmMagic.Behoimi, null)); break;
+	    			case 3:this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.HOIMI.getId()], new EntityPetAIMagicHoimi(this, EnumDqmMagic.Behoma, null)); break;
+	    		}
+				//this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.Hoimi(), new EntityPetAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Hoimi));
+			}
+
+			param = DQR.magicTablePet.magicCastGrade(this, EnumDqmMobAI.ZAKI);
+			if(param > 0)
+			{
+				//System.out.println("GetZaki");
+		   		switch(param)
+	    		{
+	    			case 1:this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.ZAKI.getId()], new EntityPetAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Zaki)); break;
+	    			case 2:this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.ZAKI.getId()], new EntityPetAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Zaraki)); break;
+	    			case 3:this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.ZAKI.getId()], new EntityPetAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Zarakima)); break;
+	    		}
+				//this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.Zaki(), new EntityPetAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Zaki));
+			}
+
+			param = DQR.magicTablePet.magicCastGrade(this, EnumDqmMobAI.BAIKIRUTO);
+			if(param > 0)
+			{
+				this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.BAIKIRUTO.getId()], new EntityPetAIMagicBuff(this, EnumDqmMagic.Baikiruto, DQPotionPlus.buffBaikiruto));
+			}
+
+			param = DQR.magicTablePet.magicCastGrade(this, EnumDqmMobAI.SUKARA);
+			if(param > 0)
+			{
+				this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.SUKARA.getId()], new EntityPetAIMagicBuff(this, EnumDqmMagic.Sukara, DQPotionPlus.buffSukara));
+			}
+
+			param = DQR.magicTablePet.magicCastGrade(this, EnumDqmMobAI.BAHA);
+			if(param > 0)
+			{
+				this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.BAHA.getId()], new EntityPetAIMagicBuff(this, EnumDqmMagic.Baha, DQPotionPlus.buffBaha));
+			}
+
+			param = DQR.magicTablePet.magicCastGrade(this, EnumDqmMobAI.PIORA);
+			if(param > 0)
+			{
+				this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.PIORA.getId()], new EntityPetAIMagicBuff(this, EnumDqmMagic.Piora, DQPotionPlus.buffPiora));
+			}
+
+			param = DQR.magicTablePet.magicCastGrade(this, EnumDqmMobAI.MAGICBARIA);
+			if(param > 0)
+			{
+				this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.MAGICBARIA.getId()], new EntityPetAIMagicBuff(this, EnumDqmMagic.Magicbaria, DQPotionPlus.buffMagicBaria));
+			}
+
+			param = DQR.magicTablePet.magicCastGrade(this, EnumDqmMobAI.MAHOKANTA);
+			if(param > 0)
+			{
+				this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.MAHOKANTA.getId()], new EntityPetAIMagicBuff(this, EnumDqmMagic.Mahokanta, DQPotionPlus.buffMahokanta));
+			}
+
+			param = DQR.magicTablePet.magicCastGrade(this, EnumDqmMobAI.BOMIE);
+			if(param > 0)
+			{
+				this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.BOMIE.getId()], new EntityPetAIMagicDebuff(this, EnumDqmMagic.Bomie, DQPotionMinus.debuffBomie));
+			}
+
+			param = DQR.magicTablePet.magicCastGrade(this, EnumDqmMobAI.RARIHO);
+			if(param > 0)
+			{
+				this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.RARIHO.getId()], new EntityPetAIMagicDebuff(this, EnumDqmMagic.Rariho, DQPotionMinus.debuffRariho));
+			}
+
+			param = DQR.magicTablePet.magicCastGrade(this, EnumDqmMobAI.MANUSA);
+			if(param > 0)
+			{
+				this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.MANUSA.getId()], new EntityPetAIMagicDebuff(this, EnumDqmMagic.Manusa, DQPotionMinus.debuffManusa));
+			}
+
+			param = DQR.magicTablePet.magicCastGrade(this, EnumDqmMobAI.MAHOTON);
+			if(param > 0)
+			{
+				this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.MAHOTON.getId()], new EntityPetAIMagicDebuff(this, EnumDqmMagic.Mahoton, DQPotionMinus.debuffMahoton));
+			}
+
+			param = DQR.magicTablePet.magicCastGrade(this, EnumDqmMobAI.RUKANI);
+			if(param > 0)
+			{
+				this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.RUKANI.getId()], new EntityPetAIMagicDebuff(this, EnumDqmMagic.Rukani, DQPotionMinus.debuffRukani));
+			}
+
+			param = DQR.magicTablePet.magicCastGrade(this, EnumDqmMobAI.MEDAPANI);
+			if(param > 0)
+			{
+				this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.MEDAPANI.getId()], new EntityPetAIMagicDebuff(this, EnumDqmMagic.Medapani, DQPotionMinus.debuffMedapani));
+			}
+
+			param = DQR.magicTablePet.magicCastGrade(this, EnumDqmMobAI.HENATOSU);
+			if(param > 0)
+			{
+				this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.HENATOSU.getId()], new EntityPetAIMagicDebuff(this, EnumDqmMagic.Henatosu, DQPotionMinus.debuffHenatosu));
+			}
+
+			param = DQR.magicTablePet.magicCastGrade(this, EnumDqmMobAI.DIVAINSUPERU);
+			if(param > 0)
+			{
+				this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.DIVAINSUPERU.getId()], new EntityPetAIMagicDebuff(this, EnumDqmMagic.Divainsuperu, DQPotionMinus.debuffDivainsuperu));
+			}
+
+			param = DQR.magicTablePet.magicCastGrade(this, EnumDqmMobAI.RUKANAN);
+			if(param > 0)
+			{
+				this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.RUKANAN.getId()], new EntityPetAIMagicDebuff(this, EnumDqmMagic.Rukanan, DQPotionMinus.debuffRukani));
+			}
+
+			param = DQR.magicTablePet.magicCastGrade(this, EnumDqmMobAI.RARIHOMA);
+			if(param > 0)
+			{
+				this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.RARIHOMA.getId()], new EntityPetAIMagicDebuff(this, EnumDqmMagic.Rarihoma, DQPotionMinus.debuffRariho));
+			}
+
+			param = DQR.magicTablePet.magicCastGrade(this, EnumDqmMobAI.BOMIOSU);
+			if(param > 0)
+			{
+				this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.BOMIOSU.getId()], new EntityPetAIMagicDebuff(this, EnumDqmMagic.Bomiosu, DQPotionMinus.debuffBomie));
+			}
+
+			param = DQR.magicTablePet.magicCastGrade(this, EnumDqmMobAI.SUKURUTO);
+			if(param > 0)
+			{
+				this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.SUKURUTO.getId()], new EntityPetAIMagicBuff(this, EnumDqmMagic.Sukuruto, DQPotionPlus.buffSukara));
+			}
+
+			param = DQR.magicTablePet.magicCastGrade(this, EnumDqmMobAI.PIORIMU);
+			if(param > 0)
+			{
+				this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.PIORIMU.getId()], new EntityPetAIMagicBuff(this, EnumDqmMagic.Piorimu, DQPotionPlus.buffPiora));
+			}
+
+			//DQR.func.debugString("TEST??1", this.getClass());
+			param = DQR.magicTablePet.magicCastGrade(this, EnumDqmMobAI.BEHOMARA);
+			if(param > 0)
+			{
+				//DQR.func.debugString("TEST??2 : " + this.mobAI.getBehomara(), this.getClass());
+		   		switch(param)
+	    		{
+	    			case 1:this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.BEHOMARA.getId()], new EntityPetAIMagicBehomara(this, EnumDqmMagic.Behomara, null)); break;
+	    			case 2:this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.BEHOMARA.getId()], new EntityPetAIMagicBehomara(this, EnumDqmMagic.Behomazun, null)); break;
+	    		}
+				//this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.Behomara(), new EntityPetAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Behomara));
+			}
+
+			param = DQR.magicTablePet.magicCastGrade(this, EnumDqmMobAI.MAHOIMI);
+			if(param > 0)
+			{
+		   		switch(param)
+	    		{
+	    			case 1:this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.MAHOIMI.getId()], new EntityPetAIMagicMahoimi(this, EnumDqmMagic.Mahoimi, null)); break;
+	    			case 2:this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.MAHOIMI.getId()], new EntityPetAIMagicMahoimi(this, EnumDqmMagic.Mahoriku, null)); break;
+	    			case 3:this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.MAHOIMI.getId()], new EntityPetAIMagicMahoimi(this, EnumDqmMagic.Mahoizun, null)); break;
+	    		}
+				//this.tasks.addTask(this.arrayAIRate[EnumDqmMobAI.Mahoimi(), new EntityPetAIMagicAttack4(this, 1.25D, 20, 60, 25.0F, EnumDqmMagic.Mahoimi));
+			}
+        }
+
+        //this.tasks.addTask(2, new EntityPetAIMagicHoimi(this, EnumDqmMagic.Behoma, null));
         if(chestOn)
         {
         	//this.initPetChest();
         }
+
+
     }
 
     public void setAttackTarget(EntityLivingBase p_70624_1_)
@@ -270,6 +653,17 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
     {
         super.onLivingUpdate();
 
+
+
+        /*
+        if(this.isTamed() && this.worldObj.getWorldTime() % 40 == 0)
+        {
+        	attackEntityWithRangedAttack(this, 1.0f);
+        }
+        */
+
+
+
         if(this.getHealth() <= 0.1F && !this.deathFlg)
         {
         	this.clearTasks();
@@ -288,12 +682,23 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
             this.worldObj.setEntityState(this, (byte)8);
         }
         */
+
+        if(DQR.conf.dqrHardcorePet != 0 && this.getOwner() != null && this.getOwner() instanceof EntityPlayer)
+        {
+        	EntityPlayer owner = (EntityPlayer)this.getOwner();
+
+        	//System.out.println("TIME : " + ExtendedPlayerProperties.get(owner).getBirthTime() +" / "+ tamingTime);
+        	if(ExtendedPlayerProperties.get(owner).getBirthTime() > tamingTime && !this.worldObj.isRemote)
+        	{
+        		this.setDead();
+        	}
+        }
     }
 
     //fwetrwe
     public boolean attackEntityFrom(DamageSource p_70097_1_, float p_70097_2_)
     {
-        if (!this.isTamed() || this.isEntityInvulnerable() || (p_70097_1_.getSourceOfDamage() == this.getOwner() && p_70097_2_ > 0.0F) || (this.isTamed() && this.getHealth() <= 0.1F))
+        if (!this.isTamed() || this.isEntityInvulnerable() || (p_70097_1_.getSourceOfDamage() == this.getOwner() && p_70097_2_ > 0.0F) || (this.isTamed() && this.getHealth() <= 0.1F && DQR.conf.dqrHardcorePet2 == 0))
         {
             return false;
         }
@@ -364,7 +769,14 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
                 p_70097_2_ = (p_70097_2_ + 1.0F) / 2.0F;
             }
 
-            if(this.isTamed() && this.getHealth() - p_70097_2_ <= 0)
+            int ran2 = rand.nextInt(2);
+
+            if (p_70097_1_ != null && ran2 == 0)
+            {
+                teleportRandomly();
+            }
+
+            if(this.isTamed() && this.getHealth() - p_70097_2_ <= 0 && DQR.conf.dqrHardcorePet2 == 0)
             {
             	//System.out.println("Line1");
             	this.clearTasks();
@@ -388,6 +800,7 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 
     public boolean attackEntityFrom2(DamageSource p_70097_1_, float p_70097_2_)
     {
+
         if (this.isEntityInvulnerable())
         {
             return false;
@@ -431,7 +844,7 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
             {
                 return false;
             }
-            else if(this.getHealth() - p_70097_2_ <= 0.0F)
+            else if(this.getHealth() - p_70097_2_ <= 0.0F && DQR.conf.dqrHardcorePet2 == 0)
             {
             	if(DQR.debug == 3)System.out.println("DEBUG_LINE1");
             	this.setHealth(0.05F);
@@ -596,7 +1009,7 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
             if (p_70665_2_ != 0.0F)
             {
                 float f2 = this.getHealth();
-                if(f2 - p_70665_2_ <= 0.1F)
+                if(f2 - p_70665_2_ <= 0.1F && DQR.conf.dqrHardcorePet2 == 0)
                 {
                 	p_70665_2_ = f2 - 0.05F;
                 }
@@ -916,7 +1329,7 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 	                        this.worldObj.playSoundAtEntity(this, "DQM_Sound.Rura", 0.8F, 1.5F);
 	                    	this.entityDropItem(tutu, 0.0F);
 
-	                    	this.setDead();
+	                    	this.setDead(false);
 	        			}
 
 	            		return true;
@@ -938,12 +1351,12 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 
 	        				if((haigouPet1 == null || haigouPet1.hasNoTags()) && (haigouPet2 == null || !haigouPet2.getString("PetUUID").equalsIgnoreCase(this.getUniqueID().toString())))
 	        				{
-	        					ExtendedPlayerProperties3.get(ep).setHaigouPet1(this.makeTutuNBT(new NBTTagCompound()));
+	        					ExtendedPlayerProperties3.get(ep).setHaigouPet1(this.makeTutuNBT(new NBTTagCompound(), false));
 	        					ep.addChatMessage(new ChatComponentTranslation("dqm.iteminfo.petHaigou1",new Object[] {this.getCommandSenderName(), this.JobLv[0]}));
 	        				}else if((haigouPet2 == null || haigouPet2.hasNoTags()) && (haigouPet2 == null || !haigouPet2.getString("PetUUID").equalsIgnoreCase(this.getUniqueID().toString())))
 	        				{
 	        					ep.addChatMessage(new ChatComponentTranslation("dqm.iteminfo.petHaigou1",new Object[] {haigouPet1.getString("PetName"), haigouPet1.getInteger("JobLv_0")}));
-	        					ExtendedPlayerProperties3.get(ep).setHaigouPet2(this.makeTutuNBT(new NBTTagCompound()));
+	        					ExtendedPlayerProperties3.get(ep).setHaigouPet2(this.makeTutuNBT(new NBTTagCompound(), false));
 	        					ep.addChatMessage(new ChatComponentTranslation("dqm.iteminfo.petHaigou2",new Object[] {this.getCommandSenderName(), this.JobLv[0]}));
 	        				}else
 	        				{
@@ -983,7 +1396,7 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 		                        }
 	                        }
 	                        */
-	                        ExtendedPlayerProperties3.get(ep).minusPetCount(1);
+	                        //ExtendedPlayerProperties3.get(ep).minusPetCount(1);
 	                    	this.setDead();
 	        			}
 
@@ -1071,7 +1484,7 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
                 {
                 	if(this.func_152114_e(ep) || DQR.debug != 0)
                 	{
-	                    if (this.isTamed() && this.getHealth() <= 0.1F)
+	                    if ((this.isTamed() && this.getHealth() <= 0.1F) || (this.isTamed() && DQR.conf.dqrHardcorePet2 != 0))
 	                    {
 	                        if (!ep.capabilities.isCreativeMode)
 	                        {
@@ -1084,6 +1497,7 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 	                        }
 
 	                        //vrtyhuvbjeytg
+	                        /*
 	                        if(!ep.worldObj.isRemote)
 	                        {
 		                        if(chestOn)
@@ -1103,6 +1517,7 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 			                        }
 		                        }
 	                        }
+	                        */
 
 
 	                        this.setDead();
@@ -1139,6 +1554,8 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 	                {
 	                	DqmItemFoodSeedBase food = (DqmItemFoodSeedBase)itemstack.getItem();
 	                	int healHP = 0;
+	                	int healMP = 0;
+	                	boolean itemUseFlg = false;
 
 	        			if(food.getMinHP() > -1 || food.getMaxHP() > -1)
 	        			{
@@ -1146,44 +1563,74 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 
 	                     	if(this.getHealth() < this.getMaxHealth() && this.getHealth() > 0.1F)
 	                    	{
+	                     		/*
 	                            if (!ep.capabilities.isCreativeMode)
 	                            {
 	                                --itemstack.stackSize;
 	                            }
+	                            */
+	                     		itemUseFlg = true;
 	                    		this.setHealth(this.getHealth() + healHP);
 
 	                        	if(this.getHealth() >= this.getMaxHealth())
 	                        	{
 	                        		this.setHealth(this.getMaxHealth());
 	                        	}
+	                    	}
+	        			}
 
-	                        	if(DQR.exp.getNextExpPet(this.getJobLv(this.getJob()), this) <= 0)
+	        			if(food.getMinMP() > -1 || food.getMaxMP() > -1)
+	        			{
+	        				 healMP = (int)(food.getMinMP() + rand.nextInt(food.getMaxMP() + 1));
+
+	                     	if(this.MP < this.MaxMP)
+	                    	{
+	                     		itemUseFlg = true;
+
+
+	                        	if(this.MP + healMP >= this.MaxMP)
 	                        	{
-		    	        	  		ep.addChatMessage(new ChatComponentTranslation("msg.pet.status1MAX.txt",new Object[] {petName, ownerName,
-		    								  this.getJobLv(this.getJob()),
-		    								  this.getJobExp(this.getJob()),DQR.exp.getNextExpPet(this.getJob(), this),
-		    								  (int)(this.getHealth()), (int)(this.getMaxHealth()),
-		    								  this.getMP(), this.getMaxMP()}));
+	                        		this.MP = this.MaxMP;
 	                        	}else
 	                        	{
-		    	        	  		ep.addChatMessage(new ChatComponentTranslation("msg.pet.status1.txt",new Object[] {petName, ownerName,
-		    								  this.getJobLv(this.getJob()),
-		    								  this.getJobExp(this.getJob()),DQR.exp.getNextExpPet(this.getJob(), this),
-		    								  (int)(this.getHealth()), (int)(this.getMaxHealth()),
-		    								  this.getMP(), this.getMaxMP()}));
+	                        		this.MP = this.MP + healMP;
 	                        	}
-
-	    	        	  		ep.addChatMessage(new ChatComponentTranslation("msg.pet.status2.txt",new Object[] {this.getKougeki(),
-	    								  this.getBougyo(), this.getTotalArmorValue(),
-	    								  this.getMaryoku(),
-	    								  this.getTikara(),
-	    								  this.getMikawasi(),
-	    								  this.getKasikosa()}));
-
-	    	        	  		ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
-
-	                        	return true;
 	                    	}
+	        			}
+
+	        			if(itemUseFlg)
+	        			{
+	                        if (!ep.capabilities.isCreativeMode)
+	                        {
+	                            --itemstack.stackSize;
+	                        }
+
+                        	if(DQR.exp.getNextExpPet(this.getJobLv(this.getJob()), this) <= 0)
+                        	{
+	    	        	  		ep.addChatMessage(new ChatComponentTranslation("msg.pet.status1MAX.txt",new Object[] {petName, ownerName,
+	    								  this.getJobLv(this.getJob()),
+	    								  this.getJobExp(this.getJob()),DQR.exp.getNextExpPet(this.getJob(), this),
+	    								  (int)(this.getHealth()), (int)(this.getMaxHealth()),
+	    								  this.getMP(), this.getMaxMP()}));
+                        	}else
+                        	{
+	    	        	  		ep.addChatMessage(new ChatComponentTranslation("msg.pet.status1.txt",new Object[] {petName, ownerName,
+	    								  this.getJobLv(this.getJob()),
+	    								  this.getJobExp(this.getJob()),DQR.exp.getNextExpPet(this.getJob(), this),
+	    								  (int)(this.getHealth()), (int)(this.getMaxHealth()),
+	    								  this.getMP(), this.getMaxMP()}));
+                        	}
+
+    	        	  		ep.addChatMessage(new ChatComponentTranslation("msg.pet.status2.txt",new Object[] {this.getKougeki(),
+    								  this.getBougyo(), this.getTotalArmorValue(),
+    								  this.getMaryoku(),
+    								  this.getTikara(),
+    								  this.getMikawasi(),
+    								  this.getKasikosa()}));
+
+    	        	  		ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
+
+                        	return true;
 	        			}
 
 	                }
@@ -1197,6 +1644,8 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 	                {
 	                	DqmItemFoodMiscBase food = (DqmItemFoodMiscBase)itemstack.getItem();
 	                	int healHP = 0;
+	                	int healMP = 0;
+	                	boolean itemUseFlg = false;
 
 	        			if(food.getMinHP() > -1 || food.getMaxHP() > -1)
 	        			{
@@ -1204,43 +1653,67 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 
 	                     	if(this.getHealth() < this.getMaxHealth())
 	                    	{
-	                            if (!ep.capabilities.isCreativeMode)
-	                            {
-	                                --itemstack.stackSize;
-	                            }
+	                     		itemUseFlg = true;
 	                    		this.setHealth(this.getHealth() + healHP);
 
 	                        	if(this.getHealth() >= this.getMaxHealth())
 	                        	{
 	                        		this.setHealth(this.getMaxHealth());
 	                        	}
-	                        	if(DQR.exp.getNextExpPet(this.getJobLv(this.getJob()), this) <= 0)
+
+	                    	}
+	        			}
+
+	        			if(food.getMinMP() > -1 || food.getMaxMP() > -1)
+	        			{
+	        				 healMP = (int)(food.getMinMP() + rand.nextInt(food.getMaxMP() + 1));
+
+	                     	if(this.MP < this.MaxMP)
+	                    	{
+	                     		itemUseFlg = true;
+	                        	if(this.MP + healMP >= this.MaxMP)
 	                        	{
-		    	        	  		ep.addChatMessage(new ChatComponentTranslation("msg.pet.status1MAX.txt",new Object[] {petName, ownerName,
-		    								  this.getJobLv(this.getJob()),
-		    								  this.getJobExp(this.getJob()),DQR.exp.getNextExpPet(this.getJob(), this),
-		    								  (int)(this.getHealth()), (int)(this.getMaxHealth()),
-		    								  this.getMP(), this.getMaxMP()}));
+	                        		this.MP = this.MaxMP;
 	                        	}else
 	                        	{
-		    	        	  		ep.addChatMessage(new ChatComponentTranslation("msg.pet.status1MAX.txt",new Object[] {petName, ownerName,
-		    								  this.getJobLv(this.getJob()),
-		    								  this.getJobExp(this.getJob()),DQR.exp.getNextExpPet(this.getJob(), this),
-		    								  (int)(this.getHealth()), (int)(this.getMaxHealth()),
-		    								  this.getMP(), this.getMaxMP()}));
+	                        		this.MP = this.MP + healMP;
 	                        	}
-
-	    	        	  		ep.addChatMessage(new ChatComponentTranslation("msg.pet.status2.txt",new Object[] {this.getKougeki(),
-	    								  this.getBougyo(), this.getTotalArmorValue(),
-	    								  this.getMaryoku(),
-	    								  this.getTikara(),
-	    								  this.getMikawasi(),
-	    								  this.getKasikosa()}));
-
-	    	        	  		ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
-
-	                        	return true;
 	                    	}
+	        			}
+
+	        			if(itemUseFlg)
+	        			{
+                            if (!ep.capabilities.isCreativeMode)
+                            {
+                                --itemstack.stackSize;
+                            }
+
+                        	if(DQR.exp.getNextExpPet(this.getJobLv(this.getJob()), this) <= 0)
+                        	{
+	    	        	  		ep.addChatMessage(new ChatComponentTranslation("msg.pet.status1MAX.txt",new Object[] {petName, ownerName,
+	    								  this.getJobLv(this.getJob()),
+	    								  this.getJobExp(this.getJob()),DQR.exp.getNextExpPet(this.getJob(), this),
+	    								  (int)(this.getHealth()), (int)(this.getMaxHealth()),
+	    								  this.getMP(), this.getMaxMP()}));
+                        	}else
+                        	{
+	    	        	  		ep.addChatMessage(new ChatComponentTranslation("msg.pet.status1MAX.txt",new Object[] {petName, ownerName,
+	    								  this.getJobLv(this.getJob()),
+	    								  this.getJobExp(this.getJob()),DQR.exp.getNextExpPet(this.getJob(), this),
+	    								  (int)(this.getHealth()), (int)(this.getMaxHealth()),
+	    								  this.getMP(), this.getMaxMP()}));
+                        	}
+
+                        	ep.addChatMessage(new ChatComponentTranslation("msg.pet.status2.txt",new Object[] {this.getKougeki(),
+    								  this.getBougyo(), this.getTotalArmorValue(),
+    								  this.getMaryoku(),
+    								  this.getTikara(),
+    								  this.getMikawasi(),
+    								  this.getKasikosa()}));
+
+    	        	  		ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
+
+                        	return true;
 	        			}
 	                }
                 }
@@ -1256,6 +1729,100 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 
                 }
                 */
+                if(itemstack.getItem() instanceof DqmItemPetbook)
+                {
+                	if(ep.isSneaking())
+                	{
+                		if(!this.worldObj.isRemote)
+                		{
+	                		ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
+	                		if(this.flgAIuse == 0)
+	                		{
+	                			this.flgAIuse = 1;
+	                		}else
+	                		{
+	                			this.flgAIuse = 0;
+	                		}
+	                		ep.addChatMessage(new ChatComponentTranslation("skill.change.info." + this.flgAIuse + ".txt",new Object[] {this.getCommandSenderName()}));
+	                		if(!this.isSitting())
+	                		{
+	                			this.clearTasks();
+	                			this.setCombatTasks();
+	                		}
+                		}
+                	}else
+                	{
+	                	int setCount = 0;
+	                	//String makeString = EnumDqmMessageConv.PetSkill.getStartS();
+	            		String val = "";
+	            		//DQR.func.debugString("TEST1:" + val);
+	                	for(int cnt = 1; cnt < this.arrayAILimit.length; cnt++)
+	                	{
+	                		//DQR.func.debugString("TEST2:" + val);
+	                		int flg1 = this.arrayAIMaster[cnt];
+	                		int flg2 = this.arrayAILimit[cnt];
+	                		//int flg3 = DQR.magicTablePet.magicCastGradeFromID(this, cnt);
+	                		EnumDqmMobAI aiEnum = DQR.enumGetter.getDqmMobAI(cnt);
+
+
+	                		if(flg2 > 0)
+	                		{
+
+
+	                			/*
+	                			if(cnt != 1)
+	                			{
+	                				val = val + ",";
+	                			}
+	                			*/
+
+	                			//al = val + aiEnum.getId() + ",";
+
+	                			for(int cnt2 = 1; cnt2 <= flg2; cnt2++)
+	                			{
+	                				String color = "";
+	                				if(this.arrayAIMaster[cnt] >= cnt2)
+	                				{
+	                					color = EnumColor.Yellow.getChatColor();
+	                					//val = val + "," + cnt + "," + cnt2 + ",";
+	                				}else if(DQR.magicTablePet.magicCastGradeFromID(this, cnt) >= cnt2)
+	                				{
+	                					color = EnumColor.White.getChatColor();
+	                				}else
+	                				{
+	                					color = EnumColor.Gray.getChatColor();
+	                				}
+	                				//DQR.func.debugString("TEST3:" + val);
+	                				val = val + cnt + "," + cnt2 + "," + color + ",";
+	                				setCount = setCount + 1;
+	                				//DQR.func.debugString("TEST4:" + val);
+	                				if(aiEnum.getGradeFlg() == 0)
+	                				{
+	                					break;
+	                				}
+	                			}
+	                			//DQR.func.debugString("TEST5:" + val);
+	                		}
+	                		//System.out.println("CHECK[" + cnt + "] : (" + flg1 + ")(" + flg2 + ")" + val);
+	                	}
+	                	//DQR.func.debugString("TEST6:" + val);
+	                	if(!this.worldObj.isRemote)
+	                	{
+	                		ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
+		                	if(setCount > 0)
+		                	{
+
+		                		ep.addChatMessage(new ChatComponentTranslation("skill.list." + this.flgAIuse + ".msg",new Object[] {}));
+		                		ep.addChatMessage(new ChatComponentTranslation(EnumDqmMessageConv.PetSkill.getStartS() + val + EnumDqmMessageConv.PetSkill.getEndS(),new Object[] {}));
+		                	}else
+		                	{
+		                		ep.addChatMessage(new ChatComponentTranslation("skill.noskill.name",new Object[] {}));
+		                	}
+	                	}
+                	}
+
+                	return true;
+                }
 
                 if(itemstack.getItem() instanceof DqmItemWeaponBase)
                 {
@@ -1499,8 +2066,10 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 		                    this.setMaxHP(type.HPDEF);
 		                    this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(type.HPDEF);
 		                    this.setMaxMP(type.MPDEF);
+		                    this.setTamingTime(this.worldObj.getWorldTime());
 		                    //this.setJobTikara(this.getJob(), type.TIKARADEF);
 		                    //this.setJobKasikosa(this.getJob(), type.KASIKOSADEF);
+		                    this.setAiBox();
 		                    this.setHealth(this.getMaxHealth());
 		                    if(DQR.debug == 3)System.out.println("DEBUG_LINE6");
 		                    this.setMP(this.getMaxMP());
@@ -1809,6 +2378,36 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
         	p_70014_1_.setInteger("JukurenExp_" + cnt, JukurenExp[cnt]);
         }
 
+        for(int cnt = 0; cnt < 64; cnt++)
+        {
+        	p_70014_1_.setInteger("arrayAILimit_" + cnt, arrayAILimit[cnt]);
+        }
+
+        for(int cnt = 0; cnt < 64; cnt++)
+        {
+        	p_70014_1_.setInteger("arrayAIMaster_" + cnt, arrayAIMaster[cnt]);
+        }
+
+        for(int cnt = 0; cnt < 64; cnt++)
+        {
+        	p_70014_1_.setInteger("arrayAISets_" + cnt, arrayAISets[cnt]);
+        }
+
+        for(int cnt = 0; cnt < 64; cnt++)
+        {
+        	p_70014_1_.setInteger("arrayAIRate_" + cnt, arrayAIRate[cnt]);
+        }
+
+        for(int cnt = 0; cnt < 64; cnt++)
+        {
+        	p_70014_1_.setInteger("arrayAIRateDef_" + cnt, arrayAIRateDef[cnt]);
+        }
+
+        p_70014_1_.setInteger("flgAIextended", this.flgAIextended);
+        p_70014_1_.setInteger("flgAIuse", this.flgAIuse);
+
+
+        p_70014_1_.setLong("tamingTime", this.tamingTime);
 
         p_70014_1_.setInteger("Kougeki", this.Kougeki);
         p_70014_1_.setInteger("Bougyo", this.Bougyo);
@@ -2061,6 +2660,36 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
         	JukurenExp[cnt] = p_70037_1_.getInteger("JukurenExp_" + cnt);
         }
 
+        for(int cnt = 0; cnt < 64; cnt++)
+        {
+        	arrayAILimit[cnt] = p_70037_1_.getInteger("arrayAILimit_" + cnt);
+        }
+
+        for(int cnt = 0; cnt < 64; cnt++)
+        {
+        	arrayAIMaster[cnt] = p_70037_1_.getInteger("arrayAIMaster_" + cnt);
+        }
+
+        for(int cnt = 0; cnt < 64; cnt++)
+        {
+        	arrayAISets[cnt] = p_70037_1_.getInteger("arrayAISets_" + cnt);
+        }
+
+        for(int cnt = 0; cnt < 64; cnt++)
+        {
+        	arrayAIRate[cnt] = p_70037_1_.getInteger("arrayAIRate_" + cnt);
+        }
+
+        for(int cnt = 0; cnt < 64; cnt++)
+        {
+        	arrayAIRateDef[cnt] = p_70037_1_.getInteger("arrayAIRateDef_" + cnt);
+        }
+
+        this.flgAIextended = p_70037_1_.getInteger("flgAIextended");
+        this.flgAIuse = p_70037_1_.getInteger("flgAIuse");
+
+        this.tamingTime = p_70037_1_.getLong("tamingTime");
+
         this.Kougeki = p_70037_1_.getInteger("Kougeki");
         this.Bougyo = p_70037_1_.getInteger("Bougyo");
         this.Maryoku = p_70037_1_.getInteger("Maryoku");
@@ -2158,6 +2787,11 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 	            }
 	        }
 	        */
+        }
+
+        if(this.flgAIextended == 0)
+        {
+        	this.setAiBox();
         }
 
     }
@@ -2286,9 +2920,29 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
     }
     */
 
-    @Override
-    public void setDead()
+
+    public void setDead(boolean par1)
     {
+        if(!this.worldObj.isRemote)
+        {
+            if(chestOn && par1)
+            {
+                InventoryPetInventory inventory = new InventoryPetInventory(this);
+                inventory.openInventory();
+
+                for(int cnt = 0; cnt < inventory.getSizeInventory(); cnt++)
+                {
+                	if(inventory.getStackInSlot(cnt) != null)
+                	{
+                		this.entityDropItem(inventory.getStackInSlot(cnt), 0.0F);
+                		//inventory.getStackInSlot(cnt) = null;
+                		inventory.setInventorySlotContents(cnt, null);
+                		inventory.markDirty();
+                	}
+                }
+            }
+        }
+
     	EntityPlayer ep = null;
     	if(DQR.partyManager.hasParty(this))
     	{
@@ -2307,6 +2961,12 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
     	}
 
     	this.isDead = true;
+    }
+
+    @Override
+    public void setDead()
+    {
+    	this.setDead(true);
     }
 
 
@@ -2626,6 +3286,118 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
         this.JukurenExp[par1] = par2;
     }
 
+
+    public int[] getArrayAILimitA() {
+    	if(arrayAILimit == null) arrayAILimit = new int[64];
+        return arrayAILimit;
+    }
+    public void setArrayAILimitA(int[] par1) {
+    	if(arrayAILimit == null) arrayAILimit = new int[64];
+        this.arrayAILimit = par1;
+    }
+    public int getArrayAILimit(int par1) {
+    	if(arrayAILimit == null) arrayAILimit = new int[64];
+        return arrayAILimit[par1];
+    }
+    public void setArrayAILimit(int par1, int par2) {
+    	if(arrayAILimit == null) arrayAILimit = new int[64];
+        this.arrayAILimit[par1] = par2;
+    }
+
+    public int[] getArrayAIMasterA() {
+    	if(arrayAIMaster == null) arrayAIMaster = new int[64];
+        return arrayAIMaster;
+    }
+    public void setArrayAIMasterA(int[] par1) {
+    	if(arrayAIMaster == null) arrayAIMaster = new int[64];
+        this.arrayAIMaster = par1;
+    }
+    public int getArrayAIMaster(int par1) {
+    	if(arrayAIMaster == null) arrayAIMaster = new int[64];
+        return arrayAIMaster[par1];
+    }
+    public void setArrayAIMaster(int par1, int par2) {
+    	if(arrayAIMaster == null) arrayAIMaster = new int[64];
+        this.arrayAIMaster[par1] = par2;
+    }
+
+    public int[] getArrayAISetsA() {
+    	if(arrayAISets == null) arrayAISets = new int[64];
+        return arrayAISets;
+    }
+    public void setArrayAISetsA(int[] par1) {
+    	if(arrayAISets == null) arrayAISets = new int[64];
+        this.arrayAISets = par1;
+    }
+    public int getArrayAISets(int par1) {
+    	if(arrayAISets == null) arrayAISets = new int[64];
+        return arrayAISets[par1];
+    }
+    public void setArrayAISets(int par1, int par2) {
+    	if(arrayAISets == null) arrayAISets = new int[64];
+        this.arrayAISets[par1] = par2;
+    }
+
+    public int[] getArrayAIRateA() {
+    	if(arrayAIRate == null) arrayAIRate = new int[64];
+        return arrayAIRate;
+    }
+    public void setArrayAIRateA(int[] par1) {
+    	if(arrayAIRate == null) arrayAIRate = new int[64];
+        this.arrayAIRate = par1;
+    }
+    public int getArrayAIRate(int par1) {
+    	if(arrayAIRate == null) arrayAIRate = new int[64];
+        return arrayAIRate[par1];
+    }
+    public void setArrayAIRate(int par1, int par2) {
+    	if(arrayAIRate == null) arrayAIRate = new int[64];
+        this.arrayAIRate[par1] = par2;
+    }
+
+    public int[] getArrayAIRateDefA() {
+    	if(arrayAIRateDef == null) arrayAIRateDef = new int[64];
+        return arrayAIRateDef;
+    }
+    public void setArrayAIRateDefA(int[] par1) {
+    	if(arrayAIRateDef == null) arrayAIRateDef = new int[64];
+        this.arrayAIRateDef = par1;
+    }
+    public int getArrayAIRateDef(int par1) {
+    	if(arrayAIRateDef == null) arrayAIRateDef = new int[64];
+        return arrayAIRateDef[par1];
+    }
+    public void setArrayAIRateDef(int par1, int par2) {
+    	if(arrayAIRateDef == null) arrayAIRateDef = new int[64];
+        this.arrayAIRateDef[par1] = par2;
+    }
+
+    public int getFlgAIextended() {
+        return flgAIextended;
+    }
+
+    public void setFlgAIextended(int par1) {
+        this.flgAIextended = par1;
+    }
+
+    public int getFlgAIuse() {
+        return flgAIuse;
+    }
+
+    public void setFlgAIuse(int par1) {
+        this.flgAIuse = par1;
+    }
+
+
+    public long getTamingTime() {
+        return tamingTime;
+    }
+
+    public void setTamingTime(long par1) {
+        this.tamingTime = par1;
+    }
+
+
     public int getKougeki() {
         return Kougeki;
     }
@@ -2809,6 +3581,11 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 
     private NBTTagCompound makeTutuNBT(NBTTagCompound tag1)
     {
+    	return makeTutuNBT(tag1, true);
+    }
+
+    private NBTTagCompound makeTutuNBT(NBTTagCompound tag1, boolean par1)
+    {
     	NBTTagCompound nbt = tag1;
 
     	if(nbt == null)
@@ -2907,6 +3684,36 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
         	nbt.setInteger("JukurenExp_" + cnt, JukurenExp[cnt]);
         }
 
+        for(int cnt = 0; cnt < 64; cnt++)
+        {
+        	nbt.setInteger("arrayAILimit_" + cnt, arrayAILimit[cnt]);
+        }
+
+        for(int cnt = 0; cnt < 64; cnt++)
+        {
+        	nbt.setInteger("arrayAIMaster_" + cnt, arrayAIMaster[cnt]);
+        }
+
+        for(int cnt = 0; cnt < 64; cnt++)
+        {
+        	nbt.setInteger("arrayAISets_" + cnt, arrayAISets[cnt]);
+        }
+
+        for(int cnt = 0; cnt < 64; cnt++)
+        {
+        	nbt.setInteger("arrayAIRate_" + cnt, arrayAIRate[cnt]);
+        }
+
+        for(int cnt = 0; cnt < 64; cnt++)
+        {
+        	nbt.setInteger("arrayAIRateDef_" + cnt, arrayAIRateDef[cnt]);
+        }
+
+        nbt.setInteger("flgAIextended", this.flgAIextended);
+        nbt.setInteger("flgAIuse", this.flgAIuse);
+
+
+        nbt.setLong("tamingTime", this.tamingTime);
 
         nbt.setInteger("Kougeki", this.Kougeki);
         nbt.setInteger("Bougyo", this.Bougyo);
@@ -2987,38 +3794,41 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
         }
         */
 
-        if(chestOn)
+        if(par1)
         {
-        	NBTTagCompound itemNBT = new NBTTagCompound();
-        	if(this.sampleItemStack == null)
-        	{
-                this.sampleItemStack = new ItemStack(Items.wooden_sword, 1);
-                this.sampleItemStack.setTagCompound(new NBTTagCompound());
-                this.sampleItemStack.getTagCompound().setTag("Items", new NBTTagList());
-        	}
-
-        	this.sampleItemStack.writeToNBT(itemNBT);
-        	nbt.setTag("sampleItemStack", itemNBT);
-            /*
-	        NBTTagList nbttaglist = new NBTTagList();
-
-	        for (int i = 2; i < this.petChest.getSizeInventory(); ++i)
+	        if(chestOn)
 	        {
-	            ItemStack itemstack = this.petChest.getStackInSlot(i);
+	        	NBTTagCompound itemNBT = new NBTTagCompound();
+	        	if(this.sampleItemStack == null)
+	        	{
+	                this.sampleItemStack = new ItemStack(Items.wooden_sword, 1);
+	                this.sampleItemStack.setTagCompound(new NBTTagCompound());
+	                this.sampleItemStack.getTagCompound().setTag("Items", new NBTTagList());
+	        	}
 
-	            if (itemstack != null)
-	            {
-	                NBTTagCompound nbttagcompound1 = new NBTTagCompound();
-	                nbttagcompound1.setByte("Slot", (byte)i);
-	                itemstack.writeToNBT(nbttagcompound1);
-	                nbttaglist.appendTag(nbttagcompound1);
-	            }
+	        	this.sampleItemStack.writeToNBT(itemNBT);
+	        	nbt.setTag("sampleItemStack", itemNBT);
+	            /*
+		        NBTTagList nbttaglist = new NBTTagList();
+
+		        for (int i = 2; i < this.petChest.getSizeInventory(); ++i)
+		        {
+		            ItemStack itemstack = this.petChest.getStackInSlot(i);
+
+		            if (itemstack != null)
+		            {
+		                NBTTagCompound nbttagcompound1 = new NBTTagCompound();
+		                nbttagcompound1.setByte("Slot", (byte)i);
+		                itemstack.writeToNBT(nbttagcompound1);
+		                nbttaglist.appendTag(nbttagcompound1);
+		            }
+		        }
+
+		        p_70014_1_.setTag("Items", nbttaglist);
+		        */
 	        }
-
-	        p_70014_1_.setTag("Items", nbttaglist);
-	        */
         }
-
+        nbt.setString("PetCustomName", this.getCustomNameTag());
         return nbt;
     }
 
@@ -3088,5 +3898,2360 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
     public void setChestItem(ItemStack par1)
     {
     	this.sampleItemStack = par1;
+    }
+
+
+
+
+
+
+
+
+    public void attackEntityWithHoimi(EntityLivingBase p_82196_1_, float p_82196_2_, EnumDqmMagic grade, int tag, EntityLivingBase tagMob)
+    {
+
+    	if(DQR.debug == 4){System.out.println("attackEntityWithHoimi 4");}
+    	if(tag == 1)
+    	{
+    		if(DQR.debug == 4){System.out.println("attackEntityWithHoimi 1");}
+	    	MagicEntity magic = null;
+			PotionEffect pe;
+			pe = this.getActivePotionEffect(DQPotionMinus.debuffMahoton);
+			if(pe != null && !this.worldObj.isRemote)
+			{
+				return;
+			}
+			//pe = this.getActivePotionEffect(DQPotionMinus.debuffRariho);
+			//if(pe != null && !this.worldObj.isRemote)
+			if(DQR.func.isBind(this))
+			{
+				return;
+			}
+
+    		if(!this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.jumon", 1.0F, 1.0F);
+
+
+			if((this.MP >= grade.getMP()|| this.MaxMP == -1) || DQR.debug == 4)
+			{
+				int attackDam = grade.getAttack();
+
+				this.MP = this.MP -grade.getMP();
+				//magic.setDamage(attackDam);
+
+
+				if(!this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.jumon", 1.0F, 1.0F);
+
+				if(this.isPotionActive(DQPotionPlus.buffMahokanta))
+				{
+					if(!this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.mahokanta", 1.0F, 1.0F);
+				}else
+				{
+					if(this.getHealth() > 0)
+					{
+		            	if(this.getHealth() + attackDam > this.getMaxHealth())
+		            	{
+		            		this.setHealth(this.getMaxHealth());
+		            	}else
+		            	{
+		            		this.setHealth(this.getHealth() + (float)attackDam);
+		            	}
+					}
+
+	            	if(!this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.hoimi", 1.0F, 1.0F);
+				}
+			}else
+			{
+				if(DQR.conf.offMobNotEnoughMP > 0 && !this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.pi", 0.1F, 1.0F);
+				return;
+			}
+
+    	}else
+	    {
+    		if(DQR.debug == 4){System.out.println("attackEntityWithHoimi 2");}
+	    	MagicEntity magic = null;
+			PotionEffect pe;
+			pe = this.getActivePotionEffect(DQPotionMinus.debuffMahoton);
+			if(pe != null && !this.worldObj.isRemote)
+			{
+				return;
+			}
+			//pe = this.getActivePotionEffect(DQPotionMinus.debuffRariho);
+			//if(pe != null && !this.worldObj.isRemote)
+			if(DQR.func.isBind(this))
+			{
+				return;
+			}
+
+		   	magic = new MagicEntityHoimiDummy(this.worldObj, this, 1.5F, 1.0F, 0.0F, 0.0F, 0.0F);
+
+
+			if(magic != null)
+			{
+
+
+				if((this.MP >= grade.getMP()|| this.MaxMP == -1) || DQR.debug == 4)
+				{
+					int attackDam = grade.getAttack();
+
+					//magic.setDamage(attackDam);
+
+
+					if(!this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.jumon", 1.0F, 1.0F);
+					this.MP = this.MP - grade.getMP();
+					/*
+		        	if (!this.worldObj.isRemote)
+		        	{
+		        		this.worldObj.spawnEntityInWorld(magic);
+		        	}
+		        	*/
+
+
+	        		if(tagMob.isPotionActive(DQPotionPlus.buffMahokanta))
+	        		{
+	                	if(this.getHealth() + attackDam > this.getMaxHealth())
+	                	{
+	                		this.setHealth(this.getMaxHealth());
+	                	}else
+	                	{
+	                		this.setHealth(this.getHealth() + (float)attackDam);
+	                	}
+	                	if(!tagMob.worldObj.isRemote) tagMob.worldObj.playSoundAtEntity(this, "dqr:player.mahokanta", 1.0F, 1.0F);
+	                	this.playSound("dqr:player.hoimi", 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
+	        		}else
+	        		{
+	        			if(tagMob.getHealth() > 0)
+	        			{
+		                	if(tagMob.getHealth() + attackDam > tagMob.getMaxHealth())
+		                	{
+		                		tagMob.setHealth(tagMob.getMaxHealth());
+		                	}else
+		                	{
+		                		tagMob.setHealth(tagMob.getHealth() + (float)attackDam);
+		                	}
+		                	if(!tagMob.worldObj.isRemote) tagMob.playSound("dqr:player.hoimi", 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
+	        			}
+	        		}
+				}else
+				{
+					magic = null;
+					if(DQR.conf.offMobNotEnoughMP > 0 && !this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.pi", 0.1F, 1.0F);
+				}
+			}
+	    }
+    }
+
+    public void attackEntityWithBagi(EntityLivingBase p_82196_1_, float p_82196_2_, EnumDqmMagic grade)
+    {
+		PotionEffect pe;
+		pe = this.getActivePotionEffect(DQPotionMinus.debuffMahoton);
+		if(pe != null && !this.worldObj.isRemote)
+		{
+			return;
+		}
+
+		if(DQR.func.isBind(this))
+		{
+			return;
+		}
+
+		MagicEntityBagi[] magic = null;
+
+
+		if(grade == EnumDqmMagic.Bagi)
+		{
+
+			magic = new MagicEntityBagi[3];
+
+			magic[0] = new MagicEntityBagi(p_82196_1_.worldObj, this, 1.5F, 1.0F, -1.0F, 0.0F, 0.0F, 0.0F, 0.0F);
+			magic[1] = new MagicEntityBagi(p_82196_1_.worldObj, this, 1.5F, 1.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
+			magic[2] = new MagicEntityBagi(p_82196_1_.worldObj, this, 1.5F, 1.0F, 1.0F, 0.0F, 0.0F, 0.0F, 0.0F);
+			for(int cnt = 0;cnt < 3; cnt++)
+			{
+				magic[cnt].setMaxTicksRange(grade.getTickRange());
+				magic[cnt].shootingEntity = this;
+				if(this.getOwner() != null)
+				{
+					magic[cnt].setShootingEntityOwner(this.getOwner());
+				}
+			}
+
+		}else if(grade == EnumDqmMagic.Bagima)
+		{
+			grade = EnumDqmMagic.Bagima;
+			magic = new MagicEntityBagi[3];
+			magic[0] = new MagicEntityBagi(p_82196_1_.worldObj, this, 1.5F, 1.0F, -1.0F, 0.0F, 0.0F, 0.0F, 0.0F);
+			magic[1] = new MagicEntityBagi(p_82196_1_.worldObj, this, 1.5F, 1.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
+			magic[2] = new MagicEntityBagi(p_82196_1_.worldObj, this, 1.5F, 1.0F, 1.0F, 0.0F, 0.0F, 0.0F, 0.0F);
+			for(int cnt = 0;cnt < 3; cnt++)
+			{
+				magic[cnt].setMaxTicksRange(grade.getTickRange());
+				magic[cnt].shootingEntity = this;
+				if(this.getOwner() != null)
+				{
+					magic[cnt].setShootingEntityOwner(this.getOwner());
+				}
+			}
+			/*
+	   		minusMP = 6;
+	   		minusDam = 150;
+	   		needLvS = 22;
+	   		//needLvK = 18;
+			*/
+		}else if(grade == EnumDqmMagic.Bagikurosu)
+		{
+			grade = EnumDqmMagic.Bagikurosu;
+			magic = new MagicEntityBagi[5];
+			magic[0] = new MagicEntityBagi(p_82196_1_.worldObj, this, 1.5F, 1.0F, -1.0F, 0.0F, 0.0F, 0.0F, 0.0F);
+			magic[1] = new MagicEntityBagi(p_82196_1_.worldObj, this, 1.5F, 1.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
+			magic[2] = new MagicEntityBagi(p_82196_1_.worldObj, this, 1.5F, 1.0F, 1.0F, 0.0F, 0.0F, 0.0F, 0.0F);
+			magic[3] = new MagicEntityBagi(p_82196_1_.worldObj, this, 1.5F, 1.0F, -1.0F, 0.0F, 0.0F, -22.5F, 0.0F);
+			magic[4] = new MagicEntityBagi(p_82196_1_.worldObj, this, 1.5F, 1.0F, 1.0F, 0.0F, 0.0F, 22.5F, 0.0F);
+			for(int cnt = 0;cnt < 5; cnt++)
+			{
+				magic[cnt].setMaxTicksRange(grade.getTickRange());
+				magic[cnt].shootingEntity = this;
+				if(this.getOwner() != null)
+				{
+					magic[cnt].setShootingEntityOwner(this.getOwner());
+				}
+			}
+
+			/*
+	   		minusMP = 12;
+	   		minusDam = 200;
+	   		needLvS = 38;
+	   		//needLvK = 31;
+			*/
+		}else if(grade == EnumDqmMagic.Bagimutyo)
+		{
+			grade = EnumDqmMagic.Bagimutyo;
+			magic = new MagicEntityBagi[5];
+			magic[0] = new MagicEntityBagi(p_82196_1_.worldObj, this, 1.5F, 1.0F, -1.0F, 0.0F, 0.0F, 0.0F, 0.0F);
+			magic[1] = new MagicEntityBagi(p_82196_1_.worldObj, this, 1.5F, 1.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
+			magic[2] = new MagicEntityBagi(p_82196_1_.worldObj, this, 1.5F, 1.0F, 1.0F, 0.0F, 0.0F, 0.0F, 0.0F);
+			magic[3] = new MagicEntityBagi(p_82196_1_.worldObj, this, 1.5F, 1.0F, -1.0F, 0.0F, 0.0F, -22.5F, 0.0F);
+			magic[4] = new MagicEntityBagi(p_82196_1_.worldObj, this, 1.5F, 1.0F, 1.0F, 0.0F, 0.0F, 22.5F, 0.0F);
+			for(int cnt = 0;cnt < 5; cnt++)
+			{
+				magic[cnt].setMaxTicksRange(grade.getTickRange());
+				magic[cnt].shootingEntity = this;
+				if(this.getOwner() != null)
+				{
+					magic[cnt].setShootingEntityOwner(this.getOwner());
+				}
+			}
+			/*
+	   		minusMP = 21;
+	   		minusDam = 300;
+	   		needLvS = 63;
+	   		*/
+	   		//needLvK = 58;
+
+		}
+
+		if(magic != null)
+		{
+
+			if(this.MP >= grade.getMP() || this.MaxMP == -1 || DQR.debug > 0)
+			{
+				int attackDam = grade.getAttack();
+
+				if(!this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.jumon", 1.0F, 1.0F);
+				this.MP = this.MP - grade.getMP();
+        		for(int cnt = 0; cnt < magic.length; cnt++)
+        		{
+    				magic[cnt].setDamage(attackDam);
+    	        	if (!this.worldObj.isRemote)
+    	        	{
+    	        		this.worldObj.spawnEntityInWorld(magic[cnt]);
+
+    	        	}
+        		}
+			}else
+			{
+				magic = null;
+
+				if(DQR.conf.offMobNotEnoughMP > 0 && !this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.pi", 0.1F, 1.0F);
+			}
+		}
+    }
+
+
+    public void attackEntityWithRangedAttack(EntityLivingBase p_82196_1_, float p_82196_2_)
+    {
+		//PotionEffect pe = this.getActivePotionEffect(DQPotionMinus.debuffRariho);
+		//if(pe != null && !this.worldObj.isRemote)
+    	if(DQR.func.isBind(this))
+		{
+			return;
+		}
+
+    	MagicEntityArrow entityarrow = new MagicEntityArrow(this.worldObj, this, 1.5F, 1.0F, 0.0f, 0.0F, 0.0F);
+
+        entityarrow.setDamage(this.Kougeki);
+        entityarrow.shootingEntity = this;
+        if(this.getOwner() != null)
+		{
+        	entityarrow.setShootingEntityOwner(this.getOwner());
+		}
+        /*
+        if (i > 0)
+        {
+            entityarrow.setDamage(entityarrow.getDamage() + (double)i * 0.5D + 0.5D);
+        }
+
+        if (j > 0)
+        {
+            entityarrow.setKnockbackStrength(j);
+        }
+        */
+
+        /*
+        if (EnchantmentHelper.getEnchantmentLevel(Enchantment.flame.effectId, this.getHeldItem()) > 0 || this.getSkeletonType() == 1)
+        {
+            entityarrow.setFire(100);
+        }
+        */
+
+        if(!this.worldObj.isRemote)
+        {
+        	this.playSound("random.bow", 1.0F, 1.0F / (this.getRNG().nextFloat() * 0.4F + 0.8F));
+        	this.worldObj.spawnEntityInWorld(entityarrow);
+        }
+
+    }
+
+    public void attackEntityWithDoruma(EntityLivingBase p_82196_1_, float p_82196_2_, EnumDqmMagic grade)
+    {
+		PotionEffect pe;
+		pe = this.getActivePotionEffect(DQPotionMinus.debuffMahoton);
+		if(pe != null && !this.worldObj.isRemote)
+		{
+			return;
+		}
+		//pe = this.getActivePotionEffect(DQPotionMinus.debuffRariho);
+		//if(pe != null && !this.worldObj.isRemote)
+		if(DQR.func.isBind(this))
+		{
+
+			return;
+		}
+
+
+
+    	MagicEntity[] magic = null;
+    	Random rand = new Random();
+    	int frame = 0;
+    	/*
+    	int minusMP = 0;
+    	int minusDam = 0;
+    	int needLvM = 0;
+    	int needLvK = 0;
+    	int hitCnt = 0;
+    	*/
+
+
+		if(grade == EnumDqmMagic.Doruma)
+		{
+			magic = new MagicEntity[5];
+			for(int cnt = 1;cnt < 5; cnt++)
+			{
+				frame = rand.nextInt(180) * 2;
+				magic[cnt] = new MagicEntityDoruma(this.worldObj, this, 1.5F, 1.0F, 0.0F, 0.0F, 0.0F, (float)(frame - 180), 0.0F);
+				magic[cnt].shootingEntity = this;
+				if(this.getOwner() != null)
+				{
+					magic[cnt].setShootingEntityOwner(this.getOwner());
+				}
+			}
+
+			/*
+	   		minusMP = 5;
+	   		minusDam = 100;
+	   		needLvM = 12;
+	   		needLvK = 15;
+	   		*/
+
+		}else if(grade == EnumDqmMagic.Dorukuma)
+		{
+			magic = new MagicEntity[8];
+			for(int cnt = 1;cnt < 8; cnt++)
+			{
+				frame = rand.nextInt(180) * 2;
+				magic[cnt] = new MagicEntityDoruma(this.worldObj, this, 1.5F, 1.0F, 0.0F, 0.0F, 0.0F, (float)(frame - 180), 0.0F);
+				magic[cnt].shootingEntity = this;
+				if(this.getOwner() != null)
+				{
+					magic[cnt].setShootingEntityOwner(this.getOwner());
+				}
+			}
+
+			/*
+	   		minusMP = 12;
+	   		minusDam = 150;
+	   		needLvM = 27;
+	   		needLvK = 27;
+	   		*/
+
+		}else if(grade == EnumDqmMagic.Dorumoa)
+		{
+			magic = new MagicEntity[16];
+			for(int cnt = 1;cnt < 16; cnt++)
+			{
+				frame = rand.nextInt(180) * 2;
+				magic[cnt] = new MagicEntityDoruma(this.worldObj, this, 1.5F, 1.0F, 0.0F, 0.0F, 0.0F, (float)(frame - 180), 0.0F);
+				magic[cnt].shootingEntity = this;
+				if(this.getOwner() != null)
+				{
+					magic[cnt].setShootingEntityOwner(this.getOwner());
+				}
+
+			}
+			/*
+	   		minusMP = 21;
+	   		minusDam = 200;
+	   		needLvM = 42;
+	   		needLvK = 38;
+	   		*/
+
+		}else if(grade == EnumDqmMagic.Dorumadon)
+		{
+			magic = new MagicEntity[32];
+			for(int cnt = 1;cnt < 32; cnt++)
+			{
+				frame = rand.nextInt(180) * 2;
+				magic[cnt] = new MagicEntityDoruma(this.worldObj, this, 1.5F, 1.0F, 0.0F, 0.0F, 0.0F, (float)(frame - 180), 0.0F);
+				magic[cnt].shootingEntity = this;
+				if(this.getOwner() != null)
+				{
+					magic[cnt].setShootingEntityOwner(this.getOwner());
+				}
+
+			}
+			/*
+	   		minusMP = 38;
+	   		minusDam = 300;
+	   		needLvM = 72;
+	   		needLvK = 67;
+	   		*/
+
+		}
+
+		magic[0] = new MagicEntityDoruma(this.worldObj, this, 1.5F, 1.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
+		magic[0].shootingEntity = this;
+		/*
+    	minusMP = 0;
+    	minusDam = 0;
+    	needLvM = 0;
+    	needLvK = 0;
+    	hitCnt = 0;
+    	*/
+
+		if(magic != null)
+		{
+			if(this.MP >= grade.getMP() || this.MaxMP == -1)
+			{
+				int attackDam = grade.getAttack();
+
+				if(!this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.jumon", 1.0F, 1.0F);
+				this.MP = this.MP - grade.getMP();
+        		for(int cnt = 0; cnt < magic.length; cnt++)
+        		{
+    				magic[cnt].setDamage(attackDam);
+    	        	if (!this.worldObj.isRemote)
+    	        	{
+
+    	        		this.worldObj.spawnEntityInWorld(magic[cnt]);
+
+    	        	}
+        		}
+			}else
+			{
+				magic = null;
+				if(DQR.conf.offMobNotEnoughMP > 0 && !this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.pi", 0.1F, 1.0F);
+			}
+		}
+    }
+
+    public void attackEntityWithGira(EntityLivingBase p_82196_1_, float p_82196_2_, EnumDqmMagic grade)
+    {
+    	PotionEffect pe;
+		pe = this.getActivePotionEffect(DQPotionMinus.debuffMahoton);
+		if(pe != null && !this.worldObj.isRemote)
+		{
+			return;
+		}
+		//pe = this.getActivePotionEffect(DQPotionMinus.debuffRariho);
+		//if(pe != null && !this.worldObj.isRemote)
+		if(DQR.func.isBind(this))
+		{
+			return;
+		}
+
+    	MagicEntity[] magic = null;
+    	/*
+    	int minusMP = 0;
+    	int minusDam = 0;
+    	int needLvM = 0;
+    	int needLvK = 0;
+    	int hitCnt = 0;
+    	*/
+
+		if(grade == EnumDqmMagic.Gira)
+		{
+
+			magic = new MagicEntity[3];
+			for(int cnt = 0;cnt < 3; cnt++)
+			{
+				magic[cnt] = new MagicEntityGira(this.worldObj, this, 1.5F, 1.0F, (float)(-1 + cnt), 0.0F, 0.0F);
+				magic[cnt].shootingEntity = this;
+				if(this.getOwner() != null)
+				{
+					magic[cnt].setShootingEntityOwner(this.getOwner());
+				}
+			}
+			/*
+	   		minusMP = 2;
+	   		minusDam = 100;
+	   		needLvM = 9;
+	   		needLvK = 12;
+	   		*/
+
+		}else if(grade == EnumDqmMagic.Begirama)
+		{
+			magic = new MagicEntity[5];
+			for(int cnt = 0;cnt < 5; cnt++)
+			{
+				magic[cnt] = new MagicEntityBegirama(this.worldObj, this, 1.5F, 1.0F, (float)(-2 + cnt), 0.0F, 0.0F);
+				magic[cnt].shootingEntity = this;
+				if(this.getOwner() != null)
+				{
+					magic[cnt].setShootingEntityOwner(this.getOwner());
+				}
+			}
+			/*
+	   		minusMP = 5;
+	   		minusDam = 150;
+	   		needLvM = 23;
+	   		needLvK = 23;
+	   		*/
+
+		}else if(grade == EnumDqmMagic.Begiragon)
+		{
+			magic = new MagicEntity[7];
+			for(int cnt = 0;cnt < 7; cnt++)
+			{
+				magic[cnt] = new MagicEntityBegiragon(this.worldObj, this, 1.5F, 1.0F, (float)(-3 + cnt), 0.0F, 0.0F);
+				magic[cnt].shootingEntity = this;
+				if(this.getOwner() != null)
+				{
+					magic[cnt].setShootingEntityOwner(this.getOwner());
+				}
+			}
+			/*
+	   		minusMP = 10;
+	   		minusDam = 200;
+	   		needLvM = 38;
+	   		needLvK = 35;
+	   		*/
+
+		}else if(grade == EnumDqmMagic.Giragureido)
+		{
+			magic = new MagicEntity[9];
+			for(int cnt = 0;cnt < 9; cnt++)
+			{
+				magic[cnt] = new MagicEntityGiragureido(this.worldObj, this, 1.5F, 1.0F, (float)(-4 + cnt), 0.0F, 0.0F);
+				magic[cnt].shootingEntity = this;
+				if(this.getOwner() != null)
+				{
+					magic[cnt].setShootingEntityOwner(this.getOwner());
+				}
+			}
+			/*
+	   		minusMP = 18;
+	   		minusDam = 300;
+	   		needLvM = 67;
+	   		needLvK = 63;
+	   		*/
+
+		}
+
+		/*
+    	minusMP = 0;
+    	minusDam = 0;
+    	needLvM = 0;
+    	needLvK = 0;
+    	hitCnt = 0;
+    	*/
+
+		if(magic != null)
+		{
+
+			if(this.MP >= grade.getMP() || this.MaxMP == -1)
+			{
+				int attackDam = grade.getAttack();
+
+				if(!this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.jumon", 1.0F, 1.0F);
+				this.MP = this.MP - grade.getMP();
+        		for(int cnt = 0; cnt < magic.length; cnt++)
+        		{
+    				magic[cnt].setDamage(attackDam);
+    	        	if (!this.worldObj.isRemote)
+    	        	{
+
+    	        		this.worldObj.spawnEntityInWorld(magic[cnt]);
+
+    	        	}
+        		}
+			}else
+			{
+				magic = null;
+				if(DQR.conf.offMobNotEnoughMP > 0 && !this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.pi", 0.1F, 1.0F);
+			}
+
+		}
+    }
+
+
+    public void attackEntityWithHyado(EntityLivingBase p_82196_1_, float p_82196_2_, EnumDqmMagic grade)
+    {
+    	PotionEffect pe;
+
+		pe = this.getActivePotionEffect(DQPotionMinus.debuffMahoton);
+		if(pe != null && !this.worldObj.isRemote)
+		{
+			return;
+		}
+		//pe = this.getActivePotionEffect(DQPotionMinus.debuffRariho);
+		//if(pe != null && !this.worldObj.isRemote)
+		if(DQR.func.isBind(this))
+		{
+			return;
+		}
+
+
+    	MagicEntityHyado[] magic = null;
+    	/*
+    	int minusMP = 0;
+    	int minusDam = 0;
+    	int needLvM = 0;
+    	int needLvK = 0;
+    	int hitCnt = 0;
+    	*/
+
+		if(grade == EnumDqmMagic.Hyado)
+		{
+			magic = new MagicEntityHyado[1];
+			for(int cnt = 0;cnt < 1; cnt++)
+			{
+				magic[cnt] = new MagicEntityHyado(this.worldObj, this, 1.5F, 1.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
+				magic[cnt].shootingEntity = this;
+				if(this.getOwner() != null)
+				{
+					magic[cnt].setShootingEntityOwner(this.getOwner());
+				}
+				if(rand.nextInt(10) == 0 && DQR.conf.magicSpFubuki == 1)magic[cnt].setWorldFlg(0);
+			}
+
+			/*
+	   		minusMP = 3;
+	   		minusDam = 100;
+	   		needLvM = 5;
+	   		needLvK = 8;
+	   		*/
+
+		}else if(grade == EnumDqmMagic.Hyadaruko)
+		{
+			magic = new MagicEntityHyado[3];
+			for(int cnt = 0;cnt < 3; cnt++)
+			{
+				magic[cnt] = new MagicEntityHyado(this.worldObj, this, 1.5F, 1.0F, 0.0F, 0.0F, 0.0F, (float)(-15.0F + (15.0F * cnt)), 0.0F);
+				magic[cnt].shootingEntity = this;
+				if(this.getOwner() != null)
+				{
+					magic[cnt].setShootingEntityOwner(this.getOwner());
+				}
+				if(rand.nextInt(10) == 0 && DQR.conf.magicSpFubuki == 1)magic[cnt].setWorldFlg(1);
+			}
+
+			/*
+	   		minusMP = 6;
+	   		minusDam = 150;
+	   		needLvM = 18;
+	   		needLvK = 18;
+	   		*/
+
+		}else if(grade == EnumDqmMagic.Mahyado)
+		{
+			magic = new MagicEntityHyado[5];
+			for(int cnt = 0;cnt < 5; cnt++)
+			{
+				magic[cnt] = new MagicEntityHyado(this.worldObj, this, 1.5F, 1.0F, 0.0F, 0.0F, 0.0F, (float)(-30.0F + (15.0F * cnt)), 0.0F);
+				magic[cnt].shootingEntity = this;
+				if(this.getOwner() != null)
+				{
+					magic[cnt].setShootingEntityOwner(this.getOwner());
+				}
+				if(rand.nextInt(10) == 0 && DQR.conf.magicSpFubuki == 1)magic[cnt].setWorldFlg(2);
+			}
+			/*
+	   		minusMP = 11;
+	   		minusDam = 200;
+	   		needLvM = 34;
+	   		needLvK = 31;
+	   		*/
+
+		}else if(grade == EnumDqmMagic.Mahyadodesu)
+		{
+			magic = new MagicEntityHyado[7];
+			for(int cnt = 0;cnt < 7; cnt++)
+			{
+				magic[cnt] = new MagicEntityHyado(this.worldObj, this, 1.5F, 1.0F, 0.0F, 0.0F, 0.0F, (float)(-45.0F + (15.0F * cnt)), 0.0F);
+				magic[cnt].shootingEntity = this;
+				if(this.getOwner() != null)
+				{
+					magic[cnt].setShootingEntityOwner(this.getOwner());
+				}
+				if(rand.nextInt(10) == 0 && DQR.conf.magicSpFubuki == 1)magic[cnt].setWorldFlg(3);
+			}
+			/*
+	   		minusMP = 21;
+	   		minusDam = 300;
+	   		needLvM = 63;
+	   		needLvK = 58;
+	   		*/
+
+		}
+
+
+		if(magic != null)
+		{
+
+			if(this.MP >= grade.getMP()|| this.MaxMP == -1)
+			{
+				int attackDam = grade.getAttack();
+
+				if(!this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.jumon", 1.0F, 1.0F);
+				this.MP = this.MP - grade.getMP();
+        		for(int cnt = 0; cnt < magic.length; cnt++)
+        		{
+    				magic[cnt].setDamage(attackDam);
+    	        	if (!this.worldObj.isRemote)
+    	        	{
+
+    	        		this.worldObj.spawnEntityInWorld(magic[cnt]);
+
+    	        	}
+        		}
+			}else
+			{
+				magic = null;
+				if(DQR.conf.offMobNotEnoughMP > 0 && !this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.pi", 0.1F, 1.0F);
+			}
+		}
+
+    }
+
+
+    public void attackEntityWithIo(EntityLivingBase p_82196_1_, float p_82196_2_, EnumDqmMagic grade)
+    {
+    	PotionEffect pe;
+		pe = this.getActivePotionEffect(DQPotionMinus.debuffMahoton);
+		if(pe != null && !this.worldObj.isRemote)
+		{
+			return;
+		}
+		//pe = this.getActivePotionEffect(DQPotionMinus.debuffRariho);
+		//if(pe != null && !this.worldObj.isRemote)
+		if(DQR.func.isBind(this))
+		{
+			return;
+		}
+
+		MagicEntityIo[] magic = null;
+    	/*
+    	int minusMP = 0;
+    	int minusDam = 0;
+    	int needLvM = 0;
+    	int needLvK = 0;
+    	int hitCnt = 0;
+    	*/
+
+		if(grade == EnumDqmMagic.Io)
+		{
+			magic = new MagicEntityIo[8];
+			for(int cnt = 0;cnt < 8; cnt++)
+			{
+				magic[cnt] = new MagicEntityIo(this.worldObj, this, 1.5F, 1.0F, 0.0F, 0.0F, 0.0F, (float)(-135.0F + (45.0F * cnt)), 0.0F);
+				magic[cnt].shootingEntity = this;
+				if(this.getOwner() != null)
+				{
+					magic[cnt].setShootingEntityOwner(this.getOwner());
+				}
+				magic[cnt].setMaxTicksRange(grade.getTickRange());
+			}
+
+			/*
+	   		minusMP = 5;
+	   		minusDam = 100;
+	   		needLvM = 12;
+	   		needLvK = 15;
+	   		*/
+
+		}else if(grade == EnumDqmMagic.Iora)
+		{
+			magic = new MagicEntityIo[8];
+			for(int cnt = 0;cnt < 8; cnt++)
+			{
+				magic[cnt] = new MagicEntityIo(this.worldObj, this, 1.5F, 1.0F, 0.0F, 0.0F, 0.0F, (float)(-135.0F + (45.0F * cnt)), 0.0F);
+				magic[cnt].shootingEntity = this;
+				if(this.getOwner() != null)
+				{
+					magic[cnt].setShootingEntityOwner(this.getOwner());
+				}
+				magic[cnt].setMaxTicksRange(grade.getTickRange());
+			}
+
+			/*
+	   		minusMP = 12;
+	   		minusDam = 150;
+	   		needLvM = 27;
+	   		needLvK = 27;
+	   		*/
+
+		}else if(grade == EnumDqmMagic.Ionazun)
+		{
+			magic = new MagicEntityIo[16];
+			for(int cnt = 0;cnt < 16; cnt++)
+			{
+				magic[cnt] = new MagicEntityIo(this.worldObj, this, 1.5F, 1.0F, 0.0F, 0.0F, 0.0F, (float)(-157.5F + (22.5F * cnt)), 0.0F);
+				magic[cnt].shootingEntity = this;
+				if(this.getOwner() != null)
+				{
+					magic[cnt].setShootingEntityOwner(this.getOwner());
+				}
+				magic[cnt].setMaxTicksRange(grade.getTickRange());
+			}
+			/*
+	   		minusMP = 21;
+	   		minusDam = 200;
+	   		needLvM = 42;
+	   		needLvK = 38;
+	   		*/
+
+		}else if(grade == EnumDqmMagic.Iogurande)
+		{
+			magic = new MagicEntityIo[16];
+			for(int cnt = 0;cnt < 16; cnt++)
+			{
+				magic[cnt] = new MagicEntityIo(this.worldObj, this, 1.5F, 1.0F, 0.0F, 0.0F, 0.0F, (float)(-157.5F + (22.5F * cnt)), 0.0F);
+				magic[cnt].shootingEntity = this;
+				if(this.getOwner() != null)
+				{
+					magic[cnt].setShootingEntityOwner(this.getOwner());
+				}
+				magic[cnt].setMaxTicksRange(grade.getTickRange());
+			}
+			/*
+	   		minusMP = 38;
+	   		minusDam = 300;
+	   		needLvM = 72;
+	   		needLvK = 67;
+	   		*/
+
+		}
+
+		/*
+    	minusMP = 0;
+    	minusDam = 0;
+    	needLvM = 0;
+    	needLvK = 0;
+    	hitCnt = 0;
+    	*/
+
+		if(magic != null)
+		{
+
+			if(this.MP >= grade.getMP()|| this.MaxMP == -1)
+			{
+				int attackDam = grade.getAttack();
+
+
+				if(!this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.jumon", 1.0F, 1.0F);
+				this.MP = this.MP - grade.getMP();
+        		for(int cnt = 0; cnt < magic.length; cnt++)
+        		{
+    				magic[cnt].setDamage(attackDam);
+    	        	if (!this.worldObj.isRemote)
+    	        	{
+
+    	        		magic[cnt].setWorldFlg(this.isSneaking());
+    	        		this.worldObj.spawnEntityInWorld(magic[cnt]);
+
+    	        	}
+        		}
+			}else
+			{
+				magic = null;
+				if(DQR.conf.offMobNotEnoughMP > 0 && !this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.pi", 0.1F, 1.0F);
+			}
+		}
+    }
+
+
+    public void attackEntityWithMera(EntityLivingBase p_82196_1_, float p_82196_2_, EnumDqmMagic grade)
+    {
+
+    	PotionEffect pe;
+		pe = this.getActivePotionEffect(DQPotionMinus.debuffMahoton);
+		if(pe != null && !this.worldObj.isRemote)
+		{
+			return;
+		}
+		//pe = this.getActivePotionEffect(DQPotionMinus.debuffRariho);
+		//if(pe != null && !this.worldObj.isRemote)
+		if(DQR.func.isBind(this))
+		{
+			return;
+		}
+
+    	MagicEntity magic = null;
+    	/*
+    	int minusMP = 0;
+    	int minusDam = 0;
+    	int needLvM = 0;
+    	int needLvK = 0;
+    	*/
+
+		if(grade == EnumDqmMagic.Mera)
+		{
+	   		magic = new MagicEntityMera(this.worldObj, this, 1.5F, 1.0F, 0.0F, 0.0F, 0.0F);
+			magic.shootingEntity = this;
+			if(this.getOwner() != null)
+			{
+				magic.setShootingEntityOwner(this.getOwner());
+			}
+
+	   		((MagicEntityMera) magic).setWorldFlg(DQR.conf.magicSpHonoo == 1 && rand.nextInt(10) == 0);
+	   		/*
+	   		minusMP = 2;
+	   		minusDam = 100;
+	   		needLvM = 3;
+	   		needLvK = 5;
+	   		*/
+
+		}else if(grade == EnumDqmMagic.Merami)
+		{
+			magic = new MagicEntityMerami(this.worldObj, this, 1.5F, 1.0F, 0.0F, 0.0F, 0.0F);
+			magic.shootingEntity = this;
+			if(this.getOwner() != null)
+			{
+				magic.setShootingEntityOwner(this.getOwner());
+			}
+			((MagicEntityMerami) magic).setWorldFlg(DQR.conf.magicSpHonoo == 1 && rand.nextInt(10) == 0);
+			/*
+	   		minusMP = 5;
+	   		minusDam = 150;
+	   		needLvM = 15;
+	   		needLvK = 15;
+	   		*/
+
+
+		}else if(grade == EnumDqmMagic.Merazoma)
+		{
+			magic = new MagicEntityMerazoma(this.worldObj, this, 1.5F, 1.0F, 0.0F, 0.0F, 0.0F);
+			magic.shootingEntity = this;
+			if(this.getOwner() != null)
+			{
+				magic.setShootingEntityOwner(this.getOwner());
+			}
+			((MagicEntityMerazoma) magic).setWorldFlg(DQR.conf.magicSpHonoo == 1 && rand.nextInt(10) == 0);
+			/*
+	   		minusMP = 10;
+	   		minusDam = 200;
+	   		needLvM = 29;
+	   		needLvK = 25;
+	   		*/
+
+		}else if(grade == EnumDqmMagic.Meragaia)
+		{
+			magic = new MagicEntityMeragaia(this.worldObj, this, 1.5F, 1.0F, 0.0F, 0.0F, 0.0F);
+			magic.shootingEntity = this;
+			if(this.getOwner() != null)
+			{
+				magic.setShootingEntityOwner(this.getOwner());
+			}
+			((MagicEntityMeragaia) magic).setWorldFlg(DQR.conf.magicSpHonoo == 1 && rand.nextInt(10) == 0);
+			/*
+	   		minusMP = 18;
+	   		minusDam = 300;
+	   		needLvM = 55;
+	   		needLvK = 49;
+	   		*/
+
+		}
+
+		if(magic != null)
+		{
+
+
+			if(this.MP >= grade.getMP()|| this.MaxMP == -1)
+			{
+				int attackDam = grade.getAttack();
+
+				magic.setDamage(attackDam);
+
+				if(!this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.jumon", 1.0F, 1.0F);
+				this.MP = this.MP - grade.getMP();
+	        	if (!this.worldObj.isRemote)
+	        	{
+	        		this.worldObj.spawnEntityInWorld(magic);
+
+	        	}
+			}else
+			{
+				magic = null;
+				if(DQR.conf.offMobNotEnoughMP > 0 && !this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.pi", 0.1F, 1.0F);
+			}
+		}
+    }
+
+
+    public void attackEntityWithRaidein(EntityLivingBase p_82196_1_, float p_82196_2_, EnumDqmMagic grade)
+    {
+
+    	PotionEffect pe;
+		pe = this.getActivePotionEffect(DQPotionMinus.debuffMahoton);
+		if(pe != null && !this.worldObj.isRemote)
+		{
+			return;
+		}
+		//pe = this.getActivePotionEffect(DQPotionMinus.debuffRariho);
+		//if(pe != null && !this.worldObj.isRemote)
+		if(DQR.func.isBind(this))
+		{
+			return;
+		}
+
+    	MagicEntity[] magic = null;
+    	/*
+    	int minusMP = 0;
+    	int minusDam = 0;
+    	int needLvM = 0;
+    	int needLvK = 0;
+    	int hitCnt = 0;
+    	*/
+
+		if(grade == EnumDqmMagic.Raidein)
+		{
+			magic = new MagicEntity[1];
+			for(int cnt = 0;cnt < 1; cnt++)
+			{
+				magic[cnt] = new MagicEntityRaidein(this.worldObj, this, 1.5F, 1.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0);
+				magic[cnt].shootingEntity = this;
+				if(this.getOwner() != null)
+				{
+					magic[cnt].setShootingEntityOwner(this.getOwner());
+				}
+			}
+
+			/*
+	   		minusMP = 3;
+	   		minusDam = 100;
+	   		needLvM = 5;
+	   		needLvK = 8;
+	   		*/
+
+		}else if(grade == EnumDqmMagic.Gigadein)
+		{
+			magic = new MagicEntity[3];
+			for(int cnt = 0;cnt < 3; cnt++)
+			{
+				magic[cnt] = new MagicEntityRaidein(this.worldObj, this, 1.5F, 1.0F, 0.0F, 0.0F, 0.0F, (float)(-45.0F + (45.0F * cnt)), 0.0F, 1);
+				magic[cnt].shootingEntity = this;
+				if(this.getOwner() != null)
+				{
+					magic[cnt].setShootingEntityOwner(this.getOwner());
+				}
+			}
+
+			/*
+	   		minusMP = 6;
+	   		minusDam = 150;
+	   		needLvM = 18;
+	   		needLvK = 18;
+	   		*/
+
+		}else if(grade == EnumDqmMagic.Minadein)
+		{
+			magic = new MagicEntity[5];
+			for(int cnt = 0;cnt < 5; cnt++)
+			{
+				magic[cnt] = new MagicEntityRaidein(this.worldObj, this, 1.5F, 1.0F, 0.0F, 0.0F, 0.0F, (float)(-90.0F + (45.0F * cnt)), 0.0F, 2);
+				magic[cnt].shootingEntity = this;
+				if(this.getOwner() != null)
+				{
+					magic[cnt].setShootingEntityOwner(this.getOwner());
+				}
+			}
+			/*
+	   		minusMP = 11;
+	   		minusDam = 200;
+	   		needLvM = 34;
+	   		needLvK = 31;
+	   		*/
+
+		}
+
+
+		if(magic != null)
+		{
+
+			if(this.MP >= grade.getMP()|| this.MaxMP == -1)
+			{
+				int attackDam = grade.getAttack();
+
+
+				if(!this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.jumon", 1.0F, 1.0F);
+				this.MP = this.MP - grade.getMP();
+        		for(int cnt = 0; cnt < magic.length; cnt++)
+        		{
+    				magic[cnt].setDamage(attackDam);
+    	        	if (!this.worldObj.isRemote)
+    	        	{
+
+    	        		this.worldObj.spawnEntityInWorld(magic[cnt]);
+
+    	        	}
+        		}
+			}else
+			{
+				magic = null;
+				if(DQR.conf.offMobNotEnoughMP > 0 && !this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.pi", 0.1F, 1.0F);
+			}
+		}
+    }
+
+
+    public void attackEntityWithZaki(EntityLivingBase p_82196_1_, float p_82196_2_, EnumDqmMagic grade)
+    {
+    	PotionEffect pe;
+		pe = this.getActivePotionEffect(DQPotionMinus.debuffMahoton);
+		if(pe != null && !this.worldObj.isRemote)
+		{
+			return;
+		}
+		//pe = this.getActivePotionEffect(DQPotionMinus.debuffRariho);
+		//if(pe != null && !this.worldObj.isRemote)
+		if(DQR.func.isBind(this))
+		{
+			return;
+		}
+
+
+
+		MagicEntityZaki[] magic = null;
+
+		if(grade == EnumDqmMagic.Zaki)
+		{
+			magic = new MagicEntityZaki[1];
+			magic[0] = new MagicEntityZaki(this.worldObj, this, 1.5F, 1.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
+			magic[0].shootingEntity = this;
+			if(this.getOwner() != null)
+			{
+				magic[0].setShootingEntityOwner(this.getOwner());
+			}
+		}else if(grade == EnumDqmMagic.Zaraki)
+		{
+			magic = new MagicEntityZaki[3];
+			for(int cnt = 0;cnt < 3; cnt++)
+			{
+				magic[cnt] = new MagicEntityZaki(this.worldObj, this, 1.5F, 1.0F, 0.0F, 0.0F, 0.0F, (float)(-45.0F + (45.0F * cnt)), 0.0F);
+				magic[cnt].shootingEntity = this;
+				if(this.getOwner() != null)
+				{
+					magic[cnt].setShootingEntityOwner(this.getOwner());
+				}
+			}
+		}else if(grade == EnumDqmMagic.Zarakima)
+		{
+			magic = new MagicEntityZaki[3];
+			for(int cnt = 0;cnt < 3; cnt++)
+			{
+				magic[cnt] = new MagicEntityZaki(this.worldObj, this, 1.5F, 1.0F, 0.0F, 0.0F, 0.0F, (float)(-45.0F + (45.0F * cnt)), 0.0F);
+				magic[cnt].shootingEntity = this;
+				if(this.getOwner() != null)
+				{
+					magic[cnt].setShootingEntityOwner(this.getOwner());
+				}
+				magic[cnt].setBoxHit(3);
+			}
+
+		}
+
+		//System.out.println("TEST MP : " + this.DqmMobMP + " : " + grade.getMP() + " : " + this.DqmMobMaxMP);
+		if(this.MP < grade.getMP() && this.MaxMP != -1)
+		{
+			if(DQR.conf.offMobNotEnoughMP > 0 && !this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.pi", 0.1F, 1.0F);
+			return;
+		}else
+		{
+			this.MP = this.MP - grade.getMP();
+		}
+		//System.out.println("TEST MPX");
+    	//magic = new MagicEntityZaki(this.worldObj, this, 1.5F, 1.0F, 0.0F, 0.0F, 0.0F,   0.0F, 0.0F);
+
+		if(magic != null)
+		{
+			//System.out.println("TEST MPR : " + magic.length);
+			//int epMP = ExtendedPlayerProperties.get(this).getMP();
+
+			for(int cnt = 0; cnt < magic.length; cnt ++ )
+			{
+				magic[cnt].setDamage(0);
+				magic[cnt].setRate(grade.getRate());
+				//magic[cnt].setRate(90);
+				//magic.setPotionEffect(new PotionEffect(this.pot.id, grade.getAttack(), 0));
+				if(!this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.jumon", 1.0F, 1.0F);
+
+	        	if (!this.worldObj.isRemote)
+	        	{
+	        		this.worldObj.spawnEntityInWorld(magic[cnt]);
+
+	        	}
+			}
+        }
+    }
+
+
+    public void attackEntityWithHonoo(EntityLivingBase p_82196_1_, float p_82196_2_, EnumDqmMagic grade)
+    {
+
+       	PotionEffect pe;
+
+		//pe = this.getActivePotionEffect(DQPotionMinus.debuffRariho);
+		//if(pe != null && !this.worldObj.isRemote)
+		if(DQR.func.isBind(this))
+		{
+			return;
+		}
+
+		MagicEntity[] magic = null;
+    	/*
+    	int minusMP = 0;
+    	int minusDam = 0;
+    	int needLvM = 0;
+    	int needLvK = 0;
+    	int hitCnt = 0;
+    	*/
+
+		if(grade == EnumDqmMagic.Hinoiki)
+		{
+			magic = new MagicEntityMeraB[1];
+			magic[0] = new MagicEntityMeraB(this.worldObj, this, 1.5F, 1.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
+			magic[0].shootingEntity = this;
+			if(this.getOwner() != null)
+			{
+				magic[0].setShootingEntityOwner(this.getOwner());
+			}
+			((MagicEntityMeraB) magic[0]).setWorldFlg(DQR.conf.magicSpHonoo == 1 && rand.nextInt(10) == 0);
+			/*
+	   		minusMP = 5;
+	   		minusDam = 100;
+	   		needLvM = 12;
+	   		needLvK = 15;
+	   		*/
+
+		}else if(grade == EnumDqmMagic.Kaeniki)
+		{
+			magic = new MagicEntityMeramiB[3];
+			for(int cnt = 0;cnt < 3; cnt++)
+			{
+				magic[cnt] = new MagicEntityMeramiB(this.worldObj, this, 1.5F, 1.0F, 0.0F, 0.0F, 0.0F, (float)(-15.0F + (15.0F * cnt)), 0.0F);
+				magic[cnt].shootingEntity = this;
+				if(this.getOwner() != null)
+				{
+					magic[cnt].setShootingEntityOwner(this.getOwner());
+				}
+				((MagicEntityMeramiB) magic[cnt]).setWorldFlg(DQR.conf.magicSpHonoo == 1 && rand.nextInt(10) == 0);
+			}
+
+			/*
+	   		minusMP = 12;
+	   		minusDam = 150;
+	   		needLvM = 27;
+	   		needLvK = 27;
+	   		*/
+
+		}else if(grade == EnumDqmMagic.HagesiiHonoo)
+		{
+			magic = new MagicEntityMeramiB[7];
+			for(int cnt = 0;cnt < 7; cnt++)
+			{
+				magic[cnt] = new MagicEntityMeramiB(this.worldObj, this, 1.5F, 1.0F, 0.0F, 0.0F, 0.0F, (float)(-45.0F + (15.0F * cnt)), 0.0F);
+				magic[cnt].shootingEntity = this;
+				if(this.getOwner() != null)
+				{
+					magic[cnt].setShootingEntityOwner(this.getOwner());
+				}
+				((MagicEntityMeramiB) magic[cnt]).setWorldFlg(DQR.conf.magicSpHonoo == 1 && rand.nextInt(10) == 0);
+			}
+			/*
+	   		minusMP = 21;
+	   		minusDam = 200;
+	   		needLvM = 42;
+	   		needLvK = 38;
+	   		*/
+
+		}else if(grade == EnumDqmMagic.Syakunetu)
+		{
+			magic = new MagicEntityMerazomaB[16];
+			for(int cnt = 0;cnt < 16; cnt++)
+			{
+				magic[cnt] = new MagicEntityMerazomaB(this.worldObj, this, 1.5F, 1.0F, 0.0F, 0.0F, 0.0F, (float)(-157.5F + (22.5F * cnt)), 0.0F);
+				magic[cnt].shootingEntity = this;
+				if(this.getOwner() != null)
+				{
+					magic[cnt].setShootingEntityOwner(this.getOwner());
+				}
+				((MagicEntityMerazomaB) magic[cnt]).setWorldFlg(DQR.conf.magicSpHonoo == 1 && rand.nextInt(10) == 0);
+			}
+			/*
+	   		minusMP = 38;
+	   		minusDam = 300;
+	   		needLvM = 72;
+	   		needLvK = 67;
+	   		*/
+
+		}else if(grade == EnumDqmMagic.RengokuHonoo)
+		{
+			magic = new MagicEntityMeragaiaB[32];
+			for(int cnt = 0;cnt < 32; cnt++)
+			{
+				magic[cnt] = new MagicEntityMeragaiaB(this.worldObj, this, 1.5F, 1.0F, 0.0F, 0.0F, 0.0F, (float)(-157.5F + (11.25F * cnt)), 0.0F);
+				magic[cnt].shootingEntity = this;
+				if(this.getOwner() != null)
+				{
+					magic[cnt].setShootingEntityOwner(this.getOwner());
+				}
+				((MagicEntityMeragaiaB) magic[cnt]).setWorldFlg(DQR.conf.magicSpHonoo == 1 && rand.nextInt(10) == 0);
+			}
+			/*
+	   		minusMP = 38;
+	   		minusDam = 300;
+	   		needLvM = 72;
+	   		needLvK = 67;
+	   		*/
+		}
+
+		/*
+    	minusMP = 0;
+    	minusDam = 0;
+    	needLvM = 0;
+    	needLvK = 0;
+    	hitCnt = 0;
+    	*/
+
+		if(magic != null)
+		{
+
+			int attackDam = grade.getAttack();
+
+			//this.worldObj.playSoundAtEntity(this, "dqr:player.jumon", 1.0F, 1.0F);
+
+    		for(int cnt = 0; cnt < magic.length; cnt++)
+    		{
+				magic[cnt].setDamage(attackDam);
+	        	if (!this.worldObj.isRemote)
+	        	{
+	        		//magic[cnt].setWorldFlg(this.isSneaking());
+	        		this.worldObj.spawnEntityInWorld(magic[cnt]);
+	        	}
+    		}
+
+		}
+    }
+
+    public void attackEntityWithFubuki(EntityLivingBase p_82196_1_, float p_82196_2_, EnumDqmMagic grade)
+    {
+       	PotionEffect pe;
+
+		//pe = this.getActivePotionEffect(DQPotionMinus.debuffRariho);
+		//if(pe != null && !this.worldObj.isRemote)
+		if(DQR.func.isBind(this))
+		{
+			return;
+		}
+
+		MagicEntityHyadoB[] magic = null;
+    	/*
+    	int minusMP = 0;
+    	int minusDam = 0;
+    	int needLvM = 0;
+    	int needLvK = 0;
+    	int hitCnt = 0;
+    	*/
+
+		if(grade == EnumDqmMagic.Tumetaiiki)
+		{
+			magic = new MagicEntityHyadoB[1];
+			magic[0] = new MagicEntityHyadoB(this.worldObj, this, 1.5F, 1.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
+			magic[0].shootingEntity = this;
+			if(this.getOwner() != null)
+			{
+				magic[0].setShootingEntityOwner(this.getOwner());
+			}
+			if(rand.nextInt(10) == 0 && DQR.conf.magicSpFubuki == 1)magic[0].setWorldFlg(0);
+			/*
+	   		minusMP = 5;
+	   		minusDam = 100;
+	   		needLvM = 12;
+	   		needLvK = 15;
+	   		*/
+
+		}else if(grade == EnumDqmMagic.Koorinoiki)
+		{
+			magic = new MagicEntityHyadoB[3];
+			for(int cnt = 0;cnt < 3; cnt++)
+			{
+				magic[cnt] = new MagicEntityHyadoB(this.worldObj, this, 1.5F, 1.0F, (float)(-1 + cnt), 0.0F, 0.0F);
+				magic[cnt].shootingEntity = this;
+				if(this.getOwner() != null)
+				{
+					magic[cnt].setShootingEntityOwner(this.getOwner());
+				}
+				if(rand.nextInt(10) == 0 && DQR.conf.magicSpFubuki == 1)magic[cnt].setWorldFlg(1);
+			}
+
+			/*
+	   		minusMP = 12;
+	   		minusDam = 150;
+	   		needLvM = 27;
+	   		needLvK = 27;
+	   		*/
+
+		}else if(grade == EnumDqmMagic.Kogoeruhubuki)
+		{
+			magic = new MagicEntityHyadoB[7];
+			for(int cnt = 0;cnt < 7; cnt++)
+			{
+				magic[cnt] = new MagicEntityHyadoB(this.worldObj, this, 1.5F, 1.0F, (float)(-2 + cnt), 0.0F, 0.0F);
+				magic[cnt].shootingEntity = this;
+				if(this.getOwner() != null)
+				{
+					magic[cnt].setShootingEntityOwner(this.getOwner());
+				}
+				if(rand.nextInt(10) == 0 && DQR.conf.magicSpFubuki == 1)magic[cnt].setWorldFlg(2);
+			}
+			/*
+	   		minusMP = 21;
+	   		minusDam = 200;
+	   		needLvM = 42;
+	   		needLvK = 38;
+	   		*/
+
+		}else if(grade == EnumDqmMagic.Kagayakuiki)
+		{
+			magic = new MagicEntityHyadoB[16];
+			for(int cnt = 0;cnt < 16; cnt++)
+			{
+				magic[cnt] = new MagicEntityHyadoB(this.worldObj, this, 1.5F, 1.0F, 0.0F, 0.0F, 0.0F, (float)(-157.5F + (22.5F * cnt)), 0.0F);
+				magic[cnt].shootingEntity = this;
+				if(this.getOwner() != null)
+				{
+					magic[cnt].setShootingEntityOwner(this.getOwner());
+				}
+				if(rand.nextInt(10) == 0 && DQR.conf.magicSpFubuki == 1)magic[cnt].setWorldFlg(3);
+			}
+			/*
+	   		minusMP = 38;
+	   		minusDam = 300;
+	   		needLvM = 72;
+	   		needLvK = 67;
+	   		*/
+
+		}else if(grade == EnumDqmMagic.Zettaireido)
+		{
+			magic = new MagicEntityHyadoB[32];
+			for(int cnt = 0;cnt < 32; cnt++)
+			{
+				magic[cnt] = new MagicEntityHyadoB(this.worldObj, this, 1.5F, 1.0F, 0.0F, 0.0F, 0.0F, (float)(-157.5F + (11.25F * cnt)), 0.0F);
+				magic[cnt].shootingEntity = this;
+				if(this.getOwner() != null)
+				{
+					magic[cnt].setShootingEntityOwner(this.getOwner());
+				}
+				if(rand.nextInt(10) == 0 && DQR.conf.magicSpFubuki == 1)magic[cnt].setWorldFlg(4);
+			}
+			/*
+	   		minusMP = 38;
+	   		minusDam = 300;
+	   		needLvM = 72;
+	   		needLvK = 67;
+	   		*/
+		}
+
+		/*
+    	minusMP = 0;
+    	minusDam = 0;
+    	needLvM = 0;
+    	needLvK = 0;
+    	hitCnt = 0;
+    	*/
+
+		if(magic != null)
+		{
+
+			int attackDam = grade.getAttack();
+
+			//this.worldObj.playSoundAtEntity(this, "dqr:player.jumon", 1.0F, 1.0F);
+
+    		for(int cnt = 0; cnt < magic.length; cnt++)
+    		{
+				magic[cnt].setDamage(attackDam);
+	        	if (!this.worldObj.isRemote)
+	        	{
+	        		//magic[cnt].setWorldFlg(this.isSneaking());
+	        		this.worldObj.spawnEntityInWorld(magic[cnt]);
+	        	}
+    		}
+
+		}
+    }
+
+
+    public void attackEntityWithBehomara(EntityLivingBase p_82196_1_, float p_82196_2_, EnumDqmMagic grade)
+    {
+		PotionEffect pe;
+		pe = this.getActivePotionEffect(DQPotionMinus.debuffMahoton);
+		if(pe != null && !this.worldObj.isRemote)
+		{
+			return ;
+		}
+		//pe = this.getActivePotionEffect(DQPotionMinus.debuffRariho);
+		//if(pe != null && !this.worldObj.isRemote)
+		if(DQR.func.isBind(this))
+		{
+			return;
+		}
+
+		if(this.MP < grade.getMP() &&  this.MaxMP != -1)
+		{
+			if(DQR.conf.offMobNotEnoughMP > 0 && !this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.pi", 0.1F, 1.0F);
+			return;
+		}else
+		{
+			this.MP = this.MP - grade.getMP();
+		}
+
+
+		//this.addPotionEffect(new PotionEffect(this.pot.id, grade.getAttack(), 0));
+		if(!this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.jumon", 1.0F, 1.0F);
+		//this.worldObj.playSoundAtEntity(this, "dqr:player.up", 1.0F, 1.0F);
+		int attackDam = grade.getAttack();
+
+		if(this.isPotionActive(DQPotionPlus.buffMahokanta))
+		{
+			if(!this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.mahokanta", 1.0F, 1.0F);
+		}else
+		{
+        	if(this.getHealth() + attackDam > this.getMaxHealth())
+        	{
+        		this.setHealth(this.getMaxHealth());
+        	}else
+        	{
+        		this.setHealth(this.getHealth() + (float)attackDam);
+        	}
+        	if(!this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.hoimi", 1.0F, 1.0F);
+		}
+
+    	EntityPlayer owner = null;
+
+    	if(this.getOwner() != null && this.getOwner() instanceof EntityPlayer)
+    	{
+    		owner = (EntityPlayer)this.getOwner();
+    	}
+
+
+        List list = this.worldObj.getEntitiesWithinAABBExcludingEntity(this,
+        		this.boundingBox.addCoord(this.motionX, this.motionY, this.motionZ).expand(10.0D, 5.0D, 10.0D));
+
+        if (list != null && !list.isEmpty())
+        {
+        	for (int n = 0 ; n < list.size() ; n++)
+        	{
+        		Entity target = (Entity)list.get(n);
+        		boolean flg = false;
+
+        		if(target instanceof EntityPlayer)
+        		{
+        			EntityPlayer entityplayer = (EntityPlayer)target;
+
+        			if(owner != null && (entityplayer.capabilities.disableDamage || !owner.canAttackPlayer(entityplayer)))
+                    {
+                    	//PvPが許可されていないと当たらない
+        				flg = true;
+                    }else if(owner != null && target == owner)
+                    {
+                    	flg = true;
+                    }
+        		}else if(target instanceof DqmPetBase)
+        		{
+                	if(owner != null && !(DQR.func.canAttackPetMonster((DqmPetBase)target, owner)))
+                	{
+                		flg = true;
+                	}
+        		}else
+        		{
+        			/*
+        			if(((DqmMobBase) target).getHealth() < ((DqmMobBase) target).getMaxHealth())
+        			{
+        				this.tagetMob = (DqmMobBase)target;
+        				return true;
+        			}
+        			*/
+        		}
+
+        		if(flg && target instanceof EntityLivingBase)
+        		{
+        			attackDam = grade.getAttack();
+
+    				EntityLivingBase elb = (EntityLivingBase)target;
+
+                	PotionEffect pe2 = null;
+            		pe2 = elb.getActivePotionEffect(DQPotionPlus.buffMahokanta);
+
+            		if(pe2 != null)
+            		{
+                    	if(this.getHealth() + attackDam > this.getMaxHealth())
+                    	{
+                    		this.setHealth(this.getMaxHealth());
+                    	}else
+                    	{
+                    		this.setHealth(this.getHealth() + (float)attackDam);
+                    	}
+                    	if(!elb.worldObj.isRemote) elb.worldObj.playSoundAtEntity(elb, "dqr:player.mahokanta", 1.0F, 1.0F);
+                    	this.worldObj.playSoundAtEntity(this, "dqr:player.hoimi", 1.0F, 1.0F);
+            		}
+            		else
+            		{
+            			if(elb.getHealth() > 0)
+            			{
+	                    	if(elb.getHealth() + attackDam > elb.getMaxHealth())
+	                    	{
+	                    		elb.setHealth(elb.getMaxHealth());
+	                    	}else
+	                    	{
+	                    		elb.setHealth(elb.getHealth() + (float)attackDam);
+	                    	}
+	                    	if(!elb.worldObj.isRemote) elb.worldObj.playSoundAtEntity(elb, "dqr:player.hoimi", 1.0F, 1.0F);
+            			}
+            		}
+        		}
+
+        		/*
+        		if (target != null && target instanceof EntityLivingBase && !(target instanceof EntityPlayer || target instanceof EntityTameable || target instanceof EntityHorse))
+        		{
+    				attackDam = grade.getAttack();
+
+    				EntityLivingBase elb = (EntityLivingBase)target;
+
+                	PotionEffect pe2 = null;
+            		pe2 = elb.getActivePotionEffect(DQPotionPlus.buffMahokanta);
+
+            		if(pe2 != null)
+            		{
+                    	if(this.getHealth() + attackDam > this.getMaxHealth())
+                    	{
+                    		this.setHealth(this.getMaxHealth());
+                    	}else
+                    	{
+                    		this.setHealth(this.getHealth() + (float)attackDam);
+                    	}
+                    	if(!elb.worldObj.isRemote) elb.worldObj.playSoundAtEntity(elb, "dqr:player.mahokanta", 1.0F, 1.0F);
+                    	this.worldObj.playSoundAtEntity(this, "dqr:player.hoimi", 1.0F, 1.0F);
+            		}
+            		else
+            		{
+            			if(elb.getHealth() > 0)
+            			{
+	                    	if(elb.getHealth() + attackDam > elb.getMaxHealth())
+	                    	{
+	                    		elb.setHealth(elb.getMaxHealth());
+	                    	}else
+	                    	{
+	                    		elb.setHealth(elb.getHealth() + (float)attackDam);
+	                    	}
+	                    	if(!elb.worldObj.isRemote) elb.worldObj.playSoundAtEntity(elb, "dqr:player.hoimi", 1.0F, 1.0F);
+            			}
+            		}
+            	}
+					*/
+        	}
+        }
+    }
+
+
+    public void attackEntityWithBuff(EntityLivingBase p_82196_1_, float p_82196_2_, Potion pot, EnumDqmMagic grade, int tag, EntityLivingBase tagMob)
+    {
+    	PotionEffect pe;
+
+		pe = this.getActivePotionEffect(DQPotionMinus.debuffMahoton);
+		if(pe != null && !this.worldObj.isRemote)
+		{
+			return;
+		}
+		//pe = this.getActivePotionEffect(DQPotionMinus.debuffRariho);
+		//if(pe != null && !this.worldObj.isRemote)
+		if(DQR.func.isBind(this))
+		{
+			return;
+		}
+
+
+		if(this.MP < grade.getMP() && this.MaxMP != -1)
+		{
+			if(!this.worldObj.isRemote && DQR.conf.offMobNotEnoughMP > 0) this.worldObj.playSoundAtEntity(this, "dqr:player.pi", 0.1F, 1.0F);
+			return;
+		}else
+		{
+			this.MP = this.MP - grade.getMP();
+		}
+
+
+		if(grade == EnumDqmMagic.Sukuruto || grade == EnumDqmMagic.Fubaha ||grade == EnumDqmMagic.Piorimu)
+		{
+			if(!this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.jumon", 1.0F, 1.0F);
+			if(this.isPotionActive(DQPotionPlus.buffMahokanta))
+			{
+				if(!this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.mahokanta", 1.0F, 1.0F);
+			}else
+			{
+				this.addPotionEffect(new PotionEffect(pot.id, grade.getAttack(), 0));
+				if(!this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.up", 1.0F, 1.0F);
+			}
+
+	    	EntityPlayer owner = null;
+
+	    	if(this.getOwner() != null && this.getOwner() instanceof EntityPlayer)
+	    	{
+	    		owner = (EntityPlayer)this.getOwner();
+	    	}
+
+            List list = this.worldObj.getEntitiesWithinAABBExcludingEntity(this,
+            		this.boundingBox.addCoord(this.motionX, this.motionY, this.motionZ).expand(10.0D, 5.0D, 10.0D));
+
+            if (list != null && !list.isEmpty())
+            {
+            	for (int n = 0 ; n < list.size() ; n++)
+            	{
+            		Entity target = (Entity)list.get(n);
+
+            		boolean flg = false;
+
+            		if(target instanceof EntityPlayer)
+            		{
+            			EntityPlayer entityplayer = (EntityPlayer)target;
+
+            			if(owner != null && (entityplayer.capabilities.disableDamage || !owner.canAttackPlayer(entityplayer)))
+                        {
+                        	//PvPが許可されていないと当たらない
+            				flg = true;
+                        }else if(owner != null && target == owner)
+                        {
+                        	flg = true;
+                        }
+            		}else if(target instanceof DqmPetBase)
+            		{
+                    	if(owner != null && !(DQR.func.canAttackPetMonster((DqmPetBase)target, owner)))
+                    	{
+                    		flg = true;
+                    	}
+            		}else
+            		{
+            			/*
+            			if(((DqmMobBase) target).getHealth() < ((DqmMobBase) target).getMaxHealth())
+            			{
+            				this.tagetMob = (DqmMobBase)target;
+            				return true;
+            			}
+            			*/
+            		}
+
+            		if(flg && target instanceof EntityLivingBase)
+            		{
+               			EntityLivingBase elb = (EntityLivingBase)target;
+            			if(elb.isPotionActive(DQPotionPlus.buffMahokanta))
+            			{
+            				this.addPotionEffect(new PotionEffect(pot.id, grade.getAttack(), 0));
+            				if(!elb.worldObj.isRemote) elb.worldObj.playSoundAtEntity(elb, "dqr:player.mahokanta", 1.0F, 1.0F);
+            				this.worldObj.playSoundAtEntity(this, "dqr:player.up", 1.0F, 1.0F);
+            			}else
+            			{
+            				elb.addPotionEffect(new PotionEffect(pot.id, grade.getAttack(), 0));
+            				if(!elb.worldObj.isRemote) elb.worldObj.playSoundAtEntity(elb, "dqr:player.up", 1.0F, 1.0F);
+            			}
+            		}
+            		/*
+            		if(target != null && target instanceof EntityLivingBase && !(target instanceof EntityPlayer || target instanceof EntityTameable || target instanceof EntityHorse))
+            		{
+            			EntityLivingBase elb = (EntityLivingBase)target;
+            			if(elb.isPotionActive(DQPotionPlus.buffMahokanta))
+            			{
+            				this.addPotionEffect(new PotionEffect(pot.id, grade.getAttack(), 0));
+            				if(!elb.worldObj.isRemote) elb.worldObj.playSoundAtEntity(elb, "dqr:player.mahokanta", 1.0F, 1.0F);
+            				this.worldObj.playSoundAtEntity(this, "dqr:player.up", 1.0F, 1.0F);
+            			}else
+            			{
+            				elb.addPotionEffect(new PotionEffect(pot.id, grade.getAttack(), 0));
+            				if(!elb.worldObj.isRemote) elb.worldObj.playSoundAtEntity(elb, "dqr:player.up", 1.0F, 1.0F);
+            			}
+            		}
+            		*/
+            	}
+            }
+
+            return;
+		}else if(tag == 0)
+    	{
+        	MagicEntityBuffDummy magic = null;
+
+        	magic = new MagicEntityBuffDummy(this.worldObj, this, 1.5F, 1.0F, 0.0F, 0.0F, 0.0F);
+
+    		if(magic != null)
+    		{
+    			//int epMP = ExtendedPlayerProperties.get(this).getMP();
+
+				magic.setDamage(0);
+				//magic.setPotionEffect(new PotionEffect(pot.id, grade.getAttack(), 1));
+				if(!this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.jumon", 1.0F, 1.0F);
+
+
+				/*
+	        	if (!this.worldObj.isRemote)
+	        	{
+	        		this.worldObj.spawnEntityInWorld(magic);
+
+	        	}
+	        	*/
+
+	        	if(tagMob != null)
+	        	{
+	        		if(tagMob.isPotionActive(DQPotionPlus.buffMahokanta))
+	        		{
+	        			if(!tagMob.worldObj.isRemote) tagMob.worldObj.playSoundAtEntity(this, "dqr:player.mahokanta", 1.0F, 1.0F);
+	        			this.addPotionEffect(new PotionEffect(pot.id, grade.getAttack(), 1));
+	        			this.playSound("dqr:player.up", 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
+	        		}else{
+	        			tagMob.addPotionEffect(new PotionEffect(pot.id, grade.getAttack(), 1));
+	        			if(!tagMob.worldObj.isRemote) tagMob.playSound("dqr:player.up", 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
+	        		}
+	        	}
+	        }
+    	}else
+    	{
+    		if(!this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.jumon", 1.0F, 1.0F);
+    		if(this.isPotionActive(DQPotionPlus.buffMahokanta))
+    		{
+    			if(!this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.mahokanta", 1.0F, 1.0F);
+    		}else
+    		{
+    			this.addPotionEffect(new PotionEffect(pot.id, grade.getAttack(), 1));
+    			if(!this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.up", 1.0F, 1.0F);
+    		}
+    	}
+    }
+
+    public void attackEntityWithDebuff(EntityLivingBase p_82196_1_, float p_82196_2_, Potion pot, EnumDqmMagic grade, EntityLivingBase tagMob)
+    {
+    	PotionEffect pe;
+		pe = this.getActivePotionEffect(DQPotionMinus.debuffMahoton);
+		if(pe != null && !this.worldObj.isRemote)
+		{
+			return;
+		}
+		//pe = this.getActivePotionEffect(DQPotionMinus.debuffRariho);
+		//if(pe != null && !this.worldObj.isRemote)
+		if(DQR.func.isBind(this))
+		{
+			return;
+		}
+
+
+		if(this.MP < grade.getMP() && this.MaxMP != -1)
+		{
+			if(!this.worldObj.isRemote && DQR.conf.offMobNotEnoughMP > 0) this.worldObj.playSoundAtEntity(this, "dqr:player.pi", 0.25F, 1.0F);
+			return;
+		}else
+		{
+			MP = MP - grade.getMP();
+		}
+
+
+		if(grade == EnumDqmMagic.Rukanan || grade == EnumDqmMagic.Rarihoma ||grade == EnumDqmMagic.Bomiosu ||
+		   grade == EnumDqmMagic.Rariho || grade == EnumDqmMagic.Manusa || grade == EnumDqmMagic.Mahoton ||
+		   grade == EnumDqmMagic.Medapani || grade == EnumDqmMagic.Divainsuperu)
+		{
+    		//this.addPotionEffect(new PotionEffect(this.pot.id, grade.getAttack(), 0));
+			if(!this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.jumon", 1.0F, 1.0F);
+			//this.worldObj.playSoundAtEntity(this, "dqr:player.up", 1.0F, 1.0F);
+
+	    	EntityPlayer owner = null;
+
+	    	if(this.getOwner() != null && this.getOwner() instanceof EntityPlayer)
+	    	{
+	    		owner = (EntityPlayer)this.getOwner();
+	    	}
+
+
+            List list = this.worldObj.getEntitiesWithinAABBExcludingEntity(this,
+            		this.boundingBox.addCoord(this.motionX, this.motionY, this.motionZ).expand(10.0D, 5.0D, 10.0D));
+
+            if (list != null && !list.isEmpty())
+            {
+            	for (int n = 0 ; n < list.size() ; n++)
+            	{
+            		Entity target = (Entity)list.get(n);
+            		boolean flg = false;
+
+            		if(target instanceof EntityPlayer)
+            		{
+            			EntityPlayer entityplayer = (EntityPlayer)target;
+
+            			if(owner != null && (entityplayer.capabilities.disableDamage || !owner.canAttackPlayer(entityplayer)))
+                        {
+                        	//PvPが許可されていないと当たらない
+                        }else if(owner != null && target == owner)
+                        {
+                        }else if(entityplayer.capabilities.isCreativeMode)
+                        {
+                        }else
+                        {
+                        	flg = true;
+                        }
+            		}else if(target instanceof DqmPetBase)
+            		{
+                    	if(owner != null && !(DQR.func.canAttackPetMonster((DqmPetBase)target, owner)))
+                    	{
+                    	}else
+                    	{
+                    		flg = true;
+                    	}
+            		}else if (target instanceof DqmPetBase)
+            		{
+            			flg = true;
+            			/*
+            			if(((DqmMobBase) target).getHealth() < ((DqmMobBase) target).getMaxHealth())
+            			{
+            				this.tagetMob = (DqmMobBase)target;
+            				return true;
+            			}
+            			*/
+            		}
+
+            		if(flg && target instanceof EntityLivingBase)
+            		{
+            			Random rand = new Random();
+            			int ratePer = rand.nextInt(100);
+            			//System.out.println(grade.getRate() + "/" + ratePer);
+            			if(ratePer < grade.getRate())
+            			{
+	            			EntityLivingBase elb = (EntityLivingBase)target;
+	            			if(elb instanceof EntityPlayer && ((EntityPlayer)elb).capabilities.isCreativeMode)
+	            			{
+	            				//クリエの場合無効
+	            				;
+	            			}else
+	            			{
+		            			if(elb.isPotionActive(DQPotionPlus.buffMahokanta))
+		            			{
+		            				this.addPotionEffect(new PotionEffect(pot.id, grade.getAttack(), 0));
+		            				if(!elb.worldObj.isRemote) elb.worldObj.playSoundAtEntity(elb, "dqr:player.mahokanta", 1.0F, 1.0F);
+		            				if(!this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.down", 1.0F, 1.0F);
+		            			}else
+		            			{
+		            				elb.addPotionEffect(new PotionEffect(pot.id, grade.getAttack(), 0));
+		            				if(!elb.worldObj.isRemote) elb.worldObj.playSoundAtEntity(elb, "dqr:player.down", 1.0F, 1.0F);
+		            			}
+	            			}
+            			}
+            		}
+            		/*
+            		if (target != null && target instanceof EntityLivingBase && target instanceof EntityPlayer || target instanceof EntityTameable || target instanceof EntityHorse)
+            		{
+            			Random rand = new Random();
+            			int ratePer = rand.nextInt(100);
+            			//System.out.println(grade.getRate() + "/" + ratePer);
+            			if(ratePer < grade.getRate())
+            			{
+	            			EntityLivingBase elb = (EntityLivingBase)target;
+	            			if(elb instanceof EntityPlayer && ((EntityPlayer)elb).capabilities.isCreativeMode)
+	            			{
+	            				//クリエの場合無効
+	            				;
+	            			}else
+	            			{
+		            			if(elb.isPotionActive(DQPotionPlus.buffMahokanta))
+		            			{
+		            				this.addPotionEffect(new PotionEffect(pot.id, grade.getAttack(), 0));
+		            				if(!elb.worldObj.isRemote) elb.worldObj.playSoundAtEntity(elb, "dqr:player.mahokanta", 1.0F, 1.0F);
+		            				if(!this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.down", 1.0F, 1.0F);
+		            			}else
+		            			{
+		            				elb.addPotionEffect(new PotionEffect(pot.id, grade.getAttack(), 0));
+		            				if(!elb.worldObj.isRemote) elb.worldObj.playSoundAtEntity(elb, "dqr:player.down", 1.0F, 1.0F);
+		            			}
+	            			}
+            			}
+            		}
+            		*/
+            	}
+            }
+
+            return;
+		}else
+    	{
+			MagicEntityDebuff magic = null;
+
+        	magic = new MagicEntityDebuff(this.worldObj, this, 1.5F, 1.0F, 0.0F, 0.0F, 0.0F);
+
+    		if(magic != null)
+    		{
+    			//int epMP = ExtendedPlayerProperties.get(this).getMP();
+
+				magic.setDamage(0);
+				magic.setRate(grade.getRate());
+				magic.setPotionEffect(new PotionEffect(pot.id, grade.getAttack(), 1));
+				if(!this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.jumon", 1.0F, 1.0F);
+
+	        	if (!this.worldObj.isRemote)
+	        	{
+	        		this.worldObj.spawnEntityInWorld(magic);
+
+	        	}
+	        }
+    	}
+
+    }
+
+    public void attackEntityWithMahoimi(EntityLivingBase p_82196_1_, float p_82196_2_, EnumDqmMagic grade, EntityLivingBase tagMob)
+    {
+		PotionEffect pe;
+		pe = this.getActivePotionEffect(DQPotionMinus.debuffMahoton);
+		if(pe != null && !this.worldObj.isRemote)
+		{
+			return;
+		}
+		//pe = this.getActivePotionEffect(DQPotionMinus.debuffRariho);
+		//if(pe != null && !this.worldObj.isRemote)
+		if(DQR.func.isBind(this))
+		{
+			return;
+		}
+
+		MagicEntity magic = null;
+
+
+	   	//magic = new MagicEntityMahoimi(this.worldObj, this, 1.5F, 1.0F, 0.0F, 0.0F, 0.0F);
+		magic = new MagicEntityMahoimiDummy(this.worldObj, this, 1.5F, 1.0F, 0.0F, 0.0F, 0.0F);
+
+
+		if(magic != null)
+		{
+
+			if(this.MP >= grade.getMP()|| this.MaxMP == -1)
+			{
+				if(!this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.jumon", 1.0F, 1.0F);
+
+				int attackDam = grade.getAttack();
+				/*
+	        	if (!this.worldObj.isRemote)
+	        	{
+	        		this.worldObj.spawnEntityInWorld(magic);
+	        	}
+	        	*/
+
+	        	this.MP = this.MP - grade.getMP();
+	        	if(tagMob.isPotionActive(DQPotionPlus.buffMahokanta))
+	        	{
+	        		if(!tagMob.worldObj.isRemote) tagMob.worldObj.playSoundAtEntity(this, "dqr:player.mahokanta", 1.0F, 1.0F);
+        			this.MP = this.MP + attackDam;
+        			if(!this.worldObj.isRemote) this.playSound("dqr:player.hoimi", 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
+	        	}else if(tagMob instanceof EntityPlayer)
+				{
+					EntityPlayer ep = (EntityPlayer)tagMob;
+					if(ExtendedPlayerProperties.get(ep).getMP() + attackDam > ExtendedPlayerProperties.get(ep).getMaxMP())
+					{
+						ExtendedPlayerProperties.get(ep).setMP(ExtendedPlayerProperties.get(ep).getMaxMP());
+					}else
+					{
+						ExtendedPlayerProperties.get(ep).setMP(ExtendedPlayerProperties.get(ep).getMP() + attackDam);
+					}
+					if(!this.worldObj.isRemote) this.playSound("dqr:player.hoimi", 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
+				}else if(tagMob instanceof DqmPetBase)
+				{
+					DqmPetBase tag = (DqmPetBase)tagMob;
+					if(tag.getMP() + attackDam > tag.getMaxMP())
+					{
+						tag.setMP(tag.getMaxMP());
+					}else
+					{
+						tag.setMP(tag.getMP() + attackDam);
+					}
+					if(!this.worldObj.isRemote) this.playSound("dqr:player.hoimi", 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
+				}
+			}else
+			{
+				magic = null;
+				if(DQR.conf.offMobNotEnoughMP > 0 && !this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.pi", 0.1F, 1.0F);
+			}
+
+			/*
+			if(this.DqmMobMP >= grade.getMP()|| this.DqmMobMaxMP == -1)
+			{
+
+				//magic.setDamage(attackDam);
+
+
+				if(!this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.jumon", 1.0F, 1.0F);
+				DqmMobMP = DqmMobMP - grade.getMP();
+	        	if (!this.worldObj.isRemote)
+	        	{
+	        		this.worldObj.spawnEntityInWorld(magic);
+
+	        	}
+
+	        	if(tagMob.isPotionActive(DQPotionPlus.buffMahokanta))
+	        	{
+	        		if(!tagMob.worldObj.isRemote) tagMob.worldObj.playSoundAtEntity(this, "dqr:player.mahokanta", 1.0F, 1.0F);
+        			this.DqmMobMP = this.DqmMobMP + attackDam;
+        			if(!this.worldObj.isRemote) this.playSound("dqr:player.hoimi", 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
+	        	}else
+	        	{
+	        		tagMob.DqmMobMP = tagMob.DqmMobMP + attackDam;
+	        		if(!tagMob.worldObj.isRemote) tagMob.playSound("dqr:player.hoimi", 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
+	        	}
+			}else
+			{
+
+			}
+			*/
+		}
+    }
+
+    public void setMegante()
+    {
+    	MeganteFlg = true;
+    }
+
+    @Override
+    public void onUpdate()
+    {
+
+    	/*
+    	if(DQR.func.isBind(this))
+    	{
+    		//System.out.println("BIND?" + this.isClearTasks);
+    	}
+    	*/
+
+    	/*
+    	if(DQR.func.isBind(this))
+    	{
+    		this.setAttackTarget(null);
+    	}
+
+    	if(DQR.func.isBind(this) && !this.isClearTasks)
+    	{
+    		//System.out.println("BIND!!!");
+
+    		this.clearTasks();
+    		this.isClearTasks = true;
+    	}else if(!DQR.func.isBind(this) && this.isClearTasks)
+    	{
+    		//System.out.println("CLEAR0");
+    		this.tasks.removeTask(this.aiBind);
+
+    		//if(this.worldObj != null && !this.worldObj.isRemote)
+    		//{
+    			this.setDefaultTask();
+    			this.setCombatTask();
+    			this.isClearTasks = false;
+    			//System.out.println("CLEAR");
+    		//}
+    	}
+    	*/
+
+
+
+    	if(this.getArrayAISets(EnumDqmMobAI.MEGANTE.getId()) > 0)
+    	{
+	        if (this.isEntityAlive() && !this.worldObj.isRemote)
+	        {
+	        	if(MeganteFlg)
+	        	{
+
+	            	//System.out.println("TEST" + MeganteCnt);
+	            	if(MeganteCnt == 0)
+	            	{
+	            		if(!this.worldObj.isRemote) this.playSound("creeper.primed", 1.0F, 0.5F);
+	            	}else if(MeganteCnt > 20)
+	            	{
+	            		boolean flag = this.worldObj.getGameRules().getGameRuleBooleanValue("mobGriefing");
+	            		float explodeRadius = (float)(rand.nextInt(this.getArrayAISets(EnumDqmMobAI.MEGANTE.getId()) / 2) + this.getArrayAISets(EnumDqmMobAI.MEGANTE.getId()) / 2);
+	            		if(DQR.conf.magicSpMegante == 0)
+	            		{
+	            			flag = false;
+	            		}
+
+	            		if(!this.worldObj.isRemote)
+	            		{
+		            		//if
+		            		this.worldObj.createExplosion(this, this.posX, this.posY, this.posZ, explodeRadius, false);
+
+
+		            		//this.worldObj.createExplosion(this, this.posX, this.posY, this.posZ, (float)5.0F, flag);
+		            		//this.setDead();
+		            		this.attackEntityFrom(DamageSource.magic, this.getHealth() - 0.05F);
+		            		this.tasks.removeTask(aiMegante);
+		            		MeganteCnt = 0;
+	            		}
+	            		//Block test = this.worldObj.getBlock((int)this.posX, (int)this.posY, (int)this.posZ).;
+		        		MeganteCnt++;
+	            	}
+	        	}else
+	        	{
+	        		if(this.getHealth() < this.getMaxHealth() * meganteUseLine / 100 && this.getHealth() > 5.0f)
+	        		{
+	        			this.tasks.addTask(this.getArrayAIRate(EnumDqmMobAI.MEGANTE.getId()), aiMegante);
+	        			//this.tasks.addTask(1, new EntityAIMagicMegante(this));
+	        		}
+	        	}
+	        }
+    	}
+
+        super.onUpdate();
+    }
+
+    public void setAiBox()
+    {
+    	EnumDqmMonster mobEnum = DQR.enumGetter.getMonsterFromName(this.type.getPetname());
+    	EnumDqmMonsterAI mobAI = mobEnum.getMonsterAI();
+    	EnumDqmMonsterAIrate mobAIrate = mobEnum.getMonsterAIrate();
+
+    	//DQR.func.debugString("TEST4 : " + mobEnum.getMobName() + " / " + mobAI.getClassName() + " / " + mobAIrate.getClassName(), this.getClass());
+    	for(int cnt = 0; cnt < arrayAIRate.length; cnt++)
+    	{
+    	    arrayAIRate[cnt] = mobAIrate.getParamFromIndex(cnt);
+    	    arrayAIRateDef[cnt] = mobAIrate.getParamFromIndex(cnt);
+
+    	    arrayAILimit[cnt] = mobAI.getParamFromIndex(cnt);
+    	    arrayAIMaster[cnt] = -1;
+    	    arrayAISets[cnt] = mobAI.getParamFromIndex(cnt);
+
+    	    //DQR.func.debugString("TEST5 : [" + cnt + "] " + mobAI.getParamFromIndex(cnt) + " / " + mobAIrate.getParamFromIndex(cnt) , this.getClass());
+    	}
+
+    	flgAIextended = 1;
+    }
+
+
+    public boolean teleportRandomly()
+    {
+        double d0 = this.posX + (this.rand.nextDouble() - 0.5D) * (double)arrayAISets[EnumDqmMobAI.TELEPORT.getId()];
+        double d1 = this.posY + (double)(this.rand.nextInt(3));
+        double d2 = this.posZ + (this.rand.nextDouble() - 0.5D) * (double)arrayAISets[EnumDqmMobAI.TELEPORT.getId()];
+        return this.teleportTo(d0, d1, d2);
+    }
+
+    /**
+     * Teleport the enderman to another entity
+     */
+    public boolean teleportToEntity(Entity p_70816_1_)
+    {
+        Vec3 vec3 = Vec3.createVectorHelper(this.posX - p_70816_1_.posX, this.boundingBox.minY + (double)(this.height / 2.0F) - p_70816_1_.posY + (double)p_70816_1_.getEyeHeight(), this.posZ - p_70816_1_.posZ);
+        vec3 = vec3.normalize();
+        double d0 = 16.0D;
+        double d1 = this.posX + (this.rand.nextDouble() - 0.5D) * 8.0D - vec3.xCoord * d0;
+        double d2 = this.posY + (double)(this.rand.nextInt(16) - 8) - vec3.yCoord * d0;
+        double d3 = this.posZ + (this.rand.nextDouble() - 0.5D) * 8.0D - vec3.zCoord * d0;
+        return this.teleportTo(d1, d2, d3);
+    }
+
+    /**
+     * Teleport the enderman
+     */
+    public boolean teleportTo(double p_70825_1_, double p_70825_3_, double p_70825_5_)
+    {
+        EnderTeleportEvent event = new EnderTeleportEvent(this, p_70825_1_, p_70825_3_, p_70825_5_, 0);
+        if (MinecraftForge.EVENT_BUS.post(event)){
+            return false;
+        }
+        double d3 = this.posX;
+        double d4 = this.posY;
+        double d5 = this.posZ;
+        this.posX = event.targetX;
+        this.posY = event.targetY;
+        this.posZ = event.targetZ;
+        boolean flag = false;
+        int i = MathHelper.floor_double(this.posX);
+        int j = MathHelper.floor_double(this.posY);
+        int k = MathHelper.floor_double(this.posZ);
+
+        if (this.worldObj.blockExists(i, j, k))
+        {
+            boolean flag1 = false;
+
+            while (!flag1 && j > 0)
+            {
+                Block block = this.worldObj.getBlock(i, j - 1, k);
+
+                if (block.getMaterial().blocksMovement())
+                {
+                    flag1 = true;
+                }
+                else
+                {
+                    --this.posY;
+                    --j;
+                }
+            }
+
+            if (flag1)
+            {
+                this.setPosition(this.posX, this.posY, this.posZ);
+
+                if (this.worldObj.getCollidingBoundingBoxes(this, this.boundingBox).isEmpty() && !this.worldObj.isAnyLiquid(this.boundingBox))
+                {
+                    flag = true;
+                }
+            }
+        }
+
+        if (!flag)
+        {
+            this.setPosition(d3, d4, d5);
+            return false;
+        }
+        else
+        {
+            short short1 = 128;
+
+            for (int l = 0; l < short1; ++l)
+            {
+                double d6 = (double)l / ((double)short1 - 1.0D);
+                float f = (this.rand.nextFloat() - 0.5F) * 0.2F;
+                float f1 = (this.rand.nextFloat() - 0.5F) * 0.2F;
+                float f2 = (this.rand.nextFloat() - 0.5F) * 0.2F;
+                double d7 = d3 + (this.posX - d3) * d6 + (this.rand.nextDouble() - 0.5D) * (double)this.width * 2.0D;
+                double d8 = d4 + (this.posY - d4) * d6 + this.rand.nextDouble() * (double)this.height;
+                double d9 = d5 + (this.posZ - d5) * d6 + (this.rand.nextDouble() - 0.5D) * (double)this.width * 2.0D;
+                this.worldObj.spawnParticle("portal", d7, d8, d9, (double)f, (double)f1, (double)f2);
+            }
+
+            if(!this.worldObj.isRemote) this.worldObj.playSoundEffect(d3, d4, d5, "mob.endermen.portal", 1.0F, 1.0F);
+            if(!this.worldObj.isRemote) this.playSound("mob.endermen.portal", 1.0F, 1.0F);
+            return true;
+        }
     }
 }

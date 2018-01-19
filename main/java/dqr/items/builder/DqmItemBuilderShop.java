@@ -157,7 +157,7 @@ public class DqmItemBuilderShop extends DqmItemBuilderBase{
 
         	if(!par3World.isRemote)
         	{
-        		ThreadBuilderShop builderThread = new ThreadBuilderShop(par3World, mSize + 1, mHeight, mUnder, par1ItemStack);
+        		ThreadBuilderShop builderThread = new ThreadBuilderShop(par3World, mSize + 1, mHeight, mUnder, par1ItemStack, par2EntityPlayer);
         		builderThread.start();
         	}
 

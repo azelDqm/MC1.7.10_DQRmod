@@ -95,4 +95,5 @@ public class DQAccessories {
 	public static Item itemUroborosunotate;
 
 	public static Item itemAccCanceler;
+	public static Item itemAccStopper;
 }

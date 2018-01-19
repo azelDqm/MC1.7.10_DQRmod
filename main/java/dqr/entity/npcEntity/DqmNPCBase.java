@@ -24,6 +24,8 @@ public abstract class DqmNPCBase extends EntityTameable
     private float prevTimeWolfIsShaking;
     private int de1;
     public int xxxx;
+    public String ownerName2;
+    public String ownerUUID2;
 
     /*TameMode 0:標準 1:雇用書*/
     public int tameMode = 0;
@@ -47,13 +49,44 @@ public abstract class DqmNPCBase extends EntityTameable
     public void writeEntityToNBT(NBTTagCompound p_70014_1_)
     {
         super.writeEntityToNBT(p_70014_1_);
+
         p_70014_1_.setInteger("TameMode", tameMode);
+        if(ownerName2 != null)
+        {
+        	p_70014_1_.setString("OwnerName2", ownerName2);
+        }else
+        {
+        	p_70014_1_.setString("OwnerName2", "");
+        }
+
+        if(ownerUUID2 != null)
+        {
+        	p_70014_1_.setString("OwnerUUID2", ownerUUID2);
+        }else
+        {
+        	p_70014_1_.setString("OwnerUUID2", "");
+        }
     }
 
     public void readEntityFromNBT(NBTTagCompound p_70037_1_)
     {
     	super.readEntityFromNBT(p_70037_1_);
     	tameMode = p_70037_1_.getInteger("TameMode");
+    	if(p_70037_1_.getString("OwnerName2") != null)
+    	{
+    		ownerName2 = p_70037_1_.getString("OwnerName2");
+    	}else
+    	{
+    		ownerName2 = "";
+    	}
+
+    	if(p_70037_1_.getString("OwnerUUID2") != null)
+    	{
+    		ownerUUID2 = p_70037_1_.getString("OwnerUUID2");
+    	}else
+    	{
+    		ownerUUID2 = "";
+    	}
     }
 
     public void setTameMode(int par1)
@@ -65,4 +98,23 @@ public abstract class DqmNPCBase extends EntityTameable
     {
     	return this.tameMode;
     }
+
+    public void setOwnerName2(String par1)
+    {
+    	this.ownerName2 = par1;
+    }
+    public String getOwnerName2()
+    {
+    	return this.ownerName2;
+    }
+
+    public void setOwnerUUID2(String par1)
+    {
+    	this.ownerUUID2 = par1;
+    }
+    public String getOwnerUUID2()
+    {
+    	return this.ownerUUID2;
+    }
 }
+

@@ -4115,7 +4115,15 @@ ver1.20ADD-<*/
             "AAA",
             "ABA",
             "AAA",
-            'A', Blocks.glass, 'B', DQMiscs.itemNiku4
+            'A', Blocks.glass, 'B', DQMiscs.itemNiku1
+        });
+
+        GameRegistry.addRecipe(new ItemStack(DQMiscs.itemPetbook, 1), new Object[]
+        {
+            "AAA",
+            "ABA",
+            "AAA",
+            'A', Items.paper, 'B', DQMagicTools.itemPetSuisyou
         });
 
         GameRegistry.addShapelessRecipe(new ItemStack(DQMiscs.itemOokinaFukuroR, 1), new Object[] {new ItemStack(DQMiscs.itemOokinaFukuro, 1), new ItemStack(DQMiscs.itemAkaisango, 1)});
@@ -4241,6 +4249,8 @@ ver1.20ADD-<*/
             " A ",
             'A', DQIngots.itemMigakizuna
         });
+        GameRegistry.addShapelessRecipe(new ItemStack(DQAccessories.itemAccStopper, 1), new Object[] {new ItemStack(DQAccessories.itemAccCanceler, 1)});
+        GameRegistry.addShapelessRecipe(new ItemStack(DQAccessories.itemAccCanceler, 1), new Object[] {new ItemStack(DQAccessories.itemAccStopper, 1)});
 
         GameRegistry.addRecipe(new ItemStack(DQMiscs.itemShinjirukokoro), new Object[]
         {

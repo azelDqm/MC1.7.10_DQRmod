@@ -119,6 +119,10 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
     private String playerName = null;
     private String playerUUID = null;
     private int hardcoreInfo = 0;
+    private long birthTime = 0;
+    private int birthFlag = 0;
+
+    private int accBuffStop = 0;
 /*
     private int sampleInt = 0;
     private double sampleDouble = 0.0D;
@@ -322,6 +326,8 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
         	nbt.setInteger("arrayKaisinritu_" + cnt, arrayKaisinritu[cnt]);
         }
 
+        nbt.setLong("BirthTime", this.birthTime);
+        nbt.setInteger("BirthFlag", this.birthFlag);
         nbt.setInteger("Gold", this.Gold);
         nbt.setInteger("Medal", this.Medal);
 //        nbt.setInteger("Coin", this.Coin);
@@ -334,6 +340,8 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
         nbt.setInteger("MaxMP", this.MaxMP);
 
         nbt.setInteger("weapon", this.weapon);
+
+        nbt.setInteger("accBuffStop", this.accBuffStop);
 
         for(int cnt = 0; cnt < 64; cnt++)
         {
@@ -562,6 +570,8 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
         	arrayKaisinritu[cnt] = nbt.getInteger("arrayKaisinritu_" + cnt);
         }
 
+        this.birthTime = nbt.getLong("BirthTime");
+        this.birthFlag = nbt.getInteger("BirthFlag");
         this.Gold = nbt.getInteger("Gold");
         this.Medal = nbt.getInteger("Medal");
 //        this.Coin = nbt.getInteger("Coin");
@@ -573,6 +583,8 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
         this.MP = nbt.getInteger("MP");
         this.MaxMP = nbt.getInteger("MaxMP");
         this.weapon = nbt.getInteger("weapon");
+
+        this.accBuffStop = nbt.getInteger("accBuffStop");
 
         for(int cnt = 0; cnt < 64; cnt++)
         {
@@ -1044,6 +1056,27 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
     {
     	if(MagicMode == null) MagicMode = new int[16];
         this.MagicMode[par1] = par2;
+    }
+
+    public long getBirthTime() {
+        return birthTime;
+    }
+    public void setBirthTime(long par1) {
+        this.birthTime = par1;
+    }
+
+    public int getBirthFlag() {
+        return birthFlag;
+    }
+    public void setBirthFlag(int par1) {
+        this.birthFlag = par1;
+    }
+
+    public int getAccBuffStop() {
+        return accBuffStop;
+    }
+    public void setAccBuffStop(int par1) {
+        this.accBuffStop = par1;
     }
 
     public int getKougeki() {

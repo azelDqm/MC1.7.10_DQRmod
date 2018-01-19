@@ -27,6 +27,7 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSource;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import scala.util.Random;
 import cpw.mods.fml.common.eventhandler.EventPriority;
@@ -39,6 +40,7 @@ import dqr.api.enums.EnumDqmMessageConv;
 import dqr.api.enums.EnumDqmMobRoot;
 import dqr.api.enums.EnumDqmSkillW;
 import dqr.api.enums.EnumDqmWeapon;
+import dqr.api.event.DqrDamageEntityEvent;
 import dqr.api.potion.DQPotionEtc;
 import dqr.api.potion.DQPotionMinus;
 import dqr.api.potion.DQPotionPlus;
@@ -327,6 +329,7 @@ public class DamageHandler {
 	@SubscribeEvent(priority=EventPriority.LOWEST)
 	public void onLivingHurtEvent(LivingHurtEvent event) {
 
+		float baseDamage = event.ammount;
 		/*
 		if(event.source.getEntity() instanceof EntityPlayer)
 		{
@@ -340,6 +343,13 @@ public class DamageHandler {
 
 		int varDifficulty = DQR.conf.DqmEndoraDifficulty == -1 ? DQR.conf.DqmDifficulty : DQR.conf.DqmEndoraDifficulty;
 		EnumDqmEndoraParam enumEndora = DQR.enumGetter.getEndoraParam(varDifficulty);
+
+		if(event.entityLiving != null)
+		{
+			DqrDamageEntityEvent xev = new DqrDamageEntityEvent(1, event.entityLiving, event.source, event.ammount, baseDamage, event.ammount);
+			MinecraftForge.EVENT_BUS.post(xev);
+			event.ammount = xev.retDamage;
+		}
 
 		if(event.source instanceof EntityDamageSource)
 		{
@@ -386,9 +396,7 @@ public class DamageHandler {
 		    	if(subEquip != null && subEquip.getStackInSlot(11) != null)
 		    	{
 		    		shield = subEquip.getStackInSlot(11).getItem();
-
 		    	}
-
 			}
 
 			//EntityLivingBase elv = (EntityLivingBase)event.source.getEntity();
@@ -545,11 +553,16 @@ public class DamageHandler {
 			}
 		}
 
-
+		if(event.entityLiving != null)
+		{
+			DqrDamageEntityEvent xev = new DqrDamageEntityEvent(2, event.entityLiving, event.source, event.ammount, baseDamage, event.ammount);
+			MinecraftForge.EVENT_BUS.post(xev);
+			event.ammount = xev.retDamage;
+		}
 
 //System.out.println("TEST1:" + event.ammount);
-		if(event.source.getEntity() != null && !(event.source.getDamageType().equalsIgnoreCase(DamageSource.causeThornsDamage(event.entityLiving).getDamageType()))){
-
+		if(event.source.getEntity() != null && !(event.source.getDamageType().equalsIgnoreCase(DamageSource.causeThornsDamage(event.entityLiving).getDamageType())))
+		{
 			if(event.source.getEntity() instanceof EntityDragon)
 			{
 
@@ -905,6 +918,16 @@ public class DamageHandler {
 			event.ammount = event.ammount / 5;
  		}
 
+
+		if(event.entityLiving != null)
+		{
+			DqrDamageEntityEvent xev = new DqrDamageEntityEvent(3, event.entityLiving, event.source, event.ammount, baseDamage, event.ammount);
+			MinecraftForge.EVENT_BUS.post(xev);
+			event.ammount = xev.retDamage;
+		}
+
+		//乱数加味前のダメージ
+		float preDamage = event.ammount;
 		//ダメージ乱数
 		int randomDam = (int)(event.ammount / 2);
 		if(randomDam > 0)
@@ -912,6 +935,12 @@ public class DamageHandler {
 			event.ammount = (event.ammount * 3 / 4) + (rand.nextInt(randomDam));
 		}
 
+		if(event.entityLiving != null)
+		{
+			DqrDamageEntityEvent xev = new DqrDamageEntityEvent(4, event.entityLiving, event.source, event.ammount, baseDamage, preDamage);
+			MinecraftForge.EVENT_BUS.post(xev);
+			event.ammount = xev.retDamage;
+		}
 		//DQR.func.debugString("DAMTEST_C:" + event.ammount);
 
 		boolean criticalFlg = false;
@@ -939,14 +968,26 @@ public class DamageHandler {
 					{
 						if(rand.nextInt(1000) < DQR.func.getMikawasi(event.entityLiving))
 						{
-							if(!event.entityLiving.worldObj.isRemote)
+							boolean missFlg = true;
+							if(event.entityLiving != null)
 							{
-								event.entityLiving.worldObj.playSoundAtEntity(event.entityLiving, "dqr:player.miss", 1.0F, 1.0F);
+								DqrDamageEntityEvent xev = new DqrDamageEntityEvent(5, event.entityLiving, event.source, event.ammount, baseDamage, preDamage);
+								MinecraftForge.EVENT_BUS.post(xev);
+								event.ammount = xev.retDamage;
+								missFlg = xev.retMissFlg;
 							}
 
-							event.ammount = -1;
-							event.setCanceled(true);
-							return;
+							if(missFlg)
+							{
+								if(!event.entityLiving.worldObj.isRemote)
+								{
+									event.entityLiving.worldObj.playSoundAtEntity(event.entityLiving, "dqr:player.miss", 1.0F, 1.0F);
+								}
+
+								event.ammount = -1;
+								event.setCanceled(true);
+								return;
+							}
 						}
 					}
 				}
@@ -1014,13 +1055,25 @@ public class DamageHandler {
 					{
 						if(rand.nextInt(1000) < DQR.func.getMikawasi(event.entityLiving))
 						{
-							if(!event.entityLiving.worldObj.isRemote)
+							boolean missFlg = true;
+							if(event.entityLiving != null)
 							{
-								event.entityLiving.worldObj.playSoundAtEntity(event.entityLiving, "dqr:player.miss", 1.0F, 1.0F);
+								DqrDamageEntityEvent xev = new DqrDamageEntityEvent(6, event.entityLiving, event.source, event.ammount, baseDamage, preDamage);
+								MinecraftForge.EVENT_BUS.post(xev);
+								event.ammount = xev.retDamage;
+								missFlg = xev.retMissFlg;
 							}
-							event.ammount = -1;
-							event.setCanceled(true);
-							return;
+
+							if(missFlg)
+							{
+								if(!event.entityLiving.worldObj.isRemote)
+								{
+									event.entityLiving.worldObj.playSoundAtEntity(event.entityLiving, "dqr:player.miss", 1.0F, 1.0F);
+								}
+								event.ammount = -1;
+								event.setCanceled(true);
+								return;
+							}
 						}
 					}
 				}
@@ -1062,16 +1115,36 @@ public class DamageHandler {
 					{
 						if(rand.nextInt(1000) < DQR.func.getMikawasi(event.entityLiving))
 						{
-							if(!event.entityLiving.worldObj.isRemote)
+							boolean missFlg = true;
+							if(event.entityLiving != null)
 							{
-								event.entityLiving.worldObj.playSoundAtEntity(event.entityLiving, "dqr:player.miss", 1.0F, 1.0F);
+								DqrDamageEntityEvent xev = new DqrDamageEntityEvent(7, event.entityLiving, event.source, event.ammount, baseDamage, preDamage);
+								MinecraftForge.EVENT_BUS.post(xev);
+								event.ammount = xev.retDamage;
+								missFlg = xev.retMissFlg;
 							}
-							event.ammount = -1;
-							event.setCanceled(true);
-							return;
+
+							if(missFlg)
+							{
+								if(!event.entityLiving.worldObj.isRemote)
+								{
+									event.entityLiving.worldObj.playSoundAtEntity(event.entityLiving, "dqr:player.miss", 1.0F, 1.0F);
+								}
+								event.ammount = -1;
+								event.setCanceled(true);
+								return;
+							}
 						}
 					}
 				}
+			}
+
+
+			if(event.entityLiving != null)
+			{
+				DqrDamageEntityEvent xev = new DqrDamageEntityEvent(8, event.entityLiving, event.source, event.ammount, baseDamage, preDamage);
+				MinecraftForge.EVENT_BUS.post(xev);
+				event.ammount = xev.retDamage;
 			}
 
 			if(event.entityLiving instanceof EntityPlayer)
@@ -1120,6 +1193,13 @@ public class DamageHandler {
 				}
 
 				event.ammount = event.ammount - bougyoryoku;
+
+				if(event.entityLiving != null)
+				{
+					DqrDamageEntityEvent xev = new DqrDamageEntityEvent(9, event.entityLiving, event.source, event.ammount, baseDamage, preDamage);
+					MinecraftForge.EVENT_BUS.post(xev);
+					event.ammount = xev.retDamage;
+				}
 
 				if(!ep.worldObj.isRemote && event.ammount <= 0.0F)
 				{

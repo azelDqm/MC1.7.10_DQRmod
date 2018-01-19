@@ -1,5 +1,7 @@
 package dqr.api.enums;
 
+import dqr.DQR;
+
 
 public enum EnumDqmMagic {
 
@@ -67,7 +69,7 @@ public enum EnumDqmMagic {
 	Fubaha(EnumDqmMagicCateg.Resist, 0, 5, 1800, 300, 30, 0),
 	Piorimu(EnumDqmMagicCateg.SPDup, 0, 5, 1800, 300, 30, 0),
 	Bomie(EnumDqmMagicCateg.SPDdown, 0, 3, 1200, 300, 30, 90),
-	Rariho(EnumDqmMagicCateg.ETC, 0, 5, 1600, 300, 30, 25),
+	Rariho(EnumDqmMagicCateg.ETC, 0, 5, 1600, DQR.conf.rarihoDuration, 30, 25),
 	Manusa(EnumDqmMagicCateg.ETC, 0, 4, 1600, 300, 30, 30),
 	Kiari(EnumDqmMagicCateg.ReStatus, 0, 4, 500, 0, 0, 0),
 	Mahoton(EnumDqmMagicCateg.ETC, 0, 8, 1800, 300, 30, 30),
@@ -76,7 +78,7 @@ public enum EnumDqmMagic {
 	Henatosu(EnumDqmMagicCateg.PWdown, 0, 15, 1800, 300, 30, 80),
 	Divainsuperu(EnumDqmMagicCateg.ETC, 0, 12, 1800, 300, 30, 80),
 	Rukanan(EnumDqmMagicCateg.DEFdown, 0, 14, 1800, 300, 30, 50),
-	Rarihoma(EnumDqmMagicCateg.ETC, 0, 20, 1800, 300, 30, 15),
+	Rarihoma(EnumDqmMagicCateg.ETC, 0, 20, 1800, DQR.conf.rarihomaDuration, 30, 15),
 	Bomiosu(EnumDqmMagicCateg.SPDdown, 0, 9, 1800, 300, 30, 80),
 	Mahouken1(EnumDqmMagicCateg.ETC, 0, 10, 500, 1200, 0, 0),
 	Mahouken2(EnumDqmMagicCateg.ETC, 0, 20, 500, 1200, 0, 0),

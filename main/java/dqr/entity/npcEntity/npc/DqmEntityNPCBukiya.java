@@ -11,11 +11,13 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.World;
 import dqr.DQR;
+import dqr.api.Items.DQBuilders;
 import dqr.api.enums.EnumDqmNpcTalk;
 import dqr.api.potion.DQPotionEtc;
 import dqr.entity.npcEntity.DqmNPCBase;
@@ -255,8 +257,30 @@ public class DqmEntityNPCBukiya extends DqmNPCBase
     @Override
     public boolean interact(EntityPlayer ep)
     {
+
     	if(!ep.worldObj.isRemote)
     	{
+
+    		ItemStack its = ep.inventory.getCurrentItem();
+    		if(its != null && its.getItem() == DQBuilders.itemBuilderKaikosyo && ep.isSneaking())
+    		{
+    			int confVal = DQR.conf.permBuilder5;
+    			if(confVal != 0)
+    			{
+	    			//  && this.tameMode != 0
+	    			boolean opFlg = MinecraftServer.getServer().getConfigurationManager().func_152596_g(ep.getGameProfile());
+
+	    			if((confVal == 3) ||
+	    			   (confVal == 1 && opFlg) ||
+	    			   (confVal == 2 && (opFlg || ep.getUniqueID().toString().equalsIgnoreCase(this.getOwnerUUID2()))))
+	    			{
+		    			ep.worldObj.playSoundAtEntity(ep, "dqr:mob.petmob", 1.0F, 0.5F);
+		    			this.setDead();
+		    			return true;
+	    			}
+    			}
+    		}
+
 			int flg = ExtendedPlayerProperties.get(ep).getNpcTalk(EnumDqmNpcTalk.BUKIYA.getId());
 
     		//this.getp

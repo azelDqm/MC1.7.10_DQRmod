@@ -6,7 +6,7 @@ import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
@@ -207,9 +207,9 @@ public class TwilightForestHandler {
     	 EnumDqrTFMonster mobParam = getEnumTFMonsterFromEntity(event.entity);
 
 
-    	 if(mobParam != null && !(event.entity instanceof EntityTFHydra))
+    	 if(mobParam != null && !(event.entity instanceof EntityTFHydra) && event.entity instanceof EntityLivingBase)
     	 {
-    		 EntityLiving ent = (EntityLiving)event.entity;
+    		 EntityLivingBase ent = (EntityLivingBase)event.entity;
      		if(ent.getMaxHealth() < mobParam.getCheckhp())
      		{
      			/*

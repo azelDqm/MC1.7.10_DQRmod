@@ -7,7 +7,6 @@ import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IProjectile;
 import net.minecraft.entity.monster.EntityEnderman;
@@ -362,7 +361,7 @@ public class MagicEntityZaki extends MagicEntity implements IProjectile{
             	{
             		Entity target = entityList.get(n).entityHit;
 
-            		if(this.shootingEntity instanceof EntityPlayer || this.shootingEntity instanceof EntityTameable)
+            		if(this.shootingEntity instanceof EntityPlayer)
             		{
 	            		if (target instanceof EntityPlayer)
 	                    {
@@ -383,6 +382,45 @@ public class MagicEntityZaki extends MagicEntity implements IProjectile{
 	                    }else if(target instanceof DqmPetBase)
 	                    {
 	                    	if(!(DQR.func.canAttackPetMonster((DqmPetBase)target, ((EntityPlayer)this.shootingEntity))))
+	                    	{
+	                    		entityList.remove(n);
+	                    	}
+	                    }
+	                    else if (target instanceof EntityTameable ||
+	                                 target instanceof EntityHorse)
+	                    {
+	                    	//事故防止の為、EntityTameable（犬や猫などのペット）、馬にも当たらないようにする
+	                    	entityList.remove(n);
+	                    }
+            		}else if(this.shootingEntity instanceof DqmPetBase)
+            		{
+            			EntityPlayer owner = null;
+                    	if(this.shootingEntityOwner != null && this.shootingEntityOwner instanceof EntityPlayer)
+                    	{
+                    		 owner = (EntityPlayer)this.shootingEntityOwner;
+                    	}
+
+
+        				if(target == this.shootingEntity)
+        				{
+        					//対象が撃った本人の場合も当たらない
+                        	entityList.remove(n);
+        				}else if (target instanceof EntityPlayer)
+	                    {
+	                    	//プレイヤーに当たった時
+	                    	EntityPlayer entityplayer = (EntityPlayer)target;
+
+	                        if(owner != null && (entityplayer.capabilities.disableDamage || !owner.canAttackPlayer(entityplayer)))
+	                        {
+	                        	//PvPが許可されていないと当たらない
+	                            entityList.remove(n);
+	                        }else if(owner != null && target == owner)
+	                        {
+	                        	entityList.remove(n);
+	                        }
+	                    }else if(target instanceof DqmPetBase)
+	                    {
+	                    	if(owner != null && !(DQR.func.canAttackPetMonster((DqmPetBase)target, owner)))
 	                    	{
 	                    		entityList.remove(n);
 	                    	}
@@ -471,9 +509,9 @@ public class MagicEntityZaki extends MagicEntity implements IProjectile{
                         {
                         	PotionEffect pe = null;
                         	DQR.func.debugString("Hit6!!!!!!!!!!!!" + target.entityHit.getCommandSenderName(), this.getClass());
-                    		if(target.entityHit instanceof EntityLiving)
+                    		if(target.entityHit instanceof EntityLivingBase)
                     		{
-                    			EntityLiving elv2 = (EntityLiving)target.entityHit;
+                    			EntityLivingBase elv2 = (EntityLivingBase)target.entityHit;
                     			pe = elv2.getActivePotionEffect(DQPotionPlus.buffMahokanta);
                     		}
 
@@ -482,7 +520,7 @@ public class MagicEntityZaki extends MagicEntity implements IProjectile{
                     		if(pe != null && this.shootingEntity != null && this.shootingEntity instanceof EntityLivingBase)
                     		{
                     			//System.out.println("Hit!!!!!!!!!!!!");
-                            	EntityLiving elv = (EntityLiving)this.shootingEntity;
+                            	EntityLivingBase elv = (EntityLivingBase)this.shootingEntity;
                             	float fixRate = DQR.calcDamage.applyDamageResistMagic2(0, elv, damagesource);
                             	Random rand2 = new Random();
                             	if(rand.nextInt(100) < this.rate && (fixRate * 100) > rand2.nextInt(100))

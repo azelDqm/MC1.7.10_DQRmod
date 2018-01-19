@@ -39,6 +39,7 @@ import dqr.dataTable.FuncJobChangeLvTable;
 import dqr.dataTable.FuncKaitoriPriceTable;
 import dqr.dataTable.FuncMGFarmSeedTable;
 import dqr.dataTable.FuncMagicLvTable;
+import dqr.dataTable.FuncMagicLvTablePet;
 import dqr.dataTable.FuncMedalkingItems;
 import dqr.dataTable.FuncMobRandom;
 import dqr.dataTable.FuncSpecialUseItemTable;
@@ -105,7 +106,7 @@ import dqr.potion.DqmPotion;
 import dqr.world.DqmStructureRegister;
 import dqr.world.DqmVillageRegister;
 
-@Mod(modid = "DQMIIINext", name = "DQRespect", version = "0.9.3.6", useMetadata = true, dependencies = "after:PotionExtension")
+@Mod(modid = "DQMIIINext", name = "DQRespect", version = "0.9.4", useMetadata = true, dependencies = "after:PotionExtension")
 public class DQR {
 
 	@SidedProxy(clientSide = "dqr.ClientProxy", serverSide = "dqr.CommonProxy")
@@ -148,6 +149,7 @@ public class DQR {
 	public static FuncBukiyaPriceTable bukiyaPrice;
 	// public static FuncJobNameTable job;
 	public static FuncMagicLvTable magicTable;
+	public static FuncMagicLvTablePet magicTablePet;
 	public static FuncJobChangeLvTable jobChangeTable;
 	public static FuncMGFarmSeedTable MGSeedTable;
 	public static FuncCheckMutation mutationTable;
@@ -292,6 +294,7 @@ public class DQR {
 		kaitoriPrice = new FuncKaitoriPriceTable();
 		bukiyaPrice = new FuncBukiyaPriceTable();
 		magicTable = new FuncMagicLvTable();
+		magicTablePet = new FuncMagicLvTablePet();
 		aptitudeTable = new FuncWeaponAptitude();
 		jobChangeTable = new FuncJobChangeLvTable();
 		MGSeedTable = new FuncMGFarmSeedTable();

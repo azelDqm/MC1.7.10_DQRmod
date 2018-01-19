@@ -6,11 +6,14 @@ import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAIMate;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.World;
 import dqr.DQR;
+import dqr.api.Items.DQBuilders;
 import dqr.api.enums.EnumDqmJob;
 import dqr.api.enums.EnumDqmMessageConv;
 import dqr.api.enums.EnumDqmNpcTalk;
@@ -233,6 +236,26 @@ public class DqmEntityNPCSinkan extends DqmNPCBase
     	//ep.openGui(DQR.instance, DQR.conf.GuiID_JobChange, ep.worldObj, (int)ep.posX, (int)ep.posY, (int)ep.posZ);
 		if(!ep.worldObj.isRemote)
 		{
+    		ItemStack its = ep.inventory.getCurrentItem();
+    		if(its != null && its.getItem() == DQBuilders.itemBuilderKaikosyo && ep.isSneaking())
+    		{
+    			int confVal = DQR.conf.permBuilder5;
+    			if(confVal != 0)
+    			{
+	    			//  && this.tameMode != 0
+	    			boolean opFlg = MinecraftServer.getServer().getConfigurationManager().func_152596_g(ep.getGameProfile());
+
+	    			if((confVal == 3) ||
+	    			   (confVal == 1 && opFlg) ||
+	    			   (confVal == 2 && (opFlg || ep.getUniqueID().toString().equalsIgnoreCase(this.getOwnerUUID2()))))
+	    			{
+		    			ep.worldObj.playSoundAtEntity(ep, "dqr:mob.petmob", 1.0F, 0.5F);
+		    			this.setDead();
+		    			return true;
+	    			}
+    			}
+    		}
+
 			int tabidachi = ExtendedPlayerProperties.get(ep).getTabidachiFlg();
 			if(tabidachi >= 100)
 			{
@@ -253,103 +276,103 @@ public class DqmEntityNPCSinkan extends DqmNPCBase
 					ExtendedPlayerProperties3.get(ep).setJobPermission(jobNo, 1);
 				}
 			}
-		}
-    	/*
-    	if(rand.nextInt(2) < 5)
-    	{
-    		ep.openGui(DQR.instance, DQR.conf.GuiID_JobChange, ep.worldObj, (int)ep.posX, (int)ep.posY, (int)ep.posZ);
-    		return true;
-    	}
-    	*/
 
-    	//if(!ep.worldObj.isRemote)
-    	//{
-		int talkNo = ExtendedPlayerProperties.get(ep).getNpcTalk(EnumDqmNpcTalk.SINKAN.getId());
+	    	/*
+	    	if(rand.nextInt(2) < 5)
+	    	{
+	    		ep.openGui(DQR.instance, DQR.conf.GuiID_JobChange, ep.worldObj, (int)ep.posX, (int)ep.posY, (int)ep.posZ);
+	    		return true;
+	    	}
+	    	*/
 
-		//ep.addChatMessage(new ChatComponentTranslation("" + talkNo));
-		if(talkNo < 10)
-		{
-			if(!ep.worldObj.isRemote)
-			{
-				DQR.func.debugString("Line1",this.getClass());
-				ep.addChatMessage(new ChatComponentTranslation("msg.Dama1.messages." + talkNo + ".txt" ,new Object[] {}));
-				ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
-			}
+	    	//if(!ep.worldObj.isRemote)
+	    	//{
+			int talkNo = ExtendedPlayerProperties.get(ep).getNpcTalk(EnumDqmNpcTalk.SINKAN.getId());
 
-			if(talkNo < 4)
-			{
-				ExtendedPlayerProperties.get(ep).setNpcTalk(EnumDqmNpcTalk.SINKAN.getId(), talkNo + 1);
-			}else
-			{
-				ExtendedPlayerProperties.get(ep).setNpcTalk(EnumDqmNpcTalk.SINKAN.getId(), 30);
-			}
-
-			return true;
-		}
-
-		if(ep.inventory.getCurrentItem() != null && ep.inventory.getCurrentItem().getItem() instanceof DqmItemEmblemBase)
-		{
-			DqmItemEmblemBase handEmblem = (DqmItemEmblemBase)ep.inventory.getCurrentItem().getItem();
-
-			int jobPerm = ExtendedPlayerProperties3.get(ep).getJobPermission(handEmblem.getJobEnum().getId());
-			if(!ep.worldObj.isRemote)
-			{
-				DqmItemEmblemBase embItem = (DqmItemEmblemBase)ep.inventory.getCurrentItem().getItem();
-				DQR.func.debugString("Line5 : ",this.getClass());
-				ep.addChatMessage(new ChatComponentTranslation("msg.Dama1.messages.11.txt" ,new Object[] {EnumDqmMessageConv.JobName.getStartS() + embItem.getJobEnum().getId() + EnumDqmMessageConv.JobName.getEndS()}));
-				ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
-			}
-
-			if(jobPerm == 0)
-			{
-				ExtendedPlayerProperties3.get(ep).setJobPermission(handEmblem.getJobEnum().getId() , 1);
-				ep.inventory.getCurrentItem().stackSize--;
-
-				if(!ep.worldObj.isRemote)
-				{
-					DQR.func.debugString("Line6 : ",this.getClass());
-					ep.addChatMessage(new ChatComponentTranslation("msg.Dama1.messages.12.txt" ,new Object[] {EnumDqmMessageConv.JobName.getStartS() + handEmblem.getJobEnum().getId() + EnumDqmMessageConv.JobName.getEndS()}));
-				}
-			}else
+			//ep.addChatMessage(new ChatComponentTranslation("" + talkNo));
+			if(talkNo < 10)
 			{
 				if(!ep.worldObj.isRemote)
 				{
-					DQR.func.debugString("Line7 : ",this.getClass());
-					ep.addChatMessage(new ChatComponentTranslation("msg.Dama1.messages.13.txt" ,new Object[] {}));
+					DQR.func.debugString("Line1",this.getClass());
+					ep.addChatMessage(new ChatComponentTranslation("msg.Dama1.messages." + talkNo + ".txt" ,new Object[] {}));
+					ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
 				}
+
+				if(talkNo < 4)
+				{
+					ExtendedPlayerProperties.get(ep).setNpcTalk(EnumDqmNpcTalk.SINKAN.getId(), talkNo + 1);
+				}else
+				{
+					ExtendedPlayerProperties.get(ep).setNpcTalk(EnumDqmNpcTalk.SINKAN.getId(), 30);
+				}
+
+				return true;
 			}
 
-			ExtendedPlayerProperties.get(ep).setNpcTalk(EnumDqmNpcTalk.SINKAN.getId(), 20);
+			if(ep.inventory.getCurrentItem() != null && ep.inventory.getCurrentItem().getItem() instanceof DqmItemEmblemBase)
+			{
+				DqmItemEmblemBase handEmblem = (DqmItemEmblemBase)ep.inventory.getCurrentItem().getItem();
 
-		}else if(talkNo >= 20 && talkNo < 30)
-		{
-			if(!ep.worldObj.isRemote)
+				int jobPerm = ExtendedPlayerProperties3.get(ep).getJobPermission(handEmblem.getJobEnum().getId());
+				if(!ep.worldObj.isRemote)
+				{
+					DqmItemEmblemBase embItem = (DqmItemEmblemBase)ep.inventory.getCurrentItem().getItem();
+					DQR.func.debugString("Line5 : ",this.getClass());
+					ep.addChatMessage(new ChatComponentTranslation("msg.Dama1.messages.11.txt" ,new Object[] {EnumDqmMessageConv.JobName.getStartS() + embItem.getJobEnum().getId() + EnumDqmMessageConv.JobName.getEndS()}));
+					ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
+				}
+
+				if(jobPerm == 0)
+				{
+					ExtendedPlayerProperties3.get(ep).setJobPermission(handEmblem.getJobEnum().getId() , 1);
+					ep.inventory.getCurrentItem().stackSize--;
+
+					if(!ep.worldObj.isRemote)
+					{
+						DQR.func.debugString("Line6 : ",this.getClass());
+						ep.addChatMessage(new ChatComponentTranslation("msg.Dama1.messages.12.txt" ,new Object[] {EnumDqmMessageConv.JobName.getStartS() + handEmblem.getJobEnum().getId() + EnumDqmMessageConv.JobName.getEndS()}));
+					}
+				}else
+				{
+					if(!ep.worldObj.isRemote)
+					{
+						DQR.func.debugString("Line7 : ",this.getClass());
+						ep.addChatMessage(new ChatComponentTranslation("msg.Dama1.messages.13.txt" ,new Object[] {}));
+					}
+				}
+
+				ExtendedPlayerProperties.get(ep).setNpcTalk(EnumDqmNpcTalk.SINKAN.getId(), 20);
+
+			}else if(talkNo >= 20 && talkNo < 30)
 			{
-				DQR.func.debugString("Line2",this.getClass());
-				ep.addChatMessage(new ChatComponentTranslation("msg.Dama1.messages." + talkNo + ".txt" ,new Object[] {}));
-				ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
-			}
-			if(talkNo < 21)
-			{
-				DQR.func.debugString("Line3",this.getClass());
-				ExtendedPlayerProperties.get(ep).setNpcTalk(EnumDqmNpcTalk.SINKAN.getId(), talkNo + 1);
+				if(!ep.worldObj.isRemote)
+				{
+					DQR.func.debugString("Line2",this.getClass());
+					ep.addChatMessage(new ChatComponentTranslation("msg.Dama1.messages." + talkNo + ".txt" ,new Object[] {}));
+					ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
+				}
+				if(talkNo < 21)
+				{
+					DQR.func.debugString("Line3",this.getClass());
+					ExtendedPlayerProperties.get(ep).setNpcTalk(EnumDqmNpcTalk.SINKAN.getId(), talkNo + 1);
+				}else
+				{
+					DQR.func.debugString("Line4",this.getClass());
+					ExtendedPlayerProperties.get(ep).setNpcTalk(EnumDqmNpcTalk.SINKAN.getId(), 30);
+				}
+
+				return true;
 			}else
 			{
-				DQR.func.debugString("Line4",this.getClass());
-				ExtendedPlayerProperties.get(ep).setNpcTalk(EnumDqmNpcTalk.SINKAN.getId(), 30);
+
+				ep.openGui(DQR.instance, DQR.conf.GuiID_JobChange, ep.worldObj, (int)ep.posX, (int)ep.posY, (int)ep.posZ);
+				if(ep.worldObj.isRemote) ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
+				ExtendedPlayerProperties.get(ep).setNpcTalk(EnumDqmNpcTalk.SINKAN.getId(), 20);
+				return false;
 			}
 
-			return true;
-		}else
-		{
-
-			ep.openGui(DQR.instance, DQR.conf.GuiID_JobChange, ep.worldObj, (int)ep.posX, (int)ep.posY, (int)ep.posZ);
-			if(ep.worldObj.isRemote) ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
-			ExtendedPlayerProperties.get(ep).setNpcTalk(EnumDqmNpcTalk.SINKAN.getId(), 20);
-			return false;
 		}
-
-
     	//}
 
     	/*

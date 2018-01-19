@@ -7,7 +7,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IProjectile;
 import net.minecraft.entity.boss.EntityDragon;
@@ -358,7 +357,7 @@ public class MagicEntityHyadoB extends MagicEntity implements IProjectile{
             			entityList.remove(n);
             		}else
             		{
-	            		if(this.shootingEntity instanceof EntityPlayer || this.shootingEntity instanceof EntityTameable)
+	            		if(this.shootingEntity instanceof EntityPlayer)
 	            		{
 		            		if (target instanceof EntityPlayer)
 		                    {
@@ -379,6 +378,45 @@ public class MagicEntityHyadoB extends MagicEntity implements IProjectile{
 		                    }else if(target instanceof DqmPetBase)
 		                    {
 		                    	if(!(DQR.func.canAttackPetMonster((DqmPetBase)target, ((EntityPlayer)this.shootingEntity))))
+		                    	{
+		                    		entityList.remove(n);
+		                    	}
+		                    }
+		                    else if (target instanceof EntityTameable ||
+		                                 target instanceof EntityHorse)
+		                    {
+		                    	//事故防止の為、EntityTameable（犬や猫などのペット）、馬にも当たらないようにする
+		                    	entityList.remove(n);
+		                    }
+	            		}else if(this.shootingEntity instanceof DqmPetBase)
+	            		{
+	            			EntityPlayer owner = null;
+	                    	if(this.shootingEntityOwner != null && this.shootingEntityOwner instanceof EntityPlayer)
+	                    	{
+	                    		 owner = (EntityPlayer)this.shootingEntityOwner;
+	                    	}
+
+
+	        				if(target == this.shootingEntity)
+	        				{
+	        					//対象が撃った本人の場合も当たらない
+	                        	entityList.remove(n);
+	        				}else if (target instanceof EntityPlayer)
+		                    {
+		                    	//プレイヤーに当たった時
+		                    	EntityPlayer entityplayer = (EntityPlayer)target;
+
+		                        if(owner != null && (entityplayer.capabilities.disableDamage || !owner.canAttackPlayer(entityplayer)))
+		                        {
+		                        	//PvPが許可されていないと当たらない
+		                            entityList.remove(n);
+		                        }else if(owner != null && target == owner)
+		                        {
+		                        	entityList.remove(n);
+		                        }
+		                    }else if(target instanceof DqmPetBase)
+		                    {
+		                    	if(owner != null && !(DQR.func.canAttackPetMonster((DqmPetBase)target, owner)))
 		                    	{
 		                    		entityList.remove(n);
 		                    	}
@@ -439,15 +477,15 @@ public class MagicEntityHyadoB extends MagicEntity implements IProjectile{
                         {
                         	PotionEffect pe = null;
 
-                    		if(target.entityHit instanceof EntityLiving)
+                    		if(target.entityHit instanceof EntityLivingBase)
                     		{
-                    			EntityLiving elv2 = (EntityLiving)target.entityHit;
+                    			EntityLivingBase elv2 = (EntityLivingBase)target.entityHit;
                     			pe = elv2.getActivePotionEffect(DQPotionPlus.buffBreathReflect);
                     		}
 
                     		if(pe != null && this.shootingEntity != null && this.shootingEntity instanceof EntityLivingBase)
                     		{
-                            	EntityLiving elv = (EntityLiving)this.shootingEntity;
+                            	EntityLivingBase elv = (EntityLivingBase)this.shootingEntity;
                             	//村人以外なら、ダメージを与える処理を呼ぶ
                             	if (elv.attackEntityFrom(damagesource, (float)i1))
                                 {

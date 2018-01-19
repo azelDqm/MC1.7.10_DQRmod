@@ -241,6 +241,36 @@ public class DqmItemMahounoTutu extends DqmItemMiscBase{
 	        	pet.setJukurenExp(cnt, p_70037_1_.getInteger("JukurenExp_" + cnt));
 	        }
 
+	        for(int cnt = 0; cnt < 64; cnt++)
+	        {
+	        	pet.setArrayAILimit(cnt, p_70037_1_.getInteger("arrayAILimit_" + cnt));
+	        }
+
+	        for(int cnt = 0; cnt < 64; cnt++)
+	        {
+	        	pet.setArrayAIMaster(cnt, p_70037_1_.getInteger("arrayAIMaster_" + cnt));
+	        }
+
+	        for(int cnt = 0; cnt < 64; cnt++)
+	        {
+	        	pet.setArrayAISets(cnt, p_70037_1_.getInteger("arrayAISets_" + cnt));
+	        }
+
+	        for(int cnt = 0; cnt < 64; cnt++)
+	        {
+	        	pet.setArrayAIRate(cnt, p_70037_1_.getInteger("arrayAIRate_" + cnt));
+	        }
+
+	        for(int cnt = 0; cnt < 64; cnt++)
+	        {
+	        	pet.setArrayAIRateDef(cnt, p_70037_1_.getInteger("arrayAIRateDef_" + cnt));
+	        }
+
+	        pet.setFlgAIextended(p_70037_1_.getInteger("flgAIextended"));
+	        pet.setFlgAIuse(p_70037_1_.getInteger("flgAIuse"));
+
+	        pet.setTamingTime(p_70037_1_.getLong("tamingTime"));
+
 	        pet.setKougeki(p_70037_1_.getInteger("Kougeki"));
 	        pet.setBougyo(p_70037_1_.getInteger("Bougyo"));
 	        pet.setMaryoku(p_70037_1_.getInteger("Maryoku"));
@@ -348,6 +378,9 @@ public class DqmItemMahounoTutu extends DqmItemMiscBase{
             ep.worldObj.setEntityState(pet, (byte)7);
             //ExtendedPlayerProperties3.get(ep).plusPetCount(1);
             //DQR.petFunc.setNewPetdata(pet);
+            pet.setTamingTime(pet.worldObj.getWorldTime());
+            pet.setCustomNameTag(p_70037_1_.getString("PetCustomName"));
+            pet.func_110163_bv();
 
 	        return pet;
 	    }

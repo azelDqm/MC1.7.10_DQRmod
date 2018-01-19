@@ -29,6 +29,7 @@ public class DQRconfigs2 {
     public static int groupSpawnWeightMetal = 4;
     public static int groupSpawnWeightETC = 20;
 
+    public static double spawnTimeDelay = 0;
     //
     public int DqmEntityGorotuki = 20;
     public int DqmEntityDokuroarai = 20;
@@ -308,6 +309,8 @@ public class DQRconfigs2 {
 	public void getConfigMobSpawn(Configuration config)
 	{
 		config.load();
+		config.setCategoryComment("0_Spawn core settings", "this setting is mob spawn core setting");
+		spawnTimeDelay = config.get("0_Spawn core settings","1.Safety time until first spawn", spawnTimeDelay).getDouble();
 
 		config.setCategoryComment("1_Spawn resister", "this setting is mob spawn regist resister\nspawn resist (0:disable  1:enable)");
 		spawn_resist_overworld_day = config.get("1_Spawn resister","1.Overworld(Day)", spawn_resist_overworld_day).getInt();

@@ -76,7 +76,7 @@ public class ThreadBuilderSekizou extends Thread{
         	        {
         				if(par3World.getBlock(xxx + x, yyy + y, zzz + z) == DQBlocks.DqmBlockBuilderFrame)
         				{
-        	        		par3World.setBlock(xxx + x, yyy + y, zzz + z, Blocks.air, 0, 2);
+        	        		DQR.func.setBlockAndCheck(par3World, xxx + x, yyy + y, zzz + z, Blocks.air, 0, 2);
         				}
         				totalCnt++;
 
@@ -106,7 +106,7 @@ public class ThreadBuilderSekizou extends Thread{
             {
                 for (int y = 0; y <= 10; ++y)
                 {
-                    par3World.setBlock(xxx + x, yyy + y, zzz + z, Blocks.air, 0, 2);
+                    DQR.func.setBlockAndCheck(par3World, xxx + x, yyy + y, zzz + z, Blocks.air, 0, 2);
                 }
             }
         }
@@ -116,28 +116,28 @@ public class ThreadBuilderSekizou extends Thread{
         {
             for (int z = -2; z <= 2; ++z)
             {
-                par3World.setBlock(xxx + x, yyy, zzz + z, DQBlocks.DqmBlockToramanaYuka2, 0, 2);
+                DQR.func.setBlockAndCheck(par3World, xxx + x, yyy, zzz + z, DQBlocks.DqmBlockToramanaYuka2, 0, 2);
             }
         }
 
         for (int x = -3; x <= 3; ++x)
         {
-            par3World.setBlock(xxx + x, yyy, zzz + 3, Blocks.stone_brick_stairs, 3, 2);
+            DQR.func.setBlockAndCheck(par3World, xxx + x, yyy, zzz + 3, Blocks.stone_brick_stairs, 3, 2);
         }
 
         for (int x = -3; x <= 3; ++x)
         {
-            par3World.setBlock(xxx + x, yyy, zzz - 3, Blocks.stone_brick_stairs, 2, 2);
+            DQR.func.setBlockAndCheck(par3World, xxx + x, yyy, zzz - 3, Blocks.stone_brick_stairs, 2, 2);
         }
 
         for (int z = -3; z <= 3; ++z)
         {
-            par3World.setBlock(xxx + 3, yyy, zzz + z, Blocks.stone_brick_stairs, 1, 2);
+            DQR.func.setBlockAndCheck(par3World, xxx + 3, yyy, zzz + z, Blocks.stone_brick_stairs, 1, 2);
         }
 
         for (int z = -3; z <= 3; ++z)
         {
-            par3World.setBlock(xxx - 3, yyy, zzz + z, Blocks.stone_brick_stairs, 0, 2);
+            DQR.func.setBlockAndCheck(par3World, xxx - 3, yyy, zzz + z, Blocks.stone_brick_stairs, 0, 2);
         }
 		try {
 			this.sleep(DQR.conf.cfg_build_sleep);
@@ -145,14 +145,14 @@ public class ThreadBuilderSekizou extends Thread{
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
-        par3World.setBlock(xxx + 2, yyy + 1, zzz + 2, DQDecorates.DqmBlockKagaribidai, 0, 2);
-        par3World.setBlock(xxx + 2, yyy + 1, zzz - 2, DQDecorates.DqmBlockKagaribidai, 0, 2);
-        par3World.setBlock(xxx - 2, yyy + 1, zzz + 2, DQDecorates.DqmBlockKagaribidai, 0, 2);
-        par3World.setBlock(xxx - 2, yyy + 1, zzz - 2, DQDecorates.DqmBlockKagaribidai, 0, 2);
+        DQR.func.setBlockAndCheck(par3World, xxx + 2, yyy + 1, zzz + 2, DQDecorates.DqmBlockKagaribidai, 0, 2);
+        DQR.func.setBlockAndCheck(par3World, xxx + 2, yyy + 1, zzz - 2, DQDecorates.DqmBlockKagaribidai, 0, 2);
+        DQR.func.setBlockAndCheck(par3World, xxx - 2, yyy + 1, zzz + 2, DQDecorates.DqmBlockKagaribidai, 0, 2);
+        DQR.func.setBlockAndCheck(par3World, xxx - 2, yyy + 1, zzz - 2, DQDecorates.DqmBlockKagaribidai, 0, 2);
 
         if(this.sekizouType != null)
         {
-        	par3World.setBlock(xxx, yyy + 1, zzz, this.sekizouType, this.Hougaku, 2);
+        	DQR.func.setBlockAndCheck(par3World, xxx, yyy + 1, zzz, this.sekizouType, this.Hougaku, 2);
         }
 
 

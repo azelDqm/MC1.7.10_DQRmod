@@ -2,6 +2,7 @@ package dqr.entity.magicEntity;
 
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import dqr.entity.magicEntity.magic.MagicEntity;
+import dqr.entity.magicEntity.magic.MagicEntityArrow;
 import dqr.entity.magicEntity.magic.MagicEntityBagi;
 import dqr.entity.magicEntity.magic.MagicEntityBasiRura;
 import dqr.entity.magicEntity.magic.MagicEntityBegiragon;
@@ -34,6 +35,7 @@ import dqr.entity.magicEntity.model.MagicEntityModel1;
 import dqr.entity.magicEntity.model.MagicEntityModel2;
 import dqr.entity.magicEntity.model.MagicEntityModel3;
 import dqr.entity.magicEntity.render.MagicEntityRender;
+import dqr.entity.magicEntity.render.MagicRenderArrow;
 import dqr.entity.magicEntity.render.MagicRenderBagi;
 import dqr.entity.magicEntity.render.MagicRenderBegiragon;
 import dqr.entity.magicEntity.render.MagicRenderBegirama;
@@ -105,5 +107,6 @@ public class MagicRenderingRegister {
 		RenderingRegistry.registerEntityRenderingHandler(MagicEntityHyadoB.class, new MagicRenderHyadoB(new MagicEntityModel1()));
 
 		RenderingRegistry.registerEntityRenderingHandler(MagicEntityBasiRura.class, new ThrowingRenderBumeran(19));
+		RenderingRegistry.registerEntityRenderingHandler(MagicEntityArrow.class, new MagicRenderArrow());
 	}
 }

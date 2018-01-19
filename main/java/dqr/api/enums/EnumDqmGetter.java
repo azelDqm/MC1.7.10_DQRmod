@@ -34,6 +34,21 @@ public class EnumDqmGetter {
 		return endoraParamMax;
 	}
 
+	public EnumDqmMobAI getDqmMobAI(int par1)
+	{
+		EnumDqmMobAI[] data = EnumDqmMobAI.values();
+
+    	for(int cnt = 0; cnt < data.length; cnt++)
+    	{
+    		if(data[cnt].getId() == par1)
+    		{
+    			return data[cnt];
+    		}
+    	}
+
+    	return null;
+	}
+
     public EnumDqmCasinoPKOdds getCasinoPKOddsFromId(int par1)
     {
     	EnumDqmCasinoPKOdds[] data = EnumDqmCasinoPKOdds.values();

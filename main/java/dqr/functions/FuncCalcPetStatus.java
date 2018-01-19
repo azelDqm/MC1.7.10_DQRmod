@@ -337,10 +337,13 @@ public class FuncCalcPetStatus {
 		*/
 
 		//ストポ
-		pe = pet.getActivePotionEffect(Potion.damageBoost);
-		if(pe != null)
+		if(DQR.conf.bug_damageBoostPotionFix == 0)
 		{
-			atk = atk + ((atk * ((pe.getAmplifier() + 1) * 130)) / 100);
+			pe = pet.getActivePotionEffect(Potion.damageBoost);
+			if(pe != null)
+			{
+				atk = atk + ((atk * ((pe.getAmplifier() + 1) * 130)) / 100);
+			}
 		}
 
 		//System.out.println("ATK" + atk);

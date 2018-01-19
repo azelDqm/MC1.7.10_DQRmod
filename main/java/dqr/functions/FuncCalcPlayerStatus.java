@@ -76,6 +76,12 @@ public class FuncCalcPlayerStatus {
 			}
 		}
 
+		//勇者剣：全武器で会心+がある場合
+		if(ExtendedPlayerProperties3.get(ep).getWeaponSkillPermission(3, 4) != 0)
+		{
+			kaisin = kaisin + 20;
+		}
+
 		return kaisin;
 	}
 
@@ -397,10 +403,13 @@ public class FuncCalcPlayerStatus {
 
 
 		//ストポ
-		pe = ep.getActivePotionEffect(Potion.damageBoost);
-		if(pe != null)
+		if(DQR.conf.bug_damageBoostPotionFix == 0)
 		{
-			atk = atk + ((atk * ((pe.getAmplifier() + 1) * 130)) / 100);
+			pe = ep.getActivePotionEffect(Potion.damageBoost);
+			if(pe != null)
+			{
+				atk = atk + ((atk * ((pe.getAmplifier() + 1) * 130)) / 100);
+			}
 		}
 
 		return atk;
@@ -1073,11 +1082,17 @@ public class FuncCalcPlayerStatus {
 			}
 		}
 
+		//勇者剣：全武器で攻撃+がある場合
+		if(ExtendedPlayerProperties3.get(ep).getWeaponSkillPermission(3, 7) != 0)
+		{
+			ret = ret + 15;
+		}
     	return ret;
     }
 
     public void calcAccessory(EntityPlayer ep)
     {
+    	int buffFlg = ExtendedPlayerProperties.get(ep).getAccBuffStop();
     	Random rand = new Random();
     	int ATK = 0;
     	int MAG = 0;
@@ -1228,7 +1243,7 @@ public class FuncCalcPlayerStatus {
 			ep.removePotionEffect(DQPotionMinus.debuffMedapani.id);
 		}
 
-		if(hpRegeneration >= 0)
+		if(hpRegeneration >= 0 && buffFlg == 0)
 		{
 			ep.addPotionEffect(new PotionEffect(DQPotionPlus.buffHPRegeneration.id, 200, hpRegeneration));
 		}else
@@ -1236,7 +1251,7 @@ public class FuncCalcPlayerStatus {
 			ep.removePotionEffect(DQPotionPlus.buffHPRegeneration.id);
 		}
 
-		if(mpRegeneration >= 0)
+		if(mpRegeneration >= 0 && buffFlg == 0)
 		{
 			ep.addPotionEffect(new PotionEffect(DQPotionPlus.buffMPRegeneration.id, 200, mpRegeneration));
 		}else
@@ -1244,7 +1259,7 @@ public class FuncCalcPlayerStatus {
 			ep.removePotionEffect(DQPotionPlus.buffMPRegeneration.id);
 		}
 
-		if(hoshihuri >= 0)
+		if(hoshihuri >= 0 && buffFlg == 0)
 		{
 			ep.addPotionEffect(new PotionEffect(DQPotionPlus.buffHoshihuru.id, 200, hoshihuri));
 		}else

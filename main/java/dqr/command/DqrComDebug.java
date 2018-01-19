@@ -8,10 +8,13 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
+import dqr.DQR;
 import dqr.PacketHandler;
 import dqr.playerData.ExtendedPlayerProperties;
 import dqr.playerData.ExtendedPlayerProperties3;
 import dqr.playerData.MessagePlayerProperties3;
+import dqr.thread.ThreadExplosion;
+import dqr.thread.ThreadJukurenUp;
 import dqr.thread.ThreadLvUp;
 
 
@@ -59,12 +62,41 @@ public class DqrComDebug extends CommandBase {
         			ThreadLvUp lvup = new ThreadLvUp(ep);
 	            	lvup.start();
         			//PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties3((EntityPlayer)ep), (EntityPlayerMP)ep);
+        		}else if("jec".equalsIgnoreCase(var2[1]))
+        		{
+        			//if(ep.getHeldItem().getItem() instanceof Dq)
+        			ExtendedPlayerProperties.get(ep).setJukurenExp(ExtendedPlayerProperties.get(ep).getWeapon(),  Integer.parseInt(var2[2]));
+        			//ExtendedPlayerProperties.get(ep).setJobExp(ExtendedPlayerProperties.get(ep).getJob(), Integer.parseInt(var2[2]));
+        			ThreadJukurenUp lvup = new ThreadJukurenUp(ep);
+	            	lvup.start();
+        			//PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties3((EntityPlayer)ep), (EntityPlayerMP)ep);
         		}else if("sound".equalsIgnoreCase(var2[1]))
         		{
         			Random rand = new Random();
         			ep.worldObj.playSoundAtEntity(ep, var2[2], 1.0F, ((rand.nextFloat() - rand.nextFloat()) * 0.7F + 1.0F) * 2.0F);
         			//ExtendedPlayerProperties.get(ep).setJobExp(ExtendedPlayerProperties.get(ep).getJob(), Integer.parseInt(var2[2]));
         			//PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties3((EntityPlayer)ep), (EntityPlayerMP)ep);
+        		}else if("damage".equalsIgnoreCase(var2[1]))
+        		{
+        			ep.attackEntityFrom(DQR.damageSource.getPlayerSkillDamage(ep), Float.parseFloat(var2[2]));
+        		}else if("bomb".equalsIgnoreCase(var2[1]))
+        		{
+        			//ep.attackEntityFrom(DQR.damageSource.getPlayerSkillDamage(ep), Float.parseFloat(var2[2]));
+        			ThreadExplosion builderThread = new ThreadExplosion(ep.worldObj, ep, ep.posX, ep.posY, ep.posZ, Float.parseFloat(var2[2]));
+                    builderThread.start();
+
+
+        			/*
+        	        FuncDqrExplosion explosion = new FuncDqrExplosion(ep.worldObj, ep, ep.posX, ep.posY, ep.posZ, Float.parseFloat(var2[2]));
+        	        explosion.isFlaming = false;
+        	        explosion.isSmoking = true;
+        	        //if (net.minecraftforge.event.ForgeEventFactory.onExplosionStart(this, explosion)) return explosion;
+        	        explosion.doExplosionA();
+        	        //ThreadExplosion builderThread = new ThreadExplosion(explosion, true);
+                    //builderThread.start();
+        	        explosion.doExplosionB(false);
+        	        */
+
         		}
         	}
         	/*
