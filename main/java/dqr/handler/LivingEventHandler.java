@@ -48,11 +48,11 @@ import dqr.items.base.DqmItemBowBase;
 import dqr.items.base.DqmItemMagicBase;
 import dqr.items.base.DqmItemWeaponBase;
 import dqr.playerData.ExtendedPlayerProperties;
+import dqr.playerData.ExtendedPlayerProperties2;
 import dqr.playerData.ExtendedPlayerProperties3;
 import dqr.playerData.MessagePlayerProperties;
 import dqr.thread.NoThreadProcess;
 import dqr.thread.ThreadJukurenUp;
-import dqr.thread.ThreadLvUp;
 
 public class LivingEventHandler {
 
@@ -104,7 +104,7 @@ public class LivingEventHandler {
 	    			if(mob.isFirstAttack && weapon == EnumDqmWeapon.DqmLance.getId() && weaponSkill == 0 && skillPerm != 0)
 	    			{
 	    				//しっぷう突き
-						ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
+						DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
 						event.entity.hurtResistantTime = 0;
 						event.entity.attackEntityFrom(DQR.damageSource.getPlayerSkillDamage(ep), (damDummy * 0.75F));
 						event.entity.hurtResistantTime = 0;
@@ -404,10 +404,10 @@ public class LivingEventHandler {
 
 							if(killer != null)
 							{
-								killer.addChatMessage(new ChatComponentTranslation("msg.pet.taming1.txt",new Object[] { event.entityLiving.getCommandSenderName()}));
-								killer.addChatMessage(new ChatComponentTranslation("msg.pet.taming2.txt",new Object[] {}));
-								killer.addChatMessage(new ChatComponentTranslation("msg.pet.taming3.txt",new Object[] {}));
-								killer.addChatMessage(new ChatComponentTranslation("msg.pet.taming4.txt",new Object[] {}));
+								DQR.func.doAddChatMessageFix(killer, new ChatComponentTranslation("msg.pet.taming1.txt",new Object[] { event.entityLiving.getCommandSenderName()}));
+								DQR.func.doAddChatMessageFix(killer, new ChatComponentTranslation("msg.pet.taming2.txt",new Object[] {}));
+								DQR.func.doAddChatMessageFix(killer, new ChatComponentTranslation("msg.pet.taming3.txt",new Object[] {}));
+								DQR.func.doAddChatMessageFix(killer, new ChatComponentTranslation("msg.pet.taming4.txt",new Object[] {}));
 							}
 
 							petFlg = true;
@@ -534,7 +534,8 @@ public class LivingEventHandler {
 					}
 					calcGold = calcGold + ExtendedPlayerProperties.get(killer).getGold();
 		            ExtendedPlayerProperties.get(killer).setGold(calcGold);
-
+		            DQR.partyManager.doExpShare(killer, calcEXP);
+		            /*
 					calcEXP = calcEXP + ExtendedPlayerProperties.get(killer).getJobExp(ExtendedPlayerProperties.get(killer).getJob());
 		            ExtendedPlayerProperties.get(killer).setJobExp(ExtendedPlayerProperties.get(killer).getJob(), calcEXP);
 
@@ -549,7 +550,7 @@ public class LivingEventHandler {
 		            	NoThreadProcess proc = new NoThreadProcess();
 		            	proc.doLevelUp(killer);
 		            }
-
+					*/
 		            /*
 	            	int getJukurenLv;
 	            	int getJukurenExp;
@@ -603,10 +604,10 @@ public class LivingEventHandler {
 			if(event.entityLiving instanceof DqmMobBase)
 			{
 				DqmMobBase mob = (DqmMobBase)event.entityLiving;
-				ep.addChatMessage(new ChatComponentTranslation("msg.defeatMob.txt",new Object[] { EnumDqmMessageConv.MonsterName.getStartS() + mob.getEntityStringForce() + EnumDqmMessageConv.MonsterName.getEndS()}));
+				DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.defeatMob.txt",new Object[] { EnumDqmMessageConv.MonsterName.getStartS() + mob.getEntityStringForce() + EnumDqmMessageConv.MonsterName.getEndS()}));
 			}else
 			{
-				ep.addChatMessage(new ChatComponentTranslation("msg.defeatMob.txt",new Object[] { event.entityLiving.getCommandSenderName()}));
+				DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.defeatMob.txt",new Object[] { event.entityLiving.getCommandSenderName()}));
 			}
 
 			if(!ep.worldObj.isRemote)ep.worldObj.playSoundAtEntity(ep, "dqr:mob.death", 1.0F, 1.0F);
@@ -652,7 +653,7 @@ public class LivingEventHandler {
     			*/
     		//}
 
-    		//ep.addChatMessage(new ChatComponentTranslation("test"));
+    		//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("test"));
     		if(!ep.worldObj.isRemote)
     		{
         		int Mp = ExtendedPlayerProperties.get(ep).getMP();
@@ -709,6 +710,10 @@ public class LivingEventHandler {
         		{
         			ExtendedPlayerProperties.get(ep).setPlayerName(ep.getCommandSenderName());
         			ExtendedPlayerProperties.get(ep).setPlayerUUID(ep.getUniqueID().toString());
+        			ExtendedPlayerProperties2.get(ep).setPlayerName(ep.getCommandSenderName());
+        			ExtendedPlayerProperties2.get(ep).setPlayerUUID(ep.getUniqueID().toString());
+        			ExtendedPlayerProperties3.get(ep).setPlayerName(ep.getCommandSenderName());
+        			ExtendedPlayerProperties3.get(ep).setPlayerUUID(ep.getUniqueID().toString());
         		}
 
 
@@ -782,14 +787,94 @@ public class LivingEventHandler {
     		DqmPetBase pet = (DqmPetBase)event.entityLiving;
 
 
-    		//ep.addChatMessage(new ChatComponentTranslation("test"));
+    		//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("test"));
     		if(!pet.worldObj.isRemote)
     		{
+        		if(event.entityLiving.ticksExisted % 20 == 0 && pet.getHealth() > 0.01f)
+        		{
+        			PotionEffect pe = pet.getActivePotionEffect(DQPotionPlus.potionMahounomi);
+    	    		if(pe != null && pet.getHealth() > 0 && !pet.isDead)
+    	    		{
+    		    			int mp = pet.getMP();
+    		    			if(pet.getMaxMP() < mp + (1 + (pe.getAmplifier() * 2)))
+    		    			{
+    		    				pet.setMP(pet.getMaxMP());
+    		    			}else
+    		    			{
 
+    		    				pet.setMP(mp + (1 + (pe.getAmplifier() * 2)));
+    		    			}
+    	    			//ep.setHealth(1.0F + (pe.getAmplifier() * 2));
+    	    		}
+
+    	    		pe = pet.getActivePotionEffect(DQPotionPlus.buffMPRegeneration);
+    	    		if(pe != null && pet.getHealth() > 0 && !pet.isDead)
+    	    		{
+    		    			int mp = pet.getMP();
+    		    			if(pet.getMaxMP() < mp + (1 + (pe.getAmplifier() * 2)))
+    		    			{
+    		    				pet.setMP(pet.getMaxMP());
+    		    			}else
+    		    			{
+    		    				pet.setMP(mp + (1 + (pe.getAmplifier() * 2)));
+    		    			}
+    	    			//ep.setHealth(1.0F + (pe.getAmplifier() * 2));
+    	    		}
+        		}
+
+
+        		if(event.entityLiving.ticksExisted % 10 == 0 && pet.getHealth() > 0.01f)
+        		{
+        			PotionEffect pe = pet.getActivePotionEffect(DQPotionMinus.potionPoisonX);
+    	    		if(pe != null)
+    	    		{
+    	    			//if(ep.worldObj.getWorldTime() % 10 == 0)
+    	    			/*
+        				if((ep.getHealth() - ((pe.getAmplifier() + 1) * 2)) > 1)
+        				{
+        					ep.attackEntityFrom(DQR.damageSource.DqmPoisonX, ((pe.getAmplifier() + 1) * 2));
+        					//ep.setHealth(ep.getHealth() - ((pe.getAmplifier() + 1) * 2));
+        				}
+        				*/
+
+        				if(pet.getHealth() > 0)
+        				{
+        					pet.attackEntityFrom(DQR.damageSource.DqmPoisonX, ((pe.getAmplifier() + 1) * 2));
+        					//ep.setHealth(ep.getHealth() - ((pe.getAmplifier() + 1) * 2));
+        				}
+    	    		}
+
+    	    		pe = pet.getActivePotionEffect(DQPotionPlus.potionIyasinomi);
+    	    		if(pe != null && pet.getHealth() > 0 && !pet.isDead)
+    	    		{
+        				if(pet.getMaxHealth() < pet.getHealth() + 1.0F + (pe.getAmplifier() * 2))
+        				{
+        					pet.setHealth(pet.getMaxHealth());
+        				}else
+        				{
+        					//ep.setHealth(ep.getHealth() + 1.0F + (pe.getAmplifier() * 2));
+        					pet.heal(1.0F + (pe.getAmplifier() * 2));
+        				}
+    	    		}
+
+
+    	    		pe = pet.getActivePotionEffect(DQPotionPlus.buffHPRegeneration);
+    	    		if(pe != null && pet.getHealth() > 0 && !pet.isDead)
+    	    		{
+        				if(pet.getMaxHealth() < pet.getHealth() + 1.0F + (pe.getAmplifier() * 2))
+        				{
+        					pet.setHealth(pet.getMaxHealth());
+        				}else
+        				{
+        					//ep.setHealth(ep.getHealth() + 1.0F + (pe.getAmplifier() * 2));
+        					pet.heal(1.0F + (pe.getAmplifier() * 2));
+        				}
+    	    		}
+        		}
     			//1秒処理
         		if(event.entityLiving.ticksExisted % 21 == 0)
         		{
-	    			PotionEffect pe = event.entityLiving.getActivePotionEffect(DQPotionPlus.potionHonoonomi);
+        			PotionEffect pe = event.entityLiving.getActivePotionEffect(DQPotionPlus.potionHonoonomi);
 	    			if(pe != null)
 	    			{
 	    				event.entityLiving.addPotionEffect(new PotionEffect(Potion.fireResistance.id, 80, 0));

@@ -12,7 +12,8 @@ public enum EnumDqmWeaponMode {
 	WEAPONMODE_ITEMUSEBOW(8, "WeaponMode_ItemUseBow", "ItemUseBow"),
 	WEAPONMODE_SHINZIRU(9, "WeaponMode_Shinziru", "Shinziru"),
 	WEAPONMODE_RURASINMODE(10, "WeaponMode_RuraSinMode", "RURASINMODE"),
-	WEAPONMODE_ACCCanceler(11, "WeaponMode_AccCanceler", "ACCCANCELER");
+	WEAPONMODE_ACCCanceler(11, "WeaponMode_AccCanceler", "ACCCANCELER"),
+	WEAPONMODE_PetSuisyou(11, "WeaponMode_PetSuisyou", "PETSUISYOU");;
 
 	private int id;
 	private String name;

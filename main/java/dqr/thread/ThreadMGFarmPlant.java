@@ -97,7 +97,7 @@ public class ThreadMGFarmPlant extends Thread{
 							{
 								 ExtendedPlayerProperties2.get(ep).setSeedVal(itemName , 0);
 
-								ep.addChatMessage(new ChatComponentTranslation("msg.magictool.farm.seedPlant.1.txt",new Object[] {dummy.getDisplayName(), 0}));
+								DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.magictool.farm.seedPlant.1.txt",new Object[] {dummy.getDisplayName(), 0}));
 
 								 return;
 							}else
@@ -128,7 +128,7 @@ public class ThreadMGFarmPlant extends Thread{
 							{
 								 ExtendedPlayerProperties2.get(ep).setSeedVal(itemName , 0);
 
-								ep.addChatMessage(new ChatComponentTranslation("msg.magictool.farm.seedPlant.1.txt",new Object[] {dummy.getDisplayName(), 0}));
+								DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.magictool.farm.seedPlant.1.txt",new Object[] {dummy.getDisplayName(), 0}));
 
 
 								 return;
@@ -161,7 +161,7 @@ public class ThreadMGFarmPlant extends Thread{
 							{
 								 ExtendedPlayerProperties2.get(ep).setSeedVal(itemName , 0);
 
-								ep.addChatMessage(new ChatComponentTranslation("msg.magictool.farm.seedPlant.1.txt",new Object[] {dummy.getDisplayName(), 0}));
+								DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.magictool.farm.seedPlant.1.txt",new Object[] {dummy.getDisplayName(), 0}));
 
 
 								 return;
@@ -193,7 +193,7 @@ public class ThreadMGFarmPlant extends Thread{
 							{
 								 ExtendedPlayerProperties2.get(ep).setSeedVal(itemName , 0);
 
-								ep.addChatMessage(new ChatComponentTranslation("msg.magictool.farm.seedPlant.1.txt",new Object[] {dummy.getDisplayName(), 0}));
+								DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.magictool.farm.seedPlant.1.txt",new Object[] {dummy.getDisplayName(), 0}));
 
 
 								 return;
@@ -224,7 +224,7 @@ public class ThreadMGFarmPlant extends Thread{
 		}
 		*/
 		val = ExtendedPlayerProperties2.get(ep).getSeedVal(itemName);
-		ep.addChatMessage(new ChatComponentTranslation("msg.magictool.farm.seedPlant.1.txt",new Object[] {dummy.getDisplayName(), val}));
+		DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.magictool.farm.seedPlant.1.txt",new Object[] {dummy.getDisplayName(), val}));
 
 	}
 

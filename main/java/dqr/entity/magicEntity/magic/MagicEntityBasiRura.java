@@ -489,7 +489,8 @@ public class MagicEntityBasiRura extends MagicEntity implements IProjectile{
 	                				//provider.loadChunk(chunkX, chunkZ);
 	                				if(this.shootingEntity instanceof EntityPlayer)
 	                				{
-	                					((EntityPlayer)this.shootingEntity).addChatMessage(new ChatComponentTranslation("msg.causeBasirura.txt",new Object[] {elv2.getCommandSenderName(), this.location[0], this.location[1], this.location[2]}));
+	                					//((EntityPlayer)this.shootingEntity).addChatMessage(new ChatComponentTranslation("msg.causeBasirura.txt",new Object[] {elv2.getCommandSenderName(), this.location[0], this.location[1], this.location[2]}));
+	                					DQR.func.doAddChatMessageFix((EntityPlayer)this.shootingEntity, new ChatComponentTranslation("msg.causeBasirura.txt",new Object[] {elv2.getCommandSenderName(), this.location[0], this.location[1], this.location[2]}));
 	                				}
 
 	                				DqrChunkLoader.deleteBlockTicket(elv2.worldObj, this.location[0], this.location[1] - 2, this.location[1]);

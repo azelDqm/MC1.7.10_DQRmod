@@ -170,6 +170,11 @@ public class DqmItemFoodMiscBase extends ItemFood{
 			 p_77624_3_.add(I18n.format("dqm.iteminfo.mpheal", new Object[]{dispMinMP, dispMaxMP, dispAveMP}));
 		 }
 
+		 if(dispMinMP > 0 || dispMinHP > 0)
+		 {
+			 p_77624_3_.add(I18n.format("dqm.iteminfo.canpet", new Object[]{}));
+		 }
+
 	    	NBTTagCompound nbt = p_77624_1_.getTagCompound();
 	    	if(nbt != null)
 	    	{

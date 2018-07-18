@@ -181,6 +181,16 @@ public class FuncCalcPlayerStatus {
 
 			if(ep.getCurrentEquippedItem().getItem() instanceof DqmItemWeaponBase)
 			{
+
+				if(ExtendedPlayerProperties3.get(ep).getWeaponSkillPermission(3, 7) != 0)
+				{
+					DqmItemWeaponBase weapon = (DqmItemWeaponBase)ep.getCurrentEquippedItem().getItem();
+					if(weapon != null && weapon.getMaterial() != null && weapon.getMaterial() != DQR.dqmMaterial.DqmBraveSword)
+					{
+						atk = atk + 15;
+					}
+				}
+
 				NBTTagList tag = ep.getCurrentEquippedItem().getEnchantmentTagList();
 				if(tag != null)
 				{
@@ -261,6 +271,11 @@ public class FuncCalcPlayerStatus {
 			}else if(ep.getCurrentEquippedItem().getItem() instanceof DqmItemBowBase)
 			{
 				DqmItemBowBase dqmSword = (DqmItemBowBase)ep.getCurrentEquippedItem().getItem();
+
+				if(ExtendedPlayerProperties3.get(ep).getWeaponSkillPermission(3, 7) != 0)
+				{
+					atk = atk + 15;
+				}
 
 		    	int maxDam = dqmSword.getMaxDamage();
 		    	int calDam = maxDam - ep.getCurrentEquippedItem().getItemDamage();
@@ -351,6 +366,11 @@ public class FuncCalcPlayerStatus {
 					//atk = atk + 4;
 				}
 
+				if(ExtendedPlayerProperties3.get(ep).getWeaponSkillPermission(3, 7) != 0)
+				{
+					atk = atk + 15;
+				}
+
 				//武器スキル
 				int apti = DQR.aptitudeTable.getWAptitude(ExtendedPlayerProperties.get(ep).getJob(),
 														  ExtendedPlayerProperties.get(ep).getWeapon(),
@@ -420,12 +440,7 @@ public class FuncCalcPlayerStatus {
 		float HP = 20.0F;
 
 		//HP = ExtendedPlayerProperties.get(this.ep).getMaxHP()F;
-
-		float[] HPArray = ExtendedPlayerProperties.get(ep).getArrayHPA();
-		for(int cnt = 0; cnt < HPArray.length; cnt++)
-		{
-			HP = HP + HPArray[cnt];
-		}
+		int jobId =  ExtendedPlayerProperties.get(ep).getJob();
 
 		float[] JobHP = ExtendedPlayerProperties.get(ep).getJobHPA();
 		int job = ExtendedPlayerProperties.get(ep).getJob();
@@ -438,8 +453,25 @@ public class FuncCalcPlayerStatus {
 			}else
 			{
 				//HP = HP + (JobHP[cnt] * 0.1F);
-				HP = HP + (JobHP[cnt] / ((DQR.conf.DqmDifficulty + 2) * 2));
+				if(jobId == EnumDqmJob.Haguremetal.getId())
+				{
+					HP = HP + (JobHP[cnt] / ((DQR.conf.DqmDifficulty + 2) * 3));
+				}else
+				{
+					HP = HP + (JobHP[cnt] / ((DQR.conf.DqmDifficulty + 2) * 2));
+				}
 			}
+		}
+
+		if(jobId == EnumDqmJob.Haguremetal.getId() && HP > 100)
+		{
+			HP = 100;
+		}
+
+		float[] HPArray = ExtendedPlayerProperties.get(ep).getArrayHPA();
+		for(int cnt = 0; cnt < HPArray.length; cnt++)
+		{
+			HP = HP + HPArray[cnt];
 		}
 
 		//武器スキル
@@ -695,7 +727,7 @@ public class FuncCalcPlayerStatus {
 		pe = ep.getActivePotionEffect(DQPotionPlus.buffSukara);
 		if(pe != null)
 		{
-			def = def +  (def * ((pe.getAmplifier() + 1) / 2));
+			def = def +  (def * (pe.getAmplifier() + 1) / 2);
 		}
 		//ルカニ計算
 		pe = ep.getActivePotionEffect(DQPotionMinus.debuffRukani);
@@ -1082,11 +1114,13 @@ public class FuncCalcPlayerStatus {
 			}
 		}
 
+		/*
 		//勇者剣：全武器で攻撃+がある場合
-		if(ExtendedPlayerProperties3.get(ep).getWeaponSkillPermission(3, 7) != 0)
+		if(ExtendedPlayerProperties3.get(ep).getWeaponSkillPermission(3, 7) != 0 && StatusID == EnumDqmStatus.ATK.getId())
 		{
 			ret = ret + 15;
 		}
+		*/
     	return ret;
     }
 

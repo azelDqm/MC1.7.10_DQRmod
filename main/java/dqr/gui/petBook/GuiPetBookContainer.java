@@ -10,6 +10,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import dqr.DQR;
 import dqr.api.Items.DQMonsters;
+import dqr.api.enums.EnumDqmMGToolMode;
+import dqr.api.enums.EnumDqmWeaponMode;
+import dqr.playerData.ExtendedPlayerProperties;
 import dqr.playerData.ExtendedPlayerProperties3;
 
 public class GuiPetBookContainer extends Container
@@ -114,6 +117,7 @@ public class GuiPetBookContainer extends Container
     public void onContainerClosed(EntityPlayer p_75134_1_)
     {
         super.onContainerClosed(p_75134_1_);
+        //PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties3((EntityPlayer)p_75134_1_), (EntityPlayerMP)p_75134_1_);
         this.inventory.closeInventory();
     }
 
@@ -121,9 +125,12 @@ public class GuiPetBookContainer extends Container
     public ItemStack slotClick(int par1, int par2, int par3, EntityPlayer ep)
     {
     	boolean flg = false;
-
+    	int itemMode = ExtendedPlayerProperties.get(ep).getWeaponMode(EnumDqmWeaponMode.WEAPONMODE_PetSuisyou.getId());
+    	//System.out.println("TEST");
+    	//System.out.println("TEST_Line1 : " + ep.worldObj.isRemote);
     	if(par1 >= 0 && par1 < 54)
     	{
+    		//System.out.println("TEST2");
 	    	Slot slot = (Slot)this.inventorySlots.get(par1);
 
 	    	if(slot != null && slot.getStack() != null)
@@ -137,10 +144,15 @@ public class GuiPetBookContainer extends Container
 				int locZ = nbt.getInteger("posZ");
 				int locDim = nbt.getInteger("dimension");
 
-				if(locX == 0 && locY == 0 && locZ == 0 && locDim == 0)
+				//System.out.println("TEST_Line1 : " + ep.worldObj.isRemote);
+
+				if((locX == 0 && locY == 0 && locZ == 0 && locDim == 0) || itemMode == EnumDqmMGToolMode.PETSUISYOU_VIEWDEL.getId())
 				{
-					ExtendedPlayerProperties3.get(ep).minusPetCount(1);
+					//ExtendedPlayerProperties3.get(ep).minusPetCount(1);
+					//System.out.println("TESTTEST : " + ep.worldObj.isRemote);
 		        	DQR.petFunc.removePetdata(ep, nbt.getString("uuid"));
+
+
 		        	flg = true;
 				}
 	    		//System.out.println("TEST" + nbt.getString("uuid"));
@@ -188,6 +200,7 @@ public class GuiPetBookContainer extends Container
 
 
     	//System.out.println("TEST:" + this.pageNo + "/" + par1);
+    	//ページボタンクリック時処理
     	if(par1 == 54 && this.pageNo > 0)
     	{
     		//System.out.println("TEST2");
@@ -232,6 +245,7 @@ public class GuiPetBookContainer extends Container
 		        	items.setStackDisplayName(petData.getString("PetName"));
 
 		        	this.inventory.setInventorySlotContents(cnt, items);
+		        	//System.out.println("TEST_R [" + ep.worldObj.isRemote + "] : " + petData.getString("PetName") + " / " + cnt + " ! " + (cnt + (54 * this.pageNo))  + " ! " + countMax + " ? " + this.pageNo);
 	        	}else
 	        	{
 
@@ -282,4 +296,7 @@ public class GuiPetBookContainer extends Container
 
     	return DQMonsters.itemMonsterSuraimu;
     }
+
+
+
 }

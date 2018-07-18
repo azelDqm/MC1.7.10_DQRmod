@@ -31,10 +31,14 @@ public class ClientKeyBindCore {
 	public static final KeyBinding keyGuiPartyPlus = new KeyBinding("key.setting.GuiPartyLinePlus", Keyboard.KEY_ADD, "DQMIIImod");
 	public static final KeyBinding keyGuiPartyMinus = new KeyBinding("key.setting.GuiPartyLineMinus", Keyboard.KEY_SUBTRACT, "DQMIIImod");
 
+	public static final KeyBinding keyScrollUp = new KeyBinding("PGUP", Keyboard.KEY_PRIOR, "DQMIIImod");
+	public static final KeyBinding keyScrollDown = new KeyBinding("PGDN", Keyboard.KEY_NEXT, "DQMIIImod");
+	public static final KeyBinding keyLogDel = new KeyBinding("DEL", Keyboard.KEY_DELETE, "DQMIIImod");
 	public ClientKeyBindCore()
 	{
 		FMLCommonHandler.instance().bus().register(new KeyInputHandler());
 		FMLCommonHandler.instance().bus().register(new KeyInputHandler2());
+		//FMLCommonHandler.instance().bus().register(new MouseInputHandler());
 
 		ClientRegistry.registerKeyBinding(keyGuiPositionMode);
 		ClientRegistry.registerKeyBinding(keyGuiPositionSpeed);

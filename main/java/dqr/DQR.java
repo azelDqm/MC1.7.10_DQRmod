@@ -13,6 +13,8 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import dqr.addons.DqrAddon;
 import dqr.api.DQOreDictionary;
 import dqr.api.enums.EnumDqmGetter;
@@ -72,6 +74,7 @@ import dqr.functions.FuncFarmlandExtension;
 import dqr.functions.FuncFishHookExtension;
 import dqr.functions.FuncPetOperation;
 import dqr.gui.GuiHandler;
+import dqr.gui.playerHUD.GuiNewLogger;
 import dqr.handler.BagSlotClickHandler;
 import dqr.handler.ChestGenHandler;
 import dqr.handler.ChunkEventHandler;
@@ -106,7 +109,7 @@ import dqr.potion.DqmPotion;
 import dqr.world.DqmStructureRegister;
 import dqr.world.DqmVillageRegister;
 
-@Mod(modid = "DQMIIINext", name = "DQRespect", version = "0.9.4", useMetadata = true, dependencies = "after:PotionExtension")
+@Mod(modid = "DQMIIINext", name = "DQRespect", version = "0.9.4.5E#3", useMetadata = true, dependencies = "after:PotionExtension")
 public class DQR {
 
 	@SidedProxy(clientSide = "dqr.ClientProxy", serverSide = "dqr.CommonProxy")
@@ -115,7 +118,10 @@ public class DQR {
 	@Instance("DQMIIINext")
 	public static DQR instance;
 	public static String modID = "DQMIIINext";
-	public static int debug = 0;
+	public static int debug = 0; //12 : Lv 全calc
+	public static int easyMode = 1;
+
+	public static int jobStatusVersion = 1;
 
 	public static FuncCalcMobParam funcMob;
 	public static DQRconfigs conf;
@@ -200,6 +206,11 @@ public class DQR {
 
 	//public static SimpleNetworkWrapper networkWrapper;
 
+
+	@SideOnly(Side.CLIENT)
+	public static GuiNewLogger loglog;
+
+
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		PacketHandler.init();
@@ -229,7 +240,10 @@ public class DQR {
 		new DqrItemRegister();
 
 		// 鉱石辞書追加
-		new DQOreDictionary();
+		if(conf.DqmOreDictionary == 1)
+		{
+			new DQOreDictionary();
+		}
 		/*
 		 * blocks = new DqmBlockStandard(); decorateBlocks = new
 		 * DqmBlockDecorate(); ores = new DqmBlockOre(); seedBlocks = new

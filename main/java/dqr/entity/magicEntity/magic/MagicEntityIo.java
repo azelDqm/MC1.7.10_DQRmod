@@ -546,13 +546,15 @@ public class MagicEntityIo extends MagicEntity implements IProjectile{
 
                                     //ここでヒット時の効果音がなる
                                     this.playSound("random.explode", 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
-
+//yvgrwevher
                                     //当たったあと、弾を消去する。エンティティ貫通がONの弾種はそのまま残す。
+                                    /*
                                     if (!(target.entityHit instanceof EntityEnderman) && !this.isPenetrateEntity())
                                     {
                                         this.setDead();
                                         break;
                                     }
+                                    */
                                 }
                     		}else
                     		{
@@ -602,8 +604,11 @@ public class MagicEntityIo extends MagicEntity implements IProjectile{
 	                                //当たったあと、弾を消去する。エンティティ貫通がONの弾種はそのまま残す。
 	                                if (!(target.entityHit instanceof EntityEnderman) && !this.isPenetrateEntity())
 	                                {
+	                                	/*
+	                                	gvwevwvr
 	                                    this.setDead();
 	                                    break;
+	                                    */
 	                                }
 	                            }
                     		}

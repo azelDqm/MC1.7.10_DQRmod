@@ -8,6 +8,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IExtendedEntityProperties;
 import dqr.PacketHandler;
+import dqr.api.enums.EnumDqmWeaponMode;
 import dqr.items.magic.DqmItemMagicRuraSin;
 import dqr.items.magic.DqmItemMagicRuraSin2;
 import dqr.items.magic.DqmItemMagicRuraSinC;
@@ -28,6 +29,9 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
     private int[] JobMP = new int[32];
     private int[] JobTikara = new int[32];
     private int[] JobKasikosa = new int[32];
+
+    //ステータスの見直し・修正等で再計算が入る場合等のバージョン管理用
+    private int JobStatusVersion = 0;
 
     //バフ計算用
   //0:職業補正 1:種系 2:黄金の実 3:装備セット効果
@@ -119,10 +123,20 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
     private String playerName = null;
     private String playerUUID = null;
     private int hardcoreInfo = 0;
+    private int easymodeInfo = 0;
+    private int easymodeInfo2 = 0;
     private long birthTime = 0;
     private int birthFlag = 0;
 
     private int accBuffStop = 0;
+
+    private int shopTalkingGrade = 0;
+
+    private int shopPaymentGold = 0;
+    private int shopPaymentGold3 = 0;
+    private int shopPaymentGold4 = 0;
+    private int shopPaymentGold5 = 0;
+    private int shopPaymentGold6 = 0;
 /*
     private int sampleInt = 0;
     private double sampleDouble = 0.0D;
@@ -191,6 +205,10 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
         {
         	nbt.setFloat("JobKasikosa_" + cnt, JobKasikosa[cnt]);
         }
+
+
+        nbt.setInteger("JobStatusVersion", JobStatusVersion);
+
 
         for(int cnt = 0; cnt < 32; cnt++)
         {
@@ -345,7 +363,10 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
 
         for(int cnt = 0; cnt < 64; cnt++)
         {
-        	nbt.setInteger("weaponMode_" + cnt, weaponMode[cnt]);
+        	if(cnt != EnumDqmWeaponMode.WEAPONMODE_SHINZIRU.getId())
+        	{
+        		nbt.setInteger("weaponMode_" + cnt, weaponMode[cnt]);
+        	}
         }
 
         for(int cnt = 0; cnt < 4; cnt++)
@@ -386,6 +407,16 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
         {
         	nbt.setString("playerUUID", this.playerUUID);
         }
+
+        nbt.setInteger("easymodeInfo2", this.easymodeInfo2);
+
+        nbt.setInteger("shopTalkingGrade", this.shopTalkingGrade);
+
+        nbt.setInteger("shopPaymentGold", this.shopPaymentGold);
+        nbt.setInteger("shopPaymentGold3", this.shopPaymentGold3);
+        nbt.setInteger("shopPaymentGold4", this.shopPaymentGold4);
+        nbt.setInteger("shopPaymentGold5", this.shopPaymentGold5);
+        nbt.setInteger("shopPaymentGold6", this.shopPaymentGold6);
         compound.setTag(EXT_PROP_NAME, nbt);
     }
 
@@ -433,6 +464,8 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
         {
         	JobKasikosa[cnt] = nbt.getInteger("JobKasikosa_" + cnt);
         }
+
+        JobStatusVersion = nbt.getInteger("JobStatusVersion");
 
         for(int cnt = 0; cnt < 32; cnt++)
         {
@@ -588,7 +621,10 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
 
         for(int cnt = 0; cnt < 64; cnt++)
         {
-        	weaponMode[cnt] = nbt.getInteger("weaponMode_" + cnt);
+        	if(EnumDqmWeaponMode.WEAPONMODE_SHINZIRU.getId() != cnt)
+        	{
+        		weaponMode[cnt] = nbt.getInteger("weaponMode_" + cnt);
+        	}
         }
 
         for(int cnt = 0; cnt < 4; cnt++)
@@ -599,6 +635,15 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
         this.playerName = nbt.getString("playerName");
         this.playerUUID = nbt.getString("playerUUID");
 
+        this.shopTalkingGrade = nbt.getInteger("shopTalkingGrade");
+
+        this.easymodeInfo2 = nbt.getInteger("easymodeInfo2");
+
+        this.shopPaymentGold = nbt.getInteger("shopPaymentGold");
+        this.shopPaymentGold3 = nbt.getInteger("shopPaymentGold3");
+        this.shopPaymentGold4 = nbt.getInteger("shopPaymentGold4");
+        this.shopPaymentGold5 = nbt.getInteger("shopPaymentGold5");
+        this.shopPaymentGold6 = nbt.getInteger("shopPaymentGold6");
         /*
         this.sampleInt = nbt.getInteger("sampleInt");
         this.sampleDouble = nbt.getDouble("sampleDouble");
@@ -738,6 +783,14 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
         this.JobTikara[par1] = par2;
     }
 
+
+    public int getJobStatusVersion() {
+        return JobStatusVersion;
+    }
+    public void setJobStatusVersion(int par1) {
+        this.JobStatusVersion = par1;
+    }
+
     public int[] getJobKasikosaA() {
     	if(JobKasikosa == null) JobKasikosa = new int[32];
         return JobKasikosa;
@@ -754,9 +807,6 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
     	if(JobKasikosa == null) JobKasikosa = new int[32];
         this.JobKasikosa[par1] = par2;
     }
-
-
-
 
 
     public int[] getArrayMikawasiA() {
@@ -1568,12 +1618,79 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
         this.playerUUID = par1;
     }
 
+    public int getEasyModeInfo() {
+        return easymodeInfo;
+    }
+    public void setEasyModeInfo(int par1) {
+        this.easymodeInfo = par1;
+    }
+
+    public int getEasyModeInfo2() {
+        return easymodeInfo2;
+    }
+    public void setEasyModeInfo2(int par1) {
+        this.easymodeInfo2 = par1;
+    }
 
     public int getHardcoreInfo() {
         return hardcoreInfo;
     }
     public void setHardcoreInfo(int par1) {
         this.hardcoreInfo = par1;
+    }
+
+    public int getShopPaymentGold() {
+        return shopPaymentGold;
+    }
+    public void setShopPaymentGold(int par1) {
+        this.shopPaymentGold = par1;
+    }
+
+    public int getShopPaymentGold3() {
+        return shopPaymentGold3;
+    }
+    public void setShopPaymentGold3(int par1) {
+        this.shopPaymentGold3 = par1;
+    }
+
+    public int getShopPaymentGold4() {
+        return shopPaymentGold4;
+    }
+    public void setShopPaymentGold4(int par1) {
+        this.shopPaymentGold4 = par1;
+    }
+
+    public int getShopPaymentGold5() {
+        return shopPaymentGold5;
+    }
+    public void setShopPaymentGold5(int par1) {
+        this.shopPaymentGold5 = par1;
+    }
+
+    public int getShopPaymentGold6() {
+        return shopPaymentGold6;
+    }
+    public void setShopPaymentGold6(int par1) {
+        this.shopPaymentGold6 = par1;
+    }
+
+    public void addShopPaymentGold(int value, int flg) {
+    	switch(flg)
+    	{
+    		case 0: this.shopPaymentGold = value + this.shopPaymentGold; break;
+    		case 3: this.shopPaymentGold3 = value + this.shopPaymentGold3; break;
+    		case 4: this.shopPaymentGold4 = value + this.shopPaymentGold4; break;
+    		case 5: this.shopPaymentGold5 = value + this.shopPaymentGold5; break;
+    		case 6: this.shopPaymentGold6 = value + this.shopPaymentGold6; break;
+    		default : this.shopPaymentGold = value + this.shopPaymentGold; break;
+    	}
+    }
+
+    public int getShopTalkingGrade() {
+        return shopTalkingGrade;
+    }
+    public void setShopTalkingGrade(int par1) {
+        this.shopTalkingGrade = par1;
     }
     /*
     public int getSampleInt() {

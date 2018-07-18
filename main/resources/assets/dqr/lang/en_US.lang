@@ -21,10 +21,16 @@ main.job.18=Legend
 main.job.19=Dancer
 main.job.20=Pirate
 main.job.21=MasterDragon
+main.job.22=Shepherd
+main.job.23=Sailor
+main.job.24=ItemMaster
+main.job.25=Summoner
 
 gui.container.dama.title=job change
 gui.container.dama.page=Page. %f / %f
-gui.container.TamingPets.title=PetMonsters
+gui.container.TamingPets.title=PetMob location info
+gui.container.TamingPets2.title=PetMob loc(Delete the info mode)
+gui.container.TamingPets3.title=Click to delete
 
 msg.toDamage.txt=%2$d damage to %1$s
 msg.toDamage2.txt=%2$.3f damage to %1$s
@@ -154,6 +160,10 @@ gui.pet.status.gurd=DEF %1$4d      AGI %2$4d
 gui.pet.status.magic=MAG %1$4d      INT %2$4d
 gui.pet.status.owner=OWNER:%s
 gui.pet.status.type=MOB:%s
+gui.pet.status.status=Status:%s
+gui.pet.status.stmode1=Active
+gui.pet.status.stmode2=Dead
+gui.pet.status.stmode3=Stand-by
 
 gui.status.HP=HP %1$d / %2$d
 gui.status.MP=MP %1$d / %2$d
@@ -198,6 +208,11 @@ gui.job.18=LEG
 gui.job.19=DAN
 gui.job.20=PIR
 gui.job.21=MDR
+gui.job.22=SHP
+gui.job.23=SAI
+gui.job.24=ItM
+gui.job.25=SUM
+
 gui.position.name=GUI Position Settings
 gui.position.guiname.0=none
 gui.position.guiname.1=PlayerData
@@ -210,6 +225,15 @@ gui.position.guiname.7=PartyStatus
 gui.position.line.1=TargetGUI : %s
 gui.position.line.2=MoveSpeed : %dpixels
 gui.position.line.3=Party disp/line : %d
+
+gui.position.line.4=MoveSpeed key : [%s]
+gui.position.line.5=Free move key : [%s][%s][%s][%s]
+gui.position.line.6=Typical move key : [%s]
+
+gui.position.line.7=log view : [PageUp][PageDown]
+gui.position.line.8=log clear : [%s]
+
+gui.position.line.9=disp/line change : [%s][%s]
 
 gui.party.hp=HP
 gui.party.mp=MP
@@ -813,6 +837,11 @@ item.dqm.itemEmbDancer.name=EmbDancer
 item.dqm.itemEmbPirate.name=EmbPirate
 item.dqm.itemEmbMasterDragon.name=EmbMasterDragon
 
+item.dqm.itemEmbHituzikai.name=EmbShepherd
+item.dqm.itemEmbFunanori.name=EmbSailor
+item.dqm.itemEmbDougutukai.name=EmbItemMaster
+item.dqm.itemEmbTentiraimeishi.name=EmbSummoner
+
 item.dqm.itemDamaCivilian.name=Civilian
 item.dqm.itemDamaWarrior.name=Warrior
 item.dqm.itemDamaFighter.name=Fighter
@@ -836,6 +865,11 @@ item.dqm.itemDamaDancer.name=Dancer
 item.dqm.itemDamaPirate.name=Pirate
 item.dqm.itemDamaMasterDragon.name=MasterDragon
 
+item.dqm.itemDamaHituzikai.name=Shepherd
+item.dqm.itemDamaFunanori.name=Sailor
+item.dqm.itemDamaDougutukai.name=ItemMaster
+item.dqm.itemDamaTentiraimeishi.name=Summoner
+
 item.dqm.itemDamaCivilian_1.name=Civilian
 item.dqm.itemDamaWarrior_1.name=Warrior
 item.dqm.itemDamaFighter_1.name=Fighter
@@ -858,6 +892,11 @@ item.dqm.itemDamaDragon_1.name=Dragon
 item.dqm.itemDamaGodHnad_1.name=GodHnad
 item.dqm.itemDamaLegend_1.name=Legend
 item.dqm.itemDamaMasterDragon_1.name=MasterDragon
+
+item.dqm.itemDamaHituzikai_1.name=Shepherd
+item.dqm.itemDamaFunanori_1.name=Sailor
+item.dqm.itemDamaDougutukai_1.name=ItemMaster
+item.dqm.itemDamaTentiraimeishi_1.name=Summoner
 
 #DQM.magic
 item.dqm.itemMagicToolFarm1.name=MagicTool_Farm
@@ -1628,6 +1667,7 @@ dqm.iteminfo.petLocation3=§fLocation x: %d  y: %d  z:%d
 dqm.iteminfo.petLocation0=no data
 
 dqm.iteminfo.caneat=§6can eating
+dqm.iteminfo.canpet=§eeat pet
 dqm.iteminfo.hpheal=§fHPheal:%1d-%2d
 dqm.iteminfo.randombreak=random break
 dqm.iteminfo.mpheal=§fMPheal:%1d-%2d
@@ -1775,6 +1815,7 @@ dqm.magicinfo.categHPheal=(heal:%d)
 dqm.magicinfo.categAttack=(attack:%d)
 dqm.magicinfo.mp=Use MP:%d
 dqm.magicinfo.needLv=need Lv:%s
+dqm.magicinfo.needLv2=         & %s
 dqm.magicinfo.usefulJob=usefulJob:%s
 dqm.magicinfo.usefulJobSPC=         %s
 dqm.magicinfo.noimplemented=§c(No implemented)

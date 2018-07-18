@@ -10,7 +10,6 @@ import dqr.DQR;
 import dqr.PacketHandler;
 import dqr.api.enums.EnumDqmPet;
 import dqr.api.event.DqmJukurenUpEvent;
-import dqr.api.event.DqmLvUpEvent;
 import dqr.api.event.DqmPetLvUpEvent;
 import dqr.entity.petEntity.DqmPetBase;
 import dqr.packetMessage.MessageClientSound;
@@ -26,7 +25,9 @@ public class NoThreadProcess {
 		{
 			return;
 		}
+		DQR.func.lvUpProcessMain(ep);
 
+		/*
 		boolean flg = true;
 		int epLv = ExtendedPlayerProperties.get(ep).getJobLv(ExtendedPlayerProperties.get(ep).getJob());
 		int epEXP = ExtendedPlayerProperties.get(ep).getJobExp(ExtendedPlayerProperties.get(ep).getJob());
@@ -50,7 +51,7 @@ public class NoThreadProcess {
 			{
 				epLv = epLv + 1;
 				ExtendedPlayerProperties.get(ep).setJobLv(ExtendedPlayerProperties.get(ep).getJob(), epLv);
-				ep.addChatMessage(new ChatComponentTranslation("msg.lvUp.txt",new Object[] {epLv}));
+				DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.lvUp.txt",new Object[] {epLv}));
 				lvUpProcess(epLv, ep);
 				lvUpRefresh(ep);
 
@@ -79,8 +80,10 @@ public class NoThreadProcess {
 				break;
 			}
 		}
+		*/
 	}
 
+	/*
 	public void lvUpProcess(int lv, EntityPlayer ep)
 	{
 		Random rand = new Random();
@@ -159,7 +162,7 @@ public class NoThreadProcess {
 		//ep.getFoodStats().setFoodLevel(20);
 		ep.getFoodStats().addStats(20, 0.6F);
 	}
-
+	*/
 
 
 	public void doJukurenUp(EntityPlayer ep)
@@ -198,8 +201,8 @@ public class NoThreadProcess {
 				}
 
 				ExtendedPlayerProperties.get(ep).setJukurenWP(ExtendedPlayerProperties.get(ep).getWeapon(), jukurenWP);
-				//ep.addChatMessage(new ChatComponentTranslation("msg.jukurenUp.txt",new Object[] {weaponName, epLv}));
-				ep.addChatMessage(new ChatComponentTranslation("msg.jukurenUp.txt",new Object[] {
+				//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.jukurenUp.txt",new Object[] {weaponName, epLv}));
+				DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.jukurenUp.txt",new Object[] {
 						new ChatComponentTranslation("gui.weapon." + ExtendedPlayerProperties.get(ep).getWeapon()), epLv}));
 				ep.worldObj.playSoundAtEntity(ep, "dqr:player.skillup", 1.0F, 1.0F);
 				PacketHandler.INSTANCE.sendTo(new MessageClientSound((byte)1), (EntityPlayerMP)ep);
@@ -282,7 +285,7 @@ public class NoThreadProcess {
 
 					if(!player.worldObj.isRemote)
 					{
-						player.addChatMessage(new ChatComponentTranslation("msg.lvUpPet.txt",new Object[] {petName ,epLv}));
+						DQR.func.doAddChatMessageFix(player, new ChatComponentTranslation("msg.lvUpPet.txt",new Object[] {petName ,epLv}));
 					}
 				}
 

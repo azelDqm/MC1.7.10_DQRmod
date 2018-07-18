@@ -8,6 +8,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import dqr.DQR;
 import dqr.api.Items.DQBuilders;
 import dqr.api.Items.DQMiscs;
 import dqr.api.enums.EnumColor;
@@ -70,6 +71,18 @@ public class DqmItemMiscBase extends Item{
         		String medalValue = I18n.format("msg.casinocoin.item.txt", new Object[]{nfNum.format(coinVal)});
 
     			p_77624_3_.add(medalValue);
+    		}
+
+
+    		int itemPrice = nbt.getInteger("ItemPrice");
+    		itemPrice = DQR.calcPlayerStatus.calcShoninGold(itemPrice, p_77624_2_);
+    		//System.out.println("TEST:" + medalVal);
+    		if(itemPrice > 0)
+    		{
+
+        		String itmPrice = I18n.format("msg.itemprice.item.txt", new Object[]{nfNum.format(itemPrice)});
+
+    			p_77624_3_.add(itmPrice);
     		}
 		}
 	 }

@@ -7,6 +7,9 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChatComponentTranslation;
+
+import org.apache.commons.lang3.math.NumberUtils;
+
 import dqr.DQR;
 import dqr.api.enums.EnumColor;
 
@@ -55,7 +58,7 @@ public class DqrComParty extends CommandBase {
 		        		DQR.partyManager.addPartyMember(ep, var2[1]);
 		        	}else
 		        	{
-		        		ep.addChatMessage(new ChatComponentTranslation(EnumColor.DarkRed.getChatColor() + "/dqrpt add <PlayerName>", new Object[] {}));
+		        		DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation(EnumColor.DarkRed.getChatColor() + "/dqrpt add <PlayerName>", new Object[] {}));
 		        	}
 		        }else if(var2[0].equalsIgnoreCase("kick"))
 		        {
@@ -76,11 +79,33 @@ public class DqrComParty extends CommandBase {
 			        		}
 		        		}else
 		        		{
-		        			ep.addChatMessage(new ChatComponentTranslation("msg.shinziru.modeInfo.txt", new Object[] {}));
+		        			DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.shinziru.modeInfo.txt", new Object[] {}));
 		        		}
 		        	}else
 		        	{
-		        		ep.addChatMessage(new ChatComponentTranslation(EnumColor.DarkRed.getChatColor() + "/dqrpt kick <PlayerName>|$pet|$pets", new Object[] {}));
+		        		DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation(EnumColor.DarkRed.getChatColor() + "/dqrpt kick <PlayerName>|$pet|$pets", new Object[] {}));
+		        	}
+		        }else if(var2[0].equalsIgnoreCase("sharerate"))
+		        {
+		        	if(var2.length >= 2)
+		        	{
+			        	if(DQR.partyManager.isPartyLeader(ep))
+			    		{
+			        		if(NumberUtils.isNumber(var2[1]) & Integer.parseInt(var2[1]) >= 1 && Integer.parseInt(var2[1]) <= 100)
+			        		{
+			        			int setVal = Integer.parseInt(var2[1]);
+			        			DQR.partyManager.doChangeShareRate(ep, setVal);
+			        		}else
+			        		{
+			        			DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation(EnumColor.DarkRed.getChatColor() + "/dqrpt sharerate <ShareRateValue 1 to 100>", new Object[] {}));
+			        		}
+			    		}else
+			        	{
+			    			DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.shinziru.modeInfo.txt", new Object[] {}));
+			        	}
+		        	}else
+		        	{
+		        		DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation(EnumColor.DarkRed.getChatColor() + "/dqrpt sharerate <ShareRateValue 1 to 100>", new Object[] {}));
 		        	}
 		        }else if(var2[0].equalsIgnoreCase("leave"))
 		        {
@@ -95,7 +120,7 @@ public class DqrComParty extends CommandBase {
 		        		DQR.partyManager.closeParty(ep);
 		        	}else
 		        	{
-		        		ep.addChatMessage(new ChatComponentTranslation("msg.shinziru.modeInfo.txt", new Object[] {}));
+		        		DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.shinziru.modeInfo.txt", new Object[] {}));
 		        	}
 		        }else if(var2[0].equalsIgnoreCase("change"))
 		        {
@@ -107,19 +132,19 @@ public class DqrComParty extends CommandBase {
 		        			DQR.partyManager.changePartyLeader(var2[1], ep);
 		        		}else
 			        	{
-			        		ep.addChatMessage(new ChatComponentTranslation("msg.shinziru.modeInfo.txt", new Object[] {}));
+		        			DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.shinziru.modeInfo.txt", new Object[] {}));
 			        	}
 		        	}else
 		        	{
-		        		ep.addChatMessage(new ChatComponentTranslation(EnumColor.DarkRed.getChatColor() + "/dqrpt change <PlayerName>", new Object[] {}));
+		        		DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation(EnumColor.DarkRed.getChatColor() + "/dqrpt change <PlayerName>", new Object[] {}));
 		        	}
 		        }else
 		        {
-		        	ep.addChatMessage(new ChatComponentTranslation(EnumColor.DarkRed.getChatColor() + "/dqrpt <add|kick|leave|change>", new Object[] {}));
+		        	DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation(EnumColor.DarkRed.getChatColor() + "/dqrpt <add|kick|leave|change>", new Object[] {}));
 		        }
 			}else
 	        {
-	        	ep.addChatMessage(new ChatComponentTranslation(EnumColor.DarkRed.getChatColor() + "/dqrpt <add|kick|leave|change>", new Object[] {}));
+				DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation(EnumColor.DarkRed.getChatColor() + "/dqrpt <add|kick|leave|change|sharerate>", new Object[] {}));
 	        }
 		}
 	}

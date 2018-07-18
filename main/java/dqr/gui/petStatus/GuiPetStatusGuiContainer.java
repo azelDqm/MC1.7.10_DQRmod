@@ -159,6 +159,23 @@ public class GuiPetStatusGuiContainer extends GuiContainer
         	int petKasikosa = petData.getInteger("Kasikosa");
         	String OwnerName = petData.getString("OwnerName");
 
+        	boolean flgIsSitting = pet.isSitting();
+        	boolean flgIsLiving = pet.getHealth() < 0.5f;
+        	String stmode = null;
+
+        	if(flgIsLiving)
+        	{
+        		stmode = I18n.format("gui.pet.status.stmode2", new Object[]{});
+        	}else if(flgIsSitting)
+        	{
+        		stmode = I18n.format("gui.pet.status.stmode3", new Object[]{});
+        	}else
+        	{
+        		stmode = I18n.format("gui.pet.status.stmode1", new Object[]{});
+        	}
+
+        	stmode = I18n.format("gui.pet.status.status", new Object[]{stmode});
+
             String sName = I18n.format("gui.pet.status.name", new Object[]{petName});
             String ownerName = I18n.format("gui.pet.status.owner", new Object[]{OwnerName});
             String sEXP = I18n.format("gui.pet.status.EXP", new Object[]{petJobLv, petJobExp,DQR.exp.getNextExpPet(petJobLv, pet)});
@@ -183,6 +200,7 @@ public class GuiPetStatusGuiContainer extends GuiContainer
 
         	this.fontRendererObj.drawStringWithShadow(sHP, x2 + 10, y + 47, 0xffffffff);
         	this.fontRendererObj.drawStringWithShadow(sMP, x2 + 10, y + 56, 0xffffffff);
+        	this.fontRendererObj.drawStringWithShadow(stmode, x2 + 10, y + 65, 0xffffffff);
         	this.fontRendererObj.drawStringWithShadow(sAttack, x2 + 84, y + 47, 0xffffffff);
         	this.fontRendererObj.drawStringWithShadow(sGurd, x2 + 84, y + 56, 0xffffffff);
         	this.fontRendererObj.drawStringWithShadow(sMagic, x2 + 84, y + 65, 0xffffffff);

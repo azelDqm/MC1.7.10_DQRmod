@@ -71,7 +71,7 @@ public class PlayerEventHandler {
 							ep.inventory.mainInventory[cnt] = null;
 						}
 						//ep.playSound("random.glass", 1.0F, 1.5F);
-						ep.addChatMessage(new ChatComponentTranslation("msg.escapeDamage.inotinoIshi.txt",new Object[] {}));
+						DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.escapeDamage.inotinoIshi.txt",new Object[] {}));
 						ep.worldObj.playSoundAtEntity(ep, "dig.glass", 4.0F, 1.1F);
 						break;
 					}
@@ -158,14 +158,14 @@ public class PlayerEventHandler {
 		if(skillW != null && skillW.getFunc() == 1 && skillW.getRATE() > rand.nextInt(100))
 		{
 			boolean hitFlg = false;
-			//ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {}));
-			//ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.MonsterName.getEndS()}));
+			//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {}));
+			//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.MonsterName.getEndS()}));
 
 			if(weaponSkill == 6)
 			{
 				if(!ep.worldObj.isRemote)
 				{
-					ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
+					DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
 				}
 
 				float f = (float)e.charge / 20.0F;
@@ -295,7 +295,7 @@ public class PlayerEventHandler {
 					//e.setCanceled(true);
 					if(DQR.func.isBind(ep) && ep.worldObj.isRemote)
 					{
-						ep.addChatMessage(new ChatComponentTranslation("msg.magic.rariho.txt",new Object[] {}));
+						DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.magic.rariho.txt",new Object[] {}));
 						ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
 						return;
 					}
@@ -306,7 +306,7 @@ public class PlayerEventHandler {
 													  enumWeapon.getId(),
 													  ep) < 1 && DQR.debug == 0)
 					{
-						ep.addChatMessage(new ChatComponentTranslation("msg.magic.weaponNoAppti.txt",new Object[] {}));
+						DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.magic.weaponNoAppti.txt",new Object[] {}));
 						ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
 						return;
 					}
@@ -314,7 +314,7 @@ public class PlayerEventHandler {
 					//System.out.println("TEST" + (ep.getHeldItem().getItemDamage()) + "/" + (ep.getHeldItem().getMaxDamage() / 5 * 4 + 1));
 					if(ep.getHeldItem().getItemDamage() >= ep.getHeldItem().getMaxDamage() / 5 * 4 + 1)
 					{
-						ep.addChatMessage(new ChatComponentTranslation("msg.magic.weaponNoEnergy.txt",new Object[] {}));
+						DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.magic.weaponNoEnergy.txt",new Object[] {}));
 						ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
 						return;
 					}
@@ -399,7 +399,7 @@ public class PlayerEventHandler {
 						int seedVal = ExtendedPlayerProperties2.get(ep).getSeedVal(itemName);
 						ExtendedPlayerProperties2.get(ep).setSeedVal(itemName, seedVal + iStack.stackSize);
 
-						ep.addChatMessage(new ChatComponentTranslation("msg.magictool.farm.seedInAct.1.txt", new Object[] {iStack.getDisplayName(), seedVal + iStack.stackSize}));
+						DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.magictool.farm.seedInAct.1.txt", new Object[] {iStack.getDisplayName(), seedVal + iStack.stackSize}));
 					}
 
 					ExtendedPlayerProperties2.get(ep).setSelectSeed(itemName);

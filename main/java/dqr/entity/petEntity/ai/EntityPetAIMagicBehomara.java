@@ -112,7 +112,10 @@ public class EntityPetAIMagicBehomara extends EntityAIBase
 		        		{
 		        			if(this.tagetMob.getHealth() < this.tagetMob.getMaxHealth())
 		        			{
-		        				return true;
+		        				if(!(this.tagetMob instanceof DqmPetBase) || this.tagetMob.getHealth() > 0.5F)
+		        				{
+		        					return true;
+		        				}
 		        			}else
 		        			{
 		        				this.tagetMob = null;

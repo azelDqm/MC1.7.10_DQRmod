@@ -153,7 +153,10 @@ public class EntityPetAIAttackOnCollide2 extends EntityAIBase
 				}
 			}else
 			{
-				entitylivingbase.addPotionEffect(new PotionEffect(DQPotionMinus.debuffHeavyFire.id, 60, this.attacker.getArrayAISets(EnumDqmMobAI.HEAVYFIRE.getId())));
+				if(!entitylivingbase.isPotionActive(DQPotionMinus.debuffHeavyFire.id));
+				{
+					entitylivingbase.addPotionEffect(new PotionEffect(DQPotionMinus.debuffHeavyFire.id, 60, this.attacker.getArrayAISets(EnumDqmMobAI.HEAVYFIRE.getId())));
+				}
 			}
 		}
 

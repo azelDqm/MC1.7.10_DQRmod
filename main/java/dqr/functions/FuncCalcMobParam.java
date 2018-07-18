@@ -15,6 +15,7 @@ public class FuncCalcMobParam {
 
 	public double getCalcHP(double par1)
 	{
+		/*
 		double ret = par1;
 		switch(DQR.conf.DqmDifficulty)
 		{
@@ -22,6 +23,20 @@ public class FuncCalcMobParam {
 			case 1: ret = par1; break;
 			case 2: ret = par1; break;
 			case 3: ret = par1 + (par1 / 2); break;
+			case 4: ret = par1 * 2; break;
+			case 5: ret = par1 * 3; break;
+			case 6: ret = par1 * 4; break;
+			case 10:  ret = par1 * 10; break;
+		}
+		*/
+
+		double ret = par1;
+		switch(DQR.conf.DqmDifficulty)
+		{
+			case 0: ret = par1 / 2; break;
+			case 1: ret = par1; break;
+			case 2: ret = par1; break;
+			case 3: ret = par1 + (par1 / 5); break;
 			case 4: ret = par1 * 2; break;
 			case 5: ret = par1 * 3; break;
 			case 6: ret = par1 * 4; break;

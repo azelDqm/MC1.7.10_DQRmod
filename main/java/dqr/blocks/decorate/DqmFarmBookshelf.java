@@ -11,6 +11,7 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import dqr.DQR;
 import dqr.api.Items.DQMiscs;
 import dqr.api.Items.DQSeeds;
 import dqr.api.enums.EnumDqmNpcTalk;
@@ -220,12 +221,12 @@ public class DqmFarmBookshelf extends BlockBookshelf
     					if(ExtendedPlayerProperties2.get(player).getFarmRecipe(enumId) == 0)
     					{
     						ExtendedPlayerProperties2.get(player).setFarmRecipe(enumId, 1);
-    						player.addChatMessage(new ChatComponentTranslation("msg.FarmBookshelf.messages.complete.txt",new Object[] {}));
+    						DQR.func.doAddChatMessageFix(player, new ChatComponentTranslation("msg.FarmBookshelf.messages.complete.txt",new Object[] {}));
     						player.worldObj.playSoundAtEntity(player, "dqr:player.pi", 1.0F, 1.0F);
     						var2.stackSize--;
     					}else
     					{
-    						player.addChatMessage(new ChatComponentTranslation("msg.FarmBookshelf.messages.completeYet.txt",new Object[] {}));
+    						DQR.func.doAddChatMessageFix(player, new ChatComponentTranslation("msg.FarmBookshelf.messages.completeYet.txt",new Object[] {}));
     						player.worldObj.playSoundAtEntity(player, "dqr:player.pi", 1.0F, 1.0F);
     					}
     				}else
@@ -241,18 +242,18 @@ public class DqmFarmBookshelf extends BlockBookshelf
         						ExtendedPlayerProperties2.get(player).setFarmRecipe(EnumStatFarmingBook.IYASHI1.getId(), param + 2);
         						if(param == 10)
         						{
-            						player.addChatMessage(new ChatComponentTranslation("msg.FarmBookshelf.messages.complete.txt",new Object[] {}));
+            						DQR.func.doAddChatMessageFix(player, new ChatComponentTranslation("msg.FarmBookshelf.messages.complete.txt",new Object[] {}));
             						player.worldObj.playSoundAtEntity(player, "dqr:player.pi", 1.0F, 1.0F);
             						var2.stackSize--;
         						}else
         						{
-            						player.addChatMessage(new ChatComponentTranslation("msg.FarmBookshelf.messages.getParts.txt",new Object[] {}));
+            						DQR.func.doAddChatMessageFix(player, new ChatComponentTranslation("msg.FarmBookshelf.messages.getParts.txt",new Object[] {}));
             						player.worldObj.playSoundAtEntity(player, "dqr:player.pi", 1.0F, 1.0F);
             						var2.stackSize--;
         						}
         					}else
         					{
-        						player.addChatMessage(new ChatComponentTranslation("msg.FarmBookshelf.messages.completeYet.txt",new Object[] {}));
+        						DQR.func.doAddChatMessageFix(player, new ChatComponentTranslation("msg.FarmBookshelf.messages.completeYet.txt",new Object[] {}));
         						player.worldObj.playSoundAtEntity(player, "dqr:player.pi", 1.0F, 1.0F);
         					}
         				}else if(var2.getItem() == DQSeeds.itemDokukesisouSeed3)
@@ -264,18 +265,18 @@ public class DqmFarmBookshelf extends BlockBookshelf
         						ExtendedPlayerProperties2.get(player).setFarmRecipe(EnumStatFarmingBook.MARYOKUNOMI1.getId(), param + 2);
         						if(param == 10)
         						{
-            						player.addChatMessage(new ChatComponentTranslation("msg.FarmBookshelf.messages.complete.txt",new Object[] {}));
+            						DQR.func.doAddChatMessageFix(player, new ChatComponentTranslation("msg.FarmBookshelf.messages.complete.txt",new Object[] {}));
             						player.worldObj.playSoundAtEntity(player, "dqr:player.pi", 1.0F, 1.0F);
             						var2.stackSize--;
         						}else
         						{
-            						player.addChatMessage(new ChatComponentTranslation("msg.FarmBookshelf.messages.getParts.txt",new Object[] {}));
+            						DQR.func.doAddChatMessageFix(player, new ChatComponentTranslation("msg.FarmBookshelf.messages.getParts.txt",new Object[] {}));
             						player.worldObj.playSoundAtEntity(player, "dqr:player.pi", 1.0F, 1.0F);
             						var2.stackSize--;
         						}
         					}else
         					{
-        						player.addChatMessage(new ChatComponentTranslation("msg.FarmBookshelf.messages.completeYet.txt",new Object[] {}));
+        						DQR.func.doAddChatMessageFix(player, new ChatComponentTranslation("msg.FarmBookshelf.messages.completeYet.txt",new Object[] {}));
         						player.worldObj.playSoundAtEntity(player, "dqr:player.pi", 1.0F, 1.0F);
         					}
 
@@ -287,17 +288,17 @@ public class DqmFarmBookshelf extends BlockBookshelf
         						ExtendedPlayerProperties2.get(player).setFarmRecipe(EnumStatFarmingBook.MAHOUNOMI1.getId(), param + 2);
         						if(param == 10)
         						{
-            						player.addChatMessage(new ChatComponentTranslation("msg.FarmBookshelf.messages.complete.txt",new Object[] {}));
+            						DQR.func.doAddChatMessageFix(player, new ChatComponentTranslation("msg.FarmBookshelf.messages.complete.txt",new Object[] {}));
             						player.worldObj.playSoundAtEntity(player, "dqr:player.pi", 1.0F, 1.0F);
             						//var2.stackSize--;
         						}else
         						{
-            						player.addChatMessage(new ChatComponentTranslation("msg.FarmBookshelf.messages.getParts.txt",new Object[] {}));
+            						DQR.func.doAddChatMessageFix(player, new ChatComponentTranslation("msg.FarmBookshelf.messages.getParts.txt",new Object[] {}));
             						player.worldObj.playSoundAtEntity(player, "dqr:player.pi", 1.0F, 1.0F);
         						}
         					}else
         					{
-        						player.addChatMessage(new ChatComponentTranslation("msg.FarmBookshelf.messages.completeYet.txt",new Object[] {}));
+        						DQR.func.doAddChatMessageFix(player, new ChatComponentTranslation("msg.FarmBookshelf.messages.completeYet.txt",new Object[] {}));
         						player.worldObj.playSoundAtEntity(player, "dqr:player.pi", 1.0F, 1.0F);
         					}
 
@@ -311,18 +312,18 @@ public class DqmFarmBookshelf extends BlockBookshelf
         						ExtendedPlayerProperties2.get(player).setFarmRecipe(EnumStatFarmingBook.HONOO1.getId(), param + 2);
         						if(param == 10)
         						{
-            						player.addChatMessage(new ChatComponentTranslation("msg.FarmBookshelf.messages.complete.txt",new Object[] {}));
+            						DQR.func.doAddChatMessageFix(player, new ChatComponentTranslation("msg.FarmBookshelf.messages.complete.txt",new Object[] {}));
             						player.worldObj.playSoundAtEntity(player, "dqr:player.pi", 1.0F, 1.0F);
             						var2.stackSize--;
         						}else
         						{
-            						player.addChatMessage(new ChatComponentTranslation("msg.FarmBookshelf.messages.getParts.txt",new Object[] {}));
+            						DQR.func.doAddChatMessageFix(player, new ChatComponentTranslation("msg.FarmBookshelf.messages.getParts.txt",new Object[] {}));
             						player.worldObj.playSoundAtEntity(player, "dqr:player.pi", 1.0F, 1.0F);
             						var2.stackSize--;
         						}
         					}else
         					{
-        						player.addChatMessage(new ChatComponentTranslation("msg.FarmBookshelf.messages.completeYet.txt",new Object[] {}));
+        						DQR.func.doAddChatMessageFix(player, new ChatComponentTranslation("msg.FarmBookshelf.messages.completeYet.txt",new Object[] {}));
         						player.worldObj.playSoundAtEntity(player, "dqr:player.pi", 1.0F, 1.0F);
         					}
         				}else if(var2.getItem() == DQSeeds.itemMamoriSeed3)
@@ -334,18 +335,18 @@ public class DqmFarmBookshelf extends BlockBookshelf
         						ExtendedPlayerProperties2.get(player).setFarmRecipe(EnumStatFarmingBook.IYASHI1.getId(), param + 10);
         						if(param == 2)
         						{
-            						player.addChatMessage(new ChatComponentTranslation("msg.FarmBookshelf.messages.complete.txt",new Object[] {}));
+            						DQR.func.doAddChatMessageFix(player, new ChatComponentTranslation("msg.FarmBookshelf.messages.complete.txt",new Object[] {}));
             						player.worldObj.playSoundAtEntity(player, "dqr:player.pi", 1.0F, 1.0F);
             						var2.stackSize--;
         						}else
         						{
-            						player.addChatMessage(new ChatComponentTranslation("msg.FarmBookshelf.messages.getParts.txt",new Object[] {}));
+            						DQR.func.doAddChatMessageFix(player, new ChatComponentTranslation("msg.FarmBookshelf.messages.getParts.txt",new Object[] {}));
             						player.worldObj.playSoundAtEntity(player, "dqr:player.pi", 1.0F, 1.0F);
             						var2.stackSize--;
         						}
         					}else
         					{
-        						player.addChatMessage(new ChatComponentTranslation("msg.FarmBookshelf.messages.completeYet.txt",new Object[] {}));
+        						DQR.func.doAddChatMessageFix(player, new ChatComponentTranslation("msg.FarmBookshelf.messages.completeYet.txt",new Object[] {}));
         						player.worldObj.playSoundAtEntity(player, "dqr:player.pi", 1.0F, 1.0F);
         					}
         				}else if(var2.getItem() == DQSeeds.itemSubayasaSeed3)
@@ -357,18 +358,18 @@ public class DqmFarmBookshelf extends BlockBookshelf
         						ExtendedPlayerProperties2.get(player).setFarmRecipe(EnumStatFarmingBook.HONOO1.getId(), param + 10);
         						if(param == 2)
         						{
-            						player.addChatMessage(new ChatComponentTranslation("msg.FarmBookshelf.messages.complete.txt",new Object[] {}));
+            						DQR.func.doAddChatMessageFix(player, new ChatComponentTranslation("msg.FarmBookshelf.messages.complete.txt",new Object[] {}));
             						player.worldObj.playSoundAtEntity(player, "dqr:player.pi", 1.0F, 1.0F);
             						var2.stackSize--;
         						}else
         						{
-            						player.addChatMessage(new ChatComponentTranslation("msg.FarmBookshelf.messages.getParts.txt",new Object[] {}));
+            						DQR.func.doAddChatMessageFix(player, new ChatComponentTranslation("msg.FarmBookshelf.messages.getParts.txt",new Object[] {}));
             						player.worldObj.playSoundAtEntity(player, "dqr:player.pi", 1.0F, 1.0F);
             						var2.stackSize--;
         						}
         					}else
         					{
-        						player.addChatMessage(new ChatComponentTranslation("msg.FarmBookshelf.messages.completeYet.txt",new Object[] {}));
+        						DQR.func.doAddChatMessageFix(player, new ChatComponentTranslation("msg.FarmBookshelf.messages.completeYet.txt",new Object[] {}));
         						player.worldObj.playSoundAtEntity(player, "dqr:player.pi", 1.0F, 1.0F);
         					}
         				}else if(var2.getItem() == DQSeeds.itemIyasiSeed3)
@@ -381,18 +382,18 @@ public class DqmFarmBookshelf extends BlockBookshelf
         						ExtendedPlayerProperties2.get(player).setFarmRecipe(EnumStatFarmingBook.MAHOUNOMI1.getId(), param + 10);
         						if(param == 2)
         						{
-            						player.addChatMessage(new ChatComponentTranslation("msg.FarmBookshelf.messages.complete.txt",new Object[] {}));
+            						DQR.func.doAddChatMessageFix(player, new ChatComponentTranslation("msg.FarmBookshelf.messages.complete.txt",new Object[] {}));
             						player.worldObj.playSoundAtEntity(player, "dqr:player.pi", 1.0F, 1.0F);
             						var2.stackSize--;
         						}else
         						{
-            						player.addChatMessage(new ChatComponentTranslation("msg.FarmBookshelf.messages.getParts.txt",new Object[] {}));
+            						DQR.func.doAddChatMessageFix(player, new ChatComponentTranslation("msg.FarmBookshelf.messages.getParts.txt",new Object[] {}));
             						player.worldObj.playSoundAtEntity(player, "dqr:player.pi", 1.0F, 1.0F);
             						var2.stackSize--;
         						}
         					}else
         					{
-        						player.addChatMessage(new ChatComponentTranslation("msg.FarmBookshelf.messages.completeYet.txt",new Object[] {}));
+        						DQR.func.doAddChatMessageFix(player, new ChatComponentTranslation("msg.FarmBookshelf.messages.completeYet.txt",new Object[] {}));
         						player.worldObj.playSoundAtEntity(player, "dqr:player.pi", 1.0F, 1.0F);
         					}
         				}else if(var2.getItem() == DQSeeds.itemHonooSeed3)
@@ -404,18 +405,18 @@ public class DqmFarmBookshelf extends BlockBookshelf
         						ExtendedPlayerProperties2.get(player).setFarmRecipe(EnumStatFarmingBook.MARYOKUNOMI1.getId(), param + 10);
         						if(param == 2)
         						{
-            						player.addChatMessage(new ChatComponentTranslation("msg.FarmBookshelf.messages.complete.txt",new Object[] {}));
+            						DQR.func.doAddChatMessageFix(player, new ChatComponentTranslation("msg.FarmBookshelf.messages.complete.txt",new Object[] {}));
             						player.worldObj.playSoundAtEntity(player, "dqr:player.pi", 1.0F, 1.0F);
             						var2.stackSize--;
         						}else
         						{
-            						player.addChatMessage(new ChatComponentTranslation("msg.FarmBookshelf.messages.getParts.txt",new Object[] {}));
+            						DQR.func.doAddChatMessageFix(player, new ChatComponentTranslation("msg.FarmBookshelf.messages.getParts.txt",new Object[] {}));
             						player.worldObj.playSoundAtEntity(player, "dqr:player.pi", 1.0F, 1.0F);
             						var2.stackSize--;
         						}
         					}else
         					{
-        						player.addChatMessage(new ChatComponentTranslation("msg.FarmBookshelf.messages.completeYet.txt",new Object[] {}));
+        						DQR.func.doAddChatMessageFix(player, new ChatComponentTranslation("msg.FarmBookshelf.messages.completeYet.txt",new Object[] {}));
         						player.worldObj.playSoundAtEntity(player, "dqr:player.pi", 1.0F, 1.0F);
         					}
         				}else if(var2.getItem() == DQSeeds.itemMahounomiseed3)
@@ -427,18 +428,18 @@ public class DqmFarmBookshelf extends BlockBookshelf
         						ExtendedPlayerProperties2.get(player).setFarmRecipe(EnumStatFarmingBook.OUGON1.getId(), param + 2);
         						if(param == 10)
         						{
-            						player.addChatMessage(new ChatComponentTranslation("msg.FarmBookshelf.messages.complete.txt",new Object[] {}));
+            						DQR.func.doAddChatMessageFix(player, new ChatComponentTranslation("msg.FarmBookshelf.messages.complete.txt",new Object[] {}));
             						player.worldObj.playSoundAtEntity(player, "dqr:player.pi", 1.0F, 1.0F);
             						var2.stackSize--;
         						}else
         						{
-            						player.addChatMessage(new ChatComponentTranslation("msg.FarmBookshelf.messages.getParts.txt",new Object[] {}));
+            						DQR.func.doAddChatMessageFix(player, new ChatComponentTranslation("msg.FarmBookshelf.messages.getParts.txt",new Object[] {}));
             						player.worldObj.playSoundAtEntity(player, "dqr:player.pi", 1.0F, 1.0F);
             						var2.stackSize--;
         						}
         					}else
         					{
-        						player.addChatMessage(new ChatComponentTranslation("msg.FarmBookshelf.messages.completeYet.txt",new Object[] {}));
+        						DQR.func.doAddChatMessageFix(player, new ChatComponentTranslation("msg.FarmBookshelf.messages.completeYet.txt",new Object[] {}));
         						player.worldObj.playSoundAtEntity(player, "dqr:player.pi", 1.0F, 1.0F);
         					}
         				}else if(var2.getItem() == DQSeeds.itemMaryokunotaneseed3)
@@ -450,25 +451,25 @@ public class DqmFarmBookshelf extends BlockBookshelf
         						ExtendedPlayerProperties2.get(player).setFarmRecipe(EnumStatFarmingBook.OUGON1.getId(), param + 10);
         						if(param == 2)
         						{
-            						player.addChatMessage(new ChatComponentTranslation("msg.FarmBookshelf.messages.complete.txt",new Object[] {}));
+            						DQR.func.doAddChatMessageFix(player, new ChatComponentTranslation("msg.FarmBookshelf.messages.complete.txt",new Object[] {}));
             						player.worldObj.playSoundAtEntity(player, "dqr:player.pi", 1.0F, 1.0F);
             						var2.stackSize--;
         						}else
         						{
-            						player.addChatMessage(new ChatComponentTranslation("msg.FarmBookshelf.messages.getParts.txt",new Object[] {}));
+            						DQR.func.doAddChatMessageFix(player, new ChatComponentTranslation("msg.FarmBookshelf.messages.getParts.txt",new Object[] {}));
             						player.worldObj.playSoundAtEntity(player, "dqr:player.pi", 1.0F, 1.0F);
             						var2.stackSize--;
         						}
         					}else
         					{
-        						player.addChatMessage(new ChatComponentTranslation("msg.FarmBookshelf.messages.completeYet.txt",new Object[] {}));
+        						DQR.func.doAddChatMessageFix(player, new ChatComponentTranslation("msg.FarmBookshelf.messages.completeYet.txt",new Object[] {}));
         						player.worldObj.playSoundAtEntity(player, "dqr:player.pi", 1.0F, 1.0F);
         					}
         				}
     				}
     			}else
     			{
-	    			player.addChatMessage(new ChatComponentTranslation("msg.FarmBookshelf.messages." + flg + ".txt",new Object[] {}));
+	    			DQR.func.doAddChatMessageFix(player, new ChatComponentTranslation("msg.FarmBookshelf.messages." + flg + ".txt",new Object[] {}));
 	        		ExtendedPlayerProperties.get(player).setNpcTalk(EnumDqmNpcTalk.FARMBOOK.getId(), flg == 4 ? 0 : flg + 1);
 	    			player.worldObj.playSoundAtEntity(player, "dqr:player.pi", 1.0F, 1.0F);
     			}

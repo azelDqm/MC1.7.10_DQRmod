@@ -2227,6 +2227,21 @@ public class DqrItemRegister {
     	GameRegistry.registerItem(DQBuilders.itemBuilderKaikosyo, "itemBuilderKaikosyo");
         GameRegistry.registerItem(DQMiscs.itemPetbook, "itemPetbook");
         GameRegistry.registerItem(DQAccessories.itemAccStopper, "ItemAccStopper");
+
+        GameRegistry.registerItem(DQBuilders.itemBuilderShopBukiyaW3, "itemBuilderShopBukiyaW3");
+        GameRegistry.registerItem(DQBuilders.itemBuilderShopBukiyaW4, "itemBuilderShopBukiyaW4");
+        GameRegistry.registerItem(DQBuilders.itemBuilderShopBukiyaW5, "itemBuilderShopBukiyaW5");
+        GameRegistry.registerItem(DQBuilders.itemBuilderShopBukiyaW6, "itemBuilderShopBukiyaW6");
+
+
+		GameRegistry.registerItem(DQEmblems.itemEmbHituzikai, "ItemEmbHituzikai");
+		GameRegistry.registerItem(DQEmblems.itemDamaHituzikai, "ItemDamaHituzikai");
+		GameRegistry.registerItem(DQEmblems.itemEmbFunanori, "ItemEmbFunanori");
+		GameRegistry.registerItem(DQEmblems.itemDamaFunanori, "ItemDamaFunanori");
+		GameRegistry.registerItem(DQEmblems.itemEmbDougutukai, "ItemEmbDougutukai");
+		GameRegistry.registerItem(DQEmblems.itemDamaDougutukai, "ItemDamaDougutukai");
+		GameRegistry.registerItem(DQEmblems.itemEmbTentiraimeishi, "itemEmbTentiraimeishi");
+		GameRegistry.registerItem(DQEmblems.itemDamaTentiraimeishi, "ItemDamaTentiraimeishi");
 	}
 }
 

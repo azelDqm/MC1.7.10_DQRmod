@@ -78,7 +78,7 @@ public class ThreadLvUpPet extends Thread{
 
 					if(!player.worldObj.isRemote)
 					{
-						player.addChatMessage(new ChatComponentTranslation("msg.lvUpPet.txt",new Object[] {petName ,epLv}));
+						DQR.func.doAddChatMessageFix(player, new ChatComponentTranslation("msg.lvUpPet.txt",new Object[] {petName ,epLv}));
 					}
 				}
 

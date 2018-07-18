@@ -31,29 +31,29 @@ public class DqmItemMagicHaigou extends DqmItemMagicBase{
 		{
 			if(haigouPet1 != null && !haigouPet1.hasNoTags())
 			{
-				p_77659_3_.addChatMessage(new ChatComponentTranslation("dqm.iteminfo.petHaigou1",new Object[] {haigouPet1.getString("PetName"), haigouPet1.getInteger("JobLv_0")}));
+				DQR.func.doAddChatMessageFix(p_77659_3_, new ChatComponentTranslation("dqm.iteminfo.petHaigou1",new Object[] {haigouPet1.getString("PetName"), haigouPet1.getInteger("JobLv_0")}));
 			}else
 			{
-				p_77659_3_.addChatMessage(new ChatComponentTranslation("dqm.iteminfo.petHaigou01",new Object[] {}));
+				DQR.func.doAddChatMessageFix(p_77659_3_, new ChatComponentTranslation("dqm.iteminfo.petHaigou01",new Object[] {}));
 			}
 
 			if(haigouPet2 != null && !haigouPet2.hasNoTags())
 			{
-				p_77659_3_.addChatMessage(new ChatComponentTranslation("dqm.iteminfo.petHaigou2",new Object[] {haigouPet2.getString("PetName"), haigouPet2.getInteger("JobLv_0")}));
+				DQR.func.doAddChatMessageFix(p_77659_3_, new ChatComponentTranslation("dqm.iteminfo.petHaigou2",new Object[] {haigouPet2.getString("PetName"), haigouPet2.getInteger("JobLv_0")}));
 			}else
 			{
-				p_77659_3_.addChatMessage(new ChatComponentTranslation("dqm.iteminfo.petHaigou02",new Object[] {}));
+				DQR.func.doAddChatMessageFix(p_77659_3_, new ChatComponentTranslation("dqm.iteminfo.petHaigou02",new Object[] {}));
 			}
 
 			//System.out.println("" + haigouPet1.getString("PetBaseName") + " / " + haigouPet2.getString("PetBaseName"));
 			if(haigouPet1 != null && haigouPet2 != null && DQR.enumGetter.getEnumDqmPetHaigouSPFromName(haigouPet1.getString("PetMobName"), haigouPet2.getString("PetMobName")) != null)
 			{
-				p_77659_3_.addChatMessage(new ChatComponentTranslation("dqm.iteminfo.petHaigou3",new Object[] {}));
+				DQR.func.doAddChatMessageFix(p_77659_3_, new ChatComponentTranslation("dqm.iteminfo.petHaigou3",new Object[] {}));
 			}
 
 			if((haigouPet1 != null && !haigouPet1.hasNoTags())|| (haigouPet2 != null && !haigouPet2.hasNoTags()))
 			{
-				p_77659_3_.addChatMessage(new ChatComponentTranslation("dqm.iteminfo.petHaigou4",new Object[] {}));
+				DQR.func.doAddChatMessageFix(p_77659_3_, new ChatComponentTranslation("dqm.iteminfo.petHaigou4",new Object[] {}));
 			}
 		}
         return p_77659_1_;
@@ -65,9 +65,16 @@ public class DqmItemMagicHaigou extends DqmItemMagicBase{
 		//System.out.println("line2");
 		if(!ep.worldObj.isRemote)
 		{
-
-			FuncPetHaigou func = new FuncPetHaigou();
-			func.doHaogou(ep, par3World, par4, par5, par6, p_77648_7_, p_77648_8_, p_77648_9_, p_77648_10_);
+			if(this.getDamage(par1ItemStack) == 0)
+			{
+				par1ItemStack.damageItem(50, ep);
+				FuncPetHaigou func = new FuncPetHaigou();
+				func.doHaogou(ep, par3World, par4, par5, par6, p_77648_7_, p_77648_8_, p_77648_9_, p_77648_10_);
+			}else
+			{
+        		DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.magic.noct.txt",new Object[] {}));
+        		ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
+			}
 		}
 
 		return true;

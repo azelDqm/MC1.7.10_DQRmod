@@ -32,7 +32,7 @@ public class ThreadDqmPartyProc extends Thread{
 		{
 			NBTTagCompound mainNBT = new NBTTagCompound();
 			int cntPlayer = 0;
-			//ep.addChatMessage(new ChatComponentTranslation("TESTTEST" + cnt,new Object[] {}));
+			//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("TESTTEST" + cnt,new Object[] {}));
 			//cnt++;
 
 			HashMap partyMap = DQR.partyManager.getPartyFromLeader(this.ep);
@@ -55,23 +55,26 @@ public class ThreadDqmPartyProc extends Thread{
 						//System.out.println("TEST : " + key.getCommandSenderName());
 						//EntityPlayer xEp = (EntityPlayer)key;
 						EntityPlayer xEp = minecraftserver.getConfigurationManager().func_152612_a(key.getCommandSenderName());
-						boolean flgLeader = DQR.partyManager.isPartyLeader(xEp);
-						sideNBT.setInteger("sHP", (int)ExtendedPlayerProperties.get(xEp).getHP());
-						sideNBT.setInteger("sMaxHP", (int)ExtendedPlayerProperties.get(xEp).getMaxHP());
-						sideNBT.setInteger("sMP", ExtendedPlayerProperties.get(xEp).getMP());
-						sideNBT.setInteger("sMaxMP", ExtendedPlayerProperties.get(xEp).getMaxMP());
-						sideNBT.setInteger("sJob", ExtendedPlayerProperties.get(xEp).getJob());
-						sideNBT.setInteger("sLv",  ExtendedPlayerProperties.get(xEp).getJobLv(ExtendedPlayerProperties.get(xEp).getJob()));
-						if(flgLeader)
+						if(xEp != null)
 						{
-							sideNBT.setString("sName", "[*]" + key.getCommandSenderName());
-						}else
-						{
-							sideNBT.setString("sName", key.getCommandSenderName());
-						}
+							boolean flgLeader = DQR.partyManager.isPartyLeader(xEp);
+							sideNBT.setInteger("sHP", (int)ExtendedPlayerProperties.get(xEp).getHP());
+							sideNBT.setInteger("sMaxHP", (int)ExtendedPlayerProperties.get(xEp).getMaxHP());
+							sideNBT.setInteger("sMP", ExtendedPlayerProperties.get(xEp).getMP());
+							sideNBT.setInteger("sMaxMP", ExtendedPlayerProperties.get(xEp).getMaxMP());
+							sideNBT.setInteger("sJob", ExtendedPlayerProperties.get(xEp).getJob());
+							sideNBT.setInteger("sLv",  ExtendedPlayerProperties.get(xEp).getJobLv(ExtendedPlayerProperties.get(xEp).getJob()));
+							if(flgLeader)
+							{
+								sideNBT.setString("sName", "[*]" + key.getCommandSenderName());
+							}else
+							{
+								sideNBT.setString("sName", key.getCommandSenderName());
+							}
 
-						//mainNBT.setTag(key.getCommandSenderName(), sideNBT);
-						mainNBT.setTag(key.getUniqueID().toString(), sideNBT);
+							//mainNBT.setTag(key.getCommandSenderName(), sideNBT);
+							mainNBT.setTag(key.getUniqueID().toString(), sideNBT);
+						}
 					}else if(key instanceof DqmPetBase)
 					{
 						DqmPetBase pet = (DqmPetBase)key;
@@ -98,10 +101,11 @@ public class ThreadDqmPartyProc extends Thread{
 
 					try
 					{
-						if(key instanceof EntityPlayer)
+						if(key != null && key instanceof EntityPlayer)
 						{
 
-							//System.out.println("TEST : " + key.getCommandSenderName());
+							//System.out.println("TEST1 : " + key.getCommandSenderName());
+							//System.out.println("TEST2 : " + key.get);
 							cntPlayer++;
 							//EntityPlayer rEp = (EntityPlayer)key;
 							EntityPlayer rEp = minecraftserver.getConfigurationManager().func_152612_a(key.getCommandSenderName());

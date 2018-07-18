@@ -48,11 +48,26 @@ public class FuncPetOperation {
 	public void removePetdata(EntityPlayer ep, String uuid)
 	{
 		NBTTagCompound playerPet = ExtendedPlayerProperties3.get(ep).getNBTPlayerPetList();
+		//System.out.println("TESTXXXX1 : " + playerPet.func_150296_c().size());
 		if(playerPet.hasKey(uuid))
 		{
 			playerPet.removeTag(uuid);
 			ExtendedPlayerProperties3.get(ep).setNBTPlayerPetList(playerPet);
+
+			//PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties3((EntityPlayer)ep), (EntityPlayerMP)ep);
 		}
+
+		/*
+		if(!ep.worldObj.isRemote)
+		{
+			PacketHandler.INSTANCE.sendTo(new MessageClientDataSend(playerPet , 2), (EntityPlayerMP)ep);
+			System.out.println("TESTXXXX2 : " + playerPet.func_150296_c().size());
+		}else
+		{
+			PacketHandler.INSTANCE.sendToServer(new MessageServerDataSend(playerPet, 2));
+			System.out.println("TESTXXXX3 : " + playerPet.func_150296_c().size());
+		}
+		*/
 
 	}
 

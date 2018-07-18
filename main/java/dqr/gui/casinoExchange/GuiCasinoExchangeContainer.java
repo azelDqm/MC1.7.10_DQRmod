@@ -135,10 +135,10 @@ public class GuiCasinoExchangeContainer extends Container
 	    					ep.worldObj.playSoundAtEntity(ep, "dqr:player.medal", 0.5F, 1.5F);
 	    				}else
 	    				{
-	    					//ep.addChatMessage(new ChatComponentTranslation("msg.medalking.talk.6.txt",new Object[] {}));
+	    					//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.medalking.talk.6.txt",new Object[] {}));
 	    	    			if(ep.worldObj.isRemote)
 	    	    			{
-	    	    				ep.addChatMessage(new ChatComponentTranslation("msg.casinoexchange.talk.6.txt" ,new Object[] {}));
+	    	    				DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.casinoexchange.talk.6.txt" ,new Object[] {}));
 	    	    				Minecraft.getMinecraft().thePlayer.closeScreen();
 	    	    				Minecraft.getMinecraft().setIngameFocus();
 	    	    			}
@@ -148,7 +148,7 @@ public class GuiCasinoExchangeContainer extends Container
 
 	    			if(ep.worldObj.isRemote)
 	    			{
-	    				ep.addChatMessage(new ChatComponentTranslation("msg.casinoexchange.talk.4.txt" ,new Object[] {}));
+	    				DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.casinoexchange.talk.4.txt" ,new Object[] {}));
 	    				//ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
 	    				Minecraft.getMinecraft().thePlayer.closeScreen();
 	    				Minecraft.getMinecraft().setIngameFocus();

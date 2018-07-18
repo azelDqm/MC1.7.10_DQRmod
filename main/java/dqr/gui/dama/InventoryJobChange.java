@@ -33,6 +33,8 @@ public class InventoryJobChange implements IInventory
         items[4] = new ItemStack(DQEmblems.itemDamaPriest, 1, checkJobPermission(ep, DQEmblems.itemDamaPriest));
         items[5] = new ItemStack(DQEmblems.itemDamaMerchant, 1, checkJobPermission(ep, DQEmblems.itemDamaMerchant));
         items[6] = new ItemStack(DQEmblems.itemDamaThief, 1, checkJobPermission(ep, DQEmblems.itemDamaThief));
+        items[7] = new ItemStack(DQEmblems.itemDamaHituzikai, 1, checkJobPermission(ep, DQEmblems.itemDamaHituzikai));
+        items[8] = new ItemStack(DQEmblems.itemDamaFunanori, 1, checkJobPermission(ep, DQEmblems.itemDamaFunanori));
 
         items[9] = new ItemStack(DQEmblems.itemDamaDancer, 1, checkJobPermission(ep, DQEmblems.itemDamaDancer));
         items[10] = new ItemStack(DQEmblems.itemDamaPirate, 1, checkJobPermission(ep, DQEmblems.itemDamaPirate));
@@ -41,13 +43,17 @@ public class InventoryJobChange implements IInventory
         items[13] = new ItemStack(DQEmblems.itemDamaPaladin, 1, checkJobPermission(ep, DQEmblems.itemDamaPaladin));
         items[14] = new ItemStack(DQEmblems.itemDamaMagickKnight, 1, checkJobPermission(ep, DQEmblems.itemDamaMagickKnight));
         items[15] = new ItemStack(DQEmblems.itemDamaRanger, 1, checkJobPermission(ep, DQEmblems.itemDamaRanger));
+        items[16] = new ItemStack(DQEmblems.itemDamaMonsterTamer, 1, checkJobPermission(ep, DQEmblems.itemDamaMonsterTamer));
 
-        items[18] = new ItemStack(DQEmblems.itemDamaMonsterTamer, 1, checkJobPermission(ep, DQEmblems.itemDamaMonsterTamer));
-        items[19] = new ItemStack(DQEmblems.itemDamaSuperStar, 1, checkJobPermission(ep, DQEmblems.itemDamaSuperStar));
-        items[20] = new ItemStack(DQEmblems.itemDamaHero, 1, checkJobPermission(ep, DQEmblems.itemDamaHero));
-        items[21] = new ItemStack(DQEmblems.itemDamaHaguremetal, 1, checkJobPermission(ep, DQEmblems.itemDamaHaguremetal));
-        items[22] = new ItemStack(DQEmblems.itemDamaDragon, 1, checkJobPermission(ep, DQEmblems.itemDamaDragon));
-        items[23] = new ItemStack(DQEmblems.itemDamaGodHnad, 1, checkJobPermission(ep, DQEmblems.itemDamaGodHnad));
+        items[18] = new ItemStack(DQEmblems.itemDamaSuperStar, 1, checkJobPermission(ep, DQEmblems.itemDamaSuperStar));
+        items[19] = new ItemStack(DQEmblems.itemDamaGodHnad, 1, checkJobPermission(ep, DQEmblems.itemDamaGodHnad));
+        items[20] = new ItemStack(DQEmblems.itemDamaDougutukai, 1, checkJobPermission(ep, DQEmblems.itemDamaDougutukai));
+        items[21] = new ItemStack(DQEmblems.itemDamaTentiraimeishi, 1, checkJobPermission(ep, DQEmblems.itemDamaTentiraimeishi));
+
+        items[22] = new ItemStack(DQEmblems.itemDamaHero, 1, checkJobPermission(ep, DQEmblems.itemDamaHero));
+        items[23] = new ItemStack(DQEmblems.itemDamaHaguremetal, 1, checkJobPermission(ep, DQEmblems.itemDamaHaguremetal));
+        items[24] = new ItemStack(DQEmblems.itemDamaDragon, 1, checkJobPermission(ep, DQEmblems.itemDamaDragon));
+
     }
 
     @Override
@@ -217,7 +223,7 @@ public class InventoryJobChange implements IInventory
 	             {
 	     	        if(ExtendedPlayerProperties3.get(ep).getJobPermission(job.getId()) == 0)
 	     	        {
-	     	        	//ep.addChatMessage(new ChatComponentTranslation("msg.Dama1.messages.24.txt" ,new Object[] {}));
+	     	        	//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.Dama1.messages.24.txt" ,new Object[] {}));
 	     	        	//ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
 	     	        	return 1;
 	     	        }
@@ -225,7 +231,7 @@ public class InventoryJobChange implements IInventory
 	     	        if(!DQR.jobChangeTable.getCheckJobChange(ep, job.getId()))
 	     	        {
 	     	        	DQR.func.debugString("LinrR : ", this.getClass());
-	     	        	//ep.addChatMessage(new ChatComponentTranslation("msg.Dama1.messages.25.txt" ,new Object[] {}));
+	     	        	//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.Dama1.messages.25.txt" ,new Object[] {}));
 	     	        	ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
 	     	        	return 1;
 	     	        }

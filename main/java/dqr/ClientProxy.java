@@ -34,6 +34,7 @@ import dqr.gui.medalKing.tab.MedalKingTabs;
 import dqr.gui.petStatus.tab.PetStatusTabs;
 import dqr.gui.playerHUD.GuiBuffBar;
 import dqr.gui.playerHUD.GuiLogger;
+import dqr.gui.playerHUD.GuiNewLogger;
 import dqr.gui.playerHUD.GuiParty;
 import dqr.gui.playerHUD.GuiPlayerArmorStatus;
 import dqr.gui.playerHUD.GuiPlayerData;
@@ -110,14 +111,20 @@ public class ClientProxy extends CommonProxy
     	PetStatusTabs.initRecipes();
     	CasinoExchangeTabs.initRecipes();
 
+    	MinecraftForge.EVENT_BUS.register(new GuiPositionMode(Minecraft.getMinecraft()));
     	MinecraftForge.EVENT_BUS.register(new GuiBuffBar(Minecraft.getMinecraft()));
     	MinecraftForge.EVENT_BUS.register(new GuiLogger(Minecraft.getMinecraft()));
+    	DQR.loglog = new GuiNewLogger(Minecraft.getMinecraft());
+    	MinecraftForge.EVENT_BUS.register(DQR.loglog);
+
     	MinecraftForge.EVENT_BUS.register(new GuiParty(Minecraft.getMinecraft()));
     	MinecraftForge.EVENT_BUS.register(new GuiPlayerData(Minecraft.getMinecraft()));
     	MinecraftForge.EVENT_BUS.register(new GuiPlayerStatus(Minecraft.getMinecraft()));
     	MinecraftForge.EVENT_BUS.register(new GuiPlayerSubpoint(Minecraft.getMinecraft()));
-    	MinecraftForge.EVENT_BUS.register(new GuiPositionMode(Minecraft.getMinecraft()));
     	MinecraftForge.EVENT_BUS.register(new GuiPlayerArmorStatus(Minecraft.getMinecraft()));
+
+
+
 
     	MinecraftForge.EVENT_BUS.register(new RenderGameOverlayHandler());
 

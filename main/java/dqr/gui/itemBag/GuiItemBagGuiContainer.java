@@ -1,13 +1,17 @@
 package dqr.gui.itemBag;
 
+import java.lang.reflect.Field;
+
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.Slot;
 import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
 import dqr.DQR;
+import dqr.items.base.DqmItemFukuroBase;
 
 public class GuiItemBagGuiContainer extends GuiContainer
 {
@@ -70,6 +74,13 @@ public class GuiItemBagGuiContainer extends GuiContainer
     @Override
     protected void keyTyped(char p_73869_1_, int p_73869_2_)
     {
+    	System.out.println("BagTest : " + p_73869_1_ + " / " + p_73869_2_);
+
+    	if(!checkHotbarItems(p_73869_2_))
+    	{
+    		return;
+    	}
+
     	super.keyTyped(p_73869_1_, p_73869_2_);
 
     	if(openFlg == 2)
@@ -80,5 +91,77 @@ public class GuiItemBagGuiContainer extends GuiContainer
 	        }
     	}
 
+    }
+
+
+    protected boolean checkHotbarItems(int p_146983_1_)
+    {
+    	/*
+    	if(this.mc.thePlayer.inventory.getItemStack() != null)
+    	{
+    		System.out.println("TEST_XX1 : " + this.mc.thePlayer.inventory.getItemStack().getDisplayName());
+    	}else
+    	{
+    		System.out.println("TEST_XX1 : " + "null");
+    	}
+    	*/
+
+		Class<GuiContainer> c = GuiContainer.class;
+		GuiContainer hoge = this;
+
+		try {
+    		Field f1;
+    		Slot m;
+			f1 = c.getDeclaredField( "theSlot" );
+			f1.setAccessible( true );
+			m = (Slot) f1.get(hoge);
+
+			if(m == null) return true;
+			if(m.getStack() != null &&
+			   m.getStack().getItem() instanceof DqmItemFukuroBase)
+			{
+				return false;
+			}
+		} catch (IllegalArgumentException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}catch (NoSuchFieldException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
+
+
+        for (int j = 0; j < 9; ++j)
+        {
+            if (p_146983_1_ == this.mc.gameSettings.keyBindsHotbar[j].getKeyCode())
+            {
+            	if(this.mc.thePlayer.inventory.getStackInSlot(j) != null &&
+            	   this.mc.thePlayer.inventory.getStackInSlot(j).getItem() instanceof DqmItemFukuroBase)
+            	{
+            		return false;
+            	}
+            	/*
+            	System.out.println("TEST_XX3 : " + j);
+            	if(this.mc.thePlayer.inventory.getStackInSlot(j) != null)
+            	{
+            		System.out.println("TEST_XX2 : " + this.mc.thePlayer.inventory.getStackInSlot(j) + " : " + j);
+            	}else
+            	{
+            		System.out.println("TEST_XX2 : " + "null" + " : " + j);
+            	}
+            	*/
+
+                //this.handleMouseClick(this.theSlot, this.theSlot.slotNumber, j, 2);
+                //return;
+            }
+        }
+
+        return true;
     }
 }

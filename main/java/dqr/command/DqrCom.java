@@ -36,14 +36,14 @@ public class DqrCom extends CommandBase {
         		{
         			DQR.conf.setFisshingMode(Integer.parseInt(var2[2]));
         			flg = true;
-        			ep.addChatMessage(new ChatComponentTranslation(EnumColor.ITALIC.getChatColor() + EnumColor.Gray.getChatColor() + "FishingMode Changing to " + var2[2], new Object[] {}));
+        			DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation(EnumColor.ITALIC.getChatColor() + EnumColor.Gray.getChatColor() + "FishingMode Changing to " + var2[2], new Object[] {}));
         		}
         	}
         }
 
         if(!flg)
         {
-        	ep.addChatMessage(new ChatComponentTranslation(EnumColor.DarkRed.getChatColor() + "/dqr <conf> <fishMode> [0-1]", new Object[] {}));
+        	DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation(EnumColor.DarkRed.getChatColor() + "/dqr <conf> <fishMode> [0-1]", new Object[] {}));
         }else
         {
 

@@ -92,7 +92,7 @@ public class FuncCasinoCoinItems {
 		medalAccessory.put(DQAccessories.itemHagennoring , 200000);
 		medalAccessory.put(DQAccessories.itemMangetunoring , 200000);
 		medalAccessory.put(DQAccessories.itemRiseinoring , 200000);
-
+		medalAccessory.put(DQAccessories.itemSabitatate , 45000);
 
 		//魔法1
 		/*

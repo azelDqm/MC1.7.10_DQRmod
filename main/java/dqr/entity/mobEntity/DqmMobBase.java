@@ -93,9 +93,6 @@ import dqr.entity.npcEntity.npc.DqmEntityNPCGuntai;
 import dqr.entity.petEntity.DqmPetBase;
 import dqr.playerData.ExtendedPlayerProperties;
 import dqr.playerData.ExtendedPlayerProperties3;
-import dqr.thread.NoThreadProcess;
-import dqr.thread.ThreadLvUp;
-import dqr.thread.ThreadLvUpPet;
 
 public class DqmMobBase extends EntityMob
 {
@@ -162,6 +159,7 @@ public class DqmMobBase extends EntityMob
 	public int skillCoolTimeHealMax = 150;
 
 	public boolean flgSpawnFromSpawner = false;
+	public boolean flgGetKaisinDam = false;
 
 	public DqmMobBase(World world, EnumDqmMonster mobType)
 	{
@@ -814,6 +812,9 @@ public class DqmMobBase extends EntityMob
 		            {
 		            	getExpVal = 1;
 		            }
+
+		            DQR.partyManager.doExpShare(ep, getExpVal);
+		            /*
 		            getExpVal = getExpVal + ExtendedPlayerProperties.get(ep).getJobExp(ExtendedPlayerProperties.get(ep).getJob());
 		            //DQR.func.debugString("doExp5:" + getExpVal);
 		            ExtendedPlayerProperties.get(ep).setJobExp(ExtendedPlayerProperties.get(ep).getJob(), getExpVal);
@@ -827,6 +828,7 @@ public class DqmMobBase extends EntityMob
 		            	NoThreadProcess proc = new NoThreadProcess();
 		            	proc.doLevelUp(ep);
 		            }
+		            */
 				}
 
 	        }else if(element instanceof DqmPetBase)
@@ -852,6 +854,8 @@ public class DqmMobBase extends EntityMob
 	            	getExpVal = 1;
 	            }
 
+	            DQR.partyManager.doExpShare(pet, getExpVal);
+	            /*
 	            if(pet.getOwner() != null && pet.getOwner() instanceof EntityPlayer)
 	            {
 	            	ep = (EntityPlayer)pet.getOwner();
@@ -894,6 +898,7 @@ public class DqmMobBase extends EntityMob
 	            	NoThreadProcess proc = new NoThreadProcess();
 	            	proc.doLevelUpPet(pet);
 	            }
+	            */
 	        }
 
             /*
@@ -1066,10 +1071,10 @@ public class DqmMobBase extends EntityMob
 	    				{
 	    					//System.out.println("test3");
 	    					//EnumDqmSkillW skillW = DQR.enumGetter.getSkillW(weapon, weaponSkill);
-	    					//ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
+	    					//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
 	    					this.dqmBypassArmor = true;
 	    					source.setDamageBypassesArmor();
-	    					if(!ep.getCommandSenderName().equalsIgnoreCase("[Minecraft]"))ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
+	    					DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
 	    					skillFlg = true;
 	    				}
 	    			}else if(weapon == EnumDqmWeapon.DqmAxe.getId() && weaponSkill == 6 && skillPerm != 0)
@@ -1086,7 +1091,7 @@ public class DqmMobBase extends EntityMob
     						p_70665_2_ = 0.0F;
     					}
     					skillFlg = true;
-    					if(!ep.getCommandSenderName().equalsIgnoreCase("[Minecraft]"))ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
+    					DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
 
 	    			}else if(weapon == EnumDqmWeapon.DqmLance.getId() && weaponSkill == 6 && skillPerm != 0)
 	    			{
@@ -1102,7 +1107,7 @@ public class DqmMobBase extends EntityMob
     					}
 
     					skillFlg = true;
-    					if(!ep.getCommandSenderName().equalsIgnoreCase("[Minecraft]"))ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
+    					DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
 	    			}else if(weapon == EnumDqmWeapon.DqmSoroban.getId() && weaponSkill == 3 && skillPerm != 0)
 	    			{
 
@@ -1113,7 +1118,7 @@ public class DqmMobBase extends EntityMob
 
     					p_70665_2_ = p_70665_2_ * 2.0F;
     					skillFlg = true;
-    					if(!ep.getCommandSenderName().equalsIgnoreCase("[Minecraft]"))ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
+    					DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
 
 						if(!ep.worldObj.isRemote)
 						{
@@ -1169,24 +1174,32 @@ public class DqmMobBase extends EntityMob
             	p_70665_2_ = DQR.calcDamage.applyDamageBoost(p_70665_2_, this, source, prevDamage);
             }
 
-            if(p_70665_2_ < 0.0F || this.isDead)
+//さみだれづきBugFix
+//            if(p_70665_2_ < 0.0F || this.isDead)
+            if(this.getHealth() < 0.0F || this.isDead)
             {
             	this.isOverKill = true;
             	//死亡判定
             	return;
             }
 
+            if(p_70665_2_ == -1.0f)
+            {
+            	return;
+            }
     		DqrDamageMobEvent event4 = new DqrDamageMobEvent(4, attacker, this, source, skillFlg, p_70665_2_, absoluteDam);
     		MinecraftForge.EVENT_BUS.post(event4);
     		p_70665_2_ = event4.retDamage;
     		absoluteDam = event4.retAbsoluteDamage;
 //            DQR.func.debugString("damageEntity4:" + this.hurtResistantTime);
 //DQR.func.debugString("damageEntity3C:" + p_70665_2_);
-            if(this.absoluteDam >= 0.0f)
+            if(this.absoluteDam >= 0.0f && !this.flgGetKaisinDam)
             {
             	p_70665_2_ = this.absoluteDam;
             }
 
+            flgGetKaisinDam = false;
+//fqw^fvt0iq,^tgv0
 //DQR.func.debugString("damageEntity3D:" + p_70665_2_);
             //ダメージ0の場合にランダムで補正
             if(0.0F < p_70665_2_  && p_70665_2_ < 1.0F)
@@ -1249,29 +1262,29 @@ public class DqmMobBase extends EntityMob
 					{
 						//System.out.println(this.getEntityString());
 
-						//ep.addChatMessage(new ChatComponentTranslation("msg.toDamage.txt",new Object[] {this.getCommandSenderName(), (int)p_70665_2_}));
-						//ep.addChatMessage(new ChatComponentTranslation("msg.toDamage.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), (int)p_70665_2_}));
+						//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toDamage.txt",new Object[] {this.getCommandSenderName(), (int)p_70665_2_}));
+						//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toDamage.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), (int)p_70665_2_}));
 
 						//if(DQR.conf.damageDigits)
 						//System.out.println("TEST" + DQR.conf.damageDigits);
 						//System.out.println("TEST" + DQR.conf.damageDigits);
 						if (DQR.conf.damageDigits == 1)
 						{
-							if(!ep.getCommandSenderName().equalsIgnoreCase("[Minecraft]"))ep.addChatMessage(new ChatComponentTranslation("msg.toDamage2.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), p_70665_2_}));
+							DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toDamage2.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), p_70665_2_}));
 						}else
 						{
-							if(!ep.getCommandSenderName().equalsIgnoreCase("[Minecraft]"))ep.addChatMessage(new ChatComponentTranslation("msg.toDamage.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), (int)p_70665_2_}));
+							DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toDamage.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), (int)p_70665_2_}));
 						}
 						/*
 						if(DQR.conf.damageDigits == 1)
 						{
-							ep.addChatMessage(new ChatComponentTranslation("msg.toDamage2.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), p_70665_2_}));
+							DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toDamage2.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), p_70665_2_}));
 						}else if(DQR.conf.damageDigits == 2)
 						{
-							ep.addChatMessage(new ChatComponentTranslation("msg.toDamage3.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), p_70665_2_}));
+							DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toDamage3.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), p_70665_2_}));
 						}else
 						{
-							ep.addChatMessage(new ChatComponentTranslation("msg.toDamage.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), p_70665_2_}));
+							DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toDamage.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), p_70665_2_}));
 						}
 						*/
 					}
@@ -1294,12 +1307,12 @@ public class DqmMobBase extends EntityMob
 					{
 						if (DQR.conf.damageDigits == 1)
 						{
-							if(!ep.getCommandSenderName().equalsIgnoreCase("[Minecraft]"))ep.addChatMessage(new ChatComponentTranslation("msg.toDamage2.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), p_70665_2_}));
+							DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toDamage2.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), p_70665_2_}));
 						}else
 						{
-							if(!ep.getCommandSenderName().equalsIgnoreCase("[Minecraft]"))ep.addChatMessage(new ChatComponentTranslation("msg.toDamage.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), (int)p_70665_2_}));
+							DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toDamage.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), (int)p_70665_2_}));
 						}
-						//ep.addChatMessage(new ChatComponentTranslation("msg.toDamage.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), (int)p_70665_2_}));
+						//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toDamage.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), (int)p_70665_2_}));
 					}
 
             	}else if(source.getEntity() instanceof DqmPetBase || source.getEntity() instanceof DqmEntityNPCGuntai)
@@ -1331,15 +1344,15 @@ public class DqmMobBase extends EntityMob
 
 					if(!pet.worldObj.isRemote)
 						{
-						//ep.addChatMessage(new ChatComponentTranslation("msg.toDamage.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), (int)p_70665_2_}));
+						//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toDamage.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), (int)p_70665_2_}));
 						if (DQR.conf.damageDigits == 1)
 						{
-							if(!ep.getCommandSenderName().equalsIgnoreCase("[Minecraft]"))ep.addChatMessage(new ChatComponentTranslation("msg.toDamage2P.txt",new Object[] {petName, EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), p_70665_2_}));
+							DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toDamage2P.txt",new Object[] {petName, EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), p_70665_2_}));
 						}else
 						{
 							if(ep != null)
 							{
-								if(!ep.getCommandSenderName().equalsIgnoreCase("[Minecraft]"))ep.addChatMessage(new ChatComponentTranslation("msg.toDamageP.txt",new Object[] {petName, EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), (int)p_70665_2_}));
+								DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toDamageP.txt",new Object[] {petName, EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), (int)p_70665_2_}));
 							}
 						}
 					}
@@ -1372,13 +1385,13 @@ public class DqmMobBase extends EntityMob
 
 					if(!pet.worldObj.isRemote && ep != null)
 					{
-						//ep.addChatMessage(new ChatComponentTranslation("msg.toDamage.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), (int)p_70665_2_}));
+						//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toDamage.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), (int)p_70665_2_}));
 						if (DQR.conf.damageDigits == 1)
 						{
-							if(!ep.getCommandSenderName().equalsIgnoreCase("[Minecraft]"))ep.addChatMessage(new ChatComponentTranslation("msg.toDamage2P.txt",new Object[] {petName, EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), p_70665_2_}));
+							DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toDamage2P.txt",new Object[] {petName, EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), p_70665_2_}));
 						}else
 						{
-							if(!ep.getCommandSenderName().equalsIgnoreCase("[Minecraft]"))ep.addChatMessage(new ChatComponentTranslation("msg.toDamageP.txt",new Object[] {petName, EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), (int)p_70665_2_}));
+							DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toDamageP.txt",new Object[] {petName, EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), (int)p_70665_2_}));
 						}
 					}
 
@@ -1394,12 +1407,12 @@ public class DqmMobBase extends EntityMob
 						{
 							if (DQR.conf.damageDigits == 1)
 							{
-								if(!ep.getCommandSenderName().equalsIgnoreCase("[Minecraft]"))ep.addChatMessage(new ChatComponentTranslation("msg.toDamage2.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), p_70665_2_}));
+								DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toDamage2.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), p_70665_2_}));
 							}else
 							{
-								if(!ep.getCommandSenderName().equalsIgnoreCase("[Minecraft]"))ep.addChatMessage(new ChatComponentTranslation("msg.toDamage.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), (int)p_70665_2_}));
+								DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toDamage.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), (int)p_70665_2_}));
 							}
-							//ep.addChatMessage(new ChatComponentTranslation("msg.toDamage.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), (int)p_70665_2_}));
+							//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toDamage.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), (int)p_70665_2_}));
 						}
             		}else if(arrow.shootingEntity instanceof DqmPetBase)
             		{
@@ -3328,9 +3341,11 @@ public class DqmMobBase extends EntityMob
                 }
             }
 
+
             if (flag1)
             {
-                this.setPosition(this.posX, this.posY, this.posZ);
+                //this.setPosition(this.posX, this.posY, this.posZ);
+            	this.setPosition(i, j, k);
 
                 if (this.worldObj.getCollidingBoundingBoxes(this, this.boundingBox).isEmpty() && !this.worldObj.isAnyLiquid(this.boundingBox))
                 {
@@ -3456,12 +3471,15 @@ public class DqmMobBase extends EntityMob
             }
     	}else
     	{
+    		//DQR.func.debugString("SamidareDEBUG1");
             if (this.isEntityInvulnerable())
             {
+            	//DQR.func.debugString("SamidareDEBUG2");
                 return false;
             }
             else if (this.attackEntityFrom2(p_70097_1_, p_70097_2_))
             {
+            	//DQR.func.debugString("SamidareDEBUG3");
                 Entity entity = p_70097_1_.getEntity();
 
                 if (this.riddenByEntity != entity && this.ridingEntity != entity)
@@ -3522,8 +3540,9 @@ public class DqmMobBase extends EntityMob
     	}
 
 
+		PotionEffect pe = this.getActivePotionEffect(DQPotionMinus.debuffMahoton);
 
-    	if(this.mobAI.getMegante() > 0)
+    	if(this.mobAI.getMegante() > 0 && pe == null)
     	{
 	        if (this.isEntityAlive() && !this.worldObj.isRemote)
 	        {
@@ -3579,7 +3598,9 @@ public class DqmMobBase extends EntityMob
 
         super.onDeath(p_70645_1_);
 
-        if(this.mobAI.getMegante() > 0 && this.MeganteFlg == false)
+        PotionEffect pe = this.getActivePotionEffect(DQPotionMinus.debuffMahoton);
+
+        if(this.mobAI.getMegante() > 0 && this.MeganteFlg == false && pe == null)
         {
         	if(rand.nextInt(10) == 0){
         		boolean flag = this.worldObj.getGameRules().getGameRuleBooleanValue("mobGriefing");
@@ -3659,8 +3680,10 @@ public class DqmMobBase extends EntityMob
 
     public boolean attackEntityFrom2(DamageSource p_70097_1_, float p_70097_2_)
     {
+    	//DQR.func.debugString("SamidareDEBUG4");
         if(this.getHealth() <= 0.0F || this.isDead)
         {
+        	//DQR.func.debugString("SamidareDEBUG_A10");
         	//死亡判定
         	return false;
         }
@@ -3669,14 +3692,18 @@ public class DqmMobBase extends EntityMob
         if (ForgeHooks.onLivingAttack(this, p_70097_1_, p_70097_2_)) return false;
         if (this.isEntityInvulnerable())
         {
+        	//DQR.func.debugString("SamidareDEBUG_A11");
             return false;
         }
         else if (this.worldObj.isRemote)
         {
+        	//DQR.func.debugString("SamidareDEBUG_A12");
             return false;
         }
         else
         {
+        	//DQR.func.debugString("SamidareDEBUG_A10");
+        	//DQR.func.debugString("SamidareDEBUG5");
             this.entityAge = 0;
 
             if (this.getHealth() <= 0.0F)
@@ -3689,6 +3716,7 @@ public class DqmMobBase extends EntityMob
             }
             else
             {
+            	//DQR.func.debugString("SamidareDEBUG6");
                 if ((p_70097_1_ == DamageSource.anvil || p_70097_1_ == DamageSource.fallingBlock) && this.getEquipmentInSlot(4) != null)
                 {
                     this.getEquipmentInSlot(4).damageItem((int)(p_70097_2_ * 4.0F + this.rand.nextFloat() * p_70097_2_ * 2.0F), this);
@@ -3698,18 +3726,22 @@ public class DqmMobBase extends EntityMob
                 this.limbSwingAmount = 1.5F;
                 boolean flag = true;
 
+                //DQR.func.debugString("SamidareDEBUG7");
                 //if ((float)this.hurtResistantTime > (float)this.maxHurtResistantTime / 2.0F  && !p_70097_1_.getDamageType().equalsIgnoreCase(DQR.damageSource.DqmPlayerSkill.getDamageType()))
                 if ((float)this.hurtResistantTime > (float)this.maxHurtResistantTime / 2.0F)
                 {
+                	//DQR.func.debugString("SamidareDEBUG7_A");
                 	//DQR.func.debugString("TEST_NUMBER1 : " + this.hurtResistantTime + "/" + this.maxHurtResistantTime);
                     if(this.getHealth() <= 0.0F || this.isDead)
                     {
                     	//死亡判定
+                    	//DQR.func.debugString("SamidareDEBUG8_A : " + this.getHealth() + " / " + this.isDead);
                     	return false;
                     }
 
                     if (p_70097_2_ <= this.lastDamage)
                     {
+                    	//DQR.func.debugString("SamidareDEBUG8_B : " + p_70097_2_ + " / " + this.lastDamage);
                         return false;
                     }
 
@@ -3717,6 +3749,7 @@ public class DqmMobBase extends EntityMob
                     this.damageEntity(p_70097_1_, p_70097_2_ - this.lastDamage);
                     if(isOverKill)
                     {
+                    	//DQR.func.debugString("SamidareDEBUG8_C");
                     	return false;
                     }
                     this.lastDamage = p_70097_2_;
@@ -3725,6 +3758,7 @@ public class DqmMobBase extends EntityMob
                 }
                 else
                 {
+                	//DQR.func.debugString("SamidareDEBUG7_B");
                 	//DQR.func.debugString("TEST_NUMBER2 : " + this.hurtResistantTime + "/" + this.maxHurtResistantTime);
                 	//System.out.println("TEST2");
                     this.lastDamage = p_70097_2_;
@@ -3739,12 +3773,13 @@ public class DqmMobBase extends EntityMob
                 }
 
 
-
+                //DQR.func.debugString("SamidareDEBUG8");
                 this.attackedAtYaw = 0.0F;
                 Entity entity = p_70097_1_.getEntity();
 
                 if (entity != null)
                 {
+                	//DQR.func.debugString("SamidareDEBUG9");
                     if (entity instanceof EntityLivingBase)
                     {
                         this.setRevengeTarget((EntityLivingBase)entity);
@@ -3783,6 +3818,7 @@ public class DqmMobBase extends EntityMob
 
                 if (flag)
                 {
+                	//DQR.func.debugString("SamidareDEBUG10");
                     this.worldObj.setEntityState(this, (byte)2);
 
                     if (p_70097_1_ != DamageSource.drown)
@@ -3813,6 +3849,7 @@ public class DqmMobBase extends EntityMob
 
                 if (this.getHealth() <= 0.0F)
                 {
+                	//DQR.func.debugString("SamidareDEBUG11");
                     s = this.getDeathSound();
 
                     if (flag && s != null)
@@ -3824,6 +3861,7 @@ public class DqmMobBase extends EntityMob
                 }
                 else
                 {
+                	//DQR.func.debugString("SamidareDEBUG12");
                     s = this.getHurtSound();
 
                     if (flag && s != null)
@@ -3886,4 +3924,17 @@ public class DqmMobBase extends EntityMob
         }
     }
     */
+
+    @Override
+    protected void func_145780_a(int p_145780_1_, int p_145780_2_, int p_145780_3_, Block p_145780_4_)
+    {
+        //this.playSound("mob.zombie.step", 0.15F, 1.0F);
+    	//this.playSound("mob.zombie.step", 0.15F, 1.0F);
+    	if(DQR.conf.offMobStepSound == 1)
+    	{
+    		Block.SoundType soundtype = p_145780_4_.stepSound;
+    		this.playSound(soundtype.getStepResourcePath(), soundtype.getVolume() * 0.3F, soundtype.getPitch() * 0.75F);
+    	}
+    }
 }
+

@@ -698,4 +698,35 @@ public class EnumDqmGetter {
     	}
 		return null;
 	}
+	public EnumDqmShopPrice getEnumDqmShopPriceRandom(int grade2)
+	{
+		Random rand = new Random();
+		EnumDqmShopPrice[] data = EnumDqmShopPrice.values();
+		int counter = 0;
+
+    	for(int cnt = 0; cnt < data.length; cnt++)
+    	{
+    		if(data[cnt].getGrade2() == grade2 || grade2 == 6)
+    		{
+    			counter++;
+    		}
+    	}
+
+    	EnumDqmShopPrice[] data2 = new EnumDqmShopPrice[counter];
+    	counter = 0;
+    	for(int cnt = 0; cnt < data.length; cnt++)
+    	{
+    		if(data[cnt].getGrade2() == grade2 || grade2 == 6)
+    		{
+    			data2[counter] = data[cnt];
+    			counter++;
+    		}
+    	}
+
+    	if(data2 != null && data2.length > 0)
+    	{
+    		return data2[rand.nextInt(counter - 1)];
+    	}
+		return null;
+	}
 }

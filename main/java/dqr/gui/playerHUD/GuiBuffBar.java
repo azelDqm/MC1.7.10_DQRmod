@@ -7,6 +7,7 @@ import java.util.Iterator;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
@@ -66,6 +67,7 @@ public class GuiBuffBar extends Gui
       return;
     }
 
+    OpenGlHelper.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, 1, 0);
     int var1 = w - 124;
     int var2 = 0;
     int h = sr.getScaledHeight();
@@ -167,6 +169,7 @@ public class GuiBuffBar extends Gui
 
     if (!var4.isEmpty())
     {
+
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         GL11.glDisable(GL11.GL_LIGHTING);
         int var5 = 25;

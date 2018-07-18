@@ -2950,14 +2950,7 @@ ver1.20ADD-<*/
                                               'Y', DQIngots.itemHikarinoisi,
                                               'Z', DQIngots.itemMigakizuna,
                                             });
-/*
-        GameRegistry.addRecipe(new ItemStack(Rotonotate , 1),
-                               new Object[] { "ZYZ", "ZXZ", "ZYZ",
-                                              'X', Sabitatate,
-                                              'Y', DQIngots.itemHikarinoisi,
-                                              'Z', DQIngots.itemMigakizuna,
-                                            });
-*/
+
         GameRegistry.addRecipe(new ItemStack(DQArmors.itemHaganenokabuto , 1),
                                new Object[] { "YZY", "XXX", "XWX",
                                               'W', DQMiscs.itemKinkai,

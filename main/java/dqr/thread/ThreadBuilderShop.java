@@ -7,6 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import dqr.DQR;
+import dqr.addons.mceconomy2.DqrEntityNPCBankMP;
 import dqr.api.Blocks.DQBlocks;
 import dqr.api.Blocks.DQDecorates;
 import dqr.api.Items.DQBuilders;
@@ -161,6 +162,10 @@ public class ThreadBuilderShop extends Thread{
         	{
         		npc = new DqmEntityNPCSyuuri(par3World);
         		kanban = DQDecorates.DqmBlockSyuuriya;
+        	}else if(ist.getItem() == DQR.addons.itemBuilderShopBankMP)
+        	{
+        		npc = new DqrEntityNPCBankMP(par3World);
+        		kanban = DQR.addons.DqmBlockBankMP;
         	}
         }
 

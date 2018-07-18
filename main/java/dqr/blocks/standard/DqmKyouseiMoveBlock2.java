@@ -28,7 +28,7 @@ public class DqmKyouseiMoveBlock2 extends Block
     }
     public void onEntityCollidedWithBlock(World par1World, int par2, int par3, int par4, Entity par5Entity)
     {
-        if (par5Entity instanceof EntityLivingBase)
+        if (par5Entity instanceof EntityLivingBase && !par5Entity.worldObj.isRemote)
         {
 
             switch(this.point)

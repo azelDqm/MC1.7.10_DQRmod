@@ -28,6 +28,11 @@ public class DQEmblems {
 	public static Item itemEmbPirate;
 	public static Item itemEmbMasterDragon;
 
+	public static Item itemEmbHituzikai;
+	public static Item itemEmbFunanori;
+	public static Item itemEmbDougutukai;
+	public static Item itemEmbTentiraimeishi;
+
 	//転職証(ダミー)
 	public static Item itemDamaCivilian;
 	public static Item itemDamaWarrior;
@@ -51,5 +56,10 @@ public class DQEmblems {
 	public static Item itemDamaDancer;
 	public static Item itemDamaPirate;
 	public static Item itemDamaMasterDragon;
+
+	public static Item itemDamaHituzikai;
+	public static Item itemDamaFunanori;
+	public static Item itemDamaDougutukai;
+	public static Item itemDamaTentiraimeishi;
 
 }

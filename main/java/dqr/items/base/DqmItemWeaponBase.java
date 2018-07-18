@@ -145,7 +145,7 @@ public class DqmItemWeaponBase extends Item{
 			boolean flg = false;
 			if(DQR.func.isBind(par3EntityPlayer) && par3EntityPlayer.worldObj.isRemote)
 			{
-		  		par3EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.magic.rariho.txt",new Object[] {}));
+		  		DQR.func.doAddChatMessageFix(par3EntityPlayer, new ChatComponentTranslation("msg.magic.rariho.txt",new Object[] {}));
 	    		par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.pi", 1.0F, 1.0F);
 
 				return par1ItemStack;
@@ -162,7 +162,7 @@ public class DqmItemWeaponBase extends Item{
 											  enumWeapon.getId(),
 											  par3EntityPlayer) < 1 && DQR.debug == 0)
 			{
-				par3EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.magic.weaponNoAppti.txt",new Object[] {}));
+				DQR.func.doAddChatMessageFix(par3EntityPlayer, new ChatComponentTranslation("msg.magic.weaponNoAppti.txt",new Object[] {}));
 	    		par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.pi", 1.0F, 1.0F);
 				return par1ItemStack;
 			}
@@ -170,7 +170,7 @@ public class DqmItemWeaponBase extends Item{
 
 			if(par1ItemStack.getItemDamage() >= par1ItemStack.getMaxDamage() / 5 * 4 + 1)
 			{
-				par3EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.magic.weaponNoEnergy.txt",new Object[] {}));
+				DQR.func.doAddChatMessageFix(par3EntityPlayer, new ChatComponentTranslation("msg.magic.weaponNoEnergy.txt",new Object[] {}));
 				par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.pi", 1.0F, 1.0F);
 				return par1ItemStack;
 			}
@@ -507,7 +507,7 @@ public class DqmItemWeaponBase extends Item{
 			            						if(rand.nextInt(2) == 0)
 						            			{
 							            			EntityLivingBase elb = (EntityLivingBase)target;
-							            			par3EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.causeNihuramu.txt",new Object[] {elb.getCommandSenderName()}));
+							            			DQR.func.doAddChatMessageFix(par3EntityPlayer, new ChatComponentTranslation("msg.causeNihuramu.txt",new Object[] {elb.getCommandSenderName()}));
 							            			//elb.playSound("dqr:player.kenja", 1.0F, 1.2F / (rand.nextFloat() * 0.2F + 0.9F));
 							            			elb.worldObj.playSoundAtEntity(elb, "dqr:player.kenja", 1.0F, 1.0F);
 						            				elb.setDead();
@@ -517,7 +517,7 @@ public class DqmItemWeaponBase extends Item{
 			            						if(rand.nextInt(100) < 5)
 						            			{
 							            			EntityLivingBase elb = (EntityLivingBase)target;
-							            			par3EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.causeNihuramu.txt",new Object[] {elb.getCommandSenderName()}));
+							            			DQR.func.doAddChatMessageFix(par3EntityPlayer, new ChatComponentTranslation("msg.causeNihuramu.txt",new Object[] {elb.getCommandSenderName()}));
 							            			//elb.playSound("dqr:player.kenja", 1.0F, 1.2F / (rand.nextFloat() * 0.2F + 0.9F));
 							            			elb.worldObj.playSoundAtEntity(elb, "dqr:player.kenja", 1.0F, 1.0F);
 						            				elb.setDead();
@@ -529,7 +529,7 @@ public class DqmItemWeaponBase extends Item{
 	            						if(rand.nextInt(2) == 0)
 				            			{
 					            			EntityLivingBase elb = (EntityLivingBase)target;
-					            			par3EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.causeNihuramu.txt",new Object[] {elb.getCommandSenderName()}));
+					            			DQR.func.doAddChatMessageFix(par3EntityPlayer, new ChatComponentTranslation("msg.causeNihuramu.txt",new Object[] {elb.getCommandSenderName()}));
 					            			//elb.playSound("dqr:player.kenja", 1.0F, 1.2F / (rand.nextFloat() * 0.2F + 0.9F));
 					            			elb.worldObj.playSoundAtEntity(elb, "dqr:player.kenja", 1.0F, 1.0F);
 				            				elb.setDead();
@@ -539,7 +539,7 @@ public class DqmItemWeaponBase extends Item{
 				            			if(rand.nextInt(100) < 5)
 				            			{
 					            			EntityLivingBase elb = (EntityLivingBase)target;
-					            			par3EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.causeNihuramu.txt",new Object[] {elb.getCommandSenderName()}));
+					            			DQR.func.doAddChatMessageFix(par3EntityPlayer, new ChatComponentTranslation("msg.causeNihuramu.txt",new Object[] {elb.getCommandSenderName()}));
 					            			//elb.playSound("dqr:player.kenja", 1.0F, 1.2F / (rand.nextFloat() * 0.2F + 0.9F));
 					            			elb.worldObj.playSoundAtEntity(elb, "dqr:player.kenja", 1.0F, 1.0F);
 				            				elb.setDead();
@@ -559,7 +559,7 @@ public class DqmItemWeaponBase extends Item{
 
 					//魔法のそろばん：所持金表示
 					int gold = ExtendedPlayerProperties.get(par3EntityPlayer).getGold();
-					par3EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.weapon.specialEffect.mahounosoroban.txt",new Object[] {gold}));
+					DQR.func.doAddChatMessageFix(par3EntityPlayer, new ChatComponentTranslation("msg.weapon.specialEffect.mahounosoroban.txt",new Object[] {gold}));
 
 				}else if(par1ItemStack.getItem() == DQWeapons.itemReppuunoougi)
 				{
@@ -621,7 +621,7 @@ public class DqmItemWeaponBase extends Item{
 		boolean flg = false;
 		if(DQR.func.isBind(par3EntityPlayer) && par3EntityPlayer.worldObj.isRemote)
 		{
-	  		par3EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.magic.rariho.txt",new Object[] {}));
+	  		DQR.func.doAddChatMessageFix(par3EntityPlayer, new ChatComponentTranslation("msg.magic.rariho.txt",new Object[] {}));
     		par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.pi", 1.0F, 1.0F);
 
 			return par1ItemStack;
@@ -638,7 +638,7 @@ public class DqmItemWeaponBase extends Item{
 										  enumWeapon.getId(),
 										  par3EntityPlayer) < 1 && DQR.debug == 0)
 		{
-			par3EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.magic.weaponNoAppti.txt",new Object[] {}));
+			DQR.func.doAddChatMessageFix(par3EntityPlayer, new ChatComponentTranslation("msg.magic.weaponNoAppti.txt",new Object[] {}));
     		par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.pi", 1.0F, 1.0F);
 			return par1ItemStack;
 		}
@@ -1118,6 +1118,17 @@ public class DqmItemWeaponBase extends Item{
         		String medalValue = I18n.format("msg.casinocoin.item.txt", new Object[]{nfNum.format(coinVal)});
 
     			p_77624_3_.add(medalValue);
+    		}
+
+    		int itemPrice = nbt.getInteger("ItemPrice");
+    		itemPrice = DQR.calcPlayerStatus.calcShoninGold(itemPrice, p_77624_2_);
+    		//System.out.println("TEST:" + medalVal);
+    		if(itemPrice > 0)
+    		{
+
+        		String itmPrice = I18n.format("msg.itemprice.item.txt", new Object[]{nfNum.format(itemPrice)});
+
+    			p_77624_3_.add(itmPrice);
     		}
     	}
 

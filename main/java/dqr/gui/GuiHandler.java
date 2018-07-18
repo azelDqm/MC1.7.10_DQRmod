@@ -32,6 +32,8 @@ import dqr.gui.debug.GuiDebugContainer;
 import dqr.gui.debug.GuiDebugGuiContainer;
 import dqr.gui.dqrEnderChest.GuiDqrEnderChestContainer;
 import dqr.gui.dqrEnderChest.GuiDqrEnderChestGuiContainer;
+import dqr.gui.dqrShop.GuiDqrShopContainer;
+import dqr.gui.dqrShop.GuiDqrShopGuiContainer;
 import dqr.gui.farmBook.GuiFarmBookContainer;
 import dqr.gui.farmBook.GuiFarmBookGuiContainer;
 import dqr.gui.itemBag.GuiItemBagContainer;
@@ -130,6 +132,9 @@ public class GuiHandler implements IGuiHandler {
 	    }else if (ID == DQR.conf.GuiID_CSBBGame){
         	//ExtendedPlayerProperties2.get(player).setFukuroOpen(true);
         	return new GuiCasinoBBGContainer(player);
+        }else if (ID == DQR.conf.GuiID_ItemShop){
+        	//ExtendedPlayerProperties2.get(player).setFukuroOpen(true);
+        	return new GuiDqrShopContainer(player);
         }else if (ID == DQR.conf.GuiID_CSCCR){
         	//ExtendedPlayerProperties2.get(player).setFukuroOpen(true);
         	return new GuiCasinoCCRContainer(player);
@@ -209,10 +214,10 @@ public class GuiHandler implements IGuiHandler {
         }else if (ID == DQR.conf.GuiID_CEDecorateH) {
             return new GuiCasinoExchangeGuiDecorateH(player);
         }else if (ID == DQR.conf.GuiID_CSBBGame){
-        	//ExtendedPlayerProperties2.get(player).setFukuroOpen(true);
         	return new GuiCasinoBBGGuiContainer(player);
+        }else if (ID == DQR.conf.GuiID_ItemShop){
+        	return new GuiDqrShopGuiContainer(player);
         }else if (ID == DQR.conf.GuiID_CSCCR){
-        	//ExtendedPlayerProperties2.get(player).setFukuroOpen(true);
         	return new GuiCasinoCCRGuiContainer(player);
         }
 

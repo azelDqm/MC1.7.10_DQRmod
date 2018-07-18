@@ -7,6 +7,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.world.World;
+import dqr.DQR;
 import dqr.api.enums.EnumColor;
 import dqr.items.base.DqmItemMiscBase;
 import dqr.playerData.ExtendedPlayerProperties;
@@ -28,11 +29,11 @@ public class DqmItemAccessoryStopper extends DqmItemMiscBase{
 		if(flg == 1)
 		{
 			 ExtendedPlayerProperties.get(par3EntityPlayer).setAccBuffStop(0);
-			 if(!par3EntityPlayer.worldObj.isRemote)par3EntityPlayer.addChatMessage(new ChatComponentTranslation("dqm.AccessoryStopper.0.txt",new Object[] {}));
+			 if(!par3EntityPlayer.worldObj.isRemote)DQR.func.doAddChatMessageFix(par3EntityPlayer, new ChatComponentTranslation("dqm.AccessoryStopper.0.txt",new Object[] {}));
 		}else
 		{
 			ExtendedPlayerProperties.get(par3EntityPlayer).setAccBuffStop(1);
-			if(!par3EntityPlayer.worldObj.isRemote)par3EntityPlayer.addChatMessage(new ChatComponentTranslation("dqm.AccessoryStopper.1.txt",new Object[] {}));
+			if(!par3EntityPlayer.worldObj.isRemote)DQR.func.doAddChatMessageFix(par3EntityPlayer, new ChatComponentTranslation("dqm.AccessoryStopper.1.txt",new Object[] {}));
 		}
     	return par1ItemStack;
 

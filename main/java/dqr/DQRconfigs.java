@@ -16,6 +16,7 @@ public class DQRconfigs {
 	public static int DqmDifficulty = 3;
 	public static int DqmEndoraDifficulty = -1;
 
+	public static int DqmOreDictionary = 1;
 	public static int VanillaMobSpawn = 10;
 	public static int DqmMobSpawn = 120;
 
@@ -75,6 +76,9 @@ public class DQRconfigs {
 	public static int GuiID_PetInventory = 12;
 	public static int GuiID_DqrEnderchest = 13;
 	public static int GuiID_ItemBag = 14;
+
+	public static int GuiID_ItemShop = 15;
+
 	public static int GuiID_SubEquip = 20;
 	public static int GuiID_SubItemBag = 21;
 	public static int GuiID_MKAccessory = 22;
@@ -181,6 +185,7 @@ public class DQRconfigs {
     public static int bug_magicCoolTimeFix = 1;
     public static int bug_mosSpawnTimeCheck = 1;
     public static int bug_damageBoostPotionFix = 1;
+    public static int bug_jobChangeTableVersion = 0;
 
     public static int cfg_gen_Genkotu = 1;
     public static String[] cfg_gen_Genkotu_type = new String[]{"0"};
@@ -446,8 +451,10 @@ public class DQRconfigs {
 
     public static int offDeadPetSound = 0;
     public static int offMobNotEnoughMP = 0;
+    public static int offMobStepSound = 1;
 
     public static String cfgVersion = "1.0.0";
+    public static int cfgEasyMode = 1;
     public static boolean readFlg1 = false;
 
     public static int hoshihuri1 = 10;
@@ -458,6 +465,10 @@ public class DQRconfigs {
 
     public static int partyEnable = 1;
     public static int partyRefreshInterval = 500;
+    public static int[] partyExpShareRate = new int[]
+    		{	50,
+    			100
+    		};
 
     public static int fukuroLimitTagCount = 15;
     public static int chestLimitTagCount = 15;
@@ -549,6 +560,15 @@ public class DQRconfigs {
         getConfigStructure(cfg_Structure);
         getConfigCasino(cfg_Casino);
 
+		if(DQR.easyMode == 1 && cfgEasyMode == 1)
+		{
+			DqmDifficulty = 1;
+			DqmEndoraDifficulty = 4;
+			bonusChestEnable = 1;
+			gurdBakudanisiChest = 5;
+			deadClearWidth = 10;
+			deadClearHeight = 5;
+		}
 	}
 
 	public void getConfigStructure(Configuration config)
@@ -765,6 +785,7 @@ public class DQRconfigs {
 		config.setCategoryComment("Silent settings", "this setting is stop the sound");
 		offDeadPetSound = config.get("Silent settings","Dead pet sound(0:sound OFF 1:sound ON)", offDeadPetSound).getInt();
 		offMobNotEnoughMP = config.get("Silent settings","monster miss magic sound (0:sound OFF 1:sound ON)", offMobNotEnoughMP).getInt();
+		offMobStepSound = config.get("Silent settings","monster step sound (0:sound OFF 1:sound ON)", offMobStepSound).getInt();
 
 		config.setCategoryComment("Casino settings", "this setting is casino properties");
 		casinoCoinRate = config.get("Casino settings","Exchange CasinoCoin rate", casinoCoinRate ,"Value Gold = 1coin").getInt();
@@ -786,6 +807,22 @@ public class DQRconfigs {
 		petPermPetSitting = config.get("Monstar taming permission settings","Pet sitting (0:allow only owner 1:allow for all player 2:allow owner and OP)", petPermPetSitting).getInt();
 		petPermOpenInventory = config.get("Monstar taming permission settings","Pet inventorty open (0:allow only owner 2:allow owner and OP)", petPermOpenInventory).getInt();
 		offlinePlayerPetAttack = config.get("Monstar taming permission settings","Attack to Offline plater's pet (0:disable 1:enable)", offlinePlayerPetAttack).getInt();
+
+		config.setCategoryComment("DQR Party setting", "DQR Party settings");
+		partyEnable = config.get("DQR Party setting","Party system enable", partyEnable, "system (0:disable 1:enable)").getInt();
+		partyRefreshInterval = config.get("DQR Party setting","Refresh interval", partyRefreshInterval, "Party GUI refresh inverval msec(1sec = 1000msec)").getInt();
+		partyExpShareRate  = config.get("DQR Party setting","Exp share rate pattern", partyExpShareRate , "share rate pattern (1line 1rate : Value= 1 to 100)").getIntList();
+		for(int cnt = 0; cnt < partyExpShareRate.length; cnt++)
+		{
+			if(partyExpShareRate[cnt] < 1)
+			{
+				partyExpShareRate[cnt] = 1;
+			}else if(partyExpShareRate[cnt] > 100)
+			{
+				partyExpShareRate[cnt] = 100;
+			}
+		}
+
 
 		config.setCategoryComment("DQR Fishing setting", "DQR Fishing settings");
 		fishingMode = config.get("DQR Fishing setting","FishingMode", fishingMode, "setting (0:disable 1:enable)").getInt();
@@ -840,13 +877,16 @@ public class DQRconfigs {
 		config.load();
 
 		cfgVersion = config.get("_Configure version", "version", cfgVersion).getString();
-		if(cfgVersion.equalsIgnoreCase("1.0.0"))
+		if(!cfgVersion.equalsIgnoreCase("1.2.0"))
 		{
-			cfgVersion = "1.1.0";
+			cfgVersion = "1.2.0";
 			readFlg1 = true;
 			config.get("_Configure version", "version", cfgVersion).set(cfgVersion);
 		}
-
+		if(DQR.easyMode == 1)
+		{
+			cfgEasyMode = config.get("_Configure version", "EasyMode", cfgEasyMode, "0:Disable 1:enable").getInt();
+		}
 		config.setCategoryComment("Core Settings", "this setting is Game main settings");
 		DqmDifficulty = config.get("Core Settings","Difficulty", DqmDifficulty ,"0:UltraEasy 1:VeryEasy 2:Easy 3:Normal 4:Hard 5:VeryHard 6:UltraHard").getInt();
 		DqmEndoraDifficulty = config.get("Core Settings","EndoraDifficulty", DqmEndoraDifficulty ,"set difficulty for EnderDragon(0-6). if set -1 then same as Core Settings.Difficulty").getInt();
@@ -855,6 +895,7 @@ public class DQRconfigs {
 		cfg_NoThreadUseHervest = config.get("Core Settings","Don't use parallel process for Harvest(Farming Magic Tool)", cfg_NoThreadUseHervest ,"0:disable 1:enable").getInt();
 		bonusChestEnable = config.get("Core Settings","DQR bonus chest enable", bonusChestEnable ,"Add dqr item to bonus chest(for only SSP) 0:disable 1:enable").getInt();
 
+		DqmOreDictionary = config.get("Core Settings","DQR OreDictionary register enable", DqmOreDictionary ,"Regist dqr item to OreDictionarySystem 0:disable 1:enable").getInt();
 
 		config.setCategoryComment("dqr hardcore settings", "DQR hardcore mode settings");
 
@@ -917,14 +958,16 @@ public class DQRconfigs {
 
 		gurdBakudanisiChest = config.get("Player magicSpecialEffect Settings","Range of Chest guard for Io and Bakudanisi world break", gurdBakudanisiChest).getInt();
 
+
 		config.setCategoryComment("Status recaluc", "this setting is status recaluculations cause bug");
 		recalcLvStatus1 = config.get("Status recaluc","cause over Lv99", recalcLvStatus1 , "0:disable 1:enable").getInt();
 		recalcMP1 = config.get("Status recaluc","cause MP reset bug v0.8.0", recalcMP1 , "0:disable 1:enable").getInt();
 
-		config.setCategoryComment("fix bug options", "this setting is set bug before fix");
+		config.setCategoryComment("fix bug options", "this setting is set rollback the Bug fix and Some updates");
 		bug_magicCoolTimeFix = config.get("fix bug options","magic cool time fix", bug_magicCoolTimeFix , "0:before fix 1:fixed").getInt();
 		bug_mosSpawnTimeCheck = config.get("fix bug options","mob spawner time check fix", bug_mosSpawnTimeCheck , "0:before fix 1:fixed").getInt();
 		bug_damageBoostPotionFix = config.get("fix bug options","DamageBoostPotion value fix", bug_damageBoostPotionFix , "0:before fix 1:fixed").getInt();
+		bug_jobChangeTableVersion = config.get("fix bug options","Job change table version", bug_jobChangeTableVersion , "0:default or version number").getInt();
 
 		config.setCategoryComment("Biome base blocks", "this setting is Blockname for BiomeId. BiomeID and Blockname to PAIR");
 		cfg_biomeBlock_biomeId = config.get("Biome base blocks","BiomeID", cfg_biomeBlock_biomeId).getIntList();
@@ -1307,6 +1350,9 @@ public class DQRconfigs {
 		GuiID_PetInventory =  config.get("GUI ID","PetInventory", GuiID_PetInventory).getInt();
 		GuiID_DqrEnderchest =  config.get("GUI ID","DQR EnderChest", GuiID_DqrEnderchest).getInt();
 		GuiID_ItemBag =  config.get("GUI ID","ItemBag", GuiID_ItemBag).getInt();
+
+		GuiID_ItemShop =  config.get("GUI ID","ItemShop", GuiID_ItemShop).getInt();
+
 		GuiID_SubEquip =  config.get("GUI ID","MainInventory SubEquip", GuiID_SubEquip).getInt();
 		GuiID_SubItemBag =  config.get("GUI ID","ItemBag on SubEquip", GuiID_SubItemBag).getInt();
 

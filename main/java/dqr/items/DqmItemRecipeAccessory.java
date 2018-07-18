@@ -8,6 +8,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import dqr.api.Blocks.DQDecorates;
 import dqr.api.Blocks.DQOres;
 import dqr.api.Items.DQAccessories;
+import dqr.api.Items.DQIngots;
 import dqr.api.Items.DQMagics;
 import dqr.api.Items.DQMiscs;
 import dqr.api.Items.DQSeeds;
@@ -19,7 +20,15 @@ public class DqmItemRecipeAccessory {
 		GameRegistry.addShapelessRecipe(new ItemStack(DQAccessories.itemRakkipendanto, 1), new Object[] {new ItemStack(DQAccessories.itemSinigaminokubikazari, 1), new ItemStack(DQMiscs.itemSeijanohai, 1)});
 		GameRegistry.addShapelessRecipe(new ItemStack(DQAccessories.itemSinigaminokubikazari, 1), new Object[] {new ItemStack(DQAccessories.itemRakkipendanto, 1), new ItemStack(DQMiscs.itemUraminohouju, 1)});
 		GameRegistry.addShapelessRecipe(new ItemStack(DQAccessories.itemRoiyarubajjji, 1), new Object[] {new ItemStack(DQAccessories.itemRakkipendanto, 1), new ItemStack(DQAccessories.itemMamorinorubi, 1), new ItemStack(DQAccessories.itemTikaranorubi, 1)});
+		GameRegistry.addShapelessRecipe(new ItemStack(DQAccessories.itemTenkuunotate, 1), new Object[] {new ItemStack(DQAccessories.itemRotonotate, 1), new ItemStack(DQMiscs.itemBougu, 1), new ItemStack(DQMiscs.itemDensetu, 1), new ItemStack(DQMiscs.itemTenkuu, 1)});
 
+
+        GameRegistry.addRecipe(new ItemStack(DQAccessories.itemRotonotate , 1),new Object[]
+        		{ "ZYZ", "ZXZ", "ZYZ",
+                  'X', DQAccessories.itemSabitatate,
+                  'Y', DQIngots.itemHikarinoisi,
+                  'Z', DQIngots.itemMigakizuna,
+                });
 
         GameRegistry.addRecipe(new ItemStack(DQAccessories.itemTensinopiasu , 1), new Object[]
                 {

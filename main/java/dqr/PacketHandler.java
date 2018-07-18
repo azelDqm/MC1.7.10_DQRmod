@@ -9,12 +9,16 @@ import dqr.network.PacketHandlerServer;
 import dqr.network.SToCMessage;
 import dqr.packetMessage.MessageClientCleatSlotItem;
 import dqr.packetMessage.MessageClientCleatSlotItemHandler;
+import dqr.packetMessage.MessageClientDataSend;
+import dqr.packetMessage.MessageClientDataSendHandler;
 import dqr.packetMessage.MessageClientPetEntityData;
 import dqr.packetMessage.MessageClientPetEntityDataHandler;
 import dqr.packetMessage.MessageClientSound;
 import dqr.packetMessage.MessageClientSoundHandler;
 import dqr.packetMessage.MessageServerBookWrite;
 import dqr.packetMessage.MessageServerBookWriteHandler;
+import dqr.packetMessage.MessageServerDataSend;
+import dqr.packetMessage.MessageServerDataSendHandler;
 import dqr.packetMessage.MessageServerFunction;
 import dqr.packetMessage.MessageServerFunctionHandler;
 import dqr.packetMessage.MessageServerGuiId;
@@ -60,5 +64,10 @@ public class PacketHandler {
 
         INSTANCE.registerMessage(PacketHandlerServer.class, CToSMessage.class, 12, Side.SERVER);
         INSTANCE.registerMessage(PacketHandlerClient.class, SToCMessage.class, 13, Side.CLIENT);
+
+        INSTANCE.registerMessage(MessageServerDataSendHandler.class, MessageServerDataSend.class, 14, Side.SERVER);
+        INSTANCE.registerMessage(MessageClientDataSendHandler.class, MessageClientDataSend.class, 15, Side.CLIENT);
+
+        //INSTANCE.registerMessage(MessagePlayerPropertiesHandler3.class, MessagePlayerProperties3.class, 14, Side.SERVER);
     }
 }

@@ -268,6 +268,24 @@ public class FuncWeaponAptitude {
     	//マスタードラゴン
     	this.WAptitudeMonster[EnumDqmJob.Haguremetal.getId()] = 3;
 
+    	//羊飼い
+    	this.WAptitudeWhip[EnumDqmJob.Hituzikai.getId()] = 2;
+    	this.WAptitudeKnife[EnumDqmJob.Hituzikai.getId()] = 1;
+    	this.WAptitudeAxe[EnumDqmJob.Hituzikai.getId()] = 1;
+
+    	//船乗り
+    	this.WAptitudeDqmHammer[EnumDqmJob.Funanori.getId()] = 2;
+    	this.WAptitudeBow[EnumDqmJob.Funanori.getId()] = 1;
+    	this.WAptitudeLance[EnumDqmJob.Funanori.getId()] = 1;
+
+    	//道具使い
+    	this.WAptitudeLance[EnumDqmJob.Dougutukai.getId()] = 2;
+    	this.WAptitudeBow[EnumDqmJob.Funanori.getId()] = 1;
+    	this.WAptitudeSoroban[EnumDqmJob.Funanori.getId()] = 1;
+
+    	//天地雷鳴士
+    	this.WAptitudeScythe[EnumDqmJob.Tentiraimeishi.getId()] = 2;
+    	this.WAptitudeRod[EnumDqmJob.Tentiraimeishi.getId()] = 1;
     }
 
     public int  getWAptitude(int jobId, int weaponType)

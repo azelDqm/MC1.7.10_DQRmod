@@ -7,8 +7,9 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
+import dqr.PacketHandler;
 import dqr.api.Items.DQMonsters;
+import dqr.packetMessage.MessageServerDataSend;
 import dqr.playerData.ExtendedPlayerProperties3;
 
 public class InventoryPetBook implements IInventory
@@ -17,6 +18,7 @@ public class InventoryPetBook implements IInventory
     //private ItemStack currentItem;
     private ItemStack[] items;
     public int page = 0;
+    public EntityPlayer epx;
 
     public InventoryPetBook()
     {
@@ -32,16 +34,19 @@ public class InventoryPetBook implements IInventory
 
     public InventoryPetBook(EntityPlayer ep, int par1)
     {
+    	this.epx = ep;
         //inventoryPlayer = inventory;
         //currentItem = inventoryPlayer.getCurrentItem();
 
         //InventorySize
-    	//System.out.println("test2" + ep.worldObj.isRemote);
+
 
     	NBTTagCompound playerPet = ExtendedPlayerProperties3.get(ep).getNBTPlayerPetList();
 
     	Set tags = playerPet.func_150296_c();
     	Object[] tagArray = tags.toArray();
+
+    	//System.out.println("test2 : " + ep.worldObj.isRemote + " / " + tags.size());
 
     	int countMax = tags.size() > 54 + (54 * par1) ? 54 + (54 * par1) : tags.size();
     	//System.out.println("test2 : " + tags.size());
@@ -210,6 +215,20 @@ public class InventoryPetBook implements IInventory
     @Override
     public void closeInventory()
     {
+    	NBTTagCompound playerPet = ExtendedPlayerProperties3.get(this.epx).getNBTPlayerPetList();
+
+    	if(this.epx.worldObj.isRemote)
+    	{
+    		PacketHandler.INSTANCE.sendToServer(new MessageServerDataSend(playerPet, 2));
+    	}
+
+
+    	/*
+    	playerPet = ExtendedPlayerProperties3.get(this.epx).getNBTPlayerPetList();
+    	Set tags = playerPet.func_150296_c();
+    	System.out.println("TEST_CLOSE : " + this.epx.worldObj.isRemote + " / " + tags.size());
+    	*/
+    	/*
         NBTTagList tagList = new NBTTagList();
         for(int i = 0; i < items.length; i++)
         {
@@ -221,6 +240,7 @@ public class InventoryPetBook implements IInventory
                 tagList.appendTag(compound);
             }
         }
+        */
         //ItemStack result = new ItemStack(currentItem.getItem(), 1);
         //result.setTagCompound(new NBTTagCompound());
         //result.getTagCompound().setTag("Items", tagList);

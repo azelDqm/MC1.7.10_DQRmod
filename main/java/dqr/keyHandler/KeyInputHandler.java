@@ -41,6 +41,24 @@ public class KeyInputHandler {
     		DQR.conf.setCLGuiPartyPos(DQR.conf.CLGuiPartyPos, DQR.conf.CLGuiPartyPosX, DQR.conf.CLGuiPartyPosY, DQR.conf.CLGuiPartyReturnLine);
     	}
 
+    	if(DQR.conf.guiPositionTarget ==4 && DQR.conf.guiPositionMode == 1)
+    	{
+        	if(DQR.CLKeyBind.keyScrollUp.isPressed())
+        	{
+        		DQR.loglog.scroll(4);
+        		//System.out.println("TEST???????????");
+        	}
+        	if(DQR.CLKeyBind.keyScrollDown.isPressed())
+        	{
+        		DQR.loglog.scroll(-4);
+        		//System.out.println("TEST!!!!!!!!!");
+        	}
+        	if(DQR.CLKeyBind.keyLogDel.isPressed())
+        	{
+        		DQR.loglog.clearChatMessages();
+        		//System.out.println("TEST!!!!!!!!!");
+        	}
+    	}
 
     	if (DQR.CLKeyBind.keyGuiPositionSpeed.isPressed()) {
     		//GUI位置調整 移動速度変更

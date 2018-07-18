@@ -3,6 +3,8 @@ package dqr.items.builder;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import dqr.DQR;
+import dqr.addons.mceconomy2.DqrEntityNPCBankMP;
 import dqr.api.Items.DQBuilders;
 import dqr.api.enums.EnumDqmBuilder;
 import dqr.entity.npcEntity.DqmNPCBase;
@@ -29,7 +31,7 @@ public class DqmItemBuilderNPC extends DqmItemBuilderBase{
 		if(!par3World.isRemote)
 		{
 			DqmNPCBase newEntity = null;
-
+			//int weaponShopFlg = 0;
 			if(this == DQBuilders.itemBuilderShopBukiyaW)
 			{
 				newEntity = new DqmEntityNPCBukiya(par3World);
@@ -51,7 +53,34 @@ public class DqmItemBuilderNPC extends DqmItemBuilderBase{
 			}else if(this == DQBuilders.itemBuilderDamaWW)
 			{
 				newEntity = new DqmEntityNPCSinkan3(par3World);
+			}else if(this == DQBuilders.itemBuilderShopBukiyaW3)
+			{
+				newEntity = new DqmEntityNPCBukiya(par3World);
+				newEntity = new DqmEntityNPCBukiya(par3World, 3);
+				//weaponShopFlg = 3;
+			}else if(this == DQBuilders.itemBuilderShopBukiyaW4)
+			{
+				newEntity = new DqmEntityNPCBukiya(par3World);
+				newEntity = new DqmEntityNPCBukiya(par3World, 4);
+				//weaponShopFlg = 4;
+			}else if(this == DQBuilders.itemBuilderShopBukiyaW5)
+			{
+				newEntity = new DqmEntityNPCBukiya(par3World);
+				newEntity = new DqmEntityNPCBukiya(par3World, 5);
+				//weaponShopFlg = 5;
+			}else if(this == DQBuilders.itemBuilderShopBukiyaW6)
+			{
+				newEntity = new DqmEntityNPCBukiya(par3World);
+				newEntity = new DqmEntityNPCBukiya(par3World, 6);
+				//weaponShopFlg = 6;
+			}else if(DQR.addons.mce2IsEnable == 1)
+			{
+				if(this == DQR.addons.itemBuilderShopBankMPW)
+				{
+					newEntity = new DqrEntityNPCBankMP(par3World);
+				}
 			}
+
 
 			if(newEntity != null)
 			{
@@ -59,6 +88,12 @@ public class DqmItemBuilderNPC extends DqmItemBuilderBase{
 				newEntity.setOwnerName2(par2EntityPlayer.getCommandSenderName());
 				newEntity.setOwnerUUID2(par2EntityPlayer.getUniqueID().toString());
 				newEntity.setLocationAndAngles((double)par4 + 0.5D, (double)par5 + 1.5D, (double)par6 + 0.5D, 0.0F, 0.0F);
+				/*
+				if(weaponShopFlg != 0)
+				{
+					((DqmEntityNPCBukiya)newEntity).setShopGrade(weaponShopFlg);
+				}
+				*/
 	        	par3World.spawnEntityInWorld(newEntity);
 	        	par1ItemStack.stackSize--;
 			}

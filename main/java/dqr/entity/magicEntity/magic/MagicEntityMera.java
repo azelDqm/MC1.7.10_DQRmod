@@ -222,7 +222,7 @@ public class MagicEntityMera extends MagicEntity implements IProjectile{
     {
         super.onUpdate();
 
-        DQR.func.debugString("Mera motion : " + this.motionX + " / " + this.motionY + " / " + this.motionZ);
+//        DQR.func.debugString("Mera motion : " + this.motionX + " / " + this.motionY + " / " + this.motionZ);
 
         if(this.isDoSetDead(this, shootingEntity))
         {

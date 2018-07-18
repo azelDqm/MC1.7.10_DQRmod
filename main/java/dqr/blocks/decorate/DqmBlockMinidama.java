@@ -13,6 +13,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import dqr.DQR;
 import dqr.api.enums.EnumDqmJob;
 import dqr.blocks.decorate.tileEntity.DqmTileEntityMinidama;
 import dqr.playerData.ExtendedPlayerProperties;
@@ -139,13 +140,13 @@ public class DqmBlockMinidama extends BlockContainer
 		        		if(playerJob == setJob)
 		        		{
 		        		   	//String jobName = I18n.format("main.job." + setJob);
-		        	    	//ep.addChatMessage(new ChatComponentTranslation("msg.startingJob.Set1.txt",new Object[] {jobName}));
-		        		   	ep.addChatMessage(new ChatComponentTranslation("msg.startingJob.Set1.txt",new Object[] {new ChatComponentTranslation("main.job." + setJob)}));
+		        	    	//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.startingJob.Set1.txt",new Object[] {jobName}));
+		        		   	DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.startingJob.Set1.txt",new Object[] {new ChatComponentTranslation("main.job." + setJob)}));
 		        		}else
 		        		{
 		        		   	//String jobName = I18n.format("main.job." + setJob);
-		        	    	//ep.addChatMessage(new ChatComponentTranslation("msg.startingJob.Set2.txt",new Object[] {jobName}));
-		        		   	ep.addChatMessage(new ChatComponentTranslation("msg.startingJob.Set2.txt",new Object[] {new ChatComponentTranslation("main.job." + setJob)}));
+		        	    	//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.startingJob.Set2.txt",new Object[] {jobName}));
+		        		   	DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.startingJob.Set2.txt",new Object[] {new ChatComponentTranslation("main.job." + setJob)}));
 		        		}
 	        		}
 
@@ -172,8 +173,8 @@ public class DqmBlockMinidama extends BlockContainer
 
 	        			//mdamaB(ep, TabidachiFlg);
 		        		//String jobName = I18n.format("main.job." + dispJob);
-		            	//ep.addChatMessage(new ChatComponentTranslation("msg.startingJob.select.txt",new Object[] {jobName}));
-		        		ep.addChatMessage(new ChatComponentTranslation("msg.startingJob.select.txt",new Object[] {new ChatComponentTranslation("main.job." + dispJob)}));
+		            	//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.startingJob.select.txt",new Object[] {jobName}));
+		        		DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.startingJob.select.txt",new Object[] {new ChatComponentTranslation("main.job." + dispJob)}));
 
 
 		        		ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
@@ -181,8 +182,8 @@ public class DqmBlockMinidama extends BlockContainer
 	        		}else if(TabidachiFlg >= 12)
 		        	{
 		        		//String message = I18n.format("msg.startingJob.messages." + TabidachiFlg + ".txt");
-		        		//ep.addChatMessage(new ChatComponentTranslation(message,new Object[] {}));
-	        			ep.addChatMessage(new ChatComponentTranslation("msg.startingJob.messages." + TabidachiFlg + ".txt",new Object[] {}));
+		        		//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation(message,new Object[] {}));
+	        			DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.startingJob.messages." + TabidachiFlg + ".txt",new Object[] {}));
 
 		        		ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
 		        		TabidachiFlg = TabidachiFlg + 1;
@@ -208,7 +209,7 @@ public class DqmBlockMinidama extends BlockContainer
 		            		//if (message.equalsIgnoreCase("msg.startingJob.jobInfo." + (TabidachiFlg - 4) + "." + cnt + ".txt")) break;
 		            		//if (message.equalsIgnoreCase("msg.startingJob.jobInfo." + (TabidachiFlg - 4) + "." + cnt + ".txt")) break;
 
-		            		ep.addChatMessage(new ChatComponentTranslation(message,new Object[] {}));
+		            		DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation(message,new Object[] {}));
 		            	}
 		        		ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
 		        		TabidachiFlg = TabidachiFlg + 1;
@@ -216,8 +217,8 @@ public class DqmBlockMinidama extends BlockContainer
 		        	}else{
 
 		        		//String message = I18n.format("msg.startingJob.messages." + TabidachiFlg + ".txt");
-		        		//ep.addChatMessage(new ChatComponentTranslation(message,new Object[] {}));
-		        		ep.addChatMessage(new ChatComponentTranslation("msg.startingJob.messages." + TabidachiFlg + ".txt",new Object[] {}));
+		        		//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation(message,new Object[] {}));
+		        		DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.startingJob.messages." + TabidachiFlg + ".txt",new Object[] {}));
 
 		        		ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
 		        		TabidachiFlg = TabidachiFlg + 1;
@@ -246,8 +247,8 @@ public class DqmBlockMinidama extends BlockContainer
     public void mdamaA(EntityPlayer ep, int Job, int pat)
     {
     	//String jobName = I18n.format("main.job." + Job);
-    	//ep.addChatMessage(new ChatComponentTranslation("msg.startingJob.Set" + pat +".txt",new Object[] {jobName}));
-    	ep.addChatMessage(new ChatComponentTranslation("msg.startingJob.Set" + pat +".txt",new Object[] {new ChatComponentTranslation("main.job." + Job)}));
+    	//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.startingJob.Set" + pat +".txt",new Object[] {jobName}));
+    	DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.startingJob.Set" + pat +".txt",new Object[] {new ChatComponentTranslation("main.job." + Job)}));
 
     }
 
@@ -259,7 +260,7 @@ public class DqmBlockMinidama extends BlockContainer
     		String message = String.format("msg.startingJob.jobInfo." + Job + "." + cnt + ".txt");
     		if (message.equalsIgnoreCase("")) break;
 
-    		ep.addChatMessage(new ChatComponentTranslation(message,new Object[] {}));
+    		DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation(message,new Object[] {}));
     	}
 
     }
@@ -267,15 +268,15 @@ public class DqmBlockMinidama extends BlockContainer
     public void mdamaC(EntityPlayer ep, int TabidachiFlg)
     {
 		//String message = I18n.format("msg.startingJob.messages." + TabidachiFlg + ".txt");
-		//ep.addChatMessage(new ChatComponentTranslation(message,new Object[] {}));
-    	ep.addChatMessage(new ChatComponentTranslation("msg.startingJob.messages." + TabidachiFlg + ".txt",new Object[] {}));
+		//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation(message,new Object[] {}));
+    	DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.startingJob.messages." + TabidachiFlg + ".txt",new Object[] {}));
     }
 
     public void mdamaD(EntityPlayer ep, int TabidachiFlg, int Job)
     {
 		//String message = I18n.format("msg.startingJob.messages." + TabidachiFlg + ".txt");
-		//ep.addChatMessage(new ChatComponentTranslation(message,new Object[] {}));
-    	ep.addChatMessage(new ChatComponentTranslation("msg.startingJob.messages." + TabidachiFlg + ".txt",new Object[] {}));
+		//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation(message,new Object[] {}));
+    	DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.startingJob.messages." + TabidachiFlg + ".txt",new Object[] {}));
     }
 
     public void JobChange(EntityPlayer ep)

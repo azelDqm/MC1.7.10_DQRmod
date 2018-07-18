@@ -20,9 +20,120 @@ import dqr.playerData.ExtendedPlayerProperties;
 
 public class WorldEventHandler {
 
+
+	/*
+	@SubscribeEvent
+	public void onEntityJoinWorldEvent(EntityJoinWorldEvent event)
+	{
+		if(event.entity instanceof DqmPetBase)
+		{
+			System.out.println("TESTTESTTESTTESTTESTTESTTESTTEST");
+		}
+	}
+	*/
+	/*
+	@SubscribeEvent
+	public void onEntityJoinWorldEvent(EntityJoinWorldEvent event)
+	{
+		if(event.entity instanceof EntityItem)
+		{
+			Entity item = event.entity;
+
+			if(item != null && item instanceof EntityItem)
+			{
+				ItemStack stack = ((EntityItem)item).getEntityItem();
+
+				if(stack != null && stack.getItem() instanceof DqmItemWeaponBase)
+				{
+
+					//ObfuscationReflectionHelper.setPrivateValue(item.getClass().getSuperclass(), event.entity, true, "invulnerable");
+					event.entity.fireResistance = 10000;
+
+	    			try {
+
+	    				Class cl = item.getClass().getSuperclass();
+	    				Field[] test = cl.getDeclaredFields();
+	    				//Boolean CONVERTING = ObfuscationReflectionHelper.getPrivateValue(Entity.class, event.entity, "CONVERTING", "invulnerable");
+
+	    				for(int cnt = 0; cnt < test.length; cnt++)
+	    				{
+	    					//System.out.println("TEST : " + test[cnt].getName());
+	    					if(test[cnt].getName().equalsIgnoreCase("invulnerable"))
+	    					{
+
+	    						test[cnt].setAccessible(true);
+	    						test[cnt].set(item, Boolean.valueOf(true));
+	    					}
+
+	    					if(test[cnt].getName().equalsIgnoreCase("isImmuneToFire"))
+	    					{
+
+	    						test[cnt].setAccessible(true);
+	    						test[cnt].set(item, Boolean.valueOf(true));
+	    					}
+	    				}
+
+					} catch (SecurityException | IllegalArgumentException | IllegalAccessException e) {
+						// TODO 自動生成された catch ブロック
+						e.printStackTrace();
+					}
+
+
+				}
+			}
+		}
+	}
+	*/
+
+
+	/*ボツ(ItemEntityUnbreakだと、Entityの状態が保存されない。)
+	@SubscribeEvent
+	public void onEntityJoinWorldEvent(EntityJoinWorldEvent event)
+	{
+
+		//System.out.println("CASE1 : " + event.world.isRemote);
+		if(event.entity instanceof EntityItem)
+		{
+			EntityItem item = (EntityItem)event.entity;
+
+			if(item != null)
+			{
+				//Entity ent = (Entity)((((Class)item).getSuperclass()).getClass());
+
+				//ItemStack stack = item.getDataWatcher().getWatchableObjectItemStack(10);
+				ItemStack stack = item.getEntityItem();
+
+				if(stack != null && stack.getItem() instanceof DqmItemWeaponBase && !(event.entity instanceof ItemEntityUnbreak))
+				{
+					System.out.println("CASE2 : " + event.world.isRemote);
+					ItemEntityUnbreak newItem = new ItemEntityUnbreak(event.world, item.posX, item.posY, item.posZ, new ItemStack(DQWeapons.itemRotonoturugi, 1));
+					newItem.delayBeforeCanPickup = item.delayBeforeCanPickup;
+					newItem.fireResistance = 1000;
+					newItem.motionX = item.motionX;
+					newItem.motionY = item.motionY;
+					newItem.motionZ = item.motionZ;
+					event.world.spawnEntityInWorld(newItem);
+					event.entity.setDead();
+
+				}
+			}
+		}
+	}
+	*/
+
 	@SubscribeEvent
 	public void onInitNoiseGensEvent(BlockEvent.BreakEvent event)
 	{
+		/*
+		if(DQR.debug != 0)
+		{
+			System.out.println("TEST R1 : " + event.block.getMaterial().blocksMovement());
+			System.out.println("TEST R2 : " + event.block.getMaterial().toString());
+			System.out.println("TEST R1 : " + event.block.getMaterial().getCanBlockGrass());
+			System.out.println("TEST R1 : " + (event.block.getMaterial() == event.block.getMaterial().air));
+		}
+		*/
+
 		//System.out.println("TEST");
 		if(event.getPlayer().getHeldItem() != null && event.getPlayer().getHeldItem().getItem() instanceof DqmItemWeaponBase)
 		{

@@ -41,7 +41,7 @@ public class DqrComDebug2 extends CommandBase {
         		if("mode".equalsIgnoreCase(var2[1]))
         		{
         			DQR.debug = Integer.parseInt(var2[2]);
-        			ep.addChatMessage(new ChatComponentTranslation("debug mode change to " + var2[2], new Object[] {}));
+        			DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("debug mode change to " + var2[2], new Object[] {}));
         		}
         	}
         	/*
@@ -65,7 +65,7 @@ public class DqrComDebug2 extends CommandBase {
         	{
         		if("kbres".equalsIgnoreCase(var2[1]))
         		{
-        			ep.addChatMessage(new ChatComponentTranslation("Knockback resist " + ep.getEntityAttribute(SharedMonsterAttributes.knockbackResistance).getAttributeValue(), new Object[] {}));
+        			DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("Knockback resist " + ep.getEntityAttribute(SharedMonsterAttributes.knockbackResistance).getAttributeValue(), new Object[] {}));
         		}
 
         		if("kbset".equalsIgnoreCase(var2[1]))
@@ -104,7 +104,7 @@ public class DqrComDebug2 extends CommandBase {
 
         		if("motion".equalsIgnoreCase(var2[1]))
         		{
-        			ep.addChatMessage(new ChatComponentTranslation("motionX : " + ep.motionX + " / motionZ : " + ep.motionZ + " / " + ep.rotationYaw, new Object[] {}));
+        			DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("motionX : " + ep.motionX + " / motionZ : " + ep.motionZ + " / " + ep.rotationYaw, new Object[] {}));
         		}
         	}
         	/*

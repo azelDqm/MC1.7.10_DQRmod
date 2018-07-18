@@ -44,7 +44,7 @@ public class PartyEventHandler {
 						DQR.partyManager.kickPartyMember(targetEp.getCommandSenderName(), ep);
 					}else
 	        		{
-	        			ep.addChatMessage(new ChatComponentTranslation("msg.shinziru.modeInfo.txt", new Object[] {}));
+	        			DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.shinziru.modeInfo.txt", new Object[] {}));
 	        		}
 				}
 			}
@@ -56,11 +56,15 @@ public class PartyEventHandler {
 	{
 		EntityPlayer ep = e.player;
 
+		if(DQR.debug == 8)System.out.println("PT_DEBUG5:");
 		if(!ep.worldObj.isRemote)
 		{
+			if(DQR.debug == 8)System.out.println("PT_DEBUG5-1:");
 			//System.out.println("TEST_AAAA");
+
 			if(DQR.partyManager.isPartyLeader(ep))
 			{
+				if(DQR.debug == 8)System.out.println("PT_DEBUG5-2:");
 				//System.out.println("TEST_BBBB");
 				DQR.partyManager.changePartyLeaderForce(ep);
 			}

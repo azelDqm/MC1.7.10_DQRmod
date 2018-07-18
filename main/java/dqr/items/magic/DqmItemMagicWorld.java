@@ -59,7 +59,7 @@ public class DqmItemMagicWorld extends DqmItemMagicBase{
 		pe = par3EntityPlayer.getActivePotionEffect(DQPotionMinus.debuffMahoton);
 		if(pe != null && par3EntityPlayer.worldObj.isRemote)
 		{
-	  		par3EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.magic.mahoton.txt",new Object[] {}));
+	  		DQR.func.doAddChatMessageFix(par3EntityPlayer, new ChatComponentTranslation("msg.magic.mahoton.txt",new Object[] {}));
     		par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.pi", 1.0F, 1.0F);
 
 			return par1ItemStack;
@@ -67,7 +67,7 @@ public class DqmItemMagicWorld extends DqmItemMagicBase{
 
 		if(DQR.func.isBind(par3EntityPlayer) && par3EntityPlayer.worldObj.isRemote)
 		{
-	  		par3EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.magic.rariho.txt",new Object[] {}));
+	  		DQR.func.doAddChatMessageFix(par3EntityPlayer, new ChatComponentTranslation("msg.magic.rariho.txt",new Object[] {}));
     		par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.pi", 1.0F, 1.0F);
 
 			return par1ItemStack;
@@ -77,7 +77,7 @@ public class DqmItemMagicWorld extends DqmItemMagicBase{
 
 		if(!DQR.magicTable.magicEnable(par3EntityPlayer, this) && DQR.debug == 0)
 		{
-			par3EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.magic.noLv.txt",new Object[] {}));
+			DQR.func.doAddChatMessageFix(par3EntityPlayer, new ChatComponentTranslation("msg.magic.noLv.txt",new Object[] {}));
 			par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.pi", 1.0F, 1.0F);
 
 			return par1ItemStack;
@@ -90,22 +90,22 @@ public class DqmItemMagicWorld extends DqmItemMagicBase{
 			{
 				if(!par3EntityPlayer.worldObj.isRemote)
 				{
-					//par3EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.magic.nomp.txt",new Object[] {}));
+					//DQR.func.doAddChatMessageFix(par3EntityPlayer, new ChatComponentTranslation("msg.magic.nomp.txt",new Object[] {}));
 
 					int mode = ExtendedPlayerProperties.get(par3EntityPlayer).getMagicMode(EnumDqmMagicMode.CallCloud.getMode());
 					par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.pi", 1.0F, 1.0F);
 
 					if(mode == CLEAR)
 					{
-						par3EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.magic.callcloud.rain",new Object[] {par1ItemStack.getDisplayName()}));
+						DQR.func.doAddChatMessageFix(par3EntityPlayer, new ChatComponentTranslation("msg.magic.callcloud.rain",new Object[] {par1ItemStack.getDisplayName()}));
 						ExtendedPlayerProperties.get(par3EntityPlayer).setMagicMode(EnumDqmMagicMode.CallCloud.getMode(),RAIN);
 					}else if(mode == RAIN)
 					{
-						par3EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.magic.callcloud.thunder",new Object[] {par1ItemStack.getDisplayName()}));
+						DQR.func.doAddChatMessageFix(par3EntityPlayer, new ChatComponentTranslation("msg.magic.callcloud.thunder",new Object[] {par1ItemStack.getDisplayName()}));
 						ExtendedPlayerProperties.get(par3EntityPlayer).setMagicMode(EnumDqmMagicMode.CallCloud.getMode(),THUNDER);
 					}else if(mode == THUNDER)
 					{
-						par3EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.magic.callcloud.clear",new Object[] {par1ItemStack.getDisplayName()}));
+						DQR.func.doAddChatMessageFix(par3EntityPlayer, new ChatComponentTranslation("msg.magic.callcloud.clear",new Object[] {par1ItemStack.getDisplayName()}));
 						ExtendedPlayerProperties.get(par3EntityPlayer).setMagicMode(EnumDqmMagicMode.CallCloud.getMode(),CLEAR);
 					}
 				}
@@ -122,12 +122,12 @@ public class DqmItemMagicWorld extends DqmItemMagicBase{
 					{
 						mode = mode + 1;
 
-						par3EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.magic.ranaluta",new Object[] {par1ItemStack.getDisplayName(), DQR.conf.RanalutaStep[mode]}));
+						DQR.func.doAddChatMessageFix(par3EntityPlayer, new ChatComponentTranslation("msg.magic.ranaluta",new Object[] {par1ItemStack.getDisplayName(), DQR.conf.RanalutaStep[mode]}));
 						ExtendedPlayerProperties.get(par3EntityPlayer).setMagicMode(EnumDqmMagicMode.Hikarinotue.getMode(),mode);
 					}else
 					{
 						mode = 0;
-						par3EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.magic.ranaluta",new Object[] {par1ItemStack.getDisplayName(), DQR.conf.RanalutaStep[mode]}));
+						DQR.func.doAddChatMessageFix(par3EntityPlayer, new ChatComponentTranslation("msg.magic.ranaluta",new Object[] {par1ItemStack.getDisplayName(), DQR.conf.RanalutaStep[mode]}));
 						ExtendedPlayerProperties.get(par3EntityPlayer).setMagicMode(EnumDqmMagicMode.Hikarinotue.getMode(),mode);
 					}
 				}
@@ -137,7 +137,7 @@ public class DqmItemMagicWorld extends DqmItemMagicBase{
 		{
 			if(epMP < this.getEnumMagic().getMP() && DQR.debug == 0)
 			{
-				par3EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.magic.nomp.txt",new Object[] {}));
+				DQR.func.doAddChatMessageFix(par3EntityPlayer, new ChatComponentTranslation("msg.magic.nomp.txt",new Object[] {}));
 				par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.pi", 1.0F, 1.0F);
 				return par1ItemStack;
 			}else

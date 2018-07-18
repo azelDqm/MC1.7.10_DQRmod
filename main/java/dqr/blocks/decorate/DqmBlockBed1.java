@@ -149,14 +149,16 @@ public class DqmBlockBed1 extends BlockContainer
 
 	    	if(gold - yadodai < 0)
 	    	{
-	    		ep.addChatMessage(new ChatComponentTranslation("msg.yadoya.messages.3.txt",new Object[] {yadodai}));
+	    		//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.yadoya.messages.3.txt",new Object[] {yadodai}));
+	    		DQR.func.doAddChatMessageFix(ep,new ChatComponentTranslation("msg.yadoya.messages.3.txt",new Object[] {yadodai}));
 	    		return true;
 	    	}
 
 	    	//モンスターチェック
 	    	if(!DQR.checkBed.checkMob(par1World, par2, par3, par4, ep))
 	    	{
-	    		ep.addChatComponentMessage(new ChatComponentTranslation("tile.bed.notSafe", new Object[0]));
+	    		//ep.addChatComponentMessage(new ChatComponentTranslation("tile.bed.notSafe", new Object[0]));
+	    		DQR.func.doAddChatMessageFix(ep,new ChatComponentTranslation("tile.bed.notSafe", new Object[0]));
 	    		return false;
 	    	}
 
@@ -174,6 +176,10 @@ public class DqmBlockBed1 extends BlockContainer
 	    	ExtendedPlayerProperties.get(ep).setGold(gold - yadodai);
 	    	ep.setHealth(ep.getMaxHealth());
 	    	ExtendedPlayerProperties.get(ep).setMP(ExtendedPlayerProperties.get(ep).getMaxMP());
+
+	    	//ペットの回復処理
+	    	DQR.checkBed.healPet(par1World, par2, par3, par4, ep);
+
 	    	ep.getFoodStats().addStats(20, 0.6F);
 	    	if(!ep.worldObj.isRemote)
 	    	{
@@ -221,8 +227,10 @@ public class DqmBlockBed1 extends BlockContainer
     	{
     		if(!par1World.isRemote)
     		{
-    			ep.addChatMessage(new ChatComponentTranslation("msg.yadoya.messages.0.txt",new Object[] {yadodai}));
-    			ep.addChatMessage(new ChatComponentTranslation("msg.yadoya.messages.1.txt",new Object[] {}));
+    			//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.yadoya.messages.0.txt",new Object[] {yadodai}));
+    			DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.yadoya.messages.0.txt",new Object[] {yadodai}));
+    			//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.yadoya.messages.1.txt",new Object[] {}));
+    			DQR.func.doAddChatMessageFix(ep,new ChatComponentTranslation("msg.yadoya.messages.1.txt",new Object[] {}));
     			ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
     		}
     	}

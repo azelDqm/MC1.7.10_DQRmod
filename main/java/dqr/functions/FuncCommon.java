@@ -1,20 +1,29 @@
 package dqr.functions;
 
 import java.util.Random;
+import java.util.UUID;
 
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
 import dqr.DQR;
+import dqr.PacketHandler;
+import dqr.api.Items.DQSeeds;
+import dqr.api.enums.EnumDqmJob;
+import dqr.api.event.DqmLvUpEvent;
 import dqr.api.potion.DQPotionMinus;
+import dqr.api.potion.DQPotionPlus;
 import dqr.entity.magicEntity.magic.MagicEntity;
 import dqr.entity.magicEntity.magic.MagicEntityBagi;
 import dqr.entity.magicEntity.magic.MagicEntityBegiragon;
@@ -32,6 +41,8 @@ import dqr.entity.magicEntity.magic.MagicEntityRaidein;
 import dqr.entity.magicEntity.magic.MagicEntityZaki;
 import dqr.entity.mobEntity.DqmMobBase;
 import dqr.entity.petEntity.DqmPetBase;
+import dqr.items.base.DqmItemFoodSeedBase;
+import dqr.packetMessage.MessageClientSound;
 import dqr.playerData.ExtendedPlayerProperties;
 
 public class FuncCommon {
@@ -147,17 +158,43 @@ public class FuncCommon {
 
 	public void debugString(String par1)
 	{
+		this.debugString(par1, null, 1);
+		/*
 		if(DQR.debug != 0)
 		{
 			System.out.println(par1);
 		}
+		*/
 	}
 
 	public void debugString(String par1, Class par2)
 	{
+		this.debugString(par1, par2, 1);
+		/*
 		if(DQR.debug != 0)
 		{
 			System.out.println(par2.getName() + "/" + par1);
+		}
+		*/
+	}
+
+	public void debugString(String par1, Class par2, int debugNo)
+	{
+		try
+		{
+			if(DQR.debug == debugNo)
+			{
+				if(par2 != null)
+				{
+					System.out.println(par2.getName() + "/" + par1);
+				}else
+				{
+					System.out.println(par1);
+				}
+			}
+		}catch(Exception e)
+		{
+
 		}
 	}
 
@@ -484,5 +521,323 @@ public class FuncCommon {
 		}
 
 		return ret;
+	}
+
+	public EntityPlayerMP getPlayerFromUUID(UUID par1)
+	{
+		EntityPlayerMP entityplayermp;
+		MinecraftServer minecraftserver = MinecraftServer.getServer();
+
+        for (int i = 0; i < minecraftserver.getConfigurationManager().playerEntityList.size(); ++i)
+        {
+            entityplayermp = (EntityPlayerMP)minecraftserver.getConfigurationManager().playerEntityList.get(i);
+
+            if (entityplayermp.getUniqueID().equals(par1))
+            {
+                return entityplayermp;
+            }
+        }
+
+        return null;
+	}
+
+	public EntityPlayerMP getPlayerFromName(String name)
+	{
+		MinecraftServer minecraftserver = MinecraftServer.getServer();
+		return minecraftserver.getConfigurationManager().func_152612_a(name);
+	}
+
+	public void lvUpProcessMain(EntityPlayer ep)
+	{
+		//System.out.println("DEBUG111111111111111");
+		boolean flg = true;
+		int epJob = ExtendedPlayerProperties.get(ep).getJob();
+		int epLv = ExtendedPlayerProperties.get(ep).getJobLv(epJob);
+		int epEXP = ExtendedPlayerProperties.get(ep).getJobExp(epJob);
+
+		if((epLv >= 100 && DQR.conf.recalcLvStatus1 == 1) || DQR.debug == 12)
+		{
+			epLv = 0;
+			ExtendedPlayerProperties.get(ep).setJobLv(ExtendedPlayerProperties.get(ep).getJob(), 0);
+			ExtendedPlayerProperties.get(ep).setJobHP(epJob, 0);
+			ExtendedPlayerProperties.get(ep).setJobMP(epJob, 0);
+			ExtendedPlayerProperties.get(ep).setJobTikara(epJob, 0);
+			ExtendedPlayerProperties.get(ep).setJobKasikosa(epJob, 0);
+		}
+
+		//バージョン管理 再計算
+		int stVer = ExtendedPlayerProperties.get(ep).getJobStatusVersion();
+
+		if(stVer < DQR.jobStatusVersion)
+		{
+			ExtendedPlayerProperties.get(ep).setJobHP(epJob, 0);
+			ExtendedPlayerProperties.get(ep).setJobMP(epJob, 0);
+			ExtendedPlayerProperties.get(ep).setJobTikara(epJob, 0);
+			ExtendedPlayerProperties.get(ep).setJobKasikosa(epJob, 0);
+
+			for(int cntJ = 0; cntJ < 32; cntJ++)
+			{
+				for(int cnt = 0; cnt <= ExtendedPlayerProperties.get(ep).getJobLv(cntJ); cnt++)
+				{
+					lvUpStatusUp(cnt, ep, cntJ, false);
+				}
+			}
+			ExtendedPlayerProperties.get(ep).setJobStatusVersion(DQR.jobStatusVersion);
+		}
+
+		for (int i = 0; i < 100; i++)
+		{
+			//System.out.println("DEBUG2222222222");
+			flg = true;
+			//System.out.println("DEBUG" + "/" + epLv + "/" + epEXP);
+			if(epLv < 99 && epEXP >= DQR.exp.getNextExp(epLv))
+			{
+				epLv = epLv + 1;
+				ExtendedPlayerProperties.get(ep).setJobLv(ExtendedPlayerProperties.get(ep).getJob(), epLv);
+				DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.lvUp.txt",new Object[] {epLv}));
+				lvUpStatusUp(epLv, ep);
+				lvUpRefresh(ep);
+
+				ep.worldObj.playSoundAtEntity(ep, "dqr:player.levelup", 1.0F, 1.0F);
+				PacketHandler.INSTANCE.sendTo(new MessageClientSound((byte)0), (EntityPlayerMP)ep);
+
+				flg = false;
+
+				//外部からの干渉用
+				DqmLvUpEvent event = new DqmLvUpEvent(ep,
+													  ExtendedPlayerProperties.get(ep).getJob(),
+													  epLv);
+				event.setCanceled(false);
+				MinecraftForge.EVENT_BUS.post(event);
+
+				if (event.isCanceled())
+				{
+					//System.out.println("STOP1");
+					break;
+				}
+			}
+
+			if(flg)
+			{
+				//System.out.println("STOP2");
+				break;
+			}
+		}
+	}
+
+	public void lvUpStatusUp(int lv, EntityPlayer ep)
+	{
+		this.lvUpStatusUp(lv, ep, ExtendedPlayerProperties.get(ep).getJob(), true);
+	}
+
+	public void lvUpStatusUp(int lv, EntityPlayer ep, int jobLv, boolean setMaxStatus)
+	{
+		Random rand = new Random();
+		int epJob = jobLv;
+
+		//HP
+		float plusHpVal = 0.0F;
+		int plusMpVal = 0;
+		int plusTikaraVal = 0;
+		int plusKasikosaVal = 0;
+
+		EnumDqmJob jobEnum = DQR.enumGetter.getJobFromId(epJob);
+
+		plusHpVal = jobEnum.getHpAbs() + rand.nextInt(jobEnum.getHpRan());
+		plusMpVal = jobEnum.getMpAbs() + rand.nextInt(jobEnum.getMpRan());
+
+		if(jobEnum.getTikaraAbs() != 0)
+		{
+			int randNum = rand.nextInt(99);
+			//System.out.println("LvUP TEST 1 : (" + lv + ") " + jobEnum.getTikaraAbs() + " : " + jobEnum.getTikaraRan() + "[" + randNum  + "]");
+
+			plusTikaraVal = (lv % jobEnum.getTikaraAbs() == 0 ? 1 : 0) + (randNum <  jobEnum.getTikaraRan() ? 1 : 0);
+		}else
+		{
+			int randNum = rand.nextInt(99);
+			plusTikaraVal = randNum <  jobEnum.getTikaraRan() ? 1 : 0;
+		}
+
+
+		if(jobEnum.getKasikosaAbs() != 0)
+		{
+			plusKasikosaVal = (lv % jobEnum.getKasikosaAbs() == 0 ? 1 : 0) + (rand.nextInt(99) <  jobEnum.getKasikosaRan() ? 1 : 0);
+		}else
+		{
+			plusKasikosaVal = rand.nextInt(99) <  jobEnum.getKasikosaRan() ? 1 : 0;
+		}
+
+		//DQR.func.debugString("Job:" + plusHpVal + "/" + plusMpVal + "/" + plusTikaraVal + "/" + plusKasikosaVal);
+		ExtendedPlayerProperties.get(ep).setJobHP(epJob, ExtendedPlayerProperties.get(ep).getJobHP(epJob) + plusHpVal);
+		ExtendedPlayerProperties.get(ep).setJobMP(epJob, ExtendedPlayerProperties.get(ep).getJobMP(epJob) + plusMpVal);
+		ExtendedPlayerProperties.get(ep).setJobTikara(epJob, ExtendedPlayerProperties.get(ep).getJobTikara(epJob) + plusTikaraVal);
+		ExtendedPlayerProperties.get(ep).setJobKasikosa(epJob, ExtendedPlayerProperties.get(ep).getJobKasikosa(epJob) + plusKasikosaVal);
+
+		if(setMaxStatus)
+		{
+			ExtendedPlayerProperties.get(ep).setMaxHP(DQR.calcPlayerStatus.calcHP(ep));
+			ExtendedPlayerProperties.get(ep).setMaxMP(DQR.calcPlayerStatus.calcMP(ep));
+
+			ep.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(ExtendedPlayerProperties.get(ep).getMaxHP());
+		}
+	}
+
+
+	public void doAddChatMessageFix(Entity ep, ChatComponentTranslation chat)
+	{
+		if(ep != null && ep instanceof EntityPlayer)
+		{
+			EntityPlayer epr = (EntityPlayer)ep;
+			if(!epr.getCommandSenderName().equalsIgnoreCase("[Minecraft]"))
+			{
+				epr.addChatMessage(chat);
+			}
+		}
+	}
+
+	public void lvUpRefresh(EntityPlayer ep)
+	{
+		ExtendedPlayerProperties.get(ep).setHP(ExtendedPlayerProperties.get(ep).getMaxHP());
+		ep.setHealth(ep.getMaxHealth());
+		ExtendedPlayerProperties.get(ep).setMP(ExtendedPlayerProperties.get(ep).getMaxMP());
+		//ep.getFoodStats().setFoodLevel(20);
+		ep.getFoodStats().addStats(20, 0.6F);
+	}
+
+	public void doFoodEaten(EntityLivingBase ep, DqmItemFoodSeedBase item)
+	{
+		Random rand = new Random();
+		float healHP = 0.0F;
+
+		if(item.getMinHP() > -1 || item.getMaxHP() > -1)
+		{
+			healHP = item.getMinHP() + rand.nextInt(item.getMaxHP() + 1);
+		}
+
+		if(item.getUnlocalizedName().equalsIgnoreCase(DQSeeds.itemBannouyaku.getUnlocalizedName()))
+		{
+			//ep.setHealth(30.0F + (float)rand.nextInt(10));
+			ep.removePotionEffect(DQPotionMinus.potionPoison.id);
+			ep.removePotionEffect(DQPotionMinus.potionPoisonX.id);
+		}else if(item.getUnlocalizedName().equalsIgnoreCase(DQSeeds.itemJouyakusou.getUnlocalizedName()))
+		{
+			//healHP = 40.0F + (float)rand.nextInt(10);
+		}else if(item.getUnlocalizedName().equalsIgnoreCase(DQSeeds.itemTokuyakusou.getUnlocalizedName()))
+		{
+			//healHP = 70.0F + (float)rand.nextInt(20);
+		}else if(item.getUnlocalizedName().equalsIgnoreCase(DQSeeds.itemYakusou.getUnlocalizedName()))
+		{
+			//healHP = 8.0F + (float)rand.nextInt(5);
+		}else if(item.getUnlocalizedName().equalsIgnoreCase(DQSeeds.itemYakusou2.getUnlocalizedName()))
+		{
+			//healHP = 35.0F + (float)rand.nextInt(20);
+		}else if(item.getUnlocalizedName().equalsIgnoreCase(DQSeeds.itemYakusou3.getUnlocalizedName()))
+		{
+			//healHP = 60.0F + (float)rand.nextInt(40);
+		}else if(item.getUnlocalizedName().equalsIgnoreCase(DQSeeds.itemDokukesisou.getUnlocalizedName()))
+		{
+			//healHP = (float)rand.nextInt(5);
+			ep.removePotionEffect(DQPotionMinus.potionPoison.id);
+			ep.addPotionEffect(new PotionEffect(DQPotionPlus.potionDokukesisou.id, 200, 0));
+		}else if(item.getUnlocalizedName().equalsIgnoreCase(DQSeeds.itemDokukesisou2.getUnlocalizedName()))
+		{
+			//healHP = 10.0F + (float)rand.nextInt(10);
+			ep.removePotionEffect(DQPotionMinus.potionPoison.id);
+			ep.addPotionEffect(new PotionEffect(DQPotionPlus.potionDokukesisou.id, 300, 1));
+		}else if(item.getUnlocalizedName().equalsIgnoreCase(DQSeeds.itemDokukesisou3.getUnlocalizedName()))
+		{
+			ep.removePotionEffect(DQPotionMinus.potionPoison.id);
+			ep.removePotionEffect(DQPotionMinus.potionPoisonX.id);
+			ep.addPotionEffect(new PotionEffect(DQPotionPlus.potionDokukesisou.id, 400, 1));
+			//healHP = 20.0F + (float)rand.nextInt(10);
+		}else if(item.getUnlocalizedName().equalsIgnoreCase(DQSeeds.itemTikaranotane.getUnlocalizedName()))
+		{
+			//System.out.println("DEBUGLINE:" + item.getUnlocalizedName());
+			ep.addPotionEffect(new PotionEffect(DQPotionPlus.potionTikaranotane.id, 600, 0));
+		}else if(item.getUnlocalizedName().equalsIgnoreCase(DQSeeds.itemTikaranotane2.getUnlocalizedName()))
+		{
+			ep.addPotionEffect(new PotionEffect(DQPotionPlus.potionTikaranotane.id, 1200, 1));
+		}else if(item.getUnlocalizedName().equalsIgnoreCase(DQSeeds.itemTikaranotane3.getUnlocalizedName()))
+		{
+			ep.addPotionEffect(new PotionEffect(DQPotionPlus.potionTikaranotane.id, 1800, 2));
+		}else if(item.getUnlocalizedName().equalsIgnoreCase(DQSeeds.itemMamorinotane.getUnlocalizedName()))
+		{
+			ep.addPotionEffect(new PotionEffect(DQPotionPlus.potionMamorinotane.id, 600, 0));
+		}else if(item.getUnlocalizedName().equalsIgnoreCase(DQSeeds.itemMamorinotane2.getUnlocalizedName()))
+		{
+			ep.addPotionEffect(new PotionEffect(DQPotionPlus.potionMamorinotane.id, 1200, 1));
+		}else if(item.getUnlocalizedName().equalsIgnoreCase(DQSeeds.itemMamorinotane3.getUnlocalizedName()))
+		{
+			ep.addPotionEffect(new PotionEffect(DQPotionPlus.potionMamorinotane.id, 1800, 2));
+		}else if(item.getUnlocalizedName().equalsIgnoreCase(DQSeeds.itemSubayasanotane.getUnlocalizedName()))
+		{
+			ep.addPotionEffect(new PotionEffect(DQPotionPlus.potionSubayasanotane.id, 600, 0));
+		}else if(item.getUnlocalizedName().equalsIgnoreCase(DQSeeds.itemSubayasanotane2.getUnlocalizedName()))
+		{
+			ep.addPotionEffect(new PotionEffect(DQPotionPlus.potionSubayasanotane.id, 1200, 1));
+		}else if(item.getUnlocalizedName().equalsIgnoreCase(DQSeeds.itemSubayasanotane3.getUnlocalizedName()))
+		{
+			ep.addPotionEffect(new PotionEffect(DQPotionPlus.potionSubayasanotane.id, 1800, 2));
+		}else if(item.getUnlocalizedName().equalsIgnoreCase(DQSeeds.itemHonoonomi.getUnlocalizedName()))
+		{
+			ep.addPotionEffect(new PotionEffect(DQPotionPlus.potionHonoonomi.id, 600, 0));
+		}else if(item.getUnlocalizedName().equalsIgnoreCase(DQSeeds.itemHonoonomi2.getUnlocalizedName()))
+		{
+			ep.addPotionEffect(new PotionEffect(DQPotionPlus.potionHonoonomi.id, 1200, 1));
+		}else if(item.getUnlocalizedName().equalsIgnoreCase(DQSeeds.itemHonoonomi3.getUnlocalizedName()))
+		{
+			ep.addPotionEffect(new PotionEffect(DQPotionPlus.potionHonoonomi.id, 1800, 2));
+		}else if(item.getUnlocalizedName().equalsIgnoreCase(DQSeeds.itemIyasinomi.getUnlocalizedName()))
+		{
+			ep.addPotionEffect(new PotionEffect(DQPotionPlus.potionIyasinomi.id, 600, 0));
+		}else if(item.getUnlocalizedName().equalsIgnoreCase(DQSeeds.itemIyasinomi2.getUnlocalizedName()))
+		{
+			ep.addPotionEffect(new PotionEffect(DQPotionPlus.potionIyasinomi.id, 1200, 1));
+		}else if(item.getUnlocalizedName().equalsIgnoreCase(DQSeeds.itemIyasinomi3.getUnlocalizedName()))
+		{
+			ep.addPotionEffect(new PotionEffect(DQPotionPlus.potionIyasinomi.id, 1800, 2));
+		}else if(item.getUnlocalizedName().equalsIgnoreCase(DQSeeds.itemMahounomiI.getUnlocalizedName()))
+		{
+			ep.addPotionEffect(new PotionEffect(DQPotionPlus.potionMahounomi.id, 600, 0));
+		}else if(item.getUnlocalizedName().equalsIgnoreCase(DQSeeds.itemMahounomiI2.getUnlocalizedName()))
+		{
+			ep.addPotionEffect(new PotionEffect(DQPotionPlus.potionMahounomi.id, 1200, 1));
+		}else if(item.getUnlocalizedName().equalsIgnoreCase(DQSeeds.itemMahounomiI3.getUnlocalizedName()))
+		{
+			ep.addPotionEffect(new PotionEffect(DQPotionPlus.potionMahounomi.id, 1800, 2));
+		}else if(item.getUnlocalizedName().equalsIgnoreCase(DQSeeds.itemMaryokunotaneI.getUnlocalizedName()))
+		{
+			ep.addPotionEffect(new PotionEffect(DQPotionPlus.potionMaryokunotane.id, 600, 0));
+		}else if(item.getUnlocalizedName().equalsIgnoreCase(DQSeeds.itemMaryokunotaneI2.getUnlocalizedName()))
+		{
+			ep.addPotionEffect(new PotionEffect(DQPotionPlus.potionMaryokunotane.id, 1200, 1));
+		}else if(item.getUnlocalizedName().equalsIgnoreCase(DQSeeds.itemMaryokunotaneI3.getUnlocalizedName()))
+		{
+			ep.addPotionEffect(new PotionEffect(DQPotionPlus.potionMaryokunotane.id, 1800, 2));
+		}else if(item.getUnlocalizedName().equalsIgnoreCase(DQSeeds.itemOugon.getUnlocalizedName()))
+		{
+			ep.addPotionEffect(new PotionEffect(DQPotionPlus.potionOugonnomi.id, 600, 0));
+		}else if(item.getUnlocalizedName().equalsIgnoreCase(DQSeeds.itemOugon2.getUnlocalizedName()))
+		{
+			ep.addPotionEffect(new PotionEffect(DQPotionPlus.potionOugonnomi.id, 1200, 1));
+		}else if(item.getUnlocalizedName().equalsIgnoreCase(DQSeeds.itemOugon3.getUnlocalizedName()))
+		{
+			ep.addPotionEffect(new PotionEffect(DQPotionPlus.potionOugonnomi.id, 1800, 2));
+		}else if(item.getUnlocalizedName().equalsIgnoreCase(DQSeeds.itemOugon4.getUnlocalizedName()))
+		{
+			ep.addPotionEffect(new PotionEffect(DQPotionPlus.potionOugonnomi.id, 600, 3));
+		}
+
+
+		ep.heal(healHP);
+		/*
+		if(healHP + ep.getHealth() > ep.getMaxHealth())
+		{
+			ep.setHealth(ep.getMaxHealth());
+		}else
+		{
+			ep.setHealth(ep.getHealth() + healHP);
+		}
+		*/
 	}
 }

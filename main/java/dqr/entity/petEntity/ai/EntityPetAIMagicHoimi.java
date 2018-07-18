@@ -115,7 +115,10 @@ public class EntityPetAIMagicHoimi extends EntityAIBase
 		        		{
 		        			if(this.taget.getHealth() < this.taget.getMaxHealth())
 		        			{
-		        				return true;
+		        				if(!(this.taget instanceof DqmPetBase) || this.taget.getHealth() > 0.5F)
+		        				{
+		        					return true;
+		        				}
 		        			}else
 		        			{
 		        				this.taget = null;

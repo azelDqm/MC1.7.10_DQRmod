@@ -23,6 +23,12 @@ public class DqmItemSkillWBase  extends Item{
 
 
 		NBTTagCompound nbt = p_77624_1_.getTagCompound();
+
+		if(p_77624_1_.getDisplayName().indexOf("dqm.skill.") > -1)
+		{
+			p_77624_1_.setStackDisplayName(I18n.format(p_77624_1_.getDisplayName(), new Object[]{}));
+		}
+
 		if(nbt != null)
 		{
 			int skill_point= nbt.getInteger("skill_point");

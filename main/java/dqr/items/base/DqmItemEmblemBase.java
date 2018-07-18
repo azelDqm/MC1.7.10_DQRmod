@@ -57,7 +57,7 @@ public class DqmItemEmblemBase extends Item{
 		//メタデータでアイテムを追加する
 		//par3List.add(new ItemStack(this, 1, <メタデータ>));
 		par3List.add(new ItemStack(this, 1, 0));
-		par3List.add(new ItemStack(this, 1, 1));
+		//par3List.add(new ItemStack(this, 1, 1));
 	}
 
 
@@ -92,6 +92,8 @@ public class DqmItemEmblemBase extends Item{
 
     	if(needLvTable != null)
     	{
+    		int jobCnt = 0;
+
     		for(int cnt = 0; cnt < needLvTable.length; cnt++)
     		{
     			if(needLvTable[cnt] > 0)
@@ -109,13 +111,40 @@ public class DqmItemEmblemBase extends Item{
     			}
     		}
 
-    		if(needLv == "")
+    		if(needLv.split("& ").length > 3)
     		{
-    			String noLv = I18n.format("dqm.magicinfo.needNo", new Object[]{});
-    			p_77624_3_.add(I18n.format("dqm.magicinfo.needLv", new Object[]{noLv}));
+    			String[] splitWord = needLv.split("& ");
+    			int loopCnt = 0;
+    			for(int reCnt = 0; reCnt < splitWord.length; reCnt++)
+    			{
+    				if(loopCnt == 0)
+    				{
+    					p_77624_3_.add(I18n.format("dqm.magicinfo.needLv", new Object[]{splitWord[reCnt] + " & " + splitWord[reCnt + 1]}));
+    				}else
+    				{
+    					if(reCnt + 1 < splitWord.length)
+    					{
+    						p_77624_3_.add(I18n.format("dqm.magicinfo.needLv2", new Object[]{splitWord[reCnt] + " & " + splitWord[reCnt + 1]}));
+    					}else
+    					{
+    						p_77624_3_.add(I18n.format("dqm.magicinfo.needLv2", new Object[]{splitWord[reCnt]}));
+    					}
+    				}
+
+    				reCnt = reCnt + 1;
+    				loopCnt = loopCnt + 1;
+    			}
     		}else
     		{
-    			p_77624_3_.add(I18n.format("dqm.magicinfo.needLv", new Object[]{needLv}));
+
+	    		if(needLv == "")
+	    		{
+	    			String noLv = I18n.format("dqm.magicinfo.needNo", new Object[]{});
+	    			p_77624_3_.add(I18n.format("dqm.magicinfo.needLv", new Object[]{noLv}));
+	    		}else
+	    		{
+	    			p_77624_3_.add(I18n.format("dqm.magicinfo.needLv", new Object[]{needLv}));
+	    		}
     		}
     	}
 

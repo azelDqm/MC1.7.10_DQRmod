@@ -51,7 +51,7 @@ public class EntityAIMagicDebuff extends EntityAIBase
         */
     	EntityLivingBase entitylivingbase = this.field_151500_b.getAttackTarget();
 
-        if (entitylivingbase == null && !(entitylivingbase instanceof EntityPlayer))
+        if (entitylivingbase == null || !(entitylivingbase instanceof EntityPlayer))
         {
         	//System.out.println("test11");
         	this.tagetMob = null;

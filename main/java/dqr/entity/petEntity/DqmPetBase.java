@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockColored;
+import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EntityLivingBase;
@@ -56,6 +57,7 @@ import dqr.DQR;
 import dqr.PacketHandler;
 import dqr.api.Items.DQMagics;
 import dqr.api.Items.DQMiscs;
+import dqr.api.Items.DQSeeds;
 import dqr.api.enums.EnumColor;
 import dqr.api.enums.EnumDqmMGToolMode;
 import dqr.api.enums.EnumDqmMagic;
@@ -95,6 +97,8 @@ import dqr.entity.magicEntity.magicDummy.MagicEntityHoimiDummy;
 import dqr.entity.magicEntity.magicDummy.MagicEntityMahoimiDummy;
 import dqr.entity.petEntity.ai.EntityAIDeath;
 import dqr.entity.petEntity.ai.EntityAISit2;
+import dqr.entity.petEntity.ai.EntityPetAIArrowAttack2;
+import dqr.entity.petEntity.ai.EntityPetAIAttackOnCollide2;
 import dqr.entity.petEntity.ai.EntityPetAIAttackOnCollideJump;
 import dqr.entity.petEntity.ai.EntityPetAIMagicAttack4;
 import dqr.entity.petEntity.ai.EntityPetAIMagicBehomara;
@@ -243,6 +247,7 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
         {
         	this.tasks.addTask(2, this.aiSit);
         }
+        this.tasks.addTask(0, new EntityAISwimming(this));
 	}
 
 	@Override
@@ -272,6 +277,7 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
     		this.tasks.removeTask(entityaibase1);
     	}
 
+    	this.tasks.addTask(0, new EntityAISwimming(this));
     	this.setAttackTarget((EntityLivingBase)null);
     	this.tasks.addTask(2, this.aiSit);
     }
@@ -295,23 +301,27 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
         this.targetTasks.addTask(3, new EntityAIHurtByTarget(this, true));
 
 
+    	if(DQR.magicTablePet.magicCastGrade(this, EnumDqmMobAI.ARROW) > 0)
+    	{
+    		//System.out.println("ARROW");
+    		this.tasks.addTask(2, new EntityPetAIArrowAttack2(this, 1.2D, this.arrayAIRate[EnumDqmMobAI.ARROW.getId()], this.arrayAISets[EnumDqmMobAI.ARROW.getId()], 20.0F));
+    		//this.tasks.addTask(2, new EntityPetAIArrowAttack2(this, 1.2D, 20, 40, 20.0F));
+    		//this.tasks.addTask(3, new EntityPetAIArrowAttack2(this, 1.0D, 20, 60, 15.0F));
+    		//this.tasks.removeTask(new EntityPetAIAttackOnCollide2(this, EntityPlayer.class, 1.5D, true));
+    	}else
+    	{
+    		//System.out.println("ARROW");
+    		this.tasks.addTask(2, new EntityPetAIAttackOnCollide2(this, 1.5D, true));
+    		//this.tasks.addTask(1, new EntityPetAIAttackOnCollide2(this, 1.5D, true));
+    	}
 
         if(this.flgAIuse == 0)
         {
 	        int param = -1;
-	        /*
-	    	if(DQR.magicTablePet.magicCastGrade(this, EnumDqmMobAI.ARROW) > 0)
-	    	{
-	    		//System.out.println("ARROW");
-	    		this.tasks.addTask(2, new EntityPetAIArrowAttack2(this, 1.2D, this.arrayAIRate[EnumDqmMobAI.ARROW.getId()], this.mobAI.getArrow(), 20.0F));
-	    		//this.tasks.addTask(3, new EntityPetAIArrowAttack2(this, 1.0D, 20, 60, 15.0F));
-	    		//this.tasks.removeTask(new EntityPetAIAttackOnCollide2(this, EntityPlayer.class, 1.5D, true));
-	    	}else
-	    	{
-	    		this.tasks.addTask(2, new EntityPetAIAttackOnCollide2(this, 1.5D, true));
-	    		//this.tasks.addTask(1, new EntityPetAIAttackOnCollide2(this, 1.5D, true));
-	    	}
-	    	*/
+
+
+
+	        //this.tasks.addTask(2, new EntityPetAIAttackOnCollide2(this, 1.5D, true));
 
 	        param = DQR.magicTablePet.magicCastGrade(this, EnumDqmMobAI.HONOO);
 	    	if(param > 0)
@@ -671,6 +681,7 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
         	this.deathFlg = true;
         }
 
+        //System.out.println("TESTTEST_UNLOAD : " + this.getCommandSenderName());
         DQR.petFunc.setUnloadPet(this);
 
         /*
@@ -690,7 +701,18 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
         	//System.out.println("TIME : " + ExtendedPlayerProperties.get(owner).getBirthTime() +" / "+ tamingTime);
         	if(ExtendedPlayerProperties.get(owner).getBirthTime() > tamingTime && !this.worldObj.isRemote)
         	{
-        		this.setDead();
+            	EntityPlayer ep = null;
+            	if(this != null && this.worldObj != null && this.getOwner() != null)
+            	{
+            		ep = this.worldObj.func_152378_a(this.getOwner().getUniqueID());
+            	}
+
+            	if(ep != null)
+            	{
+            		ExtendedPlayerProperties3.get(ep).minusPetCount(1);
+                	DQR.petFunc.removePetdata(ep, this.getUniqueID().toString());
+            	}
+        		this.setDead(true);
         	}
         }
     }
@@ -771,10 +793,13 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 
             int ran2 = rand.nextInt(2);
 
-            if (p_70097_1_ != null && ran2 == 0)
-            {
-                teleportRandomly();
-            }
+            if(arrayAISets[EnumDqmMobAI.TELEPORT.getId()] > 0)
+        	{
+	            if (p_70097_1_ != null && ran2 == 0)
+	            {
+	                teleportRandomly();
+	            }
+        	}
 
             if(this.isTamed() && this.getHealth() - p_70097_2_ <= 0 && DQR.conf.dqrHardcorePet2 == 0)
             {
@@ -983,13 +1008,16 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
     {
         if (!this.isEntityInvulnerable())
         {
+        	//DQR.func.debugString("TESTTESTTESTTESTTESTTESTTEST1");
             p_70665_2_ = ForgeHooks.onLivingHurt(this, p_70665_1_, p_70665_2_);
             if (p_70665_2_ <= 0) return;
             p_70665_2_ = this.applyArmorCalculations(p_70665_1_, p_70665_2_);
             p_70665_2_ = this.applyPotionDamageCalculations(p_70665_1_, p_70665_2_);
 
+            //防御力計算
+            p_70665_2_ = p_70665_2_ - this.getBougyo();
 
-
+            //DQR.func.debugString("TESTTESTTESTTESTTESTTESTTEST2");
             //ダメージ0の場合にランダムで補正
             if(p_70665_2_ < 0.5F)
             {
@@ -999,23 +1027,31 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
             	}
             }
 
+            //DQR.func.debugString("TESTTESTTESTTESTTESTTESTTEST3");
             //耐性計算
+            DQR.func.debugString("TEST_A : " + p_70665_2_ , null, 3);
             p_70665_2_ = DQR.calcDamage.applyDamageResistMagic(p_70665_2_, this, p_70665_1_);
-
+            DQR.func.debugString("TEST_G : " + p_70665_2_ , null, 3);
+            p_70665_2_ = DQR.calcDamage.applyDamageResist(p_70665_2_, this, p_70665_1_);
+            DQR.func.debugString("TEST_F : " + p_70665_2_ , null, 3);
             float f1 = p_70665_2_;
             p_70665_2_ = Math.max(p_70665_2_ - this.getAbsorptionAmount(), 0.0F);
             this.setAbsorptionAmount(this.getAbsorptionAmount() - (f1 - p_70665_2_));
 
+            DQR.func.debugString("TEST_B : " + p_70665_2_ , null, 3);
             if (p_70665_2_ != 0.0F)
             {
+            	DQR.func.debugString("TEST_C : " + p_70665_2_ , null, 3);
                 float f2 = this.getHealth();
                 if(f2 - p_70665_2_ <= 0.1F && DQR.conf.dqrHardcorePet2 == 0)
                 {
                 	p_70665_2_ = f2 - 0.05F;
                 }
+                DQR.func.debugString("TEST_D : " + p_70665_2_ , null, 3);
                 this.setHealth(f2 - p_70665_2_);
                 this.func_110142_aN().func_94547_a(p_70665_1_, f2, p_70665_2_);
                 this.setAbsorptionAmount(this.getAbsorptionAmount() - p_70665_2_);
+                DQR.func.debugString("TEST_E : " + p_70665_2_ , null, 3);
             }
         }
     }
@@ -1028,6 +1064,57 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 		}
 
         //int i = this.isTamed() ? 4 : 2;
+
+		Random rand = new Random();
+
+		int param = DQR.magicTablePet.magicCastGrade(this, EnumDqmMobAI.JUMP);
+        if (param > 0)
+        {
+            //if (par2 > 2.0F && par2 < 8.0F && this.rand.nextInt(5) == 0)
+        	if (this.rand.nextInt(5) == 0)
+            {
+                if (this.onGround)
+                {
+                    double var4 = p_70652_1_.posX - this.posX;
+                    double var6 = p_70652_1_.posZ - this.posZ;
+                    float var8 = MathHelper.sqrt_double(var4 * var4 + var6 * var6);
+                    this.motionX = var4 / (double)var8 * 0.5D * 0.800000011920929D + this.motionX * 0.1D * this.arrayAIRate[EnumDqmMobAI.JUMP.getId()];
+                    this.motionZ = var6 / (double)var8 * 0.5D * 0.800000011920929D + this.motionZ * 0.1D *this.arrayAIRate[EnumDqmMobAI.JUMP.getId()];
+                    this.motionY = 0.1D * this.arrayAISets[EnumDqmMobAI.JUMP.getId()];
+                }
+            }
+        }
+
+		if(p_70652_1_ != null && p_70652_1_ instanceof EntityPlayer)
+		{
+			EntityPlayer ep = (EntityPlayer)p_70652_1_;
+
+			param = DQR.magicTablePet.magicCastGrade(this, EnumDqmMobAI.HEAVYFIRE);
+			if(param > 0 && !ep.capabilities.isCreativeMode)
+			{
+				ep.addPotionEffect(new PotionEffect(DQPotionMinus.debuffHeavyFire.id, 60, this.arrayAISets[EnumDqmMobAI.HEAVYFIRE.getId()]));
+			}
+
+			param = DQR.magicTablePet.magicCastGrade(this, EnumDqmMobAI.POISON);
+	        if(param > 0)
+	        {
+        		if(rand.nextInt(this.arrayAIRate[EnumDqmMobAI.POISON.getId()]) == 0)
+        		{
+        			ep.addPotionEffect(new PotionEffect(DQPotionMinus.potionPoison.id, rand.nextInt(10) + 10, this.arrayAISets[EnumDqmMobAI.POISON.getId()] - 1));
+        		}
+	        }
+
+	        param = DQR.magicTablePet.magicCastGrade(this, EnumDqmMobAI.POISONX);
+	        if(param > 0)
+	        {
+        		if(rand.nextInt(this.arrayAIRate[EnumDqmMobAI.POISONX.getId()]) == 0)
+        		{
+        			ep.addPotionEffect(new PotionEffect(DQPotionMinus.potionPoisonX.id, rand.nextInt(10) + 10, this.arrayAISets[EnumDqmMobAI.POISONX.getId()]));
+        		}
+	        }
+		}
+
+
 
         return p_70652_1_.attackEntityFrom(DamageSource.causeMobDamage(this), (float)this.Kougeki);
     }
@@ -1192,7 +1279,7 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 	            		pe = ep.getActivePotionEffect(DQPotionMinus.debuffMahoton);
 	            		if(pe != null && ep.worldObj.isRemote)
 	            		{
-	            			ep.addChatMessage(new ChatComponentTranslation("msg.magic.mahoton.txt",new Object[] {}));
+	            			DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.magic.mahoton.txt",new Object[] {}));
 	            			ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
 
 	            			return false;
@@ -1201,7 +1288,7 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 	            		//if(pe != null && this.worldObj.isRemote)
 	            		if(DQR.func.isBind(this))
 	            		{
-	            			ep.addChatMessage(new ChatComponentTranslation("msg.magic.rariho.txt",new Object[] {}));
+	            			DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.magic.rariho.txt",new Object[] {}));
 	            			ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
 
 	            			return false;
@@ -1215,7 +1302,7 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 
 	                		if(!DQR.magicTable.magicEnable(ep, itemstack.getItem()) && DQR.debug == 0)
 	                		{
-	            				ep.addChatMessage(new ChatComponentTranslation("msg.magic.noLv.txt",new Object[] {}));
+	            				DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.magic.noLv.txt",new Object[] {}));
 	            				ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
 
 	            				return false;
@@ -1225,7 +1312,7 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 
 	            			if(epMP < magicItem.getEnumMagic().getMP() && DQR.debug == 0)
 	            			{
-	            				ep.addChatMessage(new ChatComponentTranslation("msg.magic.nomp.txt",new Object[] {}));
+	            				DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.magic.nomp.txt",new Object[] {}));
 	            				ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
 	            				return false;
 	            			}else
@@ -1329,6 +1416,17 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 	                        this.worldObj.playSoundAtEntity(this, "DQM_Sound.Rura", 0.8F, 1.5F);
 	                    	this.entityDropItem(tutu, 0.0F);
 
+	                    	EntityPlayer ep2 = null;
+	                    	if(this != null && this.worldObj != null && this.getOwner() != null)
+	                    	{
+	                    		ep2 = this.worldObj.func_152378_a(this.getOwner().getUniqueID());
+	                    	}
+
+	                    	if(ep2 != null)
+	                    	{
+	                    		ExtendedPlayerProperties3.get(ep2).minusPetCount(1);
+	                        	DQR.petFunc.removePetdata(ep2, this.getUniqueID().toString());
+	                    	}
 	                    	this.setDead(false);
 	        			}
 
@@ -1344,61 +1442,80 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 	            	   )
 	            	{
 
-	        			if (!this.worldObj.isRemote)
-	        			{
-	        				NBTTagCompound haigouPet1 = ExtendedPlayerProperties3.get(ep).getHaigouPet1();
-	        				NBTTagCompound haigouPet2 = ExtendedPlayerProperties3.get(ep).getHaigouPet2();
+	            		if(itemstack.getItemDamage() == 0)
+	            		{
+	            			itemstack.setItemDamage(20);
+		        			if (!this.worldObj.isRemote)
+		        			{
+		        				NBTTagCompound haigouPet1 = ExtendedPlayerProperties3.get(ep).getHaigouPet1();
+		        				NBTTagCompound haigouPet2 = ExtendedPlayerProperties3.get(ep).getHaigouPet2();
 
-	        				if((haigouPet1 == null || haigouPet1.hasNoTags()) && (haigouPet2 == null || !haigouPet2.getString("PetUUID").equalsIgnoreCase(this.getUniqueID().toString())))
-	        				{
-	        					ExtendedPlayerProperties3.get(ep).setHaigouPet1(this.makeTutuNBT(new NBTTagCompound(), false));
-	        					ep.addChatMessage(new ChatComponentTranslation("dqm.iteminfo.petHaigou1",new Object[] {this.getCommandSenderName(), this.JobLv[0]}));
-	        				}else if((haigouPet2 == null || haigouPet2.hasNoTags()) && (haigouPet2 == null || !haigouPet2.getString("PetUUID").equalsIgnoreCase(this.getUniqueID().toString())))
-	        				{
-	        					ep.addChatMessage(new ChatComponentTranslation("dqm.iteminfo.petHaigou1",new Object[] {haigouPet1.getString("PetName"), haigouPet1.getInteger("JobLv_0")}));
-	        					ExtendedPlayerProperties3.get(ep).setHaigouPet2(this.makeTutuNBT(new NBTTagCompound(), false));
-	        					ep.addChatMessage(new ChatComponentTranslation("dqm.iteminfo.petHaigou2",new Object[] {this.getCommandSenderName(), this.JobLv[0]}));
-	        				}else
-	        				{
-	        					ep.addChatMessage(new ChatComponentTranslation("dqm.iteminfo.petHaigou1",new Object[] {haigouPet1.getString("PetName"), haigouPet1.getInteger("JobLv_0")}));
-	        					ep.addChatMessage(new ChatComponentTranslation("dqm.iteminfo.petHaigou2",new Object[] {haigouPet2.getString("PetName"), haigouPet2.getInteger("JobLv_0")}));
+		        				if((haigouPet1 == null || haigouPet1.hasNoTags()) && (haigouPet2 == null || !haigouPet2.getString("PetUUID").equalsIgnoreCase(this.getUniqueID().toString())))
+		        				{
+		        					ExtendedPlayerProperties3.get(ep).setHaigouPet1(this.makeTutuNBT(new NBTTagCompound(), false));
+		        					DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("dqm.iteminfo.petHaigou1",new Object[] {this.getCommandSenderName(), this.JobLv[0]}));
+		        				}else if((haigouPet2 == null || haigouPet2.hasNoTags()) && (haigouPet1 == null || !haigouPet1.getString("PetUUID").equalsIgnoreCase(this.getUniqueID().toString())))
+		        				{
+		        					DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("dqm.iteminfo.petHaigou1",new Object[] {haigouPet1.getString("PetName"), haigouPet1.getInteger("JobLv_0")}));
+		        					ExtendedPlayerProperties3.get(ep).setHaigouPet2(this.makeTutuNBT(new NBTTagCompound(), false));
+		        					DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("dqm.iteminfo.petHaigou2",new Object[] {this.getCommandSenderName(), this.JobLv[0]}));
+		        				}else
+		        				{
+		        					DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("dqm.iteminfo.petHaigou1",new Object[] {haigouPet1.getString("PetName"), haigouPet1.getInteger("JobLv_0")}));
+		        					DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("dqm.iteminfo.petHaigou2",new Object[] {haigouPet2.getString("PetName"), haigouPet2.getInteger("JobLv_0")}));
 
-	        					//System.out.println("TEST:" + haigouPet1.getString("PetBaseName"));
-	        					//System.out.println("TEST2:" + haigouPet2.getString("PetBaseName"));
-	        					return true;
-	        				}
+		        					//System.out.println("TEST:" + haigouPet1.getString("PetBaseName"));
+		        					//System.out.println("TEST2:" + haigouPet2.getString("PetBaseName"));
+		        					return true;
+		        				}
 
-	        				//System.out.println("TEST:" + haigouPet1.getString("PetBaseName"));
-	                        //NBTTagCompound nbt = tutu.getTagCompound();
+		        				//System.out.println("TEST:" + haigouPet1.getString("PetBaseName"));
+		                        //NBTTagCompound nbt = tutu.getTagCompound();
 
-	                        //nbt = this.getEntityData();
-	                        //nbt.setString("PetBaseName", this.getEntityString());
+		                        //nbt = this.getEntityData();
+		                        //nbt.setString("PetBaseName", this.getEntityString());
 
-	                        //tutu.setTagCompound(nbt);
-	                        //tutu.setStackDisplayName((new ChatComponentTranslation("item.dqm.MahounoTutu2.name",new Object[] { this.getCommandSenderName()})).getFormattedText());
+		                        //tutu.setTagCompound(nbt);
+		                        //tutu.setStackDisplayName((new ChatComponentTranslation("item.dqm.MahounoTutu2.name",new Object[] { this.getCommandSenderName()})).getFormattedText());
 
-	                        this.worldObj.playSoundAtEntity(this, "dqr:player.haigouin", 0.6F, 3.0F);
-	                        /*
-	                        if(!ep.worldObj.isRemote)
-	                        {
-		                        if(chestOn)
+		                        this.worldObj.playSoundAtEntity(this, "dqr:player.haigouin", 0.6F, 3.0F);
+		                        /*
+		                        if(!ep.worldObj.isRemote)
 		                        {
-			                        InventoryPetInventory inventory = new InventoryPetInventory(this);
-			                        inventory.openInventory();
-
-			                        for(int cnt = 0; cnt < inventory.getSizeInventory(); cnt++)
+			                        if(chestOn)
 			                        {
-			                        	if(inventory.getStackInSlot(cnt) != null)
-			                        	{
-			                        		this.entityDropItem(inventory.getStackInSlot(cnt), 0.0F);
-			                        	}
+				                        InventoryPetInventory inventory = new InventoryPetInventory(this);
+				                        inventory.openInventory();
+
+				                        for(int cnt = 0; cnt < inventory.getSizeInventory(); cnt++)
+				                        {
+				                        	if(inventory.getStackInSlot(cnt) != null)
+				                        	{
+				                        		this.entityDropItem(inventory.getStackInSlot(cnt), 0.0F);
+				                        	}
+				                        }
 			                        }
 		                        }
-	                        }
-	                        */
-	                        //ExtendedPlayerProperties3.get(ep).minusPetCount(1);
-	                    	this.setDead();
-	        			}
+		                        */
+		                        //ExtendedPlayerProperties3.get(ep).minusPetCount(1);
+		                    	EntityPlayer ep2 = null;
+		                    	if(this != null && this.worldObj != null && this.getOwner() != null)
+		                    	{
+		                    		ep2 = this.worldObj.func_152378_a(this.getOwner().getUniqueID());
+		                    	}
+
+		                    	if(ep2 != null)
+		                    	{
+		                    		ExtendedPlayerProperties3.get(ep2).minusPetCount(1);
+		                        	DQR.petFunc.removePetdata(ep2, this.getUniqueID().toString());
+		                    	}
+		                    	this.setDead(true);
+		        			}
+	            		}else
+	            		{
+	                		DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.magic.noct.txt",new Object[] {}));
+	                		ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
+	            		}
 
 
 	            		return true;
@@ -1466,7 +1583,7 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
     						DQR.partyManager.kickPartyPet(ep, this);
     					}else
     	        		{
-    	        			ep.addChatMessage(new ChatComponentTranslation("msg.shinziru.modeInfo.txt", new Object[] {}));
+    	        			DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.shinziru.modeInfo.txt", new Object[] {}));
     	        		}
     				}
 
@@ -1520,11 +1637,22 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 	                        */
 
 
-	                        this.setDead();
+	                    	EntityPlayer ep2 = null;
+	                    	if(this != null && this.worldObj != null && this.getOwner() != null)
+	                    	{
+	                    		ep2 = this.worldObj.func_152378_a(this.getOwner().getUniqueID());
+	                    	}
+
+	                    	if(ep2 != null)
+	                    	{
+	                    		ExtendedPlayerProperties3.get(ep2).minusPetCount(1);
+	                        	DQR.petFunc.removePetdata(ep2, this.getUniqueID().toString());
+	                    	}
+	                        this.setDead(true);
 	                    }else
 	                    {
 	                    	//this.setHealth(0.05F);
-	                    	this.attackEntityFrom(DamageSource.magic, this.getHealth() - 0.05F);
+	                    	this.attackEntityFrom(DamageSource.magic.setDamageBypassesArmor(), this.getHealth() - 0.05F);
 	                    	//this.isDead = true;
 	                    	/*
 	                        if(!this.worldObj.isRemote)
@@ -1598,6 +1726,17 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 	                    	}
 	        			}
 
+	        			if(food.getUnlocalizedName().equalsIgnoreCase(DQSeeds.itemIyasinomi.getUnlocalizedName()) ||
+	        					food.getUnlocalizedName().equalsIgnoreCase(DQSeeds.itemIyasinomi2.getUnlocalizedName()) ||
+	        					food.getUnlocalizedName().equalsIgnoreCase(DQSeeds.itemIyasinomi3.getUnlocalizedName()) ||
+	        					food.getUnlocalizedName().equalsIgnoreCase(DQSeeds.itemMahounomiI.getUnlocalizedName()) ||
+	        					food.getUnlocalizedName().equalsIgnoreCase(DQSeeds.itemMahounomiI2.getUnlocalizedName()) ||
+	        					food.getUnlocalizedName().equalsIgnoreCase(DQSeeds.itemMahounomiI3.getUnlocalizedName()))
+	        			{
+	        				DQR.func.doFoodEaten(this, food);
+	        				itemUseFlg = true;
+	        			}
+
 	        			if(itemUseFlg)
 	        			{
 	                        if (!ep.capabilities.isCreativeMode)
@@ -1607,21 +1746,21 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 
                         	if(DQR.exp.getNextExpPet(this.getJobLv(this.getJob()), this) <= 0)
                         	{
-	    	        	  		ep.addChatMessage(new ChatComponentTranslation("msg.pet.status1MAX.txt",new Object[] {petName, ownerName,
+	    	        	  		DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.pet.status1MAX.txt",new Object[] {petName, ownerName,
 	    								  this.getJobLv(this.getJob()),
 	    								  this.getJobExp(this.getJob()),DQR.exp.getNextExpPet(this.getJob(), this),
 	    								  (int)(this.getHealth()), (int)(this.getMaxHealth()),
 	    								  this.getMP(), this.getMaxMP()}));
                         	}else
                         	{
-	    	        	  		ep.addChatMessage(new ChatComponentTranslation("msg.pet.status1.txt",new Object[] {petName, ownerName,
+	    	        	  		DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.pet.status1.txt",new Object[] {petName, ownerName,
 	    								  this.getJobLv(this.getJob()),
 	    								  this.getJobExp(this.getJob()),DQR.exp.getNextExpPet(this.getJob(), this),
 	    								  (int)(this.getHealth()), (int)(this.getMaxHealth()),
 	    								  this.getMP(), this.getMaxMP()}));
                         	}
 
-    	        	  		ep.addChatMessage(new ChatComponentTranslation("msg.pet.status2.txt",new Object[] {this.getKougeki(),
+    	        	  		DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.pet.status2.txt",new Object[] {this.getKougeki(),
     								  this.getBougyo(), this.getTotalArmorValue(),
     								  this.getMaryoku(),
     								  this.getTikara(),
@@ -1690,21 +1829,21 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 
                         	if(DQR.exp.getNextExpPet(this.getJobLv(this.getJob()), this) <= 0)
                         	{
-	    	        	  		ep.addChatMessage(new ChatComponentTranslation("msg.pet.status1MAX.txt",new Object[] {petName, ownerName,
+	    	        	  		DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.pet.status1MAX.txt",new Object[] {petName, ownerName,
 	    								  this.getJobLv(this.getJob()),
 	    								  this.getJobExp(this.getJob()),DQR.exp.getNextExpPet(this.getJob(), this),
 	    								  (int)(this.getHealth()), (int)(this.getMaxHealth()),
 	    								  this.getMP(), this.getMaxMP()}));
                         	}else
                         	{
-	    	        	  		ep.addChatMessage(new ChatComponentTranslation("msg.pet.status1MAX.txt",new Object[] {petName, ownerName,
+	    	        	  		DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.pet.status1MAX.txt",new Object[] {petName, ownerName,
 	    								  this.getJobLv(this.getJob()),
 	    								  this.getJobExp(this.getJob()),DQR.exp.getNextExpPet(this.getJob(), this),
 	    								  (int)(this.getHealth()), (int)(this.getMaxHealth()),
 	    								  this.getMP(), this.getMaxMP()}));
                         	}
 
-                        	ep.addChatMessage(new ChatComponentTranslation("msg.pet.status2.txt",new Object[] {this.getKougeki(),
+                        	DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.pet.status2.txt",new Object[] {this.getKougeki(),
     								  this.getBougyo(), this.getTotalArmorValue(),
     								  this.getMaryoku(),
     								  this.getTikara(),
@@ -1743,7 +1882,7 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 	                		{
 	                			this.flgAIuse = 0;
 	                		}
-	                		ep.addChatMessage(new ChatComponentTranslation("skill.change.info." + this.flgAIuse + ".txt",new Object[] {this.getCommandSenderName()}));
+	                		DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("skill.change.info." + this.flgAIuse + ".txt",new Object[] {this.getCommandSenderName()}));
 	                		if(!this.isSitting())
 	                		{
 	                			this.clearTasks();
@@ -1811,12 +1950,19 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 	                		ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
 		                	if(setCount > 0)
 		                	{
-
-		                		ep.addChatMessage(new ChatComponentTranslation("skill.list." + this.flgAIuse + ".msg",new Object[] {}));
-		                		ep.addChatMessage(new ChatComponentTranslation(EnumDqmMessageConv.PetSkill.getStartS() + val + EnumDqmMessageConv.PetSkill.getEndS(),new Object[] {}));
+		                		String name = null;
+		                		if(this.getCustomNameTag().length() > 0)
+		                		{
+		                			name = this.getCustomNameTag();
+		                		}else
+		                		{
+		                			name = this.getCommandSenderName();
+		                		}
+		                		DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("skill.list." + this.flgAIuse + ".msg",new Object[] {name}));
+		                		DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation(EnumDqmMessageConv.PetSkill.getStartS() + val + EnumDqmMessageConv.PetSkill.getEndS(),new Object[] {}));
 		                	}else
 		                	{
-		                		ep.addChatMessage(new ChatComponentTranslation("skill.noskill.name",new Object[] {}));
+		                		DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("skill.noskill.name",new Object[] {}));
 		                	}
 	                	}
                 	}
@@ -1878,21 +2024,21 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
                     	{
                     		if(DQR.exp.getNextExpPet(this.getJobLv(this.getJob()), this) <= 0)
                     		{
-    	        	  		ep.addChatMessage(new ChatComponentTranslation("msg.pet.status1MAX.txt",new Object[] {petName, ownerName,
+    	        	  		DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.pet.status1MAX.txt",new Object[] {petName, ownerName,
     	        	  																						  this.getJobLv(this.getJob()),
     	        	  																						  this.getJobExp(this.getJob()),DQR.exp.getNextExpPet(this.getJobLv(this.getJob()), this),
     	        	  																						  (int)(this.getHealth()), (int)(this.getMaxHealth()),
     	        	  																						  this.getMP(), this.getMaxMP()}));
                     		}else
                     		{
-        	        	  		ep.addChatMessage(new ChatComponentTranslation("msg.pet.status1.txt",new Object[] {petName, ownerName,
+        	        	  		DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.pet.status1.txt",new Object[] {petName, ownerName,
         	        	  																						   this.getJobLv(this.getJob()),
         	        	  																						   this.getJobExp(this.getJob()),DQR.exp.getNextExpPet(this.getJobLv(this.getJob()), this),
         	        	  																						   (int)(this.getHealth()), (int)(this.getMaxHealth()),
         	        	  																						   this.getMP(), this.getMaxMP()}));
 
                     		}
-    	        	  		ep.addChatMessage(new ChatComponentTranslation("msg.pet.status2.txt",new Object[] {this.getKougeki(),
+    	        	  		DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.pet.status2.txt",new Object[] {this.getKougeki(),
     																										  this.getBougyo(), this.getTotalArmorValue(),
     																										  this.getMaryoku(),
     																										  this.getTikara(),
@@ -2041,7 +2187,7 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 	            {
 	        		ep.worldObj.playSoundAtEntity(ep, "dqr:mob.petmob", 1.0F, 0.5F);
 
-	        		this.setDead();
+	        		this.setDead(true);
 	            }
 
         	}else
@@ -2090,7 +2236,7 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 		                    //System.out.println("TEST3" + this.isSitting());
 	                	}else
 	                	{
-	            	  		ep.addChatMessage(new ChatComponentTranslation("msg.petTame.maxnumber.txt",new Object[] {}));
+	            	  		DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.petTame.maxnumber.txt",new Object[] {}));
 	                		ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
 	                	}
 	                }
@@ -2940,6 +3086,8 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
                 		inventory.markDirty();
                 	}
                 }
+
+                inventory.closeInventory();
             }
         }
 
@@ -2949,6 +3097,9 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
     		DQR.partyManager.removePartyMember(this);
     	}
 
+
+    	/*
+    	EntityPlayer ep = null;
     	if(this != null && this.worldObj != null && this.getOwner() != null)
     	{
     		ep = this.worldObj.func_152378_a(this.getOwner().getUniqueID());
@@ -2959,6 +3110,7 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
     		ExtendedPlayerProperties3.get(ep).minusPetCount(1);
         	DQR.petFunc.removePetdata(ep, this.getUniqueID().toString());
     	}
+    	*/
 
     	this.isDead = true;
     }
@@ -2966,7 +3118,7 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
     @Override
     public void setDead()
     {
-    	this.setDead(true);
+    	this.setDead(false);
     }
 
 
@@ -3946,14 +4098,15 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 					if(!this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.mahokanta", 1.0F, 1.0F);
 				}else
 				{
-					if(this.getHealth() > 0)
+					if(this.getHealth() > 0.5F)
 					{
 		            	if(this.getHealth() + attackDam > this.getMaxHealth())
 		            	{
 		            		this.setHealth(this.getMaxHealth());
 		            	}else
 		            	{
-		            		this.setHealth(this.getHealth() + (float)attackDam);
+		            		//this.setHealth(this.getHealth() + (float)attackDam);
+		            		this.heal(attackDam);
 		            	}
 					}
 
@@ -3964,7 +4117,6 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 				if(DQR.conf.offMobNotEnoughMP > 0 && !this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.pi", 0.1F, 1.0F);
 				return;
 			}
-
     	}else
 	    {
     		if(DQR.debug == 4){System.out.println("attackEntityWithHoimi 2");}
@@ -4013,20 +4165,22 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 	                		this.setHealth(this.getMaxHealth());
 	                	}else
 	                	{
-	                		this.setHealth(this.getHealth() + (float)attackDam);
+	                		//this.setHealth(this.getHealth() + (float)attackDam);
+	                		this.heal(attackDam);
 	                	}
 	                	if(!tagMob.worldObj.isRemote) tagMob.worldObj.playSoundAtEntity(this, "dqr:player.mahokanta", 1.0F, 1.0F);
 	                	this.playSound("dqr:player.hoimi", 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
 	        		}else
 	        		{
-	        			if(tagMob.getHealth() > 0)
+	        			if(tagMob.getHealth() > 0.5F || (tagMob instanceof EntityPlayer && tagMob.getHealth() > 0))
 	        			{
 		                	if(tagMob.getHealth() + attackDam > tagMob.getMaxHealth())
 		                	{
 		                		tagMob.setHealth(tagMob.getMaxHealth());
 		                	}else
 		                	{
-		                		tagMob.setHealth(tagMob.getHealth() + (float)attackDam);
+		                		//tagMob.setHealth(tagMob.getHealth() + (float)attackDam);
+		                		tagMob.heal(attackDam);
 		                	}
 		                	if(!tagMob.worldObj.isRemote) tagMob.playSound("dqr:player.hoimi", 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
 	        			}
@@ -5460,7 +5614,8 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
         		this.setHealth(this.getMaxHealth());
         	}else
         	{
-        		this.setHealth(this.getHealth() + (float)attackDam);
+        		//this.setHealth(this.getHealth() + (float)attackDam);
+        		this.heal(attackDam);
         	}
         	if(!this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.hoimi", 1.0F, 1.0F);
 		}
@@ -5499,7 +5654,11 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
         		{
                 	if(owner != null && !(DQR.func.canAttackPetMonster((DqmPetBase)target, owner)))
                 	{
-                		flg = true;
+                		DqmPetBase tagPet = (DqmPetBase)target;
+                		if(tagPet.getHealth() > 0.5F)
+                		{
+                			flg = true;
+                		}
                 	}
         		}else
         		{
@@ -5528,7 +5687,8 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
                     		this.setHealth(this.getMaxHealth());
                     	}else
                     	{
-                    		this.setHealth(this.getHealth() + (float)attackDam);
+                    		//this.setHealth(this.getHealth() + (float)attackDam);
+                    		this.heal(attackDam);
                     	}
                     	if(!elb.worldObj.isRemote) elb.worldObj.playSoundAtEntity(elb, "dqr:player.mahokanta", 1.0F, 1.0F);
                     	this.worldObj.playSoundAtEntity(this, "dqr:player.hoimi", 1.0F, 1.0F);
@@ -5542,7 +5702,8 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 	                    		elb.setHealth(elb.getMaxHealth());
 	                    	}else
 	                    	{
-	                    		elb.setHealth(elb.getHealth() + (float)attackDam);
+	                    		//elb.setHealth(elb.getHealth() + (float)attackDam);
+	                    		elb.heal(attackDam);
 	                    	}
 	                    	if(!elb.worldObj.isRemote) elb.worldObj.playSoundAtEntity(elb, "dqr:player.hoimi", 1.0F, 1.0F);
             			}
@@ -6217,6 +6378,19 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
                 }
             }
 
+            Material bl1 = this.worldObj.getBlock(i, j, k).getMaterial();
+            Material bl2 = this.worldObj.getBlock(i, j + 1, k).getMaterial();
+
+            if(bl1 != Material.air && bl1 != Material.carpet && bl1 !=  Material.plants && bl1 != Material.grass)
+            {
+            	flag1 = false;
+            }
+            if(bl2 != Material.air && bl2 != Material.carpet && bl2 !=  Material.plants && bl2 != Material.grass)
+            {
+            	flag1 = false;
+            }
+
+            //bl1.get
             if (flag1)
             {
                 this.setPosition(this.posX, this.posY, this.posZ);

@@ -21,6 +21,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import dqr.DQR;
 import dqr.api.Blocks.DQDecorates;
 import dqr.api.Blocks.DQSekizous;
 import dqr.blocks.mobObj.tileEntity.DqmTileEntityObjSura;
@@ -192,7 +193,7 @@ public class DqmBlockSekizou extends BlockContainer
 		            while (iterator.hasNext())
 		            {
 		                entityplayer = (EntityPlayer)iterator.next();
-		                entityplayer.addChatMessage(new ChatComponentTranslation("msg.sekizou." + this.mobName + ".talk." + talkFlg + ".txt",new Object[] {}));
+		                DQR.func.doAddChatMessageFix(entityplayer, new ChatComponentTranslation("msg.sekizou." + this.mobName + ".talk." + talkFlg + ".txt",new Object[] {}));
 		                entityplayer.worldObj.playSoundAtEntity(entityplayer, "dqr:player.pi", 1.0F, 1.0F);
 		                //entityplayer.addPotionEffect(new PotionEffect(this.primaryEffect, 180, b0, true));
 		            }

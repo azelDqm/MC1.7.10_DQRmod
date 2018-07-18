@@ -989,10 +989,10 @@ public class DqmMobBase extends EntityMob
 	    				{
 	    					//System.out.println("test3");
 	    					//EnumDqmSkillW skillW = DQR.enumGetter.getSkillW(weapon, weaponSkill);
-	    					//ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
+	    					//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
 	    					this.dqmBypassArmor = true;
 	    					source.setDamageBypassesArmor();
-	    					if(!ep.getCommandSenderName().equalsIgnoreCase("[Minecraft]"))ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
+	    					if(!ep.getCommandSenderName().equalsIgnoreCase("[Minecraft]"))DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
 	    					skillFlg = true;
 	    				}
 	    			}else if(weapon == EnumDqmWeapon.DqmAxe.getId() && weaponSkill == 6 && skillPerm != 0)
@@ -1009,7 +1009,7 @@ public class DqmMobBase extends EntityMob
     						p_70665_2_ = 0.0F;
     					}
     					skillFlg = true;
-    					if(!ep.getCommandSenderName().equalsIgnoreCase("[Minecraft]"))ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
+    					if(!ep.getCommandSenderName().equalsIgnoreCase("[Minecraft]"))DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
 
 	    			}else if(weapon == EnumDqmWeapon.DqmLance.getId() && weaponSkill == 6 && skillPerm != 0)
 	    			{
@@ -1025,7 +1025,7 @@ public class DqmMobBase extends EntityMob
     					}
 
     					skillFlg = true;
-    					if(!ep.getCommandSenderName().equalsIgnoreCase("[Minecraft]"))ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
+    					if(!ep.getCommandSenderName().equalsIgnoreCase("[Minecraft]"))DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
 	    			}else if(weapon == EnumDqmWeapon.DqmSoroban.getId() && weaponSkill == 3 && skillPerm != 0)
 	    			{
 
@@ -1036,7 +1036,7 @@ public class DqmMobBase extends EntityMob
 
     					p_70665_2_ = p_70665_2_ * 2.0F;
     					skillFlg = true;
-    					if(!ep.getCommandSenderName().equalsIgnoreCase("[Minecraft]"))ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
+    					if(!ep.getCommandSenderName().equalsIgnoreCase("[Minecraft]"))DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
 
 						if(!ep.worldObj.isRemote)
 						{
@@ -1152,29 +1152,29 @@ public class DqmMobBase extends EntityMob
 					{
 						//System.out.println(this.getEntityString());
 
-						//ep.addChatMessage(new ChatComponentTranslation("msg.toDamage.txt",new Object[] {this.getCommandSenderName(), (int)p_70665_2_}));
-						//ep.addChatMessage(new ChatComponentTranslation("msg.toDamage.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), (int)p_70665_2_}));
+						//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toDamage.txt",new Object[] {this.getCommandSenderName(), (int)p_70665_2_}));
+						//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toDamage.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), (int)p_70665_2_}));
 
 						//if(DQR.conf.damageDigits)
 						//System.out.println("TEST" + DQR.conf.damageDigits);
 						//System.out.println("TEST" + DQR.conf.damageDigits);
 						if (DQR.conf.damageDigits == 1)
 						{
-							if(!ep.getCommandSenderName().equalsIgnoreCase("[Minecraft]"))ep.addChatMessage(new ChatComponentTranslation("msg.toDamage2.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), p_70665_2_}));
+							if(!ep.getCommandSenderName().equalsIgnoreCase("[Minecraft]"))DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toDamage2.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), p_70665_2_}));
 						}else
 						{
-							if(!ep.getCommandSenderName().equalsIgnoreCase("[Minecraft]"))ep.addChatMessage(new ChatComponentTranslation("msg.toDamage.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), (int)p_70665_2_}));
+							if(!ep.getCommandSenderName().equalsIgnoreCase("[Minecraft]"))DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toDamage.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), (int)p_70665_2_}));
 						}
 						/*
 						if(DQR.conf.damageDigits == 1)
 						{
-							ep.addChatMessage(new ChatComponentTranslation("msg.toDamage2.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), p_70665_2_}));
+							DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toDamage2.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), p_70665_2_}));
 						}else if(DQR.conf.damageDigits == 2)
 						{
-							ep.addChatMessage(new ChatComponentTranslation("msg.toDamage3.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), p_70665_2_}));
+							DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toDamage3.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), p_70665_2_}));
 						}else
 						{
-							ep.addChatMessage(new ChatComponentTranslation("msg.toDamage.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), p_70665_2_}));
+							DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toDamage.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), p_70665_2_}));
 						}
 						*/
 					}
@@ -1197,12 +1197,12 @@ public class DqmMobBase extends EntityMob
 					{
 						if (DQR.conf.damageDigits == 1)
 						{
-							if(!ep.getCommandSenderName().equalsIgnoreCase("[Minecraft]"))ep.addChatMessage(new ChatComponentTranslation("msg.toDamage2.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), p_70665_2_}));
+							if(!ep.getCommandSenderName().equalsIgnoreCase("[Minecraft]"))DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toDamage2.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), p_70665_2_}));
 						}else
 						{
-							if(!ep.getCommandSenderName().equalsIgnoreCase("[Minecraft]"))ep.addChatMessage(new ChatComponentTranslation("msg.toDamage.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), (int)p_70665_2_}));
+							if(!ep.getCommandSenderName().equalsIgnoreCase("[Minecraft]"))DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toDamage.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), (int)p_70665_2_}));
 						}
-						//ep.addChatMessage(new ChatComponentTranslation("msg.toDamage.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), (int)p_70665_2_}));
+						//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toDamage.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), (int)p_70665_2_}));
 					}
 
             	}else if(source.getEntity() instanceof DqmPetBase || source.getEntity() instanceof DqmEntityNPCGuntai)
@@ -1234,15 +1234,15 @@ public class DqmMobBase extends EntityMob
 
 					if(!pet.worldObj.isRemote)
 						{
-						//ep.addChatMessage(new ChatComponentTranslation("msg.toDamage.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), (int)p_70665_2_}));
+						//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toDamage.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), (int)p_70665_2_}));
 						if (DQR.conf.damageDigits == 1)
 						{
-							if(!ep.getCommandSenderName().equalsIgnoreCase("[Minecraft]"))ep.addChatMessage(new ChatComponentTranslation("msg.toDamage2P.txt",new Object[] {petName, EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), p_70665_2_}));
+							if(!ep.getCommandSenderName().equalsIgnoreCase("[Minecraft]"))DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toDamage2P.txt",new Object[] {petName, EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), p_70665_2_}));
 						}else
 						{
 							if(ep != null)
 							{
-								if(!ep.getCommandSenderName().equalsIgnoreCase("[Minecraft]"))ep.addChatMessage(new ChatComponentTranslation("msg.toDamageP.txt",new Object[] {petName, EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), (int)p_70665_2_}));
+								if(!ep.getCommandSenderName().equalsIgnoreCase("[Minecraft]"))DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toDamageP.txt",new Object[] {petName, EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), (int)p_70665_2_}));
 							}
 						}
 					}
@@ -1275,13 +1275,13 @@ public class DqmMobBase extends EntityMob
 
 					if(!pet.worldObj.isRemote && ep != null)
 					{
-						//ep.addChatMessage(new ChatComponentTranslation("msg.toDamage.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), (int)p_70665_2_}));
+						//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toDamage.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), (int)p_70665_2_}));
 						if (DQR.conf.damageDigits == 1)
 						{
-							if(!ep.getCommandSenderName().equalsIgnoreCase("[Minecraft]"))ep.addChatMessage(new ChatComponentTranslation("msg.toDamage2P.txt",new Object[] {petName, EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), p_70665_2_}));
+							if(!ep.getCommandSenderName().equalsIgnoreCase("[Minecraft]"))DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toDamage2P.txt",new Object[] {petName, EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), p_70665_2_}));
 						}else
 						{
-							if(!ep.getCommandSenderName().equalsIgnoreCase("[Minecraft]"))ep.addChatMessage(new ChatComponentTranslation("msg.toDamagePtxt",new Object[] {petName, EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), (int)p_70665_2_}));
+							if(!ep.getCommandSenderName().equalsIgnoreCase("[Minecraft]"))DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toDamagePtxt",new Object[] {petName, EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), (int)p_70665_2_}));
 						}
 					}
 
@@ -1297,12 +1297,12 @@ public class DqmMobBase extends EntityMob
 						{
 							if (DQR.conf.damageDigits == 1)
 							{
-								if(!ep.getCommandSenderName().equalsIgnoreCase("[Minecraft]"))ep.addChatMessage(new ChatComponentTranslation("msg.toDamage2.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), p_70665_2_}));
+								if(!ep.getCommandSenderName().equalsIgnoreCase("[Minecraft]"))DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toDamage2.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), p_70665_2_}));
 							}else
 							{
-								if(!ep.getCommandSenderName().equalsIgnoreCase("[Minecraft]"))ep.addChatMessage(new ChatComponentTranslation("msg.toDamage.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), (int)p_70665_2_}));
+								if(!ep.getCommandSenderName().equalsIgnoreCase("[Minecraft]"))DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toDamage.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), (int)p_70665_2_}));
 							}
-							//ep.addChatMessage(new ChatComponentTranslation("msg.toDamage.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), (int)p_70665_2_}));
+							//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toDamage.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + this.getEntityString() + EnumDqmMessageConv.MonsterName.getEndS(), (int)p_70665_2_}));
 						}
             		}else if(arrow.shootingEntity instanceof DqmPetBase)
             		{

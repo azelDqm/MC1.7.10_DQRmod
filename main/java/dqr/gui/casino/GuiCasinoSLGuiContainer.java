@@ -395,6 +395,44 @@ public class GuiCasinoSLGuiContainer extends GuiContainer
         	this.drawTexturedModalRect(mainX + realBasePosFix3, mainY + realBasePosFixY1 , 174, 5, 48, 48);
         }
 
+
+        //quvtujevuqepmq
+        if(koyakuLine1 == 99)
+        {
+        	this.drawTexturedModalRect(mainX + realBasePosFix1, mainY + realBasePosFixY1 , 174, 58, 48, 48);
+        	this.drawTexturedModalRect(mainX + realBasePosFix2, mainY + realBasePosFixY1 , 174, 58, 48, 48);
+        	this.drawTexturedModalRect(mainX + realBasePosFix3, mainY + realBasePosFixY1 , 174, 58, 48, 48);
+        }
+
+        if(koyakuLine2 == 99)
+        {
+        	this.drawTexturedModalRect(mainX + realBasePosFix1, mainY + realBasePosFixY2 , 174, 58, 48, 48);
+        	this.drawTexturedModalRect(mainX + realBasePosFix2, mainY + realBasePosFixY2 , 174, 58, 48, 48);
+        	this.drawTexturedModalRect(mainX + realBasePosFix3, mainY + realBasePosFixY2 , 174, 58, 48, 48);
+        }
+
+        if(koyakuLine3 == 99)
+        {
+        	this.drawTexturedModalRect(mainX + realBasePosFix1, mainY + realBasePosFixY3 , 174, 58, 48, 48);
+        	this.drawTexturedModalRect(mainX + realBasePosFix2, mainY + realBasePosFixY3 , 174, 58, 48, 48);
+        	this.drawTexturedModalRect(mainX + realBasePosFix3, mainY + realBasePosFixY3 , 174, 58, 48, 48);
+        }
+
+        if(koyakuLine4 == 991)
+        {
+        	this.drawTexturedModalRect(mainX + realBasePosFix1, mainY + realBasePosFixY1 , 174, 58, 48, 48);
+        	this.drawTexturedModalRect(mainX + realBasePosFix2, mainY + realBasePosFixY2 , 174, 58, 48, 48);
+        	this.drawTexturedModalRect(mainX + realBasePosFix3, mainY + realBasePosFixY3 , 174, 58, 48, 48);
+        }
+
+        if(koyakuLine5 == 99)
+        {
+        	this.drawTexturedModalRect(mainX + realBasePosFix1, mainY + realBasePosFixY3 , 174, 58, 48, 48);
+        	this.drawTexturedModalRect(mainX + realBasePosFix2, mainY + realBasePosFixY2 , 174, 58, 48, 48);
+        	this.drawTexturedModalRect(mainX + realBasePosFix3, mainY + realBasePosFixY1 , 174, 58, 48, 48);
+        }
+
+
         //告知
         this.mc.getTextureManager().bindTexture(textureReal_temp);
         if(kokutiFlg == 1)
@@ -1342,8 +1380,16 @@ public class GuiCasinoSLGuiContainer extends GuiContainer
 			koyakuLine1 = 1;
 		}else if(checkVal1 == checkVal1B && checkVal1 == checkVal1C)
 		{
-			retKoyaku = checkVal1;
-			koyakuLine1 = 1;
+			if(checkVal1 < 5 || checkVal1 > 7 || (checkVal1 == koyakuFlg))
+			{
+				retKoyaku = checkVal1;
+				koyakuLine1 = 1;
+			}
+
+			if(bonusFlg != 1 && bonusFlg != 2 && (checkVal1 == 1 || checkVal1 == 2 || checkVal1 == 3))
+			{
+				koyakuLine1 = 99;
+			}
 		}
 
 		if(checkVal2 == 4)
@@ -1352,8 +1398,16 @@ public class GuiCasinoSLGuiContainer extends GuiContainer
 			koyakuLine2 = 1;
 		}else if(checkVal2 == checkVal2B && checkVal2 == checkVal2C)
 		{
-			retKoyaku = checkVal2;
-			koyakuLine2 = 1;
+			if(checkVal2 < 5 || checkVal2 > 7 || (checkVal2 == koyakuFlg))
+			{
+				retKoyaku = checkVal2;
+				koyakuLine2 = 1;
+			}
+
+			if(bonusFlg != 1 && bonusFlg != 2 && (checkVal2 == 1 || checkVal2 == 2 || checkVal2 == 3))
+			{
+				koyakuLine2 = 99;
+			}
 		}
 
 		if(checkVal3 == 4)
@@ -1362,8 +1416,16 @@ public class GuiCasinoSLGuiContainer extends GuiContainer
 			koyakuLine3 = 1;
 		}else if(checkVal3 == checkVal3B && checkVal3 == checkVal3C)
 		{
-			retKoyaku = checkVal3;
-			koyakuLine3 = 1;
+			if(checkVal3 < 5 || checkVal3 > 7 || (checkVal3 == koyakuFlg))
+			{
+				retKoyaku = checkVal3;
+				koyakuLine3 = 1;
+			}
+
+			if(bonusFlg != 1 && bonusFlg != 2 && (checkVal3 == 1 || checkVal3 == 2 || checkVal3 == 3))
+			{
+				koyakuLine3 = 99;
+			}
 		}
 
 		if(checkVal1 == 4)
@@ -1372,8 +1434,16 @@ public class GuiCasinoSLGuiContainer extends GuiContainer
 			koyakuLine4 = 1;
 		}else if(checkVal1 == checkVal2B && checkVal1 == checkVal3C)
 		{
-			retKoyaku = checkVal1;
-			koyakuLine4 = 1;
+			if(checkVal1 < 5 || checkVal1 > 7 || (checkVal1 == koyakuFlg))
+			{
+				retKoyaku = checkVal1;
+				koyakuLine4 = 1;
+
+				if(bonusFlg != 1 && bonusFlg != 2 && (checkVal1 == 1 || checkVal1 == 2 || checkVal1 == 3))
+				{
+					koyakuLine4 = 99;
+				}
+			}
 		}
 
 		if(checkVal3 == 4)
@@ -1382,8 +1452,16 @@ public class GuiCasinoSLGuiContainer extends GuiContainer
 			koyakuLine5 = 1;
 		}else if(checkVal3 == checkVal2B && checkVal3 == checkVal1C)
 		{
-			retKoyaku = checkVal3;
-			koyakuLine5 = 1;
+			if(checkVal3 < 5 || checkVal3 > 7 || (checkVal3 == koyakuFlg))
+			{
+				retKoyaku = checkVal3;
+				koyakuLine5 = 1;
+			}
+
+			if(bonusFlg != 1 && bonusFlg != 2 && (checkVal3 == 1 || checkVal3 == 2 || checkVal3 == 3))
+			{
+				koyakuLine5 = 99;
+			}
 		}
 
 		if(cherry == 1)

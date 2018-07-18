@@ -3,6 +3,7 @@ package dqr.gui.playerHUD;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -86,6 +87,7 @@ public class GuiPlayerData extends Gui
     	  return;
       }
 
+      OpenGlHelper.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, 1, 0);
       if (DQR.conf.CLGuiVis1 == 1)
       {
           //int test = 0;
@@ -191,6 +193,8 @@ public class GuiPlayerData extends Gui
           y2 = y0 + 10;
           y3 = y0 + 18;
           y4 = y0 + 26;
+
+          //OpenGlHelper.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, 1, 0);
           GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 
           //strAry2[0]:Lv strAry2[1]:EXP strAry2[2]:HP strAry2[3]:MP strAry[1]:SP
@@ -231,7 +235,7 @@ public class GuiPlayerData extends Gui
         		  reLoc = new ResourceLocation("dqr","textures/gui/mpStatus_p.png");
         	  }
               mc.renderEngine.bindTexture(reLoc);
-              this.drawTexturedModalRect(x, y0, 0, 0, 150, 40);
+              this.drawTexturedModalRect(x, y0, 0, 0, 104, 39);
               mc.fontRenderer.drawStringWithShadow(sJob, x + 5 , y1, 0xFFCC6600);
               mc.fontRenderer.drawStringWithShadow(sHP, x + 5, y2, 0xFFCC6600);
               mc.fontRenderer.drawStringWithShadow(sMP, x + 5, y3, 0xFFCC6600);
@@ -247,7 +251,7 @@ public class GuiPlayerData extends Gui
         		  reLoc = new ResourceLocation("dqr","textures/gui/mpStatus.png");
         	  }
               mc.renderEngine.bindTexture(reLoc);
-              this.drawTexturedModalRect(x, y0, 0, 0, 150, 40);
+              this.drawTexturedModalRect(x, y0, 0, 0, 104, 39);
               mc.fontRenderer.drawStringWithShadow(sJob, x + 5 , y1, 0xffffffff);
               mc.fontRenderer.drawStringWithShadow(sHP, x + 5, y2, 0xffffffff);
               mc.fontRenderer.drawStringWithShadow(sMP, x + 5, y3, 0xffffffff);

@@ -64,22 +64,7 @@ public class DqmEntityNPCKajinoCoin extends DqmNPCBase
         int var2 = MathHelper.floor_double(this.boundingBox.minY);
         int var3 = MathHelper.floor_double(this.posZ);
         return super.getCanSpawnHere() && !(isValidLightLevel());
-        		/*
-            this.worldObj.getBlockId(var1, var2 - 1, var3) == 1 && !(isValidLightLevel()) && this.worldObj.getBlockId(var1, var2, var3) == 0 && this.worldObj.getBlockId(var1, var2 + 1, var3) == 0
-            || this.worldObj.getBlockId(var1, var2 - 1, var3) == 2 && !(isValidLightLevel()) && this.worldObj.getBlockId(var1, var2, var3) == 0 && this.worldObj.getBlockId(var1, var2 + 1, var3) == 0
-            || this.worldObj.getBlockId(var1, var2 - 1, var3) == 3 && !(isValidLightLevel()) && this.worldObj.getBlockId(var1, var2, var3) == 0 && this.worldObj.getBlockId(var1, var2 + 1, var3) == 0
-            || this.worldObj.getBlockId(var1, var2 - 1, var3) == 12 && !(isValidLightLevel()) && this.worldObj.getBlockId(var1, var2, var3) == 0 && this.worldObj.getBlockId(var1, var2 + 1, var3) == 0
-            || this.worldObj.getBlockId(var1, var2 - 1, var3) == 18 && this.worldObj.getBlockId(var1, var2, var3) == 0 && this.worldObj.getBlockId(var1, var2 + 1, var3) == 0
-            || this.worldObj.getBlockId(var1, var2 - 1, var3) == 31 && this.worldObj.getBlockId(var1, var2, var3) == 0 && this.worldObj.getBlockId(var1, var2 + 1, var3) == 0
-            || this.worldObj.getBlockId(var1, var2 - 1, var3) == 78 && this.worldObj.getBlockId(var1, var2, var3) == 0 && this.worldObj.getBlockId(var1, var2 + 1, var3) == 0
-            || this.worldObj.getBlockId(var1, var2 - 1, var3) == 87 && this.worldObj.getBlockId(var1, var2, var3) == 0 && this.worldObj.getBlockId(var1, var2 + 1, var3) == 0
-            || this.worldObj.getBlockId(var1, var2 - 1, var3) == 98  && this.worldObj.getBlockId(var1, var2, var3) == 0 && this.worldObj.getBlockId(var1, var2 + 1, var3) == 0
-            || this.worldObj.getBlockId(var1, var2 - 1, var3) == 110 && this.worldObj.getBlockId(var1, var2, var3) == 0 && this.worldObj.getBlockId(var1, var2 + 1, var3) == 0
-            || this.worldObj.getBlockId(var1, var2 - 1, var3) == 112 && this.worldObj.getBlockId(var1, var2, var3) == 0 && this.worldObj.getBlockId(var1, var2 + 1, var3) == 0
-            || this.worldObj.getBlockId(var1, var2 - 1, var3) == 121 && this.worldObj.getBlockId(var1, var2, var3) == 0 && this.worldObj.getBlockId(var1, var2 + 1, var3) == 0;
-            */
-        // || this.isValidLightLevel() && super.getCanSpawnHere();
-        //   return super.getCanSpawnHere() && isValidLightLevel();
+
     }
     protected boolean isValidLightLevel()
     {
@@ -140,50 +125,7 @@ public class DqmEntityNPCKajinoCoin extends DqmNPCBase
         this.tasks.addTask(9, new EntityAILookIdle(this));
     }
 
-    /*
-    public void Nedan(ICommandSender var1, String[] var2)
-    {
-        EntityPlayer ep = (EntityPlayer)var1;
-        String var13;
-        String var14;
-        var13 = "そうだな、そいつの修理なら " + ep.SyuuriGold + " Gになるがどうする？";
-        var1.sendChatToPlayer(var13);
-        var14 = "修理するならスニーク状態で、もう一度その武具で話しかけるんだな。";
-        var1.sendChatToPlayer(var14);
-    }
-    public void Syuuri(ICommandSender var1, String[] var2)
-    {
-        EntityPlayer ep = (EntityPlayer)var1;
-        String var13;
-        String var14;
-        var13 = ep.SyuuriGold + " G支払った。またきな！";
-        var1.sendChatToPlayer(var13);
-    }
-    public void Taranai(ICommandSender var1, String[] var2)
-    {
-        String var13;
-        var13 = "金が足らないようだな。";
-        var1.sendChatToPlayer(var13);
-    }
-    public void No(ICommandSender var1, String[] var2)
-    {
-        String var13;
-        var13 = "悪いが、そいつは修理できねぇな。";
-        var1.sendChatToPlayer(var13);
-    }
-    public void Event(ICommandSender var1, String[] var2)
-    {
-        String var13;
-        var13 = "よう！修理したい武具があれば直してやるぞ！";
-        var1.sendChatToPlayer(var13);
-    }
-    public void Nakama(ICommandSender var1, String[] var2)
-    {
-        String var13;
-        var13 = "いつも助かるぜ！これからはお前専属の修理屋となろう！どこへでも着いていくぜ！";
-        var1.sendChatToPlayer(var13);
-    }
-    */
+
     private int flag2;
     private int flag3;
 
@@ -191,27 +133,12 @@ public class DqmEntityNPCKajinoCoin extends DqmNPCBase
     private int Nedan;
     private int ID;
 
-    /*
-    @Override
-    protected void dropFewItems(boolean par1, int par2)
-    {
-        if (rand.nextInt(1) == 0)
-        {
-            this.dropItem(DqmItemList.Se.itemID, 1);   //1
-        }
-    }
-    */
-
     @Override	public int getTotalArmorValue()
     {
         return DF;
     }
-    /*
-    @Override	public int getAttackStrength(Entity par1Entity)
-    {
-        return PW;
-    }
-    */
+
+
     @Override	public boolean isAIEnabled()
     {
         return true;
@@ -225,7 +152,7 @@ public class DqmEntityNPCKajinoCoin extends DqmNPCBase
     {
     	if(!ep.worldObj.isRemote)
     	{
-    		//ep.addChatMessage(new ChatComponentTranslation("testTESTtest"));
+    		//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("testTESTtest"));
     		ItemStack its = ep.inventory.getCurrentItem();
     		if(its != null && its.getItem() == DQBuilders.itemBuilderKaikosyo && ep.isSneaking())
     		{
@@ -270,7 +197,7 @@ public class DqmEntityNPCKajinoCoin extends DqmNPCBase
     				NumberFormat nfNum = NumberFormat.getNumberInstance();
     				String price = nfNum.format((int)(casinoCoinRate * Math.pow(10, flg - 9)));
 
-	    			ep.addChatMessage(new ChatComponentTranslation("msg.Casino.coin.messages." + flg + ".txt",new Object[]{price}));
+	    			DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.Casino.coin.messages." + flg + ".txt",new Object[]{price}));
 	    			ExtendedPlayerProperties.get(ep).setNpcTalk(EnumDqmNpcTalk.CASINOCOIN.getId(), flg);
 	    			ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
 
@@ -284,7 +211,7 @@ public class DqmEntityNPCKajinoCoin extends DqmNPCBase
 	    				//System.out.println("TEST : " + flg);
 	    				if(flg < 10)
 	    				{
-			    			ep.addChatMessage(new ChatComponentTranslation("msg.Casino.coin.messages.7.txt",new Object[] {}));
+			    			DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.Casino.coin.messages.7.txt",new Object[] {}));
 			    			ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
 	    				}else
 	    				{
@@ -293,13 +220,13 @@ public class DqmEntityNPCKajinoCoin extends DqmNPCBase
 
 	    					if(epMoney < price)
 	    					{
-	    		    			ep.addChatMessage(new ChatComponentTranslation("msg.Casino.coin.messages.39.txt",new Object[] {}));
+	    		    			DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.Casino.coin.messages.39.txt",new Object[] {}));
 	    		    			ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
 	    					}else
 	    					{
 	    			        	int COIN = ExtendedPlayerProperties3.get(ep).getCoin();
 	    			        	//System.out.println("TEST_Minus : " + value + " / " + COIN);
-	    			        	ep.addChatMessage(new ChatComponentTranslation("msg.Casino.coin.messages." + (flg + 20) + ".txt",new Object[] {}));
+	    			        	DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.Casino.coin.messages." + (flg + 20) + ".txt",new Object[] {}));
 
 	    			        	int gold = ExtendedPlayerProperties.get(ep).getGold();
 	    			        	ExtendedPlayerProperties.get(ep).setGold(gold - price);
@@ -318,15 +245,15 @@ public class DqmEntityNPCKajinoCoin extends DqmNPCBase
 	    					if(its.getItem() == DQMiscs.itemDouka)
 	    					{
 	    						ExtendedPlayerProperties3.get(ep).setCoin(COIN + 50);
-	    						ep.addChatMessage(new ChatComponentTranslation("msg.Casino.coin.messages.40.txt",new Object[] {}));
+	    						DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.Casino.coin.messages.40.txt",new Object[] {}));
 	    					}else if(its.getItem() == DQMiscs.itemGinka)
 	    					{
 	    						ExtendedPlayerProperties3.get(ep).setCoin(COIN + 150);
-	    						ep.addChatMessage(new ChatComponentTranslation("msg.Casino.coin.messages.41.txt",new Object[] {}));
+	    						DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.Casino.coin.messages.41.txt",new Object[] {}));
 	    					}else if(its.getItem() == DQMiscs.itemKinka)
 	    					{
 	    						ExtendedPlayerProperties3.get(ep).setCoin(COIN + 300);
-	    						ep.addChatMessage(new ChatComponentTranslation("msg.Casino.coin.messages.42.txt",new Object[] {}));
+	    						DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.Casino.coin.messages.42.txt",new Object[] {}));
 	    					}
 
     			        	ep.worldObj.playSoundAtEntity(ep, "dqr:player.okane", 1.0F, 1.0F);
@@ -337,7 +264,7 @@ public class DqmEntityNPCKajinoCoin extends DqmNPCBase
     			}
     		}else if(flg <= 6)
     		{
-    			ep.addChatMessage(new ChatComponentTranslation("msg.Casino.coin.messages." + flg + ".txt",new Object[] {}));
+    			DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.Casino.coin.messages." + flg + ".txt",new Object[] {}));
     			ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
 
     			ExtendedPlayerProperties.get(ep).setNpcTalk(EnumDqmNpcTalk.CASINOCOIN.getId(), flg + 1);

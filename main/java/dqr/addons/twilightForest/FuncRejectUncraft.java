@@ -25,9 +25,10 @@ public class FuncRejectUncraft {
 
     			if(blc != null)
     			{
+    				//if(DQR.debug == 2)System.out.println("TF_UNCRAFT_TEST A1" + blc.getUnlocalizedName());
     				tableRejectUncraft.put(Item.getItemFromBlock(blc), true);
     			}
-    		}catch (Exception e){}
+    		}catch (Exception e){if(DQR.debug == 2)System.out.println("TF_UNCRAFT_TEST A1");}
     	}
 
     	for(int cnt = 0; cnt < DQR.addons.rejectUncraft.length; cnt++)
@@ -38,9 +39,10 @@ public class FuncRejectUncraft {
 
     			if(itm != null)
     			{
+    				//if(DQR.debug == 2)System.out.println("TF_UNCRAFT_TEST A2" + itm.getUnlocalizedName());
     				tableRejectUncraft.put(itm, true);
     			}
-    		}catch (Exception e){}
+    		}catch (Exception e){if(DQR.debug == 2)System.out.println("TF_UNCRAFT_TEST A2");}
     	}
     }
 

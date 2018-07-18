@@ -227,11 +227,13 @@ public class GuiSubEquipContainer extends Container {
         Slot slot = (Slot) this.inventorySlots.get(p_82846_2_);
 
         //System.out.println("TEST:" + p_82846_2_);
+        System.out.println("TEST1:" + p_82846_1_.getCommandSenderName());
 
         if (slot != null && slot.getHasStack()) {
             ItemStack itemstack1 = slot.getStack();
             itemstack = itemstack1.copy();
 
+            System.out.println("TEST2");
             if (!(36 <= p_82846_2_ && p_82846_2_ <= 48)){
             	if (itemstack.getItem() instanceof ISubEquip && ((ISubEquip) itemstack.getItem()).isItemValid(EnumDqmSubEquipType.Piasu, itemstack)) {
 
@@ -249,8 +251,9 @@ public class GuiSubEquipContainer extends Container {
                     }
 
                 }else if (itemstack.getItem() instanceof ISubEquip && ((ISubEquip) itemstack.getItem()).isItemValid(EnumDqmSubEquipType.Shield, itemstack)) {
-
+                	System.out.println("TEST3");
                     if (this.checkSameItem(itemstack1, 47, 48) || !this.mergeItemStack(itemstack1, 47, 48, false)) {
+                    	System.out.println("TEST4");
                         return null;
                     }
 

@@ -31,14 +31,14 @@ public class MessageServerJobChangeHandler implements IMessageHandler<MessageSer
         {
 	        if(ExtendedPlayerProperties3.get(ep).getJobPermission(pat) == 0)
 	        {
-	        	ep.addChatMessage(new ChatComponentTranslation("msg.Dama1.messages.24.txt" ,new Object[] {}));
+	        	DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.Dama1.messages.24.txt" ,new Object[] {}));
 	        	ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
 	        	return null;
 	        }
 
 	        if(!DQR.jobChangeTable.getCheckJobChange(ep, pat))
 	        {
-	        	ep.addChatMessage(new ChatComponentTranslation("msg.Dama1.messages.25.txt" ,new Object[] {}));
+	        	DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.Dama1.messages.25.txt" ,new Object[] {}));
 	        	ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
 	        	return null;
 	        }
@@ -47,8 +47,8 @@ public class MessageServerJobChangeHandler implements IMessageHandler<MessageSer
         ExtendedPlayerProperties.get(ep).setJob(pat);
         ((ExtendedPlayerProperties)(ep.getExtendedProperties(ExtendedPlayerProperties.EXT_PROP_NAME))).loadProxyData((EntityPlayer)ep);
 
-        ep.addChatMessage(new ChatComponentTranslation("msg.Dama1.messages.22.txt" ,new Object[] {EnumDqmMessageConv.JobName.getStartS() + pat + EnumDqmMessageConv.JobName.getEndS()}));
-        ep.addChatMessage(new ChatComponentTranslation("msg.Dama1.messages.23.txt" ,new Object[] {}));
+        DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.Dama1.messages.22.txt" ,new Object[] {EnumDqmMessageConv.JobName.getStartS() + pat + EnumDqmMessageConv.JobName.getEndS()}));
+        DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.Dama1.messages.23.txt" ,new Object[] {}));
 
         //サーバーへ送った際に、EntityPlayerインスタンス（EntityPlayerMPインスタンス）はこのように取れる。
         //EntityPlayer entityPlayer = ctx.getServerHandler().playerEntity;

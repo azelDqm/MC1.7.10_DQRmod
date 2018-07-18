@@ -474,6 +474,10 @@ public class DqItem {
 		DQBuilders.itemBuilderDamaSW = new DqmItemBuilderNPC(EnumDqmBuilder.SHOP).setCreativeTab(DQR.tabs.DqmTabBuilder).setUnlocalizedName("dqm.BuilderDamaSW").setMaxStackSize(1).setTextureName("dqr:BuilderDama20W");
 		DQBuilders.itemBuilderDamaWW = new DqmItemBuilderNPC(EnumDqmBuilder.SHOP).setCreativeTab(DQR.tabs.DqmTabBuilder).setUnlocalizedName("dqm.BuilderDamaWW").setMaxStackSize(1).setTextureName("dqr:BuilderDama30W");
 
+		DQBuilders.itemBuilderShopBukiyaW3 = new DqmItemBuilderNPC(EnumDqmBuilder.SHOP).setCreativeTab(DQR.tabs.DqmTabBuilder).setUnlocalizedName("dqm.BuilderShopBukiW3").setMaxStackSize(1).setTextureName("dqr:Builder_Shop_BukiyaW");
+		DQBuilders.itemBuilderShopBukiyaW4 = new DqmItemBuilderNPC(EnumDqmBuilder.SHOP).setCreativeTab(DQR.tabs.DqmTabBuilder).setUnlocalizedName("dqm.BuilderShopBukiW4").setMaxStackSize(1).setTextureName("dqr:Builder_Shop_BukiyaW");
+		DQBuilders.itemBuilderShopBukiyaW5 = new DqmItemBuilderNPC(EnumDqmBuilder.SHOP).setCreativeTab(DQR.tabs.DqmTabBuilder).setUnlocalizedName("dqm.BuilderShopBukiW5").setMaxStackSize(1).setTextureName("dqr:Builder_Shop_BukiyaW");
+		DQBuilders.itemBuilderShopBukiyaW6 = new DqmItemBuilderNPC(EnumDqmBuilder.SHOP).setCreativeTab(DQR.tabs.DqmTabBuilder).setUnlocalizedName("dqm.BuilderShopBukiW6").setMaxStackSize(1).setTextureName("dqr:Builder_Shop_BukiyaW");
 		//転職証
 		DQEmblems.itemEmbCivilian = new DqmItemEmblemBase(EnumDqmJob.Asobinin).setCreativeTab(DQR.tabs.DqmTabMisc).setUnlocalizedName("dqm.itemEmbCivilian").setTextureName("dqr:EmbCivilian");
 		DQEmblems.itemEmbWarrior = new DqmItemEmblemBase(EnumDqmJob.Senshi).setCreativeTab(DQR.tabs.DqmTabMisc).setUnlocalizedName("dqm.itemEmbWarrior").setTextureName("dqr:EmbWarrior");
@@ -498,6 +502,12 @@ public class DqItem {
 		DQEmblems.itemEmbPirate = new DqmItemEmblemBase(EnumDqmJob.Kaizoku).setCreativeTab(DQR.tabs.DqmTabMisc).setUnlocalizedName("dqm.itemEmbPirate").setTextureName("dqr:EmbPirate");
 		DQEmblems.itemEmbMasterDragon = new DqmItemEmblemBase(EnumDqmJob.MASTERDRAGON).setCreativeTab(DQR.tabs.DqmTabMisc).setUnlocalizedName("dqm.itemEmbMasterDragon").setTextureName("dqr:EmbMasterDragon");
 
+		DQEmblems.itemEmbHituzikai = new DqmItemEmblemBase(EnumDqmJob.Hituzikai).setCreativeTab(DQR.tabs.DqmTabMisc).setUnlocalizedName("dqm.itemEmbHituzikai").setTextureName("dqr:EmbHituzikai");
+		DQEmblems.itemEmbFunanori = new DqmItemEmblemBase(EnumDqmJob.Funanori).setCreativeTab(DQR.tabs.DqmTabMisc).setUnlocalizedName("dqm.itemEmbFunanori").setTextureName("dqr:EmbFunanori");
+		DQEmblems.itemEmbDougutukai = new DqmItemEmblemBase(EnumDqmJob.Dougutukai).setCreativeTab(DQR.tabs.DqmTabMisc).setUnlocalizedName("dqm.itemEmbDougutukai").setTextureName("dqr:EmbDougutukai");
+		DQEmblems.itemEmbTentiraimeishi = new DqmItemEmblemBase(EnumDqmJob.Tentiraimeishi).setCreativeTab(DQR.tabs.DqmTabMisc).setUnlocalizedName("dqm.itemEmbTentiraimeishi").setTextureName("dqr:EmbTentiraimeishi");
+
+
 		DQEmblems.itemDamaCivilian = new DqmItemEmblemBase(EnumDqmJob.Asobinin).setUnlocalizedName("dqm.itemDamaCivilian").setTextureName("dqr:DamaCivilian");
 		DQEmblems.itemDamaWarrior = new DqmItemEmblemBase(EnumDqmJob.Senshi).setUnlocalizedName("dqm.itemDamaWarrior").setTextureName("dqr:DamaWarrior");
 		DQEmblems.itemDamaFighter = new DqmItemEmblemBase(EnumDqmJob.Budouka).setUnlocalizedName("dqm.itemDamaFighter").setTextureName("dqr:DamaFighter");
@@ -521,6 +531,10 @@ public class DqItem {
 		DQEmblems.itemDamaPirate = new DqmItemEmblemBase(EnumDqmJob.Kaizoku).setUnlocalizedName("dqm.itemDamaPirate").setTextureName("dqr:DamaPirate");
 		DQEmblems.itemDamaMasterDragon = new DqmItemEmblemBase(EnumDqmJob.MASTERDRAGON).setUnlocalizedName("dqm.itemDamaMasterDragon").setTextureName("dqr:DamaMasterDragon");
 
+		DQEmblems.itemDamaHituzikai = new DqmItemEmblemBase(EnumDqmJob.Hituzikai).setUnlocalizedName("dqm.itemDamaHituzikai").setTextureName("dqr:DamaHituzikai");
+		DQEmblems.itemDamaFunanori = new DqmItemEmblemBase(EnumDqmJob.Funanori).setUnlocalizedName("dqm.itemDamaFunanori").setTextureName("dqr:DamaFunanori");
+		DQEmblems.itemDamaDougutukai = new DqmItemEmblemBase(EnumDqmJob.Dougutukai).setUnlocalizedName("dqm.itemDamaDougutukai").setTextureName("dqr:DamaDougutukai");
+		DQEmblems.itemDamaTentiraimeishi = new DqmItemEmblemBase(EnumDqmJob.Tentiraimeishi).setUnlocalizedName("dqm.itemDamaTentiraimeishi").setTextureName("dqr:DamaTentiraimeishi");
 
 
 		//鉱石

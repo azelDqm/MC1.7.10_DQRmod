@@ -43,20 +43,20 @@ public class FuncDamageMessage {
 									DqmMobBase mob2 = (DqmMobBase)mob.shootingEntity;
 									if (DQR.conf.damageDigits == 1)
 									{
-										ep.addChatMessage(new ChatComponentTranslation("msg.fromDamage2.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + mob2.getEntityStringForce() + EnumDqmMessageConv.MonsterName.getEndS(), damageVal}));
+										DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.fromDamage2.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + mob2.getEntityStringForce() + EnumDqmMessageConv.MonsterName.getEndS(), damageVal}));
 									}else
 									{
-										ep.addChatMessage(new ChatComponentTranslation("msg.fromDamage.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + mob2.getEntityStringForce() + EnumDqmMessageConv.MonsterName.getEndS(), (int)damageVal}));
+										DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.fromDamage.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + mob2.getEntityStringForce() + EnumDqmMessageConv.MonsterName.getEndS(), (int)damageVal}));
 									}
 								}else
 								{
 
 									if (DQR.conf.damageDigits == 1)
 									{
-										ep.addChatMessage(new ChatComponentTranslation("msg.fromDamage2.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + mob.getCommandSenderName() + EnumDqmMessageConv.MonsterName.getEndS(), damageVal}));
+										DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.fromDamage2.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + mob.getCommandSenderName() + EnumDqmMessageConv.MonsterName.getEndS(), damageVal}));
 									}else
 									{
-										ep.addChatMessage(new ChatComponentTranslation("msg.fromDamage.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + mob.getCommandSenderName() + EnumDqmMessageConv.MonsterName.getEndS(), (int)damageVal}));
+										DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.fromDamage.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + mob.getCommandSenderName() + EnumDqmMessageConv.MonsterName.getEndS(), (int)damageVal}));
 									}
 								}
 
@@ -65,35 +65,35 @@ public class FuncDamageMessage {
 
 								if (DQR.conf.damageDigits == 1)
 								{
-									ep.addChatMessage(new ChatComponentTranslation("msg.fromDamage2.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + mob.getCommandSenderName() + EnumDqmMessageConv.MonsterName.getEndS(), damageVal}));
+									DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.fromDamage2.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + mob.getCommandSenderName() + EnumDqmMessageConv.MonsterName.getEndS(), damageVal}));
 								}else
 								{
-									ep.addChatMessage(new ChatComponentTranslation("msg.fromDamage.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + mob.getCommandSenderName() + EnumDqmMessageConv.MonsterName.getEndS(), (int)damageVal}));
+									DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.fromDamage.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + mob.getCommandSenderName() + EnumDqmMessageConv.MonsterName.getEndS(), (int)damageVal}));
 								}
 							}
-							//ep.addChatMessage(new ChatComponentTranslation("msg.fromDamage.txt",new Object[] { EnumDqmMessageConv.MonsterName.getStartS() + mob.getEntityStringForce() + EnumDqmMessageConv.MonsterName.getEndS(), damageVal}));
+							//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.fromDamage.txt",new Object[] { EnumDqmMessageConv.MonsterName.getStartS() + mob.getEntityStringForce() + EnumDqmMessageConv.MonsterName.getEndS(), damageVal}));
 						}
 						else if(p_94547_1_.getEntity() instanceof DqmMobBase)
 						{
 							DqmMobBase mob = (DqmMobBase)p_94547_1_.getEntity();
 							if (DQR.conf.damageDigits == 1)
 							{
-								ep.addChatMessage(new ChatComponentTranslation("msg.fromDamage2.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + mob.getEntityStringForce() + EnumDqmMessageConv.MonsterName.getEndS(), damageVal}));
+								DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.fromDamage2.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + mob.getEntityStringForce() + EnumDqmMessageConv.MonsterName.getEndS(), damageVal}));
 							}else
 							{
-								ep.addChatMessage(new ChatComponentTranslation("msg.fromDamage.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + mob.getEntityStringForce() + EnumDqmMessageConv.MonsterName.getEndS(), (int)damageVal}));
+								DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.fromDamage.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + mob.getEntityStringForce() + EnumDqmMessageConv.MonsterName.getEndS(), (int)damageVal}));
 							}
-							//ep.addChatMessage(new ChatComponentTranslation("msg.fromDamage.txt",new Object[] { EnumDqmMessageConv.MonsterName.getStartS() + mob.getEntityStringForce() + EnumDqmMessageConv.MonsterName.getEndS(), damageVal}));
+							//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.fromDamage.txt",new Object[] { EnumDqmMessageConv.MonsterName.getStartS() + mob.getEntityStringForce() + EnumDqmMessageConv.MonsterName.getEndS(), damageVal}));
 						}else
 						{
 							if (DQR.conf.damageDigits == 1)
 							{
-								ep.addChatMessage(new ChatComponentTranslation("msg.fromDamage2.txt",new Object[] {p_94547_1_.getEntity().getCommandSenderName(), damageVal}));
+								DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.fromDamage2.txt",new Object[] {p_94547_1_.getEntity().getCommandSenderName(), damageVal}));
 							}else
 							{
-								ep.addChatMessage(new ChatComponentTranslation("msg.fromDamage.txt",new Object[] {p_94547_1_.getEntity().getCommandSenderName(), (int)damageVal}));
+								DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.fromDamage.txt",new Object[] {p_94547_1_.getEntity().getCommandSenderName(), (int)damageVal}));
 							}
-							//ep.addChatMessage(new ChatComponentTranslation("msg.fromDamage.txt",new Object[] { p_94547_1_.getEntity().getCommandSenderName(), damageVal}));
+							//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.fromDamage.txt",new Object[] { p_94547_1_.getEntity().getCommandSenderName(), damageVal}));
 						}
 					}else
 					{
@@ -110,20 +110,20 @@ public class FuncDamageMessage {
 										DqmMobBase mob2 = (DqmMobBase)mob.shootingEntity;
 										if (DQR.conf.damageDigits == 1)
 										{
-											ep.addChatMessage(new ChatComponentTranslation("msg.fromDamage2.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + mob2.getEntityStringForce() + EnumDqmMessageConv.MonsterName.getEndS(), damageVal}));
+											DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.fromDamage2.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + mob2.getEntityStringForce() + EnumDqmMessageConv.MonsterName.getEndS(), damageVal}));
 										}else
 										{
-											ep.addChatMessage(new ChatComponentTranslation("msg.fromDamage.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + mob2.getEntityStringForce() + EnumDqmMessageConv.MonsterName.getEndS(), (int)damageVal}));
+											DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.fromDamage.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + mob2.getEntityStringForce() + EnumDqmMessageConv.MonsterName.getEndS(), (int)damageVal}));
 										}
 									}else
 									{
 
 										if (DQR.conf.damageDigits == 1)
 										{
-											ep.addChatMessage(new ChatComponentTranslation("msg.fromDamage2.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + mob.getCommandSenderName() + EnumDqmMessageConv.MonsterName.getEndS(), damageVal}));
+											DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.fromDamage2.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + mob.getCommandSenderName() + EnumDqmMessageConv.MonsterName.getEndS(), damageVal}));
 										}else
 										{
-											ep.addChatMessage(new ChatComponentTranslation("msg.fromDamage.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + mob.getCommandSenderName() + EnumDqmMessageConv.MonsterName.getEndS(), (int)damageVal}));
+											DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.fromDamage.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + mob.getCommandSenderName() + EnumDqmMessageConv.MonsterName.getEndS(), (int)damageVal}));
 										}
 									}
 
@@ -132,35 +132,35 @@ public class FuncDamageMessage {
 
 									if (DQR.conf.damageDigits == 1)
 									{
-										ep.addChatMessage(new ChatComponentTranslation("msg.fromDamage2.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + mob.getCommandSenderName() + EnumDqmMessageConv.MonsterName.getEndS(), damageVal}));
+										DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.fromDamage2.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + mob.getCommandSenderName() + EnumDqmMessageConv.MonsterName.getEndS(), damageVal}));
 									}else
 									{
-										ep.addChatMessage(new ChatComponentTranslation("msg.fromDamage.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + mob.getCommandSenderName() + EnumDqmMessageConv.MonsterName.getEndS(), (int)damageVal}));
+										DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.fromDamage.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + mob.getCommandSenderName() + EnumDqmMessageConv.MonsterName.getEndS(), (int)damageVal}));
 									}
 								}
-								//ep.addChatMessage(new ChatComponentTranslation("msg.fromDamage.txt",new Object[] { EnumDqmMessageConv.MonsterName.getStartS() + mob.getEntityStringForce() + EnumDqmMessageConv.MonsterName.getEndS(), damageVal}));
+								//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.fromDamage.txt",new Object[] { EnumDqmMessageConv.MonsterName.getStartS() + mob.getEntityStringForce() + EnumDqmMessageConv.MonsterName.getEndS(), damageVal}));
 							}
 							else if(p_94547_1_.getSourceOfDamage() instanceof DqmMobBase)
 							{
 								DqmMobBase mob = (DqmMobBase)p_94547_1_.getSourceOfDamage();
 								if (DQR.conf.damageDigits == 1)
 								{
-									ep.addChatMessage(new ChatComponentTranslation("msg.fromDamage2.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + mob.getEntityStringForce() + EnumDqmMessageConv.MonsterName.getEndS(), damageVal}));
+									DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.fromDamage2.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + mob.getEntityStringForce() + EnumDqmMessageConv.MonsterName.getEndS(), damageVal}));
 								}else
 								{
-									ep.addChatMessage(new ChatComponentTranslation("msg.fromDamage.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + mob.getEntityStringForce() + EnumDqmMessageConv.MonsterName.getEndS(), (int)damageVal}));
+									DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.fromDamage.txt",new Object[] {EnumDqmMessageConv.MonsterName.getStartS() + mob.getEntityStringForce() + EnumDqmMessageConv.MonsterName.getEndS(), (int)damageVal}));
 								}
-								//ep.addChatMessage(new ChatComponentTranslation("msg.fromDamage.txt",new Object[] { EnumDqmMessageConv.MonsterName.getStartS() + mob.getEntityStringForce() + EnumDqmMessageConv.MonsterName.getEndS(), damageVal}));
+								//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.fromDamage.txt",new Object[] { EnumDqmMessageConv.MonsterName.getStartS() + mob.getEntityStringForce() + EnumDqmMessageConv.MonsterName.getEndS(), damageVal}));
 							}else
 							{
 								if (DQR.conf.damageDigits == 1)
 								{
-									ep.addChatMessage(new ChatComponentTranslation("msg.fromDamage2.txt",new Object[] {p_94547_1_.getSourceOfDamage().getCommandSenderName(), damageVal}));
+									DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.fromDamage2.txt",new Object[] {p_94547_1_.getSourceOfDamage().getCommandSenderName(), damageVal}));
 								}else
 								{
-									ep.addChatMessage(new ChatComponentTranslation("msg.fromDamage.txt",new Object[] {p_94547_1_.getSourceOfDamage().getCommandSenderName(), (int)damageVal}));
+									DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.fromDamage.txt",new Object[] {p_94547_1_.getSourceOfDamage().getCommandSenderName(), (int)damageVal}));
 								}
-								//ep.addChatMessage(new ChatComponentTranslation("msg.fromDamage.txt",new Object[] { p_94547_1_.getSourceOfDamage().getCommandSenderName(), damageVal}));
+								//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.fromDamage.txt",new Object[] { p_94547_1_.getSourceOfDamage().getCommandSenderName(), damageVal}));
 							}
 						}
 					}
@@ -175,22 +175,22 @@ public class FuncDamageMessage {
 				{
 					if (DQR.conf.damageDigits == 1)
 					{
-						ep.addChatMessage(new ChatComponentTranslation("msg.fromDamage2." + p_94547_1_.getDamageType() + ".txt",new Object[] {damageVal}));
+						DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.fromDamage2." + p_94547_1_.getDamageType() + ".txt",new Object[] {damageVal}));
 					}else
 					{
-						ep.addChatMessage(new ChatComponentTranslation("msg.fromDamage." + p_94547_1_.getDamageType() + ".txt",new Object[] {(int)damageVal}));
+						DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.fromDamage." + p_94547_1_.getDamageType() + ".txt",new Object[] {(int)damageVal}));
 					}
 				}else
 				{
 					if (DQR.conf.damageDigits == 1)
 					{
-						ep.addChatMessage(new ChatComponentTranslation("msg.fromDamageNo2.txt",new Object[] {p_94547_1_.getDamageType(), damageVal}));
+						DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.fromDamageNo2.txt",new Object[] {p_94547_1_.getDamageType(), damageVal}));
 					}else
 					{
-						ep.addChatMessage(new ChatComponentTranslation("msg.fromDamageNo.txt",new Object[] {p_94547_1_.getDamageType(), (int)damageVal}));
+						DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.fromDamageNo.txt",new Object[] {p_94547_1_.getDamageType(), (int)damageVal}));
 					}
 				}
-				//ep.addChatMessage(new ChatComponentTranslation("msg.fromDamage." + p_94547_1_.getDamageType() + ".txt",new Object[] {damageVal}));
+				//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.fromDamage." + p_94547_1_.getDamageType() + ".txt",new Object[] {damageVal}));
 			}
 		}
 	}

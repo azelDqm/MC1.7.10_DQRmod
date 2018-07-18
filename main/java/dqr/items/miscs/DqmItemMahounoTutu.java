@@ -128,7 +128,7 @@ public class DqmItemMahounoTutu extends DqmItemMiscBase{
 				}
         	}else
         	{
-        		ep.addChatMessage(new ChatComponentTranslation("msg.petTame.maxnumber.txt",new Object[] {}));
+        		DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.petTame.maxnumber.txt",new Object[] {}));
         		ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
         	}
 

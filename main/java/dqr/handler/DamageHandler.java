@@ -36,6 +36,7 @@ import dqr.DQR;
 import dqr.api.Items.DQAccessories;
 import dqr.api.enums.EnumDqmElement;
 import dqr.api.enums.EnumDqmEndoraParam;
+import dqr.api.enums.EnumDqmJob;
 import dqr.api.enums.EnumDqmMessageConv;
 import dqr.api.enums.EnumDqmMobRoot;
 import dqr.api.enums.EnumDqmSkillW;
@@ -44,7 +45,10 @@ import dqr.api.event.DqrDamageEntityEvent;
 import dqr.api.potion.DQPotionEtc;
 import dqr.api.potion.DQPotionMinus;
 import dqr.api.potion.DQPotionPlus;
+import dqr.entity.magicEntity.magic.MagicEntity;
 import dqr.entity.mobEntity.DqmMobBase;
+import dqr.entity.petEntity.DqmPetBase;
+import dqr.entity.petEntity.InventoryPetInventory;
 import dqr.entity.throwingEntity.throwing.ThrowingEntity;
 import dqr.gui.subEquip.InventorySubEquip;
 import dqr.items.base.DqmItemBowBase;
@@ -329,6 +333,7 @@ public class DamageHandler {
 	@SubscribeEvent(priority=EventPriority.LOWEST)
 	public void onLivingHurtEvent(LivingHurtEvent event) {
 
+		//DQR.func.debugString("TEST??? : ", this.getClass(), 3);
 		float baseDamage = event.ammount;
 		/*
 		if(event.source.getEntity() instanceof EntityPlayer)
@@ -553,6 +558,30 @@ public class DamageHandler {
 			}
 		}
 
+		if(event.entityLiving instanceof EntityPlayer)
+		{
+			EntityPlayer ep = (EntityPlayer)event.entityLiving;
+			int epJob = ExtendedPlayerProperties.get(ep).getJob();
+
+			if(epJob == EnumDqmJob.Haguremetal.getId() || epJob == EnumDqmJob.MASTERDRAGON.getId())
+			{
+				if(DQR.damageSource.isDqmBreathDamage(event.source))
+				{
+					event.ammount = event.ammount * 0.025f;
+				}else if(DQR.damageSource.isDqmMagicDamage(event.source))
+				{
+					event.ammount = event.ammount * 0.0f;
+				}
+			}else if(epJob == EnumDqmJob.Dragon.getId())
+			{
+				if(DQR.damageSource.isDqmBreathDamage(event.source))
+				{
+					event.ammount = event.ammount * 0.5f;
+				}
+			}
+
+		}
+
 		if(event.entityLiving != null)
 		{
 			DqrDamageEntityEvent xev = new DqrDamageEntityEvent(2, event.entityLiving, event.source, event.ammount, baseDamage, event.ammount);
@@ -667,13 +696,13 @@ public class DamageHandler {
 
 						EnumDqmSkillW skillW = DQR.enumGetter.getSkillW(weapon, weaponSkill);
 
-						//ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {}));
+						//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {}));
 
 						if(skillW != null && skillW.getFunc() == 1 && skillW.getRATE() > rand.nextInt(100))
 						{
 							boolean hitFlg = false;
-							//ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {}));
-							//ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.MonsterName.getEndS()}));
+							//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {}));
+							//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.MonsterName.getEndS()}));
 
 							if(weapon == EnumDqmWeapon.DqmBow.getId())
 							{
@@ -693,7 +722,7 @@ public class DamageHandler {
 								}else if(weaponSkill ==4)
 								{
 									//ニードルショット
-									if(!ep.getCommandSenderName().equalsIgnoreCase("[Minecraft]"))ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
+									DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
 
 									if(rand.nextInt(5) == 0)
 									{
@@ -725,7 +754,7 @@ public class DamageHandler {
 								if(weaponSkill == 0)
 								{
 									//クロスカッター
-									if(!ep.getCommandSenderName().equalsIgnoreCase("[Minecraft]"))ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
+									DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
 
 									List list = ep.worldObj.getEntitiesWithinAABBExcludingEntity(evb,
 							            		evb.boundingBox.addCoord(evb.motionX, evb.motionY, evb.motionZ).expand(5.0D, 5.0D, 5.0D));
@@ -747,7 +776,7 @@ public class DamageHandler {
 								}else if(weaponSkill == 1)
 								{
 					            	//パワフルスロー
-									if(!ep.getCommandSenderName().equalsIgnoreCase("[Minecraft]"))ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
+									DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
 
 									List list = ep.worldObj.getEntitiesWithinAABBExcludingEntity(evb,
 							            		evb.boundingBox.addCoord(evb.motionX, evb.motionY, evb.motionZ).expand(10.0D, 5.0D, 10.0D));
@@ -778,7 +807,7 @@ public class DamageHandler {
 								}else if(weaponSkill == 5)
 								{
 									//シャインスコール
-									if(!ep.getCommandSenderName().equalsIgnoreCase("[Minecraft]"))ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
+									DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
 
 									event.ammount = 100.0F;
 									List list = ep.worldObj.getEntitiesWithinAABBExcludingEntity(evb,
@@ -801,7 +830,7 @@ public class DamageHandler {
 								}else if(weaponSkill == 6)
 								{
 									//バーニングバード
-									if(!ep.getCommandSenderName().equalsIgnoreCase("[Minecraft]"))ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
+									DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
 
 									List list = ep.worldObj.getEntitiesWithinAABBExcludingEntity(evb,
 							            		evb.boundingBox.addCoord(evb.motionX, evb.motionY, evb.motionZ).expand(8.0D, 5.0D, 8.0D));
@@ -827,7 +856,7 @@ public class DamageHandler {
 								}else if(weaponSkill == 8)
 								{
 					            	//メタルウィング
-									if(!ep.getCommandSenderName().equalsIgnoreCase("[Minecraft]"))ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
+									DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
 
 									List list = ep.worldObj.getEntitiesWithinAABBExcludingEntity(evb,
 							            		evb.boundingBox.addCoord(evb.motionX, evb.motionY, evb.motionZ).expand(10.0D, 5.0D, 10.0D));
@@ -866,7 +895,7 @@ public class DamageHandler {
 
 							if(hitFlg)
 							{
-								if(!ep.getCommandSenderName().equalsIgnoreCase("[Minecraft]"))ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
+								DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
 							}
 						}
 					}
@@ -996,7 +1025,8 @@ public class DamageHandler {
 				EntityPlayer epr = (EntityPlayer)event.source.getEntity();
 				int criticalVal = ExtendedPlayerProperties.get(epr).getKaisinritu() + 5;
 
-				if(event.source.getDamageType().equalsIgnoreCase(DQR.damageSource.DqmPlayerSkillCri.getDamageType()) ||
+				if(DQR.debug == 8 ||
+				   event.source.getDamageType().equalsIgnoreCase(DQR.damageSource.DqmPlayerSkillCri.getDamageType()) ||
 				   event.source.getDamageType().equalsIgnoreCase(DQR.damageSource.DqmPlayerSpecialCri.getDamageType()) ||
 					(rand.nextInt(1000) < criticalVal &&
 					 (epr.getHeldItem() != null || (epr.getHeldItem() != null && (epr.getHeldItem().getItem() instanceof DqmItemWeaponBase || epr.getHeldItem().getItem() instanceof DqmItemBowBase)))
@@ -1009,6 +1039,11 @@ public class DamageHandler {
 							        + ExtendedPlayerProperties.get(epr).getKaisinMin());
 
 
+					if(event.entityLiving instanceof DqmMobBase)
+					{
+						DqmMobBase mob = (DqmMobBase)event.entityLiving;
+						mob.flgGetKaisinDam = true;
+					}
 					/*
 					DQR.func.debugString("TEST1 : " +  (event.entityLiving == null ? "Line1" : "Line2"));
 					DQR.func.debugString("TEST2 : " +  (event.entityLiving.getCommandSenderName() == null ? "Line1" : "Line2"));
@@ -1018,7 +1053,7 @@ public class DamageHandler {
 
 					if(!epr.worldObj.isRemote && event.entityLiving != null)
 					{
-						if(!epr.getCommandSenderName().equalsIgnoreCase("[Minecraft]"))epr.addChatMessage(new ChatComponentTranslation("msg.epCritical.txt",new Object[] { event.entityLiving.getCommandSenderName(), (int)event.ammount}));
+						DQR.func.doAddChatMessageFix(epr, new ChatComponentTranslation("msg.epCritical.txt",new Object[] { event.entityLiving.getCommandSenderName(), (int)event.ammount}));
 					}
 					epr.worldObj.playSoundAtEntity(epr, "dqr:player.kaisin", 0.3F, 1.0F);
 					criticalFlg = true;
@@ -1089,16 +1124,16 @@ public class DamageHandler {
 							 event.source.getDamageType().equalsIgnoreCase(DQR.damageSource.DqmPlayerSpecialDeath.getDamageType())) &&
 							event.ammount > 1.0F)
 						{
-							if(!epr.getCommandSenderName().equalsIgnoreCase("[Minecraft]"))epr.addChatMessage(new ChatComponentTranslation("msg.toDamage3.txt",new Object[] {event.entityLiving.getCommandSenderName()}));
+							DQR.func.doAddChatMessageFix(epr, new ChatComponentTranslation("msg.toDamage3.txt",new Object[] {event.entityLiving.getCommandSenderName()}));
 						}
 						else if (DQR.conf.damageDigits == 1)
 						{
-							if(!epr.getCommandSenderName().equalsIgnoreCase("[Minecraft]"))epr.addChatMessage(new ChatComponentTranslation("msg.toDamage2.txt",new Object[] {event.entityLiving.getCommandSenderName(), dam}));
+							DQR.func.doAddChatMessageFix(epr, new ChatComponentTranslation("msg.toDamage2.txt",new Object[] {event.entityLiving.getCommandSenderName(), dam}));
 						}else
 						{
-							if(!epr.getCommandSenderName().equalsIgnoreCase("[Minecraft]"))epr.addChatMessage(new ChatComponentTranslation("msg.toDamage.txt",new Object[] {event.entityLiving.getCommandSenderName(), (int)dam}));
+							DQR.func.doAddChatMessageFix(epr, new ChatComponentTranslation("msg.toDamage.txt",new Object[] {event.entityLiving.getCommandSenderName(), (int)dam}));
 						}
-						//epr.addChatMessage(new ChatComponentTranslation("msg.toDamage.txt",new Object[] {event.entityLiving.getCommandSenderName(), dam}));
+						//DQR.func.doAddChatMessageFix(epr, new ChatComponentTranslation("msg.toDamage.txt",new Object[] {event.entityLiving.getCommandSenderName(), dam}));
 					}
 				}
 
@@ -1176,7 +1211,7 @@ public class DamageHandler {
 
 				if(!ep.worldObj.isRemote && criticalFlg)
 				{
-					if(!ep.getCommandSenderName().equalsIgnoreCase("[Minecraft]"))ep.addChatMessage(new ChatComponentTranslation("msg.mobCritical.txt",new Object[] { event.source.getEntity().getCommandSenderName(), (int)event.ammount}));
+					DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.mobCritical.txt",new Object[] { event.source.getEntity().getCommandSenderName(), (int)event.ammount}));
 				}
 				if (DQR.debug == 0)
 				{
@@ -1184,7 +1219,7 @@ public class DamageHandler {
 				}
 
 				int bougyoryoku;
-				if(criticalFlg)
+				if(criticalFlg || event.source.getEntity() instanceof MagicEntity || event.source.getSourceOfDamage() instanceof MagicEntity)
 				{
 					bougyoryoku = 0;
 				}else
@@ -1194,6 +1229,18 @@ public class DamageHandler {
 
 				event.ammount = event.ammount - bougyoryoku;
 
+
+				//職業はぐれメタルの場合の物理耐性
+				if(ExtendedPlayerProperties.get(ep).getJob() == EnumDqmJob.Haguremetal.getId())
+				{
+					if(criticalFlg || event.source.getEntity() instanceof MagicEntity || event.source.getSourceOfDamage() instanceof MagicEntity)
+					{
+
+					}else
+					{
+						event.ammount = event.ammount * 0.001f;
+					}
+				}
 				if(event.entityLiving != null)
 				{
 					DqrDamageEntityEvent xev = new DqrDamageEntityEvent(9, event.entityLiving, event.source, event.ammount, baseDamage, preDamage);
@@ -1205,6 +1252,14 @@ public class DamageHandler {
 				{
 					ep.worldObj.playSoundAtEntity(ep, "dqr:player.miss", 1.0F, 1.0F);
 				}
+			}else if(event.entityLiving instanceof DqmPetBase)
+			{
+				DqmPetBase pet = (DqmPetBase)event.entityLiving;
+
+				//ep.inventory.damageArmor(event.ammount);
+
+				InventoryPetInventory equipment = new InventoryPetInventory(pet);
+		        equipment.openInventory();
 			}else if(event.entityLiving instanceof DqmMobBase)
 			{
 
@@ -1221,7 +1276,7 @@ public class DamageHandler {
 			{
 				if(!ep.worldObj.isRemote)
 				{
-					ep.addChatMessage(new ChatComponentTranslation("msg.fromDamage.txt",new Object[] { event.source.getEntity().getCommandSenderName(), (int)event.ammount}));
+					DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.fromDamage.txt",new Object[] { event.source.getEntity().getCommandSenderName(), (int)event.ammount}));
 				}
 			}
 		}

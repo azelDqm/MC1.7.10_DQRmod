@@ -74,7 +74,7 @@ public class GuiCasinoCCRGuiContainer extends GuiContainer
 
     private static final ResourceLocation dialog = new ResourceLocation("dqr", "textures/casino/dialog.png");
 
-
+    public int debugKey = -1;
     public GuiTextField commandTextField;
     public int[] suraBox = new int[5];
     //public GuiTextField commandTextField;
@@ -149,6 +149,8 @@ public class GuiCasinoCCRGuiContainer extends GuiContainer
     protected void keyTyped(char p_73869_1_, int p_73869_2_)
     {
 
+    	System.out.println("KEY : " +  p_73869_2_);
+    	debugKey = p_73869_2_;
     	if(this.gamePhase == 0 || this.gamePhase == 99)
     	{
 	    	if(p_73869_2_ == 203)
@@ -604,6 +606,40 @@ public class GuiCasinoCCRGuiContainer extends GuiContainer
     			dice2 = rand.nextInt(6) + 1;
     			dice3 = rand.nextInt(6) + 1;
 
+    			if(DQR.debug == 1)
+    			{
+    				if(debugKey == 59)
+    				{
+    					dice1 = 5;
+    					dice2 = 4;
+    					dice3 = 6;
+    				}else if(debugKey == 60)
+    				{
+    					dice1 = 1;
+    					dice2 = 1;
+    					dice3 = 1;
+    				}else if(debugKey == 60)
+    				{
+    					dice1 = 3;
+    					dice2 = 4;
+    					dice3 = 5;
+    				}else if(debugKey == 60)
+    				{
+    					dice1 = 1;
+    					dice2 = 1;
+    					dice3 = 1;
+    				}else if(debugKey == 61)
+    				{
+    					dice1 = 1;
+    					dice2 = 2;
+    					dice3 = 3;
+    				}else if(debugKey == 62)
+    				{
+    					dice1 = 4;
+    					dice2 = 2;
+    					dice3 = 4;
+    				}
+    			}
 	    		ThreadCasinoCCR threadCCR = new ThreadCasinoCCR(epa, this, this.gamePhase, p_146284_1_.id);
 	    		threadCCR.start();
     		}

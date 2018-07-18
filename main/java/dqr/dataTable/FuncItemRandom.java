@@ -597,7 +597,7 @@ public class FuncItemRandom {
 		Item item = null;
 
 
-		switch(rand.nextInt(7))
+		switch(rand.nextInt(9))
 		{
 			case 0: item = DQEmblems.itemEmbCivilian; break;
 			case 1: item = DQEmblems.itemEmbWarrior; break;
@@ -606,6 +606,8 @@ public class FuncItemRandom {
 			case 4: item = DQEmblems.itemEmbPriest; break;
 			case 5: item = DQEmblems.itemEmbMerchant; break;
 			case 6: item = DQEmblems.itemEmbThief; break;
+			case 7: item = DQEmblems.itemEmbFunanori; break;
+			case 8: item = DQEmblems.itemEmbHituzikai; break;
 		}
 
 		if(item != null)
@@ -628,7 +630,7 @@ public class FuncItemRandom {
 		Item item = null;
 
 
-		switch(rand.nextInt(7))
+		switch(rand.nextInt(8))
 		{
 			case 0: item = DQEmblems.itemEmbBattleMaster; break;
 			case 1: item = DQEmblems.itemEmbSage; break;
@@ -637,6 +639,7 @@ public class FuncItemRandom {
 			case 4: item = DQEmblems.itemEmbRanger; break;
 			case 5: item = DQEmblems.itemEmbDancer; break;
 			case 6: item = DQEmblems.itemEmbPirate; break;
+			case 7: item = DQEmblems.itemEmbMonsterTamer; break;
 		}
 
 		if(item != null)
@@ -659,12 +662,13 @@ public class FuncItemRandom {
 		Item item = null;
 
 
-		switch(rand.nextInt(4))
+		switch(rand.nextInt(5))
 		{
 			case 0: item = DQEmblems.itemEmbHero; break;
-			case 1: item = DQEmblems.itemEmbMonsterTamer; break;
-			case 2: item = DQEmblems.itemEmbSuperStar; break;
-			case 3: item = DQEmblems.itemEmbGodHnad; break;
+			case 1: item = DQEmblems.itemEmbDougutukai; break;
+			case 2: item = DQEmblems.itemEmbTentiraimeishi; break;
+			case 3: item = DQEmblems.itemEmbSuperStar; break;
+			case 4: item = DQEmblems.itemEmbGodHnad; break;
 		}
 
 		if(item != null)

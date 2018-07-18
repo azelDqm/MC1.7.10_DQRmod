@@ -57,7 +57,7 @@ public class DqmItemMagicRuraSinC extends DqmItemMagicBase{
 		pe = par3EntityPlayer.getActivePotionEffect(DQPotionMinus.debuffMahoton);
 		if(pe != null && par3EntityPlayer.worldObj.isRemote)
 		{
-	  		par3EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.magic.mahoton.txt",new Object[] {}));
+	  		DQR.func.doAddChatMessageFix(par3EntityPlayer, new ChatComponentTranslation("msg.magic.mahoton.txt",new Object[] {}));
     		par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.pi", 1.0F, 1.0F);
 
 			return par1ItemStack;
@@ -65,7 +65,7 @@ public class DqmItemMagicRuraSinC extends DqmItemMagicBase{
 
 		if(DQR.func.isBind(par3EntityPlayer) && par3EntityPlayer.worldObj.isRemote)
 		{
-	  		par3EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.magic.rariho.txt",new Object[] {}));
+	  		DQR.func.doAddChatMessageFix(par3EntityPlayer, new ChatComponentTranslation("msg.magic.rariho.txt",new Object[] {}));
     		par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.pi", 1.0F, 1.0F);
 
 			return par1ItemStack;
@@ -75,7 +75,7 @@ public class DqmItemMagicRuraSinC extends DqmItemMagicBase{
 	    	{
     			if(!DQR.magicTable.magicEnable(par3EntityPlayer, this) && DQR.debug == 0)
     			{
-    				par3EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.magic.noLv.txt",new Object[] {}));
+    				DQR.func.doAddChatMessageFix(par3EntityPlayer, new ChatComponentTranslation("msg.magic.noLv.txt",new Object[] {}));
     				par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.pi", 1.0F, 1.0F);
     			}else
     			{
@@ -85,21 +85,21 @@ public class DqmItemMagicRuraSinC extends DqmItemMagicBase{
 	    				int select = ExtendedPlayerProperties.get(par3EntityPlayer).getRuraSinSelectX(this);
 	    				if(select == 9)
 	    				{
-	    					par3EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.magic.ruraMissSlot.txt",new Object[] {}));
+	    					DQR.func.doAddChatMessageFix(par3EntityPlayer, new ChatComponentTranslation("msg.magic.ruraMissSlot.txt",new Object[] {}));
 	        				par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.pi", 1.0F, 1.0F);
 	    				}else
 	    				{
 		    				if(DQR.conf.RuraSinC_IGF == 2 || (DQR.conf.RuraSinC_IGF == 1 && flg))
 		    				{
 		    					DQR.conf.setRuraSinCoordinates(select, (int)par3EntityPlayer.posX, (int)par3EntityPlayer.posY, (int)par3EntityPlayer.posZ, par3EntityPlayer.dimension);
-		    	    	        par3EntityPlayer.addChatMessage(new ChatComponentTranslation("dqm.iteminfo.kimeraLoc.2.txt",new Object[] {par3EntityPlayer.dimension,
+		    	    	        DQR.func.doAddChatMessageFix(par3EntityPlayer, new ChatComponentTranslation("dqm.iteminfo.kimeraLoc.2.txt",new Object[] {par3EntityPlayer.dimension,
 		    	    	        		Math.floor(par3EntityPlayer.posX),
 		    	    	        		Math.floor(par3EntityPlayer.posY),
 		    	    	        		Math.floor(par3EntityPlayer.posZ)}));
 		    					par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.mira", 0.9F, 0.9F);
 		    				}else
 		    				{
-		        				par3EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.magic.ruraNoPerm.txt",new Object[] {}));
+		        				DQR.func.doAddChatMessageFix(par3EntityPlayer, new ChatComponentTranslation("msg.magic.ruraNoPerm.txt",new Object[] {}));
 		        				par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.pi", 1.0F, 1.0F);
 		    				}
 	    				}
@@ -114,7 +114,7 @@ public class DqmItemMagicRuraSinC extends DqmItemMagicBase{
 	    			{
 	        			if(!DQR.magicTable.magicEnable(par3EntityPlayer, this) && DQR.debug == 0)
 	        			{
-	        				par3EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.magic.noLv.txt",new Object[] {}));
+	        				DQR.func.doAddChatMessageFix(par3EntityPlayer, new ChatComponentTranslation("msg.magic.noLv.txt",new Object[] {}));
 	        				par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.pi", 1.0F, 1.0F);
 	        			}else
 	        			{
@@ -157,13 +157,13 @@ public class DqmItemMagicRuraSinC extends DqmItemMagicBase{
 
 	    		    	        if(setEnable == 0)
 	    		    	        {
-	    	        				par3EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.magic.ruraNoPos0.txt",new Object[] {}));
-	    	        				par3EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.magic.ruraNoPos1.txt",new Object[] {}));
+	    	        				DQR.func.doAddChatMessageFix(par3EntityPlayer, new ChatComponentTranslation("msg.magic.ruraNoPos0.txt",new Object[] {}));
+	    	        				DQR.func.doAddChatMessageFix(par3EntityPlayer, new ChatComponentTranslation("msg.magic.ruraNoPos1.txt",new Object[] {}));
 	    	        				par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.pi", 1.0F, 1.0F);
 	    	        				return par1ItemStack;
 	    		    	        }else if(setDim != par3EntityPlayer.dimension)
 	    		    	        {
-	    	        				par3EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.magic.ruraNoDim.txt",new Object[] {}));
+	    	        				DQR.func.doAddChatMessageFix(par3EntityPlayer, new ChatComponentTranslation("msg.magic.ruraNoDim.txt",new Object[] {}));
 	    	        				par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.pi", 1.0F, 1.0F);
 	    	        				return par1ItemStack;
 	    		    	        }
@@ -249,7 +249,7 @@ public class DqmItemMagicRuraSinC extends DqmItemMagicBase{
 
 			    			}else
 			    			{
-			    				par3EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.magic.nomp.txt",new Object[] {}));
+			    				DQR.func.doAddChatMessageFix(par3EntityPlayer, new ChatComponentTranslation("msg.magic.nomp.txt",new Object[] {}));
 			    				par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.pi", 1.0F, 1.0F);
 			    			}
 	        			}
@@ -257,7 +257,7 @@ public class DqmItemMagicRuraSinC extends DqmItemMagicBase{
 	    			}
 	        	}else
 	        	{
-	        		par3EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.magic.noct.txt",new Object[] {}));
+	        		DQR.func.doAddChatMessageFix(par3EntityPlayer, new ChatComponentTranslation("msg.magic.noct.txt",new Object[] {}));
 	        		par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.pi", 1.0F, 1.0F);
 	        	}
 	    	}

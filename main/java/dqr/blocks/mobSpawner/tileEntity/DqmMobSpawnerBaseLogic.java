@@ -21,6 +21,8 @@ import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import dqr.entity.mobEntity.DqmMobBase;
+import dqr.entity.mobEntity.monsterDay.DqmMobBaseDay;
+import dqr.entity.mobEntity.monsterNight.DqmMobBaseNight;
 
 public abstract class DqmMobSpawnerBaseLogic extends MobSpawnerBaseLogic
 {
@@ -137,17 +139,50 @@ public abstract class DqmMobSpawnerBaseLogic extends MobSpawnerBaseLogic
                     EntityLiving entityliving = entity instanceof EntityLiving ? (EntityLiving)entity : null;
                     entity.setLocationAndAngles(d2, d3, d4, this.getSpawnerWorld().rand.nextFloat() * 360.0F, 0.0F);
 
-                    if (entityliving == null || entityliving.getCanSpawnHere())
+                    if(entityliving instanceof DqmMobBaseDay)
                     {
-                        this.func_98265_a(entity);
-                        this.getSpawnerWorld().playAuxSFX(2004, this.getSpawnerX(), this.getSpawnerY(), this.getSpawnerZ(), 0);
+                    	DqmMobBaseDay monster = (DqmMobBaseDay)entityliving;
+	                    if (monster == null || monster.getCanSpawnHere2())
+	                    {
+	                        this.func_98265_a(monster);
+	                        this.getSpawnerWorld().playAuxSFX(2004, this.getSpawnerX(), this.getSpawnerY(), this.getSpawnerZ(), 0);
 
-                        if (entityliving != null)
-                        {
-                            entityliving.spawnExplosionParticle();
-                        }
+	                        if (monster != null)
+	                        {
+	                        	monster.spawnExplosionParticle();
+	                        }
 
-                        flag = true;
+	                        flag = true;
+	                    }
+                    }else if(entityliving instanceof DqmMobBaseNight)
+                    {
+                    	DqmMobBaseNight monster = (DqmMobBaseNight)entityliving;
+	                    if (monster == null || monster.getCanSpawnHere2())
+	                    {
+	                        this.func_98265_a(monster);
+	                        this.getSpawnerWorld().playAuxSFX(2004, this.getSpawnerX(), this.getSpawnerY(), this.getSpawnerZ(), 0);
+
+	                        if (monster != null)
+	                        {
+	                        	monster.spawnExplosionParticle();
+	                        }
+
+	                        flag = true;
+	                    }
+                    }else
+                    {
+	                    if (entityliving == null || entityliving.getCanSpawnHere())
+	                    {
+	                        this.func_98265_a(entity);
+	                        this.getSpawnerWorld().playAuxSFX(2004, this.getSpawnerX(), this.getSpawnerY(), this.getSpawnerZ(), 0);
+
+	                        if (entityliving != null)
+	                        {
+	                            entityliving.spawnExplosionParticle();
+	                        }
+
+	                        flag = true;
+	                    }
                     }
                 }
 

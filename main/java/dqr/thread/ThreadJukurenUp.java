@@ -50,8 +50,8 @@ public class ThreadJukurenUp extends Thread{
 				}
 
 				ExtendedPlayerProperties.get(this.ep).setJukurenWP(ExtendedPlayerProperties.get(this.ep).getWeapon(), jukurenWP);
-				//ep.addChatMessage(new ChatComponentTranslation("msg.jukurenUp.txt",new Object[] {weaponName, epLv}));
-				ep.addChatMessage(new ChatComponentTranslation("msg.jukurenUp.txt",new Object[] {
+				//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.jukurenUp.txt",new Object[] {weaponName, epLv}));
+				DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.jukurenUp.txt",new Object[] {
 						new ChatComponentTranslation("gui.weapon." + ExtendedPlayerProperties.get(this.ep).getWeapon()), epLv}));
 				ep.worldObj.playSoundAtEntity(ep, "dqr:player.skillup", 1.0F, 1.0F);
 				PacketHandler.INSTANCE.sendTo(new MessageClientSound((byte)1), (EntityPlayerMP)ep);

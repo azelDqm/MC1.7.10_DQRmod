@@ -3,12 +3,14 @@ package dqr.gui.playerHUD;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -40,6 +42,7 @@ public class GuiPositionMode extends Gui
 		  return;
 		}
 
+		OpenGlHelper.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, 1, 0);
 	  //ScaledResolution sr = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
 	  //int w = sr.getScaledWidth();
 	  int padW = 2;
@@ -48,10 +51,8 @@ public class GuiPositionMode extends Gui
       int y1 = 0;
       int y2 = 0;
       int y3 = 0;
-      int y4 = 0;
-      int y5 = 0;
-      int y6 = 0;
-      int y7 = 0;
+      int nextY = 0;
+
       ScaledResolution sr = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
       int w = sr.getScaledWidth(), h = sr.getScaledHeight();
       int x = 0; //= contains(pos, 1, 2)? w - padW - mc.fontRenderer.getStringWidth("Lv10 EXP 100000/10000000 SP50"): padW;
@@ -84,10 +85,10 @@ public class GuiPositionMode extends Gui
           y1 = 0;
           y2 = 0;
           y3 = 0;
-          y4 = 0;
-          y5 = 0;
-          y6 = 0;
-          y7 = 0;
+          //y4 = 0;
+          //y5 = 0;
+          //y6 = 0;
+          //y7 = 0;
 
           x = w / 2 - 85;
           y0 = h / 2 - 45;
@@ -108,15 +109,59 @@ public class GuiPositionMode extends Gui
           ResourceLocation reLoc;// = new ResourceLocation("dqm","textures/gui/mpStatus3.png");
           reLoc = new ResourceLocation("dqr","textures/gui/guiEditMode.png");
           mc.renderEngine.bindTexture(reLoc);
-          this.drawTexturedModalRect(x, y0, 0, 0, 170, 90);
+          this.drawTexturedModalRect(x, y0, 0, 0, 170, 101);
           mc.fontRenderer.drawStringWithShadow(title, x + 5 , y1, 0xffffffff);
           mc.fontRenderer.drawStringWithShadow(line1, x + 5 , y2, 0xffffffff);
           mc.fontRenderer.drawStringWithShadow(line2, x + 5, y3, 0xffffffff);
+          nextY = y3;
           if(DQR.conf.guiPositionTarget == 7)
           {
         	  String addLine = I18n.format("gui.position.line.3", new Object[]{DQR.conf.CLGuiPartyReturnLine});
-        	  mc.fontRenderer.drawStringWithShadow(addLine, x + 5, y3 + 12, 0xffffffff);
+        	  mc.fontRenderer.drawStringWithShadow(addLine, x + 5, y3 + 11, 0xffffffff);
+        	  nextY = y3 + 11;
           }
+          //定型移動用
+          int modeKeyCode = -1;
+          switch (DQR.conf.guiPositionTarget)
+	      {
+          		case 1: modeKeyCode = DQR.CLKeyBind.keyGuiPlayerData.getKeyCode(); break;
+          		case 2: modeKeyCode = DQR.CLKeyBind.keyGuiPlayerStatus.getKeyCode(); break;
+          		case 3: modeKeyCode = DQR.CLKeyBind.keyGuiArmorStatus.getKeyCode(); break;
+          		case 4: modeKeyCode = DQR.CLKeyBind.keyGuiLog.getKeyCode(); break;
+          		case 5: modeKeyCode = DQR.CLKeyBind.keyGuiSubpoints.getKeyCode(); break;
+          		case 6: modeKeyCode = DQR.CLKeyBind.keyGuiBuffBar.getKeyCode(); break;
+          		case 7: modeKeyCode = DQR.CLKeyBind.keyGuiParty.getKeyCode(); break;
+          		default :
+	      }
+          //操作方法
+          if(DQR.conf.guiPositionTarget != 0)
+          {
+	          mc.fontRenderer.drawStringWithShadow(I18n.format("gui.position.line.4", new Object[]{Keyboard.getKeyName(DQR.CLKeyBind.keyGuiPositionSpeed.getKeyCode())}),
+	        		  x + 5, nextY + 15, 0xffffffff);
+	          mc.fontRenderer.drawStringWithShadow(I18n.format("gui.position.line.5", new Object[]{Keyboard.getKeyName(DQR.CLKeyBind.keyGuiPositionUP.getKeyCode()),
+	        		  																			   Keyboard.getKeyName(DQR.CLKeyBind.keyGuiPositionDOWN.getKeyCode()),
+	        		  																			   Keyboard.getKeyName(DQR.CLKeyBind.keyGuiPositionLEFT.getKeyCode()),
+	        		  																			   Keyboard.getKeyName(DQR.CLKeyBind.keyGuiPositionRIGHT.getKeyCode())}),
+	        		  x + 5, nextY + 26, 0xffffffff);
+	          mc.fontRenderer.drawStringWithShadow(I18n.format("gui.position.line.6", new Object[]{Keyboard.getKeyName(modeKeyCode)}),
+	        		  x + 5, nextY + 37, 0xffffffff);
+          }
+          if(DQR.conf.guiPositionTarget == 7)
+          {
+        	  mc.fontRenderer.drawStringWithShadow(I18n.format("gui.position.line.9", new Object[]{Keyboard.getKeyName(DQR.CLKeyBind.keyGuiPartyPlus.getKeyCode()),
+        			  																			   Keyboard.getKeyName(DQR.CLKeyBind.keyGuiPartyMinus.getKeyCode())}),
+            		  x + 5, nextY + 48, 0xffffffff);
+          }
+
+          if(DQR.conf.guiPositionTarget == 4)
+          {
+        	  mc.fontRenderer.drawStringWithShadow(I18n.format("gui.position.line.7", new Object[]{}),
+            		  x + 5, nextY + 48, 0xffffffff);
+        	  mc.fontRenderer.drawStringWithShadow(I18n.format("gui.position.line.8", new Object[]{Keyboard.getKeyName(DQR.CLKeyBind.keyLogDel.getKeyCode())}),
+            		  x + 5, nextY + 59, 0xffffffff);
+          }
+          //String addLine = Keyboard.getKeyName(DQR.CLKeyBind.keyGuiPositionDOWN.getKeyCode());
+          //mc.fontRenderer.drawStringWithShadow(addLine, x + 5, y3 + 12, 0xffffffff);
 
 
       }

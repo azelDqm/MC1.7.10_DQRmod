@@ -191,7 +191,7 @@ public class DqmItemMGTFarm2 extends DqmItemMagicToolBase{
 
 					if(!par3World.isRemote)
 					{
-						ep.addChatMessage(new ChatComponentTranslation("msg.magictool.farm.seedIn." + ExtendedPlayerProperties2.get(ep).getSeedSetMode() + ".txt", new Object[] {}));
+						DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.magictool.farm.seedIn." + ExtendedPlayerProperties2.get(ep).getSeedSetMode() + ".txt", new Object[] {}));
 			    		ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
 					}
 
@@ -215,7 +215,7 @@ public class DqmItemMGTFarm2 extends DqmItemMagicToolBase{
 									int seedVal = ExtendedPlayerProperties2.get(ep).getSeedVal(itemName);
 									ExtendedPlayerProperties2.get(ep).setSeedVal(itemName, seedVal + iStack.stackSize);
 									PacketHandler.INSTANCE.sendTo(new MessageClientCleatSlotItem(cnt), (EntityPlayerMP)ep);
-									//ep.addChatMessage(new ChatComponentTranslation("msg.magictool.farm.seedInAct.1.txt", new Object[] {iStack.getDisplayName(), seedVal + iStack.stackSize}));
+									//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.magictool.farm.seedInAct.1.txt", new Object[] {iStack.getDisplayName(), seedVal + iStack.stackSize}));
 								}
 								//ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
 								iStack.stackSize = 0;
@@ -232,11 +232,11 @@ public class DqmItemMGTFarm2 extends DqmItemMagicToolBase{
 						if(haveFlg > 0)
 						{
 							//System.out.println("TEST" + ep.inventory.mainInventory.length);
-							ep.addChatMessage(new ChatComponentTranslation("msg.magictool.farm.seedInAct.0.txt"));
+							DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.magictool.farm.seedInAct.0.txt"));
 
 						}else
 						{
-							ep.addChatMessage(new ChatComponentTranslation("msg.magictool.farm.seedInAct.2.txt"));
+							DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.magictool.farm.seedInAct.2.txt"));
 						}
 						ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
 					}
@@ -287,7 +287,7 @@ public class DqmItemMGTFarm2 extends DqmItemMagicToolBase{
 
 					if(!par2World.isRemote)
 					{
-						ep.addChatMessage(new ChatComponentTranslation("msg.magictool.farm.areaset.txt", new Object[] {areaX, areaY, areaZ, itemDam}));
+						DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.magictool.farm.areaset.txt", new Object[] {areaX, areaY, areaZ, itemDam}));
 			    		ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
 					}
 
@@ -371,7 +371,7 @@ public class DqmItemMGTFarm2 extends DqmItemMagicToolBase{
 							ItemStack iStack = new ItemStack((Item)rn.getObject(selectSeed), 1);
 							int val = ExtendedPlayerProperties2.get(ep).getSeedVal(selectSeed);
 
-							ep.addChatMessage(new ChatComponentTranslation("msg.magictool.farm.seedPlant.0.txt", new Object[] {iStack.getDisplayName(), val}));
+							DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.magictool.farm.seedPlant.0.txt", new Object[] {iStack.getDisplayName(), val}));
 				    		ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
 						}
 

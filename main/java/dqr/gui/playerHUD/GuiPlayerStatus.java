@@ -4,6 +4,7 @@ package dqr.gui.playerHUD;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -42,6 +43,7 @@ public class GuiPlayerStatus extends Gui
 		  return;
 		}
 
+		OpenGlHelper.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, 1, 0);
 	  //ScaledResolution sr = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
 	  //int w = sr.getScaledWidth();
 	  int padW = 2;
@@ -223,6 +225,7 @@ public class GuiPlayerStatus extends Gui
           y7 = y0 + 56;
           y8 = y0 + 65;
           y9 = y0 + 74;
+          //OpenGlHelper.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, 1, 0);
 
           GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
           ResourceLocation reLoc;// = new ResourceLocation("dqm","textures/gui/mpStatus3.png");
@@ -235,7 +238,7 @@ public class GuiPlayerStatus extends Gui
     	  }
 
           mc.renderEngine.bindTexture(reLoc);
-          this.drawTexturedModalRect(x, y0, 0, 0, 150, 90);
+          this.drawTexturedModalRect(x, y0, 0, 0, 102, 72);
           mc.fontRenderer.drawStringWithShadow(sJukuren1, x + 5 , y1, 0xffffffff);
           mc.fontRenderer.drawStringWithShadow(sJukuren2, x + 5 , y2, 0xffffffff);
           mc.fontRenderer.drawStringWithShadow(sKougeki, x + 5, y3, 0xffffffff);

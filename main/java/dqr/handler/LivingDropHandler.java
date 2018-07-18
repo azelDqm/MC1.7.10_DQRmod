@@ -481,8 +481,111 @@ public class LivingDropHandler {
 		}
 
 		//転生からの転職証1
-		if(event.entityLiving instanceof DqmMobBaseTensei && rand.nextInt(10) == 0)
+		if((event.entityLiving instanceof DqmMobBaseTensei || event.entityLiving instanceof DqmMobBaseSP) && rand.nextInt(10) == 0)
 		{
+			if(event.entityLiving instanceof DqmEntityWanpakusatan){
+				event.entityLiving.dropItem(DQEmblems.itemEmbPriest, 1);
+			}else if(event.entityLiving instanceof DqmEntityKiratoti){
+				event.entityLiving.dropItem(DQEmblems.itemEmbPriest, 1);
+			}else if(event.entityLiving instanceof DqmEntityMashougumo){
+				event.entityLiving.dropItem(DQEmblems.itemEmbCivilian, 1);
+			}else if(event.entityLiving instanceof DqmEntitySirubamanto){
+				event.entityLiving.dropItem(DQEmblems.itemEmbPriest, 1);
+			}else if(event.entityLiving instanceof DqmEntityDarkRamia){
+				event.entityLiving.dropItem(DQEmblems.itemEmbCivilian, 1);
+			}else if(event.entityLiving instanceof DqmEntityGodonheddo){
+				event.entityLiving.dropItem(DQEmblems.itemEmbFunanori, 1);
+			}else if(event.entityLiving instanceof DqmEntityAtorasu){
+				event.entityLiving.dropItem(DQEmblems.itemEmbFighter, 1);
+			}else if(event.entityLiving instanceof DqmEntityYamatanooroti){
+				event.entityLiving.dropItem(DQEmblems.itemEmbMagician, 1);
+			}else if(event.entityLiving instanceof DqmEntityBazuzu){
+				event.entityLiving.dropItem(DQEmblems.itemEmbFunanori, 1);
+			}else if(event.entityLiving instanceof DqmEntityKiramajinga){
+				event.entityLiving.dropItem(DQEmblems.itemEmbFighter, 1);
+			}else if(event.entityLiving instanceof DqmEntitySuraimujeneraru){
+				event.entityLiving.dropItem(DQEmblems.itemEmbWarrior, 1);
+			}else if(event.entityLiving instanceof DqmEntityBurasu){
+				event.entityLiving.dropItem(DQEmblems.itemEmbMagician, 1);
+			}else if(event.entityLiving instanceof DqmEntityKandatakobun){
+				event.entityLiving.dropItem(DQEmblems.itemEmbThief, 1);
+			}else if(event.entityLiving instanceof DqmEntityKinghidora){
+				event.entityLiving.dropItem(DQEmblems.itemEmbFighter, 1);
+			}else if(event.entityLiving instanceof DqmEntityMasso){
+				event.entityLiving.dropItem(DQEmblems.itemEmbMerchant, 1);
+			}else if(event.entityLiving instanceof DqmEntityPisaronaito){
+				event.entityLiving.dropItem(DQEmblems.itemEmbWarrior, 1);
+			}else if(event.entityLiving instanceof DqmEntityPuremiasuraimu){
+				event.entityLiving.dropItem(DQEmblems.itemEmbMerchant, 1);
+			}else if(event.entityLiving instanceof DqmEntityTattyan){
+				event.entityLiving.dropItem(DQEmblems.itemEmbFunanori, 1);
+			}else if(event.entityLiving instanceof DqmEntityTororubakkosu){
+				event.entityLiving.dropItem(DQEmblems.itemEmbThief, 1);
+			}else if(event.entityLiving instanceof DqmEntityUragirikozou){
+				event.entityLiving.dropItem(DQEmblems.itemEmbHituzikai, 1);
+			}else if(event.entityLiving instanceof DqmEntityFureizado){
+				event.entityLiving.dropItem(DQEmblems.itemEmbMagician, 1);
+			}else if(event.entityLiving instanceof DqmEntityKandata){
+				event.entityLiving.dropItem(DQEmblems.itemEmbThief, 1);
+			}else if(event.entityLiving instanceof DqmEntityBlackchack){
+				event.entityLiving.dropItem(DQEmblems.itemEmbHituzikai, 1);
+			}else if(event.entityLiving instanceof DqmEntitySuraimuemperor){
+				event.entityLiving.dropItem(DQEmblems.itemEmbCivilian, 1);
+			}else if(event.entityLiving instanceof DqmEntityOrutega){
+				event.entityLiving.dropItem(DQEmblems.itemEmbWarrior, 1);
+			}else if(event.entityLiving instanceof DqmEntitySeigin){
+				event.entityLiving.dropItem(DQEmblems.itemEmbHituzikai, 1);
+			}else if(event.entityLiving instanceof DqmEntityDebirurodo){
+				event.entityLiving.dropItem(DQEmblems.itemEmbMagician, 1);
+			}else if(event.entityLiving instanceof DqmEntityMaaburun){
+				event.entityLiving.dropItem(DQEmblems.itemEmbCivilian, 1);
+			}else if(event.entityLiving instanceof DqmEntityArukemisuton){
+				event.entityLiving.dropItem(DQEmblems.itemEmbMagician, 1);
+			}else if(event.entityLiving instanceof DqmEntityGorudenkon){
+				event.entityLiving.dropItem(DQEmblems.itemEmbCivilian, 1);
+			}else if(event.entityLiving instanceof DqmEntityKuinmomon){
+				event.entityLiving.dropItem(DQEmblems.itemEmbPriest, 1);
+			}else if(event.entityLiving instanceof DqmEntityMoonkimera){
+				event.entityLiving.dropItem(DQEmblems.itemEmbMagician, 1);
+			}else if(event.entityLiving instanceof DqmEntityTyokonuba){
+				event.entityLiving.dropItem(DQEmblems.itemEmbFighter, 1);
+			}else if(event.entityLiving instanceof DqmEntityReddoatya){
+				event.entityLiving.dropItem(DQEmblems.itemEmbThief, 1);
+			}else if(event.entityLiving instanceof DqmEntityKirapike){
+				event.entityLiving.dropItem(DQEmblems.itemEmbFunanori, 1);
+			}else if(event.entityLiving instanceof DqmEntityTogekonbou){
+				event.entityLiving.dropItem(DQEmblems.itemEmbFighter, 1);
+			}else if(event.entityLiving instanceof DqmEntityTaipug){
+				event.entityLiving.dropItem(DQEmblems.itemEmbWarrior, 1);
+			}else if(event.entityLiving instanceof DqmEntityBebingosatan){
+				event.entityLiving.dropItem(DQEmblems.itemEmbThief, 1);
+			}else if(event.entityLiving instanceof DqmEntityGoldmanto){
+				event.entityLiving.dropItem(DQEmblems.itemEmbMerchant, 1);
+			}else if(event.entityLiving instanceof DqmEntityHatonaito){
+				event.entityLiving.dropItem(DQEmblems.itemEmbWarrior, 1);
+			}else if(event.entityLiving instanceof DqmEntityMadrainbow){
+				event.entityLiving.dropItem(DQEmblems.itemEmbHituzikai, 1);
+			}else if(event.entityLiving instanceof DqmEntityMetaruhoimin){
+				event.entityLiving.dropItem(DQEmblems.itemEmbPriest, 1);
+			}else if(event.entityLiving instanceof DqmEntityMomoirosansimai){
+				event.entityLiving.dropItem(DQEmblems.itemEmbFighter, 1);
+			}else if(event.entityLiving instanceof DqmEntityNoroinoiwa){
+				event.entityLiving.dropItem(DQEmblems.itemEmbFunanori, 1);
+			}else if(event.entityLiving instanceof DqmEntityPinkbonbon){
+				event.entityLiving.dropItem(DQEmblems.itemEmbCivilian, 1);
+			}else if(event.entityLiving instanceof DqmEntitySabotengold){
+				event.entityLiving.dropItem(DQEmblems.itemEmbMerchant, 1);
+			}else if(event.entityLiving instanceof DqmEntityShuvaluts){
+				event.entityLiving.dropItem(DQEmblems.itemEmbWarrior, 1);
+			}else if(event.entityLiving instanceof DqmEntitySirudoaniki){
+				event.entityLiving.dropItem(DQEmblems.itemEmbThief, 1);
+			}else if(event.entityLiving instanceof DqmEntitySweetbag){
+				event.entityLiving.dropItem(DQEmblems.itemEmbMerchant, 1);
+			}else if(event.entityLiving instanceof DqmEntityTumurinmama){
+				event.entityLiving.dropItem(DQEmblems.itemEmbPriest, 1);
+			}
+
+			/*
 			if(event.entityLiving instanceof DqmEntitySeigin){
 				event.entityLiving.dropItem(DQEmblems.itemEmbFighter, 1);
 			}else if(event.entityLiving instanceof DqmEntityDebirurodo){
@@ -534,11 +637,114 @@ public class LivingDropHandler {
 			}else if(event.entityLiving instanceof DqmEntityTumurinmama){
 				event.entityLiving.dropItem(DQEmblems.itemEmbPriest, 1);
 			}
+			*/
 		}
 
 		//転生からの転職証2
-		if(event.entityLiving instanceof DqmMobBaseTensei && rand.nextInt(100) == 0)
+		if((event.entityLiving instanceof DqmMobBaseTensei || event.entityLiving instanceof DqmMobBaseSP) && rand.nextInt(100) == 0)
 		{
+			if(event.entityLiving instanceof DqmEntityWanpakusatan){
+				event.entityLiving.dropItem(DQEmblems.itemEmbPaladin, 1);
+			}else if(event.entityLiving instanceof DqmEntityKiratoti){
+				event.entityLiving.dropItem(DQEmblems.itemEmbPaladin, 1);
+			}else if(event.entityLiving instanceof DqmEntityMashougumo){
+				event.entityLiving.dropItem(DQEmblems.itemEmbDancer, 1);
+			}else if(event.entityLiving instanceof DqmEntitySirubamanto){
+				event.entityLiving.dropItem(DQEmblems.itemEmbPaladin, 1);
+			}else if(event.entityLiving instanceof DqmEntityDarkRamia){
+				event.entityLiving.dropItem(DQEmblems.itemEmbDancer, 1);
+			}else if(event.entityLiving instanceof DqmEntityGodonheddo){
+				event.entityLiving.dropItem(DQEmblems.itemEmbPirate, 1);
+			}else if(event.entityLiving instanceof DqmEntityAtorasu){
+				event.entityLiving.dropItem(DQEmblems.itemEmbBattleMaster, 1);
+			}else if(event.entityLiving instanceof DqmEntityYamatanooroti){
+				event.entityLiving.dropItem(DQEmblems.itemEmbSage, 1);
+			}else if(event.entityLiving instanceof DqmEntityBazuzu){
+				event.entityLiving.dropItem(DQEmblems.itemEmbPirate, 1);
+			}else if(event.entityLiving instanceof DqmEntityKiramajinga){
+				event.entityLiving.dropItem(DQEmblems.itemEmbBattleMaster, 1);
+			}else if(event.entityLiving instanceof DqmEntitySuraimujeneraru){
+				event.entityLiving.dropItem(DQEmblems.itemEmbMagickKnight, 1);
+			}else if(event.entityLiving instanceof DqmEntityBurasu){
+				event.entityLiving.dropItem(DQEmblems.itemEmbSage, 1);
+			}else if(event.entityLiving instanceof DqmEntityKandatakobun){
+				event.entityLiving.dropItem(DQEmblems.itemEmbBattleMaster, 1);
+			}else if(event.entityLiving instanceof DqmEntityKinghidora){
+				event.entityLiving.dropItem(DQEmblems.itemEmbMagickKnight, 1);
+			}else if(event.entityLiving instanceof DqmEntityMasso){
+				event.entityLiving.dropItem(DQEmblems.itemEmbRanger, 1);
+			}else if(event.entityLiving instanceof DqmEntityPisaronaito){
+				event.entityLiving.dropItem(DQEmblems.itemEmbMagickKnight, 1);
+			}else if(event.entityLiving instanceof DqmEntityPuremiasuraimu){
+				event.entityLiving.dropItem(DQEmblems.itemEmbRanger, 1);
+			}else if(event.entityLiving instanceof DqmEntityTattyan){
+				event.entityLiving.dropItem(DQEmblems.itemEmbPirate, 1);
+			}else if(event.entityLiving instanceof DqmEntityTororubakkosu){
+				event.entityLiving.dropItem(DQEmblems.itemEmbMonsterTamer, 1);
+			}else if(event.entityLiving instanceof DqmEntityUragirikozou){
+				event.entityLiving.dropItem(DQEmblems.itemEmbMonsterTamer, 1);
+			}else if(event.entityLiving instanceof DqmEntityFureizado){
+				event.entityLiving.dropItem(DQEmblems.itemEmbSage, 1);
+			}else if(event.entityLiving instanceof DqmEntityKandata){
+				event.entityLiving.dropItem(DQEmblems.itemEmbRanger, 1);
+			}else if(event.entityLiving instanceof DqmEntityBlackchack){
+				event.entityLiving.dropItem(DQEmblems.itemEmbMonsterTamer, 1);
+			}else if(event.entityLiving instanceof DqmEntitySuraimuemperor){
+				event.entityLiving.dropItem(DQEmblems.itemEmbDancer, 1);
+			}else if(event.entityLiving instanceof DqmEntityOrutega){
+				event.entityLiving.dropItem(DQEmblems.itemEmbBattleMaster, 1);
+			}else if(event.entityLiving instanceof DqmEntitySeigin){
+				event.entityLiving.dropItem(DQEmblems.itemEmbSage, 1);
+			}else if(event.entityLiving instanceof DqmEntityDebirurodo){
+				event.entityLiving.dropItem(DQEmblems.itemEmbSage, 1);
+			}else if(event.entityLiving instanceof DqmEntityMaaburun){
+				event.entityLiving.dropItem(DQEmblems.itemEmbMonsterTamer, 1);
+			}else if(event.entityLiving instanceof DqmEntityArukemisuton){
+				event.entityLiving.dropItem(DQEmblems.itemEmbSage, 1);
+			}else if(event.entityLiving instanceof DqmEntityGorudenkon){
+				event.entityLiving.dropItem(DQEmblems.itemEmbRanger, 1);
+			}else if(event.entityLiving instanceof DqmEntityKuinmomon){
+				event.entityLiving.dropItem(DQEmblems.itemEmbPaladin, 1);
+			}else if(event.entityLiving instanceof DqmEntityMoonkimera){
+				event.entityLiving.dropItem(DQEmblems.itemEmbSage, 1);
+			}else if(event.entityLiving instanceof DqmEntityTyokonuba){
+				event.entityLiving.dropItem(DQEmblems.itemEmbRanger, 1);
+			}else if(event.entityLiving instanceof DqmEntityReddoatya){
+				event.entityLiving.dropItem(DQEmblems.itemEmbRanger, 1);
+			}else if(event.entityLiving instanceof DqmEntityKirapike){
+				event.entityLiving.dropItem(DQEmblems.itemEmbBattleMaster, 1);
+			}else if(event.entityLiving instanceof DqmEntityTogekonbou){
+				event.entityLiving.dropItem(DQEmblems.itemEmbBattleMaster, 1);
+			}else if(event.entityLiving instanceof DqmEntityTaipug){
+				event.entityLiving.dropItem(DQEmblems.itemEmbPaladin, 1);
+			}else if(event.entityLiving instanceof DqmEntityBebingosatan){
+				event.entityLiving.dropItem(DQEmblems.itemEmbPirate, 1);
+			}else if(event.entityLiving instanceof DqmEntityGoldmanto){
+				event.entityLiving.dropItem(DQEmblems.itemEmbMagickKnight, 1);
+			}else if(event.entityLiving instanceof DqmEntityHatonaito){
+				event.entityLiving.dropItem(DQEmblems.itemEmbPaladin, 1);
+			}else if(event.entityLiving instanceof DqmEntityMadrainbow){
+				event.entityLiving.dropItem(DQEmblems.itemEmbDancer, 1);
+			}else if(event.entityLiving instanceof DqmEntityMetaruhoimin){
+				event.entityLiving.dropItem(DQEmblems.itemEmbMagickKnight, 1);
+			}else if(event.entityLiving instanceof DqmEntityMomoirosansimai){
+				event.entityLiving.dropItem(DQEmblems.itemEmbDancer, 1);
+			}else if(event.entityLiving instanceof DqmEntityNoroinoiwa){
+				event.entityLiving.dropItem(DQEmblems.itemEmbPirate, 1);
+			}else if(event.entityLiving instanceof DqmEntityPinkbonbon){
+				event.entityLiving.dropItem(DQEmblems.itemEmbMonsterTamer, 1);
+			}else if(event.entityLiving instanceof DqmEntitySabotengold){
+				event.entityLiving.dropItem(DQEmblems.itemEmbPirate, 1);
+			}else if(event.entityLiving instanceof DqmEntityShuvaluts){
+				event.entityLiving.dropItem(DQEmblems.itemEmbMagickKnight, 1);
+			}else if(event.entityLiving instanceof DqmEntitySirudoaniki){
+				event.entityLiving.dropItem(DQEmblems.itemEmbBattleMaster, 1);
+			}else if(event.entityLiving instanceof DqmEntitySweetbag){
+				event.entityLiving.dropItem(DQEmblems.itemEmbDancer, 1);
+			}else if(event.entityLiving instanceof DqmEntityTumurinmama){
+				event.entityLiving.dropItem(DQEmblems.itemEmbMonsterTamer, 1);
+			}
+			/*
 			if(event.entityLiving instanceof DqmEntitySeigin){
 				event.entityLiving.dropItem(DQEmblems.itemEmbSage, 1);
 			}else if(event.entityLiving instanceof DqmEntityDebirurodo){
@@ -590,11 +796,114 @@ public class LivingDropHandler {
 			}else if(event.entityLiving instanceof DqmEntityTumurinmama){
 				event.entityLiving.dropItem(DQEmblems.itemEmbMonsterTamer, 1);
 			}
+			*/
 		}
 
 		//転生からの転職証3
-		if(event.entityLiving instanceof DqmMobBaseTensei && rand.nextInt(500) == 0)
+		if((event.entityLiving instanceof DqmMobBaseTensei || event.entityLiving instanceof DqmMobBaseSP)  && rand.nextInt(500) == 0)
 		{
+			if(event.entityLiving instanceof DqmEntityWanpakusatan){
+				event.entityLiving.dropItem(DQEmblems.itemEmbTentiraimeishi, 1);
+			}else if(event.entityLiving instanceof DqmEntityKiratoti){
+				event.entityLiving.dropItem(DQEmblems.itemEmbDougutukai, 1);
+			}else if(event.entityLiving instanceof DqmEntityMashougumo){
+				event.entityLiving.dropItem(DQEmblems.itemEmbTentiraimeishi, 1);
+			}else if(event.entityLiving instanceof DqmEntitySirubamanto){
+				event.entityLiving.dropItem(DQEmblems.itemEmbGodHnad, 1);
+			}else if(event.entityLiving instanceof DqmEntityDarkRamia){
+				event.entityLiving.dropItem(DQEmblems.itemEmbTentiraimeishi, 1);
+			}else if(event.entityLiving instanceof DqmEntityGodonheddo){
+				event.entityLiving.dropItem(DQEmblems.itemEmbDougutukai, 1);
+			}else if(event.entityLiving instanceof DqmEntityAtorasu){
+				event.entityLiving.dropItem(DQEmblems.itemEmbGodHnad, 1);
+			}else if(event.entityLiving instanceof DqmEntityYamatanooroti){
+				event.entityLiving.dropItem(DQEmblems.itemEmbTentiraimeishi, 1);
+			}else if(event.entityLiving instanceof DqmEntityBazuzu){
+				event.entityLiving.dropItem(DQEmblems.itemEmbTentiraimeishi, 1);
+			}else if(event.entityLiving instanceof DqmEntityKiramajinga){
+				event.entityLiving.dropItem(DQEmblems.itemEmbGodHnad, 1);
+			}else if(event.entityLiving instanceof DqmEntitySuraimujeneraru){
+				event.entityLiving.dropItem(DQEmblems.itemEmbGodHnad, 1);
+			}else if(event.entityLiving instanceof DqmEntityBurasu){
+				event.entityLiving.dropItem(DQEmblems.itemEmbTentiraimeishi, 1);
+			}else if(event.entityLiving instanceof DqmEntityKandatakobun){
+				event.entityLiving.dropItem(DQEmblems.itemEmbSuperStar, 1);
+			}else if(event.entityLiving instanceof DqmEntityKinghidora){
+				event.entityLiving.dropItem(DQEmblems.itemEmbSuperStar, 1);
+			}else if(event.entityLiving instanceof DqmEntityMasso){
+				event.entityLiving.dropItem(DQEmblems.itemEmbDougutukai, 1);
+			}else if(event.entityLiving instanceof DqmEntityPisaronaito){
+				event.entityLiving.dropItem(DQEmblems.itemEmbGodHnad, 1);
+			}else if(event.entityLiving instanceof DqmEntityPuremiasuraimu){
+				event.entityLiving.dropItem(DQEmblems.itemEmbDougutukai, 1);
+			}else if(event.entityLiving instanceof DqmEntityTattyan){
+				event.entityLiving.dropItem(DQEmblems.itemEmbDougutukai, 1);
+			}else if(event.entityLiving instanceof DqmEntityTororubakkosu){
+				event.entityLiving.dropItem(DQEmblems.itemEmbGodHnad, 1);
+			}else if(event.entityLiving instanceof DqmEntityUragirikozou){
+				event.entityLiving.dropItem(DQEmblems.itemEmbSuperStar, 1);
+			}else if(event.entityLiving instanceof DqmEntityFureizado){
+				event.entityLiving.dropItem(DQEmblems.itemEmbTentiraimeishi, 1);
+			}else if(event.entityLiving instanceof DqmEntityKandata){
+				event.entityLiving.dropItem(DQEmblems.itemEmbSuperStar, 1);
+			}else if(event.entityLiving instanceof DqmEntityBlackchack){
+				event.entityLiving.dropItem(DQEmblems.itemEmbDougutukai, 1);
+			}else if(event.entityLiving instanceof DqmEntitySuraimuemperor){
+				event.entityLiving.dropItem(DQEmblems.itemEmbSuperStar, 1);
+			}else if(event.entityLiving instanceof DqmEntityOrutega){
+				event.entityLiving.dropItem(DQEmblems.itemEmbSuperStar, 1);
+			}else if(event.entityLiving instanceof DqmEntitySeigin){
+				event.entityLiving.dropItem(DQEmblems.itemEmbSuperStar, 1);
+			}else if(event.entityLiving instanceof DqmEntityDebirurodo){
+				event.entityLiving.dropItem(DQEmblems.itemEmbDougutukai, 1);
+			}else if(event.entityLiving instanceof DqmEntityMaaburun){
+				event.entityLiving.dropItem(DQEmblems.itemEmbSuperStar, 1);
+			}else if(event.entityLiving instanceof DqmEntityArukemisuton){
+				event.entityLiving.dropItem(DQEmblems.itemEmbTentiraimeishi, 1);
+			}else if(event.entityLiving instanceof DqmEntityGorudenkon){
+				event.entityLiving.dropItem(DQEmblems.itemEmbSuperStar, 1);
+			}else if(event.entityLiving instanceof DqmEntityKuinmomon){
+				event.entityLiving.dropItem(DQEmblems.itemEmbSuperStar, 1);
+			}else if(event.entityLiving instanceof DqmEntityMoonkimera){
+				event.entityLiving.dropItem(DQEmblems.itemEmbTentiraimeishi, 1);
+			}else if(event.entityLiving instanceof DqmEntityTyokonuba){
+				event.entityLiving.dropItem(DQEmblems.itemEmbDougutukai, 1);
+			}else if(event.entityLiving instanceof DqmEntityReddoatya){
+				event.entityLiving.dropItem(DQEmblems.itemEmbDougutukai, 1);
+			}else if(event.entityLiving instanceof DqmEntityKirapike){
+				event.entityLiving.dropItem(DQEmblems.itemEmbDougutukai, 1);
+			}else if(event.entityLiving instanceof DqmEntityTogekonbou){
+				event.entityLiving.dropItem(DQEmblems.itemEmbGodHnad, 1);
+			}else if(event.entityLiving instanceof DqmEntityTaipug){
+				event.entityLiving.dropItem(DQEmblems.itemEmbGodHnad, 1);
+			}else if(event.entityLiving instanceof DqmEntityBebingosatan){
+				event.entityLiving.dropItem(DQEmblems.itemEmbTentiraimeishi, 1);
+			}else if(event.entityLiving instanceof DqmEntityGoldmanto){
+				event.entityLiving.dropItem(DQEmblems.itemEmbGodHnad, 1);
+			}else if(event.entityLiving instanceof DqmEntityHatonaito){
+				event.entityLiving.dropItem(DQEmblems.itemEmbGodHnad, 1);
+			}else if(event.entityLiving instanceof DqmEntityMadrainbow){
+				event.entityLiving.dropItem(DQEmblems.itemEmbTentiraimeishi, 1);
+			}else if(event.entityLiving instanceof DqmEntityMetaruhoimin){
+				event.entityLiving.dropItem(DQEmblems.itemEmbTentiraimeishi, 1);
+			}else if(event.entityLiving instanceof DqmEntityMomoirosansimai){
+				event.entityLiving.dropItem(DQEmblems.itemEmbSuperStar, 1);
+			}else if(event.entityLiving instanceof DqmEntityNoroinoiwa){
+				event.entityLiving.dropItem(DQEmblems.itemEmbTentiraimeishi, 1);
+			}else if(event.entityLiving instanceof DqmEntityPinkbonbon){
+				event.entityLiving.dropItem(DQEmblems.itemEmbSuperStar, 1);
+			}else if(event.entityLiving instanceof DqmEntitySabotengold){
+				event.entityLiving.dropItem(DQEmblems.itemEmbDougutukai, 1);
+			}else if(event.entityLiving instanceof DqmEntityShuvaluts){
+				event.entityLiving.dropItem(DQEmblems.itemEmbGodHnad, 1);
+			}else if(event.entityLiving instanceof DqmEntitySirudoaniki){
+				event.entityLiving.dropItem(DQEmblems.itemEmbGodHnad, 1);
+			}else if(event.entityLiving instanceof DqmEntitySweetbag){
+				event.entityLiving.dropItem(DQEmblems.itemEmbDougutukai, 1);
+			}else if(event.entityLiving instanceof DqmEntityTumurinmama){
+				event.entityLiving.dropItem(DQEmblems.itemEmbSuperStar, 1);
+			}
+			/*
 			if(event.entityLiving instanceof DqmEntitySeigin){
 				event.entityLiving.dropItem(DQEmblems.itemEmbSuperStar, 1);
 			}else if(event.entityLiving instanceof DqmEntityDebirurodo){
@@ -646,6 +955,7 @@ public class LivingDropHandler {
 			}else if(event.entityLiving instanceof DqmEntityTumurinmama){
 				event.entityLiving.dropItem(DQEmblems.itemEmbSuperStar, 1);
 			}
+			*/
 		}
 
 

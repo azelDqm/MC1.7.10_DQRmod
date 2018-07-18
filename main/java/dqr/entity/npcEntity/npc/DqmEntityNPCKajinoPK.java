@@ -176,17 +176,17 @@ public class DqmEntityNPCKajinoPK extends DqmNPCBase
 
 			int talkNo = ExtendedPlayerProperties.get(ep).getNpcTalk(EnumDqmNpcTalk.CASINOPK.getId());
 
-			//ep.addChatMessage(new ChatComponentTranslation("" + talkNo));
+			//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("" + talkNo));
 			if(talkNo == 0)
 			{
-				ep.addChatMessage(new ChatComponentTranslation("msg.casino.dealer.poker.0.txt" ,new Object[] {}));
+				DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.casino.dealer.poker.0.txt" ,new Object[] {}));
 				ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
 				ExtendedPlayerProperties.get(ep).setNpcTalk(EnumDqmNpcTalk.CASINOPK.getId(), 1);
 			}else
 			{
 				ep.openGui(DQR.instance, DQR.conf.GuiID_CSPoker, ep.worldObj, (int)ep.posX, (int)ep.posY, (int)ep.posZ);
 			}
-			//ep.addChatMessage(new ChatComponentTranslation("msg.Dama2.messages.-1.txt" ,new Object[] {}));
+			//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.Dama2.messages.-1.txt" ,new Object[] {}));
 			//ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
 		}
 

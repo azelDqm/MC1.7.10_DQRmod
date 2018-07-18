@@ -1,0 +1,807 @@
+package dqr.party;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.ChatComponentTranslation;
+import dqr.DQR;
+import dqr.PacketHandler;
+import dqr.entity.petEntity.DqmPetBase;
+import dqr.playerData.ExtendedPlayerProperties;
+import dqr.playerData.ExtendedPlayerProperties3;
+import dqr.playerData.MessagePlayerProperties3;
+import dqr.thread.NoThreadProcess;
+import dqr.thread.ThreadLvUp;
+import dqr.thread.ThreadLvUpPet;
+
+public class DqmPartyManager {
+
+	//キーはメンバー名：値がリーダー名
+	public static Map<Entity, String> partySet = new HashMap();
+	public static Map<String, Integer> expShareRate = new HashMap();
+
+	public DqmPartyManager(){}
+
+	//パーティー作成
+	public boolean createParty(Entity ep)
+	{
+		//System.out.println("TEST_LINE_A1");
+		if(!partySet.containsValue(ep))
+		{
+			//System.out.println("TEST_LINE_A2");
+			partySet.put(ep, ep.getCommandSenderName());
+			expShareRate.put(ep.getCommandSenderName(), 0);
+			((EntityPlayer)ep).addChatMessage(new ChatComponentTranslation("msg.party.create.txt",new Object[] {}));
+
+			if(!ep.worldObj.isRemote)
+			{
+				//System.out.println("TEST_LINE_A3");
+				ThreadDqmPartyProc threadParty = new ThreadDqmPartyProc(ep);
+				threadParty.start();
+			}
+			return true;
+		}
+
+		return false;
+	}
+
+	//メンバー追加(追加メンバーはIDから)
+	public void addPartyMember(EntityPlayer ep, String newMember)
+	{
+
+		if(!ep.worldObj.isRemote)
+		{
+			MinecraftServer minecraftserver = MinecraftServer.getServer();
+
+			Entity er = minecraftserver.getConfigurationManager().func_152612_a(newMember);
+			//minecraftserver.getConfigurationManager().playerEntityList
+			//partySet.put(ep, er);
+			if(er != null)
+			{
+				this.addPartyMember(ep, er);
+				DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.party.join.txt",new Object[] {ep.getCommandSenderName()}));
+			}else
+			{
+				DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.party.noplayer.txt",new Object[] {}));
+			}
+
+		}
+	}
+
+	//メンバー追加(追加メンバーはEntity型)
+	public void addPartyMember(Entity ep, Entity newMember)
+	{
+
+		//System.out.println("TEST_LINE1");
+
+		if(!this.hasParty(newMember))
+		{
+			boolean flg = true;
+
+			if(!(partySet.containsKey(ep)))
+			{
+				//System.out.println("TEST_LINE2");
+				flg = createParty(ep);
+			}
+
+			if(flg)
+			{
+				//System.out.println("TEST_LINE3");
+				this.sendPartyMessage(newMember, "msg.party.join2.txt", new Object[] {newMember.getCommandSenderName()});
+				partySet.put(newMember, ep.getCommandSenderName());
+			}
+		}else
+		{
+			if(ep instanceof EntityPlayer)
+			{
+				((EntityPlayer)ep).addChatMessage(new ChatComponentTranslation("msg.party.hasparty.txt",new Object[] {newMember.getCommandSenderName()}));
+			}
+		}
+	}
+
+
+
+	public boolean changePartyLeader(String newLeader, Entity oldLeader)
+	{
+		boolean ret = false;
+		if(newLeader == null || oldLeader == null) return ret;
+
+		if(!oldLeader.worldObj.isRemote)
+		{
+			MinecraftServer minecraftserver = MinecraftServer.getServer();
+			Entity er = minecraftserver.getConfigurationManager().func_152612_a(newLeader);
+
+			if(er != null)
+			{
+				this.changePartyLeader(er, oldLeader);
+			}else
+			{
+				((EntityPlayer)oldLeader).addChatMessage(new ChatComponentTranslation("msg.party.noplayer.txt",new Object[] {}));
+			}
+		}
+
+		return ret;
+	}
+
+	public boolean changePartyLeader(Entity newLeader, Entity oldLeader)
+	{
+		boolean ret = false;
+        //if(newLeader == null || oldLeader == null) return ret;
+
+		Iterator iterator = partySet.keySet().iterator();
+
+        while (iterator.hasNext())
+        {
+        	Entity s = (Entity)iterator.next();
+        	MinecraftServer minecraftserver = MinecraftServer.getServer();
+        	Entity er = minecraftserver.getConfigurationManager().func_152612_a(partySet.get(s));
+        	if(er != null && er.getCommandSenderName().equalsIgnoreCase(oldLeader.getCommandSenderName()))
+        	{
+        		partySet.put(s, newLeader.getCommandSenderName());
+
+        		ret = true;
+        	}
+        }
+
+		if(ret)
+		{
+			int shareRate = 0;
+			if(oldLeader != null && expShareRate.containsKey(oldLeader.getCommandSenderName()))
+			{
+				shareRate = expShareRate.get(oldLeader.getCommandSenderName());
+				expShareRate.remove(oldLeader.getCommandSenderName());
+			}
+			expShareRate.put(newLeader.getCommandSenderName(), shareRate);
+
+
+			//System.out.println("TEST_LINE_A3");
+			ThreadDqmPartyProc threadParty = new ThreadDqmPartyProc(newLeader);
+			threadParty.start();
+
+			this.sendPartyMessage(newLeader, "msg.party.changeleader.txt", new Object[] {newLeader.getCommandSenderName()});
+		}
+
+		return ret;
+	}
+
+	//パーティーリーダーになれる人を探す
+	public boolean changePartyLeaderForce(Entity oldLeader)
+	{
+    	Entity newLeader = null;
+
+        Iterator iterator2 = partySet.keySet().iterator();
+
+        while (iterator2.hasNext())
+        {
+        	Entity s = (Entity)iterator2.next();
+        	if(s instanceof EntityPlayer && !s.getCommandSenderName().equalsIgnoreCase(oldLeader.getCommandSenderName()))
+        	{
+        		return this.changePartyLeader(s, oldLeader);
+        	}
+        }
+
+        return false;
+	}
+
+	//パーティーからの除名
+	//除名者がリーダーだった場合は、リーダー変更
+	public boolean removePartyMember(Entity par1)
+	{
+		boolean ret = false;
+		boolean leaderFlg = this.isPartyLeader(par1);
+
+		List removeKeys = new ArrayList();
+
+        Iterator iterator = partySet.keySet().iterator();
+
+
+        while (iterator.hasNext())
+        {
+        	Entity s = (Entity)iterator.next();
+        	if(s.getUniqueID().toString().equalsIgnoreCase(par1.getUniqueID().toString()))
+        	{
+        		leaderFlg = this.isPartyLeader(s);
+        		ret = true;
+        		//partySet.remove(s);
+        		removeKeys.add(s);
+        	}
+        }
+
+        /*
+        if(partySet.containsKey(par1))
+        {
+        	removeKeys.add(par1);
+        	//partySet.remove(par1);
+        	ret = true;
+
+        }
+        */
+
+
+        for(int cnt = 0; cnt < removeKeys.size(); cnt++)
+        {
+        	partySet.remove(removeKeys.get(cnt));
+        	if(par1 instanceof EntityPlayer)
+        	{
+        		ExtendedPlayerProperties3.get((EntityPlayer)par1).setPartyMemberData(null);
+            	if(!par1.worldObj.isRemote)
+            	{
+            		PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties3((EntityPlayer)par1), (EntityPlayerMP)par1);
+            	}
+        		EntityPlayer ep = (EntityPlayer)par1;
+        		DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.party.leave.txt",new Object[] {}));
+        	}
+        }
+
+        if(leaderFlg)
+        {
+
+            //リーダーになれるEntityがいない場合PT解散
+        	if(!changePartyLeaderForce(par1))
+        	{
+        		this.closeParty(par1);
+        	}
+        	return true;
+        }
+
+        return ret;
+	}
+
+	//パーティーから除名
+	public boolean kickPartyMember(String par1, EntityPlayer ep)
+	{
+        Iterator iterator = partySet.keySet().iterator();
+
+        while (iterator.hasNext())
+        {
+            Entity s = (Entity)iterator.next();
+        	MinecraftServer minecraftserver = MinecraftServer.getServer();
+        	Entity er = minecraftserver.getConfigurationManager().func_152612_a(partySet.get(s));
+
+            if(er != null && er.getCommandSenderName().equalsIgnoreCase(par1) && partySet.get(er) != null &&
+            		partySet.get(er).equalsIgnoreCase(ep.getCommandSenderName()))
+            {
+            	partySet.remove(s);
+            	if(s instanceof EntityPlayer)
+            	{
+            		ExtendedPlayerProperties3.get((EntityPlayer)er).setPartyMemberData(null);
+                	if(!ep.worldObj.isRemote)
+                	{
+                		PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties3((EntityPlayer)er), (EntityPlayerMP)s);
+                	}
+            		((EntityPlayer)er).addChatMessage(new ChatComponentTranslation("msg.party.leave.txt",new Object[] {}));
+
+            		/*
+            		ExtendedPlayerProperties3.get((EntityPlayer)s).setPartyMemberData(null);
+                	if(!ep.worldObj.isRemote)
+                	{
+                		PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties3((EntityPlayer)s), (EntityPlayerMP)s);
+                	}
+                	*/
+            	}
+
+
+            	return true;
+            }
+        }
+
+		return false;
+	}
+
+	public boolean kickPartyPet(EntityPlayer ep, boolean all)
+	{
+        Iterator iterator = partySet.keySet().iterator();
+        List removeKeys = new ArrayList();
+        boolean removeFlg = false;
+
+        while (iterator.hasNext())
+        {
+            Entity s = (Entity)iterator.next();
+            //System.out.println("NAME" + partySet.get(s).getCommandSenderName() + " / " + ep.getCommandSenderName());
+            //System.out.println("NAME" + s.getCommandSenderName() + " / " + s.getClass().getName());
+            if(s instanceof DqmPetBase &&  partySet.get(s) != null &&
+            		partySet.get(s).equalsIgnoreCase(ep.getCommandSenderName()))
+            {
+
+
+            	removeFlg = true;
+            	if(!all)
+            	{
+            		partySet.remove(s);
+            		return true;
+            	}else
+            	{
+            		removeKeys.add(s);
+            	}
+            }
+        }
+
+        for(int cnt = 0; cnt < removeKeys.size(); cnt++)
+        {
+        	partySet.remove(removeKeys.get(cnt));
+        }
+
+		return removeFlg;
+	}
+
+
+	public boolean kickPartyPet(EntityPlayer ep, DqmPetBase pet)
+	{
+
+        boolean removeFlg = false;
+
+        if(pet instanceof DqmPetBase && partySet.get(pet) != null &&
+        		partySet.get(pet).equalsIgnoreCase(ep.getCommandSenderName()))
+        {
+        	partySet.remove(pet);
+
+        	removeFlg = true;
+        }
+
+		return removeFlg;
+	}
+
+	public void closeParty(Entity ep)
+	{
+        Iterator iterator = partySet.keySet().iterator();
+        List removeKeys = new ArrayList();
+        String readerName = getPartyLeaderFromMember(ep);
+        while (iterator.hasNext())
+        {
+        	 Entity s = (Entity)iterator.next();
+
+         	MinecraftServer minecraftserver = MinecraftServer.getServer();
+         	Entity er = minecraftserver.getConfigurationManager().func_152612_a(partySet.get(s));
+
+        	 if(er != null && partySet.get(er).equalsIgnoreCase(ep.getCommandSenderName()))
+        	 {
+        		 //partySet.remove(s);
+        		 removeKeys.add(s);
+
+        	 }
+        }
+
+
+        for(int cnt = 0; cnt < removeKeys.size(); cnt++)
+        {
+        	partySet.remove(removeKeys.get(cnt));
+			if(removeKeys.get(cnt) instanceof EntityPlayer)
+			{
+				MinecraftServer minecraftserver = MinecraftServer.getServer();
+				Entity er = minecraftserver.getConfigurationManager().func_152612_a(((EntityPlayer)removeKeys.get(cnt)).getCommandSenderName());
+
+				if(er != null)
+				{
+					ExtendedPlayerProperties3.get((EntityPlayer)er).setPartyMemberData(null);
+
+					if(!ep.worldObj.isRemote)
+					{
+						PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties3((EntityPlayer)er), (EntityPlayerMP)er);
+					}
+				}
+			}
+        }
+
+        expShareRate.remove(readerName);
+
+	}
+
+	public boolean isPartyLeader(Entity ep)
+	{
+		return partySet.containsValue(ep.getCommandSenderName());
+		//return partySet.get(ep).getCommandSenderName().equalsIgnoreCase(ep.getCommandSenderName());
+	}
+
+	//リーダー名からパーティを取得
+	public HashMap getPartyFromLeader(Entity ep)
+	{
+		HashMap dataMap = new HashMap();
+
+        Iterator iterator = partySet.keySet().iterator();
+        int dataNum = 0;
+
+        while (iterator.hasNext())
+        {
+            Entity s = (Entity)iterator.next();
+            Entity epx = (Entity)ep;
+
+            /*
+            if(s instanceof EntityPlayerMP)
+            {
+            	System.out.println("############");
+            }
+
+            if(ep instanceof EntityPlayerMP)
+            {
+            	System.out.println("!!!!!!!!!!!!!!!");
+            }
+            */
+            //System.out.println(s.getCommandSenderName());
+            //if(partySet.get(s).getCommandSenderName().equalsIgnoreCase(epx.getCommandSenderName()))
+            if(partySet.get(s).equalsIgnoreCase(epx.getCommandSenderName()))
+            {
+            	dataMap.put((Entity)s, (Entity)epx);
+            }
+        }
+
+		return dataMap;
+	}
+
+	public HashMap<Entity, EntityPlayer> getPartyFromLeader2(String ep)
+	{
+		HashMap dataMap = new HashMap();
+
+        Iterator iterator = partySet.keySet().iterator();
+        int dataNum = 0;
+
+        while (iterator.hasNext())
+        {
+            Entity s = (Entity)iterator.next();
+
+            if(partySet.get(s).equalsIgnoreCase(ep))
+            {
+            	dataMap.put((Entity)s, ep);
+            }
+        }
+
+		return dataMap;
+	}
+
+	public String getPartyLeaderFromMember(Entity ep)
+	{
+		String ret = null;
+
+		if(partySet.containsKey(ep))
+		{
+			ret = partySet.get(ep);
+		}
+
+		return ret;
+	}
+
+	public boolean hasParty(Entity target)
+	{
+
+		Iterator iterator = partySet.keySet().iterator();
+        int dataNum = 0;
+
+        while (iterator.hasNext())
+        {
+        	Entity s = (Entity)iterator.next();
+        	//System.out.println("CODE:" + s.getUniqueID().toString() + " / " + target.getUniqueID().toString());
+
+        	if(s.getUniqueID().toString().equalsIgnoreCase(target.getUniqueID().toString()))
+        	{
+        		return true;
+        	}
+        }
+
+        return false;
+		//return partySet.containsKey(target);
+	}
+
+	public void sendPartyMessage(Entity reader, String keys, Object[] obj)
+	{
+		this.sendPartyMessage(reader, keys, obj, true, true);
+	}
+
+	public void sendPartyMessage(Entity reader, String keys, Object[] obj, boolean addReader, boolean doSound)
+	{
+		Iterator iterator = partySet.keySet().iterator();
+		MinecraftServer minecraftserver = MinecraftServer.getServer();
+
+        while (iterator.hasNext())
+        {
+        	 Entity s = (Entity)iterator.next();
+          	Entity er = minecraftserver.getConfigurationManager().func_152612_a(partySet.get(s));
+          	if(er != null && reader != null)
+          	{
+	        	 if(er.getCommandSenderName().equalsIgnoreCase(reader.getCommandSenderName()) && !addReader){
+	        	 }else
+	        	 {
+	        		 if(s instanceof EntityPlayer)
+	        		 {
+	        			 EntityPlayer er2 = minecraftserver.getConfigurationManager().func_152612_a(s.getCommandSenderName());
+	        			 if(er2 != null)
+	        			 {
+	        				 er2.addChatMessage(new ChatComponentTranslation(keys, obj));
+	        				 if(doSound)
+	        				 {
+	        					 er2.worldObj.playSoundAtEntity(er2, "dqr:player.pi", 1.0F, 1.0F);
+	        				 }
+	        			 }
+	        		 }
+	        	 }
+          	}
+        }
+	}
+
+	public void doChangeShareRate(EntityPlayer ent)
+	{
+		this.doChangeShareRate(ent, -1);
+	}
+
+	public void doChangeShareRate(EntityPlayer ent, int setParam)
+	{
+		int shareRate = expShareRate.get(ent.getCommandSenderName());
+
+		int setVal = 0;
+		if(setParam != -1)
+		{
+			setVal = setParam;
+			expShareRate.put(ent.getCommandSenderName(), setVal);
+		}else
+		{
+			if(DQR.conf.partyExpShareRate.length > 0)
+			{
+				if(shareRate == 0)
+				{
+					setVal = DQR.conf.partyExpShareRate[0];
+					expShareRate.put(ent.getCommandSenderName(), DQR.conf.partyExpShareRate[0]);
+				}else
+				{
+
+					for(int cnt = 0; cnt < DQR.conf.partyExpShareRate.length; cnt++)
+					{
+						if(DQR.conf.partyExpShareRate[cnt] == shareRate)
+						{
+							if(cnt == (DQR.conf.partyExpShareRate.length - 1))
+							{
+								setVal = 0;
+							}else
+							{
+								setVal = DQR.conf.partyExpShareRate[cnt + 1];
+							}
+						}
+					}
+
+					expShareRate.put(ent.getCommandSenderName(), setVal);
+				}
+			}else
+			{
+				setVal = 0;
+				expShareRate.put(ent.getCommandSenderName(), 0);
+			}
+		}
+
+		if(!ent.worldObj.isRemote)
+		{
+			if(setVal == 0)
+			{
+				//ent.addChatMessage(new ChatComponentTranslation("msg.shinziru.shareRate.0.txt", new Object[]{}));
+				//ent.worldObj.playSoundAtEntity(ent, "dqr:player.pi", 1.0F, 1.0F);
+				this.sendPartyMessage(ent, "msg.shinziru.shareRate.0.txt", new Object[]{}, true, true);
+			}else
+			{
+				//ent.addChatMessage(new ChatComponentTranslation("msg.shinziru.shareRate.1.txt", new Object[]{setVal}));
+				//ent.worldObj.playSoundAtEntity(ent, "dqr:player.pi", 1.0F, 1.0F);
+				this.sendPartyMessage(ent, "msg.shinziru.shareRate.1.txt", new Object[]{setVal}, true, true);
+			}
+		}
+	}
+
+	public void doExpShare(Entity ent, int par1)
+	{
+		String readerName = this.getPartyLeaderFromMember(ent);
+
+		int memberCnt = partySet.size();
+		float shareRate = 0.0f;
+		if(readerName != null)
+		{
+			shareRate = (float)expShareRate.get(readerName);
+		}
+
+		if(((float)par1 * (shareRate / 100)) / memberCnt < 1.0f || readerName == null)
+		{
+			if(ent instanceof EntityPlayer)
+			{
+				par1 = par1 + ExtendedPlayerProperties.get((EntityPlayer)ent).getJobExp(ExtendedPlayerProperties.get((EntityPlayer)ent).getJob());
+	            ExtendedPlayerProperties.get((EntityPlayer)ent).setJobExp(ExtendedPlayerProperties.get((EntityPlayer)ent).getJob(), par1);
+
+	            if(DQR.conf.cfg_NoThreadUse == 1)
+	            {
+	            	ThreadLvUp lvup = new ThreadLvUp((EntityPlayer)ent);
+	            	lvup.start();
+	            }else
+	            {
+	            	NoThreadProcess proc = new NoThreadProcess();
+	            	proc.doLevelUp((EntityPlayer)ent);
+	            }
+			}else if(ent instanceof DqmPetBase)
+			{
+				DqmPetBase pet = (DqmPetBase)ent;
+				/*
+	            if(pet.getOwner() != null && pet.getOwner() instanceof EntityPlayer)
+	            {
+	            	EntityPlayer ep = (EntityPlayer)pet.getOwner();
+	            	int tmpExpVal = 0;
+	            	if(par1 * 0.05F < 1)
+	            	{
+	            		 tmpExpVal = 1 + ExtendedPlayerProperties.get(ep).getJobExp(ExtendedPlayerProperties.get(ep).getJob());
+
+	            	}else
+	            	{
+	            		tmpExpVal = (int)(par1 * 0.05F) + ExtendedPlayerProperties.get(ep).getJobExp(ExtendedPlayerProperties.get(ep).getJob());
+	            	}
+
+            		ExtendedPlayerProperties.get(ep).setJobExp(ExtendedPlayerProperties.get(ep).getJob(), tmpExpVal);
+    	            //ThreadLvUp lvup = new ThreadLvUp(ep);
+    	            //lvup.start();
+    	            if(DQR.conf.cfg_NoThreadUse == 1)
+    	            {
+    	            	ThreadLvUp lvup = new ThreadLvUp(ep);
+    	            	lvup.start();
+    	            }else
+    	            {
+    	            	NoThreadProcess proc = new NoThreadProcess();
+    	            	proc.doLevelUp(ep);
+    	            }
+	            }
+	            */
+
+	            par1 = par1 + pet.getJobExp(pet.getJob());
+	            //DQR.func.debugString("doExp5:" + getExpVal);
+	            pet.setJobExp(pet.getJob(), par1);
+	            //ThreadLvUpPet lvup = new ThreadLvUpPet(pet);
+	            //lvup.start();
+
+	            if(DQR.conf.cfg_NoThreadUse == 1)
+	            {
+		            ThreadLvUpPet lvup = new ThreadLvUpPet(pet);
+		            lvup.start();
+	            }else
+	            {
+	            	NoThreadProcess proc = new NoThreadProcess();
+	            	proc.doLevelUpPet(pet);
+	            }
+			}
+		}else
+		{
+
+			if(ent instanceof EntityPlayer)
+			{
+				float baseExp = (par1  * ((100 - shareRate) / 100)) + ExtendedPlayerProperties.get((EntityPlayer)ent).getJobExp(ExtendedPlayerProperties.get((EntityPlayer)ent).getJob());
+	            ExtendedPlayerProperties.get((EntityPlayer)ent).setJobExp(ExtendedPlayerProperties.get((EntityPlayer)ent).getJob(), (int)baseExp);
+
+	            if(DQR.conf.cfg_NoThreadUse == 1)
+	            {
+	            	ThreadLvUp lvup = new ThreadLvUp((EntityPlayer)ent);
+	            	lvup.start();
+	            }else
+	            {
+	            	NoThreadProcess proc = new NoThreadProcess();
+	            	proc.doLevelUp((EntityPlayer)ent);
+	            }
+			}else if(ent instanceof DqmPetBase)
+			{
+				float baseExp = par1  * ((100 - shareRate) / 100);
+				DqmPetBase pet = (DqmPetBase)ent;
+            	/*
+	            if(pet.getOwner() != null && pet.getOwner() instanceof EntityPlayer)
+	            {
+
+	            	EntityPlayer ep = (EntityPlayer)pet.getOwner();
+	            	int tmpExpVal = 0;
+	            	if(baseExp * 0.05F < 1)
+	            	{
+	            		 tmpExpVal = 1 + ExtendedPlayerProperties.get(ep).getJobExp(ExtendedPlayerProperties.get(ep).getJob());
+
+	            	}else
+	            	{
+	            		tmpExpVal = (int)(baseExp * 0.05F) + ExtendedPlayerProperties.get(ep).getJobExp(ExtendedPlayerProperties.get(ep).getJob());
+	            	}
+
+            		ExtendedPlayerProperties.get(ep).setJobExp(ExtendedPlayerProperties.get(ep).getJob(), tmpExpVal);
+
+    	            //ThreadLvUp lvup = new ThreadLvUp(ep);
+    	            //lvup.start();
+    	            if(DQR.conf.cfg_NoThreadUse == 1)
+    	            {
+    	            	ThreadLvUp lvup = new ThreadLvUp(ep);
+    	            	lvup.start();
+    	            }else
+    	            {
+    	            	NoThreadProcess proc = new NoThreadProcess();
+    	            	proc.doLevelUp(ep);
+    	            }
+	            }
+
+            	*/
+	            baseExp = baseExp + (float)pet.getJobExp(pet.getJob());
+	            //DQR.func.debugString("doExp5:" + getExpVal);
+	            pet.setJobExp(pet.getJob(), (int)baseExp);
+	            //ThreadLvUpPet lvup = new ThreadLvUpPet(pet);
+	            //lvup.start();
+
+	            if(DQR.conf.cfg_NoThreadUse == 1)
+	            {
+		            ThreadLvUpPet lvup = new ThreadLvUpPet(pet);
+		            lvup.start();
+	            }else
+	            {
+	            	NoThreadProcess proc = new NoThreadProcess();
+	            	proc.doLevelUpPet(pet);
+	            }
+			}
+
+			HashMap partySetS = this.getPartyFromLeader2(readerName);
+			int shareExp = (int)((float)par1 * (shareRate / 100)) / memberCnt;
+
+			Iterator iterator = partySetS.keySet().iterator();
+			MinecraftServer minecraftserver = MinecraftServer.getServer();
+
+	        while (iterator.hasNext())
+	        {
+	        	Entity s = (Entity)iterator.next();
+	        	if(s instanceof EntityPlayer)
+	        	{
+	        		EntityPlayer tagE = (EntityPlayer) s;
+					int expVal = shareExp + ExtendedPlayerProperties.get(tagE).getJobExp(ExtendedPlayerProperties.get(tagE).getJob());
+		            ExtendedPlayerProperties.get(tagE).setJobExp(ExtendedPlayerProperties.get(tagE).getJob(), expVal);
+
+		            if(DQR.conf.cfg_NoThreadUse == 1)
+		            {
+		            	ThreadLvUp lvup = new ThreadLvUp(tagE);
+		            	lvup.start();
+		            }else
+		            {
+		            	NoThreadProcess proc = new NoThreadProcess();
+		            	proc.doLevelUp(tagE);
+		            }
+	        	}else if(s instanceof DqmPetBase)
+	        	{
+	        		DqmPetBase tagP = (DqmPetBase)s;
+		            if(tagP.getOwner() != null && tagP.getOwner() instanceof EntityPlayer)
+		            {
+		            	EntityPlayer ep = (EntityPlayer)tagP.getOwner();
+		            	int tmpExpVal = 0;
+		            	if(shareExp * 0.05F < 1)
+		            	{
+		            		 tmpExpVal = 1 + ExtendedPlayerProperties.get(ep).getJobExp(ExtendedPlayerProperties.get(ep).getJob());
+
+		            	}else
+		            	{
+		            		tmpExpVal = (int)(shareExp * 0.05F) + ExtendedPlayerProperties.get(ep).getJobExp(ExtendedPlayerProperties.get(ep).getJob());
+		            	}
+
+	            		ExtendedPlayerProperties.get(ep).setJobExp(ExtendedPlayerProperties.get(ep).getJob(), tmpExpVal);
+	    	            //ThreadLvUp lvup = new ThreadLvUp(ep);
+	    	            //lvup.start();
+	    	            if(DQR.conf.cfg_NoThreadUse == 1)
+	    	            {
+	    	            	ThreadLvUp lvup = new ThreadLvUp(ep);
+	    	            	lvup.start();
+	    	            }else
+	    	            {
+	    	            	NoThreadProcess proc = new NoThreadProcess();
+	    	            	proc.doLevelUp(ep);
+	    	            }
+		            }
+
+		            int expVal = shareExp + tagP.getJobExp(tagP.getJob());
+		            //DQR.func.debugString("doExp5:" + getExpVal);
+		            tagP.setJobExp(tagP.getJob(), expVal);
+		            //ThreadLvUpPet lvup = new ThreadLvUpPet(pet);
+		            //lvup.start();
+
+		            if(DQR.conf.cfg_NoThreadUse == 1)
+		            {
+			            ThreadLvUpPet lvup = new ThreadLvUpPet(tagP);
+			            lvup.start();
+		            }else
+		            {
+		            	NoThreadProcess proc = new NoThreadProcess();
+		            	proc.doLevelUpPet(tagP);
+		            }
+	        	}
+	        }
+		}
+	}
+}

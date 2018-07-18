@@ -16,6 +16,32 @@ public class DqmMobBaseDay extends DqmMobBase
 		super(world, Type);
 	}
 
+
+    public boolean getCanSpawnHere2()
+    {
+        int i = MathHelper.floor_double(this.posX);
+        int j = MathHelper.floor_double(this.boundingBox.minY);
+        int k = MathHelper.floor_double(this.posZ);
+        //return
+
+        if(DQR.checkCanSpawn.checkCanSpawnField(this.worldObj, (int)this.posX, (int)this.posY, (int)this.posZ, boundingBox, this) == false)
+        {
+        	return false;
+        }
+
+        boolean timeCheck = false;
+        if(DQR.conf.bug_mosSpawnTimeCheck == 1)
+        {
+        	timeCheck = true;
+        }
+
+        return this.worldObj.checkNoEntityCollision(this.boundingBox) &&
+          	   this.worldObj.getCollidingBoundingBoxes(this, this.boundingBox).isEmpty() &&
+          	   !this.worldObj.isAnyLiquid(this.boundingBox) &&
+          	   (this.worldObj.isDaytime() || timeCheck) &&
+          	   this.worldObj.difficultySetting != EnumDifficulty.PEACEFUL;
+    }
+
 	@Override
     public boolean getCanSpawnHere()
     {

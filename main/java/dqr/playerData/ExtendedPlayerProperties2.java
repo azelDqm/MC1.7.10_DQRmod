@@ -15,7 +15,8 @@ public class ExtendedPlayerProperties2 implements IExtendedEntityProperties {
 	public final static String EXT_PROP_NAME = "DqmPlayerData2";
 	private int[] farmRecipe = new int[32];
     private int[] bugFixFlg = new int[8];
-    private String PlayerName;
+    private String playerName = null;
+    private String playerUUID = null;
 
     //private SubEquipmentStats equipment;
     private boolean fukuroOpen = false;
@@ -114,9 +115,14 @@ public class ExtendedPlayerProperties2 implements IExtendedEntityProperties {
         nbt.setInteger("ToolBreak2Area", ToolBreak2Area);
         nbt.setInteger("BreakBlockMode", BreakBlockMode);
 
-        if(PlayerName != null)
+        if(this.playerName != null)
         {
-        	nbt.setString("PlayerName", PlayerName);
+        	nbt.setString("playerName", this.playerName);
+        }
+
+        if(this.playerUUID != null)
+        {
+        	nbt.setString("playerUUID", this.playerUUID);
         }
 
         nbt.setTag("enderChestTagList1", enderChestTagList1);
@@ -168,7 +174,9 @@ public class ExtendedPlayerProperties2 implements IExtendedEntityProperties {
         	bugFixFlg[cnt] = nbt.getInteger("bugFixFlg_" + cnt);
         }
 
-        PlayerName = nbt.getString("PlayerName");
+        this.playerName = nbt.getString("playerName");
+        this.playerUUID = nbt.getString("playerUUID");
+
         this.SeedsNBTTagCompound = nbt.getCompoundTag("SeedsNBTTag");
         Tool1mode = nbt.getInteger("Tool1mode");
         Tool2mode = nbt.getInteger("Tool2mode");
@@ -285,11 +293,18 @@ public class ExtendedPlayerProperties2 implements IExtendedEntityProperties {
         return bugFixFlg[par1];
     }
 
-    public void setPlayerName(String par1) {
-        this.PlayerName = par1;
-    }
     public String getPlayerName() {
-        return PlayerName;
+        return this.playerName;
+    }
+    public void setPlayerName(String par1) {
+        this.playerName = par1;
+    }
+
+    public String getPlayerUUID() {
+        return this.playerUUID;
+    }
+    public void setPlayerUUID(String par1) {
+        this.playerUUID = par1;
     }
 
     public NBTTagCompound getSeedsNBTTagCompound() {

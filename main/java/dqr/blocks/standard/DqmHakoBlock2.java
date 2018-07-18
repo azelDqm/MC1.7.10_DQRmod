@@ -11,7 +11,7 @@ public class DqmHakoBlock2 extends Block
     public DqmHakoBlock2() //ブロックの基本設定
     {
         //super(i, Material.rock); //材質を土に
-    	super(Material.rock); //材質を土に
+    	super(Material.wood); //材質を土に
     }
 
     private static int getRandom(int max, int min)

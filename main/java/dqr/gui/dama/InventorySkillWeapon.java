@@ -8,7 +8,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.StatCollector;
 import dqr.DQR;
 import dqr.api.Items.DQSkillWs;
 import dqr.api.enums.EnumDqmSkillW;
@@ -114,8 +113,9 @@ public class InventorySkillWeapon implements IInventory
 
 	            	items[key].setTagCompound(nbt);
 
-	            	String skillName = StatCollector.translateToLocal("dqm.skill." + skillEnum.getName() + ".name");
-	            	items[key].setStackDisplayName(skillName);
+	            	//String skillName = StatCollector.translateToLocal("dqm.skill." + skillEnum.getName() + ".name");
+	            	//items[key].setStackDisplayName(skillName);
+	            	items[key].setStackDisplayName("dqm.skill." + skillEnum.getName() + ".name");
 	        	}
         	}
         	//items[key] = new ItemStack(skills.get(key), 1);

@@ -19,7 +19,7 @@ public class DqmHakoBlock13 extends Block
 
     public DqmHakoBlock13() //ブロックの基本設定
     {
-        super(Material.iron); //材質を土に
+        super(Material.wood); //材質を土に
     }
 
     private static int getRandom(int max, int min)

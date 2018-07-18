@@ -146,14 +146,16 @@ public class DqmBlockBed2 extends BlockContainer
 
 	    	if(gold - yadodai < 0)
 	    	{
-	    		ep.addChatMessage(new ChatComponentTranslation("msg.yadoya.messages.3.txt",new Object[] {yadodai}));
+	    		//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.yadoya.messages.3.txt",new Object[] {yadodai}));
+	    		DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.yadoya.messages.3.txt",new Object[] {yadodai}));
 	    		return true;
 	    	}
 
 	    	//モンスターチェック
 	    	if(!DQR.checkBed.checkMob(par1World, par2, par3, par4, ep))
 	    	{
-	    		ep.addChatComponentMessage(new ChatComponentTranslation("tile.bed.notSafe", new Object[0]));
+	    		//ep.addChatComponentMessage(new ChatComponentTranslation("tile.bed.notSafe", new Object[0]));
+	    		DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("tile.bed.notSafe", new Object[0]));
 	    		return false;
 	    	}
 
@@ -170,6 +172,10 @@ public class DqmBlockBed2 extends BlockContainer
 	    	ExtendedPlayerProperties.get(ep).setGold(gold - yadodai);
 	    	ep.setHealth(ep.getMaxHealth());
 	    	ExtendedPlayerProperties.get(ep).setMP(ExtendedPlayerProperties.get(ep).getMaxMP());
+
+	    	//ペットの回復処理
+	    	DQR.checkBed.healPet(par1World, par2, par3, par4, ep);
+
 	    	ep.getFoodStats().addStats(20, 0.6F);
 	    	if(!ep.worldObj.isRemote) ep.worldObj.playSoundAtEntity(ep, "dqr:player.yado", 1.0F, 1.0F);
 
@@ -185,8 +191,10 @@ public class DqmBlockBed2 extends BlockContainer
     	{
     		if(!par1World.isRemote)
     		{
-    			ep.addChatMessage(new ChatComponentTranslation("msg.yadoya.messages.0.txt",new Object[] {yadodai}));
-    			ep.addChatMessage(new ChatComponentTranslation("msg.yadoya.messages.1.txt",new Object[] {}));
+    			//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.yadoya.messages.0.txt",new Object[] {yadodai}));
+    			DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.yadoya.messages.0.txt",new Object[] {yadodai}));
+    			//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.yadoya.messages.1.txt",new Object[] {}));
+    			DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.yadoya.messages.1.txt",new Object[] {}));
     			ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
     		}
     	}
@@ -199,8 +207,9 @@ public class DqmBlockBed2 extends BlockContainer
     public void mdamaA(EntityPlayer ep, int Job, int pat)
     {
     	//String jobName = I18n.format("main.job." + Job);
-    	//ep.addChatMessage(new ChatComponentTranslation("msg.startingJob.Set" + pat +".txt",new Object[] {jobName}));
-    	ep.addChatMessage(new ChatComponentTranslation("msg.startingJob.Set" + pat +".txt",new Object[] {new ChatComponentTranslation("main.job." + Job)}));
+    	//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.startingJob.Set" + pat +".txt",new Object[] {jobName}));
+    	//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.startingJob.Set" + pat +".txt",new Object[] {new ChatComponentTranslation("main.job." + Job)}));
+    	DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.startingJob.Set" + pat +".txt",new Object[] {new ChatComponentTranslation("main.job." + Job)}));
 
     }
 
@@ -212,7 +221,8 @@ public class DqmBlockBed2 extends BlockContainer
     		String message = String.format("msg.startingJob.jobInfo." + Job + "." + cnt + ".txt");
     		if (message.equalsIgnoreCase("")) break;
 
-    		ep.addChatMessage(new ChatComponentTranslation(message,new Object[] {}));
+    		//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation(message,new Object[] {}));
+    		DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation(message,new Object[] {}));
     	}
 
     }
@@ -220,15 +230,17 @@ public class DqmBlockBed2 extends BlockContainer
     public void mdamaC(EntityPlayer ep, int TabidachiFlg)
     {
 		//String message = I18n.format("msg.startingJob.messages." + TabidachiFlg + ".txt");
-		//ep.addChatMessage(new ChatComponentTranslation(message,new Object[] {}));
-    	ep.addChatMessage(new ChatComponentTranslation("msg.startingJob.messages." + TabidachiFlg + ".txt",new Object[] {}));
+		//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation(message,new Object[] {}));
+    	//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.startingJob.messages." + TabidachiFlg + ".txt",new Object[] {}));
+    	DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.startingJob.messages." + TabidachiFlg + ".txt",new Object[] {}));
     }
 
     public void mdamaD(EntityPlayer ep, int TabidachiFlg, int Job)
     {
 		//String message = I18n.format("msg.startingJob.messages." + TabidachiFlg + ".txt");
-		//ep.addChatMessage(new ChatComponentTranslation(message,new Object[] {}));
-    	ep.addChatMessage(new ChatComponentTranslation("msg.startingJob.messages." + TabidachiFlg + ".txt",new Object[] {}));
+		//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation(message,new Object[] {}));
+    	//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.startingJob.messages." + TabidachiFlg + ".txt",new Object[] {}));
+    	DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.startingJob.messages." + TabidachiFlg + ".txt",new Object[] {}));
     }
 
     public void JobChange(EntityPlayer ep)

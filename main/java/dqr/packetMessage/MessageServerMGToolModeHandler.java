@@ -74,7 +74,7 @@ public class MessageServerMGToolModeHandler implements IMessageHandler<MessageSe
 	        			ExtendedPlayerProperties2.get(ep).setTool1mode(EnumDqmMGToolMode.MGFARM1_HOE.getId());
 	        		}
 
-	        		ep.addChatMessage(new ChatComponentTranslation("msg.magictool.farm.mode." + ExtendedPlayerProperties2.get(ep).getTool1mode() + ".txt"));
+	        		DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.magictool.farm.mode." + ExtendedPlayerProperties2.get(ep).getTool1mode() + ".txt"));
 	        		if(ExtendedPlayerProperties2.get(ep).getTool1mode() == EnumDqmMGToolMode.MGFARM1_PLANT.getId())
 	        		{
 	        			RegistryNamespaced rn = Item.itemRegistry;
@@ -86,7 +86,7 @@ public class MessageServerMGToolModeHandler implements IMessageHandler<MessageSe
 	        			}
 	        			ItemStack iStack = new ItemStack((Item)rn.getObject(selectSeed), 1);
 	        			int val = ExtendedPlayerProperties2.get(ep).getSeedVal(selectSeed);
-	        			ep.addChatMessage(new ChatComponentTranslation("msg.magictool.farm.seedPlant.2.txt", new Object[] {iStack.getDisplayName(), val}));
+	        			DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.magictool.farm.seedPlant.2.txt", new Object[] {iStack.getDisplayName(), val}));
 	        		}
 	        		ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
 
@@ -108,7 +108,7 @@ public class MessageServerMGToolModeHandler implements IMessageHandler<MessageSe
 	        			}
 	        			//ItemStack iStack = new ItemStack((Item)rn.getObject(selectSeed), 1);
 	        			//int val = ExtendedPlayerProperties2.get(ep).getSeedVal(selectSeed);
-	        			//ep.addChatMessage(new ChatComponentTranslation("msg.magictool.farm.seedPlant.2.txt", new Object[] {iStack.getDisplayName(), val}));
+	        			//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.magictool.farm.seedPlant.2.txt", new Object[] {iStack.getDisplayName(), val}));
 
 	        		}else if(mode == EnumDqmMGToolMode.MGFARM2_PLANT1.getId())
 	        		{
@@ -123,7 +123,7 @@ public class MessageServerMGToolModeHandler implements IMessageHandler<MessageSe
 	        			}
 	        			//ItemStack iStack = new ItemStack((Item)rn.getObject(selectSeed), 1);
 	        			//int val = ExtendedPlayerProperties2.get(ep).getSeedVal(selectSeed);
-	        			//ep.addChatMessage(new ChatComponentTranslation("msg.magictool.farm.seedPlant.2.txt", new Object[] {iStack.getDisplayName(), val}));
+	        			//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.magictool.farm.seedPlant.2.txt", new Object[] {iStack.getDisplayName(), val}));
 
 	        		}else if(mode == EnumDqmMGToolMode.MGFARM2_PLANT2.getId())
 	        		{
@@ -138,7 +138,7 @@ public class MessageServerMGToolModeHandler implements IMessageHandler<MessageSe
 	        			}
 	        			//ItemStack iStack = new ItemStack((Item)rn.getObject(selectSeed), 1);
 	        			//int val = ExtendedPlayerProperties2.get(ep).getSeedVal(selectSeed);
-	        			//ep.addChatMessage(new ChatComponentTranslation("msg.magictool.farm.seedPlant.2.txt", new Object[] {iStack.getDisplayName(), val}));
+	        			//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.magictool.farm.seedPlant.2.txt", new Object[] {iStack.getDisplayName(), val}));
 	        		}else if(mode == EnumDqmMGToolMode.MGFARM2_PLANT3.getId())
 	        		{
 	        			ExtendedPlayerProperties2.get(ep).setTool2mode(EnumDqmMGToolMode.MGFARM2_PLANT4.getId());
@@ -152,7 +152,7 @@ public class MessageServerMGToolModeHandler implements IMessageHandler<MessageSe
 	        			}
 	        			//ItemStack iStack = new ItemStack((Item)rn.getObject(selectSeed), 1);
 	        			//int val = ExtendedPlayerProperties2.get(ep).getSeedVal(selectSeed);
-	        			//ep.addChatMessage(new ChatComponentTranslation("msg.magictool.farm.seedPlant.2.txt", new Object[] {iStack.getDisplayName(), val}));
+	        			//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.magictool.farm.seedPlant.2.txt", new Object[] {iStack.getDisplayName(), val}));
 	        		}else if(mode == EnumDqmMGToolMode.MGFARM2_PLANT4.getId())
 	        		{
 	        			ExtendedPlayerProperties2.get(ep).setTool2mode(EnumDqmMGToolMode.MGFARM2_HARVEST.getId());
@@ -167,7 +167,7 @@ public class MessageServerMGToolModeHandler implements IMessageHandler<MessageSe
 	        			ExtendedPlayerProperties2.get(ep).setTool2mode(EnumDqmMGToolMode.MGFARM2_HOE.getId());
 	        		}
 
-	        		ep.addChatMessage(new ChatComponentTranslation("msg.magictool.farm.mode." + ExtendedPlayerProperties2.get(ep).getTool2mode() + ".txt"));
+	        		DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.magictool.farm.mode." + ExtendedPlayerProperties2.get(ep).getTool2mode() + ".txt"));
 
 	        		if((mode == EnumDqmMGToolMode.MGFARM2_PLANT1.getId() ||
 	        		    mode == EnumDqmMGToolMode.MGFARM2_PLANT2.getId() ||
@@ -178,7 +178,7 @@ public class MessageServerMGToolModeHandler implements IMessageHandler<MessageSe
 	        			RegistryNamespaced rn = Item.itemRegistry;
 	          			ItemStack iStack = new ItemStack((Item)rn.getObject(selectSeed), 1);
 	        			int val = ExtendedPlayerProperties2.get(ep).getSeedVal(selectSeed);
-	        			ep.addChatMessage(new ChatComponentTranslation("msg.magictool.farm.seedPlant.2.txt", new Object[] {iStack.getDisplayName(), val}));
+	        			DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.magictool.farm.seedPlant.2.txt", new Object[] {iStack.getDisplayName(), val}));
 
 	        		}
 
@@ -203,7 +203,7 @@ public class MessageServerMGToolModeHandler implements IMessageHandler<MessageSe
 	        		}
 
 	        		ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
-	        		ep.addChatMessage(new ChatComponentTranslation("msg.basirura.modeInfo." + setIdx + ".txt", new Object[] {}));
+	        		DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.basirura.modeInfo." + setIdx + ".txt", new Object[] {}));
 	        		ExtendedPlayerProperties.get(ep).setWeaponMode(EnumDqmWeaponMode.WEAPONMODE_BASIRURA.getId(), setIdx);
 	        	}else if(its.getItem() == DQAccessories.itemAccCanceler)
 		        {
@@ -223,9 +223,30 @@ public class MessageServerMGToolModeHandler implements IMessageHandler<MessageSe
 
         			if(!ep.worldObj.isRemote)
         			{
-        				ep.addChatMessage(new ChatComponentTranslation("msg.acccancel.modeInfo." + itemMode + ".txt", new Object[] {}));
+        				DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.acccancel.modeInfo." + itemMode + ".txt", new Object[] {}));
         			}
         			ExtendedPlayerProperties.get(ep).setWeaponMode(EnumDqmWeaponMode.WEAPONMODE_ACCCanceler.getId(), itemMode);
+		        }else if(its.getItem() == DQMagicTools.itemPetSuisyou)
+		        {
+	        		int itemMode = ExtendedPlayerProperties.get(ep).getWeaponMode(EnumDqmWeaponMode.WEAPONMODE_PetSuisyou.getId());
+
+	        		//itemMode = itemMode + 1;
+
+	        		if(itemMode == EnumDqmMGToolMode.PETSUISYOU_CLEAR.getId())
+	        		{
+	        			itemMode = EnumDqmMGToolMode.PETSUISYOU_VIEW.getId();
+	        		}else
+	        		{
+	        			itemMode++;
+	        		}
+
+	        		ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
+
+        			if(!ep.worldObj.isRemote)
+        			{
+        				DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.petSuisyou.modeInfo." + itemMode + ".txt", new Object[] {}));
+        			}
+        			ExtendedPlayerProperties.get(ep).setWeaponMode(EnumDqmWeaponMode.WEAPONMODE_PetSuisyou.getId(), itemMode);
 		        }else if(DQR.conf.partyEnable != 0 && its.getItem() == DQMiscs.itemShinjirukokoro)
 		        {
 	        		int itemMode = ExtendedPlayerProperties.get(ep).getWeaponMode(EnumDqmWeaponMode.WEAPONMODE_SHINZIRU.getId());
@@ -235,8 +256,12 @@ public class MessageServerMGToolModeHandler implements IMessageHandler<MessageSe
 
 	        		if(itemMode == EnumDqmMGToolMode.SHINZIRU_MEMBER_ADD.getId())
 	        		{
+	        			setIdx = EnumDqmMGToolMode.SHINZIRU_SHARE.getId();
+	        		}else if(itemMode == EnumDqmMGToolMode.SHINZIRU_SHARE.getId())
+	        		{
 	        			setIdx = EnumDqmMGToolMode.SHINZIRU_MEMBER_KICK.getId();
-	        		}else if(itemMode == EnumDqmMGToolMode.SHINZIRU_MEMBER_KICK.getId())
+	        		}
+	        		else if(itemMode == EnumDqmMGToolMode.SHINZIRU_MEMBER_KICK.getId())
 	        		{
 	        			setIdx = EnumDqmMGToolMode.SHINZIRU_PET_KICK.getId();
 	        		}else if(itemMode == EnumDqmMGToolMode.SHINZIRU_PET_KICK.getId())
@@ -255,8 +280,12 @@ public class MessageServerMGToolModeHandler implements IMessageHandler<MessageSe
 
         			if(!ep.worldObj.isRemote)
         			{
-        				ep.addChatMessage(new ChatComponentTranslation("msg.shinziru.modeInfo." + setIdx + ".0.txt", new Object[] {}));
-        				ep.addChatMessage(new ChatComponentTranslation("msg.shinziru.modeInfo." + setIdx + ".1.txt", new Object[] {}));
+        				DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.shinziru.modeInfo." + setIdx + ".0.txt", new Object[] {}));
+        				DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.shinziru.modeInfo." + setIdx + ".1.txt", new Object[] {}));
+        				if(setIdx == 5)
+        				{
+        					DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.shinziru.modeInfo." + setIdx + ".2.txt", new Object[] {}));
+        				}
         			}
 	        		ExtendedPlayerProperties.get(ep).setWeaponMode(EnumDqmWeaponMode.WEAPONMODE_SHINZIRU.getId(), setIdx);
 		        		//信じるこころ
@@ -275,7 +304,7 @@ public class MessageServerMGToolModeHandler implements IMessageHandler<MessageSe
 		        		}
 
 		        		ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
-		        		ep.addChatMessage(new ChatComponentTranslation("msg.basirura.modeInfo." + setIdx + ".txt", new Object[] {}));
+		        		DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.basirura.modeInfo." + setIdx + ".txt", new Object[] {}));
 		        		ExtendedPlayerProperties.get(ep).setWeaponMode(EnumDqmWeaponMode.WEAPONMODE_BASIRURA.getId(), setIdx);
 		        		*/
 		        }else if(its.getItem() instanceof DqmItemMagicRuraSin ||
@@ -345,10 +374,10 @@ public class MessageServerMGToolModeHandler implements IMessageHandler<MessageSe
 	        			{
 	        				if(ruraEnable > 0)
 	        				{
-	        					ep.addChatMessage(new ChatComponentTranslation("dqm.iteminfo.RurasinLastLoc.txt", new Object[] {ruraDim, ruraX, ruraY ,ruraZ}));
+	        					DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("dqm.iteminfo.RurasinLastLoc.txt", new Object[] {ruraDim, ruraX, ruraY ,ruraZ}));
 	        				}else
 	        				{
-	        					ep.addChatMessage(new ChatComponentTranslation("dqm.iteminfo.RurasinLastNoLoc.txt", new Object[] {}));
+	        					DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("dqm.iteminfo.RurasinLastNoLoc.txt", new Object[] {}));
 	        				}
 	        			}else
 	        			{
@@ -356,19 +385,19 @@ public class MessageServerMGToolModeHandler implements IMessageHandler<MessageSe
 	        				{
 	        					if(ruraName != null)
 	        					{
-	        						ep.addChatMessage(new ChatComponentTranslation("dqm.iteminfo.RurasinLoc2.txt", new Object[] {ruraName, ruraDim, ruraX, ruraY ,ruraZ}));
+	        						DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("dqm.iteminfo.RurasinLoc2.txt", new Object[] {ruraName, ruraDim, ruraX, ruraY ,ruraZ}));
 	        					}else
 	        					{
-	        						ep.addChatMessage(new ChatComponentTranslation("dqm.iteminfo.RurasinLoc.txt", new Object[] {(select + 1), ruraDim, ruraX, ruraY ,ruraZ}));
+	        						DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("dqm.iteminfo.RurasinLoc.txt", new Object[] {(select + 1), ruraDim, ruraX, ruraY ,ruraZ}));
 	        					}
 	        				}else
 	        				{
 	        					if(ruraName != null)
 	        					{
-	        						ep.addChatMessage(new ChatComponentTranslation("dqm.iteminfo.RurasinNoLoc2.txt", new Object[] {(ruraName)}));
+	        						DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("dqm.iteminfo.RurasinNoLoc2.txt", new Object[] {(ruraName)}));
 	        					}else
 	        					{
-	        						ep.addChatMessage(new ChatComponentTranslation("dqm.iteminfo.RurasinNoLoc.txt", new Object[] {(select + 1)}));
+	        						DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("dqm.iteminfo.RurasinNoLoc.txt", new Object[] {(select + 1)}));
 	        					}
 	        				}
 	        			}
@@ -388,7 +417,7 @@ public class MessageServerMGToolModeHandler implements IMessageHandler<MessageSe
 		        		}
 
 		        		ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
-		        		ep.addChatMessage(new ChatComponentTranslation("msg.rurasin.modeInfo." + setIdx + ".txt", new Object[] {}));
+		        		DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.rurasin.modeInfo." + setIdx + ".txt", new Object[] {}));
 		        		ExtendedPlayerProperties.get(ep).setWeaponMode(EnumDqmWeaponMode.WEAPONMODE_RURASINPOS.getId(), setIdx);
 		        		*/
 	        		}else
@@ -434,7 +463,7 @@ public class MessageServerMGToolModeHandler implements IMessageHandler<MessageSe
 		        		*/
 
 		        		ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
-		        		ep.addChatMessage(new ChatComponentTranslation("msg.rura.modeInfo." + setIdx + ".txt", new Object[] {}));
+		        		DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.rura.modeInfo." + setIdx + ".txt", new Object[] {}));
 		        		ExtendedPlayerProperties.get(ep).setWeaponMode(EnumDqmWeaponMode.WEAPONMODE_RURASINMODE.getId(), setIdx);
 	        		}
 
@@ -484,7 +513,7 @@ public class MessageServerMGToolModeHandler implements IMessageHandler<MessageSe
 	        		*/
 
 	        		ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
-	        		ep.addChatMessage(new ChatComponentTranslation("msg.rura.modeInfo." + setIdx + ".txt", new Object[] {}));
+	        		DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.rura.modeInfo." + setIdx + ".txt", new Object[] {}));
 	        		ExtendedPlayerProperties.get(ep).setWeaponMode(EnumDqmWeaponMode.WEAPONMODE_RURA.getId(), setIdx);
 	        	}else if(its.getItem() instanceof DqmItemKimera ||
 	       			 its.getItem() instanceof DqmItemKimera2 ||
@@ -529,7 +558,7 @@ public class MessageServerMGToolModeHandler implements IMessageHandler<MessageSe
 		       		*/
 
 		       		ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
-		       		ep.addChatMessage(new ChatComponentTranslation("msg.rura.modeInfo." + setIdx + ".txt", new Object[] {}));
+		       		DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.rura.modeInfo." + setIdx + ".txt", new Object[] {}));
 		       		ExtendedPlayerProperties.get(ep).setWeaponMode(EnumDqmWeaponMode.WEAPONMODE_KIMERA.getId(), setIdx);
 		       	}else if(its.getItem() instanceof DqmItemBowBase)
 		       	{
@@ -543,11 +572,11 @@ public class MessageServerMGToolModeHandler implements IMessageHandler<MessageSe
 		    			if(itemMode2 == 1)
 		    			{
 		    				ExtendedPlayerProperties.get(ep).setWeaponMode(idx, 0);
-		    				ep.addChatMessage(new ChatComponentTranslation("msg.weapon3.modeInfo.0.txt", new Object[] {}));
+		    				DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.weapon3.modeInfo.0.txt", new Object[] {}));
 		    			}else
 		    			{
 		    				ExtendedPlayerProperties.get(ep).setWeaponMode(idx, itemMode2 + 1);
-		    				ep.addChatMessage(new ChatComponentTranslation("msg.weapon3.modeInfo." + (itemMode2 + 1) +".txt", new Object[] {}));
+		    				DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.weapon3.modeInfo." + (itemMode2 + 1) +".txt", new Object[] {}));
 		    			}
 		    			ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
 	    				return null;
@@ -568,11 +597,11 @@ public class MessageServerMGToolModeHandler implements IMessageHandler<MessageSe
 		    			if(itemMode2 == 1)
 		    			{
 		    				ExtendedPlayerProperties.get(ep).setWeaponMode(idx, 0);
-		    				ep.addChatMessage(new ChatComponentTranslation("msg.weapon2.modeInfo.0.txt", new Object[] {}));
+		    				DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.weapon2.modeInfo.0.txt", new Object[] {}));
 		    			}else
 		    			{
 		    				ExtendedPlayerProperties.get(ep).setWeaponMode(idx, itemMode2 + 1);
-		    				ep.addChatMessage(new ChatComponentTranslation("msg.weapon2.modeInfo." + (itemMode2 + 1) +".txt", new Object[] {}));
+		    				DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.weapon2.modeInfo." + (itemMode2 + 1) +".txt", new Object[] {}));
 		    			}
 		    			ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
 	    				return null;
@@ -598,22 +627,22 @@ public class MessageServerMGToolModeHandler implements IMessageHandler<MessageSe
 			    			if(itemMode == 2)
 			    			{
 			    				ExtendedPlayerProperties.get(ep).setWeaponMode(idx, -1);
-			    				ep.addChatMessage(new ChatComponentTranslation("msg.weapon.modeInfo." + idx + ".-1.txt", new Object[] {}));
+			    				DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.weapon.modeInfo." + idx + ".-1.txt", new Object[] {}));
 			    			}else
 			    			{
 			    				ExtendedPlayerProperties.get(ep).setWeaponMode(idx, itemMode + 1);
-			    				ep.addChatMessage(new ChatComponentTranslation("msg.weapon.modeInfo." + idx + "." + (itemMode + 1) +".txt", new Object[] {}));
+			    				DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.weapon.modeInfo." + idx + "." + (itemMode + 1) +".txt", new Object[] {}));
 			    			}
 		    			}else
 		    			{
 			    			if(itemMode == 0)
 			    			{
 			    				ExtendedPlayerProperties.get(ep).setWeaponMode(idx, -1);
-			    				ep.addChatMessage(new ChatComponentTranslation("msg.weapon.modeInfo." + idx + ".-1.txt", new Object[] {}));
+			    				DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.weapon.modeInfo." + idx + ".-1.txt", new Object[] {}));
 			    			}else
 			    			{
 			    				ExtendedPlayerProperties.get(ep).setWeaponMode(idx, 0);
-			    				ep.addChatMessage(new ChatComponentTranslation("msg.weapon.modeInfo." + idx + ".0.txt", new Object[] {}));
+			    				DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.weapon.modeInfo." + idx + ".0.txt", new Object[] {}));
 			    			}
 		    			}
 
@@ -633,7 +662,7 @@ public class MessageServerMGToolModeHandler implements IMessageHandler<MessageSe
 	        			ExtendedPlayerProperties2.get(ep).setBlockSetMode(EnumDqmMGToolMode.MGSET_SET.getId());
 	        		}
 
-	        		ep.addChatMessage(new ChatComponentTranslation("msg.magictool.set.mode." + ExtendedPlayerProperties2.get(ep).getBlockSetMode() + ".txt"));
+	        		DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.magictool.set.mode." + ExtendedPlayerProperties2.get(ep).getBlockSetMode() + ".txt"));
 	        		ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
 	        	}else if(its.getItem() == DQMagicTools.itemMagicToolBreak1)
 	        	{
@@ -657,7 +686,7 @@ public class MessageServerMGToolModeHandler implements IMessageHandler<MessageSe
 	        			ExtendedPlayerProperties2.get(ep).setToolBreak1mode(EnumDqmMGToolMode.MGBREAK_DELETE.getId());
 	        		}
 
-	        		ep.addChatMessage(new ChatComponentTranslation("msg.magictool.break.mode." + ExtendedPlayerProperties2.get(ep).getToolBreak1mode() + ".txt"));
+	        		DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.magictool.break.mode." + ExtendedPlayerProperties2.get(ep).getToolBreak1mode() + ".txt"));
 	        		/*
 	        		if(ExtendedPlayerProperties2.get(ep).getTool1mode() == EnumDqmMGToolMode.MGFARM1_PLANT.getId())
 	        		{
@@ -670,7 +699,7 @@ public class MessageServerMGToolModeHandler implements IMessageHandler<MessageSe
 	        			}
 	        			ItemStack iStack = new ItemStack((Item)rn.getObject(selectSeed), 1);
 	        			int val = ExtendedPlayerProperties2.get(ep).getSeedVal(selectSeed);
-	        			ep.addChatMessage(new ChatComponentTranslation("msg.magictool.farm.seedPlant.2.txt", new Object[] {iStack.getDisplayName(), val}));
+	        			DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.magictool.farm.seedPlant.2.txt", new Object[] {iStack.getDisplayName(), val}));
 	        		}
 	        		*/
 	        		ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
@@ -696,7 +725,7 @@ public class MessageServerMGToolModeHandler implements IMessageHandler<MessageSe
 	        			ExtendedPlayerProperties2.get(ep).setToolBreak2mode(EnumDqmMGToolMode.MGBREAK_DELETE.getId());
 	        		}
 
-	        		ep.addChatMessage(new ChatComponentTranslation("msg.magictool.break.mode." + ExtendedPlayerProperties2.get(ep).getToolBreak2mode() + ".txt"));
+	        		DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.magictool.break.mode." + ExtendedPlayerProperties2.get(ep).getToolBreak2mode() + ".txt"));
 	        		/*
 	        		if(ExtendedPlayerProperties2.get(ep).getTool1mode() == EnumDqmMGToolMode.MGFARM1_PLANT.getId())
 	        		{
@@ -709,7 +738,7 @@ public class MessageServerMGToolModeHandler implements IMessageHandler<MessageSe
 	        			}
 	        			ItemStack iStack = new ItemStack((Item)rn.getObject(selectSeed), 1);
 	        			int val = ExtendedPlayerProperties2.get(ep).getSeedVal(selectSeed);
-	        			ep.addChatMessage(new ChatComponentTranslation("msg.magictool.farm.seedPlant.2.txt", new Object[] {iStack.getDisplayName(), val}));
+	        			DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.magictool.farm.seedPlant.2.txt", new Object[] {iStack.getDisplayName(), val}));
 	        		}
 	        		*/
 	        		ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
@@ -750,14 +779,14 @@ public class MessageServerMGToolModeHandler implements IMessageHandler<MessageSe
         {
 	        if(ExtendedPlayerProperties3.get(ep).getJobPermission(pat) == 0)
 	        {
-	        	ep.addChatMessage(new ChatComponentTranslation("msg.Dama1.messages.24.txt" ,new Object[] {}));
+	        	DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.Dama1.messages.24.txt" ,new Object[] {}));
 	        	ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
 	        	return null;
 	        }
 
 	        if(!DQR.jobChangeTable.getCheckJobChange(ep, pat))
 	        {
-	        	ep.addChatMessage(new ChatComponentTranslation("msg.Dama1.messages.25.txt" ,new Object[] {}));
+	        	DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.Dama1.messages.25.txt" ,new Object[] {}));
 	        	ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
 	        	return null;
 	        }
@@ -766,8 +795,8 @@ public class MessageServerMGToolModeHandler implements IMessageHandler<MessageSe
         ExtendedPlayerProperties.get(ep).setJob(pat);
         ((ExtendedPlayerProperties)(ep.getExtendedProperties(ExtendedPlayerProperties.EXT_PROP_NAME))).loadProxyData((EntityPlayer)ep);
 
-        ep.addChatMessage(new ChatComponentTranslation("msg.Dama1.messages.22.txt" ,new Object[] {EnumDqmMessageConv.JobName.getStartS() + pat + EnumDqmMessageConv.JobName.getEndS()}));
-        ep.addChatMessage(new ChatComponentTranslation("msg.Dama1.messages.23.txt" ,new Object[] {}));
+        DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.Dama1.messages.22.txt" ,new Object[] {EnumDqmMessageConv.JobName.getStartS() + pat + EnumDqmMessageConv.JobName.getEndS()}));
+        DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.Dama1.messages.23.txt" ,new Object[] {}));
 		*/
         //サーバーへ送った際に、EntityPlayerインスタンス（EntityPlayerMPインスタンス）はこのように取れる。
         //EntityPlayer entityPlayer = ctx.getServerHandler().playerEntity;

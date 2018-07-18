@@ -7,7 +7,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IProjectile;
 import net.minecraft.entity.boss.EntityDragon;
@@ -557,13 +556,61 @@ public class ThrowingEntity extends Entity implements IProjectile{
                             	target.entityHit.hurtResistantTime = 0;
                             }
                         }
-                        else */if (target.entityHit instanceof IProjectile)
+                        else */
+
+                        if (target.entityHit instanceof IProjectile)
                         {
                         	//対象が矢などの飛翔Entityの場合、打ち消すことが出来る
                         	target.entityHit.setDead();
                         }
                         else
                         {
+                        	//村人以外なら、ダメージを与える処理を呼ぶ
+                        	if (target.entityHit.attackEntityFrom(damagesource, (float)i1))
+                            {
+                        		//ダメージを与えることに成功したら以下の処理を行う
+                        		System.out.println("TEST2 : " + (target.entityHit.getCommandSenderName()));
+                                if (target.entityHit instanceof EntityLivingBase)
+                                {
+                                    EntityLivingBase entitylivingbase = (EntityLivingBase)target.entityHit;
+
+                                    //ノックバック
+                                    if (this.knockbackStrength > 0)
+                                    {
+                                        f3 = MathHelper.sqrt_double(this.motionX * this.motionX + this.motionZ * this.motionZ);
+
+                                        if (f3 > 0.0F)
+                                        {
+                                            target.entityHit.addVelocity(this.motionX *
+                                                (double)this.knockbackStrength * 0.6000000238418579D / (double)f3, 0.1D, this.motionZ *
+                                                (double)this.knockbackStrength * 0.6000000238418579D / (double)f3);
+                                        }
+                                    }
+                                    else
+                                    {
+                                    	target.entityHit.hurtResistantTime = 0;
+                                    }
+
+                                    //Thornのエンチャント効果で反撃を受ける
+                                    if (this.shootingEntity != null && this.shootingEntity instanceof EntityLivingBase)
+                                    {
+                                        EnchantmentHelper.func_151384_a(entitylivingbase, this.shootingEntity);
+                                        EnchantmentHelper.func_151385_b((EntityLivingBase)this.shootingEntity, entitylivingbase);
+                                    }
+
+                                    //マルチプレイ時に、両者がプレイヤーだった時のパケット送信処理
+                                    if (this.shootingEntity != null && target.entityHit != this.shootingEntity &&
+                                            target.entityHit instanceof EntityPlayer && this.shootingEntity instanceof EntityPlayerMP)
+                                    {
+                                        ((EntityPlayerMP)this.shootingEntity).playerNetServerHandler.sendPacket(new S2BPacketChangeGameState(6, 0.0F));
+                                    }
+
+                                    this.playSound("dqr:mob.hit", 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
+                                }
+
+
+                            }
+                        	/*
                     		if(target.entityHit instanceof EntityLivingBase)
                     		{
                     			EntityLivingBase elv2 = (EntityLivingBase)target.entityHit;
@@ -573,6 +620,7 @@ public class ThrowingEntity extends Entity implements IProjectile{
                     		{
                             	EntityLivingBase elv = (EntityLivingBase)this.shootingEntity;
                             	//村人以外なら、ダメージを与える処理を呼ぶ
+                            	System.out.println("TEST : " + elv.getCommandSenderName());
                             	if (elv.attackEntityFrom(damagesource, (float)i1))
                                 {
                             		//ダメージを与えることに成功したら以下の処理を行う
@@ -605,18 +653,6 @@ public class ThrowingEntity extends Entity implements IProjectile{
 
                                         this.playSound("dqr:mob.hit", 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
                                     }
-
-                                    //ここでヒット時の効果音がなる
-                                    //this.playSound("dqr:mob.hit", 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
-
-                                    //当たったあと、弾を消去する。エンティティ貫通がONの弾種はそのまま残す。
-                                    /*
-                                    if (!(target.entityHit instanceof EntityEnderman) && !this.isPenetrateEntity())
-                                    {
-                                        this.setDead();
-                                        break;
-                                    }
-                                    */
                                 }
 
                     		}else
@@ -625,6 +661,7 @@ public class ThrowingEntity extends Entity implements IProjectile{
 	                        	if (target.entityHit.attackEntityFrom(damagesource, (float)i1))
 	                            {
 	                        		//ダメージを与えることに成功したら以下の処理を行う
+	                        		System.out.println("TEST2 : " + (target.entityHit.getCommandSenderName()));
 	                                if (target.entityHit instanceof EntityLivingBase)
 	                                {
 	                                    EntityLivingBase entitylivingbase = (EntityLivingBase)target.entityHit;
@@ -663,19 +700,10 @@ public class ThrowingEntity extends Entity implements IProjectile{
 	                                    this.playSound("dqr:mob.hit", 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
 	                                }
 
-	                                //ここでヒット時の効果音がなる
-	                                //this.playSound("dqr:mob.hit", 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
 
-	                                //当たったあと、弾を消去する。エンティティ貫通がONの弾種はそのまま残す。
-	                                /*
-	                                if (!(target.entityHit instanceof EntityEnderman) && !this.isPenetrateEntity())
-	                                {
-	                                    this.setDead();
-	                                    break;
-	                                }
-	                                */
 	                            }
                     		}
+                    		*/
                         }
             		}
             	}

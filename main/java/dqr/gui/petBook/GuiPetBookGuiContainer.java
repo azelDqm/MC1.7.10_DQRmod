@@ -11,23 +11,29 @@ import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
+import dqr.api.enums.EnumDqmMGToolMode;
+import dqr.api.enums.EnumDqmWeaponMode;
+import dqr.playerData.ExtendedPlayerProperties;
 import dqr.playerData.ExtendedPlayerProperties3;
 
 public class GuiPetBookGuiContainer extends GuiContainer
 {
     private static final ResourceLocation texture = new ResourceLocation("dqr","textures/gui/petBook.png");
+    private static final ResourceLocation texture2 = new ResourceLocation("dqr","textures/gui/petBookD.png");
+    private EntityPlayer ep;
     private int page = 0;
 
     public GuiPetBookGuiContainer(EntityPlayer player)
     {
 
         super(new GuiPetBookContainer(player));
-
+        this.ep = player;
     	NBTTagCompound playerPet = ExtendedPlayerProperties3.get(player).getNBTPlayerPetList();
     	Set tags = playerPet.func_150296_c();
+    	//System.out.println("TEST_LOAD : " + tags.size() + " / " + player.worldObj.isRemote);
 
         this.ySize = 155;
-
+        this.xSize = 176;
 
     }
 
@@ -39,10 +45,24 @@ public class GuiPetBookGuiContainer extends GuiContainer
     {
 		int x2 = (this.width  - this.xSize) / 2;
 		int y = (this.height - this.ySize) / 2;
+		int halfX = (this.width - this.xSize) / 2 + (this.xSize / 2);
 
 		String message = I18n.format("gui.container.TamingPets.title", new Object[]{});
-	    this.fontRendererObj.drawString(message, 8, 6, 4210752);
 
+		int itemMode = ExtendedPlayerProperties.get(ep).getWeaponMode(EnumDqmWeaponMode.WEAPONMODE_PetSuisyou.getId());
+		int color = 4210752;
+		if(itemMode == EnumDqmMGToolMode.PETSUISYOU_VIEWDEL.getId())
+		{
+			message = I18n.format("gui.container.TamingPets2.title", new Object[]{});
+			color = 0xffffffff;
+
+			String message2 = I18n.format("gui.container.TamingPets3.title", new Object[]{});
+			this.fontRendererObj.drawString(message2, (this.xSize / 2) - (mc.fontRenderer.getStringWidth(message2) / 2) , 134, color);
+		}
+		//System.out.println("SIZE : " +  mc.fontRenderer.getStringWidth(message) + " / " + this.width + " / " + this.xSize);
+
+	    //this.fontRendererObj.drawString(message, 8, 6, 4210752);
+		this.fontRendererObj.drawString(message, (this.xSize / 2) - (mc.fontRenderer.getStringWidth(message) / 2) , 6, color);
 		/*
     	this.buttonList.clear();
 
@@ -55,6 +75,11 @@ public class GuiPetBookGuiContainer extends GuiContainer
         //this.fontRendererObj.drawString("Inventory", 8, this.ySize - 96 + 2, 4210752);
     }
 
+    public void initGui()
+    {
+        super.initGui();
+    }
+
     /*
         背景の描画
      */
@@ -62,7 +87,16 @@ public class GuiPetBookGuiContainer extends GuiContainer
     protected void drawGuiContainerBackgroundLayer(float p_146976_1_, int p_146976_2_, int p_146976_3_)
     {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        this.mc.getTextureManager().bindTexture(texture);
+        int itemMode = ExtendedPlayerProperties.get(ep).getWeaponMode(EnumDqmWeaponMode.WEAPONMODE_PetSuisyou.getId());
+        if(itemMode == EnumDqmMGToolMode.PETSUISYOU_VIEWDEL.getId())
+        {
+        	this.mc.getTextureManager().bindTexture(texture2);
+        }else
+        {
+        	this.mc.getTextureManager().bindTexture(texture);
+        }
+
+
         int k = (this.width - this.xSize) / 2;
         int l = (this.height - this.ySize) / 2;
         this.drawTexturedModalRect(k, l, 0, 0, this.xSize, this.ySize);

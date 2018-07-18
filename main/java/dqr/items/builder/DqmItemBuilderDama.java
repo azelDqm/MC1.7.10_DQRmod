@@ -33,7 +33,7 @@ public class DqmItemBuilderDama extends DqmItemBuilderBase{
 				;
 			}else
 			{
-				par2EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.Builder.messages.perm.txt",new Object[] {}));
+				DQR.func.doAddChatMessageFix(par2EntityPlayer, new ChatComponentTranslation("msg.Builder.messages.perm.txt",new Object[] {}));
 				par2EntityPlayer.worldObj.playSoundAtEntity(par2EntityPlayer, "dqr:player.pi", 1.0F, 1.0F);
 				return false;
 			}
@@ -88,7 +88,7 @@ public class DqmItemBuilderDama extends DqmItemBuilderBase{
     		/*
     		if(nbt != null && nbt.getInteger("buildReady") == -1)
     		{
-    			par2EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.Builder.messages.0.txt",new Object[] {}));
+    			DQR.func.doAddChatMessageFix(par2EntityPlayer, new ChatComponentTranslation("msg.Builder.messages.0.txt",new Object[] {}));
     			return false;
     		}else
     		{
@@ -112,8 +112,8 @@ public class DqmItemBuilderDama extends DqmItemBuilderBase{
 
 	        		if(!par3World.isRemote)
 	        		{
-	        			par2EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.Builder.messages.1.txt",new Object[] {}));
-	        			par2EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.Builder.messages.2.txt",new Object[] {}));
+	        			DQR.func.doAddChatMessageFix(par2EntityPlayer, new ChatComponentTranslation("msg.Builder.messages.1.txt",new Object[] {}));
+	        			DQR.func.doAddChatMessageFix(par2EntityPlayer, new ChatComponentTranslation("msg.Builder.messages.2.txt",new Object[] {}));
 	        		}
 	        	}else
 	        	{
@@ -143,8 +143,8 @@ public class DqmItemBuilderDama extends DqmItemBuilderBase{
 
         		if(!par3World.isRemote)
         		{
-        			par2EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.Builder.messages.1.txt",new Object[] {}));
-        			par2EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.Builder.messages.2.txt",new Object[] {}));
+        			DQR.func.doAddChatMessageFix(par2EntityPlayer, new ChatComponentTranslation("msg.Builder.messages.1.txt",new Object[] {}));
+        			DQR.func.doAddChatMessageFix(par2EntityPlayer, new ChatComponentTranslation("msg.Builder.messages.2.txt",new Object[] {}));
         		}
         	}else
         	{
@@ -167,7 +167,7 @@ public class DqmItemBuilderDama extends DqmItemBuilderBase{
         		{
         			if(!par3World.isRemote)
         			{
-        				par2EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.Builder.messages.need.txt",new Object[] {}));
+        				DQR.func.doAddChatMessageFix(par2EntityPlayer, new ChatComponentTranslation("msg.Builder.messages.need.txt",new Object[] {}));
         				par2EntityPlayer.worldObj.playSoundAtEntity(par2EntityPlayer, "dqr:player.pi", 1.0F, 1.0F);
         			}
         			return false;

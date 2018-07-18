@@ -110,7 +110,7 @@ public class FuncMedalkingItems {
 		medalAccessory.put(DQAccessories.itemHosizoranokubikazari, 750);
 		medalAccessory.put(DQAccessories.itemSuparing , 1000);
 		medalAccessory.put(DQAccessories.itemSosararing , 1000);
-
+		medalAccessory.put(DQAccessories.itemSabitatate , 250);
 
 		//魔法1
 		medalMagic.put(DQMagics.itemBegiragon , 500);
@@ -170,6 +170,8 @@ public class FuncMedalkingItems {
 		medalJobchange.put(DQEmblems.itemEmbPriest , 100);
 		medalJobchange.put(DQEmblems.itemEmbThief , 100);
 		medalJobchange.put(DQEmblems.itemEmbMerchant , 100);
+		medalJobchange.put(DQEmblems.itemEmbHituzikai , 150);
+		medalJobchange.put(DQEmblems.itemEmbFunanori , 150);
 
 		medalJobchange.put(DQEmblems.itemEmbDancer , 700);
 		medalJobchange.put(DQEmblems.itemEmbPirate , 700);
@@ -178,10 +180,12 @@ public class FuncMedalkingItems {
 		medalJobchange.put(DQEmblems.itemEmbPaladin , 700);
 		medalJobchange.put(DQEmblems.itemEmbMagickKnight , 700);
 		medalJobchange.put(DQEmblems.itemEmbRanger , 700);
+		medalJobchange.put(DQEmblems.itemEmbMonsterTamer , 700);
 
-		medalJobchange.put(DQEmblems.itemEmbMonsterTamer , 1500);
 		medalJobchange.put(DQEmblems.itemEmbSuperStar , 1500);
+		medalJobchange.put(DQEmblems.itemEmbDougutukai , 1500);
 		medalJobchange.put(DQEmblems.itemEmbGodHnad , 1500);
+		medalJobchange.put(DQEmblems.itemEmbTentiraimeishi , 1500);;
 		medalJobchange.put(DQEmblems.itemEmbHero , 3000);
 		medalJobchange.put(DQEmblems.itemEmbHaguremetal , 3000);
 		medalJobchange.put(DQEmblems.itemEmbDragon , 3000);

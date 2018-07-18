@@ -43,12 +43,6 @@ public class DqmEntityNPCBank extends DqmNPCBase
         int var2 = MathHelper.floor_double(this.boundingBox.minY);
         int var3 = MathHelper.floor_double(this.posZ);
 
-        /*
-        if (this.worldObj.getBlockId(var1, var2 - 1, var3) == DqmItemList.Shoumetu.blockID)
-        {
-            this.setDead();
-        }
-		*/
         super.onLivingUpdate();
     }
     @Override
@@ -61,22 +55,6 @@ public class DqmEntityNPCBank extends DqmNPCBase
         int var2 = MathHelper.floor_double(this.boundingBox.minY);
         int var3 = MathHelper.floor_double(this.posZ);
         return super.getCanSpawnHere() && !(isValidLightLevel());
-        		/*
-            this.worldObj.getBlockId(var1, var2 - 1, var3) == 1 && !(isValidLightLevel()) && this.worldObj.getBlockId(var1, var2, var3) == 0 && this.worldObj.getBlockId(var1, var2 + 1, var3) == 0
-            || this.worldObj.getBlockId(var1, var2 - 1, var3) == 2 && !(isValidLightLevel()) && this.worldObj.getBlockId(var1, var2, var3) == 0 && this.worldObj.getBlockId(var1, var2 + 1, var3) == 0
-            || this.worldObj.getBlockId(var1, var2 - 1, var3) == 3 && !(isValidLightLevel()) && this.worldObj.getBlockId(var1, var2, var3) == 0 && this.worldObj.getBlockId(var1, var2 + 1, var3) == 0
-            || this.worldObj.getBlockId(var1, var2 - 1, var3) == 12 && !(isValidLightLevel()) && this.worldObj.getBlockId(var1, var2, var3) == 0 && this.worldObj.getBlockId(var1, var2 + 1, var3) == 0
-            || this.worldObj.getBlockId(var1, var2 - 1, var3) == 18 && this.worldObj.getBlockId(var1, var2, var3) == 0 && this.worldObj.getBlockId(var1, var2 + 1, var3) == 0
-            || this.worldObj.getBlockId(var1, var2 - 1, var3) == 31 && this.worldObj.getBlockId(var1, var2, var3) == 0 && this.worldObj.getBlockId(var1, var2 + 1, var3) == 0
-            || this.worldObj.getBlockId(var1, var2 - 1, var3) == 78 && this.worldObj.getBlockId(var1, var2, var3) == 0 && this.worldObj.getBlockId(var1, var2 + 1, var3) == 0
-            || this.worldObj.getBlockId(var1, var2 - 1, var3) == 87 && this.worldObj.getBlockId(var1, var2, var3) == 0 && this.worldObj.getBlockId(var1, var2 + 1, var3) == 0
-            || this.worldObj.getBlockId(var1, var2 - 1, var3) == 98  && this.worldObj.getBlockId(var1, var2, var3) == 0 && this.worldObj.getBlockId(var1, var2 + 1, var3) == 0
-            || this.worldObj.getBlockId(var1, var2 - 1, var3) == 110 && this.worldObj.getBlockId(var1, var2, var3) == 0 && this.worldObj.getBlockId(var1, var2 + 1, var3) == 0
-            || this.worldObj.getBlockId(var1, var2 - 1, var3) == 112 && this.worldObj.getBlockId(var1, var2, var3) == 0 && this.worldObj.getBlockId(var1, var2 + 1, var3) == 0
-            || this.worldObj.getBlockId(var1, var2 - 1, var3) == 121 && this.worldObj.getBlockId(var1, var2, var3) == 0 && this.worldObj.getBlockId(var1, var2 + 1, var3) == 0;
-            */
-        // || this.isValidLightLevel() && super.getCanSpawnHere();
-        //   return super.getCanSpawnHere() && isValidLightLevel();
     }
     protected boolean isValidLightLevel()
     {
@@ -150,50 +128,6 @@ public class DqmEntityNPCBank extends DqmNPCBase
         this.tasks.addTask(9, new EntityAILookIdle(this));
     }
 
-    /*
-    public void Nedan(ICommandSender var1, String[] var2)
-    {
-        EntityPlayer ep = (EntityPlayer)var1;
-        String var13;
-        String var14;
-        var13 = "そうだな、そいつの修理なら " + ep.SyuuriGold + " Gになるがどうする？";
-        var1.sendChatToPlayer(var13);
-        var14 = "修理するならスニーク状態で、もう一度その武具で話しかけるんだな。";
-        var1.sendChatToPlayer(var14);
-    }
-    public void Syuuri(ICommandSender var1, String[] var2)
-    {
-        EntityPlayer ep = (EntityPlayer)var1;
-        String var13;
-        String var14;
-        var13 = ep.SyuuriGold + " G支払った。またきな！";
-        var1.sendChatToPlayer(var13);
-    }
-    public void Taranai(ICommandSender var1, String[] var2)
-    {
-        String var13;
-        var13 = "金が足らないようだな。";
-        var1.sendChatToPlayer(var13);
-    }
-    public void No(ICommandSender var1, String[] var2)
-    {
-        String var13;
-        var13 = "悪いが、そいつは修理できねぇな。";
-        var1.sendChatToPlayer(var13);
-    }
-    public void Event(ICommandSender var1, String[] var2)
-    {
-        String var13;
-        var13 = "よう！修理したい武具があれば直してやるぞ！";
-        var1.sendChatToPlayer(var13);
-    }
-    public void Nakama(ICommandSender var1, String[] var2)
-    {
-        String var13;
-        var13 = "いつも助かるぜ！これからはお前専属の修理屋となろう！どこへでも着いていくぜ！";
-        var1.sendChatToPlayer(var13);
-    }
-    */
     private int flag2;
     private int flag3;
 
@@ -201,27 +135,13 @@ public class DqmEntityNPCBank extends DqmNPCBase
     private int Nedan;
     private int ID;
 
-    /*
-    @Override
-    protected void dropFewItems(boolean par1, int par2)
-    {
-        if (rand.nextInt(1) == 0)
-        {
-            this.dropItem(DqmItemList.Se.itemID, 1);   //1
-        }
-    }
-    */
 
     @Override	public int getTotalArmorValue()
     {
         return DF;
     }
-    /*
-    @Override	public int getAttackStrength(Entity par1Entity)
-    {
-        return PW;
-    }
-    */
+
+
     @Override	public boolean isAIEnabled()
     {
         return true;
@@ -235,7 +155,7 @@ public class DqmEntityNPCBank extends DqmNPCBase
     {
     	if(!ep.worldObj.isRemote)
     	{
-    		//ep.addChatMessage(new ChatComponentTranslation("testTESTtest"));
+    		//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("testTESTtest"));
 
     		ItemStack its = ep.inventory.getCurrentItem();
     		if(its != null && its.getItem() == DQBuilders.itemBuilderKaikosyo && ep.isSneaking())
@@ -268,27 +188,32 @@ public class DqmEntityNPCBank extends DqmNPCBase
     			{
     					if(flg == 8 || flg == 14)
     					{
-    		    			ep.addChatMessage(new ChatComponentTranslation("msg.Bank.messages.10.txt",new Object[] {}));
+    						DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.Bank.messages.10.txt",new Object[] {}));
+    		    			//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.Bank.messages.10.txt",new Object[] {}));
     		    			ExtendedPlayerProperties.get(ep).setNpcTalk(EnumDqmNpcTalk.BANK.getId(), 10);
     		    			ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
     					}else if(flg == 10)
     					{
-    		    			ep.addChatMessage(new ChatComponentTranslation("msg.Bank.messages.11.txt",new Object[] {}));
+    		    			//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.Bank.messages.11.txt",new Object[] {}));
+    						DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.Bank.messages.11.txt",new Object[] {}));
     		    			ExtendedPlayerProperties.get(ep).setNpcTalk(EnumDqmNpcTalk.BANK.getId(), 11);
     		    			ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
     					}else if(flg == 11)
     					{
-    		    			ep.addChatMessage(new ChatComponentTranslation("msg.Bank.messages.12.txt",new Object[] {}));
+    		    			//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.Bank.messages.12.txt",new Object[] {}));
+    						DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.Bank.messages.12.txt",new Object[] {}));
     		    			ExtendedPlayerProperties.get(ep).setNpcTalk(EnumDqmNpcTalk.BANK.getId(), 12);
     		    			ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
     					}else if(flg == 12)
     					{
-    		    			ep.addChatMessage(new ChatComponentTranslation("msg.Bank.messages.13.txt",new Object[] {}));
+    		    			//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.Bank.messages.13.txt",new Object[] {}));
+    						DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.Bank.messages.13.txt",new Object[] {}));
     		    			ExtendedPlayerProperties.get(ep).setNpcTalk(EnumDqmNpcTalk.BANK.getId(), 13);
     		    			ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
     					}else if(flg == 13)
     					{
-    		    			ep.addChatMessage(new ChatComponentTranslation("msg.Bank.messages.14.txt",new Object[] {}));
+    		    			//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.Bank.messages.14.txt",new Object[] {}));
+    						DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.Bank.messages.14.txt",new Object[] {}));
     		    			ExtendedPlayerProperties.get(ep).setNpcTalk(EnumDqmNpcTalk.BANK.getId(), 14);
     		    			ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
     					}
@@ -299,7 +224,8 @@ public class DqmEntityNPCBank extends DqmNPCBase
 
     		if(flg < 7)
     		{
-    			ep.addChatMessage(new ChatComponentTranslation("msg.Bank.messages." + flg + ".txt",new Object[] {}));
+    			//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.Bank.messages." + flg + ".txt",new Object[] {}));
+    			DQR.func.doAddChatMessageFix(ep,new ChatComponentTranslation("msg.Bank.messages." + flg + ".txt",new Object[] {}));
     			ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
     			if(flg + 1 <= 7)
     			{
@@ -307,7 +233,8 @@ public class DqmEntityNPCBank extends DqmNPCBase
     			}
     		}else if(flg == 7 || flg == 8)
     		{
-    			ep.addChatMessage(new ChatComponentTranslation("msg.Bank.messages.7.txt",new Object[] {}));
+    			//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.Bank.messages.7.txt",new Object[] {}));
+    			DQR.func.doAddChatMessageFix(ep,new ChatComponentTranslation("msg.Bank.messages.7.txt",new Object[] {}));
     			ExtendedPlayerProperties.get(ep).setNpcTalk(EnumDqmNpcTalk.BANK.getId(), 8);
     			ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
     		}else if(flg == 14)
@@ -321,49 +248,58 @@ public class DqmEntityNPCBank extends DqmNPCBase
 
     				if(epIts.getItem() == DQMiscs.itemOkane)
     				{
-    					ep.addChatMessage(new ChatComponentTranslation("msg.Bank.messages.30.txt",new Object[] {}));
+    					//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.Bank.messages.30.txt",new Object[] {}));
+    					DQR.func.doAddChatMessageFix(ep,new ChatComponentTranslation("msg.Bank.messages.30.txt",new Object[] {}));
     					cashGold = 1000;
     				}else if(epIts.getItem() == DQMiscs.itemOkane10000)
     				{
-    					ep.addChatMessage(new ChatComponentTranslation("msg.Bank.messages.31.txt",new Object[] {}));
+    					//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.Bank.messages.31.txt",new Object[] {}));
+    					DQR.func.doAddChatMessageFix(ep,new ChatComponentTranslation("msg.Bank.messages.31.txt",new Object[] {}));
     					cashGold = 10000;
     				}else if(epIts.getItem() == DQMiscs.itemOkane100000)
     				{
-    					ep.addChatMessage(new ChatComponentTranslation("msg.Bank.messages.32.txt",new Object[] {}));
+    					//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.Bank.messages.32.txt",new Object[] {}));
+    					DQR.func.doAddChatMessageFix(ep,new ChatComponentTranslation("msg.Bank.messages.32.txt",new Object[] {}));
     					cashGold = 100000;
     				}else if(epIts.getItem() == DQMiscs.itemOkane1000000)
     				{
-    					ep.addChatMessage(new ChatComponentTranslation("msg.Bank.messages.33.txt",new Object[] {}));
+    					//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.Bank.messages.33.txt",new Object[] {}));
+    					DQR.func.doAddChatMessageFix(ep,new ChatComponentTranslation("msg.Bank.messages.33.txt",new Object[] {}));
     					cashGold = 1000000;
     				}else if(epIts.getItem() == DQMiscs.itemDouka)
     				{
-    					ep.addChatMessage(new ChatComponentTranslation("msg.Bank.messages.34.txt",new Object[] {}));
+    					//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.Bank.messages.34.txt",new Object[] {}));
+    					DQR.func.doAddChatMessageFix(ep,new ChatComponentTranslation("msg.Bank.messages.34.txt",new Object[] {}));
     					cashGold = 500;
     				}else if(epIts.getItem() == DQMiscs.itemGinka)
     				{
-    					ep.addChatMessage(new ChatComponentTranslation("msg.Bank.messages.35.txt",new Object[] {}));
+    					//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.Bank.messages.35.txt",new Object[] {}));
+    					DQR.func.doAddChatMessageFix(ep,new ChatComponentTranslation("msg.Bank.messages.35.txt",new Object[] {}));
     					cashGold = 3000;
     				}else if(epIts.getItem() == DQMiscs.itemKinka)
     				{
-    					ep.addChatMessage(new ChatComponentTranslation("msg.Bank.messages.36.txt",new Object[] {}));
+    					//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.Bank.messages.36.txt",new Object[] {}));
+    					DQR.func.doAddChatMessageFix(ep,new ChatComponentTranslation("msg.Bank.messages.36.txt",new Object[] {}));
     					cashGold = 10000;
     				}
 
     				if(cashGold > 0)
     				{
 	    				ep.inventory.getCurrentItem().stackSize = ep.inventory.getCurrentItem().stackSize - 1;
-	    				//ep.addChatMessage(new ChatComponentTranslation("msg.Bank.messages." + (10 + flg) + ".txt",new Object[] {}));
+	    				//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.Bank.messages." + (10 + flg) + ".txt",new Object[] {}));
 	    				ExtendedPlayerProperties.get(ep).setGold(epMoney + cashGold);
 
 	    				ep.worldObj.playSoundAtEntity(ep, "dqr:player.okane", 1.0F, 1.0F);
     				}else
     				{
-            			ep.addChatMessage(new ChatComponentTranslation("msg.Bank.messages.38.txt",new Object[] {}));
+            			//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.Bank.messages.38.txt",new Object[] {}));
+    					DQR.func.doAddChatMessageFix(ep,new ChatComponentTranslation("msg.Bank.messages.38.txt",new Object[] {}));
             			ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
     				}
     			}else
     			{
-        			ep.addChatMessage(new ChatComponentTranslation("msg.Bank.messages.37.txt",new Object[] {}));
+        			//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.Bank.messages.37.txt",new Object[] {}));
+    				DQR.func.doAddChatMessageFix(ep,new ChatComponentTranslation("msg.Bank.messages.37.txt",new Object[] {}));
         			ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
     			}
     		}else
@@ -387,241 +323,26 @@ public class DqmEntityNPCBank extends DqmNPCBase
     			{
     				if(ep.inventory.addItemStackToInventory(itsOkane))
     				{
-	    				ep.addChatMessage(new ChatComponentTranslation("msg.Bank.messages." + (10 + flg) + ".txt",new Object[] {}));
+	    				//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.Bank.messages." + (10 + flg) + ".txt",new Object[] {}));
+    					DQR.func.doAddChatMessageFix(ep,new ChatComponentTranslation("msg.Bank.messages." + (10 + flg) + ".txt",new Object[] {}));
 	    				ExtendedPlayerProperties.get(ep).setGold(epMoney - rate);
 
 	    				ep.worldObj.playSoundAtEntity(ep, "dqr:player.okane", 1.0F, 1.0F);
     				}else
     				{
     					ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
-    					ep.addChatMessage(new ChatComponentTranslation("msg.Bank.messages.25.txt",new Object[] {}));
+    					//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.Bank.messages.25.txt",new Object[] {}));
+    					DQR.func.doAddChatMessageFix(ep,new ChatComponentTranslation("msg.Bank.messages.25.txt",new Object[] {}));
     				}
     			}else
     			{
     				ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
-    				ep.addChatMessage(new ChatComponentTranslation("msg.Bank.messages.24.txt",new Object[] {}));
+    				//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.Bank.messages.24.txt",new Object[] {}));
+    				DQR.func.doAddChatMessageFix(ep,new ChatComponentTranslation("msg.Bank.messages.24.txt",new Object[] {}));
     			}
     		}
     	}
 
-    		/*
-
-    		else if(flg == 1)
-    		{
-    			ItemStack its = ep.inventory.getCurrentItem();
-    			int syuuriPrice = DQR.syuuriPrice.Gold(its);
-    			if(syuuriPrice >= 0)
-    			{
-    				if(!ep.isSneaking())
-    				{
-	    				ep.addChatMessage(new ChatComponentTranslation("msg.shopSyuriya.messages.1.txt",new Object[] {syuuriPrice}));
-	    				ep.addChatMessage(new ChatComponentTranslation("msg.shopSyuriya.messages.2.txt",new Object[] {}));
-	    				ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
-    				}else
-    				{
-    					int epGold = ExtendedPlayerProperties.get(ep).getGold();
-    					if(epGold >= syuuriPrice)
-    					{
-    	    				ep.addChatMessage(new ChatComponentTranslation("msg.shopSyuriya.messages.3.txt",new Object[] {syuuriPrice}));
-    	    				ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
-
-    	    				ep.inventory.getCurrentItem().setItemDamage(0);
-    	    				//ExtendedPlayerProperties.get(ep).setGold(epGold - syuuriPrice);
-    					}else
-    					{
-    	    				ep.addChatMessage(new ChatComponentTranslation("msg.shopSyuriya.messages.4.txt",new Object[] {}));
-    	    				ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
-    					}
-    				}
-    			}else
-    			{
-    				ep.addChatMessage(new ChatComponentTranslation("msg.shopSyuriya.messages.5.txt",new Object[] {}));
-    				ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
-    			}
-    			ExtendedPlayerProperties.get(ep).setNpcTalk(0, 1);
-    		}
-    	}
-    	*/
-    	/*
-        int ran = rand.nextInt(20) + 1;
-        int ran2 = rand.nextInt(8) + 1;
-        int boss = rand.nextInt(4);
-        ItemStack var2 = ep.inventory.getCurrentItem();
-
-        //魔法の筒******************************************************************************************************
-        if (var2 != null && var2.itemID == DqmItemList2.ItemMahounoTutu03ID)
-        {
-            if (!this.worldObj.isRemote)
-            {
-                if (!ep.capabilities.isCreativeMode)
-                {
-                    --var2.stackSize;
-                }
-            }
-
-            if (var2.stackSize <= 0)
-            {
-                ep.inventory.setInventorySlotContents(ep.inventory.currentItem, (ItemStack)null);
-            }
-
-            if (!this.worldObj.isRemote)
-            {
-                int setDamage = 0;
-                if(this.isTamed())
-                {
-                    setDamage = setDamage + 1000000000;
-                }
-                ep.sendChatToPlayer("イルイル！！");
-                this.worldObj.playSoundAtEntity(this, "DQM_Sound.Fire", 0.8F, 1.0F);
-                this.entityDropItem(new ItemStack(DqmItemList2.ItemTutuEventSyuuriID, 1, setDamage), 0.0F);
-                this.setDead();
-            }
-
-            return true;
-        }
-
-        if (!(var2 != null) && this.isTamed())
-        {
-        	this.
-            this.setOwner(ep.getCommandSenderName());
-            this.aiSit.setSitting(!this.isSitting());
-            this.isJumping = false;
-            this.worldObj.playSoundAtEntity(this, "DQM_Sound.Pi", 1.0F, 1.0F);
-            return true;
-        }
-
-        if (ep.SyuuriLV >= 50000 && this.getHealth() >= 1 && !(this.isTamed()))
-        {
-            if (!this.worldObj.isRemote)
-            {
-                if (this.rand.nextInt(1) == 0)
-                {
-                    this.setTamed(true);
-                    this.setAttackTarget((EntityLiving)null);
-                    this.aiSit.setSitting(true);
-                    this.worldObj.playSoundAtEntity(this, "DQM_Sound.Pet", 1.0F, 1.0F);
-                    this.setOwner(ep.username);
-                    this.playTameEffect(true);
-                    this.worldObj.setEntityState(this, (byte)7);
-                    Nakama(ep, null);
-                    ep.SyuuriLV = 0;
-                }
-                else
-                {
-                    this.playTameEffect(false);
-                    this.worldObj.setEntityState(this, (byte)6);
-                }
-            }
-
-            return true;
-        }
-
-        if (!this.worldObj.isRemote)
-        {
-            if (flag2 == 0)
-            {
-                Event(ep, null);
-                flag2 = 1;
-                return true;
-            }
-
-            if (var2 != null && var2.itemID == DqmEventSyuuriGold.Gold(var2, ep) && ID == DqmEventSyuuriGold.Gold(var2, ep) && flag10 == 1 && !(ep.isSneaking()))
-            {
-            	//ver1.50
-	            //Nedan(ep, null);
-	            //return true;
-            	if (ep.SyuuriGold == 99999999)
-            	{
-            		No(ep, null);
-	                return true;
-            	}else
-            	{
-	                Nedan(ep, null);
-	                return true;
-            	}
-            }
-
-            if (var2 != null && var2.itemID == DqmEventSyuuriGold.Gold(var2, ep) && ID == DqmEventSyuuriGold.Gold(var2, ep) && flag10 == 1 && ep.isSneaking())
-            {
-                if (ep.SyuuriGold == 99999999)
-                {
-                    No(ep, null);
-                    flag10 = 0;
-                    return true;
-                }
-
-                if (ep.Gold >= ep.SyuuriGold)
-                {
-                    if (var2 != null && var2.itemID == DqmEventSyuuriGold.Gold(var2, ep))
-                    {
-                        if (!this.worldObj.isRemote)
-                        {
-                            if (!ep.capabilities.isCreativeMode)
-                            {
-                                --var2.stackSize;
-                            }
-                        }
-
-                        if (var2.stackSize <= 0)
-                        {
-                            ep.inventory.setInventorySlotContents(ep.inventory.currentItem, (ItemStack)null);
-                        }
-
-                        if (!this.worldObj.isRemote)
-                        {
-                            if (this.rand.nextInt(1) == 0)
-                            {
-                                this.worldObj.playSoundAtEntity(this, "DQM_Sound.Pi", 1.0F, 1.0F);
-                                Syuuri(ep, null);
-                                ep.Gold = ep.Gold - ep.SyuuriGold;
-                                ep.dropItem(DqmEventSyuuriGold.Gold(var2, ep), 1);
-
-                                if (!(this.isTamed()))
-                                {
-                                    ep.SyuuriLV = ep.SyuuriLV + ep.SyuuriGold;
-                                }
-                            }
-                        }
-                    }
-
-                    return true;
-                }
-
-                if (ep.Gold < ep.SyuuriGold)
-                {
-                    Taranai(ep, null);
-                    flag10 = 0;
-                    return true;
-                }
-
-                return true;
-            }
-
-            ep.SyuuriGold = 99999999;
-
-            if (var2 != null && var2.itemID == DqmEventSyuuriGold.Gold(var2, ep) && flag10 == 0)
-            {
-                if (ep.SyuuriGold != 99999999)
-                {
-	                Nedan(ep, null);
-	                flag10 = 1;
-	                ID = DqmEventSyuuriGold.Gold(var2, ep);
-	                Nedan = ep.SyuuriGold;
-	                return true;
-                }else
-                {
-                    No(ep, null);
-                    flag10 = 0;
-                    return true;
-                }
-            }
-
-            flag10 = 0;
-            return true;
-        }
-
-        return true;
-        */
     	return true;
     }
 	@Override

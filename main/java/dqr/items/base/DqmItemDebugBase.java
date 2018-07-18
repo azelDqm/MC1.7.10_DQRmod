@@ -52,6 +52,7 @@ public class DqmItemDebugBase extends Item{
     	}
     	*/
 
+		System.out.println("DEBUG : " + player.getCommandSenderName());
     	/*
     	RegistryNamespaced rnb = Block.blockRegistry;
     	RegistryNamespaced rni = Item.itemRegistry;
@@ -60,8 +61,56 @@ public class DqmItemDebugBase extends Item{
     	System.out.println("TEST2 : " + rni.getNameForObject(this));
 		*/
 
+		/*
+    	MinecraftServer minecraftserver = MinecraftServer.getServer();
+    	Entity er = minecraftserver.getConfigurationManager().func_152612_a(player.getCommandSenderName());
+    	if(er != null)
+    	{
+    		System.out.println("TEST2 : " + er.getCommandSenderName());
+    	}else
+    	{
+    		System.out.println("TEST2 : " + "null");
+    	}
+
+    	EntityPlayerMP ex = DQR.func.getPlayerFromUUID(player.getUniqueID());
+
+    	if(ex != null)
+    	{
+    		System.out.println("TEST3 : " + ex.getCommandSenderName());
+    	}else
+    	{
+    		System.out.println("TEST3 : " + "null");
+    	}
+    	*/
+
     	if(!world.isRemote)
     	{
+    		/*
+    		Hashtable<Integer, Object> test = new Hashtable();
+
+    		String code = "TEST";
+    		test.put(1, ep);
+    		test.put(2, code + 2);
+    		test.put(3, ep);
+    		test.put(4, code + 3);
+    		test.put(5, ep);
+    		test.put(6, code + 4);
+
+    		for(int cnt = 1; cnt < 7; cnt++)
+    		{
+    			if(test.get(cnt) instanceof String)
+    			{
+    				System.out.println("[" + cnt + "]STRING : " + test.get(cnt));
+    			}
+
+    			if(test.get(cnt) instanceof EntityPlayer)
+    			{
+    				EntityPlayer wk = (EntityPlayer)test.get(cnt);
+    				System.out.println("[" + cnt + "]EntityPlayer : " + wk.getCommandSenderName());
+    			}
+    		}
+    		*/
+
     		//player.curePotionEffects(new ItemStack(Items.milk_bucket, 1));
 	    	//System.out.println("TEST");
 	    	//DqmGansekiBlock bl = new DqmGansekiBlock();

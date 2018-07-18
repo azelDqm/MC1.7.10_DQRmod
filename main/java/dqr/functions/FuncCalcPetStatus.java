@@ -596,7 +596,7 @@ public class FuncCalcPetStatus {
 		pe = pet.getActivePotionEffect(DQPotionPlus.buffSukara);
 		if(pe != null)
 		{
-			def = def +  (def * ((pe.getAmplifier() + 1) / 2));
+			def = def +  (def * (pe.getAmplifier() + 1) / 2);
 		}
 		//ルカニ計算
 		pe = pet.getActivePotionEffect(DQPotionMinus.debuffRukani);

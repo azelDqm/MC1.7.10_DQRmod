@@ -16,6 +16,7 @@ import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.world.World;
 import dqr.DQR;
 import dqr.api.Items.DQMagics;
+import dqr.api.enums.EnumDqmJob;
 import dqr.api.enums.EnumDqmMagic;
 import dqr.api.enums.EnumDqmMobCateg;
 import dqr.api.enums.EnumDqmMobRoot;
@@ -69,7 +70,7 @@ public class FuncPetHaigou {
 					pe = ep.getActivePotionEffect(DQPotionMinus.debuffMahoton);
 					if(pe != null && ep.worldObj.isRemote)
 					{
-						ep.addChatMessage(new ChatComponentTranslation("msg.magic.mahoton.txt",new Object[] {}));
+						DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.magic.mahoton.txt",new Object[] {}));
 						ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
 
 						return;
@@ -77,21 +78,25 @@ public class FuncPetHaigou {
 
 					if(DQR.func.isBind(ep) && ep.worldObj.isRemote)
 					{
-						ep.addChatMessage(new ChatComponentTranslation("msg.magic.rariho.txt",new Object[] {}));
+						DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.magic.rariho.txt",new Object[] {}));
 						ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
 
 						return;
 					}
 
 					int epMP = ExtendedPlayerProperties.get(ep).getMP();
-					if(epMP < EnumDqmMagic.Haigou.getMP() && DQR.debug == 0)
+					int job = ExtendedPlayerProperties.get(ep).getJob();
+					if(epMP < EnumDqmMagic.Haigou.getMP() && DQR.debug == 0 && job != EnumDqmJob.Mamonotukai.getId())
 					{
-						ep.addChatMessage(new ChatComponentTranslation("msg.magic.nomp.txt",new Object[] {}));
+						DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.magic.nomp.txt",new Object[] {}));
 						ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
 						return;
 					}else
 					{
-						ExtendedPlayerProperties.get(ep).setMP(epMP - EnumDqmMagic.Haigou.getMP());
+						if(job != EnumDqmJob.Mamonotukai.getId())
+						{
+							ExtendedPlayerProperties.get(ep).setMP(epMP - EnumDqmMagic.Haigou.getMP());
+						}
 					}
 
 					ep.worldObj.playSoundAtEntity(ep, "dqr:player.jumon", 0.5F, 1.0F);
@@ -271,7 +276,7 @@ public class FuncPetHaigou {
 						//配合不可組み合わせ(戻す)
 						//System.out.println("Haigour Error:3");
 						//DQR.func.debugString("Haigour Error:3");
-						ep.addChatMessage(new ChatComponentTranslation("dqm.iteminfo.petHaigou0",new Object[] {}));
+						DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("dqm.iteminfo.petHaigou0",new Object[] {}));
 					}
 
 

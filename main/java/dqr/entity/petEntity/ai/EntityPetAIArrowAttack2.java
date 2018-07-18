@@ -144,7 +144,7 @@ public class EntityPetAIArrowAttack2 extends EntityAIBase
         this.entityHost.getLookHelper().setLookPositionWithEntity(this.attackTarget, 30.0F, 30.0F);
         float f;
 
-        System.out.println("TEST : " + this.rangedAttackTime);
+        //System.out.println("TEST : " + this.rangedAttackTime);
         if (--this.rangedAttackTime == 0)
         {
             if (d0 > (double)this.field_82642_h || !flag)

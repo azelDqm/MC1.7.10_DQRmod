@@ -2,6 +2,7 @@ package dqr.dataTable;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import dqr.DQR;
 import dqr.api.Items.DQEmblems;
 import dqr.api.enums.EnumDqmJob;
 import dqr.playerData.ExtendedPlayerProperties;
@@ -119,45 +120,122 @@ public class FuncJobChangeLvTable {
 										0, 0, 0, 0, 0, 0, 0, 0,
 										0, 0, 0, 0, 0, 0, 0, 0};
 
+	public static int[] Hituzikai =
+		{0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0};
+
+	public static int[] Funanori =
+		{0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0};
+
+	public static int[] Dougutukai =
+		{0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0};
+
+	public static int[] Tentiraimeishi =
+		{0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0};
+
 	public FuncJobChangeLvTable()
 	{
-		this.BattleMaster[EnumDqmJob.Senshi.getId()] = 30;
-		this.BattleMaster[EnumDqmJob.Budouka.getId()] = 30;
+		if(DQR.conf.bug_jobChangeTableVersion == 1)
+		{
+			this.BattleMaster[EnumDqmJob.Senshi.getId()] = 30;
+			this.BattleMaster[EnumDqmJob.Budouka.getId()] = 30;
 
-		this.Kenja[EnumDqmJob.Mahoutukai.getId()] = 30;
-		this.Kenja[EnumDqmJob.Souryo.getId()] = 30;
+			this.Kenja[EnumDqmJob.Mahoutukai.getId()] = 30;
+			this.Kenja[EnumDqmJob.Souryo.getId()] = 30;
 
-		this.Yusha[EnumDqmJob.GodHand.getId()] = 50;
-		this.Yusha[EnumDqmJob.Kenja.getId()] = 50;
-		this.Yusha[EnumDqmJob.Ranger.getId()] = 50;
-		this.Yusha[EnumDqmJob.SuperStar.getId()] = 50;
+			this.Yusha[EnumDqmJob.GodHand.getId()] = 50;
+			this.Yusha[EnumDqmJob.Kenja.getId()] = 50;
+			this.Yusha[EnumDqmJob.Ranger.getId()] = 50;
+			this.Yusha[EnumDqmJob.SuperStar.getId()] = 50;
 
-		this.Paladin[EnumDqmJob.Budouka.getId()] = 30;
-		this.Paladin[EnumDqmJob.Souryo.getId()] = 30;
+			this.Paladin[EnumDqmJob.Budouka.getId()] = 30;
+			this.Paladin[EnumDqmJob.Souryo.getId()] = 30;
 
-		this.Mahousensi[EnumDqmJob.Senshi.getId()] = 30;
-		this.Mahousensi[EnumDqmJob.Mahoutukai.getId()] = 30;
+			this.Mahousensi[EnumDqmJob.Senshi.getId()] = 30;
+			this.Mahousensi[EnumDqmJob.Mahoutukai.getId()] = 30;
 
-		this.Ranger[EnumDqmJob.Touzoku.getId()] = 30;
-		this.Ranger[EnumDqmJob.Syounin.getId()] = 30;
+			this.Ranger[EnumDqmJob.Touzoku.getId()] = 30;
+			this.Ranger[EnumDqmJob.Syounin.getId()] = 30;
 
-		this.Mamonotukai[EnumDqmJob.Asobinin.getId()] = 30;
-		this.Mamonotukai[EnumDqmJob.Syounin.getId()] = 30;
+			this.Mamonotukai[EnumDqmJob.Asobinin.getId()] = 30;
+			this.Mamonotukai[EnumDqmJob.Syounin.getId()] = 30;
 
-		this.SuperStar[EnumDqmJob.Odoriko.getId()] = 50;
+			this.SuperStar[EnumDqmJob.Odoriko.getId()] = 50;
 
-		this.Godhand[EnumDqmJob.BattleMaster.getId()] = 50;
-		this.Godhand[EnumDqmJob.Paladin.getId()] = 50;
-		this.Godhand[EnumDqmJob.MahouSenshi.getId()] = 50;
+			this.Godhand[EnumDqmJob.BattleMaster.getId()] = 50;
+			this.Godhand[EnumDqmJob.Paladin.getId()] = 50;
+			this.Godhand[EnumDqmJob.MahouSenshi.getId()] = 50;
 
-		this.Odoriko[EnumDqmJob.Asobinin.getId()] = 20;
+			this.Odoriko[EnumDqmJob.Asobinin.getId()] = 20;
 
-		this.Kaizoku[EnumDqmJob.Touzoku.getId()] = 30;
-		this.Kaizoku[EnumDqmJob.Budouka.getId()] = 30;
+			this.Kaizoku[EnumDqmJob.Touzoku.getId()] = 30;
+			this.Kaizoku[EnumDqmJob.Budouka.getId()] = 30;
 
-		this.Dragon[EnumDqmJob.Mamonotukai.getId()] = 75;
-		this.Haguremetal[EnumDqmJob.Mamonotukai.getId()] = 75;
+			this.Dragon[EnumDqmJob.Mamonotukai.getId()] = 75;
+			this.Haguremetal[EnumDqmJob.Mamonotukai.getId()] = 75;
 
+			this.Hituzikai[EnumDqmJob.Yuusha.getId()] = 50;
+			this.Funanori[EnumDqmJob.Yuusha.getId()] = 50;
+			this.Dougutukai[EnumDqmJob.Yuusha.getId()] = 50;
+			this.Tentiraimeishi[EnumDqmJob.Yuusha.getId()] = 50;
+		}else
+		{
+			this.Odoriko[EnumDqmJob.Asobinin.getId()] = 20;
+
+			this.Kaizoku[EnumDqmJob.Touzoku.getId()] = 30;
+			this.Kaizoku[EnumDqmJob.Funanori.getId()] = 30;
+
+			this.BattleMaster[EnumDqmJob.Senshi.getId()] = 30;
+			this.BattleMaster[EnumDqmJob.Budouka.getId()] = 30;
+
+			this.Kenja[EnumDqmJob.Mahoutukai.getId()] = 30;
+			this.Kenja[EnumDqmJob.Souryo.getId()] = 30;
+
+			this.Paladin[EnumDqmJob.Budouka.getId()] = 30;
+			this.Paladin[EnumDqmJob.Souryo.getId()] = 30;
+
+			this.Mahousensi[EnumDqmJob.Senshi.getId()] = 30;
+			this.Mahousensi[EnumDqmJob.Mahoutukai.getId()] = 30;
+
+			this.Ranger[EnumDqmJob.Touzoku.getId()] = 30;
+			this.Ranger[EnumDqmJob.Hituzikai.getId()] = 30;
+
+			this.Mamonotukai[EnumDqmJob.Asobinin.getId()] = 30;
+			this.Mamonotukai[EnumDqmJob.Hituzikai.getId()] = 30;
+
+			this.SuperStar[EnumDqmJob.Odoriko.getId()] = 50;
+			this.SuperStar[EnumDqmJob.Syounin.getId()] = 50;
+
+			this.Dragon[EnumDqmJob.Mamonotukai.getId()] = 75;
+			this.Haguremetal[EnumDqmJob.Mamonotukai.getId()] = 75;
+
+			this.Godhand[EnumDqmJob.BattleMaster.getId()] = 50;
+			this.Godhand[EnumDqmJob.Paladin.getId()] = 50;
+			//this.Godhand[EnumDqmJob.MahouSenshi.getId()] = 50;
+
+			this.Dougutukai[EnumDqmJob.Ranger.getId()] = 50;
+			this.Dougutukai[EnumDqmJob.Kaizoku.getId()] = 50;
+			this.Dougutukai[EnumDqmJob.Syounin.getId()] = 50;
+
+			this.Tentiraimeishi[EnumDqmJob.Kenja.getId()] = 50;
+			this.Tentiraimeishi[EnumDqmJob.MahouSenshi.getId()] = 50;
+
+			this.Yusha[EnumDqmJob.GodHand.getId()] = 50;
+			this.Yusha[EnumDqmJob.Tentiraimeishi.getId()] = 50;
+			this.Yusha[EnumDqmJob.Dougutukai.getId()] = 50;
+			this.Yusha[EnumDqmJob.SuperStar.getId()] = 50;
+		}
 	}
 
     public int[] getJobChangeTable(Item itm)
@@ -207,9 +285,16 @@ public class FuncJobChangeLvTable {
 	    	lvTable = this.Odoriko;
 	    }else if(itm == DQEmblems.itemEmbPirate || itm ==DQEmblems.itemDamaPirate){
 	    	lvTable = this.Kaizoku;
-	    }else if(itm == DQEmblems.itemEmbMasterDragon || itm ==DQEmblems.itemDamaMasterDragon)
-	    {
+	    }else if(itm == DQEmblems.itemEmbMasterDragon || itm ==DQEmblems.itemDamaMasterDragon){
 	    	lvTable = this.MasterDragon;
+	    }else if(itm == DQEmblems.itemEmbHituzikai || itm ==DQEmblems.itemDamaHituzikai){
+	    	lvTable = this.Hituzikai;
+	    }else if(itm == DQEmblems.itemEmbFunanori || itm ==DQEmblems.itemDamaFunanori){
+	    	lvTable = this.Funanori;
+	    }else if(itm == DQEmblems.itemEmbDougutukai || itm ==DQEmblems.itemDamaDougutukai){
+	    	lvTable = this.Dougutukai;
+	    }else if(itm == DQEmblems.itemEmbTentiraimeishi || itm ==DQEmblems.itemDamaTentiraimeishi){
+	    	lvTable = this.Tentiraimeishi;
 	    }
 
     	return lvTable;
@@ -266,6 +351,18 @@ public class FuncJobChangeLvTable {
 	    }else if(par1 == EnumDqmJob.MASTERDRAGON.getId())
 	    {
 	    	lvTable = this.MasterDragon;
+	    }else if(par1 == EnumDqmJob.Hituzikai.getId())
+	    {
+	    	lvTable = this.Hituzikai;
+	    }else if(par1 == EnumDqmJob.Funanori.getId())
+	    {
+	    	lvTable = this.Funanori;
+	    }else if(par1 == EnumDqmJob.Dougutukai.getId())
+	    {
+	    	lvTable = this.Dougutukai;
+	    }else if(par1 == EnumDqmJob.Tentiraimeishi.getId())
+	    {
+	    	lvTable = this.Tentiraimeishi;
 	    }
 
 	    for(int cnt = 0; cnt < lvTable.length; cnt++)

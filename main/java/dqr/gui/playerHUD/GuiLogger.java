@@ -3,6 +3,7 @@ package dqr.gui.playerHUD;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -40,47 +41,50 @@ public class GuiLogger extends Gui
 		  return;
 		}
 
-	  //ScaledResolution sr = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
-	  //int w = sr.getScaledWidth();
-	  int padW = 2;
-	  int padH = 2;
-      int y0 = 0;
-      int y1 = 0;
-      int y2 = 0;
-      int y3 = 0;
-      int y4 = 0;
-      int y5 = 0;
-      int y6 = 0;
-      int y7 = 0;
-      int y8 = 0;
-      ScaledResolution sr = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
-      int w = sr.getScaledWidth(), h = sr.getScaledHeight();
-      int x = 0; //= contains(pos, 1, 2)? w - padW - mc.fontRenderer.getStringWidth("Lv10 EXP 100000/10000000 SP50"): padW;
-      int y = 0; // = contains(pos, 0, 1)? h - padH - 10: padH;
-      /*
-      x = padW;
-      y0 = h - 22 ;
-      y1 = h - 20;
-      y2 = h - 12  ;
-      y3 = 20;
-      y4 = 28;
-      ResourceLocation reLoc = new ResourceLocation("dqm","textures/gui/mpStatus.png");
-      mc.renderEngine.bindTexture(reLoc);
-      this.drawTexturedModalRect(x, y0, 0, 0, 150, 50);
-      mc.fontRenderer.drawStringWithShadow("遊人 Lv99 SP 100", x + 5 , y1, 0xffffffff);
-      mc.fontRenderer.drawStringWithShadow("HP2000/2000", x + 5, y2, 0xffffffff);
-	*/
+	  if (DQR.conf.CLGuiLogVis == 2)
+	    {
+		  //ScaledResolution sr = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
+		  //int w = sr.getScaledWidth();
+			OpenGlHelper.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, 1, 0);
 
-      EntityPlayer ep = DQR.proxy.getEntityPlayerInstance();
+		  int padW = 2;
+		  int padH = 2;
+	      int y0 = 0;
+	      int y1 = 0;
+	      int y2 = 0;
+	      int y3 = 0;
+	      int y4 = 0;
+	      int y5 = 0;
+	      int y6 = 0;
+	      int y7 = 0;
+	      int y8 = 0;
+	      ScaledResolution sr = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
+	      int w = sr.getScaledWidth(), h = sr.getScaledHeight();
+	      int x = 0; //= contains(pos, 1, 2)? w - padW - mc.fontRenderer.getStringWidth("Lv10 EXP 100000/10000000 SP50"): padW;
+	      int y = 0; // = contains(pos, 0, 1)? h - padH - 10: padH;
+	      /*
+	      x = padW;
+	      y0 = h - 22 ;
+	      y1 = h - 20;
+	      y2 = h - 12  ;
+	      y3 = 20;
+	      y4 = 28;
+	      ResourceLocation reLoc = new ResourceLocation("dqm","textures/gui/mpStatus.png");
+	      mc.renderEngine.bindTexture(reLoc);
+	      this.drawTexturedModalRect(x, y0, 0, 0, 150, 50);
+	      mc.fontRenderer.drawStringWithShadow("遊人 Lv99 SP 100", x + 5 , y1, 0xffffffff);
+	      mc.fontRenderer.drawStringWithShadow("HP2000/2000", x + 5, y2, 0xffffffff);
+		*/
+	      //System.out.println("SIZE 2 : " + y0 + "/" + sr.getScaledWidth() + " / " + sr.getScaledHeight());
+	      EntityPlayer ep = DQR.proxy.getEntityPlayerInstance();
 
-      if(ep == null)
-      {
-    	  return;
-      }
+	      if(ep == null)
+	      {
+	    	  return;
+	      }
 
 
-      if (DQR.conf.CLGuiLogVis == 1)
-      {
+
           y0 = 0;
           y1 = 0;
           y2 = 0;
@@ -186,6 +190,9 @@ public class GuiLogger extends Gui
           y6 = y0 + 47;
           y7 = y0 + 56;
           y8 = y0 + 65;
+
+          //System.out.println("SIZE 5 : " + y0);
+
 
           GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
           ResourceLocation reLoc;// = new ResourceLocation("dqr","textures/gui/mpLog.png");

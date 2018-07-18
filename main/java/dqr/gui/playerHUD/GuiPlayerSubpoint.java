@@ -4,6 +4,7 @@ package dqr.gui.playerHUD;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -43,6 +44,7 @@ public class GuiPlayerSubpoint extends Gui
 		  return;
 		}
 
+		OpenGlHelper.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, 1, 0);
 	  //ScaledResolution sr = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
 	  //int w = sr.getScaledWidth();
 	  int padW = 2;

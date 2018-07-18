@@ -10,6 +10,8 @@ mahouken.name.26=(HP吸収)
 skill.Jump.name=ジャンプ攻撃%d
 skill.Poison.name=毒攻撃%d
 skill.Baikiruto.name=バイキルト
+skill.Baikiruto.1.name=バイキルト
+skill.Baikiruto.2.name=バイキルト
 skill.Sukara.name=スカラ
 skill.Baha.name=バーハ
 skill.Piora.name=ピオラ
@@ -52,6 +54,9 @@ skill.Mera.1.name=メラ
 skill.Mera.2.name=メラミ
 skill.Mera.3.name=メラゾーマ
 skill.Mera.4.name=メラガイア
+skill.Raidein.1.name=ライデイン
+skill.Raidein.2.name=ギガデイン
+skill.Raidein.3.name=ミナデイン
 skill.Dein.1.name=ライデイン
 skill.Dein.2.name=ギガデイン
 skill.Dein.3.name=ミナデイン
@@ -120,10 +125,15 @@ main.job.18=伝説の勇者
 main.job.19=踊子
 main.job.20=海賊
 main.job.21=マスタードラゴン
-
+main.job.22=羊飼い
+main.job.23=船乗り
+main.job.24=どうぐ使い
+main.job.25=天地雷鳴士
 gui.container.dama.title=転職
 gui.container.dama.page=Page. %f / %f
-gui.container.TamingPets.title=ペットモンスター
+gui.container.TamingPets2.title=ペット位置情報(情報削除モード)
+gui.container.TamingPets.title=ペット位置情報
+gui.container.TamingPets3.title=ｸﾘｯｸで情報削除
 
 death.attack.PlayerSpcial=不思議な力により力尽きた
 death.attack.DqmDamageBlock=ダメージ床により力尽きた
@@ -138,6 +148,7 @@ msg.causeNihuramu.txt=%sは光のかなたに消え去った
 
 msg.hardcore.messages.1.txt=§c[注意]§e現在DQRハードコアモードで動作しています。
 msg.hardcore.messages.2.txt=§eDQRハードコアモードでは、死亡時にプレイヤーデータがリセットされます。
+msg.easymode.messages.txt=§e[注意]現在DQRイージーモードで動作しています。
 msg.toSkillHit.txt=%s§e発動！
 msg.epCritical.txt=%sに会心の一撃
 msg.mobCritical.txt=%sの痛恨の一撃
@@ -255,7 +266,10 @@ gui.pet.status.gurd=防 %1$4d      身 %2$4d
 gui.pet.status.magic=魔 %1$4d      賢 %2$4d
 gui.pet.status.owner=飼主:%s
 gui.pet.status.type=種族:%s
-
+gui.pet.status.status=状態:%s
+gui.pet.status.stmode1=行動中
+gui.pet.status.stmode2=行動不能
+gui.pet.status.stmode3=待機
 gui.status.HP=HP %d / %d
 gui.status.MP=MP %d / %d
 gui.status.EXP=EXP %1$d / %2$d
@@ -299,6 +313,10 @@ gui.job.18=伝説
 gui.job.19=踊子
 gui.job.20=海賊
 gui.job.21=マスドラ
+gui.job.22=羊飼
+gui.job.23=船乗
+gui.job.24=道具
+gui.job.25=天雷
 gui.position.name=GUI位置調整
 gui.position.guiname.0=無し
 gui.position.guiname.1=プレイヤーデータ
@@ -311,6 +329,16 @@ gui.position.guiname.7=パーティーステータス
 gui.position.line.1=選択中GUI: %s
 gui.position.line.2=GUI移動速度: %dpixels
 gui.position.line.3=パーティー1行表示数: %d
+
+gui.position.line.4=移動速度変更 : [%s]
+gui.position.line.5=自由移動 : [%s][%s][%s][%s]
+gui.position.line.6=定型移動 : [%s]
+
+gui.position.line.7=ログの履歴確認 : [PageUp][PageDown]
+gui.position.line.8=ログ削除 : [%s]
+
+gui.position.line.9=1行表示数増減 : [%s][%s]
+
 
 gui.party.hp=HP
 gui.party.mp=MP
@@ -901,6 +929,11 @@ item.dqm.itemEmbDancer.name=踊り子の証
 item.dqm.itemEmbPirate.name=海賊の証
 item.dqm.itemEmbMasterDragon.name=マスタードラゴンの証
 
+item.dqm.itemEmbHituzikai.name=羊飼いの証
+item.dqm.itemEmbFunanori.name=船乗りの証
+item.dqm.itemEmbDougutukai.name=道具使いの証
+item.dqm.itemEmbTentiraimeishi.name=天地雷鳴士の証
+
 item.dqm.itemDamaCivilian.name=遊び人
 item.dqm.itemDamaWarrior.name=戦士
 item.dqm.itemDamaFighter.name=武闘家
@@ -924,6 +957,11 @@ item.dqm.itemDamaGodHnad.name=ゴッドハンド
 item.dqm.itemDamaLegend.name=伝説の勇者
 item.dqm.itemDamaMasterDragon.name=マスタードラゴン
 
+item.dqm.itemDamaHituzikai.name=羊飼い
+item.dqm.itemDamaFunanori.name=船乗り
+item.dqm.itemDamaDougutukai.name=道具使い
+item.dqm.itemDamaTentiraimeishi.name=天地雷鳴士
+
 item.dqm.itemDamaCivilian_1.name=遊び人
 item.dqm.itemDamaWarrior_1.name=戦士
 item.dqm.itemDamaFighter_1.name=武闘家
@@ -946,6 +984,12 @@ item.dqm.itemDamaDragon_1.name=ドラゴン
 item.dqm.itemDamaGodHnad_1.name=ゴッドハンド
 item.dqm.itemDamaLegend_1.name=伝説の勇者
 item.dqm.itemDamaMasterDragon_1.name=マスタードラゴン
+
+item.dqm.itemDamaHituzikai_1.name=羊飼い
+item.dqm.itemDamaFunanori_1.name=船乗り
+item.dqm.itemDamaDougutukai_1.name=道具使い
+item.dqm.itemDamaTentiraimeishi_1.name=天地雷鳴士
+
 
 item.dqm.itemBasirura.name=バシルーラの杖
 item.dqm.itembasirurac.name=バシルーラの杖(改)
@@ -1385,6 +1429,10 @@ item.dqm.BuilderShopSyuuriya.name=修理屋設計図
 item.dqm.BuilderShopKaitoriya.name=買取屋設計図
 
 item.dqm.BuilderShopBukiW.name=武器屋スティーブ召喚書
+item.dqm.BuilderShopBukiW3.name=武器屋スティーブ召喚書(ネザー)
+item.dqm.BuilderShopBukiW4.name=武器屋スティーブ召喚書(エンド)
+item.dqm.BuilderShopBukiW5.name=武器屋スティーブ召喚書(伝説)
+item.dqm.BuilderShopBukiW6.name=武器屋スティーブ召喚書(全て)
 item.dqm.BuilderShopBankW.name=銀行スティーブ召喚書
 item.dqm.BuilderShopSyuuriW.name=修理屋スティーブ召喚書
 item.dqm.BuilderShopKaitoriW.name=買取屋スティーブ召喚書
@@ -1422,7 +1470,6 @@ dqm.potion.poisonX=猛毒
 dqm.potion.Suffocation=窒息
 dqm.potion.hoshihuru=速度上昇
 dqm.potion.HPRegeneration=HP自動回復
-dqm.potion.MPRegeneration=MP自動回復
 dqm.potion.MPRegeneration=MP自動回復
 
 dqm.skill.WSkill_2_0.name=ドラゴン斬り
@@ -1766,6 +1813,7 @@ dqm.iteminfo.petHaigou3=§cこの組み合わせは特殊な結果が出そう�
 dqm.iteminfo.petHaigou4=スニーク+アイテム使用で配合をキャンセルできます。
 
 dqm.iteminfo.caneat=§6[食用]
+dqm.iteminfo.canpet=§e[ペット使用可]
 dqm.iteminfo.hpheal=§fHP回復量:%1d-%2d
 dqm.iteminfo.randombreak=使用時一定確率で壊れる
 dqm.iteminfo.mpheal=§fMP回復量:%1d-%2d
@@ -1843,12 +1891,26 @@ dqm.iteminfo.mahounoTutu.2.txt=ペットをアイテム化することができ�
 dqm.iteminfo.kaikosyo.1.txt=召喚されたNPCに向かってスニーク＋アイテム使用で
 dqm.iteminfo.kaikosyo.2.txt=対象NPCを消滅させることができます。
 
+
+dqm.iteminfo.PetSuisyou.20.txt=アイテム モード切替対応：ペット位置確認モード
+dqm.iteminfo.PetSuisyou.21.txt=アイテム モード切替対応：ペット位置確認(削除)
+dqm.iteminfo.PetSuisyou.22.txt=アイテム モード切替対応：登録データリフレッシュ
+dqm.iteminfo.PetSuisyou.23.txt=アイテム モード切替対応：登録データ一括削除
 dqm.iteminfo.PetSuisyou.1.txt=アイテムを使用すると
 dqm.iteminfo.PetSuisyou.2.txt=自分のペットの現在座標を調べることができる。
-dqm.iteminfo.PetSuisyou.3.txt=スニークしながらジャンプ中に使用すると
-dqm.iteminfo.PetSuisyou.4.txt=座標取得失敗データの削除ができます。
-dqm.iteminfo.PetSuisyou.5.txt=水中でスニークしながら使用すると
-dqm.iteminfo.PetSuisyou.6.txt=全座標データの削除ができます。
+dqm.iteminfo.PetSuisyou.3.txt=0座標ペットはクリックで削除できます。
+
+dqm.iteminfo.PetSuisyou.4.txt=クリックでペット情報を削除できます。
+dqm.iteminfo.PetSuisyou.5.txt=(削除データは情報再受信で復活します。)
+
+dqm.iteminfo.PetSuisyou.6.txt=スニークしながらジャンプ中に使用すると
+dqm.iteminfo.PetSuisyou.7.txt=座標取得失敗データ・不正データの削除ができます。
+
+dqm.iteminfo.PetSuisyou.8.txt=スニークしながらジャンプ中に使用すると
+dqm.iteminfo.PetSuisyou.9.txt=全ての情報を一旦全削除します。
+dqm.iteminfo.PetSuisyou.10.txt=(削除データは情報再受信で復活します。)
+
+dqm.iteminfo.PetSuisyou.10.txt=※ペット発見・再読み込み時に情報を取得しています。
 
 dqm.iteminfo.accessory.base.txt=[特殊効果]
 dqm.iteminfo.accessory.Hosifurupiasu.0.txt=移動速度上昇
@@ -2030,6 +2092,7 @@ dqm.magicinfo.categHPheal=(回復量:%d)
 dqm.magicinfo.categAttack=(威力:%d)
 dqm.magicinfo.mp=消費MP:%d
 dqm.magicinfo.needLv=必要レベル:%s
+dqm.magicinfo.needLv2=           & %s
 dqm.magicinfo.usefulJob=適正職:%s
 dqm.magicinfo.usefulJobSPC=       %s
 dqm.magicinfo.noimplemented=§c(未実装)
@@ -2174,13 +2237,17 @@ msg.Bank.messages.36.txt=!player.10,000Gを受け取った。
 msg.Bank.messages.37.txt=!player.換金希望のアイテムを持って右クリックすれば交換するぞ。
 msg.Bank.messages.38.txt=!player.そのアイテムは換金できないぞ。
 msg.Bukiya.messages.0.txt=!player.俺は武具を扱っている商人なんだが、よかったら見ていってくれ！
-msg.Bukiya.messages.1.txt=!player.次の仕入れに少し時間が必要なんだ。また後で来てくれ。
-msg.Bukiya.messages.2.txt=!player.今日仕入れた物は『%s』%dG
-msg.Bukiya.messages.3.txt=!player.買う気があるならスニーク状態で、話しかけてくれ。
-msg.Bukiya.messages.4.txt=!player. G支払った。
-msg.Bukiya.messages.5.txt=!player.助かったぜ、じゃあまたな！
-msg.Bukiya.messages.6.txt=!player.金が足らないようだな。
-msg.Bukiya.messages.7.txt=!player.アイテムを持ちきれないようだな・・・。
+msg.Bukiya.messages.21.txt=次の仕入れに少し時間が必要なんだ。
+msg.Bukiya.messages.22.txt=また後で来てくれ。
+msg.Bukiya.messages.2.txt=何か欲しいものはあるか？
+msg.Bukiya.messages.3.txt=%dG支払った。
+msg.Bukiya.messages.4.txt=他に欲しいものはあるか？
+msg.Bukiya.messages.11.txt=!player.助かったぜ、じゃあまたな！
+msg.Bukiya.messages.12.txt=!player.またきてくれよな！
+msg.Bukiya.messages.6.txt=金が足らないようだな。
+msg.Bukiya.messages.7.txt=アイテムを持ちきれないようだな…。
+
+msg.Bukiya.messages.30.txt=いつもありがとな。こいつはお礼だ。受け取ってくれ。。
 
 msg.Dama1.messages.11.txt=!player.おお！%sの証を持ってきたのじゃな。
 msg.Dama1.messages.12.txt=!player.ならば%sとなること認めよう！
@@ -2233,6 +2300,7 @@ msg.Builder.messages.notDim.txt=!player.この世界には生成することが�
 
 msg.medalking.item.txt=§e[%d枚]
 msg.casinocoin.item.txt=§e[%s枚]
+msg.itemprice.item.txt=§e[%sG]
 msg.medalking.talk.1.txt=!player.わしは世界中のちいさなメダルをあつめておる。
 msg.medalking.talk.2.txt=!player.メダルを見つけてきた者には褒美をとらせようぞ！
 msg.medalking.talk.3.txt=!player.ほほうメダルを持ってきたな。望みの褒美はあるかね？
@@ -2263,6 +2331,11 @@ msg.acccancel.modeInfo.0.txt=!player.モード：アクセサリのみ修理
 msg.acccancel.modeInfo.1.txt=!player.モード：防具のみ修理
 msg.acccancel.modeInfo.2.txt=!player.モード：アクセサリと防具全て修理
 
+msg.petSuisyou.modeInfo.0.txt=!player.モード：ペット位置確認
+msg.petSuisyou.modeInfo.1.txt=!player.モード：ペット位置確認(削除モード)
+msg.petSuisyou.modeInfo.2.txt=!player.モード：登録データリフレッシュ
+msg.petSuisyou.modeInfo.3.txt=!player.モード：登録データ一括削除
+
 msg.shinziru.modeInfo.0.0.txt=!player.[メンバー追加モード]に切り替えた
 msg.shinziru.modeInfo.0.1.txt=!player.他プレイヤー/ペットモンスターに使用するとパーティに追加します
 msg.shinziru.modeInfo.1.0.txt=!player.[メンバー除名モード]に切り替えた
@@ -2273,7 +2346,13 @@ msg.shinziru.modeInfo.3.0.txt=!player.[パーティ脱退モード]に切り替�
 msg.shinziru.modeInfo.3.1.txt=!player.使用するとパーティから脱退します
 msg.shinziru.modeInfo.4.0.txt=!player.[パーティ解散モード]に切り替えた
 msg.shinziru.modeInfo.4.1.txt=!player.使用するとパーティを解散します
+msg.shinziru.modeInfo.5.0.txt=!player.[経験値分配率変更モード]に切り替えた
+msg.shinziru.modeInfo.5.1.txt=!player.使用するとパーティ内での経験値の分配率を変更します。
+msg.shinziru.modeInfo.5.2.txt=!player.獲得経験値のうち、指定した％分はパーティ内で分配されます。
 msg.shinziru.modeInfo.txt=!player.リーダーのみ実行できます
+
+msg.shinziru.shareRate.0.txt=パーティー経験値分配を無効にしました。
+msg.shinziru.shareRate.1.txt=パーティー経験値分配を%s％に設定しました。
 
 msg.weapon.modeInfo.1.-1.txt=!player.斧モードを解除した
 msg.weapon.modeInfo.1.0.txt=!player.斧モードに切り替えた

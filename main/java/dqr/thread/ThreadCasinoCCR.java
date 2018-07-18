@@ -171,7 +171,7 @@ public class ThreadCasinoCCR extends Thread{
 					gui.winner = 1;
 				}else if(gui.playerResult == EnumDqmCasinoCCROdds.R456)
 				{
-					inCoin = betCoin * 3;
+					inCoin = inCoin + betCoin * 3;
 					gui.winner = 1;
 				}else if(gui.playerResult == EnumDqmCasinoCCROdds.RABC)
 				{

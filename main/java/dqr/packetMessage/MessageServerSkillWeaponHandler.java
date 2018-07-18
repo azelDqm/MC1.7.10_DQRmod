@@ -50,7 +50,7 @@ public class MessageServerSkillWeaponHandler implements IMessageHandler<MessageS
 		        	if(needWP <= nowWP || DQR.debug == 1)
 		        	{
 		        		String skillName = StatCollector.translateToLocal("dqm.skill." + skillW.getName() + ".name");
-		        		ep.addChatMessage(new ChatComponentTranslation("msg.Dama3.messages.20.txt" ,new Object[] {skillName}));
+		        		DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.Dama3.messages.20.txt" ,new Object[] {skillName}));
 		        		ep.worldObj.playSoundAtEntity(ep, "dqr:player.levelup", 1.0F, 0.9F);
 		        		ExtendedPlayerProperties.get(ep).setJukurenWP(pat, nowWP - needWP);
 		        		ExtendedPlayerProperties3.get(ep).setWeaponSkillPermission(pat, pat2, 1);
@@ -58,11 +58,11 @@ public class MessageServerSkillWeaponHandler implements IMessageHandler<MessageS
 		        		((ExtendedPlayerProperties3)(ep.getExtendedProperties(ExtendedPlayerProperties3.EXT_PROP_NAME))).loadProxyData((EntityPlayer)ep);
 		        	}else
 		        	{
-		        		ep.addChatMessage(new ChatComponentTranslation("msg.Dama3.messages.40.txt" ,new Object[] {}));
+		        		DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.Dama3.messages.40.txt" ,new Object[] {}));
 		        	}
 	        	}else
 	        	{
-	        		ep.addChatMessage(new ChatComponentTranslation("msg.Dama3.messages.42.txt" ,new Object[] {}));
+	        		DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.Dama3.messages.42.txt" ,new Object[] {}));
 	        	}
         	}
         }
@@ -77,14 +77,14 @@ public class MessageServerSkillWeaponHandler implements IMessageHandler<MessageS
         {
 	        if(ExtendedPlayerProperties3.get(ep).getJobPermission(pat) == 0)
 	        {
-	        	ep.addChatMessage(new ChatComponentTranslation("msg.Dama1.messages.24.txt" ,new Object[] {}));
+	        	DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.Dama1.messages.24.txt" ,new Object[] {}));
 	        	ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
 	        	return null;
 	        }
 
 	        if(!DQR.jobChangeTable.getCheckJobChange(ep, pat))
 	        {
-	        	ep.addChatMessage(new ChatComponentTranslation("msg.Dama1.messages.25.txt" ,new Object[] {}));
+	        	DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.Dama1.messages.25.txt" ,new Object[] {}));
 	        	ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
 	        	return null;
 	        }
@@ -93,8 +93,8 @@ public class MessageServerSkillWeaponHandler implements IMessageHandler<MessageS
         ExtendedPlayerProperties.get(ep).setJob(pat);
         ((ExtendedPlayerProperties)(ep.getExtendedProperties(ExtendedPlayerProperties.EXT_PROP_NAME))).loadProxyData((EntityPlayer)ep);
 
-        ep.addChatMessage(new ChatComponentTranslation("msg.Dama1.messages.22.txt" ,new Object[] {EnumDqmMessageConv.JobName.getStartS() + pat + EnumDqmMessageConv.JobName.getEndS()}));
-        ep.addChatMessage(new ChatComponentTranslation("msg.Dama1.messages.23.txt" ,new Object[] {}));
+        DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.Dama1.messages.22.txt" ,new Object[] {EnumDqmMessageConv.JobName.getStartS() + pat + EnumDqmMessageConv.JobName.getEndS()}));
+        DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.Dama1.messages.23.txt" ,new Object[] {}));
 
 */
         //サーバーへ送った際に、EntityPlayerインスタンス（EntityPlayerMPインスタンス）はこのように取れる。

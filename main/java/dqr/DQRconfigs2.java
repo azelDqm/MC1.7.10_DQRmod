@@ -304,6 +304,11 @@ public class DQRconfigs2 {
     	cfg_mobspawn = new Configuration(new File(DQR.proxy.getDir(), "config/DQMIIINext/DQMIIINext_MobSpawn.cfg"));
 
     	this.getConfigMobSpawn(cfg_mobspawn);
+
+    	if(DQR.easyMode == 1 && DQR.conf.cfgEasyMode == 1)
+    	{
+    		spawnTimeDelay = 48000;
+    	}
 	}
 
 	public void getConfigMobSpawn(Configuration config)

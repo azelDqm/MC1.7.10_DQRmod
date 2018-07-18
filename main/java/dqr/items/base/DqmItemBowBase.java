@@ -444,6 +444,17 @@ public class DqmItemBowBase extends ItemBow{
 
     			p_77624_3_.add(medalValue);
     		}
+
+    		int itemPrice = nbt.getInteger("ItemPrice");
+    		itemPrice = DQR.calcPlayerStatus.calcShoninGold(itemPrice, p_77624_2_);
+    		//System.out.println("TEST:" + medalVal);
+    		if(itemPrice > 0)
+    		{
+
+        		String itmPrice = I18n.format("msg.itemprice.item.txt", new Object[]{nfNum.format(itemPrice)});
+
+    			p_77624_3_.add(itmPrice);
+    		}
     	}
 
     	NBTTagList tag = p_77624_1_.getEnchantmentTagList();

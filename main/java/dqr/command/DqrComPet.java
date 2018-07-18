@@ -79,7 +79,7 @@ public class DqrComPet extends CommandBase {
 			        				{
 			        					ExtendedPlayerProperties3.get(ep).minusPetCount(1);
 			        		        	DQR.petFunc.removePetdata(ep, uid);
-			        		        	ep.addChatMessage(new ChatComponentTranslation("dqm.iteminfo.petCommand.s0",new Object[] {petData.getString("PetName")}));
+			        		        	DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("dqm.iteminfo.petCommand.s0",new Object[] {petData.getString("PetName")}));
 			        		        	setCount++;
 			        		        	//flg = true;
 			        				}
@@ -96,12 +96,12 @@ public class DqrComPet extends CommandBase {
 				}else if(var2[0].equalsIgnoreCase("clear"))
 				{
 					DQR.petFunc.clearPetdata(ep);
-					ep.addChatMessage(new ChatComponentTranslation("dqm.iteminfo.petCommand.s1",new Object[] {}));
+					DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("dqm.iteminfo.petCommand.s1",new Object[] {}));
 
 				}
 			}else
 	        {
-	        	ep.addChatMessage(new ChatComponentTranslation(EnumColor.DarkRed.getChatColor() + "/dqrpet refresh|clear", new Object[] {}));
+				DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation(EnumColor.DarkRed.getChatColor() + "/dqrpet refresh|clear", new Object[] {}));
 	        }
 		}
 	}

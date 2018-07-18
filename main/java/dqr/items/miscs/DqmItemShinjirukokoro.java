@@ -32,7 +32,7 @@ public class DqmItemShinjirukokoro extends DqmItemMiscBase{
 		        		DQR.partyManager.kickPartyPet(ep, true);
 	        		}else
 	        		{
-	        			ep.addChatMessage(new ChatComponentTranslation("msg.shinziru.modeInfo.txt", new Object[] {}));
+	        			DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.shinziru.modeInfo.txt", new Object[] {}));
 	        		}
 				}else if(itemMode == EnumDqmMGToolMode.SHINZIRU_LEAVE.getId())
 				{
@@ -44,7 +44,16 @@ public class DqmItemShinjirukokoro extends DqmItemMiscBase{
 						DQR.partyManager.closeParty(ep);
 	        		}else
 	        		{
-	        			ep.addChatMessage(new ChatComponentTranslation("msg.shinziru.modeInfo.txt", new Object[] {}));
+	        			DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.shinziru.modeInfo.txt", new Object[] {}));
+	        		}
+				}else if(itemMode == EnumDqmMGToolMode.SHINZIRU_SHARE.getId())
+				{
+					if(DQR.partyManager.isPartyLeader(ep))
+	        		{
+		        		DQR.partyManager.doChangeShareRate(ep);
+	        		}else
+	        		{
+	        			DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.shinziru.modeInfo.txt", new Object[] {}));
 	        		}
 				}
 	    	}

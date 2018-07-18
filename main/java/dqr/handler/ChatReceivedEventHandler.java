@@ -18,6 +18,7 @@ public class ChatReceivedEventHandler {
 
 		boolean chatComponentType = true;
 
+		//DQR.loglog.printChatMessage(event.message);
 		/*
 		System.out.println("TEST:" + event.message.getUnformattedText());
 		System.out.println("TEST2:" + event.message.getFormattedText());
@@ -144,6 +145,7 @@ public class ChatReceivedEventHandler {
 	        		//event.setCanceled(true);
 
 	        		//System.out.println("通過B");
+	        		/*
 	    	    	if (DQR.dqmLog[0] == "")
 	    	    	{
 	    	    		DQR.dqmLog[0] = chatMessage;
@@ -179,7 +181,8 @@ public class ChatReceivedEventHandler {
 		    			DQR.dqmLog[6] = DQR.dqmLog[7];
 		    			DQR.dqmLog[7] = chatMessage;
 	    	    	}
-
+	    	    	*/
+	        		DQR.loglog.printChatMessage(new ChatComponentTranslation(chatMessage,new Object[] {}));
 	    	    	event.setCanceled(true);
 	        	}
         	}else if(DQR.conf.CLGuiLogWindowOff == 1)

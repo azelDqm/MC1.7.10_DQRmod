@@ -8,6 +8,7 @@ import java.util.TreeMap;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -47,6 +48,7 @@ public class GuiParty extends Gui
 		  return;
 		}
 
+		OpenGlHelper.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, 1, 0);
 	  //ScaledResolution sr = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
 	  //int w = sr.getScaledWidth();
 	  int effectCnt = 0;
@@ -289,7 +291,7 @@ public class GuiParty extends Gui
 
 		          mc.renderEngine.bindTexture(reLoc);
 	              int posXfix = (dataTree.get(key) % DQR.conf.CLGuiPartyReturnLine * 69 + 5);
-		          this.drawTexturedModalRect(x + posXfix, y0 + ((effectCnt / DQR.conf.CLGuiPartyReturnLine) * 67 + 3) , 0, 0, 85, 67);
+		          this.drawTexturedModalRect(x + posXfix, y0 + ((effectCnt / DQR.conf.CLGuiPartyReturnLine) * 67 + 3) , 0, 0, 69, 67);
 
 
 

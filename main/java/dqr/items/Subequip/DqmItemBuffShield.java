@@ -23,7 +23,7 @@ public class DqmItemBuffShield extends DqmItemAccessoryBase{
     {
 		if(DQR.func.isBind(par3EntityPlayer) && par3EntityPlayer.worldObj.isRemote)
 		{
-	  		par3EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.magic.rariho.txt",new Object[] {}));
+	  		DQR.func.doAddChatMessageFix(par3EntityPlayer, new ChatComponentTranslation("msg.magic.rariho.txt",new Object[] {}));
     		par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.pi", 1.0F, 1.0F);
 
 			return par1ItemStack;
@@ -31,13 +31,13 @@ public class DqmItemBuffShield extends DqmItemAccessoryBase{
 
 		if(par1ItemStack.getItemDamage() + (this.getMaxDamage() / 20) > this.getMaxDamage())
 		{
-	  		par3EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.subequipUse.noDamage.txt",new Object[] {}));
+	  		DQR.func.doAddChatMessageFix(par3EntityPlayer, new ChatComponentTranslation("msg.subequipUse.noDamage.txt",new Object[] {}));
     		par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.pi", 1.0F, 1.0F);
     		//System.out.println("wk2 :");
 			return par1ItemStack;
 		}else if(par1ItemStack.getItemDamage() >= (this.getMaxDamage() / 10 * 9))
 		{
-	  		par3EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.subequipUse.noDamage.txt",new Object[] {}));
+	  		DQR.func.doAddChatMessageFix(par3EntityPlayer, new ChatComponentTranslation("msg.subequipUse.noDamage.txt",new Object[] {}));
     		par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.pi", 1.0F, 1.0F);
     		//System.out.println("wk3 :");
 			return par1ItemStack;
@@ -50,7 +50,7 @@ public class DqmItemBuffShield extends DqmItemAccessoryBase{
 
 		if(epMP < this.useMP && DQR.debug == 0)
 		{
-			par3EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.magic.nomp.txt",new Object[] {}));
+			DQR.func.doAddChatMessageFix(par3EntityPlayer, new ChatComponentTranslation("msg.magic.nomp.txt",new Object[] {}));
 			par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.pi", 1.0F, 1.0F);
 			return par1ItemStack;
 		}else

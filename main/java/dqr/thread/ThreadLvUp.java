@@ -1,16 +1,7 @@
 package dqr.thread;
 
-import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.util.ChatComponentTranslation;
-import net.minecraftforge.common.MinecraftForge;
-import scala.util.Random;
 import dqr.DQR;
-import dqr.PacketHandler;
-import dqr.api.event.DqmLvUpEvent;
-import dqr.packetMessage.MessageClientSound;
-import dqr.playerData.ExtendedPlayerProperties;
 
 public class ThreadLvUp extends Thread{
 
@@ -21,18 +12,23 @@ public class ThreadLvUp extends Thread{
 		this.ep = player;
 	}
 
+
 	public void run()
 	{
+		//System.out.println("DEBUG33333333333");
 		if(this.ep.worldObj.isRemote)
 		{
 			return;
 		}
 
+		//System.out.println("DEBUG4444444444444");
+		DQR.func.lvUpProcessMain(ep);
+		/*
 		boolean flg = true;
 		int epLv = ExtendedPlayerProperties.get(this.ep).getJobLv(ExtendedPlayerProperties.get(this.ep).getJob());
 		int epEXP = ExtendedPlayerProperties.get(this.ep).getJobExp(ExtendedPlayerProperties.get(this.ep).getJob());
 
-		if(epLv >= 100 && DQR.conf.recalcLvStatus1 == 1)
+		if((epLv >= 100 && DQR.conf.recalcLvStatus1 == 1) || DQR.debug == 12)
 		{
 			epLv = 0;
 			int epJob = ExtendedPlayerProperties.get(this.ep).getJob();
@@ -50,7 +46,7 @@ public class ThreadLvUp extends Thread{
 			{
 				epLv = epLv + 1;
 				ExtendedPlayerProperties.get(this.ep).setJobLv(ExtendedPlayerProperties.get(this.ep).getJob(), epLv);
-				ep.addChatMessage(new ChatComponentTranslation("msg.lvUp.txt",new Object[] {epLv}));
+				DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.lvUp.txt",new Object[] {epLv}));
 				lvUpProcess(epLv);
 				lvUpRefresh();
 
@@ -79,9 +75,11 @@ public class ThreadLvUp extends Thread{
 				break;
 			}
 		}
+		*/
 
 	}
 
+	/*
 	public void lvUpProcess(int lv)
 	{
 		Random rand = new Random();
@@ -98,9 +96,9 @@ public class ThreadLvUp extends Thread{
 		{
 			case 0: plusHpVal = (float)(rand.nextInt(3) + 2); plusMpVal = rand.nextInt(3) + 1;
 					plusTikaraVal = lv % 15 == 0? 1 : 0; plusKasikosaVal = lv % 49 == 0? 1 : 0; break;
-			case 1: plusHpVal = (float)(rand.nextInt(3) + 3); plusMpVal = rand.nextInt(3) + 0;
+			case 1: plusHpVal = (float)(rand.nextInt(4) + 3); plusMpVal = rand.nextInt(3) + 0;
 					plusTikaraVal = lv % 8 == 0? 1 : 0; plusKasikosaVal = lv % 49 == 0? 1 : 0; break;
-			case 2: plusHpVal = (float)(rand.nextInt(4) + 3); plusMpVal = rand.nextInt(2) + 0;
+			case 2: plusHpVal = (float)(rand.nextInt(2) + 3); plusMpVal = rand.nextInt(2) + 0;
 					plusTikaraVal = lv % 8 == 0? 1 : 0; plusKasikosaVal = lv % 49 == 0? 1 : 0; break;
 			case 3: plusHpVal = (float)(rand.nextInt(4) + 4); plusMpVal = rand.nextInt(2) + 1;
 					plusTikaraVal = lv % 5 == 0? 1 : 0; plusKasikosaVal = lv % 30 == 0? 1 : 0; break;
@@ -160,4 +158,5 @@ public class ThreadLvUp extends Thread{
 		//ep.getFoodStats().setFoodLevel(20);
 		ep.getFoodStats().addStats(20, 0.6F);
 	}
+	*/
 }

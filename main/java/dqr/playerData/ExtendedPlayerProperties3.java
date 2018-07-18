@@ -7,6 +7,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IExtendedEntityProperties;
 import dqr.PacketHandler;
+import dqr.entity.npcEntity.npc.DqmEntityNPCBukiya;
 import dqr.entity.petEntity.DqmPetBase;
 
 public class ExtendedPlayerProperties3 implements IExtendedEntityProperties {
@@ -17,6 +18,9 @@ public class ExtendedPlayerProperties3 implements IExtendedEntityProperties {
 	private int[] jobPermission = new int[32];
 	private NBTTagCompound NBTPlayerPetList = new NBTTagCompound();
 	private int petCount;
+
+    private String playerName = null;
+    private String playerUUID = null;
 
 	//配合用ペットデータ
 	private NBTTagCompound haigouPet1 = null;
@@ -30,6 +34,9 @@ public class ExtendedPlayerProperties3 implements IExtendedEntityProperties {
 
 	private NBTTagCompound petStatudData = null;
 	private DqmPetBase statusPet;
+	private DqmEntityNPCBukiya guiNPCBukiya;
+	private int guiBukiyaPhase;
+	private int guiBukiyaPrice;
 	private String statusPetOwner;
 	//private DqmPetBase invPet;
 
@@ -237,6 +244,15 @@ public class ExtendedPlayerProperties3 implements IExtendedEntityProperties {
 
     	nbt.setInteger("Coin", this.Coin);
 
+        if(this.playerName != null)
+        {
+        	nbt.setString("playerName", this.playerName);
+        }
+
+        if(this.playerUUID != null)
+        {
+        	nbt.setString("playerUUID", this.playerUUID);
+        }
 
         compound.setTag(EXT_PROP_NAME, nbt);
 	}
@@ -258,6 +274,9 @@ public class ExtendedPlayerProperties3 implements IExtendedEntityProperties {
 
         NBTPlayerPetList = nbt.getCompoundTag("NBTPlayerPetList");
         petCount = nbt.getInteger("petCount");
+
+        this.playerName = nbt.getString("playerName");
+        this.playerUUID = nbt.getString("playerUUID");
 
         //NBTWeaponSkillPermission = nbt.getCompoundTag("NBTWeaponSkillPermission");
         for(int cnt = 0; cnt < weaponSkillPermission.length; cnt++)
@@ -452,6 +471,7 @@ public class ExtendedPlayerProperties3 implements IExtendedEntityProperties {
     }
 
     public void setNBTPlayerPetList(NBTTagCompound nbt) {
+    	//System.out.println("TEST_EPP : ");
         this.NBTPlayerPetList = nbt;
     }
 
@@ -513,6 +533,13 @@ public class ExtendedPlayerProperties3 implements IExtendedEntityProperties {
     }
     public DqmPetBase getStatusPet() {
         return this.statusPet;
+    }
+
+    public void setGuiNPCBukiya(DqmEntityNPCBukiya par1) {
+        this.guiNPCBukiya = par1;
+    }
+    public DqmEntityNPCBukiya getGuiNPCBukiya() {
+        return this.guiNPCBukiya;
     }
 
     public void setStatusPetOwner(String par1) {
@@ -1396,4 +1423,33 @@ public class ExtendedPlayerProperties3 implements IExtendedEntityProperties {
         this.Coin = par1;
     }
 
+    public int getGuiBukiyaPhase(){
+    	return this.guiBukiyaPhase;
+    }
+
+    public void setGuiBukiyaPhase(int par1){
+    	this.guiBukiyaPhase = par1;
+    }
+
+    public int getGuiBukiyaPrice(){
+    	return this.guiBukiyaPrice;
+    }
+
+    public void setGuiBukiyaPrice(int par1){
+    	this.guiBukiyaPrice = par1;
+    }
+
+    public String getPlayerName() {
+        return this.playerName;
+    }
+    public void setPlayerName(String par1) {
+        this.playerName = par1;
+    }
+
+    public String getPlayerUUID() {
+        return this.playerUUID;
+    }
+    public void setPlayerUUID(String par1) {
+        this.playerUUID = par1;
+    }
 }

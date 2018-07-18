@@ -57,7 +57,10 @@ public class PlayerDataHandler {
 
            	ExtendedPlayerProperties.get(ep).setPlayerName(ep.getCommandSenderName());
         	ExtendedPlayerProperties.get(ep).setPlayerUUID(ep.getUniqueID().toString());
-        	ExtendedPlayerProperties2.get(ep).setPlayerName(ep.getDisplayName());
+           	ExtendedPlayerProperties2.get(ep).setPlayerName(ep.getCommandSenderName());
+        	ExtendedPlayerProperties2.get(ep).setPlayerUUID(ep.getUniqueID().toString());
+           	ExtendedPlayerProperties3.get(ep).setPlayerName(ep.getCommandSenderName());
+        	ExtendedPlayerProperties3.get(ep).setPlayerUUID(ep.getUniqueID().toString());
         	ExtendedPlayerProperties3.get(ep).setPartyMemberData(null);
             if(DQR.conf.dqrHardcore != 1)
             {
@@ -98,14 +101,18 @@ public class PlayerDataHandler {
             		if(ExtendedPlayerProperties.get(ep).getHardcoreInfo() == 0)
             		{
             			//ep.addChatComponentMessage("TEST");
-            			ep.addChatMessage(new ChatComponentTranslation("msg.hardcore.messages.1.txt",new Object[] {}));
-            			ep.addChatMessage(new ChatComponentTranslation("msg.hardcore.messages.2.txt",new Object[] {}));
+            			DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.hardcore.messages.1.txt",new Object[] {}));
+            			DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.hardcore.messages.2.txt",new Object[] {}));
             			ExtendedPlayerProperties.get(ep).setHardcoreInfo(1);
             		}
-
-
-
             	}
+            }
+
+            if(DQR.conf.cfgEasyMode == 1 && DQR.easyMode == 1 && ExtendedPlayerProperties.get(ep).getEasyModeInfo() == 0)
+            {
+            	DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.easymode.messages.txt",new Object[] {}));
+            	ExtendedPlayerProperties.get(ep).setEasyModeInfo(1);
+            	ExtendedPlayerProperties.get(ep).setEasyModeInfo2(1);
             }
 
             if(DQR.conf.dqrHardcore != 0 || DQR.conf.dqrHardcorePet != 0 || DQR.conf.dqrHardcorePet2 != 0)

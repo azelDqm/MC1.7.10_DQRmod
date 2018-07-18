@@ -40,11 +40,16 @@ import dqr.entity.magicEntity.magic.MagicEntityDoruma;
 import dqr.entity.magicEntity.magic.MagicEntityGira;
 import dqr.entity.magicEntity.magic.MagicEntityGiragureido;
 import dqr.entity.magicEntity.magic.MagicEntityHyado;
+import dqr.entity.magicEntity.magic.MagicEntityHyadoB;
 import dqr.entity.magicEntity.magic.MagicEntityIo;
 import dqr.entity.magicEntity.magic.MagicEntityMera;
+import dqr.entity.magicEntity.magic.MagicEntityMeraB;
 import dqr.entity.magicEntity.magic.MagicEntityMeragaia;
+import dqr.entity.magicEntity.magic.MagicEntityMeragaiaB;
 import dqr.entity.magicEntity.magic.MagicEntityMerami;
+import dqr.entity.magicEntity.magic.MagicEntityMeramiB;
 import dqr.entity.magicEntity.magic.MagicEntityMerazoma;
+import dqr.entity.magicEntity.magic.MagicEntityMerazomaB;
 import dqr.entity.magicEntity.magic.MagicEntityRaidein;
 import dqr.entity.magicEntity.magic.MagicEntityZaki;
 import dqr.entity.mobEntity.DqmMobBase;
@@ -235,7 +240,7 @@ public class FuncCalcDamage {
 					}else
 					{
 						((DqmMobBase)evb).absoluteDam = 1.0F;
-						ret = 1.0F;
+						//ret = 1.0F;
 
 						source.setDamageBypassesArmor();
 					}
@@ -371,7 +376,7 @@ public class FuncCalcDamage {
 
 
 			/*
-			ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + "TEST" + EnumDqmMessageConv.SkillName.getEndS()}));
+			DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + "TEST" + EnumDqmMessageConv.SkillName.getEndS()}));
             List list2 = ep.worldObj.getEntitiesWithinAABBExcludingEntity(ep,
             		ep.boundingBox.addCoord(ep.motionX, ep.motionY, ep.motionZ).expand(4.0D, 3.0D, 4.0D));
 
@@ -416,14 +421,14 @@ public class FuncCalcDamage {
 
 				EnumDqmSkillW skillW = DQR.enumGetter.getSkillW(weapon, weaponSkill);
 
-				//ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {}));
+				//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {}));
 
 
-				if(skillW != null && skillW.getFunc() == 1 && skillW.getRATE() > rand.nextInt(100))
+				if(skillW != null && skillW.getFunc() == 1 && (skillW.getRATE() > rand.nextInt(100) || DQR.debug == 4))
 				{
 					boolean hitFlg = false;
-					//ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {}));
-					//ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.MonsterName.getEndS()}));
+					//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {}));
+					//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.MonsterName.getEndS()}));
 
 					if(weapon == EnumDqmWeapon.DqmSword.getId())
 					{
@@ -462,7 +467,7 @@ public class FuncCalcDamage {
 						}else if(weaponSkill == 6)
 						{
 							//はやぶさ斬り
-							ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
+							DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
 							evb.hurtResistantTime = 0;
 							evb.attackEntityFrom(DQR.damageSource.getPlayerSkillDamage(ep), (preDamage * 0.75F));
 							if(evb.getHealth() <= 0.0F || evb.isDead)
@@ -475,7 +480,7 @@ public class FuncCalcDamage {
 							hitFlg = false;
 						}else if(weaponSkill == 8)
 						{
-							ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
+							DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
 							//ギガスラッシュ
 							//monster.damageEntity(DQR.damageSource.getPlayerSkillDamage(ep), (preDamage *3.0F));
 				            List list = evb.worldObj.getEntitiesWithinAABBExcludingEntity(evb,
@@ -510,7 +515,7 @@ public class FuncCalcDamage {
 					{
 						if(weaponSkill == 0)
 						{
-							ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
+							DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
 							//ストラッシュ
 							//monster.damageEntity(DQR.damageSource.getPlayerSkillDamage(ep), (preDamage *3.0F));
 				            List list = ep.worldObj.getEntitiesWithinAABBExcludingEntity(ep,
@@ -541,7 +546,7 @@ public class FuncCalcDamage {
 							hitFlg = false;
 						}else if(weaponSkill == 6)
 						{
-							ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
+							DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
 							//ギガソード
 							//monster.damageEntity(DQR.damageSource.getPlayerSkillDamage(ep), (preDamage *3.0F));
 				            List list = ep.worldObj.getEntitiesWithinAABBExcludingEntity(ep,
@@ -580,7 +585,7 @@ public class FuncCalcDamage {
 					{
 						if(weaponSkill == 0)
 						{
-							ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
+							DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
 							//石つぶて
 							//monster.damageEntity(DQR.damageSource.getPlayerSkillDamage(ep), (preDamage *3.0F));
 				            List list = ep.worldObj.getEntitiesWithinAABBExcludingEntity(ep,
@@ -605,7 +610,7 @@ public class FuncCalcDamage {
 							hitFlg = false;
 						}else if(weaponSkill == 2)
 						{
-							ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
+							DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
 							//かまいたち
 							//monster.damageEntity(DQR.damageSource.getPlayerSkillDamage(ep), (preDamage *3.0F));
 
@@ -634,7 +639,7 @@ public class FuncCalcDamage {
 						}else if(weaponSkill == 6)
 						{
 							//ばくれつ拳
-							ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
+							DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
 
 							List list = ep.worldObj.getEntitiesWithinAABBExcludingEntity(ep,
 				            		ep.boundingBox.addCoord(ep.motionX, ep.motionY, ep.motionZ).expand(6.0D, 3.0D, 6.0D));
@@ -709,7 +714,7 @@ public class FuncCalcDamage {
 							//岩石落とし
 							if(!ep.worldObj.isRemote)
 							{
-								ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
+								DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
 
 								for(int cntX = -2; cntX <= 2; cntX++)
 								{
@@ -755,9 +760,9 @@ public class FuncCalcDamage {
 						{
 							//ネイルスクラッチ
 							evb.hurtResistantTime = 0;
-							ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
+							DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
 
-							for(int cnt = 0; cnt < 4; cnt++)
+							for(int cnt = 0; cnt < 3; cnt++)
 							{
 								//float fixDam = (1.0F + (rand.nextFloat() * 4)) * 0.1F;
 								float fixDam = (1.0F+(rand.nextFloat() * 4)) * 0.1F;
@@ -777,7 +782,7 @@ public class FuncCalcDamage {
 						}else if(weaponSkill == 6)
 						{
 							//タイガークロー
-							ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
+							DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
 							evb.hurtResistantTime = 0;
 							evb.attackEntityFrom(DQR.damageSource.getPlayerSkillDamage(ep), (preDamage * 0.75F));
 			            	if(evb.getHealth() <= 0.0F || evb.isDead)
@@ -838,7 +843,7 @@ public class FuncCalcDamage {
 							//ランドインパクト
 							if(monster != null && monster.MobRoot.getId() == EnumDqmMobRoot.BUSSITU.getId())
 							{
-								ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
+								DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
 								//monster.damageEntity(DQR.damageSource.getPlayerSkillDamage(ep), (preDamage *3.0F));
 					            List list = ep.worldObj.getEntitiesWithinAABBExcludingEntity(ep,
 					            		ep.boundingBox.addCoord(ep.motionX, ep.motionY, ep.motionZ).expand(5.0D, 3.0D, 5.0D));
@@ -898,7 +903,7 @@ public class FuncCalcDamage {
 						{
 							//オノむそう
 
-							ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
+							DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
 				            List list = ep.worldObj.getEntitiesWithinAABBExcludingEntity(ep,
 				            		ep.boundingBox.addCoord(ep.motionX, ep.motionY, ep.motionZ).expand(4.0D, 3.0D, 4.0D));
 
@@ -938,7 +943,7 @@ public class FuncCalcDamage {
 						}else if(weaponSkill == 1)
 						{
 							//愛のムチ
-							ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
+							DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
 				            List list = ep.worldObj.getEntitiesWithinAABBExcludingEntity(ep,
 				            		ep.boundingBox.addCoord(ep.motionX, ep.motionY, ep.motionZ).expand(4.0D, 3.0D, 4.0D));
 
@@ -979,7 +984,7 @@ public class FuncCalcDamage {
 						{
 							//ヒールウィップ
 							float healPoint = 0.0F;
-							ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
+							DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
 				            List list = ep.worldObj.getEntitiesWithinAABBExcludingEntity(ep,
 				            		ep.boundingBox.addCoord(ep.motionX, ep.motionY, ep.motionZ).expand(4.0D, 3.0D, 4.0D));
 
@@ -1012,7 +1017,7 @@ public class FuncCalcDamage {
 						}else if(weaponSkill == 8)
 						{
 							//双竜打ち
-							ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
+							DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
 							evb.hurtResistantTime = 0;
 							evb.attackEntityFrom(DQR.damageSource.getPlayerSkillDamage(ep), (preDamage * 1.25F));
 			            	if(evb.getHealth() <= 0.0F || evb.isDead)
@@ -1038,7 +1043,7 @@ public class FuncCalcDamage {
 						}else if(weaponSkill == 3)
 						{
 							//きゅうしょづき
-							ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
+							DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
 							float fixRate = DQR.calcDamage.applyDamageResistMagic2(0, evb, DQR.damageSource.getPlayerSkillDamageDeath(ep));
 
 							if(rand.nextInt(5) == 0 &&  (fixRate * 100) > rand2.nextInt(100))
@@ -1059,11 +1064,11 @@ public class FuncCalcDamage {
 						}else if(weaponSkill == 8)
 						{
 							//さみだれ突き
-							ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
+							DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
 
 							/*
 							evb.hurtResistantTime = 0;
-							ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
+							DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
 
 							int roopMax = 3 + rand.nextInt(2);
 
@@ -1129,7 +1134,8 @@ public class FuncCalcDamage {
 					            }
 				            }
 
-			            	if(evb.getHealth() <= 0.0F || evb.isDead)
+			            	//if(evb.getHealth() <= 0.0F || evb.isDead)
+				            if(evb.getHealth() <= 0.0F || evb.isDead)
 							{
 								//System.out.println("TEST");
 								return -1.0F;
@@ -1137,6 +1143,7 @@ public class FuncCalcDamage {
 				            ret = -1.0F;
 
 							hitFlg = false;
+				            //hitFlg = true;
 						}
 					}
 					else if(weapon == EnumDqmWeapon.DqmKnife.getId())
@@ -1175,7 +1182,7 @@ public class FuncCalcDamage {
 						}else if(weaponSkill == 6)
 						{
 							//アサシンアタック
-							ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
+							DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
 
 							float fixRate = DQR.calcDamage.applyDamageResistMagic2(0, evb, DQR.damageSource.getPlayerSkillDamageDeath(ep));
 
@@ -1219,7 +1226,7 @@ public class FuncCalcDamage {
 						if(weaponSkill == 1)
 						{
 							//足ばらい
-							ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
+							DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
 							//monster.damageEntity(DQR.damageSource.getPlayerSkillDamage(ep), (preDamage *3.0F));
 				            List list = ep.worldObj.getEntitiesWithinAABBExcludingEntity(ep,
 				            		ep.boundingBox.addCoord(ep.motionX, ep.motionY, ep.motionZ).expand(5.0D, 3.0D, 5.0D));
@@ -1252,7 +1259,7 @@ public class FuncCalcDamage {
 						{
 							//なぎはらい
 							//float healPoint = 0.0F;
-							ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
+							DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
 				            List list = ep.worldObj.getEntitiesWithinAABBExcludingEntity(ep,
 				            		ep.boundingBox.addCoord(ep.motionX, ep.motionY, ep.motionZ).expand(4.0D, 3.0D, 4.0D));
 
@@ -1286,7 +1293,7 @@ public class FuncCalcDamage {
 						}else if(weaponSkill == 7)
 						{
 							//氷結らんげき
-							ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
+							DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
 				            List list = ep.worldObj.getEntitiesWithinAABBExcludingEntity(ep,
 				            		ep.boundingBox.addCoord(ep.motionX, ep.motionY, ep.motionZ).expand(6.0D, 3.0D, 6.0D));
 
@@ -1354,7 +1361,7 @@ public class FuncCalcDamage {
 						{
 							/*
 							//つまづいて転ぶ
-							ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
+							DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
 
 							if(!ep.worldObj.isRemote)
 							{
@@ -1387,7 +1394,7 @@ public class FuncCalcDamage {
 						}else if(weaponSkill == 7)
 						{
 							//System.out.println("TEST!!!!!!!!!!!!!!!!!!!");
-							ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
+							DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
 							//軍隊呼び
 							if(ep.worldObj.isAirBlock((int)ep.posX + 1, (int)ep.posY, (int)ep.posZ) &&
 							   ep.worldObj.isAirBlock((int)ep.posX + 1, (int)ep.posY + 1, (int)ep.posZ) &&
@@ -1484,7 +1491,7 @@ public class FuncCalcDamage {
 						}else if(weaponSkill == 8)
 						{
 							//おうぎのまい
-							ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
+							DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
 
 							 List list = ep.worldObj.getEntitiesWithinAABBExcludingEntity(ep,
 					            		ep.boundingBox.addCoord(ep.motionX, ep.motionY, ep.motionZ).expand(6.0D, 3.0D, 6.0D));
@@ -1561,7 +1568,7 @@ public class FuncCalcDamage {
 						}else if(weaponSkill == 5)
 						{
 							//しゅくふくのつえ
-							ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
+							DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
 
 							List list = ep.worldObj.getEntitiesWithinAABBExcludingEntity(ep,
 							    		ep.boundingBox.addCoord(ep.motionX, ep.motionY, ep.motionZ).expand(6.0D, 3.0D, 6.0D));
@@ -1599,7 +1606,7 @@ public class FuncCalcDamage {
 					{
 						if(!(ep.worldObj.isRemote))
 						{
-							ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
+							DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
 						}
 					}
 				}
@@ -1650,7 +1657,7 @@ public class FuncCalcDamage {
 				if(monster != null && monster.MobRoot.getId() == EnumDqmMobRoot.METARU.getId())
 				{
 					EnumDqmSkillW skillW = DQR.enumGetter.getSkillW(weapon, weaponSkill);
-					ep.addChatMessage(new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
+					DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.toSkillHit.txt",new Object[] {EnumDqmMessageConv.SkillName.getStartS() + skillW.getName() + EnumDqmMessageConv.SkillName.getEndS()}));
 					bypassFlg = true;
 				}
 			}
@@ -1672,9 +1679,9 @@ public class FuncCalcDamage {
 			{
 				DqmPetBase mob = (DqmPetBase)evb;
 				EnumDqmPet type = mob.type;
-				mobName = type.PetName;
+				mobName = type.getPetname();
 			}
-
+			//DQR.func.debugString("TEST12 : " + mobName , null, 3);
 			if(mobName != null)
 			{
 				//モンスター耐性処理
@@ -1682,12 +1689,13 @@ public class FuncCalcDamage {
 				//System.out.println("test2");
 				if(resist != null)
 				{
+					//DQR.func.debugString("TEST13 : " + source.getEntity().getCommandSenderName() , null, 3);
 					float resRate = 1.0F;
 					Entity ent = source.getEntity();
 					if(ent instanceof EntityArrow)
 					{
 						resRate =  resist.getArrow();
-					}else if(ent instanceof EntityPlayer)
+					}else //if(ent instanceof EntityPlayer)
 					{
 
 						resRate =  resist.getAttack();
@@ -1795,9 +1803,10 @@ public class FuncCalcDamage {
 		{
 			DqmPetBase mob = (DqmPetBase)evb;
 			EnumDqmPet type = mob.type;
-			mobName = type.PetName;
+			mobName = type.getPetname();
 		}
 
+		//DQR.func.debugString("TEST1 : " + evb.getCommandSenderName() + " / " + mobName, null, 3);
 		if(mobName != null)
 		{
 			//モンスター耐性処理
@@ -1805,10 +1814,14 @@ public class FuncCalcDamage {
 
 			if(resist != null)
 			{
+				//DQR.func.debugString("TEST2 : " + resist.name() + " / " + mobName, null, 3);
 				//System.out.println("TEST" + resist.getClassname());
 				//System.out.println("TEST" + source.getEntity().getCommandSenderName());
 				float resRate = 1.0F;
+				//Entity ent = source.getEntity();
 				Entity ent = source.getEntity();
+				//DQR.func.debugString("TEST2 : " + ent.getClass().getName() , null, 3);
+				//DQR.func.debugString("TEST3 : " + ent.getCommandSenderName() + " / " + mobName, null, 3);
 				if(ent instanceof MagicEntityMera || ent instanceof MagicEntityMerami ||
 				   ent instanceof MagicEntityMerazoma || ent instanceof MagicEntityMeragaia )
 				{
@@ -1853,6 +1866,23 @@ public class FuncCalcDamage {
 					if(resRate > 1.0F)
 					{
 						evb.worldObj.playSoundAtEntity(evb, "dqr:player.kaisinDoruma", 0.5F, 1.0F);
+					}
+				}else if(ent instanceof MagicEntityMeraB || ent instanceof MagicEntityMeramiB ||
+						   ent instanceof MagicEntityMerazomaB || ent instanceof MagicEntityMeragaiaB )
+				{
+					resRate =  resist.getHonoo();
+					//DQR.func.debugString("TEST3 : " + resRate , null, 3);
+					if(resRate > 1.0F)
+					{
+						evb.worldObj.playSoundAtEntity(evb, "dqr:player.kaisinMera", 0.5F, 1.0F);
+					}
+				}else if(ent instanceof MagicEntityHyadoB)
+				{
+					resRate = resist.getHubuki();
+					//DQR.func.debugString("TEST4 : " + resRate , null, 3);
+					if(resRate > 1.0F)
+					{
+						evb.worldObj.playSoundAtEntity(evb, "dqr:player.kaisinHyado", 0.5F, 1.0F);
 					}
 				}
 

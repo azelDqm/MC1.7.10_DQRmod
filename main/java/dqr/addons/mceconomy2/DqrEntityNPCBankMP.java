@@ -231,7 +231,7 @@ public class DqrEntityNPCBankMP extends DqmNPCBase
     {
     	if(!ep.worldObj.isRemote)
     	{
-    		//ep.addChatMessage(new ChatComponentTranslation("testTESTtest"));
+    		//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("testTESTtest"));
 
     		int flg = ExtendedPlayerProperties.get(ep).getNpcTalk(EnumDqmNpcTalk.BANKMP.getId());
     		int epMoney = ExtendedPlayerProperties.get(ep).getGold();
@@ -246,22 +246,26 @@ public class DqrEntityNPCBankMP extends DqmNPCBase
 
     					if(flg == 10 || flg == 1000000)
     					{
-    		    			ep.addChatMessage(new ChatComponentTranslation("msg.BankMP.messages.1000.txt",new Object[]{nfNum.format(rate)}));
+    		    			//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.BankMP.messages.1000.txt",new Object[]{nfNum.format(rate)}));
+    						DQR.func.doAddChatMessageFix(ep,new ChatComponentTranslation("msg.BankMP.messages.1000.txt",new Object[]{nfNum.format(rate)}));
     		    			ExtendedPlayerProperties.get(ep).setNpcTalk(EnumDqmNpcTalk.BANKMP.getId(), 1000);
     		    			ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
     					}else if(flg == 1000)
     					{
-    		    			ep.addChatMessage(new ChatComponentTranslation("msg.BankMP.messages.10000.txt",new Object[]{nfNum.format(rate * 10)}));
+    		    			//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.BankMP.messages.10000.txt",new Object[]{nfNum.format(rate * 10)}));
+    						DQR.func.doAddChatMessageFix(ep,new ChatComponentTranslation("msg.BankMP.messages.10000.txt",new Object[]{nfNum.format(rate * 10)}));
     		    			ExtendedPlayerProperties.get(ep).setNpcTalk(EnumDqmNpcTalk.BANKMP.getId(), 10000);
     		    			ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
     					}else if(flg == 10000)
     					{
-    		    			ep.addChatMessage(new ChatComponentTranslation("msg.BankMP.messages.100000.txt",new Object[] {nfNum.format(rate * 100)}));
+    		    			//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.BankMP.messages.100000.txt",new Object[] {nfNum.format(rate * 100)}));
+    						DQR.func.doAddChatMessageFix(ep,new ChatComponentTranslation("msg.BankMP.messages.100000.txt",new Object[] {nfNum.format(rate * 100)}));
     		    			ExtendedPlayerProperties.get(ep).setNpcTalk(EnumDqmNpcTalk.BANKMP.getId(), 100000);
     		    			ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
     					}else if(flg == 100000)
     					{
-    		    			ep.addChatMessage(new ChatComponentTranslation("msg.BankMP.messages.1000000.txt",new Object[] {nfNum.format(rate * 1000)}));
+    		    			//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.BankMP.messages.1000000.txt",new Object[] {nfNum.format(rate * 1000)}));
+    						DQR.func.doAddChatMessageFix(ep,new ChatComponentTranslation("msg.BankMP.messages.1000000.txt",new Object[] {nfNum.format(rate * 1000)}));
     		    			ExtendedPlayerProperties.get(ep).setNpcTalk(EnumDqmNpcTalk.BANKMP.getId(), 1000000);
     		    			ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
     					}
@@ -282,31 +286,32 @@ public class DqrEntityNPCBankMP extends DqmNPCBase
 				//System.out.println("TEST;" + rate);
 				if(epIts.getItem() == DQMiscs.itemOkane)
 				{
-					//ep.addChatMessage(new ChatComponentTranslation("msg.BankMP.messages.1000.txt",new Object[] {}));
+					//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.BankMP.messages.1000.txt",new Object[] {}));
 					cashGold = rate;
 					//System.out.println("TEST1;" + cashGold);
 				}else if(epIts.getItem() == DQMiscs.itemOkane10000)
 				{
-					//ep.addChatMessage(new ChatComponentTranslation("msg.BankMP.messages.10000.txt",new Object[] {}));
+					//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.BankMP.messages.10000.txt",new Object[] {}));
 					cashGold = rate * 10;
 					//System.out.println("TEST2;" + cashGold);
 				}else if(epIts.getItem() == DQMiscs.itemOkane100000)
 				{
-					//ep.addChatMessage(new ChatComponentTranslation("msg.BankMP.messages.100000.txt",new Object[] {}));
+					//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.BankMP.messages.100000.txt",new Object[] {}));
 					cashGold = rate * 100;
 					//System.out.println("TEST3;" + cashGold);
 				}else if(epIts.getItem() == DQMiscs.itemOkane1000000)
 				{
-					//ep.addChatMessage(new ChatComponentTranslation("msg.Bank.messages.1000000.txt",new Object[] {}));
+					//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.Bank.messages.1000000.txt",new Object[] {}));
 					cashGold = rate * 1000;
 					//System.out.println("TEST4;" + cashGold);
 				}
 
 				if(cashGold > 0)
 				{
-					ep.addChatMessage(new ChatComponentTranslation("msg.BankMP.messages.100.txt",new Object[] {nfNum.format(cashGold)}));
+					//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.BankMP.messages.100.txt",new Object[] {nfNum.format(cashGold)}));
+					DQR.func.doAddChatMessageFix(ep,new ChatComponentTranslation("msg.BankMP.messages.100.txt",new Object[] {nfNum.format(cashGold)}));
     				ep.inventory.getCurrentItem().stackSize = ep.inventory.getCurrentItem().stackSize - 1;
-    				//ep.addChatMessage(new ChatComponentTranslation("msg.Bank.messages." + (10 + flg) + ".txt",new Object[] {}));
+    				//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.Bank.messages." + (10 + flg) + ".txt",new Object[] {}));
     				//ExtendedPlayerProperties.get(ep).setGold(epMoney + cashGold);
     				MCEconomyAPI.addPlayerMP(ep, cashGold, false);
     				//ep.worldObj.playSoundAtEntity(ep, "dqr:player.okane", 1.0F, 1.0F);
@@ -320,7 +325,8 @@ public class DqrEntityNPCBankMP extends DqmNPCBase
 
     		if(flg < 9)
     		{
-    			ep.addChatMessage(new ChatComponentTranslation("msg.BankMP.messages." + flg + ".txt",new Object[] {}));
+    			//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.BankMP.messages." + flg + ".txt",new Object[] {}));
+    			DQR.func.doAddChatMessageFix(ep,new ChatComponentTranslation("msg.BankMP.messages." + flg + ".txt",new Object[] {}));
     			ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
     			if(flg + 1 <= 9)
     			{
@@ -328,7 +334,8 @@ public class DqrEntityNPCBankMP extends DqmNPCBase
     			}
     		}else if(flg == 9 || flg == 10)
     		{
-    			ep.addChatMessage(new ChatComponentTranslation("msg.BankMP.messages.9.txt",new Object[] {}));
+    			//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.BankMP.messages.9.txt",new Object[] {}));
+    			DQR.func.doAddChatMessageFix(ep,new ChatComponentTranslation("msg.BankMP.messages.9.txt",new Object[] {}));
     			ExtendedPlayerProperties.get(ep).setNpcTalk(EnumDqmNpcTalk.BANKMP.getId(), 10);
     			ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
     		}else
@@ -348,7 +355,8 @@ public class DqrEntityNPCBankMP extends DqmNPCBase
         			{
         				if(ep.inventory.addItemStackToInventory(itsOkane))
         				{
-    	    				ep.addChatMessage(new ChatComponentTranslation("msg.BankMP.messages.101.txt",new Object[] {nfNum.format(flg)}));
+    	    				//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.BankMP.messages.101.txt",new Object[] {nfNum.format(flg)}));
+        					DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.BankMP.messages.101.txt",new Object[] {nfNum.format(flg)}));
     	    				MCEconomyAPI.reducePlayerMP(ep, mpValue, false);
     	    				//ExtendedPlayerProperties.get(ep).setGold(epMoney - rate);
 
@@ -356,12 +364,14 @@ public class DqrEntityNPCBankMP extends DqmNPCBase
         				}else
         				{
         					ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
-        					ep.addChatMessage(new ChatComponentTranslation("msg.Bank.messages.25.txt",new Object[] {}));
+        					//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.Bank.messages.25.txt",new Object[] {}));
+        					DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.Bank.messages.25.txt",new Object[] {}));
         				}
         			}else
         			{
         				ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
-        				ep.addChatMessage(new ChatComponentTranslation("msg.BankMP.messages.24.txt",new Object[] {}));
+        				//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.BankMP.messages.24.txt",new Object[] {}));
+        				DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.BankMP.messages.24.txt",new Object[] {}));
         			}
     			}
     			//1000G袋 : 10
@@ -383,28 +393,28 @@ public class DqrEntityNPCBankMP extends DqmNPCBase
     			{
     				if(!ep.isSneaking())
     				{
-	    				ep.addChatMessage(new ChatComponentTranslation("msg.shopSyuriya.messages.1.txt",new Object[] {syuuriPrice}));
-	    				ep.addChatMessage(new ChatComponentTranslation("msg.shopSyuriya.messages.2.txt",new Object[] {}));
+	    				DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.shopSyuriya.messages.1.txt",new Object[] {syuuriPrice}));
+	    				DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.shopSyuriya.messages.2.txt",new Object[] {}));
 	    				ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
     				}else
     				{
     					int epGold = ExtendedPlayerProperties.get(ep).getGold();
     					if(epGold >= syuuriPrice)
     					{
-    	    				ep.addChatMessage(new ChatComponentTranslation("msg.shopSyuriya.messages.3.txt",new Object[] {syuuriPrice}));
+    	    				DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.shopSyuriya.messages.3.txt",new Object[] {syuuriPrice}));
     	    				ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
 
     	    				ep.inventory.getCurrentItem().setItemDamage(0);
     	    				//ExtendedPlayerProperties.get(ep).setGold(epGold - syuuriPrice);
     					}else
     					{
-    	    				ep.addChatMessage(new ChatComponentTranslation("msg.shopSyuriya.messages.4.txt",new Object[] {}));
+    	    				DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.shopSyuriya.messages.4.txt",new Object[] {}));
     	    				ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
     					}
     				}
     			}else
     			{
-    				ep.addChatMessage(new ChatComponentTranslation("msg.shopSyuriya.messages.5.txt",new Object[] {}));
+    				DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.shopSyuriya.messages.5.txt",new Object[] {}));
     				ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
     			}
     			ExtendedPlayerProperties.get(ep).setNpcTalk(0, 1);

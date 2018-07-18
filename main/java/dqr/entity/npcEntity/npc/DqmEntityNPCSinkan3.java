@@ -161,12 +161,12 @@ public class DqmEntityNPCSinkan3 extends DqmNPCBase
 
 			int talkNo = ExtendedPlayerProperties.get(ep).getNpcTalk(EnumDqmNpcTalk.SINKAN3.getId());
 
-			//ep.addChatMessage(new ChatComponentTranslation("" + talkNo));
+			//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("" + talkNo));
 			if(talkNo < 10)
 			{
 				if(!ep.worldObj.isRemote)
 				{
-					ep.addChatMessage(new ChatComponentTranslation("msg.Dama3.messages." + talkNo + ".txt" ,new Object[] {}));
+					DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.Dama3.messages." + talkNo + ".txt" ,new Object[] {}));
 					ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
 				}
 
@@ -183,7 +183,7 @@ public class DqmEntityNPCSinkan3 extends DqmNPCBase
 			{
 				if(!ep.worldObj.isRemote)
 				{
-					ep.addChatMessage(new ChatComponentTranslation("msg.Dama3.messages." + talkNo + ".txt" ,new Object[] {}));
+					DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.Dama3.messages." + talkNo + ".txt" ,new Object[] {}));
 					ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
 				}
 

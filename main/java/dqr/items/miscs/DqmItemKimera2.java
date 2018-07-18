@@ -39,7 +39,7 @@ public class DqmItemKimera2 extends DqmItemMiscBase{
 			if(!par2World.isRemote)
 			{
 				ExtendedPlayerProperties.get(par3EntityPlayer).setKimera(this.getEnumMagic().getType(), par3EntityPlayer.posX, par3EntityPlayer.posY, par3EntityPlayer.posZ, par3EntityPlayer.dimension, 1);
-    	        par3EntityPlayer.addChatMessage(new ChatComponentTranslation("dqm.iteminfo.kimeraLoc.2.txt",new Object[] {par3EntityPlayer.dimension,
+    	        DQR.func.doAddChatMessageFix(par3EntityPlayer, new ChatComponentTranslation("dqm.iteminfo.kimeraLoc.2.txt",new Object[] {par3EntityPlayer.dimension,
     	        		Math.floor(par3EntityPlayer.posX),
     	        		Math.floor(par3EntityPlayer.posY),
     	        		Math.floor(par3EntityPlayer.posZ)}));
@@ -56,8 +56,8 @@ public class DqmItemKimera2 extends DqmItemMiscBase{
     	        {
     	        	if(!par2World.isRemote)
     	        	{
-	    				par3EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.magic.ruraNoPos0.txt",new Object[] {}));
-	    				par3EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.magic.ruraNoPos1.txt",new Object[] {}));
+	    				DQR.func.doAddChatMessageFix(par3EntityPlayer, new ChatComponentTranslation("msg.magic.ruraNoPos0.txt",new Object[] {}));
+	    				DQR.func.doAddChatMessageFix(par3EntityPlayer, new ChatComponentTranslation("msg.magic.ruraNoPos1.txt",new Object[] {}));
     	        	}
     				par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.pi", 1.0F, 1.0F);
     				return par1ItemStack;
@@ -65,7 +65,7 @@ public class DqmItemKimera2 extends DqmItemMiscBase{
     	        {
     	        	if(!par2World.isRemote)
     	        	{
-    	        		par3EntityPlayer.addChatMessage(new ChatComponentTranslation("msg.magic.ruraNoDim.txt",new Object[] {}));
+    	        		DQR.func.doAddChatMessageFix(par3EntityPlayer, new ChatComponentTranslation("msg.magic.ruraNoDim.txt",new Object[] {}));
     	        	}
     				par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.pi", 1.0F, 1.0F);
     				return par1ItemStack;

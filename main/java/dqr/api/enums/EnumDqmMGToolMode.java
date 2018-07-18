@@ -33,10 +33,16 @@ public enum EnumDqmMGToolMode {
 	SHINZIRU_PET_KICK(2, "Shinziru_Pet_Kick"),
 	SHINZIRU_LEAVE(3, "Shinziru_Leave"),
 	SHINZIRU_CLOSE(4, "Shinziru_Close"),
+	SHINZIRU_SHARE(5, "Shinziru_Share"),
 
 	ACCCANCELER_ACCONLY(0, "AccCanceler_AccOnly"),
 	ACCCANCELER_ARMORONLY(1, "AccCanceler_ArmorOnly"),
 	ACCCANCELER_BOTH(2, "AccCanceler_Both"),
+
+	PETSUISYOU_VIEW(0, "Petsuisyou_View"),
+	PETSUISYOU_VIEWDEL(1, "Petsuisyou_ViewDel"),
+	PETSUISYOU_REFRESH(2, "Petsuisyou_Refresh"),
+	PETSUISYOU_CLEAR(3, "Petsuisyou_Clear"),
 	;
 
 
