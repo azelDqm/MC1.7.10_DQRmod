@@ -4,8 +4,15 @@ import java.util.List;
 
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.ChatComponentTranslation;
+
+import org.apache.commons.lang3.math.NumberUtils;
+
+import dqr.DQR;
+import dqr.api.enums.EnumColor;
+import dqr.playerData.ExtendedPlayerProperties3;
 
 
 public class DqrComDqredit extends CommandBase {
@@ -31,18 +38,67 @@ public class DqrComDqredit extends CommandBase {
 		//hoge.getWorldInfo().setSpawnPosition(p_76081_1_, p_76081_2_, p_76081_3_);
 
 		//EntityPlayer ep = (EntityPlayer)var1;
-        EntityPlayerMP ep;
+		EntityPlayer ep = (EntityPlayer)var1;
 
-        System.out.println("TEST : " + var2.length);
-        if (var2.length > 2)
+        if(var2.length == 0)
         {
-            ep = getPlayer(var1, var2[1]);
-            System.out.println("TEST2");
+        	return;
         }
-        else
+        if("petcount".equalsIgnoreCase(var2[0]) || "petc".equalsIgnoreCase(var2[0]))
         {
-            ep = getCommandSenderAsPlayer(var1);
-            System.out.println("TEST3");
+        	if(var2.length > 1)
+        	{
+        		if("check".equalsIgnoreCase(var2[1]))
+        		{
+        			if(var2.length > 2)
+        			{
+        				MinecraftServer minecraftserver = MinecraftServer.getServer();
+        				EntityPlayer er = minecraftserver.getConfigurationManager().func_152612_a(var2[2]);
+        				if(er != null)
+        				{
+        					int petCount = ExtendedPlayerProperties3.get(er).getPetCount();
+        					DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation(EnumColor.Aqua.getChatColor() + er.getCommandSenderName() + " has " + petCount + "pet monsters", new Object[] {}));
+        				}else
+        				{
+        					DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation(EnumColor.DarkRed.getChatColor() + "Player not founds.", new Object[] {}));
+        				}
+        			}else
+        			{
+        				DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation(EnumColor.DarkRed.getChatColor() + "/dqredit petc check [player]", new Object[] {}));
+        			}
+        		}else if("set".equalsIgnoreCase(var2[1]))
+        		{
+        			if(var2.length > 3)
+        			{
+        				MinecraftServer minecraftserver = MinecraftServer.getServer();
+        				EntityPlayer er = minecraftserver.getConfigurationManager().func_152612_a(var2[2]);
+        				if(er != null)
+        				{
+        					if(NumberUtils.isNumber(var2[3]))
+        					{
+        						int val = Integer.parseInt(var2[3]);
+        						ExtendedPlayerProperties3.get(er).setPetCount(val);
+        						DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation(EnumColor.Aqua.getChatColor() + er.getCommandSenderName() + " pet count set " + val, new Object[] {}));
+        					}else
+        					{
+        						DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation(EnumColor.DarkRed.getChatColor() + "/dqredit petc set [player] <VALUE(number)>", new Object[] {}));
+        					}
+
+        					int petCount = ExtendedPlayerProperties3.get(er).getPetCount();
+        					DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation(EnumColor.Aqua.getChatColor() + er.getCommandSenderName() + " has " + petCount + "pet monsters", new Object[] {}));
+        				}else
+        				{
+        					DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation(EnumColor.DarkRed.getChatColor() + "Player not founds.", new Object[] {}));
+        				}
+        			}else
+        			{
+        				DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation(EnumColor.DarkRed.getChatColor() + "/dqredit petc set [player] <VALUE>", new Object[] {}));
+        			}
+        		}
+        	}else
+        	{
+        		DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation(EnumColor.DarkRed.getChatColor() + "/dqredit pet <check|set>", new Object[] {}));
+        	}
         }
 
         /*

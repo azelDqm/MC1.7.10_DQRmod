@@ -37,8 +37,9 @@ public class DqmItemBuilderSekizou extends DqmItemBuilderBase{
 
 		if(!par3World.isRemote)
 		{
+
 			boolean flg = MinecraftServer.getServer().getConfigurationManager().func_152596_g(par2EntityPlayer.getGameProfile());
-			if(DQR.conf.permBuilder4 == 2 || (DQR.conf.permBuilder4 == 1 && flg))
+			if(DQR.conf.permBuilder6 == 2 || (DQR.conf.permBuilder6 == 1 && flg))
 			{
 				;
 			}else
@@ -48,7 +49,10 @@ public class DqmItemBuilderSekizou extends DqmItemBuilderBase{
 				return false;
 			}
 
-	        if(par3World.provider.dimensionId != 0)
+	        if(DQR.conf.permBossAlter == 2 || (DQR.conf.permBossAlter == 1 && par3World.provider.dimensionId == 0))
+	        {
+	        	;
+	        }else
 	        {
 				DQR.func.doAddChatMessageFix(par2EntityPlayer, new ChatComponentTranslation("msg.Builder.messages.notDim.txt",new Object[] {}));
 				par2EntityPlayer.worldObj.playSoundAtEntity(par2EntityPlayer, "dqr:player.pi", 1.0F, 1.0F);

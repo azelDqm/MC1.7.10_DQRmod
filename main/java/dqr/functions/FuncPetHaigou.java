@@ -266,7 +266,7 @@ public class FuncPetHaigou {
 							petCount++;
 						}else
 						{
-							DQR.func.debugString("Haigou Ret is null");
+							DQR.func.debugString("Haigou Result is null");
 						}
 
 						entityPet1 = null;
@@ -517,7 +517,7 @@ public class FuncPetHaigou {
 
 		if(parentType.getTenseiMob() != null)
 		{
-			if(rand.nextInt(10000) < 10 || DQR.debug > 0)
+			if(rand.nextInt(10000) < 10 || DQR.debug == 2)
 			{
 				soundName = "ambient.weather.thunder";
 				return DQR.enumGetter.getEnumDqmPetFromName(parentType.getTenseiMob());
@@ -1150,6 +1150,9 @@ public class FuncPetHaigou {
 
 			if(param1 > 0 || param2 > 0)
 			{
+				DQR.func.debugString("DEBUG : " + cnt + " : " + param1 + " / " + param2 , this.getClass(), 5);
+
+
 				if(param1 >= param2)
 				{
 					selectFlg = 1;
@@ -1179,6 +1182,32 @@ public class FuncPetHaigou {
 					}else
 					{
 						break;
+					}
+				}
+
+				for(int checkCnt = 1; checkCnt <= entityPet1.getArrayAIMaster(cnt); checkCnt++)
+				{
+					pet.setArrayAIMaster(cnt, checkCnt);
+					if(pet.getArrayAILimit(cnt) < checkCnt)
+					{
+						pet.setArrayAILimit(cnt, checkCnt);
+						pet.setArrayAISets(cnt, checkCnt);
+
+						pet.setArrayAIRate(cnt ,aiRate);
+						pet.setArrayAIRateDef(cnt, aiRate);
+					}
+				}
+
+				for(int checkCnt = 1; checkCnt <= entityPet2.getArrayAIMaster(cnt); checkCnt++)
+				{
+					pet.setArrayAIMaster(cnt, checkCnt);
+					if(pet.getArrayAILimit(cnt) < checkCnt)
+					{
+						pet.setArrayAILimit(cnt, checkCnt);
+						pet.setArrayAISets(cnt, checkCnt);
+
+						pet.setArrayAIRate(cnt ,aiRate);
+						pet.setArrayAIRateDef(cnt, aiRate);
 					}
 				}
 			}

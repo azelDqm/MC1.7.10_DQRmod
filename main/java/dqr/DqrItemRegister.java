@@ -21,7 +21,7 @@ import dqr.api.Items.DQMagics;
 import dqr.api.Items.DQMiscs;
 import dqr.api.Items.DQMonsters;
 import dqr.api.Items.DQSeeds;
-import dqr.api.Items.DQSkillWs;
+import dqr.api.Items.DQSkills;
 import dqr.api.Items.DQWeapons;
 import dqr.blocks.DqmBlockWithMeta;
 
@@ -2026,34 +2026,34 @@ public class DqrItemRegister {
 		GameRegistry.registerItem(DQMagicTools.itemPetSuisyou, "ItemPetSuisyou");
 
 
-		GameRegistry.registerItem(DQSkillWs.itemSkillW_20, "ItemSkillW_20");
-		GameRegistry.registerItem(DQSkillWs.itemSkillW_21, "ItemSkillW_21");
-		GameRegistry.registerItem(DQSkillWs.itemSkillW_30, "ItemSkillW_30");
-		GameRegistry.registerItem(DQSkillWs.itemSkillW_31, "ItemSkillW_31");
-		GameRegistry.registerItem(DQSkillWs.itemSkillW_40, "ItemSkillW_40");
-		GameRegistry.registerItem(DQSkillWs.itemSkillW_41, "ItemSkillW_41");
-		GameRegistry.registerItem(DQSkillWs.itemSkillW_50, "ItemSkillW_50");
-		GameRegistry.registerItem(DQSkillWs.itemSkillW_51, "ItemSkillW_51");
-		GameRegistry.registerItem(DQSkillWs.itemSkillW_60, "ItemSkillW_60");
-		GameRegistry.registerItem(DQSkillWs.itemSkillW_61, "ItemSkillW_61");
-		GameRegistry.registerItem(DQSkillWs.itemSkillW_70, "ItemSkillW_70");
-		GameRegistry.registerItem(DQSkillWs.itemSkillW_71, "ItemSkillW_71");
-		GameRegistry.registerItem(DQSkillWs.itemSkillW_80, "ItemSkillW_80");
-		GameRegistry.registerItem(DQSkillWs.itemSkillW_81, "ItemSkillW_81");
-		GameRegistry.registerItem(DQSkillWs.itemSkillW_90, "ItemSkillW_90");
-		GameRegistry.registerItem(DQSkillWs.itemSkillW_91, "ItemSkillW_91");
-		GameRegistry.registerItem(DQSkillWs.itemSkillW_100, "ItemSkillW_100");
-		GameRegistry.registerItem(DQSkillWs.itemSkillW_101, "ItemSkillW_101");
-		GameRegistry.registerItem(DQSkillWs.itemSkillW_110, "ItemSkillW_110");
-		GameRegistry.registerItem(DQSkillWs.itemSkillW_111, "ItemSkillW_111");
-		GameRegistry.registerItem(DQSkillWs.itemSkillW_120, "ItemSkillW_120");
-		GameRegistry.registerItem(DQSkillWs.itemSkillW_121, "ItemSkillW_121");
-		GameRegistry.registerItem(DQSkillWs.itemSkillW_130, "ItemSkillW_130");
-		GameRegistry.registerItem(DQSkillWs.itemSkillW_131, "ItemSkillW_131");
-		GameRegistry.registerItem(DQSkillWs.itemSkillW_240, "ItemSkillW_240");
-		GameRegistry.registerItem(DQSkillWs.itemSkillW_241, "ItemSkillW_241");
-		GameRegistry.registerItem(DQSkillWs.itemSkillW_250, "ItemSkillW_250");
-		GameRegistry.registerItem(DQSkillWs.itemSkillW_251, "ItemSkillW_251");
+		GameRegistry.registerItem(DQSkills.itemSkillW_20, "ItemSkillW_20");
+		GameRegistry.registerItem(DQSkills.itemSkillW_21, "ItemSkillW_21");
+		GameRegistry.registerItem(DQSkills.itemSkillW_30, "ItemSkillW_30");
+		GameRegistry.registerItem(DQSkills.itemSkillW_31, "ItemSkillW_31");
+		GameRegistry.registerItem(DQSkills.itemSkillW_40, "ItemSkillW_40");
+		GameRegistry.registerItem(DQSkills.itemSkillW_41, "ItemSkillW_41");
+		GameRegistry.registerItem(DQSkills.itemSkillW_50, "ItemSkillW_50");
+		GameRegistry.registerItem(DQSkills.itemSkillW_51, "ItemSkillW_51");
+		GameRegistry.registerItem(DQSkills.itemSkillW_60, "ItemSkillW_60");
+		GameRegistry.registerItem(DQSkills.itemSkillW_61, "ItemSkillW_61");
+		GameRegistry.registerItem(DQSkills.itemSkillW_70, "ItemSkillW_70");
+		GameRegistry.registerItem(DQSkills.itemSkillW_71, "ItemSkillW_71");
+		GameRegistry.registerItem(DQSkills.itemSkillW_80, "ItemSkillW_80");
+		GameRegistry.registerItem(DQSkills.itemSkillW_81, "ItemSkillW_81");
+		GameRegistry.registerItem(DQSkills.itemSkillW_90, "ItemSkillW_90");
+		GameRegistry.registerItem(DQSkills.itemSkillW_91, "ItemSkillW_91");
+		GameRegistry.registerItem(DQSkills.itemSkillW_100, "ItemSkillW_100");
+		GameRegistry.registerItem(DQSkills.itemSkillW_101, "ItemSkillW_101");
+		GameRegistry.registerItem(DQSkills.itemSkillW_110, "ItemSkillW_110");
+		GameRegistry.registerItem(DQSkills.itemSkillW_111, "ItemSkillW_111");
+		GameRegistry.registerItem(DQSkills.itemSkillW_120, "ItemSkillW_120");
+		GameRegistry.registerItem(DQSkills.itemSkillW_121, "ItemSkillW_121");
+		GameRegistry.registerItem(DQSkills.itemSkillW_130, "ItemSkillW_130");
+		GameRegistry.registerItem(DQSkills.itemSkillW_131, "ItemSkillW_131");
+		GameRegistry.registerItem(DQSkills.itemSkillW_240, "ItemSkillW_240");
+		GameRegistry.registerItem(DQSkills.itemSkillW_241, "ItemSkillW_241");
+		GameRegistry.registerItem(DQSkills.itemSkillW_250, "ItemSkillW_250");
+		GameRegistry.registerItem(DQSkills.itemSkillW_251, "ItemSkillW_251");
 
 		GameRegistry.registerBlock(DQBlocks.DqmBlockGanseki, "BlockGanseki ");
 		GameRegistry.registerItem(DQBuilders.itemBuilderIdoMedal, "ItemBuilderIdoMedal");
@@ -2242,6 +2242,19 @@ public class DqrItemRegister {
 		GameRegistry.registerItem(DQEmblems.itemDamaDougutukai, "ItemDamaDougutukai");
 		GameRegistry.registerItem(DQEmblems.itemEmbTentiraimeishi, "itemEmbTentiraimeishi");
 		GameRegistry.registerItem(DQEmblems.itemDamaTentiraimeishi, "ItemDamaTentiraimeishi");
+
+		GameRegistry.registerItem(DQBuilders.itemBuilderIdoMedalW, "itemBuilderIdoMedalW");
+
+		GameRegistry.registerItem(DQSkills.itemSkillJ_HP, "itemSkillJ_HP");
+		GameRegistry.registerItem(DQSkills.itemSkillJ_MP, "itemSkillJ_MP");
+		GameRegistry.registerItem(DQSkills.itemSkillJ_ATK, "itemSkillJ_ATK");
+		GameRegistry.registerItem(DQSkills.itemSkillJ_MAG, "itemSkillJ_MAG");
+		GameRegistry.registerItem(DQSkills.itemSkillJ_DEF, "itemSkillJ_DEF");
+		GameRegistry.registerItem(DQSkills.itemSkillJ_STR, "itemSkillJ_STR");
+		GameRegistry.registerItem(DQSkills.itemSkillJ_INT, "itemSkillJ_INT");
+		GameRegistry.registerItem(DQSkills.itemSkillJ_MISS, "itemSkillJ_MISS");
+		GameRegistry.registerItem(DQSkills.itemSkillJ_CRI, "itemSkillJ_CRI");
+		GameRegistry.registerItem(DQSkills.itemSkillJ_AGI, "itemSkillJ_AGI");
 	}
 }
 

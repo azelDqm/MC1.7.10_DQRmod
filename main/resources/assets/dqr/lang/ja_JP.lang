@@ -129,6 +129,10 @@ main.job.22=羊飼い
 main.job.23=船乗り
 main.job.24=どうぐ使い
 main.job.25=天地雷鳴士
+gui.container.dama.SkillAllJob=全職で効果発動
+gui.container.dama.SkillOnlyJob=%sの時のみ効果発動
+gui.container.dama.SkillSP=特殊特技
+gui.container.dama.SP=  SP : %d/%d
 gui.container.dama.title=転職
 gui.container.dama.page=Page. %f / %f
 gui.container.TamingPets2.title=ペット位置情報(情報削除モード)
@@ -283,7 +287,7 @@ gui.status.gold=ゴールド: %dG
 gui.status.medal=メダル: %d枚
 gui.status.coin=コイン: %d枚
 gui.status.LV=Lv.
-gui.status.SP=SP
+gui.status.SP=SP %d/%d
 gui.status.ATK=攻
 gui.status.DEF=防
 gui.status.MAG=魔
@@ -1437,6 +1441,7 @@ item.dqm.BuilderShopBankW.name=銀行スティーブ召喚書
 item.dqm.BuilderShopSyuuriW.name=修理屋スティーブ召喚書
 item.dqm.BuilderShopKaitoriW.name=買取屋スティーブ召喚書
 item.dqm.BuilderShopBankMPW.name=MP銀行スティーブ召喚書
+item.dqm.BuilderIdoMedalW.name=メダル王召喚書
 
 item.dqm.BuilderDamaTW.name=転職ダーマ神官召喚書
 item.dqm.BuilderDamaSW.name=職業特技ダーマ神官召喚書
@@ -1471,6 +1476,18 @@ dqm.potion.Suffocation=窒息
 dqm.potion.hoshihuru=速度上昇
 dqm.potion.HPRegeneration=HP自動回復
 dqm.potion.MPRegeneration=MP自動回復
+
+dqm.skill.JSkill_HP.name=最大HP+%d
+dqm.skill.JSkill_MP.name=最大MP+%d
+dqm.skill.JSkill_ATK.name=攻撃力+%d
+dqm.skill.JSkill_DEF.name=防御力+%d
+dqm.skill.JSkill_MAG.name=魔力+%d
+dqm.skill.JSkill_INT.name=賢さ+%d
+dqm.skill.JSkill_STR.name=力+%d
+dqm.skill.JSkill_MISS.name=身かわし+%d
+dqm.skill.JSkill_CRI.name=会心+%d
+dqm.skill.JSkill.needSP=消費SP %d
+dqm.skill.JSkill.allFlg=[全職で適用]
 
 dqm.skill.WSkill_2_0.name=ドラゴン斬り
 dqm.skill.WSkill_2_1.name=こうげき力+5
@@ -1885,8 +1902,8 @@ dqm.iteminfo.Inochinoishi.2.txt=即死魔法/爆発攻撃を受けた時に、�
 dqm.iteminfo.mahounoTutu.1.txt=ペットモンスターに使用すると
 dqm.iteminfo.mahounoTutu.2.txt=ペットをアイテム化することができます。
 
-dqm.iteminfo.mahounoTutu.1.txt=ペットモンスターに使用すると
-dqm.iteminfo.mahounoTutu.2.txt=ペットをアイテム化することができます。
+dqm.iteminfo.mahounoTutuA.1.txt=ペットモンスターに使用すると
+dqm.iteminfo.mahounoTutuA.2.txt=ペットをアイテム化することができます。
 
 dqm.iteminfo.kaikosyo.1.txt=召喚されたNPCに向かってスニーク＋アイテム使用で
 dqm.iteminfo.kaikosyo.2.txt=対象NPCを消滅させることができます。
@@ -1910,7 +1927,7 @@ dqm.iteminfo.PetSuisyou.8.txt=スニークしながらジャンプ中に使用�
 dqm.iteminfo.PetSuisyou.9.txt=全ての情報を一旦全削除します。
 dqm.iteminfo.PetSuisyou.10.txt=(削除データは情報再受信で復活します。)
 
-dqm.iteminfo.PetSuisyou.10.txt=※ペット発見・再読み込み時に情報を取得しています。
+dqm.iteminfo.PetSuisyou.11.txt=※ペット発見・再読み込み時に情報を取得しています。
 
 dqm.iteminfo.accessory.base.txt=[特殊効果]
 dqm.iteminfo.accessory.Hosifurupiasu.0.txt=移動速度上昇
@@ -2202,7 +2219,7 @@ msg.BankMP.messages.1000.txt=!player.[%sMPを1,000Gの袋と交換する]
 msg.BankMP.messages.10000.txt=!player.[%sMPを10,000Gの袋と交換する]
 msg.BankMP.messages.100000.txt=!player.[%sMPを100,000Gの袋と交換する]
 msg.BankMP.messages.1000000.txt=!player.[%sMPを1,000,000Gの袋と交換する]
-msg.BankMP.messages.10000000.txt=!player.[%sMPを1,000,000Gの袋と交換する]
+msg.BankMP.messages.10000000.txt=!player.[%sMPを10,000,000Gの袋と交換する]
 
 msg.BankMP.messages.100.txt=!player.%sMPを受け取った。
 msg.BankMP.messages.101.txt=!player.%sGの袋を受け取った。
@@ -2269,10 +2286,21 @@ msg.Dama1.messages.25.txt=!player.この職業に転職するには、お主に�
 msg.Dama2.messages.-1.txt=!player.すまないのぉ、まだ準備中なんじゃよ。(未実装)
 msg.Dama3.messages.-1.txt=!player.すまないのぉ、まだ準備中なんじゃよ。(未実装)
 
+msg.Dama2.messages.0.txt=!player.よくぞ参った、ここは職業特技習得を願うものが集うダーマ神殿じゃ。
+msg.Dama2.messages.1.txt=!player.そなた職業特技というものを知っておるか？
+msg.Dama2.messages.2.txt=!player.職業特技とはSPを消費することによって習得できる職業に応じた技や様々な能力の上昇のことじゃ。
+msg.Dama2.messages.3.txt=!player.SPとはそれぞれの職業ごとに振られており、職業レベルを上げることによって増えていくのじゃ。
+msg.Dama2.messages.4.txt=!player.さらにLvが上がれば上がるほど覚えられる特技の種類も増えていくからの。
+msg.Dama2.messages.5.txt=!player.何を望むかはそなたしだいじゃ、じゃが１つ注意しておくことがある・・
+msg.Dama2.messages.6.txt=!player.SPには限りがある。全ての特技を習得することはできないのじゃ。
+msg.Dama2.messages.7.txt=!player.しかし、SPの範囲内なら自由に習得と解除ができるのじゃ。
+msg.Dama2.messages.8.txt=!player.自分に一番あったパターンを探して、特技を習得すると良かろう。
+msg.Dama2.messages.9.txt=!player.さて、これで特技の説明は終わりじゃ。では、習得したい特技を選ぶがよい。
+
 
 msg.Dama3.messages.0.txt=!player.よくぞ参った、ここは武器特技習得を願うものが集うダーマ神殿じゃ。
-msg.Dama3.messages.1.txt=!player.そなた特技というものを知っておるか？
-msg.Dama3.messages.2.txt=!player.特技とはWPを消費することによって習得できる各武器に応じた技や様々な能力の上昇じゃ。
+msg.Dama3.messages.1.txt=!player.そなた武器特技というものを知っておるか？
+msg.Dama3.messages.2.txt=!player.武器特技とはWPを消費することによって習得できる各武器に応じた技や様々な能力の上昇のことじゃ。
 msg.Dama3.messages.3.txt=!player.WPとはそれぞれの武器ごとに振られており、熟練度を上げることによって増えていくのじゃ。
 msg.Dama3.messages.4.txt=!player.さらにLvが上がれば上がるほど覚えられる特技の種類も増えていくからの。焦りは禁物じゃぞ。
 msg.Dama3.messages.5.txt=!player.何を望むかはそなたしだいじゃ、じゃが１つ注意しておくことがある・・
@@ -2660,7 +2688,6 @@ tile.dqm.blockJumpBlockTerepoBoss2.name=ジャンプブロック(ボス2)(未実
 tile.dqm.blockJumpBlockTerepoBoss3.name=ジャンプブロック(ボス3)(未実装)
 tile.dqm.blockJumpBlockTerepoBoss4.name=ジャンプブロック(ボス4)(未実装)
 tile.dqm.blockJumpBlockTerepoBoss5.name=ジャンプブロック(ボス5)(未実装)
-tile.dqm.blockJumpBlockTerepoBoss6.name=ジャンプブロック(ボス6)(未実装)
 tile.dqm.blockJumpBlockTerepoBoss6.name=ジャンプブロック(ボス6)(未実装)
 
 tile.dqm.blockKieru.name=ダンジョン破壊ブロック(未実装)
@@ -3640,3 +3667,4 @@ msg.sekizou.esterk.talk.6.txt=!player.ならばしかたがないな。私はほ
 msg.sekizou.esterk.talk.7.txt=!player.さあ来るがよい！
 
 commands.dqredit.usage=/dqredit [player] <status> <value>
+commands.dqredit.usage=/dqredit <petcount(petc)>

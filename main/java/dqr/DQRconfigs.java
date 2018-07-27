@@ -78,6 +78,7 @@ public class DQRconfigs {
 	public static int GuiID_ItemBag = 14;
 
 	public static int GuiID_ItemShop = 15;
+	public static int GuiID_SkillJob = 16;
 
 	public static int GuiID_SubEquip = 20;
 	public static int GuiID_SubItemBag = 21;
@@ -279,11 +280,14 @@ public class DQRconfigs {
     public static Map<Integer, String> cfg_generateNetherSpawn = new HashMap<>();
     public static Map<String, String> cfg_generateNetherSpawnS = new HashMap<>();
 
+
+    public static int permBossAlter = 2;
     public static int permBuilder1 = 2;
     public static int permBuilder2 = 2;
     public static int permBuilder3 = 2;
     public static int permBuilder4 = 2;
     public static int permBuilder5 = 2;
+    public static int permBuilder6 = 2;
     public static int needBuilderFrame1 = 1;
     public static int needBuilderFrame2 = 1;
     public static int needBuilderFrame3 = 1;
@@ -833,7 +837,10 @@ public class DQRconfigs {
 		permBuilder3 = config.get("Item use permission","BuilderDamaW", permBuilder3, "allow use BuilderDamaW (0:prohibit 1:allow only OP 2:allow for all player)").getInt();
 		permBuilder4 = config.get("Item use permission","BuilderIdoMedal", permBuilder4, "allow use BuilderIdoMedal (0:prohibit 1:allow only OP 2:allow for all player)").getInt();
 		permBuilder5 = config.get("Item use permission","Kaikosyo", permBuilder5, "allow use Kaikosyo[NPC dismissal item] (0:prohibit 1:allow only OP 2:allow owner and OP 3:allow for all player)").getInt();
+		permBuilder6 = config.get("Item use permission","BuilderBossAlter", permBuilder6, "allow use BuilderBossAlter (0:prohibit 1:allow only OP 2:allow for all player)").getInt();
 
+
+		permBossAlter = config.get("Item use permission","BuilderBossAlter", permBossAlter, "allow use BuilderBossAlter at dimension (0:prohibit 1:allow only over world 2:allow all dimension)").getInt();
 		permUseBakudanisi = config.get("Item use permission","Bakudanisi", permUseBakudanisi, "allow use Bakudanisi (0:prohibit 1:allow only OP 2:allow for all player)").getInt();
 
 		permUseShinkanoHiseki = config.get("Item use permission","ShinkanoHiseki", permUseShinkanoHiseki, "allow use ShinkanoHiseki (0:prohibit 1:allow only OP 2:allow for all player)").getInt();
@@ -1346,6 +1353,7 @@ public class DQRconfigs {
 		GuiID_MKAccessory =  config.get("GUI ID","MedalKingGUI(Accessory)", GuiID_MKAccessory).getInt();
 		GuiID_PetBook =  config.get("GUI ID","PetBook", GuiID_PetBook).getInt();
 		GuiID_SkillWeapon =  config.get("GUI ID","SkillWeapon", GuiID_SkillWeapon).getInt();
+		GuiID_SkillJob =  config.get("GUI ID","SkillJob", GuiID_SkillJob).getInt();
 		GuiID_PetStatus =  config.get("GUI ID","PetStatus", GuiID_PetStatus).getInt();
 		GuiID_PetInventory =  config.get("GUI ID","PetInventory", GuiID_PetInventory).getInt();
 		GuiID_DqrEnderchest =  config.get("GUI ID","DQR EnderChest", GuiID_DqrEnderchest).getInt();

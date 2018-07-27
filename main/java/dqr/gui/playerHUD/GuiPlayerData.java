@@ -14,7 +14,9 @@ import org.lwjgl.opengl.GL11;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import dqr.DQR;
+import dqr.dataTable.FuncJobSkillData;
 import dqr.playerData.ExtendedPlayerProperties;
+import dqr.playerData.ExtendedPlayerProperties3;
 
 public class GuiPlayerData extends Gui
 {
@@ -215,10 +217,10 @@ public class GuiPlayerData extends Gui
           int Lv =  ExtendedPlayerProperties.get(ep).getJobLv(JOB);
           int MP = ExtendedPlayerProperties.get(ep).getMP();
           int MaxMP = ExtendedPlayerProperties.get(ep).getMaxMP();
-          int SP = ExtendedPlayerProperties.get(ep).getJobSp(JOB);
+          int SP = ExtendedPlayerProperties3.get(ep).getJobSp(JOB);
           int EXP = ExtendedPlayerProperties.get(ep).getJobExp(JOB);
 
-          String sJob = I18n.format("gui.job." + JOB) + " " + I18n.format("gui.status.LV") + Lv + " (" + I18n.format("gui.status.SP") + SP + ")";
+          String sJob = I18n.format("gui.job." + JOB) + " " + I18n.format("gui.status.LV") + Lv + " (" + I18n.format("gui.status.SP", new Object[]{FuncJobSkillData.getMaxSP(Lv) - SP, FuncJobSkillData.getMaxSP(Lv)}) + ")";
          // String sHP =  I18n.format("gui.status.HP") + " " + HP + "/" + MaxHP;
           String sHP = I18n.format("gui.status.HP",new Object[]{HP, MaxHP});
           String sMP = I18n.format("gui.status.MP",new Object[]{MP, MaxMP});

@@ -11,6 +11,7 @@ import dqr.entity.npcEntity.DqmNPCBase;
 import dqr.entity.npcEntity.npc.DqmEntityNPCBank;
 import dqr.entity.npcEntity.npc.DqmEntityNPCBukiya;
 import dqr.entity.npcEntity.npc.DqmEntityNPCKaitoriya;
+import dqr.entity.npcEntity.npc.DqmEntityNPCMedalking;
 import dqr.entity.npcEntity.npc.DqmEntityNPCSinkan;
 import dqr.entity.npcEntity.npc.DqmEntityNPCSinkan2;
 import dqr.entity.npcEntity.npc.DqmEntityNPCSinkan3;
@@ -44,6 +45,9 @@ public class DqmItemBuilderNPC extends DqmItemBuilderBase{
 			}else if(this == DQBuilders.itemBuilderShopSyuuriyaW)
 			{
 				newEntity = new DqmEntityNPCSyuuri(par3World);
+			}else if(this == DQBuilders.itemBuilderIdoMedalW)
+			{
+				newEntity = new DqmEntityNPCMedalking(par3World);
 			}else if(this == DQBuilders.itemBuilderDamaTW)
 			{
 				newEntity = new DqmEntityNPCSinkan(par3World);

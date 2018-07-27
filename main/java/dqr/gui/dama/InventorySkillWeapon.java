@@ -9,7 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import dqr.DQR;
-import dqr.api.Items.DQSkillWs;
+import dqr.api.Items.DQSkills;
 import dqr.api.enums.EnumDqmSkillW;
 import dqr.playerData.ExtendedPlayerProperties;
 import dqr.playerData.ExtendedPlayerProperties3;
@@ -278,20 +278,20 @@ public class InventorySkillWeapon implements IInventory
     {
     	switch(par1)
     	{
-    		case 2: return DQSkillWs.itemSkillW_20;
-    		case 3: return DQSkillWs.itemSkillW_30;
-    		case 4: return DQSkillWs.itemSkillW_40;
-    		case 5: return DQSkillWs.itemSkillW_50;
-    		case 6: return DQSkillWs.itemSkillW_60;
-    		case 7: return DQSkillWs.itemSkillW_70;
-    		case 8: return DQSkillWs.itemSkillW_80;
-    		case 9: return DQSkillWs.itemSkillW_90;
-    		case 10: return DQSkillWs.itemSkillW_100;
-    		case 11: return DQSkillWs.itemSkillW_110;
-    		case 12: return DQSkillWs.itemSkillW_120;
-    		case 13: return DQSkillWs.itemSkillW_130;
-    		case 24: return DQSkillWs.itemSkillW_240;
-    		case 25: return DQSkillWs.itemSkillW_250;
+    		case 2: return DQSkills.itemSkillW_20;
+    		case 3: return DQSkills.itemSkillW_30;
+    		case 4: return DQSkills.itemSkillW_40;
+    		case 5: return DQSkills.itemSkillW_50;
+    		case 6: return DQSkills.itemSkillW_60;
+    		case 7: return DQSkills.itemSkillW_70;
+    		case 8: return DQSkills.itemSkillW_80;
+    		case 9: return DQSkills.itemSkillW_90;
+    		case 10: return DQSkills.itemSkillW_100;
+    		case 11: return DQSkills.itemSkillW_110;
+    		case 12: return DQSkills.itemSkillW_120;
+    		case 13: return DQSkills.itemSkillW_130;
+    		case 24: return DQSkills.itemSkillW_240;
+    		case 25: return DQSkills.itemSkillW_250;
 
     	}
 

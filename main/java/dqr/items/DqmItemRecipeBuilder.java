@@ -224,5 +224,15 @@ public class DqmItemRecipeBuilder {
             "AAA",
             'A', Items.paper, 'B', DQMiscs.itemIerooubu
         });
+
+        GameRegistry.addRecipe(new ItemStack(DQBuilders.itemBuilderIdoMedalW, 1), new Object[]
+                {
+                    "ABC",
+                    " Z ",
+                    "DEF",
+                    'A', DQMiscs.itemRedoubu, 'B', DQMiscs.itemBuruoubu, 'C', DQMiscs.itemIerooubu,
+                    'D', DQMiscs.itemGurinoubu, 'E', DQMiscs.itemPaapuruoubu, 'F', DQMiscs.itemMetaloubu,
+                    'Z', DQBuilders.itemBuilderIdoMedal
+                });
 	}
 }

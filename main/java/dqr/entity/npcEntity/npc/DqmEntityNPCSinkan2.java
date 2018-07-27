@@ -14,7 +14,9 @@ import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.World;
 import dqr.DQR;
 import dqr.api.Items.DQBuilders;
+import dqr.api.enums.EnumDqmNpcTalk;
 import dqr.entity.npcEntity.DqmNPCBase;
+import dqr.playerData.ExtendedPlayerProperties;
 
 public class DqmEntityNPCSinkan2 extends DqmNPCBase
 {
@@ -148,8 +150,23 @@ public class DqmEntityNPCSinkan2 extends DqmNPCBase
     			}
     		}
 
-			DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.Dama2.messages.-1.txt" ,new Object[] {}));
-			ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
+    		int talkNo = ExtendedPlayerProperties.get(ep).getNpcTalk(EnumDqmNpcTalk.SINKAN3.getId());
+
+    		if(talkNo < 10)
+    		{
+    			DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.Dama2.messages." + talkNo + ".txt" ,new Object[] {}));
+    			ExtendedPlayerProperties.get(ep).setNpcTalk(EnumDqmNpcTalk.SINKAN3.getId(), talkNo + 1);
+    			ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
+    		}else
+    		{
+        		ep.openGui(DQR.instance, DQR.conf.GuiID_SkillJob, ep.worldObj, (int)ep.posX, (int)ep.posY, (int)ep.posZ);
+    			ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
+    		}
+			//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.Dama2.messages.-1.txt" ,new Object[] {}));
+
+
+			//FuncJobSkillData.calcPlayerStatus(ep);
+			//FuncJobSkillData.calcPlayerStatus2(ep);
 		}
 
     	return true;

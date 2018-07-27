@@ -14,7 +14,8 @@ public enum EnumDqmNpcTalk {
 	CASINOCOIN(10, "CasinoCoin"),
 	CASINOPK(11, "CasinoPK"),
 	CASINOEXC(12, "CasinoEXC"),
-	CASINOCCR(13, "CasinoCCR");
+	CASINOCCR(13, "CasinoCCR"),
+	SINKAN2(14, "SINKAN2");
 
 	private int id;
 	private String name;

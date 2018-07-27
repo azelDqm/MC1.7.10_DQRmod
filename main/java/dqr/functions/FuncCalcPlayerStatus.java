@@ -267,7 +267,7 @@ public class FuncCalcPlayerStatus {
 
 				//とりあえず力を攻撃力にそのまま加算
 				atk = atk + this.getLegendWeaponDamage(ep.getCurrentEquippedItem(), ep);
-				atk = atk + ExtendedPlayerProperties.get(ep).getTikara();
+				//atk = atk + ExtendedPlayerProperties.get(ep).getTikara();
 			}else if(ep.getCurrentEquippedItem().getItem() instanceof DqmItemBowBase)
 			{
 				DqmItemBowBase dqmSword = (DqmItemBowBase)ep.getCurrentEquippedItem().getItem();
@@ -345,7 +345,7 @@ public class FuncCalcPlayerStatus {
 		    	//ep.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.attackDamage).setBaseValue(emptyHandDam + atk);
 				//とりあえず力を攻撃力にそのまま加算
 				atk = atk + this.getLegendWeaponDamage(ep.getCurrentEquippedItem(), ep);
-				atk = atk + ExtendedPlayerProperties.get(ep).getTikara();
+				//atk = atk + ExtendedPlayerProperties.get(ep).getTikara();
 			}else if(ep.getCurrentEquippedItem().getItem() instanceof ItemSword)
 			{
 				ItemSword sword = (ItemSword)ep.getCurrentEquippedItem().getItem();
@@ -384,7 +384,7 @@ public class FuncCalcPlayerStatus {
 				}
 
 				//とりあえず力を攻撃力にそのまま加算
-				atk = atk + ExtendedPlayerProperties.get(ep).getTikara();
+				//atk = atk + ExtendedPlayerProperties.get(ep).getTikara();
 			}
 			/*
 			else if(ep.getCurrentEquippedItem().getClass().equals(Block.class))

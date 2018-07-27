@@ -1387,6 +1387,22 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 	            		return true;
 	            	}
 
+	            	//経験値玉
+	            	if (itemstack.getItem() == DQMiscs.itemDebugItem &&
+	            		(this.func_152114_e(ep) ||
+	            		 DQR.conf.petPermGiveExpItems == 1 ||
+	            		 (DQR.conf.petPermGiveExpItems == 2 && opFlg)
+	            		)
+	            	   )
+	            	{
+
+	                    ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
+	                    this.setJobExp(this.getJob(), 11708705);
+	                    ThreadLvUpPet lvup = new ThreadLvUpPet(this);
+	                    	            lvup.start();
+	            		return true;
+	            	}
+
 	            	//魔法の筒
 	            	if (itemstack.getItem() == DQMiscs.ItemMahounoTutu01 &&
 	            		(this.func_152114_e(ep) ||

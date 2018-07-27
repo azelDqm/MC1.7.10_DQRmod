@@ -26,6 +26,8 @@ import dqr.gui.casinoExchange.GuiCasinoExchangeGuiMisc;
 import dqr.gui.casinoExchange.GuiCasinoExchangeGuiWeapon;
 import dqr.gui.dama.GuiJobChangeContainer;
 import dqr.gui.dama.GuiJobChangeGuiContainer;
+import dqr.gui.dama.GuiSkillJobContainer;
+import dqr.gui.dama.GuiSkillJobGuiContainer;
 import dqr.gui.dama.GuiSkillWeaponContainer;
 import dqr.gui.dama.GuiSkillWeaponGuiContainer;
 import dqr.gui.debug.GuiDebugContainer;
@@ -138,6 +140,8 @@ public class GuiHandler implements IGuiHandler {
         }else if (ID == DQR.conf.GuiID_CSCCR){
         	//ExtendedPlayerProperties2.get(player).setFukuroOpen(true);
         	return new GuiCasinoCCRContainer(player);
+        }else if (ID == DQR.conf.GuiID_SkillJob){
+        	return new GuiSkillJobContainer(player);
         }
 
 
@@ -219,6 +223,8 @@ public class GuiHandler implements IGuiHandler {
         	return new GuiDqrShopGuiContainer(player);
         }else if (ID == DQR.conf.GuiID_CSCCR){
         	return new GuiCasinoCCRGuiContainer(player);
+        }else if (ID == DQR.conf.GuiID_SkillJob) {
+            return new GuiSkillJobGuiContainer(player);
         }
 
         return null;

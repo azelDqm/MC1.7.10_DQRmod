@@ -312,7 +312,9 @@ public class GuiNewLogger extends Gui
     public void printChatMessageWithOptionalDeletion(IChatComponent p_146234_1_, int p_146234_2_)
     {
         this.func_146237_a(p_146234_1_, p_146234_2_, this.mc.ingameGUI.getUpdateCounter(), false);
-        logger.info("[CHAT] " + p_146234_1_.getUnformattedText());
+        
+        //[[DEBUG FIX]]
+        //logger.info("[CHAT] " + p_146234_1_.getUnformattedText());
     }
 
     private String func_146235_b(String p_146235_1_)

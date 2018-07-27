@@ -8,7 +8,9 @@ public enum EnumStat {
 	armorSet(3),
 	buffPiora(4),
 	debuffBomie(5),
-	accessory(6);
+	accessory(6),
+	jobSkill1(7),
+	jobSkill2(8);
 
 	private int id;
     private EnumStat(int id)

@@ -176,6 +176,7 @@ public class DqmItemPetSuisyou extends DqmItemMagicToolBase{
 
     	p_77624_3_.add("");
     	p_77624_3_.add(I18n.format("dqm.iteminfo.PetSuisyou.10.txt", new Object[]{}));
+    	p_77624_3_.add(I18n.format("dqm.iteminfo.PetSuisyou.11.txt", new Object[]{}));
     	/*
     	p_77624_3_.add(I18n.format("dqm.iteminfo.PetSuisyou.1.txt", new Object[]{}));
     	p_77624_3_.add(I18n.format("dqm.iteminfo.PetSuisyou.2.txt", new Object[]{}));

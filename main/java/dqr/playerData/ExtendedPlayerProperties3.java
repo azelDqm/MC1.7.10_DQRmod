@@ -32,6 +32,10 @@ public class ExtendedPlayerProperties3 implements IExtendedEntityProperties {
 	private int[][] weaponSkillPermission = new int[64][SKILL_MAX_COUNTER];
 	private int[] weaponSkillSet = new int[64];
 
+	private int[][] jobSkillSet = new int[32][9];
+	private int[][] jobSkillSet2 = new int[32][9];
+	private int[] JobSp = new int[32];
+
 	private NBTTagCompound petStatudData = null;
 	private DqmPetBase statusPet;
 	private DqmEntityNPCBukiya guiNPCBukiya;
@@ -127,6 +131,11 @@ public class ExtendedPlayerProperties3 implements IExtendedEntityProperties {
 
         for(int cnt = 0; cnt < 32; cnt++)
         {
+        	nbt.setInteger("JobSp_" + cnt, JobSp[cnt]);
+        }
+
+        for(int cnt = 0; cnt < 32; cnt++)
+        {
         	nbt.setInteger("jobPermission_" + cnt, jobPermission[cnt]);
         }
 
@@ -146,6 +155,22 @@ public class ExtendedPlayerProperties3 implements IExtendedEntityProperties {
         for(int cnt = 0; cnt < weaponSkillSet.length; cnt++)
         {
         	nbt.setInteger("weaponSkillSet" + cnt, weaponSkillSet[cnt]);
+        }
+
+        for(int job = 0; job < jobSkillSet.length; job++)
+        {
+        	for(int idx = 0; idx < jobSkillSet[job].length; idx++)
+        	{
+        		nbt.setInteger("jobSkillSet_" + job + "_" + idx, jobSkillSet[job][idx]);
+        	}
+        }
+
+        for(int job = 0; job < jobSkillSet2.length; job++)
+        {
+        	for(int idx = 0; idx < jobSkillSet2[job].length; idx++)
+        	{
+        		nbt.setInteger("jobSkillSet2_" + job + "_" + idx, jobSkillSet2[job][idx]);
+        	}
         }
 
         nbt.setTag("partyMemberData", partyMemberData);
@@ -269,6 +294,11 @@ public class ExtendedPlayerProperties3 implements IExtendedEntityProperties {
 
         for(int cnt = 0; cnt < 32; cnt++)
         {
+        	JobSp[cnt] = nbt.getInteger("JobSp_" + cnt);
+        }
+
+        for(int cnt = 0; cnt < 32; cnt++)
+        {
         	jobPermission[cnt] = nbt.getInteger("jobPermission_" + cnt);
         }
 
@@ -292,6 +322,18 @@ public class ExtendedPlayerProperties3 implements IExtendedEntityProperties {
         for(int cnt = 0; cnt < weaponSkillSet.length; cnt++)
         {
         	weaponSkillSet[cnt] = nbt.getInteger("weaponSkillSet" + cnt);
+        }
+
+        for(int job = 0; job < jobSkillSet.length; job++)
+        {
+        	for(int idx = 0; idx < jobSkillSet[job].length; idx++)
+        	jobSkillSet[job][idx] = nbt.getInteger("jobSkillSet_" + job + "_" + idx);
+        }
+
+        for(int job = 0; job < jobSkillSet2.length; job++)
+        {
+        	for(int idx = 0; idx < jobSkillSet2[job].length; idx++)
+        	jobSkillSet2[job][idx] = nbt.getInteger("jobSkillSet2_" + job + "_" + idx);
         }
 
         if(nbt.getCompoundTag("partyMemberData") != null)
@@ -510,6 +552,60 @@ public class ExtendedPlayerProperties3 implements IExtendedEntityProperties {
     public void setWeaponSkillSet(int par1, int par2) {
     	if(weaponSkillSet == null) weaponSkillSet = new int[64];
         this.weaponSkillSet[par1] = par2;
+    }
+
+
+    public int[][] getJobSkillSetA() {
+    	if(jobSkillSet == null) jobSkillSet = new int[32][9];
+        return jobSkillSet;
+    }
+    public void setJobSkillSetA(int[][] par1) {
+    	if(jobSkillSet == null) jobSkillSet = new int[32][9];
+        this.jobSkillSet = par1;
+    }
+    public int[] getJobSkillSetA2(int job) {
+    	if(jobSkillSet == null) jobSkillSet = new int[32][9];
+        return jobSkillSet[job];
+    }
+    public void setJobSkillSetA2(int[] par1, int job) {
+    	if(jobSkillSet == null) jobSkillSet = new int[32][9];
+        this.jobSkillSet[job] = par1;
+    }
+
+    public int getJobSkillSet(int job, int idx) {
+    	if(jobSkillSet == null) jobSkillSet = new int[32][9];
+        return jobSkillSet[job][idx];
+    }
+    public void setJobSkillSet(int job, int idx, int par1) {
+    	if(jobSkillSet == null) jobSkillSet = new int[32][9];
+        this.jobSkillSet[job][idx] = par1;
+    }
+
+
+    public int[][] getJobSkillSet2A() {
+    	if(jobSkillSet2 == null) jobSkillSet2 = new int[32][9];
+        return jobSkillSet2;
+    }
+    public void setJobSkillSet2A(int[][] par1) {
+    	if(jobSkillSet2 == null) jobSkillSet2 = new int[32][9];
+        this.jobSkillSet2 = par1;
+    }
+    public int[] getJobSkillSet2A2(int job) {
+    	if(jobSkillSet2 == null) jobSkillSet2 = new int[32][9];
+        return jobSkillSet2[job];
+    }
+    public void setJobSkillSet2A2(int[] par1, int job) {
+    	if(jobSkillSet2 == null) jobSkillSet2 = new int[32][9];
+        this.jobSkillSet2[job] = par1;
+    }
+
+    public int getJobSkillSet2(int job, int idx) {
+    	if(jobSkillSet2 == null) jobSkillSet2 = new int[32][9];
+        return jobSkillSet2[job][idx];
+    }
+    public void setJobSkillSet2(int job, int idx, int par1) {
+    	if(jobSkillSet2 == null) jobSkillSet2 = new int[32][9];
+        this.jobSkillSet2[job][idx] = par1;
     }
     /*
     public NBTTagCompound getNBTWeaponSkillPermission() {
@@ -1451,5 +1547,32 @@ public class ExtendedPlayerProperties3 implements IExtendedEntityProperties {
     }
     public void setPlayerUUID(String par1) {
         this.playerUUID = par1;
+    }
+
+
+
+    public int[] getJobSpA() {
+    	if(JobSp == null) JobSp = new int[32];
+        return JobSp;
+    }
+    public void setJobSpA(int[] par1) {
+    	if(JobSp == null) JobSp = new int[32];
+        this.JobSp = par1;
+    }
+    public int getJobSp(int par1) {
+    	if(JobSp == null) JobSp = new int[32];
+        return JobSp[par1];
+    }
+    public void setJobSp(int par1, int par2) {
+    	if(JobSp == null) JobSp = new int[32];
+        this.JobSp[par1] = par2;
+    }
+    public void incJobSp(int job, int param) {
+    	if(JobSp == null) JobSp = new int[32];
+    	this.JobSp[job] = this.JobSp[job] + param;
+    }
+    public void decJobSp(int job, int param) {
+    	if(JobSp == null) JobSp = new int[32];
+    	this.JobSp[job] = this.JobSp[job] - param;
     }
 }

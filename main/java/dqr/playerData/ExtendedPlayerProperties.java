@@ -24,6 +24,8 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
     private int[] JobExp = new int[32];
     private int[] JobSp = new int[32];
 
+    private boolean jobSkillCalcFlg = true;
+
     //初期化の薬用param
     private float[] JobHP = new float[32];
     private int[] JobMP = new int[32];
@@ -696,6 +698,7 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
     }
     public void setJob(int par1) {
         this.Job = par1;
+        this.jobSkillCalcFlg = true;
     }
 
     public int[] getJobLvA() {
@@ -747,6 +750,14 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
     public void setJobSp(int par1, int par2) {
     	if(JobSp == null) JobSp = new int[32];
         this.JobSp[par1] = par2;
+    }
+    public void incJobSp(int job, int param) {
+    	if(JobSp == null) JobSp = new int[32];
+    	this.JobSp[job] = this.JobSp[job] + param;
+    }
+    public void decJobSp(int job, int param) {
+    	if(JobSp == null) JobSp = new int[32];
+    	this.JobSp[job] = this.JobSp[job] - param;
     }
 
     public float[] getJobHPA() {
@@ -1691,6 +1702,16 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
     }
     public void setShopTalkingGrade(int par1) {
         this.shopTalkingGrade = par1;
+    }
+
+    public boolean getJobSkillCalcFlg()
+    {
+    	return jobSkillCalcFlg;
+    }
+
+    public void setJobSkillCalcFlg(boolean par1)
+    {
+    	this.jobSkillCalcFlg = par1;
     }
     /*
     public int getSampleInt() {

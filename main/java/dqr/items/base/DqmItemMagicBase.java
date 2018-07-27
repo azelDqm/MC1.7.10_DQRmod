@@ -23,6 +23,8 @@ import com.google.common.collect.Multimap;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import dqr.DQR;
+import dqr.api.Items.DQMagics;
+import dqr.api.enums.EnumDqmJob;
 import dqr.api.enums.EnumDqmMagic;
 import dqr.api.enums.EnumDqmMagicCateg;
 import dqr.api.enums.EnumDqmWeapon;
@@ -387,7 +389,7 @@ public class DqmItemMagicBase extends Item{
 	 public void addInformation(ItemStack p_77624_1_, EntityPlayer p_77624_2_, List p_77624_3_, boolean p_77624_4_) {
 
     	int dam = (int)maxAttackDam;
-
+    	int job = ExtendedPlayerProperties.get(p_77624_2_).getJob();
 
     	String categ = I18n.format(this.enumMagic.getCateg().getLang());
     	categ = I18n.format("dqm.magicinfo.categ", new Object[]{categ});
@@ -435,7 +437,13 @@ public class DqmItemMagicBase extends Item{
     		}
     	}
 
-    	p_77624_3_.add(I18n.format("dqm.magicinfo.mp", new Object[]{this.enumMagic.getMP()}));
+    	if(p_77624_1_.getItem() == DQMagics.itemHaigou && job == EnumDqmJob.Mamonotukai.getId())
+    	{
+    		p_77624_3_.add(I18n.format("dqm.magicinfo.mp", new Object[]{0}));
+    	}else
+    	{
+    		p_77624_3_.add(I18n.format("dqm.magicinfo.mp", new Object[]{this.enumMagic.getMP()}));
+    	}
 
     	if(needLv.length() > 0)
     	{

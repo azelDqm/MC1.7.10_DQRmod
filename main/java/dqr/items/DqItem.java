@@ -19,7 +19,7 @@ import dqr.api.Items.DQMagics;
 import dqr.api.Items.DQMiscs;
 import dqr.api.Items.DQMonsters;
 import dqr.api.Items.DQSeeds;
-import dqr.api.Items.DQSkillWs;
+import dqr.api.Items.DQSkills;
 import dqr.api.Items.DQWeapons;
 import dqr.api.enums.EnumDqmBuilder;
 import dqr.api.enums.EnumDqmJob;
@@ -45,6 +45,7 @@ import dqr.items.base.DqmItemIngotBase;
 import dqr.items.base.DqmItemMiscBase;
 import dqr.items.base.DqmItemMonster;
 import dqr.items.base.DqmItemSeedBase;
+import dqr.items.base.DqmItemSkillJBase;
 import dqr.items.base.DqmItemSkillWBase;
 import dqr.items.base.DqmItemThrowBase;
 import dqr.items.base.DqmItemWeaponBase;
@@ -469,6 +470,8 @@ public class DqItem {
 		DQBuilders.itemBuilderShopBukiyaW = new DqmItemBuilderNPC(EnumDqmBuilder.SHOP).setCreativeTab(DQR.tabs.DqmTabBuilder).setUnlocalizedName("dqm.BuilderShopBukiW").setMaxStackSize(1).setTextureName("dqr:Builder_Shop_BukiyaW");
 		DQBuilders.itemBuilderShopSyuuriyaW = new DqmItemBuilderNPC(EnumDqmBuilder.SHOP).setCreativeTab(DQR.tabs.DqmTabBuilder).setUnlocalizedName("dqm.BuilderShopSyuuriW").setMaxStackSize(1).setTextureName("dqr:Builder_Shop_SyuuriyaW");
 		DQBuilders.itemBuilderShopKaitoriyaW = new DqmItemBuilderNPC(EnumDqmBuilder.SHOP).setCreativeTab(DQR.tabs.DqmTabBuilder).setUnlocalizedName("dqm.BuilderShopKaitoriW").setMaxStackSize(1).setTextureName("dqr:Builder_Shop_KaitoriyaW");
+
+		DQBuilders.itemBuilderIdoMedalW = new DqmItemBuilderNPC(EnumDqmBuilder.SHOP).setCreativeTab(DQR.tabs.DqmTabBuilder).setUnlocalizedName("dqm.BuilderIdoMedalW").setMaxStackSize(1).setTextureName("dqr:BuilderIdoMedalW");
 
 		DQBuilders.itemBuilderDamaTW = new DqmItemBuilderNPC(EnumDqmBuilder.SHOP).setCreativeTab(DQR.tabs.DqmTabBuilder).setUnlocalizedName("dqm.BuilderDamaTW").setMaxStackSize(1).setTextureName("dqr:BuilderDamaW");
 		DQBuilders.itemBuilderDamaSW = new DqmItemBuilderNPC(EnumDqmBuilder.SHOP).setCreativeTab(DQR.tabs.DqmTabBuilder).setUnlocalizedName("dqm.BuilderDamaSW").setMaxStackSize(1).setTextureName("dqr:BuilderDama20W");
@@ -1186,34 +1189,34 @@ public class DqItem {
 
 		//スキルエンブレム
 		//DQSkillWs.itemPetSuisyou = new DqmItemPetSuisyou().setCreativeTab(DQR.tabs.DqmTabMagic).setMaxStackSize(1).setUnlocalizedName("dqm.itemPetSuisyou").setTextureName("dqr:PetSuisyou");
-		DQSkillWs.itemSkillW_20 = new DqmItemSkillWBase().setMaxStackSize(1).setUnlocalizedName("itemSkillW_20").setTextureName("dqr:SkillW_20");
-		DQSkillWs.itemSkillW_21 = new DqmItemSkillWBase().setMaxStackSize(1).setUnlocalizedName("itemSkillW_21").setTextureName("dqr:SkillW_21");
-		DQSkillWs.itemSkillW_30 = new DqmItemSkillWBase().setMaxStackSize(1).setUnlocalizedName("itemSkillW_30").setTextureName("dqr:SkillW_30");
-		DQSkillWs.itemSkillW_31 = new DqmItemSkillWBase().setMaxStackSize(1).setUnlocalizedName("itemSkillW_31").setTextureName("dqr:SkillW_31");
-		DQSkillWs.itemSkillW_40 = new DqmItemSkillWBase().setMaxStackSize(1).setUnlocalizedName("itemSkillW_40").setTextureName("dqr:SkillW_40");
-		DQSkillWs.itemSkillW_41 = new DqmItemSkillWBase().setMaxStackSize(1).setUnlocalizedName("itemSkillW_41").setTextureName("dqr:SkillW_41");
-		DQSkillWs.itemSkillW_50 = new DqmItemSkillWBase().setMaxStackSize(1).setUnlocalizedName("itemSkillW_50").setTextureName("dqr:SkillW_50");
-		DQSkillWs.itemSkillW_51 = new DqmItemSkillWBase().setMaxStackSize(1).setUnlocalizedName("itemSkillW_51").setTextureName("dqr:SkillW_51");
-		DQSkillWs.itemSkillW_60 = new DqmItemSkillWBase().setMaxStackSize(1).setUnlocalizedName("itemSkillW_60").setTextureName("dqr:SkillW_60");
-		DQSkillWs.itemSkillW_61 = new DqmItemSkillWBase().setMaxStackSize(1).setUnlocalizedName("itemSkillW_61").setTextureName("dqr:SkillW_61");
-		DQSkillWs.itemSkillW_70 = new DqmItemSkillWBase().setMaxStackSize(1).setUnlocalizedName("itemSkillW_70").setTextureName("dqr:SkillW_70");
-		DQSkillWs.itemSkillW_71 = new DqmItemSkillWBase().setMaxStackSize(1).setUnlocalizedName("itemSkillW_71").setTextureName("dqr:SkillW_71");
-		DQSkillWs.itemSkillW_80 = new DqmItemSkillWBase().setMaxStackSize(1).setUnlocalizedName("itemSkillW_80").setTextureName("dqr:SkillW_80");
-		DQSkillWs.itemSkillW_81 = new DqmItemSkillWBase().setMaxStackSize(1).setUnlocalizedName("itemSkillW_81").setTextureName("dqr:SkillW_81");
-		DQSkillWs.itemSkillW_90 = new DqmItemSkillWBase().setMaxStackSize(1).setUnlocalizedName("itemSkillW_90").setTextureName("dqr:SkillW_90");
-		DQSkillWs.itemSkillW_91 = new DqmItemSkillWBase().setMaxStackSize(1).setUnlocalizedName("itemSkillW_91").setTextureName("dqr:SkillW_91");
-		DQSkillWs.itemSkillW_100 = new DqmItemSkillWBase().setMaxStackSize(1).setUnlocalizedName("itemSkillW_100").setTextureName("dqr:SkillW_100");
-		DQSkillWs.itemSkillW_101 = new DqmItemSkillWBase().setMaxStackSize(1).setUnlocalizedName("itemSkillW_101").setTextureName("dqr:SkillW_101");
-		DQSkillWs.itemSkillW_110 = new DqmItemSkillWBase().setMaxStackSize(1).setUnlocalizedName("itemSkillW_110").setTextureName("dqr:SkillW_110");
-		DQSkillWs.itemSkillW_111 = new DqmItemSkillWBase().setMaxStackSize(1).setUnlocalizedName("itemSkillW_111").setTextureName("dqr:SkillW_111");
-		DQSkillWs.itemSkillW_120 = new DqmItemSkillWBase().setMaxStackSize(1).setUnlocalizedName("itemSkillW_120").setTextureName("dqr:SkillW_120");
-		DQSkillWs.itemSkillW_121 = new DqmItemSkillWBase().setMaxStackSize(1).setUnlocalizedName("itemSkillW_121").setTextureName("dqr:SkillW_121");
-		DQSkillWs.itemSkillW_130 = new DqmItemSkillWBase().setMaxStackSize(1).setUnlocalizedName("itemSkillW_130").setTextureName("dqr:SkillW_130");
-		DQSkillWs.itemSkillW_131 = new DqmItemSkillWBase().setMaxStackSize(1).setUnlocalizedName("itemSkillW_131").setTextureName("dqr:SkillW_131");
-		DQSkillWs.itemSkillW_240 = new DqmItemSkillWBase().setMaxStackSize(1).setUnlocalizedName("itemSkillW_240").setTextureName("dqr:SkillW_240");
-		DQSkillWs.itemSkillW_241 = new DqmItemSkillWBase().setMaxStackSize(1).setUnlocalizedName("itemSkillW_241").setTextureName("dqr:SkillW_241");
-		DQSkillWs.itemSkillW_250 = new DqmItemSkillWBase().setMaxStackSize(1).setUnlocalizedName("itemSkillW_250").setTextureName("dqr:SkillW_250");
-		DQSkillWs.itemSkillW_251 = new DqmItemSkillWBase().setMaxStackSize(1).setUnlocalizedName("itemSkillW_251").setTextureName("dqr:SkillW_251");
+		DQSkills.itemSkillW_20 = new DqmItemSkillWBase().setMaxStackSize(1).setUnlocalizedName("itemSkillW_20").setTextureName("dqr:SkillW_20");
+		DQSkills.itemSkillW_21 = new DqmItemSkillWBase().setMaxStackSize(1).setUnlocalizedName("itemSkillW_21").setTextureName("dqr:SkillW_21");
+		DQSkills.itemSkillW_30 = new DqmItemSkillWBase().setMaxStackSize(1).setUnlocalizedName("itemSkillW_30").setTextureName("dqr:SkillW_30");
+		DQSkills.itemSkillW_31 = new DqmItemSkillWBase().setMaxStackSize(1).setUnlocalizedName("itemSkillW_31").setTextureName("dqr:SkillW_31");
+		DQSkills.itemSkillW_40 = new DqmItemSkillWBase().setMaxStackSize(1).setUnlocalizedName("itemSkillW_40").setTextureName("dqr:SkillW_40");
+		DQSkills.itemSkillW_41 = new DqmItemSkillWBase().setMaxStackSize(1).setUnlocalizedName("itemSkillW_41").setTextureName("dqr:SkillW_41");
+		DQSkills.itemSkillW_50 = new DqmItemSkillWBase().setMaxStackSize(1).setUnlocalizedName("itemSkillW_50").setTextureName("dqr:SkillW_50");
+		DQSkills.itemSkillW_51 = new DqmItemSkillWBase().setMaxStackSize(1).setUnlocalizedName("itemSkillW_51").setTextureName("dqr:SkillW_51");
+		DQSkills.itemSkillW_60 = new DqmItemSkillWBase().setMaxStackSize(1).setUnlocalizedName("itemSkillW_60").setTextureName("dqr:SkillW_60");
+		DQSkills.itemSkillW_61 = new DqmItemSkillWBase().setMaxStackSize(1).setUnlocalizedName("itemSkillW_61").setTextureName("dqr:SkillW_61");
+		DQSkills.itemSkillW_70 = new DqmItemSkillWBase().setMaxStackSize(1).setUnlocalizedName("itemSkillW_70").setTextureName("dqr:SkillW_70");
+		DQSkills.itemSkillW_71 = new DqmItemSkillWBase().setMaxStackSize(1).setUnlocalizedName("itemSkillW_71").setTextureName("dqr:SkillW_71");
+		DQSkills.itemSkillW_80 = new DqmItemSkillWBase().setMaxStackSize(1).setUnlocalizedName("itemSkillW_80").setTextureName("dqr:SkillW_80");
+		DQSkills.itemSkillW_81 = new DqmItemSkillWBase().setMaxStackSize(1).setUnlocalizedName("itemSkillW_81").setTextureName("dqr:SkillW_81");
+		DQSkills.itemSkillW_90 = new DqmItemSkillWBase().setMaxStackSize(1).setUnlocalizedName("itemSkillW_90").setTextureName("dqr:SkillW_90");
+		DQSkills.itemSkillW_91 = new DqmItemSkillWBase().setMaxStackSize(1).setUnlocalizedName("itemSkillW_91").setTextureName("dqr:SkillW_91");
+		DQSkills.itemSkillW_100 = new DqmItemSkillWBase().setMaxStackSize(1).setUnlocalizedName("itemSkillW_100").setTextureName("dqr:SkillW_100");
+		DQSkills.itemSkillW_101 = new DqmItemSkillWBase().setMaxStackSize(1).setUnlocalizedName("itemSkillW_101").setTextureName("dqr:SkillW_101");
+		DQSkills.itemSkillW_110 = new DqmItemSkillWBase().setMaxStackSize(1).setUnlocalizedName("itemSkillW_110").setTextureName("dqr:SkillW_110");
+		DQSkills.itemSkillW_111 = new DqmItemSkillWBase().setMaxStackSize(1).setUnlocalizedName("itemSkillW_111").setTextureName("dqr:SkillW_111");
+		DQSkills.itemSkillW_120 = new DqmItemSkillWBase().setMaxStackSize(1).setUnlocalizedName("itemSkillW_120").setTextureName("dqr:SkillW_120");
+		DQSkills.itemSkillW_121 = new DqmItemSkillWBase().setMaxStackSize(1).setUnlocalizedName("itemSkillW_121").setTextureName("dqr:SkillW_121");
+		DQSkills.itemSkillW_130 = new DqmItemSkillWBase().setMaxStackSize(1).setUnlocalizedName("itemSkillW_130").setTextureName("dqr:SkillW_130");
+		DQSkills.itemSkillW_131 = new DqmItemSkillWBase().setMaxStackSize(1).setUnlocalizedName("itemSkillW_131").setTextureName("dqr:SkillW_131");
+		DQSkills.itemSkillW_240 = new DqmItemSkillWBase().setMaxStackSize(1).setUnlocalizedName("itemSkillW_240").setTextureName("dqr:SkillW_240");
+		DQSkills.itemSkillW_241 = new DqmItemSkillWBase().setMaxStackSize(1).setUnlocalizedName("itemSkillW_241").setTextureName("dqr:SkillW_241");
+		DQSkills.itemSkillW_250 = new DqmItemSkillWBase().setMaxStackSize(1).setUnlocalizedName("itemSkillW_250").setTextureName("dqr:SkillW_250");
+		DQSkills.itemSkillW_251 = new DqmItemSkillWBase().setMaxStackSize(1).setUnlocalizedName("itemSkillW_251").setTextureName("dqr:SkillW_251");
 
 		DQMiscs.itemOokinaFukuro = new DqmItemFukuro().setMaxStackSize(1).setCreativeTab(DQR.tabs.DqmTabBackPack).setUnlocalizedName("dqm.itemFukuro").setTextureName("dqr:Fukuro");
 		DQMiscs.itemOokinaFukuroR = new DqmItemFukuro().setMaxStackSize(1).setCreativeTab(DQR.tabs.DqmTabBackPack).setUnlocalizedName("dqm.itemFukuroR").setTextureName("dqr:FukuroR");
@@ -1275,5 +1278,16 @@ public class DqItem {
 		DQInventorySlots.itemSlotPetBuki = new Item().setUnlocalizedName("dqm.itemSlotPetBuki").setTextureName("dqr:slot_PetBuki").setCreativeTab(DQR.tabs.DqmTabMisc);
 
 		DQBuilders.itemBuilderKaikosyo = new Item().setUnlocalizedName("dqm.Kaikosyo").setTextureName("dqr:Builder_Shop_KaikoW").setCreativeTab(DQR.tabs.DqmTabBuilder);
+
+		DQSkills.itemSkillJ_HP = new DqmItemSkillJBase().setMaxStackSize(1).setUnlocalizedName("itemSkillJ_HP").setTextureName("dqr:Inotinokinomi");
+		DQSkills.itemSkillJ_MP = new DqmItemSkillJBase().setMaxStackSize(1).setUnlocalizedName("itemSkillJ_MP").setTextureName("dqr:Fusiginakinomi");
+		DQSkills.itemSkillJ_ATK = new DqmItemSkillJBase().setMaxStackSize(1).setUnlocalizedName("itemSkillJ_ATK").setTextureName("dqr:Rotonoturugi");
+		DQSkills.itemSkillJ_MAG = new DqmItemSkillJBase().setMaxStackSize(1).setUnlocalizedName("itemSkillJ_MAG").setTextureName("dqr:Gigadein");
+		DQSkills.itemSkillJ_DEF = new DqmItemSkillJBase().setMaxStackSize(1).setUnlocalizedName("itemSkillJ_DEF").setTextureName("dqr:Mamorinotane");
+		DQSkills.itemSkillJ_STR = new DqmItemSkillJBase().setMaxStackSize(1).setUnlocalizedName("itemSkillJ_STR").setTextureName("dqr:Tikaranotane");
+		DQSkills.itemSkillJ_INT = new DqmItemSkillJBase().setMaxStackSize(1).setUnlocalizedName("itemSkillJ_INT").setTextureName("dqr:MaryokunotaneI");
+		DQSkills.itemSkillJ_MISS = new DqmItemSkillJBase().setMaxStackSize(1).setUnlocalizedName("itemSkillJ_MISS").setTextureName("dqr:Dragonwing");
+		DQSkills.itemSkillJ_CRI = new DqmItemSkillJBase().setMaxStackSize(1).setUnlocalizedName("itemSkillJ_CRI").setTextureName("dqr:Kyodainakiba");
+		DQSkills.itemSkillJ_AGI = new DqmItemSkillJBase().setMaxStackSize(1).setUnlocalizedName("itemSkillJ_AGI").setTextureName("dqr:Subayasanotane");
 	}
 }

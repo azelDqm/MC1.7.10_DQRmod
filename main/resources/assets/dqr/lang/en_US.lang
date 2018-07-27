@@ -26,6 +26,10 @@ main.job.23=Sailor
 main.job.24=ItemMaster
 main.job.25=Summoner
 
+gui.container.dama.SkillAllJob=For all job
+gui.container.dama.SkillOnlyJob=Only for %s
+gui.container.dama.SkillSP=Special skill
+gui.container.dama.SP=  SP : %d/%d
 gui.container.dama.title=job change
 gui.container.dama.page=Page. %f / %f
 gui.container.TamingPets.title=PetMob location info
@@ -110,6 +114,7 @@ msg.pet.taming4.txt=(Yes=Touch he /No=Touch he with sneak)
 #DQM.magicMessages
 msg.magic.noct.txt=CoolTime now!!
 msg.magic.nomp.txt=no MP!!
+msg.subequipUse.noDamage.txt=Eubequips not have damage point.
 msg.magic.noLv.txt=need more jobLv
 msg.magic.ruraNoPos0.txt=not set Coordinates.
 msg.magic.ruraNoPos1.txt=please set Coordinates first.
@@ -178,7 +183,7 @@ gui.status.gold=GOLD  : %dG
 gui.status.medal=MEDAL : %dmedals
 gui.status.coin=COIN  : %dcoins
 gui.status.LV=Lv.
-gui.status.SP=SP
+gui.status.SP=SP %d/%d
 gui.status.ATK=ATK
 gui.status.DEF=DEF
 gui.status.MAG=MAG
@@ -760,12 +765,14 @@ item.dqm.itemFukuroY.name=ItemPack(YELLOW)
 
 item.dqm.itemMagicbook.name=Magicbook
 item.dqm.itemMagicbook2.name=Magicbook2
+item.dqm.itemPetbook.name=Pet skill book
 
 item.dqm.itemNiku1.name=TamingMeat1
 item.dqm.itemNiku2.name=TamingMeat2
 item.dqm.itemNiku3.name=TamingMeat3
 item.dqm.itemNiku4.name=TamingMeat4
 item.dqm.itemPetSuisyou.name=CrystalBall for Pet Search
+item.dqm.itemShinjirukokoro.name=Party stone
 
 item.dqm.itemBougu.name=Bougu
 item.dqm.itemDensetu.name=Densetu
@@ -1002,6 +1009,7 @@ item.dqm.itemHaigou2.name=Haigou2
 item.dqm.itemParupunte.name=Parupunte
 item.dqm.itemRurasin.name=RuraX
 item.dqm.itemRurasin2.name=RuraX2
+item.dqm.itemRurasinC.name=RuraXC
 item.dqm.itemRaidein.name=Raidein
 item.dqm.itemGigadein.name=Gigadein
 item.dqm.itemMinadein.name=Minadein
@@ -1017,6 +1025,13 @@ item.dqm.itemRemira.name=remira
 item.dqm.itemMadante.name=Madante
 item.dqm.itemBigban.name=Bigbang
 
+item.dqm.itemMahouken1.name=Magicsword(Popison I)
+item.dqm.itemMahouken2.name=Magicsword(Popison II)
+item.dqm.itemMahouken3.name=Magicsword(Popison III)
+item.dqm.itemMahouken4.name=Magicsword(Slow)
+item.dqm.itemMahouken5.name=Magicsword(Fire)
+item.dqm.itemMahouken6.name=Magicsword(MP absorption)
+item.dqm.itemMahouken7.name=Magicsword(HP absorption)
 item.dqm.BuilderDama.name=BuilderDama
 item.dqm.BuilderDama1.name=BuilderDama_parts
 item.dqm.BuilderDama2.name=BuilderDama_parts
@@ -1051,6 +1066,30 @@ item.dqm.BuilderDamaW8.name=BuilderDamaW_parts
 item.dqm.BuilderDamaW9.name=BuilderDamaW_parts
 
 item.dqm.BuilderIdoMedal.name=House of MedalKing
+
+
+item.dqm.BuilderShopBukiya.name=Builder weapon shop
+item.dqm.BuilderShopBank.name=Builder bank
+item.dqm.BuilderShopBankMP.name=Builder MP bank
+item.dqm.BuilderShopSyuuriya.name=Builder smith
+item.dqm.BuilderShopKaitoriya.name=Builder purchase shop
+
+item.dqm.BuilderShopBukiW.name=Employment(weapon shop)
+item.dqm.BuilderShopBukiW3.name=Employment(weapon shop2)
+item.dqm.BuilderShopBukiW4.name=Employment(weapon shop3)
+item.dqm.BuilderShopBukiW5.name=Employment(weapon shop5)
+item.dqm.BuilderShopBukiW6.name=Employment(weapon shop4)
+item.dqm.BuilderShopBankW.name=Employment(bank)
+item.dqm.BuilderShopSyuuriW.name=Employment(smith)
+item.dqm.BuilderShopKaitoriW.name=Employment(purchase shop)
+item.dqm.BuilderShopBankMPW.name=Employment(MP bank)
+item.dqm.BuilderIdoMedalW.name=Petition(Medal king)
+
+item.dqm.BuilderDamaTW.name=Employment(Job change priest)
+item.dqm.BuilderDamaSW.name=Employment(Job skill priest)
+item.dqm.BuilderDamaWW.name=Employment(Weapon change priest)
+item.dqm.Kaikosyo.name=Dismissal
+
 
 item.dqm.mahounoTutu_1.name=MagicRoll
 item.dqm.mahounoTutu_3.name=MagicRoll2
@@ -1099,6 +1138,8 @@ tile.dqm.blockOreBlock15_14.name=OreTokinosuisyouBlock
 tile.dqm.blockOreBlock15_15.name=OreYougansekinokakeraBlock
 tile.dqm.HoujyouDirt.name=AstarteDirt
 tile.dqm.blockFarmBookShelf.name=FarmingStudyBookShelf
+
+tile.dqm.blockToumei.name=Clear block
 
 tile.dqm.blockEnderChest1.name=Enderchest(SuraimuKnight)
 tile.dqm.blockEnderChest2.name=Enderchest(Babypanther)
@@ -1318,12 +1359,11 @@ item.dqm.itemRotonotate.name=Rotonotate
 item.dqm.itemSabitatate.name=Sabitatate
 item.dqm.itemMegaminotate.name=Megaminotate
 item.dqm.itemUroborosunotate.name=Uroborosunotate
-item.dqm.itemAccCanceler.name=AccCanceler
-
-
-item.dqm.ItemAccCanceler.name=SubEquipAllRelease
+item.dqm.itemAccCanceler.name=SubEquipAllRelease
+item.dqm.itemAccStopper.name=AccStopper
 
 #DQM.potion
+dqm.potion.Mahouken=Magi csword
 dqm.potion.dokukesisou=AntiPoison
 dqm.potion.tikaranotane=PowerSeed
 dqm.potion.mamorinotane=DeffenceSeed
@@ -1336,6 +1376,21 @@ dqm.potion.ougonnomi=SuperFruit
 dqm.potion.poison=Poison
 dqm.potion.poisonX=SuperPoison
 dqm.potion.Suffocation=Suffocation
+dqm.potion.hoshihuru=Speed move
+dqm.potion.HPRegeneration=HP Regene
+dqm.potion.MPRegeneration=MP Regene
+
+dqm.skill.JSkill_HP.name=Max HP+%d
+dqm.skill.JSkill_MP.name=Max MP+%d
+dqm.skill.JSkill_ATK.name=ATK+%d
+dqm.skill.JSkill_DEF.name=DEF+%d
+dqm.skill.JSkill_MAG.name=MAG+%d
+dqm.skill.JSkill_INT.name=INT+%d
+dqm.skill.JSkill_STR.name=STR+%d
+dqm.skill.JSkill_MISS.name=Dodge+%d
+dqm.skill.JSkill_CRI.name=Critical+%d
+dqm.skill.JSkill.needSP=Need SP %d
+dqm.skill.JSkill.allFlg=[For all job]
 
 dqm.skill.WSkill_2_0.name=WSkill_2_0
 dqm.skill.WSkill_2_1.name=WSkill_2_1
@@ -1642,7 +1697,7 @@ dqm.potion.baikiruto=Baikiruto
 dqm.potion.sukara=Sukara
 dqm.potion.baha=Baha
 dqm.potion.piora=Piora
-dqm.potion.magicBaria=MagicBaria
+dqm.potion.magicbaria=MagicBaria
 dqm.potion.mahokanta=Mahokanta
 dqm.potion.uminarinotue=Uminari
 dqm.potion.callMagma=CallMagma
@@ -1665,6 +1720,17 @@ dqm.iteminfo.petLocation1=§f[PetLocation]
 dqm.iteminfo.petLocation2=§fDimension: %d
 dqm.iteminfo.petLocation3=§fLocation x: %d  y: %d  z:%d
 dqm.iteminfo.petLocation0=no data
+
+dqm.iteminfo.petCommand.s0=delete %s from pet memory
+dqm.iteminfo.petCommand.s1=delete all pet memory
+
+dqm.iteminfo.petHaigou0=miss combine!
+dqm.iteminfo.petHaigou1=combine pet1 : %s Lv.%d
+dqm.iteminfo.petHaigou01=combine pet1 : none
+dqm.iteminfo.petHaigou2=combine pet2 : %s Lv.%d
+dqm.iteminfo.petHaigou02=combine pet2 : none
+dqm.iteminfo.petHaigou3=§cSpecial pattern!?
+dqm.iteminfo.petHaigou4=Cancel : sneak + item use
 
 dqm.iteminfo.caneat=§6can eating
 dqm.iteminfo.canpet=§eeat pet
@@ -1702,6 +1768,17 @@ dqm.iteminfo.littleMedal.2.txt=present medal for other player
 dqm.iteminfo.kimera.txt=Set coordinates:Sneak + ItemUse＄setting is public
 dqm.iteminfo.kimera2.txt=Set coordinates:Sneak + ItemUse＄setting is private
 dqm.iteminfo.kimeraC.txt=Set coordinates:Sneak + ItemUse＄set coordinates is OP only＄setting is config param
+dqm.iteminfo.kimeraLoc.1.txt=Memory loc[DIM:%d, X:%d, Y:%d, Z:%d]
+dqm.iteminfo.kimeraLoc.2.txt=§6Change to DIM:%d§6, X:%d§6, Y:%d§6, Z:%d
+
+dqm.iteminfo.RurasinNoLoc.txt=Memory loc%d [none]
+dqm.iteminfo.RurasinNoLoc2.txt=%s [none]
+dqm.iteminfo.RurasinLoc.txt=Memory loc%d [DIM:%d, X:%d, Y:%d, Z:%d]
+dqm.iteminfo.RurasinLoc2.txt=%s [DIM:%d, X:%d, Y:%d, Z:%d]
+dqm.iteminfo.RurasinLastLoc.txt=Last Rura use [DIM:%d, X:%d, Y:%d, Z:%d]
+dqm.iteminfo.RurasinLastNoLoc.txt=Last Rura use [none]
+dqm.iteminfo.RurasinLocHid.txt=[%s] visible location
+dqm.iteminfo.RurasinLocVis.txt=[%s] ubvisible location
 
 dqm.iteminfo.builderDama.0.txt=(information)
 dqm.iteminfo.builderDama.1.txt=item use:build a guide frame.
@@ -1722,14 +1799,139 @@ dqm.iteminfo.throw.Niku3.txt=tame chance up.
 dqm.iteminfo.throw.Niku4.txt=tame chance up.
 dqm.iteminfo.throw.Sinkanohiseki.txt=fixed time, TENSEI chance up.
 
+dqm.iteminfo.Inochinoishi.1.txt=in hotbar slot
+dqm.iteminfo.Inochinoishi.2.txt=brake insted you from Zaki and selfbomb
+
 dqm.iteminfo.mahounoTutu.1.txt=this item use for pet
 dqm.iteminfo.mahounoTutu.2.txt=you can get item of pet.
 
 dqm.iteminfo.mahounoTutuA.1.txt=this item use
 dqm.iteminfo.mahounoTutuA.2.txt=you can get pet from this item.
 
+dqm.iteminfo.kaikosyo.1.txt=Sneak + use to your NPC
+dqm.iteminfo.kaikosyo.2.txt=You can despire your NPC.
+
+
+
+dqm.iteminfo.PetSuisyou.20.txt=Item mode : Location check
+dqm.iteminfo.PetSuisyou.21.txt=Item mode : Location check(click to delete)
+dqm.iteminfo.PetSuisyou.22.txt=Item mode : memory refresh
+dqm.iteminfo.PetSuisyou.23.txt=Item mode : All memory clear
 dqm.iteminfo.PetSuisyou.1.txt=this item use,
-dqm.iteminfo.PetSuisyou.2.txt=you can get your pets location.
+dqm.iteminfo.PetSuisyou.2.txt=you can get your pets location memory.
+dqm.iteminfo.PetSuisyou.3.txt=location 0 pet can click to delete 
+
+dqm.iteminfo.PetSuisyou.4.txt=pet location memory can click to delete
+dqm.iteminfo.PetSuisyou.5.txt=(pet reload to rememory)
+
+dqm.iteminfo.PetSuisyou.6.txt=Sneak + jump + use
+dqm.iteminfo.PetSuisyou.7.txt=refresh pet memory
+
+dqm.iteminfo.PetSuisyou.8.txt=Sneak + jump + use
+dqm.iteminfo.PetSuisyou.9.txt=Clear pet memory
+dqm.iteminfo.PetSuisyou.10.txt=(pet reload to rememory)
+
+dqm.iteminfo.PetSuisyou.11.txt=pet relaod : respawn and chunkload and game reload
+
+dqm.iteminfo.accessory.base.txt=[特殊効果]
+dqm.iteminfo.accessory.Hosifurupiasu.0.txt=Speed move
+dqm.iteminfo.accessory.Hosifurupiasu2.0.txt=Speed move
+dqm.iteminfo.accessory.Hosifuru.0.txt=Speed move
+dqm.iteminfo.accessory.Iyasinoudewa.0.txt=HP Regeneration
+dqm.iteminfo.accessory.Hayatenoring.0.txt=Speed move
+dqm.iteminfo.accessory.HaramotiYubiwa.0.txt=Hunger resit
+dqm.iteminfo.accessory.HaraherazuYubiwa.0.txt=Hunger resit
+dqm.iteminfo.accessory.Inotinoyubiwa.0.txt=Equip:HP Regeneration
+dqm.iteminfo.accessory.Inotinoyubiwa.1.txt=
+dqm.iteminfo.accessory.Inotinoyubiwa.2.txt=Use:HP heal
+dqm.iteminfo.accessory.Inotinoyubiwa.3.txt=Random break
+dqm.iteminfo.accessory.Inorinoyubiwa.0.txt=Equip:MP Regeneration
+dqm.iteminfo.accessory.Inorinoyubiwa.1.txt=
+dqm.iteminfo.accessory.Inorinoyubiwa.2.txt=Use:MP heal
+dqm.iteminfo.accessory.Inorinoyubiwa.3.txt=Random break
+dqm.iteminfo.accessory.Hagennoring.0.txt=Manusa resit
+dqm.iteminfo.accessory.Hagennoring2.0.txt=Manusa resit
+dqm.iteminfo.accessory.Hagennoring2.1.txt=Rariho resit
+dqm.iteminfo.accessory.Hadokunoring.0.txt=Poison resit
+dqm.iteminfo.accessory.Hadokunoring2.0.txt=Poison resit
+dqm.iteminfo.accessory.Hadokunoring2.1.txt=PoisonX resit
+dqm.iteminfo.accessory.Mangetunoring.0.txt=Speed down resit
+dqm.iteminfo.accessory.Mangetunoring2.0.txt=Speed down resit
+dqm.iteminfo.accessory.Mangetunoring2.1.txt=Mahoton resit
+dqm.iteminfo.accessory.Riseinoring.0.txt=Nausea resit
+dqm.iteminfo.accessory.Riseinoring2.0.txt=Nausea resist
+dqm.iteminfo.accessory.Riseinoring2.1.txt=Medapani resit
+
+
+dqm.iteminfo.weapon.itemOujanoturugi.txt=USe(Neew aptitude) : Bagikurosu
+dqm.iteminfo.weapon.itemTenkuunoturugi.txt=USe(Neew aptitude) : Buff remover
+dqm.iteminfo.weapon.itemKoorinoyaiba.txt=USe(Neew aptitude) : Hyadaruko
+dqm.iteminfo.weapon.itemGureitoakusu.txt=USe(Neew aptitude) : Bagima
+dqm.iteminfo.weapon.itemHajanoturugi.txt=USe(Neew aptitude) : Gira
+dqm.iteminfo.weapon.itemInferunosword.txt=USe(Neew aptitude) : Io
+dqm.iteminfo.weapon.itemMinagorosinoken.txt=USe(Neew aptitude) : Rukanan
+dqm.iteminfo.weapon.itemHonoonotume.txt=USe(Neew aptitude) : Begirama
+dqm.iteminfo.weapon.itemKoorinotume.txt=USe(Neew aptitude) : Hyadaruko
+dqm.iteminfo.weapon2.itemKeironnoyumi.txt=Attack to block : Around heal
+dqm.iteminfo.weapon.itemSeiginosoroban.txt=USe(Neew aptitude) : Holy door
+dqm.iteminfo.weapon.itemMahounosoroban.txt=USe(Neew aptitude) : Check money
+dqm.iteminfo.weapon.itemReppuunoougi.txt=USe(Neew aptitude) : Bagi
+
+dqm.iteminfo.weapon.toolmode.axe.txt=Item mode : Axe mode
+dqm.iteminfo.weapon.toolmode.shovel.txt=Item mode : Shovel mode
+dqm.iteminfo.weapon.toolmode.pickaxe.txt=Item mode : Picaxemode
+
+dqm.iteminfo.weapon.base.txt=Item mode change : Sneak + mode change key
+
+dqm.iteminfo.weapon2.base.txt=Mode change : Sneak + Mode change
+dqm.iteminfo.weapon.toolmode.party.txt=Mode change : Party mode
+
+dqm.iteminfo.weapon.element.kaminari.txt=[Attribute : Thunder]
+dqm.iteminfo.weapon.element.honoo.txt=[Attribute : Fire]
+dqm.iteminfo.weapon.element.koori.txt=[Attribute : Ice]
+dqm.iteminfo.weapon.element.kaze.txt=[Attribute : Wind]
+dqm.iteminfo.weapon.element.daiti.txt=[Attribute : Ground]
+
+dqm.iteminfo.weapon.booster.dragon.txt=Dragon buster
+dqm.iteminfo.weapon.booster.water.txt=Aquatic buster
+dqm.iteminfo.weapon.booster.undead.txt=Undead buster
+dqm.iteminfo.weapon.booster.machine.txt=Machine buster
+dqm.iteminfo.weapon.booster.element.txt=Element buster
+dqm.iteminfo.weapon.booster.slime.txt=Suraimu buster
+dqm.iteminfo.weapon.booster.busshitu.txt=Material buster
+dqm.iteminfo.weapon.booster.plant.txt=Plant buster
+dqm.iteminfo.weapon.booster.bird.txt=Bird buster
+dqm.iteminfo.weapon.booster.akuma.txt=Daemon buster
+
+dqm.iteminfo.accessory.Suraimupiasu.0.txt=
+dqm.iteminfo.accessory.Urokonotate.0.txt=Poison resist
+dqm.iteminfo.accessory.Honoonotate.0.txt=Fire resist
+dqm.iteminfo.accessory.Koorinotate.0.txt=Ice resist
+dqm.iteminfo.accessory.Mahounotate.0.txt=Magic resist
+dqm.iteminfo.accessory.Fuujinnnotate.0.txt=Use : Basirura
+dqm.iteminfo.accessory.Tikaranotate.0.txt=Use : Behoimi
+dqm.iteminfo.accessory.Metarukingnotate.0.txt=Debuff resist
+dqm.iteminfo.accessory.Tenkuunotate.0.txt=Use : Mahokanta
+dqm.iteminfo.accessory.Megaminotate.0.txt=Magic&Breath resist
+dqm.iteminfo.accessory.Uroborosunotate.0.txt=Use : Magicbaria
+dqm.iteminfo.accessory.Tenkuunotate.0.txt=Use : Mahokanta
+dqm.iteminfo.accessory.Seijukunokubikazari.0.txt=Use : mahoton
+
+dqm.iteminfo.accessory.Suraimupiasu.ss2.txt=Thirst resist
+dqm.iteminfo.accessory.HaramotiYubiwa.ss2.txt=Fatigue resist
+dqm.iteminfo.accessory.HaraherazuYubiwa.ss2.txt=Fatigue resist
+
+dqm.iteminfo.accessory.AccessoryStopper.0.txt=Item use
+dqm.iteminfo.accessory.AccessoryStopper.1.txt=change subequip buff  enable/disable
+
+dqm.iteminfo.accessory.AccessoryCanceler.0.txt=Item use : Release all sub equip
+dqm.iteminfo.accessory.AccessoryCanceler.1.txt=
+dqm.iteminfo.accessory.AccessoryCanceler.2.txt=Hand over to Smith
+dqm.iteminfo.accessory.AccessoryCanceler.3.txt=you can all sub equip repair
+dqm.iteminfo.accessory.AccessoryCanceler.4.txt=
+dqm.iteminfo.accessory.AccessoryCanceler.5.txt=Item mode : change repairs
+
+
 
 dqm.iteminfo.setEffect.armorDansa=armorDansa
 dqm.iteminfo.setEffect.armorOdoriko=armorOdoriko
@@ -1824,7 +2026,11 @@ dqm.magicinfo.needNo=NONE
 dqm.magicinfo.rura.txt=Set coordinates:Sneak + ItemUse＄setting is public
 dqm.magicinfo.rura2.txt=Set coordinates:Sneak + ItemUse＄setting is private
 dqm.magicinfo.ruraC.txt=Set coordinates:Sneak + ItemUse＄set coordinates is OP only＄setting is config param
+dqm.magicinfo.rura_all.txt=Item mode :jump around Player or only you
+dqm.magicinfo.rura_sin.txt=neak + ItemUse Change using location memory
+
 dqm.magicinfo.kiari.txt=LV6:Poison only＄Lv25:Poison + VanillaDebuff＄Lv60:More debuff
+dqm.magicinfo.basirura.txt=[効果範囲]＄Default:Mob&pet＄Lv40:passive animal＄Lv5～:other player(PVP enable)+Villager＄Lv60:???
 dqm.magicinfo.bagi.txt=LeavesBreak:Sneak + ItemUse
 dqm.magicinfo.io.txt=GroundBreak:Sneak + ItemUse
 dqm.magicinfo.mera.txt=SetFire:Sneak + ItemUse
@@ -1898,6 +2104,7 @@ msg.shopSyuriya.messages.2.txt=!player.You want fix this item so sneaking talk m
 msg.shopSyuriya.messages.3.txt=!player.you pay %dG
 msg.shopSyuriya.messages.4.txt=!player.you don't have gold
 msg.shopSyuriya.messages.5.txt=!player.sorry, I can't fix this
+msg.shopSyuriya.messages.6.txt=!player.you don't have damage item
 
 msg.shopKaitori.messages.0.txt=!player.I can buy your items.
 msg.shopKaitori.messages.1.txt=!player.sorry, I can't buy it.
@@ -1934,10 +2141,11 @@ msg.BankMP.messages.1000.txt=!player.[%1$,3dMP to 1,000G checkItem]
 msg.BankMP.messages.10000.txt=!player.[%1$,3dMP to 10,000G checkItem]
 msg.BankMP.messages.100000.txt=!player.[%1$,3dMP to 100,000G checkItem]
 msg.BankMP.messages.1000000.txt=!player.[%1$,3dMP to 1,000,000G checkItem]
+msg.BankMP.messages.10000000.txt=!player.[%1$,3dMP to 10,000,000G checkItem]
 
 msg.BankMP.messages.100.txt=!player.you get %1$,3dMP.
 msg.BankMP.messages.101.txt=!player.you get %1$,3dGold.
-
+msg.BankMP.messages.24.txt=!player.need more MP.
 
 msg.Bank.messages.0.txt=!player.I can cash your money to check.
 msg.Bank.messages.1.txt=!player.this item use?
@@ -1975,6 +2183,13 @@ msg.Bukiya.messages.4.txt=!player. you pay %dG.
 msg.Bukiya.messages.5.txt=!player.Thank you!! see you again.
 msg.Bukiya.messages.6.txt=!player.You dont't have money.
 msg.Bukiya.messages.7.txt=!player.your inventory is full!! you can't get.
+msg.Bukiya.messages.21.txt=!player.please wait next item
+msg.Bukiya.messages.22.txt=!player.come later
+msg.Bukiya.messages.11.txt=!player.thanks! see you!
+msg.Bukiya.messages.12.txt=!player.see you!
+msg.Bukiya.messages.30.txt=!player.Thank you very! It's present for you
+
+
 
 msg.Dama1.messages.11.txt=!player.thanks!! you have %s
 msg.Dama1.messages.12.txt=!player.You can change %s
@@ -1997,7 +2212,18 @@ msg.Dama1.messages.25.txt=!player.You can't job change because you need more Lev
 msg.Dama2.messages.-1.txt=!player.under developping now!!
 msg.Dama3.messages.-1.txt=!player.under developping now!!
 
-msg.Dama3.messages.0.txt=!player.よくぞ参った、ここは武器特技習得を願うものが集うダーマ神殿じゃ。
+msg.Dama2.messages.0.txt=!player.Here is job skill temple.
+msg.Dama2.messages.1.txt=!player.そなた職業特技というものを知っておるか？
+msg.Dama2.messages.2.txt=!player.職業特技とはSPを消費することによって習得できる職業に応じた技や様々な能力の上昇のことじゃ。
+msg.Dama2.messages.3.txt=!player.SPとはそれぞれの職業ごとに振られており、職業レベルを上げることによって増えていくのじゃ。
+msg.Dama2.messages.4.txt=!player.さらにLvが上がれば上がるほど覚えられる特技の種類も増えていくからの。
+msg.Dama2.messages.5.txt=!player.何を望むかはそなたしだいじゃ、じゃが１つ注意しておくことがある・・
+msg.Dama2.messages.6.txt=!player.SPには限りがある。全ての特技を習得することはできないのじゃ。
+msg.Dama2.messages.7.txt=!player.しかし、SPの範囲内なら自由に習得と解除ができるのじゃ。
+msg.Dama2.messages.8.txt=!player.自分に一番あったパターンを探して、特技を習得すると良かろう。
+msg.Dama2.messages.9.txt=!player.さて、これで特技の説明は終わりじゃ。では、習得したい特技を選ぶがよい。
+
+msg.Dama3.messages.0.txt=!player.Here is weapon skill temple.
 msg.Dama3.messages.1.txt=!player.そなた特技というものを知っておるか？
 msg.Dama3.messages.2.txt=!player.特技とはWPを消費することによって習得できる各武器に応じた技や様々な能力の上昇じゃ。
 msg.Dama3.messages.3.txt=!player.WPとはそれぞれの武器ごとに振られており、熟練度を上げることによって増えていくのじゃ。
@@ -2007,7 +2233,7 @@ msg.Dama3.messages.6.txt=!player.WPには限りがある。決して振りなお
 msg.Dama3.messages.7.txt=!player.貯めるのも1つの手じゃが、貯めているだけでは強くなれんからの。難しいところじゃな。
 msg.Dama3.messages.8.txt=!player.さて、これで特技の説明は終わりじゃ。では、習得したい特技を選ぶがよい。
 
-msg.Dama3.messages.10.txt=!player.ここは武器特技習得を願うものが集うダーマ神殿じゃ。
+msg.Dama3.messages.10.txt=!player.Here is weapon skill temple.
 msg.Dama3.messages.11.txt=!player.習得したい特技を選ぶがよい。
 msg.Dama3.messages.20.txt=!player.%sを習得した！！
 msg.Dama3.messages.40.txt=!player.スキルポイントが足らぬようじゃの・・・。
@@ -2035,6 +2261,15 @@ msg.medalking.talk.5.txt=!player.
 msg.medalking.talk.6.txt=!player.you have many items
 msg.medalking.item.txt=§e[%dmedals]
 msg.casinocoin.item.txt=§e[%scoins]
+msg.itemprice.item.txt=§e[%sG]
+
+msg.casinoexchange.item.txt=§e[%dcoins]
+msg.casinoexchange.talk.1.txt=!player.I am prize exchanger
+msg.casinoexchange.talk.2.txt=!player.Select the prize.
+
+msg.casinoexchange.talk.4.txt=You need more coins.
+msg.casinoexchange.talk.5.txt=!player.Thank you. See you!
+msg.casinoexchange.talk.6.txt=!player.You have more items.
 
 msg.magictool.farm.mode.0.txt=!player.Mode:Plowing
 msg.magictool.farm.mode.1.txt=!player.Mode : Planting
@@ -2045,11 +2280,45 @@ msg.magictool.farm.mode.14.txt=!player.Mode : Planting Lv4
 msg.magictool.farm.mode.2.txt=!player.Mode : Harvesting
 msg.magictool.farm.mode.3.txt=!player.Mode : Seed storeing
 
-msg.rura.modeInfo.0.txt=!player.target : only me
-msg.rura.modeInfo.1.txt=!player.target : me and my pet
+msg.rura.modeInfo.0.txt=!player.target : only you
+msg.rura.modeInfo.1.txt=!player.target : you and your pet
+msg.rura.modeInfo.2.txt=!player.target : you and your pet and animals
+msg.rura.modeInfo.3.txt=!player.target : you and your pet and animals and villager
+
+msg.rurasin.modeInfo.0.txt=!player.mode : loc change
+msg.rurasin.modeInfo.1.txt=!player.mode : loc select
+
+msg.acccancel.modeInfo.0.txt=!player.mode : Repair only Accessory
+msg.acccancel.modeInfo.1.txt=!player.mode : Repair only Armor
+msg.acccancel.modeInfo.2.txt=!player.mode : Repair Armor and Accessory
+
+msg.petSuisyou.modeInfo.0.txt=!player.mode : Check pet location
+msg.petSuisyou.modeInfo.1.txt=!player.mode : Check pet location(Click to delete)
+msg.petSuisyou.modeInfo.2.txt=!player.mode : Location memory refresh
+msg.petSuisyou.modeInfo.3.txt=!player.mode : Location memory clear
 
 msg.basirura.modeInfo.0.txt=!player.to random
 msg.basirura.modeInfo.1.txt=!player.to setting Coordinate
+
+
+msg.shinziru.modeInfo.0.0.txt=!player.Change to [Add Member mode]
+msg.shinziru.modeInfo.0.1.txt=!player.Use to otherPlayer or Pet monster. Add to party
+msg.shinziru.modeInfo.1.0.txt=!player.Change to [Remove Member mode]
+msg.shinziru.modeInfo.1.1.txt=!player.Use to otherPlayer or Pet monster. remove from party
+msg.shinziru.modeInfo.2.0.txt=!player.Change to [Remove pet mode]
+msg.shinziru.modeInfo.2.1.txt=!player.Item use. remove all pet monster from party
+msg.shinziru.modeInfo.3.0.txt=!player.Change to [Away party mode]
+msg.shinziru.modeInfo.3.1.txt=!player.Away from party
+msg.shinziru.modeInfo.4.0.txt=!player.Change to [Party close mode]
+msg.shinziru.modeInfo.4.1.txt=!player.Close party
+msg.shinziru.modeInfo.5.0.txt=!player.Change to [EXP share rate change mode]
+msg.shinziru.modeInfo.5.1.txt=!player.Change Exp share rate.
+msg.shinziru.modeInfo.5.2.txt=!player.EXP * VAlue% => Share in party
+msg.shinziru.modeInfo.txt=!player.Only Reader use
+
+msg.shinziru.shareRate.0.txt=Party EXP share disable
+msg.shinziru.shareRate.1.txt=Party EXP share rate set %s%
+
 
 msg.weapon.modeInfo.1.-1.txt=!player.Axe mode : false
 msg.weapon.modeInfo.1.0.txt=!player.Axe mode : true
@@ -2062,11 +2331,24 @@ msg.weapon.modeInfo.3.0.txt=!player.Shovel mode : true
 
 msg.weapon.specialEffect.mahounosoroban.txt=!player.I have %dGold
 
+
+msg.weapon2.modeInfo.0.txt=!player.Item use : Defence
+msg.weapon2.modeInfo.1.txt=!player.Item use : Special effect
+msg.weapon2.modeInfo.2.txt=!player.Item use : Defence and Special effect
+
+msg.weapon3.modeInfo.0.txt=!player.Attack : Normal attack
+msg.weapon3.modeInfo.1.txt=!player.Attack : Special effect
+msg.weapon3.modeInfo.2.txt=!player.Attack : Normal attack and Special effect
+
+
 msg.magictool.farm.seedIn.1.txt=!player.Everytime seed store : true
 msg.magictool.farm.seedIn.0.txt=!player.Everytime seed store : false
 msg.magictool.farm.seedInAct.0.txt=!player.Storede all seeds
 msg.magictool.farm.seedInAct.1.txt=!player.Stored %s (Total :%d)
 msg.magictool.farm.seedInAct.2.txt=!player.You don't have seed items.
+
+msg.magictool.break.mode.0.txt=!player.Change to [Block break mode]
+msg.magictool.break.mode.1.txt=!player.Change to [Block delete mode]
 
 msg.magictool.set.blockInAct.0.txt=!player.Storede all blocks
 msg.magictool.set.blockInAct.2.txt=!player.You don't have block items.
@@ -2076,6 +2358,9 @@ msg.magictool.set.settingBlock.2.txt=!player.selected %s(least %d)
 msg.magictool.set.mode.0.txt=!player.Mode : Block Set
 msg.magictool.set.mode.1.txt=!player.Mode : Block storeing
 msg.magictool.set.areaset.txt=!player.SetArea : %d * %d * %d (need blocks : %d)
+
+msg.magictool.set.selectBlock.0.txt=!player.Block not selected
+msg.magictool.set.selectBlock.1.txt=!player.[%s](least : %d)
 
 msg.magictool.farm.areaset.txt=!player.SetArea : %d * %d * %d (ItemDamage : %d/10000)
 
@@ -2104,7 +2389,7 @@ msg.magictool.break.info.mode.1.txt=[破壊モード]
 msg.magictool.break.info.mode.2.txt=作業範囲内の、対象ブロックを破壊します。
 msg.magictool.break.info.mode.3.txt=[削除モード]
 msg.magictool.break.info.mode.4.txt=作業範囲内の、対象ブロックを消滅させます。
-msg.magictool.break.info.mode.5.txt=※対象ブロック：最初にクリックしたブロック
+msg.magictool.break.info.mode.5.txt=※対象ブロック : 最初にクリックしたブロック
 msg.magictool.break.info.mode.6.txt=※破壊ブロックは対象外
 
 msg.magictool.break.info.mode.2A.txt=作業範囲内の、全ブロックを破壊します。
@@ -2162,6 +2447,8 @@ tile.dqm.blockDqmbed2.name=Dqmbed2
 tile.dqm.blockDqmbed3.name=Dqmbed3
 tile.dqm.blockTue.name=Tue
 tile.dqm.blockSikabane.name=Sikabane
+tile.blockCasinoSlot1.name=CasinoBlock(Slot)
+tile.blockCasinoAbg1.name=CasinoBlock(MiniBattaleGame)
 
 tile.dqm.blockKowareru5.name=Decorate lapis
 tile.dqm.blockKowareru6.name=Decorate gold
@@ -2250,6 +2537,11 @@ tile.dqm.blockHasiranaka.name=Hasiranaka
 tile.dqm.blockHasiranakaQ.name=HasiranakaQ
 tile.dqm.blockHasiraue.name=Hasiraue
 tile.dqm.blockHasiraueQ.name=HasiraueQ
+
+tile.dqm.blockHasiraNB.name=blockHasiraNB
+tile.dqm.blockHasiranakaNB.name=blockHasiranakaNB
+tile.dqm.blockHasiraueNB.name=blockHasiraueNB
+
 tile.dqm.blockSwordMob.name=SwordMob
 tile.dqm.blockSword2Mob.name=Sword2Mob
 tile.dqm.blockKen2.name=Ken2
@@ -2280,6 +2572,11 @@ tile.dqm.blockOokiihasiranakaQ.name=OokiihasiranakaQ
 tile.dqm.blockOokiihasiraueS.name=OokiihasiraueS
 tile.dqm.blockOokiihasirasitaS.name=OokiihasirasitaS
 tile.dqm.blockOokiihasiranakaS.name=OokiihasiranakaS
+
+tile.dqm.blockOokiihasiraueNB.name=blockOokiihasiraueNB
+tile.dqm.blockOokiihasirasitaNB.name=blockOokiihasirasitaNB
+tile.dqm.blockOokiihasiranakaNB.name=blockOokiihasiranakaNB
+
 tile.dqm.blockTokusyutaimatu.name=Tokusyutaimatu
 tile.dqm.blockEntotu.name=Entotu
 tile.dqm.blockEntotuS.name=EntotuS
@@ -2290,6 +2587,9 @@ tile.dqm.blockYadoya.name=Yadoya
 tile.dqm.blockDouguya.name=Douguya
 tile.dqm.blockBouguya.name=Bouguya
 tile.dqm.blockBukiya.name=Bukiya
+tile.dqm.blockSyuuriya.name=Smith
+tile.dqm.blockBank.name=Bank
+tile.dqm.blockBankMP.name=MPBank
 tile.dqm.blockTaruK.name=TaruK
 tile.dqm.blockTuboK.name=TuboK
 tile.dqm.blockSBatorurex.name=SBatorurex
@@ -2305,13 +2605,43 @@ tile.dqm.blockGenkotu.name=GenkotuMush
 tile.dqm.blockBuilderFrame.name=builder frame
 tile.dqm.blockJumpBlock.name=Jump block
 tile.dqm.blockJumpBlock2.name=Jump block
+
+tile.dqm.blockN.name=Force move(N)
+tile.dqm.blockS.name=Force move(S)
+tile.dqm.blockW.name=Force move(W)
+tile.dqm.blockE.name=Force move(E)
+
+tile.dqm.blockN2.name=Force move X(N)
+tile.dqm.blockS2.name=Force move X(S)
+tile.dqm.blockW2.name=Force move X(W)
+tile.dqm.blockE2.name=Force move X(E)
+
+tile.dqm.blockWaterBlock.name=Water block
+tile.dqm.blockWaterBlockLight.name=Water block(light)
+
+tile.dqm.blockJampBlockTerepo2.name=Jump block(Teleport)
+tile.dqm.blockJumpBlockTerepoBoss1.name=Jump block(Boss1)(No function)
+tile.dqm.blockJumpBlockTerepoBoss2.name=Jump block(Boss2)(No function)
+tile.dqm.blockJumpBlockTerepoBoss3.name=Jump block(Boss3)(No function)
+tile.dqm.blockJumpBlockTerepoBoss4.name=Jump block(Boss4)(No function)
+tile.dqm.blockJumpBlockTerepoBoss5.name=Jump block(Boss5)(No function)
+tile.dqm.blockJumpBlockTerepoBoss6.name=Jump block(Boss6)(No function)
+
+tile.dqm.blockKieru.name=Dungeon brake block(No function)
+tile.dqm.blockSet1.name=Boss room block(No function)
+tile.dqm.blockShoumetu.name=Eraser block(No function)
+tile.dqm.blockHikariB.name=Dungeon light block(No function)
+tile.dqm.blockGanseki.name=Stone block(No function)
+
 tile.dqm.blockToramanaYuka.name=Pain tile
+tile.dqm.blockToramanaYuka2.name=Pain tile2
 tile.dqm.blockMobSpawner.name=DQRmobSpawner
 tile.dqm.blockHakoHakoK.name=Box(interior)
 tile.dqm.blockHakoBlock.name=Box(interior)
 tile.dqm.blockHakoBlock2.name=Box(interior)
 tile.dqm.blockHakoBlock3.name=Box(interior)
 tile.dqm.blockHakoBlock1.name=Box(monster)
+tile.dqm.blockHakoBlock11.name=Box(monster)
 tile.dqm.blockHakoBlock12.name=Box(monster)
 tile.dqm.blockHakoBlock13.name=Box(monster)
 
@@ -2323,12 +2653,26 @@ dqm.guin.tab.medalking.job=JobChange
 dqm.guin.tab.medalking.Misc=Item
 dqm.guin.tab.medalking.Medal=LittleMedal
 dqm.guin.tab.medalking.accessories=Accessories
+dqm.guin.tab.medalking.Builder=Builder
+dqm.guin.tab.medalking.Decorate=Decorate
+dqm.guin.tab.medalking.DecorateD=Decorate2
+dqm.guin.tab.medalking.DecorateH=Decorate3
+
 dqm.guin.tab.petstatus.status=PetStatus
 dqm.guin.tab.petstatus.inv=PetInventory
 
 tile.bed.cantArea=Can't sleep at this area
 
 #monster Object block
+tile.blockObjKandata.name=Kandata(Object)
+tile.blockObjBlackchack.name=Blackchack(Object)
+tile.blockObjSuraimuemperor.name=Suraimuemperor(Object)
+tile.blockObjDarkdoriado.name=Darkdoriado(Object)
+tile.blockObjShadopan.name=ShadowBabby(Object)
+tile.blockObjShadopan2.name=ShadowPanther(Object)
+tile.blockObjWhitepan2.name=WhitePanther(Object)
+tile.blockObjOrutega.name=Orutega(Object)
+
 tile.blockObjAkairai.name=Akairai(Object)
 tile.blockObjAkumanosyo.name=Akumanosyo(Object)
 tile.blockObjAkumanotubo.name=Akumanotubo(Object)
@@ -2926,6 +3270,15 @@ tile.blockFigZinmentyou.name=Zinmentyou(Figure)
 tile.blockFigZoma.name=Zoma(Figure)
 tile.blockFigZukkinya.name=Zukkinya(Figure)
 
+tile.blockFigKandata.name=カKandata(Figure)
+tile.blockFigBlackchack.name=Blackchack(Figure)
+tile.blockFigSuraimuemperor.name=Suraimuemperor(Figure)
+tile.blockFigDarkdoriado.name=Darkdoriado(Figure)
+tile.blockFigShadopan.name=Shadow babby(Figure)
+tile.blockFigShadopan2.name=Shwdow panther(Figure)
+tile.blockFigWhitepan2.name=White panther(Figure)
+tile.blockFigOrutega.name=Orutega(Figure)
+
 #FarmerDiary(not localize)
 msg.farmerDiary.title=エンダードラゴン育成日記
 msg.farmerDiary.author=農夫スティーブ
@@ -3164,8 +3517,35 @@ msg.Casino.coin.messages.40.txt=!player.get 50coins
 msg.Casino.coin.messages.41.txt=!player.get 150coins
 msg.Casino.coin.messages.42.txt=!player.get 300coins
 
-item.dqm.BuilderCasino1.name=BuilderCasino_parts(BJ Dealer)
-item.dqm.BuilderCasino2.name=BuilderCasino_parts(CoinExchanger)
+item.dqm.BuilderCasino1.name=BuilderCasino(BJ Dealer)
+item.dqm.BuilderCasino2.name=BuilderCasino(CoinExchanger)
+item.dqm.BuilderCasino3.name=BuilderCasino(Porker)
+item.dqm.BuilderCasino4.name=BuilderCasino(Prize exchanger)
+item.dqm.BuilderCasino5.name=BuilderCasino(Chin-chiro-rin)
+
+tile.dqm.chest.name=*chest
+tile.dqm.quartzBlock.name=quartzBlock
+
+tile.blockSekizouZoma.name=Stone statue(Zoma)
+tile.blockSekizouDesupisaro1.name=Stone statue(Pisaro)
+tile.blockSekizouEsterk.name=Stone statue(Esterk)
+tile.blockSekizouMasterdoragon.name=Stone statue(Masterdragon)
+tile.blockSekizouRyuuou.name=Stone statue(Ryuou)
+tile.blockSekizouDarkRamia.name=Stone statue(Retis)
+
+tile.blockSekizouZomaNo.name=Nopower stone statue(Zoma)
+tile.blockSekizouDesupisaro1No.name=Nopower stone statue(Pisaro)
+tile.blockSekizouEsterkNo.name=Nopower stone statue(Esterk)
+tile.blockSekizouMasterdoragonNo.name=Nopower stone statue(Masterdragon)
+tile.blockSekizouRyuuouNo.name=Nopower stone statue(Ryuou)
+tile.blockSekizouDarkRamiaNo.name=Nopower stone statue(Retis)
+
+item.dqm.BuilderSekizouZoma.name=Builder alter of Zoma
+item.dqm.BuilderSekizouRyuuou.name=Builder alter of Ryuou
+item.dqm.BuilderSekizouDesupisaro.name=Builder alter of Pisaro
+item.dqm.BuilderSekizouEsterk.name=Builder alter of Esterk
+item.dqm.BuilderSekizouDarkRamia.name=Builder alter of Retis
+item.dqm.BuilderSekizouMasterdoragon.name=Builder alter of Masterdragon
 
 mahouken.name.20=(Poison1)
 mahouken.name.21=(Poison2)
@@ -3174,3 +3554,153 @@ mahouken.name.23=(Slow)
 mahouken.name.24=(Fire)
 mahouken.name.25=(MP drain)
 mahouken.name.26=(HP drain)
+
+skill.Jump.name=Jump%d
+skill.Poison.name=Poison%d
+skill.Baikiruto.name=Baikiruto1
+skill.Baikiruto.1.name=Baikiruto2
+skill.Baikiruto.2.name=Baikiruto3
+skill.Sukara.name=Sukara
+skill.Baha.name=Baha
+skill.Piora.name=Piora
+skill.Magicbaria.name=MagicBaria
+skill.Mahokanta.name=Mahokanta
+skill.Bomie.name=Bomie
+skill.Rariho.name=Rariho
+skill.Manusa.name=Manusa
+skill.Mahoton.name=Mahoton
+skill.Rukani.name=Rukani
+skill.Medapani.name=Medapani
+skill.Henatosu.name=Henatosu
+skill.Divainsuperu.name=DivineSpell
+skill.Rukanan.name=Rukanan
+skill.Rarihoma.name=Rarihoma
+skill.Bomiosu.name=Bomiosu
+skill.Sukuruto.name=Sukuruto
+skill.Piorimu.name=Piorimu
+skill.Behomara.1.name=Behomara
+skill.Behomara.2.name=Behomazun
+skill.PoisonX.name=PoisonX%d
+skill.Teleport.name=QuickMove
+skill.Megante.name=SelfBomb
+skill.HeavyFire.name=HeavyFire%d
+skill.Zaki.1.name=Zaki
+skill.Zaki.2.name=Zaraki
+skill.Zaki.3.name=Zarakima
+skill.Gira.1.name=Gira
+skill.Gira.2.name=Begirama
+skill.Gira.3.name=Begiragon
+skill.Gira.4.name=Giragureido
+skill.Bagi.1.name=Bagi
+skill.Bagi.2.name=Bagima
+skill.Bagi.3.name=Bagikurosu
+skill.Bagi.4.name=Bagimucho
+skill.Hoimi.1.name=Hoimi
+skill.Hoimi.2.name=Behoimi
+skill.Hoimi.3.name=Behoma
+skill.Mera.1.name=Mera
+skill.Mera.2.name=Merami
+skill.Mera.3.name=Merazoma
+skill.Mera.4.name=Meragaia
+skill.Raidein.1.name=Raidein
+skill.Raidein.2.name=Gigadein
+skill.Raidein.3.name=Minadein
+skill.Dein.1.name=Raidein
+skill.Dein.2.name=Gigadein
+skill.Dein.3.name=Minadein
+skill.Doruma.1.name=Doruma
+skill.Doruma.2.name=Dorukuma
+skill.Doruma.3.name=Dorumoa
+skill.Doruma.4.name=Dorumadon
+skill.Io.1.name=Io
+skill.Io.2.name=Iora
+skill.Io.3.name=Ionazun
+skill.Io.4.name=Iogurande
+skill.Hyado.1.name=Hyado
+skill.Hyado.2.name=Hyadaruko
+skill.Hyado.3.name=Mahyado
+skill.Hyado.4.name=Mahyadedosu
+skill.Mahoimi.1.name=Mahoimi
+skill.Mahoimi.2.name=Mahoriku
+skill.Mahoimi.3.name=Mahoizun
+skill.Honoo.1.name=Firebreath1
+skill.Honoo.2.name=Firebreath2
+skill.Honoo.3.name=Firebreath3
+skill.Honoo.4.name=Firebreath4
+skill.Honoo.5.name=Firebreath5
+skill.Fubuki.1.name=Icebreath1
+skill.Fubuki.2.name=Icebreath2
+skill.Fubuki.3.name=Icebreath3
+skill.Fubuki.4.name=Icebreath4
+skill.Fubuki.5.name=Icebreath5
+skill.Hubuki.1.name=Icebreath1
+skill.Hubuki.2.name=Icebreath2
+skill.Hubuki.3.name=Icebreath3
+skill.Hubuki.4.name=Icebreath4
+skill.Hubuki.5.name=Icebreath5
+skill.noskill.name=§7Can't use
+skill.list.0.msg=%s Skill list(Skill use:enable)
+skill.list.1.msg=%s Skill list§b(skill use:disable)
+skill.petbook.info.0.txt=§fuse to pet
+skill.petbook.info.1.txt=§fyou can check the skill list of pet
+skill.petbook.info.2.txt=§fuse to pet with sneaking
+skill.petbook.info.3.txt=§fyou can change the skill use mode
+skill.change.info.0.txt=%s change to [Skill use:enable]
+skill.change.info.1.txt=%s change to [Skill use:disable]
+
+dqm.AccessoryStopper.0.txt=Enable the buff by sub equip.
+dqm.AccessoryStopper.1.txt=Disable the buff by sub equip.
+
+msg.hardcore.messages.1.txt=§c[causion]§eDQR Hardcore mode
+msg.hardcore.messages.2.txt=§eDead to erase the player data.
+msg.easymode.messages.txt=§e[causion]DQR Easy mode
+
+msg.escapeDamage.inotinoIshi.txt=LifeSton break insted you.
+
+msg.sekizou.zoma.talk.1.txt=!player.人間よ！
+msg.sekizou.zoma.talk.2.txt=!player.なにゆえもがき生きるのか？
+msg.sekizou.zoma.talk.3.txt=!player.ほろびこそわがよろこび。
+msg.sekizou.zoma.talk.4.txt=!player.死にゆく者こそ美しい。
+msg.sekizou.zoma.talk.5.txt=!player.さあ・・！
+msg.sekizou.zoma.talk.6.txt=!player.わがうでの中で息絶えるがよい！
+
+msg.sekizou.ryuuou.talk.1.txt=!player.よくぞ来た人間よ！
+msg.sekizou.ryuuou.talk.2.txt=!player.わしが王のなかの王、竜王である。
+msg.sekizou.ryuuou.talk.3.txt=!player.わしは待っておった。
+msg.sekizou.ryuuou.talk.4.txt=!player.そなたのような若者があらわれることを。
+msg.sekizou.ryuuou.talk.5.txt=!player.もしわしの味方になれば世界の半分を貴様にやろう。
+msg.sekizou.ryuuou.talk.6.txt=!player.おろか者め！思い知るがよいっ！
+
+msg.sekizou.masterdoragon.talk.1.txt=!player.私は天空の城を納めるマスタードラゴン。
+msg.sekizou.masterdoragon.talk.2.txt=!player.竜の神と呼ばれているものだ。
+msg.sekizou.masterdoragon.talk.3.txt=!player.私はこの世界の全てを知ることができる。
+msg.sekizou.masterdoragon.talk.4.txt=!player.お前がなぜ私に会いに来たかも、すでに解っている。
+msg.sekizou.masterdoragon.talk.5.txt=!player.人間というものは不思議な生き物だな。
+msg.sekizou.masterdoragon.talk.6.txt=!player.か弱い人間が時として、思わぬ力を出すときがある。
+msg.sekizou.masterdoragon.talk.7.txt=!player.さぁ・・その力、みせてもらおう！
+
+msg.sekizou.darkramia.talk.1.txt=!player.私はかつて、光の世界をもわが物にせんとする暗黒神の封印にチカラを貸しました
+msg.sekizou.darkramia.talk.2.txt=!player.そのため私は暗黒神の配下である魔物たちから恨みを買っており
+msg.sekizou.darkramia.talk.3.txt=!player.私の子……卵が眠る巣が魔物の手に落ち、卵は人質にとられてしまったのです。
+msg.sekizou.darkramia.talk.4.txt=!player.卵を人質にされては手が出せません。
+msg.sekizou.darkramia.talk.5.txt=!player.私に代わって戦ってくれる勇気とチカラを持つ者を探していました。
+msg.sekizou.darkramia.talk.6.txt=!player.あなた方は私に臆することなく私の石像を作りました。その勇気は称賛に価します。
+msg.sekizou.darkramia.talk.7.txt=!player.最後に、実際に手合わせをしてあなたたちの強さを見せて下さい！
+
+msg.sekizou.desupisaro.talk.1.txt=!player.ぐはあああ……！
+msg.sekizou.desupisaro.talk.2.txt=!player.何ものだお前たちは？
+msg.sekizou.desupisaro.talk.3.txt=!player.私はデスピサロ。
+msg.sekizou.desupisaro.talk.4.txt=!player.魔族の王として目覚めたばかりだ。
+msg.sekizou.desupisaro.talk.5.txt=!player.うぐおおお……！私には何も思い出せぬ……。
+msg.sekizou.desupisaro.talk.6.txt=!player.しかし何をやるべきかはわかっている。
+msg.sekizou.desupisaro.talk.7.txt=!player.お前たち人間どもを根絶やしにしてくれるわっ！
+
+msg.sekizou.esterk.talk.1.txt=!player.グゴゴゴゴ……。
+msg.sekizou.esterk.talk.2.txt=!player.誰だ？わが眠りをさまたげる者は？
+msg.sekizou.esterk.talk.3.txt=!player.わが名はエスターク……。今はそれしか思い出せぬ……。
+msg.sekizou.esterk.talk.4.txt=!player.はたして自分が善なのか悪なのかそれすらもわからぬのだ……。
+msg.sekizou.esterk.talk.5.txt=!player.その私になに用だ？私をほろぼすためにやって来たのか？
+msg.sekizou.esterk.talk.6.txt=!player.ならばしかたがないな。私はほろぼされるわけにはいかぬ。
+msg.sekizou.esterk.talk.7.txt=!player.さあ来るがよい！
+
+commands.dqredit.usage=/dqredit [player] <status> <value>

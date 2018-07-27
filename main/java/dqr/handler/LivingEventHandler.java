@@ -40,6 +40,7 @@ import dqr.api.event.DqrMobPrizeEvent;
 import dqr.api.potion.DQPotionEtc;
 import dqr.api.potion.DQPotionMinus;
 import dqr.api.potion.DQPotionPlus;
+import dqr.dataTable.FuncJobSkillData;
 import dqr.entity.mobEntity.DqmMobBase;
 import dqr.entity.petEntity.DqmPetBase;
 import dqr.entity.throwingEntity.throwing.ThrowingEntity;
@@ -624,6 +625,12 @@ public class LivingEventHandler {
     		//System.out.println("TIME" + event.entityLiving.ticksExisted);
     		EntityPlayer ep = (EntityPlayer)event.entityLiving;
 
+    		if(ExtendedPlayerProperties.get(ep).getJobSkillCalcFlg())
+    		{
+    			FuncJobSkillData.calcPlayerStatus(ep);
+    			FuncJobSkillData.calcPlayerStatus2(ep);
+    			ExtendedPlayerProperties.get(ep).setJobSkillCalcFlg(false);
+    		}
 			//if(!ep.isPotionActive(Potion.confusion.id))
 			//{
 			//	ep.addPotionEffect(new PotionEffect(Potion.confusion.id, 101, 4));

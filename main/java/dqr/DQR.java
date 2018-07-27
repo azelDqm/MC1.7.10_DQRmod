@@ -109,7 +109,7 @@ import dqr.potion.DqmPotion;
 import dqr.world.DqmStructureRegister;
 import dqr.world.DqmVillageRegister;
 
-@Mod(modid = "DQMIIINext", name = "DQRespect", version = "0.9.4.5E#3", useMetadata = true, dependencies = "after:PotionExtension")
+@Mod(modid = "DQMIIINext", name = "DQRespect", version = "0.9.4.6E#2", useMetadata = true, dependencies = "after:PotionExtension")
 public class DQR {
 
 	@SidedProxy(clientSide = "dqr.ClientProxy", serverSide = "dqr.CommonProxy")
@@ -118,8 +118,8 @@ public class DQR {
 	@Instance("DQMIIINext")
 	public static DQR instance;
 	public static String modID = "DQMIIINext";
-	public static int debug = 0; //12 : Lv 全calc
-	public static int easyMode = 1;
+	public static int debug = 1; //12 : Lv 全calc
+	public static int easyMode = 0;
 
 	public static int jobStatusVersion = 1;
 
@@ -422,12 +422,14 @@ public class DQR {
 		{
 			event.registerServerCommand(new DqrComDebug());
 			event.registerServerCommand(new DqrComDebug2());
-			event.registerServerCommand(new DqrComDqredit());
+
 		}
 		if(this.conf.partyEnable != 0)
 		{
 			event.registerServerCommand(new DqrComParty());
 		}
+
+		event.registerServerCommand(new DqrComDqredit());
 		event.registerServerCommand(new DqrComPet());
 		event.registerServerCommand(new DqrCom());
 	}

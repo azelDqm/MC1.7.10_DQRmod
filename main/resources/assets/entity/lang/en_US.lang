@@ -365,6 +365,7 @@ entity.DQMIIINext.dqm.MagicEntityBuffDummy.name=Buff
 entity.DQMIIINext.dqm.MagicEntityHoimiDummy.name=Hoimi
 entity.DQMIIINext.dqm.MagicEntityMahoimiDummy.name=Mahoimi
 
+entity.DQMIIINext.NPCBankMP.name=MPExchangeSteave
 entity.DQMIIINext.NPCSyuuri.name=RepairSteave
 entity.DQMIIINext.NPCBukiya.name=WeaponshopSteave
 entity.DQMIIINext.NPCKaitoriya.name=BuyShopSteave

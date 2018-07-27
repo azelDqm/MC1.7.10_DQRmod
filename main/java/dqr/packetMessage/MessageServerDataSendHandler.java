@@ -29,6 +29,18 @@ public class MessageServerDataSendHandler implements IMessageHandler<MessageServ
 			//NBTTagCompound playerPet = ExtendedPlayerProperties3.get(p).getNBTPlayerPetList();
 	    	//Set tags = playerPet.func_150296_c();
 	    	//System.out.println("TEST_PACKET : " + p.worldObj.isRemote + " / " + tags.size());
+		}else if(flg == 3)
+		{
+			if(nbt != null)
+			{
+		    	NBTTagCompound checkData = (NBTTagCompound)nbt.getTag("DqmPlayerData3");
+		    	//DQR.func.debugString(checkData.getString("playerUUID") + "/" + checkData.getString("playerName") + " / " + player.getCommandSenderName());
+
+		    	if(p != null && checkData != null && checkData.getString("playerName").equalsIgnoreCase(p.getCommandSenderName()))
+		    	{
+		    		ExtendedPlayerProperties3.get(p).loadNBTData(nbt);
+		    	}
+			}
 		}
 		return null;
 

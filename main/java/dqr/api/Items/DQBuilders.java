@@ -73,4 +73,6 @@ public class DQBuilders {
 	public static Item itemBuilderShopBukiyaW4;
 	public static Item itemBuilderShopBukiyaW5;
 	public static Item itemBuilderShopBukiyaW6;
+
+	public static Item itemBuilderIdoMedalW;
 }
