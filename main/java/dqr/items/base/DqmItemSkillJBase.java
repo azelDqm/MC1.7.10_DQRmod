@@ -31,11 +31,11 @@ public class DqmItemSkillJBase extends Item{
 				p_77624_1_.setStackDisplayName(I18n.format(p_77624_1_.getDisplayName(), new Object[]{nbt.getInteger("statusParam")}));
 			}
 
-			p_77624_3_.add(EnumColor.Aqua.getChatColor() + I18n.format("dqm.skill.JSkill.needSP", new Object[]{nbt.getInteger("needSP")}));
+			p_77624_3_.add(EnumColor.Gold.getChatColor() + I18n.format("dqm.skill.JSkill.needSP", new Object[]{nbt.getInteger("needSP")}));
 
 			if(nbt.getInteger("allFlg") == 1)
 			{
-				p_77624_3_.add(EnumColor.Gold.getChatColor() + I18n.format("dqm.skill.JSkill.allFlg", new Object[]{}));
+				p_77624_3_.add(EnumColor.Yellow.getChatColor() + I18n.format("dqm.skill.JSkill.allFlg", new Object[]{}));
 			}
 		}
 	 }

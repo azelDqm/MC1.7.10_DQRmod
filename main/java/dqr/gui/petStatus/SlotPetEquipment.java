@@ -7,6 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import dqr.DQR;
 import dqr.api.Items.DQInventorySlots;
 import dqr.api.enums.EnumDqmSubEquipType;
 import dqr.items.base.DqmItemAccessoryBase;
@@ -26,7 +27,7 @@ public class SlotPetEquipment extends Slot {
 
     @Override
     public boolean isItemValid(ItemStack stack) {
-
+    	DQR.func.debugString("TEST8");
     	//System.out.println("TAKE1");
     	/*
     	if(this.equipment.getId() == EnumDqmSubEquipType.PWEAPON.getId())
@@ -79,6 +80,8 @@ public class SlotPetEquipment extends Slot {
 
     @Override
     public boolean canTakeStack(EntityPlayer player) {
+    	DQR.func.debugString("TEST9");
+    	DQR.func.debugString("TEST9 : " + this.slotNumber + " / " + this.getStack().getItem());
     	//System.out.println("TAKE2");
         //return this.getStack() != null && ((ISubEquip) this.getStack().getItem()).canTakeStack(equipment, this.getStack(), player);
     	//return false;

@@ -21,6 +21,7 @@ public enum EnumDqmStatus {
 	INT(13, "INT", DQSkills.itemSkillJ_INT),
 	CRI(14, "CRI", DQSkills.itemSkillJ_CRI),
 	MISS(15, "MISS", DQSkills.itemSkillJ_MISS),
+	GOLD(16, "GOLD", null),
 	;
 
 	private final int id;

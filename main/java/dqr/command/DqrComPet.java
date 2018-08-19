@@ -10,6 +10,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ChatComponentTranslation;
 import dqr.DQR;
 import dqr.api.enums.EnumColor;
+import dqr.playerData.ExtendedPlayerProperties;
 import dqr.playerData.ExtendedPlayerProperties3;
 
 
@@ -73,7 +74,6 @@ public class DqrComPet extends CommandBase {
 			        				int locZ = petData.getInteger("posZ");
 			        				int locDim = petData.getInteger("dimension");
 
-
 			        				//System.out.println("TEST : " + locX + "/" + locY  + "/" + locZ);
 			        				if(locX == 0 && locY == 0 && locZ == 0 && locDim == 0 || preUUID.equalsIgnoreCase(uid))
 			        				{
@@ -98,6 +98,25 @@ public class DqrComPet extends CommandBase {
 					DQR.petFunc.clearPetdata(ep);
 					DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("dqm.iteminfo.petCommand.s1",new Object[] {}));
 
+				}else if(var2[0].equalsIgnoreCase("refuse") && DQR.conf.permPetRefCommand == 1)
+				{
+					if(var2.length > 1)
+					{
+						if(var2[1].equalsIgnoreCase("1") || var2[1].equalsIgnoreCase("true") || var2[1].equalsIgnoreCase("t"))
+						{
+							ExtendedPlayerProperties.get(ep).setPetRefuse(1);
+						}else if(var2[1].equalsIgnoreCase("0") || var2[1].equalsIgnoreCase("false") || var2[1].equalsIgnoreCase("f"))
+						{
+							ExtendedPlayerProperties.get(ep).setPetRefuse(0);
+						}
+
+						int flg = ExtendedPlayerProperties.get(ep).getPetRefuse();
+						DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("dqm.iteminfo.petRefuse." + flg,new Object[] {}));
+					}else
+					{
+						int flg = ExtendedPlayerProperties.get(ep).getPetRefuse();
+						DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("dqm.iteminfo.petRefuse." + flg,new Object[] {}));
+					}
 				}
 			}else
 	        {

@@ -5,6 +5,7 @@ import net.minecraft.entity.ai.EntityAIFollowOwner;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChatComponentTranslation;
@@ -12,12 +13,14 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.World;
 import dqr.DQR;
+import dqr.PacketHandler;
 import dqr.api.Items.DQBuilders;
 import dqr.api.enums.EnumDqmNpcTalk;
 import dqr.entity.npcEntity.DqmNPCBase;
 import dqr.items.base.DqmItemBowBase;
 import dqr.items.base.DqmItemWeaponBase;
 import dqr.playerData.ExtendedPlayerProperties;
+import dqr.playerData.MessagePlayerProperties3;
 
 public class DqmEntityNPCSinkan3 extends DqmNPCBase
 {
@@ -201,7 +204,10 @@ public class DqmEntityNPCSinkan3 extends DqmNPCBase
 			if(ep.inventory.getCurrentItem() != null && (ep.inventory.getCurrentItem().getItem() instanceof DqmItemWeaponBase ||
 														 ep.inventory.getCurrentItem().getItem() instanceof DqmItemBowBase))
 			{
-
+    			if(!ep.worldObj.isRemote)
+    			{
+    				PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties3((EntityPlayer)ep), (EntityPlayerMP)ep);
+    			}
 				ep.openGui(DQR.instance, DQR.conf.GuiID_SkillWeapon, ep.worldObj, (int)ep.posX, (int)ep.posY, (int)ep.posZ);
 				if(ep.worldObj.isRemote) ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
 				ExtendedPlayerProperties.get(ep).setNpcTalk(EnumDqmNpcTalk.SINKAN3.getId(), 10);

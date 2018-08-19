@@ -33,6 +33,7 @@ public class FuncExpTable
     	int ret = 0;
     	switch(Lv)
     	{
+    		case -1: ret = 0; break;
     		case 0: ret = 50; break;
     		case 1: ret = 140; break;
     		case 2: ret = 350; break;
@@ -533,6 +534,9 @@ public class FuncExpTable
 
         switch (par1)
         {
+        	case -1:
+        		retExp = 0;
+        		break;
             case 0:
                 retExp = 7;
                 break;

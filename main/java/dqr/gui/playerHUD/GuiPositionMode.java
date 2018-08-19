@@ -10,7 +10,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 
-import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -136,20 +135,20 @@ public class GuiPositionMode extends Gui
           //操作方法
           if(DQR.conf.guiPositionTarget != 0)
           {
-	          mc.fontRenderer.drawStringWithShadow(I18n.format("gui.position.line.4", new Object[]{Keyboard.getKeyName(DQR.CLKeyBind.keyGuiPositionSpeed.getKeyCode())}),
+	          mc.fontRenderer.drawStringWithShadow(I18n.format("gui.position.line.4", new Object[]{DQR.func.getKeyDisplayString(DQR.CLKeyBind.keyGuiPositionSpeed.getKeyCode())}),
 	        		  x + 5, nextY + 15, 0xffffffff);
-	          mc.fontRenderer.drawStringWithShadow(I18n.format("gui.position.line.5", new Object[]{Keyboard.getKeyName(DQR.CLKeyBind.keyGuiPositionUP.getKeyCode()),
-	        		  																			   Keyboard.getKeyName(DQR.CLKeyBind.keyGuiPositionDOWN.getKeyCode()),
-	        		  																			   Keyboard.getKeyName(DQR.CLKeyBind.keyGuiPositionLEFT.getKeyCode()),
-	        		  																			   Keyboard.getKeyName(DQR.CLKeyBind.keyGuiPositionRIGHT.getKeyCode())}),
+	          mc.fontRenderer.drawStringWithShadow(I18n.format("gui.position.line.5", new Object[]{DQR.func.getKeyDisplayString(DQR.CLKeyBind.keyGuiPositionUP.getKeyCode()),
+	        		  																			   DQR.func.getKeyDisplayString(DQR.CLKeyBind.keyGuiPositionDOWN.getKeyCode()),
+	        		  																			   DQR.func.getKeyDisplayString(DQR.CLKeyBind.keyGuiPositionLEFT.getKeyCode()),
+	        		  																			   DQR.func.getKeyDisplayString(DQR.CLKeyBind.keyGuiPositionRIGHT.getKeyCode())}),
 	        		  x + 5, nextY + 26, 0xffffffff);
-	          mc.fontRenderer.drawStringWithShadow(I18n.format("gui.position.line.6", new Object[]{Keyboard.getKeyName(modeKeyCode)}),
+	          mc.fontRenderer.drawStringWithShadow(I18n.format("gui.position.line.6", new Object[]{DQR.func.getKeyDisplayString(modeKeyCode)}),
 	        		  x + 5, nextY + 37, 0xffffffff);
           }
           if(DQR.conf.guiPositionTarget == 7)
           {
-        	  mc.fontRenderer.drawStringWithShadow(I18n.format("gui.position.line.9", new Object[]{Keyboard.getKeyName(DQR.CLKeyBind.keyGuiPartyPlus.getKeyCode()),
-        			  																			   Keyboard.getKeyName(DQR.CLKeyBind.keyGuiPartyMinus.getKeyCode())}),
+        	  mc.fontRenderer.drawStringWithShadow(I18n.format("gui.position.line.9", new Object[]{DQR.func.getKeyDisplayString(DQR.CLKeyBind.keyGuiPartyPlus.getKeyCode()),
+        			  																			   DQR.func.getKeyDisplayString(DQR.CLKeyBind.keyGuiPartyMinus.getKeyCode())}),
             		  x + 5, nextY + 48, 0xffffffff);
           }
 
@@ -157,10 +156,10 @@ public class GuiPositionMode extends Gui
           {
         	  mc.fontRenderer.drawStringWithShadow(I18n.format("gui.position.line.7", new Object[]{}),
             		  x + 5, nextY + 48, 0xffffffff);
-        	  mc.fontRenderer.drawStringWithShadow(I18n.format("gui.position.line.8", new Object[]{Keyboard.getKeyName(DQR.CLKeyBind.keyLogDel.getKeyCode())}),
+        	  mc.fontRenderer.drawStringWithShadow(I18n.format("gui.position.line.8", new Object[]{DQR.func.getKeyDisplayString(DQR.CLKeyBind.keyLogDel.getKeyCode())}),
             		  x + 5, nextY + 59, 0xffffffff);
           }
-          //String addLine = Keyboard.getKeyName(DQR.CLKeyBind.keyGuiPositionDOWN.getKeyCode());
+          //String addLine = DQR.func.getKeyDisplayString(DQR.CLKeyBind.keyGuiPositionDOWN.getKeyCode());
           //mc.fontRenderer.drawStringWithShadow(addLine, x + 5, y3 + 12, 0xffffffff);
 
 

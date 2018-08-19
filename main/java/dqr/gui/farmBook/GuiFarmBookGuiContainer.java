@@ -1,8 +1,10 @@
 package dqr.gui.farmBook;
 
+import java.util.ArrayList;
 import java.util.Set;
 
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiOptionButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
@@ -11,12 +13,16 @@ import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
+import dqr.DQR;
+import dqr.playerData.ExtendedPlayerProperties2;
 import dqr.playerData.ExtendedPlayerProperties3;
 
 public class GuiFarmBookGuiContainer extends GuiContainer
 {
-    private static final ResourceLocation texture = new ResourceLocation("dqr", "textures/gui/guiFarmBook.png");
+    private static final ResourceLocation texture = new ResourceLocation("dqr", "textures/gui/guiFarmBook1.png");
+    private static final ResourceLocation texture2 = new ResourceLocation("dqr", "textures/gui/guiFarmBook2.png");
     private int page = 0;
+    private EntityPlayer ep;
 
     public GuiFarmBookGuiContainer(EntityPlayer player)
     {
@@ -28,6 +34,7 @@ public class GuiFarmBookGuiContainer extends GuiContainer
 
 		this.xSize = 154;
 		this.ySize = 134;
+		this.ep = player;
 
 
     }
@@ -35,6 +42,17 @@ public class GuiFarmBookGuiContainer extends GuiContainer
     public void initGui()
     {
     	super.initGui();
+    	buttonList = new ArrayList();
+		int x = (this.width  - this.xSize) / 2;
+		int y = (this.height - this.ySize) / 2;
+
+    	//this.buttonList.clear();
+    	/*
+    	this.buttonList.add(new GuiOptionButton(1, this.width / 2 + 15, this.height / 2 + 100, 18, 18, "<"));
+    	this.buttonList.add(new GuiOptionButton(2, this.width / 2 + 118, this.height / 2 + 100, 18, 18, ">"));
+    	*/
+    	this.buttonList.add(new GuiOptionButton(1, x + 33, y + 99, 16, 20, "<"));
+    	this.buttonList.add(new GuiOptionButton(2, x + 101, y + 99, 16, 20, ">"));
     }
     /*
         ChestとかInventoryとか文字を描画する
@@ -80,8 +98,22 @@ public class GuiFarmBookGuiContainer extends GuiContainer
     	//System.out.println("TESTTTTTTTTTTTTT");
 		int x2 = (this.width  - this.xSize) / 2;
 		int y = (this.height - this.ySize) / 2;
-		mc.fontRenderer.drawString(I18n.format("msg.FarmBook.seedPat.txt"), 15, 4, 4210752);
-		mc.fontRenderer.drawString(I18n.format("msg.FarmBook.plantPat.txt"), 82, 4, 4210752);
+
+		if(page != 0)
+		{
+			mc.fontRenderer.drawString(I18n.format("msg.FarmBook.seedPat.txt"), 15, 4, 4210752);
+			mc.fontRenderer.drawString(I18n.format("msg.FarmBook.plantPat.txt"), 82, 4, 4210752);
+		}else
+		{
+			mc.fontRenderer.drawString(I18n.format("msg.FarmBook.dialy.1"), 10, 10, 0xFFFFFF);
+			mc.fontRenderer.drawString(I18n.format("msg.FarmBook.dialy.2"), 10, 20, 0xFFFFFF);
+			mc.fontRenderer.drawString(I18n.format("msg.FarmBook.dialy.3"), 10, 30, 0xFFFFFF);
+			mc.fontRenderer.drawString(I18n.format("msg.FarmBook.dialy.4"), 10, 40, 0xFFFFFF);
+			mc.fontRenderer.drawString(I18n.format("msg.FarmBook.dialy.5"), 10, 50, 0xFFFFFF);
+			mc.fontRenderer.drawString(I18n.format("msg.FarmBook.dialy.6"), 10, 60, 0xFFFFFF);
+			mc.fontRenderer.drawString(I18n.format("msg.FarmBook.dialy.7"), 10, 74, 0xFFFFFF);
+			mc.fontRenderer.drawString(I18n.format("msg.FarmBook.dialy.8"), 10, 84, 0xFFFFFF);
+		}
 		//String message = I18n.format("gui.container.TamingPets.title", new Object[]{});
 	    //this.fontRendererObj.drawString(message, 8, 6, 4210752);
 
@@ -104,7 +136,13 @@ public class GuiFarmBookGuiContainer extends GuiContainer
     protected void drawGuiContainerBackgroundLayer(float p_146976_1_, int p_146976_2_, int p_146976_3_)
     {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        this.mc.getTextureManager().bindTexture(texture);
+        if(this.page == 0)
+        {
+        	this.mc.getTextureManager().bindTexture(texture2);
+        }else
+        {
+        	this.mc.getTextureManager().bindTexture(texture);
+        }
         int k = (this.width - this.xSize) / 2;
         int l = (this.height - this.ySize) / 2;
         this.drawTexturedModalRect(k, l, 0, 0, this.xSize, this.ySize);
@@ -113,6 +151,76 @@ public class GuiFarmBookGuiContainer extends GuiContainer
 
     protected void actionPerformed(GuiButton p_146284_1_)
     {
+    	if(p_146284_1_.id == 1)
+    	{
+    		for(int cnt = this.page - 1; cnt >= this.page - DQR.mutationTable.mutationSeeds.size(); cnt--)
+        	{
+        		int checkPage = cnt - 1;
+        		if(checkPage < -1)
+    			{
+        			checkPage = checkPage + DQR.mutationTable.mutationSeeds.size() + 1;
+    			}
 
+        		if(checkPage == -1)
+        		{
+        			//checkPage = 0;
+        			this.page = 0;
+        			break;
+        			//flg = true;;
+        		}
+
+        		//System.out.println("DEBUG_" + cnt + "/" + checkPage);
+        		if(ExtendedPlayerProperties2.get(ep).getFarmRecipe(checkPage) == 1 ||
+        		   ExtendedPlayerProperties2.get(ep).getFarmRecipe(checkPage) >= 12)
+        		{
+        			this.page = checkPage + 1;
+        			 break;
+        			//return;
+        		}
+        	}
+
+    		if(this.inventorySlots instanceof GuiFarmBookContainer)
+    		{
+    			GuiFarmBookContainer container = (GuiFarmBookContainer)this.inventorySlots;
+    			container.pageNo = this.page;
+    			container.refreshInventory( this.page);
+    		}
+    	}
+
+    	if(p_146284_1_.id == 2)
+    	{
+    		for(int cnt = this.page + 1; cnt <= this.page + DQR.mutationTable.mutationSeeds.size(); cnt++)
+        	{
+        		int checkPage = cnt - 1;
+        		if(checkPage >= DQR.mutationTable.mutationSeeds.size())
+    			{
+        			checkPage = checkPage - DQR.mutationTable.mutationSeeds.size() - 1;
+    			}
+
+        		if(checkPage == -1)
+        		{
+        			//checkPage = 0;
+        			this.page = 0;
+        			//return;
+        			break;
+        		}
+
+        		if(checkPage >= 0 && (ExtendedPlayerProperties2.get(ep).getFarmRecipe(checkPage) == 1 ||
+        		   ExtendedPlayerProperties2.get(ep).getFarmRecipe(checkPage) >= 12))
+        		{
+        			this.page = checkPage + 1;
+        			break;
+        			//return;
+        		}
+
+        	}
+
+    		if(this.inventorySlots instanceof GuiFarmBookContainer)
+    		{
+    			GuiFarmBookContainer container = (GuiFarmBookContainer)this.inventorySlots;
+    			container.pageNo = this.page;
+    			container.refreshInventory( this.page);
+    		}
+    	}
     }
 }

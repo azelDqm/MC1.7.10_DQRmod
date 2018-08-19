@@ -12,8 +12,9 @@ import dqr.DQR;
 import dqr.PacketHandler;
 import dqr.entity.petEntity.DqmPetBase;
 import dqr.playerData.ExtendedPlayerProperties;
-import dqr.playerData.ExtendedPlayerProperties3;
-import dqr.playerData.MessagePlayerProperties3;
+import dqr.playerData.ExtendedPlayerProperties4;
+//import dqr.playerData.MessagePlayerProperties3;
+import dqr.playerData.MessagePlayerProperties4;
 
 public class ThreadDqmPartyProc extends Thread{
 
@@ -112,13 +113,13 @@ public class ThreadDqmPartyProc extends Thread{
 							if(rEp != null)
 							{
 								//System.out.println("TEST2 : " + rEp.getCommandSenderName());
-								ExtendedPlayerProperties3.get(rEp).setPartyMemberData(mainNBT);
+								ExtendedPlayerProperties4.get(rEp).setPartyMemberData(mainNBT);
 								//System.out.println("TEST1" + mainNBT.func_150296_c().size());
 
 								if(minecraftserver.getConfigurationManager().playerEntityList.contains(rEp))
 								{
 									//System.out.println("TEST????");
-									PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties3(rEp), (EntityPlayerMP)rEp);
+									PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties4(rEp), (EntityPlayerMP)rEp);
 								}
 							}
 						}

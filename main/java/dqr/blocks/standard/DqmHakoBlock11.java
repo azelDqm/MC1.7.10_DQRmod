@@ -224,11 +224,17 @@ public class DqmHakoBlock11 extends Block
 
         if (!par1World.isRemote)
         {
-        	if(spawnMob != null)
+        	if(spawnMob != null && par5 == 0)
         	{
+        		int[] locate = DQR.func.getSpaceLocationRandom(par1World, par2, par3, par4, 4, 4);
+        		spawnMob.setLocationAndAngles((double)locate[0], (double)locate[1], (double)locate[2], 0.0F, 0.0F);
+        		par1World.spawnEntityInWorld(spawnMob);
+        		spawnMob.spawnExplosionParticle();
+        		/*
         		spawnMob.setLocationAndAngles((double)par2 + 0.5D + x4, (double)par3 + x5, (double)par4 + 0.5D + x4, 0.0F, 0.0F);
         		par1World.spawnEntityInWorld(spawnMob);
         		spawnMob.spawnExplosionParticle();
+        		*/
         	}
 
         	if(doropiItems != null)

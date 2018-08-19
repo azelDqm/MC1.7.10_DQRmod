@@ -20,7 +20,7 @@ import org.lwjgl.opengl.GL11;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import dqr.DQR;
-import dqr.playerData.ExtendedPlayerProperties3;
+import dqr.playerData.ExtendedPlayerProperties4;
 
 public class GuiParty extends Gui
 {
@@ -95,16 +95,20 @@ public class GuiParty extends Gui
     	  return;
       }
 
-      NBTTagCompound partyData = ExtendedPlayerProperties3.get(ep).getPartyMemberData();
+      NBTTagCompound partyData = ExtendedPlayerProperties4.get(ep).getPartyMemberData();
+      //DQR.func.debugString("PT_TEST");
 
       if(!partyData.hasKey(ep.getUniqueID().toString()))
       {
-    	  ExtendedPlayerProperties3.get(ep).setPartyMemberData(null);
+    	  ExtendedPlayerProperties4.get(ep).setPartyMemberData(null);
     	  return;
       }
+      //DQR.func.debugString("PT_TEST2");
 
       if (DQR.conf.CLGuiPartyVis == 1)
       {
+          //DQR.func.debugString("PT_TEST3");
+
           y0 = 0;
           y1 = 0;
           y2 = 0;

@@ -109,7 +109,7 @@ import dqr.potion.DqmPotion;
 import dqr.world.DqmStructureRegister;
 import dqr.world.DqmVillageRegister;
 
-@Mod(modid = "DQMIIINext", name = "DQRespect", version = "0.9.4.6E#2", useMetadata = true, dependencies = "after:PotionExtension")
+@Mod(modid = "DQMIIINext", name = "DQRespect", version = "0.9.4.7#1", useMetadata = true, dependencies = "after:PotionExtension")
 public class DQR {
 
 	@SidedProxy(clientSide = "dqr.ClientProxy", serverSide = "dqr.CommonProxy")
@@ -118,10 +118,10 @@ public class DQR {
 	@Instance("DQMIIINext")
 	public static DQR instance;
 	public static String modID = "DQMIIINext";
-	public static int debug = 1; //12 : Lv 全calc
+	public static int debug = 0; //12 : Lv 全calc
 	public static int easyMode = 0;
 
-	public static int jobStatusVersion = 1;
+	public static int jobStatusVersion = 2;
 
 	public static FuncCalcMobParam funcMob;
 	public static DQRconfigs conf;
@@ -418,6 +418,7 @@ public class DQR {
 	@Mod.EventHandler
 	public void setver(FMLServerStartingEvent event)
 	{
+		//StringTranslate.inject(StringTranslate.class.getResourceAsStream("/assets/dqr/lang/ja_JP.lang"));
 		if(debug != 0)
 		{
 			event.registerServerCommand(new DqrComDebug());

@@ -14,6 +14,7 @@ import net.minecraft.util.IIcon;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import dqr.DQR;
+import dqr.api.enums.EnumColor;
 import dqr.api.enums.EnumDqmJob;
 
 public class DqmItemEmblemBase extends Item{
@@ -88,9 +89,20 @@ public class DqmItemEmblemBase extends Item{
     {
 
     	int[] needLvTable = DQR.jobChangeTable.getJobChangeTable(this);
+    	int isJobSkill = 0;
     	String needLv = "";
+    	if(p_77624_1_.getDisplayName().indexOf("dqm.skill.JSkill_") > -1)
+    	{
+    		p_77624_1_.setStackDisplayName(I18n.format(p_77624_1_.getDisplayName()));
+    	}
 
-    	if(needLvTable != null)
+    	NBTTagCompound nbt = p_77624_1_.getTagCompound();
+    	if(nbt != null)
+    	{
+    		isJobSkill = nbt.getInteger("isJobSkill");
+    	}
+
+    	if(needLvTable != null && isJobSkill == 0)
     	{
     		int jobCnt = 0;
 
@@ -148,7 +160,7 @@ public class DqmItemEmblemBase extends Item{
     		}
     	}
 
-    	NBTTagCompound nbt = p_77624_1_.getTagCompound();
+    	//NBTTagCompound nbt = p_77624_1_.getTagCompound();
     	if(nbt != null)
     	{
     		NumberFormat nfNum = NumberFormat.getNumberInstance();
@@ -170,6 +182,27 @@ public class DqmItemEmblemBase extends Item{
         		String medalValue = I18n.format("msg.casinocoin.item.txt", new Object[]{nfNum.format(coinVal)});
 
     			p_77624_3_.add(medalValue);
+    		}
+
+    		if(nbt.getInteger("isJobSkill") > 0)
+    		{
+    			p_77624_3_.add(EnumColor.Gold.getChatColor() + I18n.format("dqm.skill.JSkill.needSP", new Object[]{nbt.getInteger("needSP")}));
+
+    			if(nbt.getInteger("isJobSkill") == 2)
+    			{
+    				p_77624_3_.add(EnumColor.Yellow.getChatColor() + I18n.format("dqm.skill.JSkill.allFlg", new Object[]{}));
+    			}
+
+    			if(nbt.getInteger("activeSkill") == 1)
+    			{
+    				p_77624_3_.add(EnumColor.Aqua.getChatColor() + I18n.format("dqm.skill.info.func.1", new Object[]{}));
+    			}else
+    			{
+    				p_77624_3_.add(EnumColor.Aqua.getChatColor() + I18n.format("dqm.skill.info.func.2", new Object[]{}));
+    			}
+
+    			String skillInfo = I18n.format("dqm.skill.JSkill_" + nbt.getInteger("jobId") + "_" + nbt.getInteger("skillIdx") + ".info", new Object[]{});
+    			p_77624_3_.add(EnumColor.White.getChatColor() +  skillInfo);
     		}
     	}
     }

@@ -2255,6 +2255,14 @@ public class DqrItemRegister {
 		GameRegistry.registerItem(DQSkills.itemSkillJ_MISS, "itemSkillJ_MISS");
 		GameRegistry.registerItem(DQSkills.itemSkillJ_CRI, "itemSkillJ_CRI");
 		GameRegistry.registerItem(DQSkills.itemSkillJ_AGI, "itemSkillJ_AGI");
+
+		GameRegistry.registerItem(DQMiscs.itemSkillbook, "ItemSkillbook");
+
+		GameRegistry.registerItem(DQMagics.itemJSkillBook, "ItemJSkillBook");
+		GameRegistry.registerItem(DQMagics.itemJSkillBookR, "ItemJSkillBookR");
+		GameRegistry.registerItem(DQMagics.itemJSkillBookB, "ItemJSkillBookB");
+		GameRegistry.registerItem(DQMagics.itemJSkillBookG, "ItemJSkillBookG");
+		GameRegistry.registerItem(DQMagics.itemJSkillBookY, "ItemJSkillBookY");
 	}
 }
 

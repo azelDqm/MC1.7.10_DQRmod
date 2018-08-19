@@ -15,8 +15,9 @@ import dqr.DQR;
 import dqr.PacketHandler;
 import dqr.entity.petEntity.DqmPetBase;
 import dqr.playerData.ExtendedPlayerProperties;
-import dqr.playerData.ExtendedPlayerProperties3;
-import dqr.playerData.MessagePlayerProperties3;
+import dqr.playerData.ExtendedPlayerProperties4;
+import dqr.playerData.MessagePlayerProperties4;
+//import dqr.playerData.MessagePlayerProperties3;
 import dqr.thread.NoThreadProcess;
 import dqr.thread.ThreadLvUp;
 import dqr.thread.ThreadLvUpPet;
@@ -290,10 +291,10 @@ public class DqmPartyManager {
         	partySet.remove(removeKeys.get(cnt));
         	if(par1 instanceof EntityPlayer)
         	{
-        		ExtendedPlayerProperties3.get((EntityPlayer)par1).setPartyMemberData(null);
+        		ExtendedPlayerProperties4.get((EntityPlayer)par1).setPartyMemberData(null);
             	if(!par1.worldObj.isRemote)
             	{
-            		PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties3((EntityPlayer)par1), (EntityPlayerMP)par1);
+            		PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties4((EntityPlayer)par1), (EntityPlayerMP)par1);
             	}
         		EntityPlayer ep = (EntityPlayer)par1;
         		DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.party.leave.txt",new Object[] {}));
@@ -338,10 +339,10 @@ public class DqmPartyManager {
                 Entity er = minecraftserver.getConfigurationManager().func_152612_a((String)o);
 
                 partySet.remove(o);
-                ExtendedPlayerProperties3.get((EntityPlayer)er).setPartyMemberData(null);
+                ExtendedPlayerProperties4.get((EntityPlayer)er).setPartyMemberData(null);
             	if(!ep.worldObj.isRemote)
             	{
-            		PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties3((EntityPlayer)er), (EntityPlayerMP)er);
+            		PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties4((EntityPlayer)er), (EntityPlayerMP)er);
             	}
 
             	return true;
@@ -482,11 +483,11 @@ public class DqmPartyManager {
 
 				if(er != null)
 				{
-					ExtendedPlayerProperties3.get((EntityPlayer)er).setPartyMemberData(null);
+					ExtendedPlayerProperties4.get((EntityPlayer)er).setPartyMemberData(null);
 
 					if(!ep.worldObj.isRemote)
 					{
-						PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties3((EntityPlayer)er), (EntityPlayerMP)er);
+						PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties4((EntityPlayer)er), (EntityPlayerMP)er);
 					}
 				}
 			}

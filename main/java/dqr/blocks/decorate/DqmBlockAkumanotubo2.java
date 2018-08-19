@@ -44,6 +44,8 @@ public class DqmBlockAkumanotubo2 extends BlockContainer
         int ret = (int)Math.floor(Math.random() * (max - min + 1)) + min;
         return ret;
     }
+
+
     public void onBlockDestroyedByPlayer(World par1World, int par2, int par3, int par4, int par5)
     {
         int x = 0;
@@ -51,6 +53,7 @@ public class DqmBlockAkumanotubo2 extends BlockContainer
         int x4 = x + getRandom(2, 0);
         int x5 = x + getRandom(4, 0);
 
+        DQR.func.debugString("TEST : " + par1World.getBlock(par2, par3, par4).getUnlocalizedName() + " / " + par1World.getBlockMetadata(par2, par3, par4));
         Random rand = new Random();
         DqmMobBase spawnMob = null;
         ItemStack doropiItems = null;
@@ -428,14 +431,21 @@ public class DqmBlockAkumanotubo2 extends BlockContainer
         }
 
 
-
         if (!par1World.isRemote)
         {
-        	if(spawnMob != null)
+        	DqmTileEntityAkumanotubo tile = (DqmTileEntityAkumanotubo)par1World.getTileEntity(par2, par3, par4);
+
+        	if(spawnMob != null && tile.getFlgInpasu() == 0)
         	{
+        		int[] locate = DQR.func.getSpaceLocationRandom(par1World, par2, par3, par4, 4, 4);
+        		spawnMob.setLocationAndAngles((double)locate[0], (double)locate[1], (double)locate[2], 0.0F, 0.0F);
+        		par1World.spawnEntityInWorld(spawnMob);
+        		spawnMob.spawnExplosionParticle();
+        		/*
         		spawnMob.setLocationAndAngles((double)par2 + 0.5D + x4, (double)par3 + x5, (double)par4 + 0.5D + x4, 0.0F, 0.0F);
         		par1World.spawnEntityInWorld(spawnMob);
         		spawnMob.spawnExplosionParticle();
+        		*/
         	}
 
         	if(doropiItems != null)

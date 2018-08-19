@@ -1,21 +1,30 @@
 package dqr.gui.dama;
 
-import net.minecraft.client.Minecraft;
+import java.util.ArrayList;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.util.StatCollector;
+import dqr.DQR;
 import dqr.PacketHandler;
-import dqr.packetMessage.MessageServerSkillWeapon;
+import dqr.api.enums.EnumDqmSkillW;
+import dqr.packetMessage.MessageServerDataSend;
+import dqr.playerData.ExtendedPlayerProperties;
+import dqr.playerData.ExtendedPlayerProperties3;
 
 public class GuiSkillWeaponContainer extends Container
 {
     private InventorySkillWeapon inventory;
+    private EntityPlayer ep;
 
     public GuiSkillWeaponContainer(EntityPlayer ep)
     {
         //inventory = new InventoryItemJobChange(inventoryPlayer);
+    	this.ep = ep;
     	inventory = new InventorySkillWeapon(ep);
         inventory.openInventory();
 
@@ -53,6 +62,22 @@ public class GuiSkillWeaponContainer extends Container
     public boolean canInteractWith(EntityPlayer p_75145_1_)
     {
         return true;
+    }
+
+    public void refreshInventory()
+    {
+    	this.inventorySlots = new ArrayList();
+    	inventory = new InventorySkillWeapon(ep);
+        inventory.openInventory();
+
+        int i = 2 * 18 + 1;
+
+        //for (int j = 0; j < 3; ++j)
+        //{
+        for (int k = 0; k < 10; ++k)
+        {
+            this.addSlotToContainer(new SlotSkillWeapon(inventory, k + 0 * 9, 8 + k * 18, 18 + 0 * 18));
+        }
     }
 
     @Override
@@ -100,10 +125,28 @@ public class GuiSkillWeaponContainer extends Container
     /*
         Containerを閉じるときに呼ばれる
      */
+    /*
     @Override
     public void onContainerClosed(EntityPlayer p_75134_1_)
     {
         super.onContainerClosed(p_75134_1_);
+        this.inventory.closeInventory();
+    }
+    */
+    @Override
+    public void onContainerClosed(EntityPlayer p_75134_1_)
+    {
+        super.onContainerClosed(p_75134_1_);
+		if(p_75134_1_.worldObj.isRemote)
+    	{
+			NBTTagCompound data = new NBTTagCompound();
+			ExtendedPlayerProperties3.get(p_75134_1_).saveNBTData(data);
+    		PacketHandler.INSTANCE.sendToServer(new MessageServerDataSend(data, 3));
+    	}
+
+		//FuncJobSkillData.calcPlayerStatus(p_75134_1_);
+		//FuncJobSkillData.calcPlayerStatus2(p_75134_1_);
+
         this.inventory.closeInventory();
     }
 
@@ -126,25 +169,92 @@ public class GuiSkillWeaponContainer extends Container
 	    			//System.out.println("TEST?" + skillPoint);
 	    			if(skillPoint > 0)
 	    			{
+	    				EnumDqmSkillW skillW =  DQR.enumGetter.getSkillW(nbt.getInteger("weaponId"), nbt.getInteger("CategCode"));
+
+	    				int needWP = skillW.getPOINT();
+	    	        	int nowWP = ExtendedPlayerProperties.get(ep).getJukurenWP(nbt.getInteger("weaponId"));
+	    	        	int needLv = skillW.getNeedLv();
+	    	        	int nowLv = ExtendedPlayerProperties.get(ep).getJukurenLv(nbt.getInteger("weaponId"));
+
+	    	        	//System.out.println("？？？？:" + needWP + "/" + nowWP );
+	    	        	int perm = ExtendedPlayerProperties3.get(ep).getWeaponSkillPermission(nbt.getInteger("weaponId"), nbt.getInteger("CategCode"));
+	    	        	if(perm == 0 || DQR.debug == 1)
+	    	        	{
+	    		        	if(needLv <= nowLv || DQR.debug == 1)
+	    		        	{
+	    			        	if(needWP <= nowWP || DQR.debug == 1)
+	    			        	{
+	    			        		String skillName = StatCollector.translateToLocal("dqm.skill." + skillW.getName() + ".name");
+	    			        		DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.Dama3.messages.20.txt" ,new Object[] {skillName}));
+	    			        		ep.worldObj.playSoundAtEntity(ep, "dqr:player.levelup", 1.0F, 0.9F);
+	    			        		ExtendedPlayerProperties.get(ep).setJukurenWP(nbt.getInteger("weaponId"), nowWP - needWP);
+	    			        		ExtendedPlayerProperties3.get(ep).setWeaponSkillPermission(nbt.getInteger("weaponId"), nbt.getInteger("CategCode"), 1);
+	    			        		//((ExtendedPlayerProperties)(ep.getExtendedProperties(ExtendedPlayerProperties.EXT_PROP_NAME))).loadProxyData((EntityPlayer)ep);
+	    			        		//((ExtendedPlayerProperties3)(ep.getExtendedProperties(ExtendedPlayerProperties3.EXT_PROP_NAME))).loadProxyData((EntityPlayer)ep);
+	    			        		//DQR.func.debugString("TESTTEST : " + ep.worldObj.isRemote);
+	    			        		//PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties3(ep), (EntityPlayerMP)ep);
+	    			        	}else
+	    			        	{
+	    			        		if(!ep.worldObj.isRemote)
+	    			        		{
+	    			        			DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.Dama3.messages.40.txt" ,new Object[] {}));
+	    			        		}
+	    			        	}
+	    		        	}else
+	    		        	{
+	    		        		if(!ep.worldObj.isRemote)
+	    		        		{
+	    		        			DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.Dama3.messages.42.txt" ,new Object[] {}));
+	    		        		}
+	    		        	}
+	    	        	}
+	    				/*
 	    				PacketHandler.INSTANCE.sendToServer(new MessageServerSkillWeapon(nbt.getInteger("weaponId"),
 	    																			 	 nbt.getInteger("CategCode"),
 	    																			 	 0));
+	    				 */
+
 	    			}else
 	    			{
 	    				if(skillFunc == 1)
 	    				{
+		            		int perm = ExtendedPlayerProperties3.get(ep).getWeaponSkillPermission(nbt.getInteger("weaponId"), nbt.getInteger("CategCode"));
+		            		//if(perm == 1 && ExtendedPlayerProperties3.get(ep).getWeaponSkillSet(nbt.getInteger("weaponId")) != nbt.getInteger("CategCode"))
+		            		if(perm == 1)
+		            		{
+		            			//int setSkill =  ExtendedPlayerProperties3.get(ep).getWeaponSkillSet(pat);
+		            			int wSetSkill = ExtendedPlayerProperties3.get(ep).getWeaponSkillSet(nbt.getInteger("weaponId"));
+
+		            			//DQR.func.debugString("TESTTEST : " + wSetSkill + " / " + nbt.getInteger("CategCode"));
+		            			if(nbt.getInteger("CategCode") == wSetSkill)
+		            			{
+		            				ExtendedPlayerProperties3.get(ep).setWeaponSkillSet(nbt.getInteger("weaponId"), -1);
+		            				ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
+		            			}else
+		            			{
+		            				ExtendedPlayerProperties3.get(ep).setWeaponSkillSet(nbt.getInteger("weaponId"), nbt.getInteger("CategCode"));
+		            				ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
+		            			}
+		            		}
+	    					/*
 	    					PacketHandler.INSTANCE.sendToServer(new MessageServerSkillWeapon(nbt.getInteger("weaponId"),
 	    														nbt.getInteger("CategCode"),
 	    														1));
+	    														*/
 	    				}
 	    			}
 	    		}
 
+	    		/*
 	    		if(ep.worldObj.isRemote)
 	    		{
 	    			Minecraft.getMinecraft().thePlayer.closeScreen();
 	    			Minecraft.getMinecraft().setIngameFocus();
 	    		}
+	    		*/
+
+
+
 	   			//System.out.println("1:" + ep.worldObj.isRemote + ":" + slot.getStack().getDisplayName());
 	    		/*
 	    		if(slot.getStack().getItem() instanceof DqmItemEmblemBase)
@@ -170,6 +280,7 @@ public class GuiSkillWeaponContainer extends Container
 	    	}
     	}
 
+    	this.refreshInventory();
     	return null;
     }
 }

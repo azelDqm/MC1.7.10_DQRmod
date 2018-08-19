@@ -161,6 +161,8 @@ public class DqmMobBase extends EntityMob
 	public boolean flgSpawnFromSpawner = false;
 	public boolean flgGetKaisinDam = false;
 
+	public int petRefuseFlg = 0;
+
 	public DqmMobBase(World world, EnumDqmMonster mobType)
 	{
 		super(world);
@@ -1012,6 +1014,24 @@ public class DqmMobBase extends EntityMob
 		}
 
 
+		if(attacker instanceof EntityPlayer)
+		{
+			int refFlg = ExtendedPlayerProperties.get((EntityPlayer)attacker).getPetRefuse();
+			DQR.func.debugString("RefFle : " + refFlg + " / " + this.petRefuseFlg, this.getClass(), 3);
+			if(refFlg == 1 && this.petRefuseFlg == 0  && DQR.conf.permPetRefCommand == 1)
+			{
+				this.petRefuseFlg = 2;
+			}else
+			{
+				if(refFlg == 1 && this.petRefuseFlg == 2)
+				{
+					;
+				}else
+				{
+					this.petRefuseFlg = 1;
+				}
+			}
+		}
 //DQR.func.debugString("damageEntity1:" + this.hurtResistantTime);
 		this.absoluteDam = -1.0F;
 		boolean skillFlg = false;
@@ -1030,6 +1050,22 @@ public class DqmMobBase extends EntityMob
     		if(source.getEntity() instanceof EntityPlayer)
     		{
     			EntityPlayer ep = (EntityPlayer)source.getEntity();
+
+    			int refFlg2 = ExtendedPlayerProperties.get(ep).getPetRefuse();
+    			DQR.func.debugString("RefFle : " + refFlg2 + " / " + this.petRefuseFlg, this.getClass(), 3);
+    			if(refFlg2 == 1 && this.petRefuseFlg == 0 && DQR.conf.permPetRefCommand == 1)
+    			{
+    				this.petRefuseFlg = 2;
+    			}else
+    			{
+    				if(refFlg2 == 1 && this.petRefuseFlg == 2)
+    				{
+    					;
+    				}else
+    				{
+    					this.petRefuseFlg = 1;
+    				}
+    			}
 
     			int weapon = ExtendedPlayerProperties.get(ep).getWeapon();
     			int weaponSkill = ExtendedPlayerProperties3.get(ep).getWeaponSkillSet(weapon);
@@ -3386,6 +3422,7 @@ public class DqmMobBase extends EntityMob
     	if(this.getHealth() <= 0.0F || this.isDead)
     	{
     		//死亡判定
+    		this.setDead();
     		return false;
     	}
     	if(this.mobAI.getTeleport() > 0)
@@ -3685,6 +3722,7 @@ public class DqmMobBase extends EntityMob
         {
         	//DQR.func.debugString("SamidareDEBUG_A10");
         	//死亡判定
+        	this.setDead();
         	return false;
         }
 
@@ -3705,6 +3743,35 @@ public class DqmMobBase extends EntityMob
         	//DQR.func.debugString("SamidareDEBUG_A10");
         	//DQR.func.debugString("SamidareDEBUG5");
             this.entityAge = 0;
+
+    		EntityLivingBase attacker = null;
+    		if(p_70097_1_.getEntity() instanceof EntityLivingBase)
+    		{
+    			attacker = (EntityLivingBase)p_70097_1_.getEntity();
+    		}else if(p_70097_1_.getSourceOfDamage() instanceof EntityLivingBase)
+    		{
+    			attacker = (EntityLivingBase)p_70097_1_.getSourceOfDamage();
+    		}
+
+
+    		if(attacker instanceof EntityPlayer)
+    		{
+    			int refFlg = ExtendedPlayerProperties.get((EntityPlayer)attacker).getPetRefuse();
+    			DQR.func.debugString("RefFle : " + refFlg + " / " + this.petRefuseFlg, this.getClass(), 3);
+    			if(refFlg == 1 && this.petRefuseFlg == 0  && DQR.conf.permPetRefCommand == 1)
+    			{
+    				this.petRefuseFlg = 2;
+    			}else
+    			{
+    				if(refFlg == 1 && this.petRefuseFlg == 2)
+    				{
+    					;
+    				}else
+    				{
+    					this.petRefuseFlg = 1;
+    				}
+    			}
+    		}
 
             if (this.getHealth() <= 0.0F)
             {

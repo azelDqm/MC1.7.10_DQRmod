@@ -729,4 +729,142 @@ public class EnumDqmGetter {
     	}
 		return null;
 	}
+
+
+	public EnumDqmJob[] getDqmJobsArray()
+	{
+		EnumDqmJob[] array = new EnumDqmJob[EnumDqmJob.values().length];
+		EnumDqmJob[] data = EnumDqmJob.values();
+
+    	for(int cnt = 0; cnt < data.length; cnt++)
+    	{
+    		array[data[cnt].getJobOrderId()] = data[cnt];
+    	}
+
+		return array;
+	}
+
+    public EnumDqmSkillJ getSkillJ2(int job, int idx)
+    {
+    	EnumDqmSkillJ ret = null;
+    	EnumDqmSkillJ[] data = EnumDqmSkillJ.values();
+
+    	for(int cnt = 0; cnt < data.length; cnt++)
+    	{
+    		if(data[cnt].getJob() == job && data[cnt].getIdx() == idx &&  data[cnt].getNeedsp() > -1)
+    		{
+    			return data[cnt];
+    		}
+    	}
+
+    	return ret;
+    }
+
+    public EnumDqmSkillJ getSkillJ(int job, int idx)
+    {
+    	EnumDqmSkillJ ret = null;
+    	EnumDqmSkillJ[] data = EnumDqmSkillJ.values();
+
+    	for(int cnt = 0; cnt < data.length; cnt++)
+    	{
+    		if(data[cnt].getJob() == job && data[cnt].getIdx() == idx)
+    		{
+    			return data[cnt];
+    		}
+    	}
+
+    	return ret;
+    }
+
+    public EnumDqmSkillJ getSkillAllJ(int job, int idx)
+    {
+    	EnumDqmSkillJ ret = null;
+    	EnumDqmSkillJ[] data = EnumDqmSkillJ.values();
+
+    	for(int cnt = 0; cnt < data.length; cnt++)
+    	{
+    		if(data[cnt].getJob() == job && data[cnt].getIdx() == idx && data[cnt].getNeedsp_All() > -1)
+    		{
+    			return data[cnt];
+    		}
+    	}
+
+    	return ret;
+    }
+
+    public EnumDqmSkillJ[] getSkillAllJfromJob(int job)
+    {
+    	EnumDqmSkillJ[] ret = null;
+    	EnumDqmSkillJ[] data = EnumDqmSkillJ.values();
+    	int counter = 0;
+
+    	for(int cnt = 0; cnt < data.length; cnt++)
+    	{
+    		if(data[cnt].getJob() == job && data[cnt].getNeedsp_All() > -1)
+    		{
+    			counter = counter + 1;
+    		}
+    	}
+
+    	ret = new EnumDqmSkillJ[counter];
+    	int regCount = 0;
+    	for(int cnt = 0; cnt < data.length; cnt++)
+    	{
+    		if(data[cnt].getJob() == job && data[cnt].getNeedsp_All() > -1)
+    		{
+    			ret[regCount] = data[cnt];
+    			regCount = regCount + 1;
+    		}
+    	}
+
+    	return ret;
+    }
+
+	public int getJobSPSkillCounterJ(int job)
+	{
+		EnumDqmSkillJ[] skills = EnumDqmSkillJ.values();
+		int ret = 0;
+
+	   	for(int cnt = 0; cnt < skills.length; cnt++)
+    	{
+	   		if(skills[cnt].getJob() == job)
+	   		{
+	   			ret = ret + 1;
+	   		}
+    	}
+
+		return ret;
+	}
+
+	public int getJobSPSkillCounterJ2(int job)
+	{
+		EnumDqmSkillJ[] skills = EnumDqmSkillJ.values();
+		int ret = 0;
+
+	   	for(int cnt = 0; cnt < skills.length; cnt++)
+    	{
+	   		if(skills[cnt].getJob() == job &&  skills[cnt].getNeedsp() > -1)
+	   		{
+	   			ret = ret + 1;
+	   		}
+    	}
+
+		return ret;
+	}
+
+	public int getJobSPSkillCounterAllJ(int job)
+	{
+		EnumDqmSkillJ[] skills = EnumDqmSkillJ.values();
+		int ret = 0;
+
+	   	for(int cnt = 0; cnt < skills.length; cnt++)
+    	{
+	   		if(skills[cnt].getJob() == job && skills[cnt].getNeedsp_All() > -1)
+	   		{
+	   			ret = ret + 1;
+	   		}
+    	}
+
+		return ret;
+	}
 }

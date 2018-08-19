@@ -5,6 +5,8 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import dqr.DQR;
+import dqr.api.enums.EnumDqmSkillJ;
 import dqr.api.enums.EnumDqmStatus;
 import dqr.dataTable.FuncJobSkillData;
 import dqr.playerData.ExtendedPlayerProperties;
@@ -14,13 +16,14 @@ public class InventorySkillJob implements IInventory
     //private InventoryPlayer inventoryPlayer;
     //private ItemStack currentItem;
     private ItemStack[] items;
+    private int jobId = -1;
 
     public InventorySkillJob(EntityPlayer ep, int par1)
     {
 
     	//int job = ExtendedPlayerProperties.get(ep).getJob();
     	int job = par1;
-
+    	this.jobId = par1;
     	if(job != -1)
     	{
 	    	int jobLv =  ExtendedPlayerProperties.get(ep).getJobLv(job);
@@ -33,7 +36,7 @@ public class InventorySkillJob implements IInventory
 	    	int maxCount = FuncJobSkillData.getSkillMaxCount(jobLv);
 
 	        //InventorySize
-	        items = new ItemStack[18];
+	        items = new ItemStack[18 + DQR.enumGetter.getJobSPSkillCounterJ2(job) + DQR.enumGetter.getJobSPSkillCounterAllJ(job)];
 
 	        //DQR.func.debugString("GuiDebug : 7 / " + this.buttonList.size() + " / " + this.page + " / " + this.maxPage, this.getClass(), 4);
 
@@ -99,6 +102,105 @@ public class InventorySkillJob implements IInventory
 					{
 						break;
 					}
+				}
+	    	}
+
+	    	int categCnt = 18;
+	    	if(par1 != -1)
+	    	{
+	    		//DQR.func.debugString("TEST5 : " + job + " / " + DQR.enumGetter.getJobSPSkillCounterJ(job));
+				for(int cnt = 0; cnt < DQR.enumGetter.getJobSPSkillCounterJ2(job); cnt++)
+				{
+					EnumDqmSkillJ skill = DQR.enumGetter.getSkillJ2(job, cnt);
+					ItemStack itemSkill = new ItemStack(DQR.func.getJobSPSkillItemFromJobId(job), 1);
+					//DQR.func.debugString("TEST1 : " + cnt);
+
+					if(skill.getNeedlv() <= jobLv)
+					{
+						items[cnt + 18] = itemSkill;
+
+						NBTTagCompound nbt = items[cnt + 18].getTagCompound();
+						if(nbt == null)
+						{
+							nbt = new NBTTagCompound();
+						}
+
+						//DQR.func.debugString("TEST2 : " + skill.getNeedlv() + " / " + jobLv);
+
+						//DQR.func.debugString("TEST3");
+
+						/*
+						nbt.setInteger("jobId", job);
+						nbt.setInteger("categNum", cnt + 9);
+						nbt.setInteger("statusId", jobSkillCateg[cnt].getId());
+						nbt.setInteger("statusParam", jobSkillParam2[cnt]);
+						*/
+		            	nbt.setInteger("isJobSkill", 1);
+		            	nbt.setInteger("jobId", job);
+		            	nbt.setInteger("categNum", categCnt);
+		            	nbt.setInteger("activeSkill", skill.getActiveskill());
+		            	nbt.setInteger("skillIdx", skill.getIdx());
+		            	nbt.setInteger("skillId", skill.getId());
+
+
+						nbt.setInteger("needSP", skill.getNeedsp());
+						//nbt.setInteger("allFlg", 1);
+
+						items[cnt + 18].setTagCompound(nbt);
+						items[cnt + 18].setStackDisplayName("dqm.skill.JSkill_" + skill.getJob() + "_" + skill.getIdx() + ".name");
+						//items[cnt].setStackDisplayName("dqm.skill." + skillEnum.getName() + ".name");
+						categCnt = categCnt + 1;
+					}
+
+				}
+
+
+				int addCount = 0;
+				for(int cnt = 0; cnt < DQR.enumGetter.getJobSPSkillCounterJ(job); cnt++)
+				{
+					//DQR.
+					EnumDqmSkillJ skill = DQR.enumGetter.getSkillAllJ(job, cnt);
+					ItemStack itemSkill = new ItemStack(DQR.func.getJobSPSkillItemFromJobId(job), 1);
+					//DQR.func.debugString("TEST_A : " + cnt);
+
+					if(skill != null && skill.getNeedlv() <= jobLv)
+					{
+						items[addCount + 18 + DQR.enumGetter.getJobSPSkillCounterJ2(job)] = itemSkill;
+
+						NBTTagCompound nbt = items[addCount + 18 + DQR.enumGetter.getJobSPSkillCounterJ2(job)].getTagCompound();
+						if(nbt == null)
+						{
+							nbt = new NBTTagCompound();
+						}
+
+						//DQR.func.debugString("TEST2 : " + skill.getNeedlv() + " / " + jobLv);
+
+						//DQR.func.debugString("TEST3");
+
+						/*
+						nbt.setInteger("jobId", job);
+						nbt.setInteger("categNum", cnt + 9);
+						nbt.setInteger("statusId", jobSkillCateg[cnt].getId());
+						nbt.setInteger("statusParam", jobSkillParam2[cnt]);
+						*/
+		            	nbt.setInteger("isJobSkill", 2);
+		            	nbt.setInteger("jobId", job);
+		            	nbt.setInteger("categNum", categCnt);
+		            	nbt.setInteger("activeSkill", skill.getActiveskill());
+		            	nbt.setInteger("skillIdx", skill.getIdx());
+		            	nbt.setInteger("skillId", skill.getId());
+
+
+						nbt.setInteger("needSP", skill.getNeedsp_All());
+						//nbt.setInteger("allFlg", 1);
+
+						items[addCount + 18 + DQR.enumGetter.getJobSPSkillCounterJ2(job)].setTagCompound(nbt);
+						items[addCount + 18 + DQR.enumGetter.getJobSPSkillCounterJ2(job)].setStackDisplayName("dqm.skill.JSkill_" + skill.getJob() + "_" + skill.getIdx() + ".name");
+						//items[cnt].setStackDisplayName("dqm.skill." + skillEnum.getName() + ".name");
+						addCount = addCount+ 1;
+						categCnt = categCnt + 1;
+					}
+
 				}
 	    	}
     	}else
@@ -263,6 +365,11 @@ public class InventorySkillJob implements IInventory
     public boolean isItemValidForSlot(int p_94041_1_, ItemStack p_94041_2_)
     {
         return true;
+    }
+
+    public int getJobId()
+    {
+    	return this.jobId;
     }
 
 }

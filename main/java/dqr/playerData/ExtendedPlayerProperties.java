@@ -139,6 +139,8 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
     private int shopPaymentGold4 = 0;
     private int shopPaymentGold5 = 0;
     private int shopPaymentGold6 = 0;
+
+    private int petRefuse = 0;
 /*
     private int sampleInt = 0;
     private double sampleDouble = 0.0D;
@@ -419,6 +421,8 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
         nbt.setInteger("shopPaymentGold4", this.shopPaymentGold4);
         nbt.setInteger("shopPaymentGold5", this.shopPaymentGold5);
         nbt.setInteger("shopPaymentGold6", this.shopPaymentGold6);
+
+        nbt.setInteger("petRefuse", this.petRefuse);
         compound.setTag(EXT_PROP_NAME, nbt);
     }
 
@@ -646,6 +650,8 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
         this.shopPaymentGold4 = nbt.getInteger("shopPaymentGold4");
         this.shopPaymentGold5 = nbt.getInteger("shopPaymentGold5");
         this.shopPaymentGold6 = nbt.getInteger("shopPaymentGold6");
+
+        this.petRefuse = nbt.getInteger("petRefuse");
         /*
         this.sampleInt = nbt.getInteger("sampleInt");
         this.sampleDouble = nbt.getDouble("sampleDouble");
@@ -1712,6 +1718,15 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
     public void setJobSkillCalcFlg(boolean par1)
     {
     	this.jobSkillCalcFlg = par1;
+    }
+
+
+
+    public int getPetRefuse() {
+        return petRefuse;
+    }
+    public void setPetRefuse(int par1) {
+        this.petRefuse = par1;
     }
     /*
     public int getSampleInt() {

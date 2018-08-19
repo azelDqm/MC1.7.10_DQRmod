@@ -3,6 +3,7 @@ package dqr.items.base;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.world.World;
 
 public class DqmItemDebugBase extends Item{
@@ -10,11 +11,20 @@ public class DqmItemDebugBase extends Item{
 	@Override
     public boolean onItemUse(ItemStack par1ItemStack, EntityPlayer ep, World par3World, int p_77648_4_, int p_77648_5_, int p_77648_6_, int p_77648_7_, float p_77648_8_, float p_77648_9_, float p_77648_10_)
     {
+		if(par3World.getBlockMetadata(p_77648_4_, p_77648_5_, p_77648_6_) == 0)
+		{
+			par3World.setBlockMetadataWithNotify(p_77648_4_, p_77648_5_, p_77648_6_, 1, 2);
+		}else
+		{
+			par3World.setBlockMetadataWithNotify(p_77648_4_, p_77648_5_, p_77648_6_, 0, 2);
+		}
+
+		ep.addChatMessage(new ChatComponentTranslation("TEST : " + par3World.getBlock(p_77648_4_, p_77648_5_, p_77648_6_).getUnlocalizedName() + " / "+ par3World.getBlockMetadata(p_77648_4_, p_77648_5_, p_77648_6_) ));
 		//System.out.println("TEST-1 : " + p_77648_4_ + "/" + p_77648_5_ + "/" + p_77648_6_ + "/" + p_77648_7_);
 		//System.out.println("TEST-2 : " + p_77648_8_ + "/" + p_77648_9_ + "/" + p_77648_10_);
 
-		System.out.println("TEST-2 : " + par3World.getBlock(p_77648_4_, p_77648_5_, p_77648_6_).getUnlocalizedName());
-		System.out.println("TEST-3 : " + par3World.getBlockMetadata(p_77648_4_, p_77648_5_, p_77648_6_));
+		//System.out.println("TEST-2 : " + par3World.getBlock(p_77648_4_, p_77648_5_, p_77648_6_).getUnlocalizedName());
+		//System.out.println("TEST-3 : " + par3World.getBlockMetadata(p_77648_4_, p_77648_5_, p_77648_6_));
 		/*
 		if (p_77648_7_ != 0 && par3World.getBlock(p_77648_4_, p_77648_5_ + 1, p_77648_6_))
 		{
@@ -85,6 +95,7 @@ public class DqmItemDebugBase extends Item{
 
     	if(!world.isRemote)
     	{
+    		//player.openGui(DQR.instance, DQR.conf.GuiID_Skillbook, world, (int)player.posX, (int)player.posY, (int)player.posZ);
     		/*
     		Hashtable<Integer, Object> test = new Hashtable();
 

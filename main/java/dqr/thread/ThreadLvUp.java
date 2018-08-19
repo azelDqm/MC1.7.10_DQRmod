@@ -6,12 +6,22 @@ import dqr.DQR;
 public class ThreadLvUp extends Thread{
 
 	private EntityPlayer ep;
+	private int recalcFlg = 0;
+	private int jobId = -1;
 
 	public ThreadLvUp(EntityPlayer player)
 	{
 		this.ep = player;
+		this.recalcFlg = 0;
+		this.jobId = -1;
 	}
 
+	public ThreadLvUp(EntityPlayer player, int recalcFlg, int jobId)
+	{
+		this.ep = player;
+		this.recalcFlg = recalcFlg;
+		this.jobId = jobId;
+	}
 
 	public void run()
 	{
@@ -22,7 +32,7 @@ public class ThreadLvUp extends Thread{
 		}
 
 		//System.out.println("DEBUG4444444444444");
-		DQR.func.lvUpProcessMain(ep);
+		DQR.func.lvUpProcessMain(ep, recalcFlg, jobId);
 		/*
 		boolean flg = true;
 		int epLv = ExtendedPlayerProperties.get(this.ep).getJobLv(ExtendedPlayerProperties.get(this.ep).getJob());

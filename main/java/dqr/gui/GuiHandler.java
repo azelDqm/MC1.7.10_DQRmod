@@ -55,6 +55,8 @@ import dqr.gui.petStatus.GuiPetInventoryContainer;
 import dqr.gui.petStatus.GuiPetInventoryGuiContainer;
 import dqr.gui.petStatus.GuiPetStatusContainer;
 import dqr.gui.petStatus.GuiPetStatusGuiContainer;
+import dqr.gui.skillBook.GuiSkillbookContainer;
+import dqr.gui.skillBook.GuiSkillbookGuiContainer;
 import dqr.gui.subEquip.GuiSubEquipContainer;
 import dqr.gui.subEquip.GuiSubEquipGuiContainer;
 import dqr.playerData.ExtendedPlayerProperties2;
@@ -142,6 +144,8 @@ public class GuiHandler implements IGuiHandler {
         	return new GuiCasinoCCRContainer(player);
         }else if (ID == DQR.conf.GuiID_SkillJob){
         	return new GuiSkillJobContainer(player);
+        }else if (ID == DQR.conf.GuiID_Skillbook){
+        	return new GuiSkillbookContainer(player);
         }
 
 
@@ -225,6 +229,8 @@ public class GuiHandler implements IGuiHandler {
         	return new GuiCasinoCCRGuiContainer(player);
         }else if (ID == DQR.conf.GuiID_SkillJob) {
             return new GuiSkillJobGuiContainer(player);
+        }else if (ID == DQR.conf.GuiID_Skillbook) {
+            return new GuiSkillbookGuiContainer(player);
         }
 
         return null;

@@ -1,25 +1,30 @@
 package dqr.thread;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.util.ChatComponentTranslation;
-import net.minecraftforge.common.MinecraftForge;
 import dqr.DQR;
-import dqr.PacketHandler;
-import dqr.api.event.DqmJukurenUpEvent;
-import dqr.packetMessage.MessageClientSound;
-import dqr.playerData.ExtendedPlayerProperties;
 
 public class ThreadJukurenUp extends Thread{
 	private EntityPlayer ep;
+	private int weaponId = -1;
+	private int recalcFlg = 0;
 
 	public ThreadJukurenUp(EntityPlayer player)
 	{
 		this.ep = player;
 	}
 
+	public ThreadJukurenUp(EntityPlayer player, int recalcFlg, int weaponId)
+	{
+		this.ep = player;
+		this.weaponId = weaponId;
+		this.recalcFlg = recalcFlg;
+	}
+
 	public void run()
 	{
+		//DQR.func.jukurenUpProcessMain(ep);
+		DQR.func.jukurenUpProcessMain(ep, recalcFlg, weaponId);
+		/*
 		boolean flg = true;
 		int epLv = ExtendedPlayerProperties.get(this.ep).getJukurenLv(ExtendedPlayerProperties.get(this.ep).getWeapon());
 		int epEXP = ExtendedPlayerProperties.get(this.ep).getJukurenExp(ExtendedPlayerProperties.get(this.ep).getWeapon());
@@ -73,5 +78,6 @@ public class ThreadJukurenUp extends Thread{
 				break;
 			}
 		}
+		*/
 	}
 }

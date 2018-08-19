@@ -3004,6 +3004,7 @@ ver1.20ADD-<*/
                     " A ",
                     'A', Items.stick
                 });
+
         GameRegistry.addRecipe(new ItemStack(DQDecorates.DqmBlockSikabaneK , 1), new Object[]
                 {
                     "AAA",
@@ -4299,5 +4300,11 @@ ver1.20ADD-<*/
             'A', new ItemStack(Blocks.glass, 1)
         });
 
+        GameRegistry.addRecipe(new ItemStack(DQMiscs.itemHonehone , 1), new Object[]
+        {
+            " A ",
+            "AAA",
+            'A', Items.bone
+        });
 	}
 }

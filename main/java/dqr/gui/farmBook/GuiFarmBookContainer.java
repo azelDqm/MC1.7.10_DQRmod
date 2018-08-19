@@ -1,20 +1,17 @@
 package dqr.gui.farmBook;
 
-import java.util.Set;
+import java.util.ArrayList;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import dqr.DQR;
-import dqr.playerData.ExtendedPlayerProperties2;
-import dqr.playerData.ExtendedPlayerProperties3;
 
 public class GuiFarmBookContainer extends Container
 {
     private InventoryFarmBook inventory;
     private EntityPlayer ep;
-    private int pageNo = 0;
+    public int pageNo = 0;
 
     public GuiFarmBookContainer(EntityPlayer player)
     {
@@ -27,31 +24,69 @@ public class GuiFarmBookContainer extends Container
 
         int i = 2 * 18 + 1;
 
-
-        for (int y1 = 0; y1 < 3; ++y1)
+        if(pageNo != 0)
         {
-        	for (int x1 = 0; x1 < 3; ++x1)
-        	{
-        		this.addSlotToContainer(new SlotFarmBook(inventory, x1 + y1 * 3, 16 + x1 * 18, 16 + y1 * 18));
-        		//this.addSlotToContainer(new SlotFarmBook(inventory, x1 + y1 * 3, 15 + x1 * 18, 15 + y1 * 18));
-        	}
+	        for (int y1 = 0; y1 < 3; ++y1)
+	        {
+	        	for (int x1 = 0; x1 < 3; ++x1)
+	        	{
+	        		this.addSlotToContainer(new SlotFarmBook(inventory, x1 + y1 * 3, 16 + x1 * 18, 16 + y1 * 18));
+	        		//this.addSlotToContainer(new SlotFarmBook(inventory, x1 + y1 * 3, 15 + x1 * 18, 15 + y1 * 18));
+	        	}
+	        }
+
+	        //System.out.println("TEST2=================");
+	        for (int y2 = 0; y2 < 3; ++y2)
+	        {
+	        	for (int x2 = 0; x2 < 3; ++x2)
+	        	{
+	        		this.addSlotToContainer(new SlotFarmBook(inventory, x2 + y2 * 3 + 9, 83 + x2 * 18, 16 + y2 * 18));
+	        	}
+	        }
+	        //System.out.println("TEST3=================");
+	        this.addSlotToContainer(new SlotFarmBook(inventory, 18, 67, 101));
         }
 
-        //System.out.println("TEST2=================");
-        for (int y2 = 0; y2 < 3; ++y2)
-        {
-        	for (int x2 = 0; x2 < 3; ++x2)
-        	{
-        		this.addSlotToContainer(new SlotFarmBook(inventory, x2 + y2 * 3 + 9, 83 + x2 * 18, 16 + y2 * 18));
-        	}
-        }
-        //System.out.println("TEST3=================");
-        this.addSlotToContainer(new SlotFarmBook(inventory, 18, 67, 101));
-
+        /*
         this.addSlotToContainer(new SlotFarmBook(inventory, 19, 33, 101));
         this.addSlotToContainer(new SlotFarmBook(inventory, 20, 101, 101));
+        */
 
     }
+
+
+    public void refreshInventory(int par1)
+    {
+    	this.inventorySlots = new ArrayList();
+    	inventory = new InventoryFarmBook(this.ep , par1);
+        inventory.openInventory();
+
+        int i = 2 * 18 + 1;
+
+        if(pageNo != 0)
+        {
+	        for (int y1 = 0; y1 < 3; ++y1)
+	        {
+	        	for (int x1 = 0; x1 < 3; ++x1)
+	        	{
+	        		this.addSlotToContainer(new SlotFarmBook(inventory, x1 + y1 * 3, 16 + x1 * 18, 16 + y1 * 18));
+	        		//this.addSlotToContainer(new SlotFarmBook(inventory, x1 + y1 * 3, 15 + x1 * 18, 15 + y1 * 18));
+	        	}
+	        }
+
+	        //System.out.println("TEST2=================");
+	        for (int y2 = 0; y2 < 3; ++y2)
+	        {
+	        	for (int x2 = 0; x2 < 3; ++x2)
+	        	{
+	        		this.addSlotToContainer(new SlotFarmBook(inventory, x2 + y2 * 3 + 9, 83 + x2 * 18, 16 + y2 * 18));
+	        	}
+	        }
+	        //System.out.println("TEST3=================");
+	        this.addSlotToContainer(new SlotFarmBook(inventory, 18, 67, 101));
+        }
+    }
+
 
     /*
         Containerが開いてられるか
@@ -113,21 +148,22 @@ public class GuiFarmBookContainer extends Container
     @Override
     public ItemStack slotClick(int par1, int par2, int par3, EntityPlayer ep)
     {
-    	//System.out.println("TEST Click" + par1 + "/" + par2 + "/" + par3);
+    	DQR.func.debugString("TEST Click" + par1 + "/" + par2 + "/" + par3);
 
     	if(par1 != 19 && par1 != 20)
     	{
     		return null;
     	}
-
-    	NBTTagCompound playerPet = ExtendedPlayerProperties3.get(this.ep).getNBTPlayerPetList();
-    	Set tags = playerPet.func_150296_c();
+    	DQR.func.debugString("TEST 2");
+    	//NBTTagCompound playerPet = ExtendedPlayerProperties3.get(this.ep).getNBTPlayerPetList();
+    	//Set tags = playerPet.func_150296_c();
 
     	boolean flg = false;
 
+    	/*
         if (par1 == 19)
         {
-
+        	DQR.func.debugString("TEST 3");
         	for(int cnt = this.pageNo - 1; cnt >= this.pageNo - DQR.mutationTable.mutationSeeds.size(); cnt--)
         	{
         		int checkPage = cnt - 1;
@@ -157,7 +193,7 @@ public class GuiFarmBookContainer extends Container
 
         if (par1 == 20)
         {
-
+        	DQR.func.debugString("TEST 4");
         	for(int cnt = this.pageNo + 1; cnt <= this.pageNo + DQR.mutationTable.mutationSeeds.size(); cnt++)
         	{
         		int checkPage = cnt - 1;
@@ -185,6 +221,7 @@ public class GuiFarmBookContainer extends Container
         	}
 
         }
+        */
 
         this.inventory.refreshInventory(this.pageNo);
         //System.out.println("TEST PAGE:" + this.pageNo);

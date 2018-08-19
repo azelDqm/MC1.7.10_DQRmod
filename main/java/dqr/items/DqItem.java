@@ -45,6 +45,7 @@ import dqr.items.base.DqmItemIngotBase;
 import dqr.items.base.DqmItemMiscBase;
 import dqr.items.base.DqmItemMonster;
 import dqr.items.base.DqmItemSeedBase;
+import dqr.items.base.DqmItemSkillBookBase;
 import dqr.items.base.DqmItemSkillJBase;
 import dqr.items.base.DqmItemSkillWBase;
 import dqr.items.base.DqmItemThrowBase;
@@ -906,6 +907,8 @@ public class DqItem {
 		DQMiscs.itemMagicbook = new DqmItemMiscBase().setCreativeTab(DQR.tabs.DqmTabMisc).setUnlocalizedName("dqm.itemMagicbook").setTextureName("dqr:Magicbook");
 		DQMiscs.itemMagicbook2 = new DqmItemMiscBase().setCreativeTab(DQR.tabs.DqmTabMisc).setUnlocalizedName("dqm.itemMagicbook2").setTextureName("dqr:Magicbook2");
 		DQMiscs.itemMagicbook3 = new DqmItemMiscBase().setCreativeTab(DQR.tabs.DqmTabMisc).setUnlocalizedName("dqm.itemMagicbook3").setTextureName("dqr:Magicbook3");
+		DQMiscs.itemSkillbook = new DqmItemMiscBase().setCreativeTab(DQR.tabs.DqmTabMisc).setUnlocalizedName("dqm.itemSkillbook").setTextureName("dqr:Skillbook");
+
 
 		DQMiscs.itemFarmBook = new DqmItemFarmBook().setTextureName("dqr:FarmBook").setUnlocalizedName("dqm.itemFarmBook").setCreativeTab(CreativeTabs.tabMisc);
 		DQMiscs.itemShinjirukokoro = new DqmItemShinjirukokoro().setCreativeTab(DQR.tabs.DqmTabMisc).setUnlocalizedName("dqm.itemShinjirukokoro").setTextureName("dqr:Shinjirukokoro");
@@ -1289,5 +1292,11 @@ public class DqItem {
 		DQSkills.itemSkillJ_MISS = new DqmItemSkillJBase().setMaxStackSize(1).setUnlocalizedName("itemSkillJ_MISS").setTextureName("dqr:Dragonwing");
 		DQSkills.itemSkillJ_CRI = new DqmItemSkillJBase().setMaxStackSize(1).setUnlocalizedName("itemSkillJ_CRI").setTextureName("dqr:Kyodainakiba");
 		DQSkills.itemSkillJ_AGI = new DqmItemSkillJBase().setMaxStackSize(1).setUnlocalizedName("itemSkillJ_AGI").setTextureName("dqr:Subayasanotane");
+
+		DQMagics.itemJSkillBook = new DqmItemSkillBookBase().setCreativeTab(DQR.tabs.DqmTabMagic).setUnlocalizedName("dqm.JSkillBook").setMaxStackSize(1).setTextureName("dqr:Skillbook");
+		DQMagics.itemJSkillBookR = new DqmItemSkillBookBase().setCreativeTab(DQR.tabs.DqmTabMagic).setUnlocalizedName("dqm.JSkillBookR").setMaxStackSize(1).setTextureName("dqr:SkillbookR");
+		DQMagics.itemJSkillBookB = new DqmItemSkillBookBase().setCreativeTab(DQR.tabs.DqmTabMagic).setUnlocalizedName("dqm.JSkillBookB").setMaxStackSize(1).setTextureName("dqr:SkillbookB");
+		DQMagics.itemJSkillBookG = new DqmItemSkillBookBase().setCreativeTab(DQR.tabs.DqmTabMagic).setUnlocalizedName("dqm.JSkillBookG").setMaxStackSize(1).setTextureName("dqr:SkillbookG");
+		DQMagics.itemJSkillBookY = new DqmItemSkillBookBase().setCreativeTab(DQR.tabs.DqmTabMagic).setUnlocalizedName("dqm.JSkillBookY").setMaxStackSize(1).setTextureName("dqr:SkillbookY");
 	}
 }

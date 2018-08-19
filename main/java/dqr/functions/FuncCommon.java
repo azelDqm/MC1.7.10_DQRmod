@@ -1,9 +1,11 @@
 package dqr.functions;
 
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.UUID;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -11,16 +13,24 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
+
+import org.lwjgl.input.Keyboard;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import dqr.DQR;
 import dqr.PacketHandler;
+import dqr.api.Items.DQEmblems;
 import dqr.api.Items.DQSeeds;
 import dqr.api.enums.EnumDqmJob;
+import dqr.api.event.DqmJukurenUpEvent;
 import dqr.api.event.DqmLvUpEvent;
 import dqr.api.potion.DQPotionMinus;
 import dqr.api.potion.DQPotionPlus;
@@ -44,6 +54,7 @@ import dqr.entity.petEntity.DqmPetBase;
 import dqr.items.base.DqmItemFoodSeedBase;
 import dqr.packetMessage.MessageClientSound;
 import dqr.playerData.ExtendedPlayerProperties;
+import dqr.playerData.ExtendedPlayerProperties3;
 
 public class FuncCommon {
 
@@ -158,7 +169,7 @@ public class FuncCommon {
 
 	public void debugString(String par1)
 	{
-		this.debugString(par1, null, 1);
+		this.debugString(par1, null, -1);
 		/*
 		if(DQR.debug != 0)
 		{
@@ -182,7 +193,7 @@ public class FuncCommon {
 	{
 		try
 		{
-			if(DQR.debug == debugNo)
+			if(DQR.debug == debugNo || debugNo == -1)
 			{
 				if(par2 != null)
 				{
@@ -547,18 +558,115 @@ public class FuncCommon {
 		return minecraftserver.getConfigurationManager().func_152612_a(name);
 	}
 
+	public void jukurenUpProcessMain(EntityPlayer ep)
+	{
+		this.jukurenUpProcessMain(ep, 0, -1);
+	}
+
+	public void jukurenUpProcessMain(EntityPlayer ep, int recalcFlg, int weaponId)
+	{
+		boolean flg = true;
+
+		int weapon = -1;
+
+		if(weaponId != -1)
+		{
+			weapon = weaponId;
+		}else
+		{
+			weapon = ExtendedPlayerProperties.get(ep).getWeapon();
+		}
+
+		if(recalcFlg > 0)
+		{
+			ExtendedPlayerProperties.get(ep).setJukurenLv(weapon, 0);
+			ExtendedPlayerProperties.get(ep).setJukurenWP(weapon, 0);
+			ExtendedPlayerProperties3.get(ep).setWeaponSkillSet(weapon, 0);
+			ExtendedPlayerProperties3.get(ep).setWeaponSkillPermissionC(weapon, new int[ExtendedPlayerProperties3.SKILL_MAX_COUNTER]);
+			//ExtendedPlayerProperties.get(ep).setJukurenExp(weapon, 0);
+		}
+
+		int epLv = ExtendedPlayerProperties.get(ep).getJukurenLv(weapon);
+		int epEXP = ExtendedPlayerProperties.get(ep).getJukurenExp(weapon);
+
+		for (int i = 0; i < 20; i++)
+		{
+			flg = true;
+			//System.out.println("DEBUG" + "/" + epLv + "/" + epEXP);
+			if(epLv < 10 && epEXP >= DQR.exp.getJukurenNextExp(epLv))
+			{
+				//String weaponName = I18n.format("gui.weapon." + ExtendedPlayerProperties.get(this.ep).getWeapon());
+				epLv = epLv + 1;
+				ExtendedPlayerProperties.get(ep).setJukurenLv(weapon, epLv);
+
+				int jukurenWP = ExtendedPlayerProperties.get(ep).getJukurenWP(weapon);
+
+				switch(epLv)
+				{
+					case 2: jukurenWP = jukurenWP + 15; break;
+					case 3: jukurenWP = jukurenWP + 25; break;
+					case 4: jukurenWP = jukurenWP + 35; break;
+					case 5: jukurenWP = jukurenWP + 45;  break;
+					case 6: jukurenWP = jukurenWP + 55; break;
+					case 7: jukurenWP = jukurenWP + 65; break;
+					case 8: jukurenWP = jukurenWP + 75; break;
+					case 9: jukurenWP = jukurenWP + 85; break;
+					case 10: jukurenWP = jukurenWP + 100; break;
+				}
+
+				ExtendedPlayerProperties.get(ep).setJukurenWP(weapon, jukurenWP);
+				//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.jukurenUp.txt",new Object[] {weaponName, epLv}));
+				DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.jukurenUp.txt",new Object[] {
+						new ChatComponentTranslation("gui.weapon." + weapon), epLv}));
+				ep.worldObj.playSoundAtEntity(ep, "dqr:player.skillup", 1.0F, 1.0F);
+				PacketHandler.INSTANCE.sendTo(new MessageClientSound((byte)1), (EntityPlayerMP)ep);
+				flg = false;
+
+				//外部からの干渉用
+				DqmJukurenUpEvent event = new DqmJukurenUpEvent(ep, weapon, epLv);
+				event.setCanceled(false);
+				MinecraftForge.EVENT_BUS.post(event);
+
+				if (event.isCanceled())
+				{
+					break;
+				}
+			}
+
+			if(flg)
+			{
+				break;
+			}
+		}
+	}
+
 	public void lvUpProcessMain(EntityPlayer ep)
+	{
+		this.lvUpProcessMain(ep, 0, -1);
+	}
+
+	public void lvUpProcessMain(EntityPlayer ep, int recalcFlg, int jobId)
 	{
 		//System.out.println("DEBUG111111111111111");
 		boolean flg = true;
-		int epJob = ExtendedPlayerProperties.get(ep).getJob();
+		int epJob = -1;
+		int preJob = ExtendedPlayerProperties.get(ep).getJob();
+
+		if(jobId == -1)
+		{
+			epJob = ExtendedPlayerProperties.get(ep).getJob();
+		}else
+		{
+			epJob = jobId;
+		}
+
 		int epLv = ExtendedPlayerProperties.get(ep).getJobLv(epJob);
 		int epEXP = ExtendedPlayerProperties.get(ep).getJobExp(epJob);
 
-		if((epLv >= 100 && DQR.conf.recalcLvStatus1 == 1) || DQR.debug == 12)
+		if((epLv >= 100 && DQR.conf.recalcLvStatus1 == 1) || DQR.debug == 12|| recalcFlg != 0)
 		{
 			epLv = 0;
-			ExtendedPlayerProperties.get(ep).setJobLv(ExtendedPlayerProperties.get(ep).getJob(), 0);
+			ExtendedPlayerProperties.get(ep).setJobLv(epJob, 0);
 			ExtendedPlayerProperties.get(ep).setJobHP(epJob, 0);
 			ExtendedPlayerProperties.get(ep).setJobMP(epJob, 0);
 			ExtendedPlayerProperties.get(ep).setJobTikara(epJob, 0);
@@ -570,14 +678,14 @@ public class FuncCommon {
 
 		if(stVer < DQR.jobStatusVersion)
 		{
-			ExtendedPlayerProperties.get(ep).setJobHP(epJob, 0);
-			ExtendedPlayerProperties.get(ep).setJobMP(epJob, 0);
-			ExtendedPlayerProperties.get(ep).setJobTikara(epJob, 0);
-			ExtendedPlayerProperties.get(ep).setJobKasikosa(epJob, 0);
-
 			for(int cntJ = 0; cntJ < 32; cntJ++)
 			{
-				for(int cnt = 0; cnt <= ExtendedPlayerProperties.get(ep).getJobLv(cntJ); cnt++)
+				ExtendedPlayerProperties.get(ep).setJobHP(cntJ, 0);
+				ExtendedPlayerProperties.get(ep).setJobMP(cntJ, 0);
+				ExtendedPlayerProperties.get(ep).setJobTikara(cntJ, 0);
+				ExtendedPlayerProperties.get(ep).setJobKasikosa(cntJ, 0);
+
+				for(int cnt = 1; cnt <= ExtendedPlayerProperties.get(ep).getJobLv(cntJ); cnt++)
 				{
 					lvUpStatusUp(cnt, ep, cntJ, false);
 				}
@@ -593,9 +701,17 @@ public class FuncCommon {
 			if(epLv < 99 && epEXP >= DQR.exp.getNextExp(epLv))
 			{
 				epLv = epLv + 1;
-				ExtendedPlayerProperties.get(ep).setJobLv(ExtendedPlayerProperties.get(ep).getJob(), epLv);
-				DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.lvUp.txt",new Object[] {epLv}));
-				lvUpStatusUp(epLv, ep);
+				ExtendedPlayerProperties.get(ep).setJobLv(epJob, epLv);
+
+				if(epJob == preJob)
+				{
+					DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.lvUp.txt",new Object[] {epLv}));
+				}else
+				{
+					DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.lvUp2." + epJob + ".txt",new Object[] {epLv}));
+				}
+
+				lvUpStatusUp(epLv, ep, epJob);
 				lvUpRefresh(ep);
 
 				ep.worldObj.playSoundAtEntity(ep, "dqr:player.levelup", 1.0F, 1.0F);
@@ -605,7 +721,7 @@ public class FuncCommon {
 
 				//外部からの干渉用
 				DqmLvUpEvent event = new DqmLvUpEvent(ep,
-													  ExtendedPlayerProperties.get(ep).getJob(),
+													  epJob,
 													  epLv);
 				event.setCanceled(false);
 				MinecraftForge.EVENT_BUS.post(event);
@@ -625,9 +741,15 @@ public class FuncCommon {
 		}
 	}
 
-	public void lvUpStatusUp(int lv, EntityPlayer ep)
+	public void lvUpStatusUp(int lv, EntityPlayer ep, int jobId)
 	{
-		this.lvUpStatusUp(lv, ep, ExtendedPlayerProperties.get(ep).getJob(), true);
+		if(ExtendedPlayerProperties.get(ep).getJob() != jobId)
+		{
+			this.lvUpStatusUp(lv, ep, jobId, false);
+		}else
+		{
+			this.lvUpStatusUp(lv, ep, jobId, true);
+		}
 	}
 
 	public void lvUpStatusUp(int lv, EntityPlayer ep, int jobLv, boolean setMaxStatus)
@@ -840,4 +962,147 @@ public class FuncCommon {
 		}
 		*/
 	}
+
+	@SideOnly(Side.CLIENT)
+    public static String getKeyDisplayString(int p_74298_0_)
+    {
+        return p_74298_0_ < 0 ? I18n.format("key.mouseButton", new Object[] {Integer.valueOf(p_74298_0_ + 101)}): Keyboard.getKeyName(p_74298_0_);
+    }
+
+    public Item getJobSPSkillItemFromJobId(int par1)
+    {
+    	switch(par1)
+    	{
+    	case 0: return DQEmblems.itemEmbCivilian;
+    	case 1: return DQEmblems.itemEmbWarrior;
+    	case 2: return DQEmblems.itemEmbFighter;
+    	case 3: return DQEmblems.itemEmbBattleMaster;
+    	case 4: return DQEmblems.itemEmbMagician;
+    	case 5: return DQEmblems.itemEmbPriest;
+    	case 6: return DQEmblems.itemEmbSage;
+    	case 7: return DQEmblems.itemEmbHero;
+    	case 8: return DQEmblems.itemEmbPaladin;
+    	case 9: return DQEmblems.itemEmbMagickKnight;
+    	case 10: return DQEmblems.itemEmbRanger;
+    	case 11: return DQEmblems.itemEmbMonsterTamer;
+    	case 12: return DQEmblems.itemEmbSuperStar;
+    	case 13: return DQEmblems.itemEmbHaguremetal;
+    	case 14: return DQEmblems.itemEmbMerchant;
+    	case 15: return DQEmblems.itemEmbThief;
+    	case 16: return DQEmblems.itemEmbGodHnad;
+    	case 17: return DQEmblems.itemEmbDragon;
+    	case 18: return DQEmblems.itemEmbLegend;
+    	case 19: return DQEmblems.itemEmbDancer;
+    	case 20: return DQEmblems.itemEmbPirate;
+    	case 21: return DQEmblems.itemEmbMasterDragon;
+    	case 22: return DQEmblems.itemEmbHituzikai;
+    	case 23: return DQEmblems.itemEmbFunanori;
+    	case 24: return DQEmblems.itemEmbDougutukai;
+    	case 25: return DQEmblems.itemEmbTentiraimeishi;
+    	default : return null;
+    	}
+    }
+
+    /**
+     * 指定座標とプレイヤーの間のランダムな空間座標を取得する
+     *
+     * @param world
+     * @param x
+     * @param y
+     * @param z
+     * @param ep
+     * @return
+     */
+    public int[] getSpaceLocationPlayerFront(World world, int x, int y, int z, EntityPlayer ep)
+    {
+    	int[] ret = {-1, -1, -1};
+
+    	ArrayList<Integer> tableX = new ArrayList();
+    	ArrayList<Integer> tableY = new ArrayList();
+    	ArrayList<Integer> tableZ = new ArrayList();
+
+    	//指定座標とプレイヤー座標の中心座標を取得する。
+    	int centerX = (x + (int)ep.posX) / 2;
+    	int centerY = (y + (int)ep.posY) / 2;
+    	int centerZ = (z + (int)ep.posZ) / 2;
+
+
+    	return this.getSpaceLocationRandom(world, centerX, centerY, centerZ, 4, 3);
+    }
+
+    public int[] getSpaceLocationRandom(World world, int x, int y, int z, int radiusXZ, int radiusY)
+    {
+    	int[] ret = {x, y, z};
+
+    	ArrayList<Integer> tableX = new ArrayList();
+    	ArrayList<Integer> tableY = new ArrayList();
+    	ArrayList<Integer> tableZ = new ArrayList();
+    	int[] setX = new int[radiusXZ * 2 + 1];
+    	int[] setZ = new int[radiusXZ * 2 + 1];
+    	int[] setY = new int[radiusY * 2 + 1];
+
+    	for(int cnt = radiusXZ * -1; cnt <= radiusXZ; cnt++)
+    	{
+    		tableX.add(cnt);
+    		tableZ.add(cnt);
+    	}
+    	for(int cnt = radiusY * -1; cnt <= radiusY; cnt++)
+    	{
+    		tableY.add(cnt);
+    	}
+
+    	int idxCount = 0;
+    	while(tableX.size() > 0)
+    	{
+    		Random random = new Random();
+    		int selectNum = random.nextInt(tableX.size());
+    		setX[idxCount] = tableX.get(selectNum);
+    		tableX.remove(selectNum);
+
+    		idxCount = idxCount + 1;
+    	}
+
+    	idxCount = 0;
+    	while(tableY.size() > 0)
+    	{
+    		Random random = new Random();
+    		int selectNum = random.nextInt(tableY.size());
+    		setY[idxCount] = tableY.get(selectNum);
+    		tableY.remove(selectNum);
+
+    		idxCount = idxCount + 1;
+    	}
+
+    	idxCount = 0;
+    	while(tableZ.size() > 0)
+    	{
+    		Random random = new Random();
+    		int selectNum = random.nextInt(tableZ.size());
+    		setZ[idxCount] = tableZ.get(selectNum);
+    		tableZ.remove(selectNum);
+
+    		idxCount = idxCount + 1;
+    	}
+
+
+    	for(int posX = 0; posX < radiusXZ * 2 + 1; posX++)
+    	{
+    		for(int posY = 0; posY < radiusY * 2 + 1; posY++)
+    		{
+    			for(int posZ = 0; posZ < radiusXZ * 2 + 1; posZ++)
+    			{
+    				if(world.isAirBlock(x + setX[posX], y + setY[posY], z + setZ[posZ]) &&
+    					world.isAirBlock(x + setX[posX], y + setY[posY] + 1, z + setZ[posZ]))
+    				{
+    					ret[0] = x + setX[posX];
+    					ret[1] = y + setY[posY];
+    					ret[2] = z + setZ[posZ];
+
+    					return ret;
+    				}
+    			}
+    		}
+    	}
+    	return ret;
+    }
 }

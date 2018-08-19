@@ -1,8 +1,10 @@
 package dqr.packetMessage;
 
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.RegistryNamespaced;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
@@ -19,6 +21,7 @@ import dqr.api.enums.EnumDqmMGToolMode;
 import dqr.api.enums.EnumDqmWeaponMode;
 import dqr.gui.subEquip.InventorySubEquip;
 import dqr.items.base.DqmItemBowBase;
+import dqr.items.base.DqmItemSkillBookBase;
 import dqr.items.base.DqmItemWeaponBase;
 import dqr.items.magic.DqmItemMagicBasiRura;
 import dqr.items.magic.DqmItemMagicBasiRura2;
@@ -307,7 +310,45 @@ public class MessageServerMGToolModeHandler implements IMessageHandler<MessageSe
 		        		DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.basirura.modeInfo." + setIdx + ".txt", new Object[] {}));
 		        		ExtendedPlayerProperties.get(ep).setWeaponMode(EnumDqmWeaponMode.WEAPONMODE_BASIRURA.getId(), setIdx);
 		        		*/
-		        }else if(its.getItem() instanceof DqmItemMagicRuraSin ||
+		        }else if(its.getItem() instanceof DqmItemSkillBookBase)
+	        	{
+		        	NBTTagCompound nbt = its.getTagCompound();
+		        	if(nbt == null)
+		        	{
+		        		nbt = new NBTTagCompound();
+		        	}
+
+
+	        		int selectedNo = nbt.getInteger("selectedNo");
+	        		//int setSelectNo = selectedNo;
+	        		DQR.func.debugString("TEST 0");
+	        		for(int cnt = 0; cnt < 5; cnt++)
+	        		{
+	        			if(selectedNo + 1 > 4)
+	        			{
+	        				selectedNo = 0;
+	        			}else
+	        			{
+	        				selectedNo = selectedNo + 1;
+	        			}
+
+	        			DQR.func.debugString("TEST 1 : " + cnt + " / " + selectedNo);
+	        			if(nbt.hasKey("skill" + selectedNo + "_job") && nbt.hasKey("skill" + selectedNo + "_idx") &&
+	        					nbt.getInteger("skill" + selectedNo + "_job") > -1 && nbt.getInteger("skill" + selectedNo + "_idx") > -1)
+	        			{
+	        				DQR.func.debugString("TEST 2 : " + cnt + " / " + selectedNo);
+	        				//EnumDqmSkillJ skill2 = DQR.enumGetter.getSkillJ(nbt.getInteger("skill" + bookCnt + "_job"), nbt.getInteger("skill" + bookCnt + "_idx"));
+	        				String skillName = I18n.format("dqm.skill.JSkill_" + nbt.getInteger("skill" + selectedNo + "_job") + "_" + nbt.getInteger("skill" + selectedNo + "_idx") + ".name");
+	        				nbt.setInteger("selectedNo", selectedNo);
+	        				its.setTagCompound(nbt);
+
+		        			DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("dqm.iteminfo.skillbook.R.txt", new Object[] {selectedNo + 1, skillName}));
+		        			ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
+	        				break;
+	        			}
+	        		}
+
+	        	}else if(its.getItem() instanceof DqmItemMagicRuraSin ||
 	        			 its.getItem() instanceof DqmItemMagicRuraSin2 ||
 	        			 its.getItem() instanceof DqmItemMagicRuraSinC)
 	        	{

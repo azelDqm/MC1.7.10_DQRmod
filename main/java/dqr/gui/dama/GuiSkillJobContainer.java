@@ -7,7 +7,9 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import dqr.DQR;
 import dqr.PacketHandler;
+import dqr.api.enums.EnumDqmSkillJ;
 import dqr.dataTable.FuncJobSkillData;
 import dqr.packetMessage.MessageServerDataSend;
 import dqr.playerData.ExtendedPlayerProperties;
@@ -17,6 +19,7 @@ public class GuiSkillJobContainer extends Container
 {
     private InventorySkillJob inventory;
     private EntityPlayer player;
+    public boolean systemEnable = false;
 
     public GuiSkillJobContainer(EntityPlayer ep)
     {
@@ -67,7 +70,7 @@ public class GuiSkillJobContainer extends Container
         	ItemStack stack = inventory.getStackInSlot(k);
         	if(stack != null && stack.stackSize > 0)
         	{
-        		this.addSlotToContainer(new SlotSkillJob(inventory, k + 0 * 9, 8 + 93 + k * 18, 49));
+        		this.addSlotToContainer(new SlotSkillJob(inventory, k + 0 * 9, 8 + 93 + k * 18, 42));
         	}
         }
 
@@ -76,8 +79,36 @@ public class GuiSkillJobContainer extends Container
         	ItemStack stack = inventory.getStackInSlot(k);
         	if(stack != null && stack.stackSize > 0)
         	{
-        		this.addSlotToContainer(new SlotSkillJob(inventory, k, 8 + 93 + (k - 9) * 18, 49 + 0 + 36));
+        		this.addSlotToContainer(new SlotSkillJob(inventory, k, 8 + 93 + (k - 9) * 18, 42 + 0 + 32));
         	}
+        }
+
+        //DQR.func.debugString("TEST4 : " + DQR.enumGetter.getJobSPSkillCounterJ(inventory.getJobId()));
+
+        if(systemEnable)
+        {
+	        int lastY = 0;
+	        for (int k = 18; k < DQR.enumGetter.getJobSPSkillCounterJ2(inventory.getJobId()) + 18; ++k)
+	        {
+	        	ItemStack stack = inventory.getStackInSlot(k);
+	        	if(stack != null && stack.stackSize > 0)
+	        	{
+	        		this.addSlotToContainer(new SlotSkillJob(inventory, k, 8 + 93 + ((k - 18) % 9) * 18, 108 + 18 * ((k - 18) / 9)));
+	        		lastY = 108 + 18 * ((k - 18) / 9);
+	        	}
+	        }
+
+	        int resX = 0;
+	        for (int k = 18 + DQR.enumGetter.getJobSPSkillCounterJ2(inventory.getJobId()); k < DQR.enumGetter.getJobSPSkillCounterJ2(inventory.getJobId())
+	        		+ 18 + DQR.enumGetter.getJobSPSkillCounterAllJ(inventory.getJobId()); ++k)
+	        {
+	        	ItemStack stack = inventory.getStackInSlot(k);
+	        	if(stack != null && stack.stackSize > 0)
+	        	{
+	        		this.addSlotToContainer(new SlotSkillJob(inventory, k, 8 + 93 + (resX % 9) * 18, lastY + 32 + 18 * (resX / 9)));
+	        		resX = resX + 1;
+	        	}
+	        }
         }
     }
 
@@ -173,75 +204,99 @@ public class GuiSkillJobContainer extends Container
 	    			int maxSP = FuncJobSkillData.getMaxSP(jobLv);
 	    			int jobSP = ExtendedPlayerProperties3.get(ep).getJobSp(jobId);
 
-	    			if(categNum > 8)
+	    			if(categNum >= 18)
 	    			{
-	    				if(ExtendedPlayerProperties3.get(ep).getJobSkillSet2(jobId, categNum - 9) == 0)
+	    				int jobIdx = nbt.getInteger("skillIdx");
+	    				int isJobFlg = nbt.getInteger("isJobSkill");
+	    				EnumDqmSkillJ skill = DQR.enumGetter.getSkillJ(jobId, jobIdx);
+	    				int skillPerms = ExtendedPlayerProperties3.get(ep).getJobSPSkillSet(jobId, jobIdx);
+
+	    				//DQR.func.debugString("TEST4 : " + jobId + " / "
+
+	    				if(isJobFlg == 2 && skill != null)
 	    				{
-	    					if(maxSP >= jobSP + needSP)
+	    					DQR.func.debugString("TEST4 : " + maxSP + " / " +  jobSP + " / " + skill.getNeedsp() + " / " + skill.getNeedsp_All());
+	    					DQR.func.debugString("TEST5 : " + skillPerms + " / " + (jobSP - skill.getNeedsp() + skill.getNeedsp_All()));
+	    					//全職でを指定した場合
+	    					if(skillPerms == 1)
 	    					{
-	    						ExtendedPlayerProperties3.get(ep).setJobSkillSet2(jobId, categNum - 9, 1);
-	    						ExtendedPlayerProperties3.get(ep).incJobSp(jobId, needSP);
+	    						//既に「その職のみ」が指定されている場合
+	    						if(maxSP >= jobSP - skill.getNeedsp() + skill.getNeedsp_All())
+	    						{
+		    						ExtendedPlayerProperties3.get(ep).setJobSPSkillSet(jobId, jobIdx, 2);
+		    						ExtendedPlayerProperties3.get(ep).setJobSp(jobId, jobSP - skill.getNeedsp() + skill.getNeedsp_All());
+	    						}
+	    					}else if(skillPerms == 2)
+	    					{
+	    						ExtendedPlayerProperties3.get(ep).setJobSPSkillSet(jobId, jobIdx, 0);
+	    						ExtendedPlayerProperties3.get(ep).decJobSp(jobId, skill.getNeedsp_All());
+	    					}else
+	    					{
+	    						if(maxSP >= jobSP + skill.getNeedsp_All())
+	    						{
+	    							ExtendedPlayerProperties3.get(ep).setJobSPSkillSet(jobId, jobIdx, 2);
+	    							ExtendedPlayerProperties3.get(ep).incJobSp(jobId, skill.getNeedsp_All());
+	    						}
 	    					}
-	    				}else
+	    				}else if(isJobFlg == 1 && skill != null)
 	    				{
-	    					ExtendedPlayerProperties3.get(ep).setJobSkillSet2(jobId, categNum - 9, 0);
-	    					ExtendedPlayerProperties3.get(ep).decJobSp(jobId, needSP);
+	    					DQR.func.debugString("TEST14 : " + maxSP + " / " +  jobSP + " / " + skill.getNeedsp() + " / " + skill.getNeedsp_All());
+	    					DQR.func.debugString("TEST15 : "  + skillPerms + " / " + (jobSP - skill.getNeedsp() + skill.getNeedsp_All()));
+	    					//その職のみを指定した場合
+	    					if(skillPerms == 1)
+	    					{
+	    						ExtendedPlayerProperties3.get(ep).setJobSPSkillSet(jobId, jobIdx, 0);
+	    						ExtendedPlayerProperties3.get(ep).decJobSp(jobId, skill.getNeedsp());
+	    					}else if(skillPerms == 2)
+	    					{
+	    						if(maxSP >= jobSP - skill.getNeedsp_All() + skill.getNeedsp())
+	    						{
+		    						ExtendedPlayerProperties3.get(ep).setJobSPSkillSet(jobId, jobIdx, 1);
+		    						ExtendedPlayerProperties3.get(ep).setJobSp(jobId, jobSP - skill.getNeedsp_All() + skill.getNeedsp());
+	    						}
+	    					}else
+	    					{
+	    						if(maxSP >= jobSP + skill.getNeedsp())
+	    						{
+	    							ExtendedPlayerProperties3.get(ep).setJobSPSkillSet(jobId, jobIdx, 1);
+	    							ExtendedPlayerProperties3.get(ep).incJobSp(jobId, skill.getNeedsp());
+	    						}
+	    					}
 	    				}
 	    			}else
 	    			{
-	    				if(ExtendedPlayerProperties3.get(ep).getJobSkillSet(jobId, categNum) == 0)
-	    				{
-	    					if(maxSP >= jobSP + needSP)
-	    					{
-	    						ExtendedPlayerProperties3.get(ep).setJobSkillSet(jobId, categNum, 1);
-	    						ExtendedPlayerProperties3.get(ep).incJobSp(jobId, needSP);
-	    					}
-	    				}else
-	    				{
-	    					ExtendedPlayerProperties3.get(ep).setJobSkillSet(jobId, categNum, 0);
-	    					ExtendedPlayerProperties3.get(ep).decJobSp(jobId, needSP);
-	    				}
+		    			if(categNum > 8)
+		    			{
+		    				if(ExtendedPlayerProperties3.get(ep).getJobSkillSet2(jobId, categNum - 9) == 0)
+		    				{
+		    					if(maxSP >= jobSP + needSP)
+		    					{
+		    						ExtendedPlayerProperties3.get(ep).setJobSkillSet2(jobId, categNum - 9, 1);
+		    						ExtendedPlayerProperties3.get(ep).incJobSp(jobId, needSP);
+		    					}
+		    				}else
+		    				{
+		    					ExtendedPlayerProperties3.get(ep).setJobSkillSet2(jobId, categNum - 9, 0);
+		    					ExtendedPlayerProperties3.get(ep).decJobSp(jobId, needSP);
+		    				}
+		    			}else
+		    			{
+		    				if(ExtendedPlayerProperties3.get(ep).getJobSkillSet(jobId, categNum) == 0)
+		    				{
+		    					if(maxSP >= jobSP + needSP)
+		    					{
+		    						ExtendedPlayerProperties3.get(ep).setJobSkillSet(jobId, categNum, 1);
+		    						ExtendedPlayerProperties3.get(ep).incJobSp(jobId, needSP);
+		    					}
+		    				}else
+		    				{
+		    					ExtendedPlayerProperties3.get(ep).setJobSkillSet(jobId, categNum, 0);
+		    					ExtendedPlayerProperties3.get(ep).decJobSp(jobId, needSP);
+		    				}
+		    			}
 	    			}
 
-	    			/*
-	    			if(ep.worldObj.isRemote)
-	    	    	{
-	    				NBTTagCompound data = new NBTTagCompound();
-	    				ExtendedPlayerProperties3.get(ep).saveNBTData(data);
-	    	    		PacketHandler.INSTANCE.sendToServer(new MessageServerDataSend(data, 3));
-	    	    	}
-	    	    	*/
 	    		}
-
-	    		/*
-	    		if(ep.worldObj.isRemote)
-	    		{
-	    			Minecraft.getMinecraft().thePlayer.closeScreen();
-	    			Minecraft.getMinecraft().setIngameFocus();
-	    		}
-	    		*/
-	   			//System.out.println("1:" + ep.worldObj.isRemote + ":" + slot.getStack().getDisplayName());
-	    		/*
-	    		if(slot.getStack().getItem() instanceof DqmItemEmblemBase)
-	    		{
-	    			//System.out.println("2:" + ep.worldObj.isRemote + ":" + slot.getStack().getDisplayName());
-
-	        		DqmItemEmblemBase emb = (DqmItemEmblemBase)slot.getStack().getItem();
-	    			PacketHandler.INSTANCE.sendToServer(new MessageServerJobChange(emb.getJobEnum().getId()));
-	        		//ExtendedPlayerProperties.get(ep).setJob(emb.getJobEnum().getId());
-	        		//ep.worldObj.playSoundAtEntity(ep, "dqr:player.tensyoku", 1.0F, 1.0F);
-	    		}
-
-	    		//System.out.println(slot.getStack().getDisplayName());
-	    		if(ep.worldObj.isRemote)
-	    		{
-	    			Minecraft.getMinecraft().thePlayer.closeScreen();
-	    			Minecraft.getMinecraft().setIngameFocus();
-	    		}
-	    		*/
-
-
-
 	    	}
     	}
 

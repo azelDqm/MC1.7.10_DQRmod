@@ -184,11 +184,19 @@ public class DqmBlockTubokku2 extends BlockContainer
 
         if (!par1World.isRemote)
         {
-        	if(spawnMob != null)
+        	DqmTileEntityTubokku tile = (DqmTileEntityTubokku)par1World.getTileEntity(par2, par3, par4);
+
+        	if(spawnMob != null && tile.getFlgInpasu() == 0)
         	{
+        		int[] locate = DQR.func.getSpaceLocationRandom(par1World, par2, par3, par4, 4, 4);
+        		spawnMob.setLocationAndAngles((double)locate[0], (double)locate[1], (double)locate[2], 0.0F, 0.0F);
+        		par1World.spawnEntityInWorld(spawnMob);
+        		spawnMob.spawnExplosionParticle();
+        		/*
         		spawnMob.setLocationAndAngles((double)par2 + 0.5D + x4, (double)par3 + x5, (double)par4 + 0.5D + x4, 0.0F, 0.0F);
         		par1World.spawnEntityInWorld(spawnMob);
         		spawnMob.spawnExplosionParticle();
+        		*/
         	}
 
         	if(doropiItems != null)

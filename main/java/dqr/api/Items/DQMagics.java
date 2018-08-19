@@ -151,4 +151,10 @@ public class DQMagics {
     public static Item itemBreathS3;
     public static Item itemBreathS4;
     public static Item itemBreathS5;
+
+    public static Item itemJSkillBook;
+    public static Item itemJSkillBookR;
+    public static Item itemJSkillBookB;
+    public static Item itemJSkillBookG;
+    public static Item itemJSkillBookY;
 }

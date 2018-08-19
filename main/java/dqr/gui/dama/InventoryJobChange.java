@@ -36,19 +36,19 @@ public class InventoryJobChange implements IInventory
         items[7] = new ItemStack(DQEmblems.itemDamaHituzikai, 1, checkJobPermission(ep, DQEmblems.itemDamaHituzikai));
         items[8] = new ItemStack(DQEmblems.itemDamaFunanori, 1, checkJobPermission(ep, DQEmblems.itemDamaFunanori));
 
-        items[9] = new ItemStack(DQEmblems.itemDamaDancer, 1, checkJobPermission(ep, DQEmblems.itemDamaDancer));
-        items[10] = new ItemStack(DQEmblems.itemDamaPirate, 1, checkJobPermission(ep, DQEmblems.itemDamaPirate));
-        items[11] = new ItemStack(DQEmblems.itemDamaBattleMaster, 1, checkJobPermission(ep, DQEmblems.itemDamaBattleMaster));
-        items[12] = new ItemStack(DQEmblems.itemDamaSage, 1, checkJobPermission(ep, DQEmblems.itemDamaSage));
-        items[13] = new ItemStack(DQEmblems.itemDamaPaladin, 1, checkJobPermission(ep, DQEmblems.itemDamaPaladin));
-        items[14] = new ItemStack(DQEmblems.itemDamaMagickKnight, 1, checkJobPermission(ep, DQEmblems.itemDamaMagickKnight));
-        items[15] = new ItemStack(DQEmblems.itemDamaRanger, 1, checkJobPermission(ep, DQEmblems.itemDamaRanger));
+        items[9] = new ItemStack(DQEmblems.itemDamaBattleMaster, 1, checkJobPermission(ep, DQEmblems.itemDamaBattleMaster));
+        items[10] = new ItemStack(DQEmblems.itemDamaSage, 1, checkJobPermission(ep, DQEmblems.itemDamaSage));
+        items[11] = new ItemStack(DQEmblems.itemDamaPaladin, 1, checkJobPermission(ep, DQEmblems.itemDamaPaladin));
+        items[12] = new ItemStack(DQEmblems.itemDamaMagickKnight, 1, checkJobPermission(ep, DQEmblems.itemDamaMagickKnight));
+        items[13] = new ItemStack(DQEmblems.itemDamaRanger, 1, checkJobPermission(ep, DQEmblems.itemDamaRanger));
+        items[14] = new ItemStack(DQEmblems.itemDamaDancer, 1, checkJobPermission(ep, DQEmblems.itemDamaDancer));
+        items[15] = new ItemStack(DQEmblems.itemDamaPirate, 1, checkJobPermission(ep, DQEmblems.itemDamaPirate));
         items[16] = new ItemStack(DQEmblems.itemDamaMonsterTamer, 1, checkJobPermission(ep, DQEmblems.itemDamaMonsterTamer));
 
         items[18] = new ItemStack(DQEmblems.itemDamaSuperStar, 1, checkJobPermission(ep, DQEmblems.itemDamaSuperStar));
         items[19] = new ItemStack(DQEmblems.itemDamaGodHnad, 1, checkJobPermission(ep, DQEmblems.itemDamaGodHnad));
-        items[20] = new ItemStack(DQEmblems.itemDamaDougutukai, 1, checkJobPermission(ep, DQEmblems.itemDamaDougutukai));
-        items[21] = new ItemStack(DQEmblems.itemDamaTentiraimeishi, 1, checkJobPermission(ep, DQEmblems.itemDamaTentiraimeishi));
+        items[20] = new ItemStack(DQEmblems.itemDamaTentiraimeishi, 1, checkJobPermission(ep, DQEmblems.itemDamaTentiraimeishi));
+        items[21] = new ItemStack(DQEmblems.itemDamaDougutukai, 1, checkJobPermission(ep, DQEmblems.itemDamaDougutukai));
 
         items[22] = new ItemStack(DQEmblems.itemDamaHero, 1, checkJobPermission(ep, DQEmblems.itemDamaHero));
         items[23] = new ItemStack(DQEmblems.itemDamaHaguremetal, 1, checkJobPermission(ep, DQEmblems.itemDamaHaguremetal));

@@ -6,6 +6,7 @@ import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAIMate;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChatComponentTranslation;
@@ -13,10 +14,12 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.World;
 import dqr.DQR;
+import dqr.PacketHandler;
 import dqr.api.Items.DQBuilders;
 import dqr.api.enums.EnumDqmNpcTalk;
 import dqr.entity.npcEntity.DqmNPCBase;
 import dqr.playerData.ExtendedPlayerProperties;
+import dqr.playerData.MessagePlayerProperties3;
 
 public class DqmEntityNPCSinkan2 extends DqmNPCBase
 {
@@ -150,15 +153,19 @@ public class DqmEntityNPCSinkan2 extends DqmNPCBase
     			}
     		}
 
-    		int talkNo = ExtendedPlayerProperties.get(ep).getNpcTalk(EnumDqmNpcTalk.SINKAN3.getId());
+    		int talkNo = ExtendedPlayerProperties.get(ep).getNpcTalk(EnumDqmNpcTalk.SINKAN2.getId());
 
     		if(talkNo < 10)
     		{
     			DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.Dama2.messages." + talkNo + ".txt" ,new Object[] {}));
-    			ExtendedPlayerProperties.get(ep).setNpcTalk(EnumDqmNpcTalk.SINKAN3.getId(), talkNo + 1);
+    			ExtendedPlayerProperties.get(ep).setNpcTalk(EnumDqmNpcTalk.SINKAN2.getId(), talkNo + 1);
     			ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
     		}else
     		{
+    			if(!ep.worldObj.isRemote)
+    			{
+    				PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties3((EntityPlayer)ep), (EntityPlayerMP)ep);
+    			}
         		ep.openGui(DQR.instance, DQR.conf.GuiID_SkillJob, ep.worldObj, (int)ep.posX, (int)ep.posY, (int)ep.posZ);
     			ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);
     		}

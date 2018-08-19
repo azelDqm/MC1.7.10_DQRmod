@@ -15,6 +15,7 @@ import org.lwjgl.opengl.GL11;
 
 import dqr.DQR;
 import dqr.PacketHandler;
+import dqr.api.enums.EnumDqmSkillJ;
 import dqr.dataTable.FuncJobSkillData;
 import dqr.packetMessage.MessageServerDataSend;
 import dqr.playerData.ExtendedPlayerProperties;
@@ -34,6 +35,7 @@ public class GuiSkillJobGuiContainer extends GuiContainer
 	public int page = 0;
 	public int selectJob = -1;
 	public EntityPlayer player;
+	public boolean systemEnable = false;
 
 	public GuiSkillJobContainer mainContainer;
 
@@ -180,7 +182,7 @@ public class GuiSkillJobGuiContainer extends GuiContainer
     	int halfY = (this.height - this.ySize) / 2 + (this.ySize / 2);
     	int endX = (this.width - this.xSize) / 2 + this.xSize;
     	int endY = (this.height - this.ySize) / 2 + this.ySize;
-
+    	int reCnt = 0;
 
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(texture);
@@ -196,9 +198,37 @@ public class GuiSkillJobGuiContainer extends GuiContainer
         	int jobLv = ExtendedPlayerProperties.get(player).getJobLv(selectJob);
         	int jobSP = ExtendedPlayerProperties3.get(player).getJobSp(selectJob);
 
-        	this.fontRendererObj.drawStringWithShadow(I18n.format("main.job." + this.selectJob, new Object[]{}) + I18n.format("gui.container.dama.SP", new Object[]{FuncJobSkillData.getMaxSP(jobLv) - jobSP, FuncJobSkillData.getMaxSP(jobLv)}), mainX + pageLeftSize + 12, mainY + 17, 0xffffffff);
-            this.fontRendererObj.drawString(I18n.format("gui.container.dama.SkillOnlyJob", new Object[]{I18n.format("main.job." + this.selectJob, new Object[]{})}), mainX + pageLeftSize + 7, mainY + 48 - 11, 4210752);
-            this.fontRendererObj.drawString(I18n.format("gui.container.dama.SkillAllJob", new Object[]{}), mainX + pageLeftSize + 7, mainY + 84 - 11, 4210752);
+        	this.fontRendererObj.drawStringWithShadow(I18n.format("main.job." + this.selectJob, new Object[]{}) + I18n.format("gui.container.dama.SP", new Object[]{FuncJobSkillData.getMaxSP(jobLv) - jobSP, FuncJobSkillData.getMaxSP(jobLv)}), mainX + pageLeftSize + 12, mainY + 13, 0xffffffff);
+            this.fontRendererObj.drawString(I18n.format("gui.container.dama.SkillOnlyJob", new Object[]{I18n.format("main.job." + this.selectJob, new Object[]{})}), mainX + pageLeftSize + 7, mainY + 41 - 11, 4210752);
+            this.fontRendererObj.drawString(I18n.format("gui.container.dama.SkillAllJob", new Object[]{}), mainX + pageLeftSize + 7, mainY + 73 - 11, 4210752);
+
+
+
+            if(systemEnable)
+            {
+	            this.fontRendererObj.drawString(I18n.format("gui.container.dama.SkillSpOnlyJob", new Object[]{I18n.format("main.job." + this.selectJob, new Object[]{})}), mainX + pageLeftSize + 7, mainY + 107 - 11, 4210752);
+	            for(int cnt = 0; cnt < DQR.enumGetter.getJobSPSkillCounterJ2(selectJob); cnt++)
+	            {
+	    			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+	    	        GL11.glEnable(GL11.GL_BLEND);
+	    	        OpenGlHelper.glBlendFunc(770, 771, 1, 0);
+	    	        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+	                this.mc.getTextureManager().bindTexture(texture2);
+	                this.drawTexturedModalRect(k + 7 + pageLeftSize + ((cnt % 9) * 18), 107 + l + ((cnt / 9) * 18), 0, 232, 18, 18);
+	                reCnt = cnt;
+	            }
+
+	            this.fontRendererObj.drawString(I18n.format("gui.container.dama.SkillSpAllJob", new Object[]{I18n.format("main.job." + this.selectJob, new Object[]{})}), mainX + pageLeftSize + 7, 139 + ((reCnt / 9) * 18) + l - 11, 4210752);
+	            for(int cnt = 0; cnt < DQR.enumGetter.getJobSPSkillCounterAllJ(selectJob); cnt++)
+	            {
+	    			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+	    	        GL11.glEnable(GL11.GL_BLEND);
+	    	        OpenGlHelper.glBlendFunc(770, 771, 1, 0);
+	    	        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+	                this.mc.getTextureManager().bindTexture(texture2);
+	                this.drawTexturedModalRect(k + 7 + pageLeftSize + ((cnt % 9) * 18), 139 + ((reCnt / 9) * 18) + l + ((cnt / 9) * 18), 0, 232, 18, 18);
+	            }
+            }
         }
 
         //this.fontRendererObj.drawString(I18n.format("gui.container.dama.SkillSP", new Object[]{}), mainX + pageLeftSize + 7, mainY + 124 - 11, 4210752);
@@ -215,7 +245,7 @@ public class GuiSkillJobGuiContainer extends GuiContainer
         	        OpenGlHelper.glBlendFunc(770, 771, 1, 0);
         	        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         			this.mc.getTextureManager().bindTexture(texture3);
-        			this.drawTexturedModalRect(k + pageLeftSize + 8 + (cnt * 18), 49 + l, 0, 146, 16, 16);
+        			this.drawTexturedModalRect(k + pageLeftSize + 8 + (cnt * 18), 42 + l, 0, 146, 16, 16);
         		}
         	}
 
@@ -229,9 +259,45 @@ public class GuiSkillJobGuiContainer extends GuiContainer
         	        OpenGlHelper.glBlendFunc(770, 771, 1, 0);
         	        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         			this.mc.getTextureManager().bindTexture(texture3);
-        			this.drawTexturedModalRect(k + pageLeftSize + 8 + (cnt * 18), 85 + l, 0, 146, 16, 16);
+        			this.drawTexturedModalRect(k + pageLeftSize + 8 + (cnt * 18), 74 + l, 0, 146, 16, 16);
         		}
         	}
+
+        	if(systemEnable)
+            {
+	        	int[] skillSetSP = ExtendedPlayerProperties3.get(player).getJobSPSkillSetA2(selectJob);
+	        	for(int cnt = 0;cnt < skillSetSP.length; cnt++)
+	        	{
+	        		if(skillSetSP[cnt] == 1)
+	        		{
+	        			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+	        	        GL11.glEnable(GL11.GL_BLEND);
+	        	        OpenGlHelper.glBlendFunc(770, 771, 1, 0);
+	        	        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+	        			this.mc.getTextureManager().bindTexture(texture3);
+	        			//this.drawTexturedModalRect(k + pageLeftSize + 8 + (cnt * 18), 74 + l, 0, 146, 16, 16);
+	        			this.drawTexturedModalRect(k + 8 + pageLeftSize + ((cnt % 9) * 18), 108 + l + ((cnt / 9) * 18), 0, 146, 16, 16);
+	        		}
+
+	        	}
+
+	           // this.fontRendererObj.drawString(I18n.format("gui.container.dama.SkillSpAllJob", new Object[]{I18n.format("main.job." + this.selectJob, new Object[]{})}), mainX + pageLeftSize + 7, 139 + ((reCnt / 9) * 18) + l - 11, 4210752);
+	        	EnumDqmSkillJ[] skills = DQR.enumGetter.getSkillAllJfromJob(selectJob);
+	            for(int cnt = 0; cnt < skills.length; cnt++)
+	            {
+	            	//DQR.func.debugString("TESTTEST : " + ExtendedPlayerProperties3.get(player).getJobSPSkillSet(selectJob, skills[cnt].getIdx()) + " / " + cnt + " / " + skills[cnt].getIdx());
+	            	if(ExtendedPlayerProperties3.get(player).getJobSPSkillSet(selectJob, skills[cnt].getIdx()) == 2)
+	            	{
+	            		//DQR.func.debugString("TEST _ " + cnt);
+		    			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		    	        GL11.glEnable(GL11.GL_BLEND);
+		    	        OpenGlHelper.glBlendFunc(770, 771, 1, 0);
+		    	        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+		                this.mc.getTextureManager().bindTexture(texture3);
+		                this.drawTexturedModalRect(k + 8 + pageLeftSize + ((cnt % 9) * 18), 140 + ((reCnt / 9) * 18) + l + ((cnt / 9) * 18), 0, 146, 16, 16);
+	            	}
+	            }
+            }
         }
     }
 

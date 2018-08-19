@@ -355,7 +355,7 @@ public class LivingEventHandler {
 
 				int chanceFix = (int)(DQR.conf.petChanceFix * 10);
 
-				if(chanceFix > 0 && rand.nextInt(chanceFix) < 10)
+				if(chanceFix > 0 && rand.nextInt(chanceFix) < 10 && ((DqmMobBase)mb).petRefuseFlg != 2)
 				{
 
 					//肉使用確認

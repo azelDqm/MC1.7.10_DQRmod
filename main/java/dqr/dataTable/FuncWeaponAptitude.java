@@ -266,7 +266,7 @@ public class FuncWeaponAptitude {
     	this.WAptitudeDqmHammer[EnumDqmJob.Kaizoku.getId()] = 1;
 
     	//マスタードラゴン
-    	this.WAptitudeMonster[EnumDqmJob.Haguremetal.getId()] = 3;
+    	this.WAptitudeMonster[EnumDqmJob.MASTERDRAGON.getId()] = 3;
 
     	//羊飼い
     	this.WAptitudeWhip[EnumDqmJob.Hituzikai.getId()] = 2;
@@ -280,8 +280,8 @@ public class FuncWeaponAptitude {
 
     	//道具使い
     	this.WAptitudeLance[EnumDqmJob.Dougutukai.getId()] = 2;
-    	this.WAptitudeBow[EnumDqmJob.Funanori.getId()] = 1;
-    	this.WAptitudeSoroban[EnumDqmJob.Funanori.getId()] = 1;
+    	this.WAptitudeBow[EnumDqmJob.Dougutukai.getId()] = 1;
+    	this.WAptitudeSoroban[EnumDqmJob.Dougutukai.getId()] = 1;
 
     	//天地雷鳴士
     	this.WAptitudeScythe[EnumDqmJob.Tentiraimeishi.getId()] = 2;

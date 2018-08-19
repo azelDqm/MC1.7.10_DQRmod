@@ -49,7 +49,7 @@ public class InventoryFarmBook implements IInventory
 
 			}
 
-			items[118] = new ItemStack((Item)DQR.mutationTable.mutationResults.get(page - 1) , 1);
+			items[18] = new ItemStack((Item)DQR.mutationTable.mutationResults.get(page - 1) , 1);
 		}
 
     }

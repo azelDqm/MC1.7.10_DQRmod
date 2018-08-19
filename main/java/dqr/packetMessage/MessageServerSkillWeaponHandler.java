@@ -45,24 +45,29 @@ public class MessageServerSkillWeaponHandler implements IMessageHandler<MessageS
 	        	int nowLv = ExtendedPlayerProperties.get(ep).getJukurenLv(pat);
 
 	        	//System.out.println("？？？？:" + needWP + "/" + nowWP );
-	        	if(needLv <= nowLv || DQR.debug == 1)
+	        	int perm = ExtendedPlayerProperties3.get(ep).getWeaponSkillPermission(pat, pat2);
+	        	if(perm == 0 || DQR.debug == 1)
 	        	{
-		        	if(needWP <= nowWP || DQR.debug == 1)
+		        	if(needLv <= nowLv || DQR.debug == 1)
 		        	{
-		        		String skillName = StatCollector.translateToLocal("dqm.skill." + skillW.getName() + ".name");
-		        		DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.Dama3.messages.20.txt" ,new Object[] {skillName}));
-		        		ep.worldObj.playSoundAtEntity(ep, "dqr:player.levelup", 1.0F, 0.9F);
-		        		ExtendedPlayerProperties.get(ep).setJukurenWP(pat, nowWP - needWP);
-		        		ExtendedPlayerProperties3.get(ep).setWeaponSkillPermission(pat, pat2, 1);
-		        		((ExtendedPlayerProperties)(ep.getExtendedProperties(ExtendedPlayerProperties.EXT_PROP_NAME))).loadProxyData((EntityPlayer)ep);
-		        		((ExtendedPlayerProperties3)(ep.getExtendedProperties(ExtendedPlayerProperties3.EXT_PROP_NAME))).loadProxyData((EntityPlayer)ep);
+			        	if(needWP <= nowWP || DQR.debug == 1)
+			        	{
+			        		String skillName = StatCollector.translateToLocal("dqm.skill." + skillW.getName() + ".name");
+			        		DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.Dama3.messages.20.txt" ,new Object[] {skillName}));
+			        		ep.worldObj.playSoundAtEntity(ep, "dqr:player.levelup", 1.0F, 0.9F);
+			        		ExtendedPlayerProperties.get(ep).setJukurenWP(pat, nowWP - needWP);
+			        		ExtendedPlayerProperties3.get(ep).setWeaponSkillPermission(pat, pat2, 1);
+			        		((ExtendedPlayerProperties)(ep.getExtendedProperties(ExtendedPlayerProperties.EXT_PROP_NAME))).loadProxyData((EntityPlayer)ep);
+			        		((ExtendedPlayerProperties3)(ep.getExtendedProperties(ExtendedPlayerProperties3.EXT_PROP_NAME))).loadProxyData((EntityPlayer)ep);
+			        		//PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties3(ep), (EntityPlayerMP)ep);
+			        	}else
+			        	{
+			        		DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.Dama3.messages.40.txt" ,new Object[] {}));
+			        	}
 		        	}else
 		        	{
-		        		DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.Dama3.messages.40.txt" ,new Object[] {}));
+		        		DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.Dama3.messages.42.txt" ,new Object[] {}));
 		        	}
-	        	}else
-	        	{
-	        		DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.Dama3.messages.42.txt" ,new Object[] {}));
 	        	}
         	}
         }

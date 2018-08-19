@@ -79,6 +79,7 @@ public class DQRconfigs {
 
 	public static int GuiID_ItemShop = 15;
 	public static int GuiID_SkillJob = 16;
+	public static int GuiID_Skillbook = 17;
 
 	public static int GuiID_SubEquip = 20;
 	public static int GuiID_SubItemBag = 21;
@@ -99,6 +100,7 @@ public class DQRconfigs {
 	public static int GuiID_CEDecorate = 37;
 	public static int GuiID_CEDecorateD = 38;
 	public static int GuiID_CEDecorateH = 39;
+
 
 	public static int CLGuiLogWindowOff = 1;
 
@@ -292,6 +294,7 @@ public class DQRconfigs {
     public static int needBuilderFrame2 = 1;
     public static int needBuilderFrame3 = 1;
     public static int needBuilderFrame4 = 1;
+    public static int permPetRefCommand = 1;
 
     public static float figureMagni = 5;
 
@@ -827,6 +830,8 @@ public class DQRconfigs {
 			}
 		}
 
+		config.setCategoryComment("Commands use permission", "this setting is commands using permission");
+		permPetRefCommand = config.get("Commands use permission","dqrpet refuse Command", permPetRefCommand, "setting (0:disable 1:enable)").getInt();
 
 		config.setCategoryComment("DQR Fishing setting", "DQR Fishing settings");
 		fishingMode = config.get("DQR Fishing setting","FishingMode", fishingMode, "setting (0:disable 1:enable)").getInt();
@@ -1354,6 +1359,7 @@ public class DQRconfigs {
 		GuiID_PetBook =  config.get("GUI ID","PetBook", GuiID_PetBook).getInt();
 		GuiID_SkillWeapon =  config.get("GUI ID","SkillWeapon", GuiID_SkillWeapon).getInt();
 		GuiID_SkillJob =  config.get("GUI ID","SkillJob", GuiID_SkillJob).getInt();
+		GuiID_Skillbook =  config.get("GUI ID","Skillbook", GuiID_Skillbook).getInt();
 		GuiID_PetStatus =  config.get("GUI ID","PetStatus", GuiID_PetStatus).getInt();
 		GuiID_PetInventory =  config.get("GUI ID","PetInventory", GuiID_PetInventory).getInt();
 		GuiID_DqrEnderchest =  config.get("GUI ID","DQR EnderChest", GuiID_DqrEnderchest).getInt();

@@ -34,6 +34,7 @@ public class ExtendedPlayerProperties3 implements IExtendedEntityProperties {
 
 	private int[][] jobSkillSet = new int[32][9];
 	private int[][] jobSkillSet2 = new int[32][9];
+	private int[][] jobSPSkillSet = new int[32][36];
 	private int[] JobSp = new int[32];
 
 	private NBTTagCompound petStatudData = null;
@@ -44,7 +45,7 @@ public class ExtendedPlayerProperties3 implements IExtendedEntityProperties {
 	private String statusPetOwner;
 	//private DqmPetBase invPet;
 
-	private NBTTagCompound partyMemberData = new NBTTagCompound();
+	//private NBTTagCompound partyMemberData = new NBTTagCompound();
 
     private double[] W_RuraX = new double[5];
     private double[] W_RuraY = new double[5];
@@ -99,6 +100,7 @@ public class ExtendedPlayerProperties3 implements IExtendedEntityProperties {
     public boolean tooltipShortRuraSin = false;
     public boolean tooltipShortRuraSin2 = false;
     public boolean tooltipShortRuraSinC = false;
+    public boolean tooltipShortSkillBook = false;
     //private
 
     private int Coin;
@@ -173,7 +175,15 @@ public class ExtendedPlayerProperties3 implements IExtendedEntityProperties {
         	}
         }
 
-        nbt.setTag("partyMemberData", partyMemberData);
+        for(int job = 0; job < jobSPSkillSet.length; job++)
+        {
+        	for(int idx = 0; idx < jobSPSkillSet[job].length; idx++)
+        	{
+        		nbt.setInteger("jobSPSkillSet_" + job + "_" + idx, jobSPSkillSet[job][idx]);
+        	}
+        }
+
+
         nbt.setInteger("deadCheckFlg", deadCheckFlg);
 
         if(haigouPet1 == null)
@@ -336,13 +346,13 @@ public class ExtendedPlayerProperties3 implements IExtendedEntityProperties {
         	jobSkillSet2[job][idx] = nbt.getInteger("jobSkillSet2_" + job + "_" + idx);
         }
 
-        if(nbt.getCompoundTag("partyMemberData") != null)
+        for(int job = 0; job < jobSPSkillSet.length; job++)
         {
-        	partyMemberData = (NBTTagCompound)nbt.getCompoundTag("partyMemberData");
-        }else
-        {
-        	partyMemberData = new NBTTagCompound();
+        	for(int idx = 0; idx < jobSPSkillSet[job].length; idx++)
+        	jobSPSkillSet[job][idx] = nbt.getInteger("jobSPSkillSet_" + job + "_" + idx);
         }
+
+
 
         deadCheckFlg = nbt.getInteger("deadCheckFlg");
 
@@ -473,12 +483,21 @@ public class ExtendedPlayerProperties3 implements IExtendedEntityProperties {
 
     public int getWeaponSkillPermission(int par1, int par2) {
     	if(weaponSkillPermission == null) weaponSkillPermission = new int[64][];
-        return weaponSkillPermission[par1][par2];
+    	if(par2 < 0)
+    	{
+    		return -1;
+    	}else
+    	{
+    		return weaponSkillPermission[par1][par2];
+    	}
     }
     public void setWeaponSkillPermission(int par1, int par2, int par3) {
     	if(weaponSkillPermission == null) weaponSkillPermission = new int[64][];
     	//System.out.println("VAL:" + par1 + "/" + par2 + "/" + par3);
-        this.weaponSkillPermission[par1][par2] = par3;
+    	if(par2 >= 0)
+    	{
+    		this.weaponSkillPermission[par1][par2] = par3;
+    	}
     }
 
     /*
@@ -607,6 +626,33 @@ public class ExtendedPlayerProperties3 implements IExtendedEntityProperties {
     	if(jobSkillSet2 == null) jobSkillSet2 = new int[32][9];
         this.jobSkillSet2[job][idx] = par1;
     }
+
+
+    public int[][] getJobSPSkillSetA() {
+    	if(jobSPSkillSet == null) jobSPSkillSet = new int[32][9];
+        return jobSPSkillSet;
+    }
+    public void setJobSPSkillSetA(int[][] par1) {
+    	if(jobSPSkillSet == null) jobSPSkillSet = new int[32][9];
+        this.jobSPSkillSet = par1;
+    }
+    public int[] getJobSPSkillSetA2(int job) {
+    	if(jobSPSkillSet == null) jobSPSkillSet = new int[32][9];
+        return jobSPSkillSet[job];
+    }
+    public void setJobSPSkillSetA2(int[] par1, int job) {
+    	if(jobSPSkillSet == null) jobSPSkillSet = new int[32][9];
+        this.jobSPSkillSet[job] = par1;
+    }
+
+    public int getJobSPSkillSet(int job, int idx) {
+    	if(jobSPSkillSet == null) jobSPSkillSet = new int[32][9];
+        return jobSPSkillSet[job][idx];
+    }
+    public void setJobSPSkillSet(int job, int idx, int par1) {
+    	if(jobSPSkillSet == null) jobSPSkillSet = new int[32][9];
+        this.jobSPSkillSet[job][idx] = par1;
+    }
     /*
     public NBTTagCompound getNBTWeaponSkillPermission() {
         return NBTWeaponSkillPermission;
@@ -643,22 +689,6 @@ public class ExtendedPlayerProperties3 implements IExtendedEntityProperties {
     }
     public String getStatusPetOwner() {
         return this.statusPetOwner;
-    }
-
-
-    public void setPartyMemberData(NBTTagCompound par1) {
-    	if(par1 != null)
-    	{
-    		this.partyMemberData = new NBTTagCompound();
-    		this.partyMemberData = par1;
-    		//System.out.println(par1.func_150296_c().size());
-    	}else
-    	{
-    		this.partyMemberData = new NBTTagCompound();
-    	}
-    }
-    public NBTTagCompound getPartyMemberData() {
-        return this.partyMemberData;
     }
 
 

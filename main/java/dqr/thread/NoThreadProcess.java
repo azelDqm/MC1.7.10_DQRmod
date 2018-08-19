@@ -2,18 +2,13 @@ package dqr.thread;
 
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraftforge.common.MinecraftForge;
 import scala.util.Random;
 import dqr.DQR;
-import dqr.PacketHandler;
 import dqr.api.enums.EnumDqmPet;
-import dqr.api.event.DqmJukurenUpEvent;
 import dqr.api.event.DqmPetLvUpEvent;
 import dqr.entity.petEntity.DqmPetBase;
-import dqr.packetMessage.MessageClientSound;
-import dqr.playerData.ExtendedPlayerProperties;
 
 public class NoThreadProcess {
 
@@ -171,6 +166,9 @@ public class NoThreadProcess {
 		{
 			return;
 		}
+
+		DQR.func.jukurenUpProcessMain(ep);
+		/*
 		boolean flg = true;
 		int epLv = ExtendedPlayerProperties.get(ep).getJukurenLv(ExtendedPlayerProperties.get(ep).getWeapon());
 		int epEXP = ExtendedPlayerProperties.get(ep).getJukurenExp(ExtendedPlayerProperties.get(ep).getWeapon());
@@ -224,6 +222,7 @@ public class NoThreadProcess {
 				break;
 			}
 		}
+		*/
 	}
 
 	public void doLevelUpPet(DqmPetBase pet)
