@@ -10,9 +10,11 @@ import dqr.DQR;
 import dqr.PacketHandler;
 import dqr.api.enums.EnumDqmCasinoBJOdds;
 import dqr.api.enums.EnumDqmFuncPacketCode;
+import dqr.api.enums.EnumDqmJob;
 import dqr.api.enums.EnumDqmTrump;
 import dqr.gui.casino.GuiCasinoBJGuiContainer;
 import dqr.packetMessage.MessageServerFunction;
+import dqr.playerData.ExtendedPlayerProperties5;
 
 public class ThreadCasinoBJ extends Thread{
 
@@ -89,7 +91,7 @@ public class ThreadCasinoBJ extends Thread{
 				// TODO 自動生成された catch ブロック
 				e.printStackTrace();
 			}
-		}else if(this.phaseNum == 2)
+		}else if(this.phaseNum == 2 || this.phaseNum == 21)
 		{
 			if(this.buttonId == 1 || this.buttonId == 3)
 			{
@@ -100,10 +102,17 @@ public class ThreadCasinoBJ extends Thread{
 					e.printStackTrace();
 				}
 				int val = rand.nextInt(gui.trumpDeck.size());
-				gui.trumpSet.put(gui.trumpSet.size(), gui.trumpDeck.get(val));
-				//this.ep.playSound("gui.button.press", 0.9F, 1.0F);
-				gui.soundPlay = 1;
-				gui.trumpDeck.remove(val);
+
+				if(this.phaseNum == 2)
+				{
+					gui.trumpSet.put(gui.trumpSet.size(), gui.trumpDeck.get(val));
+					//this.ep.playSound("gui.button.press", 0.9F, 1.0F);
+					gui.soundPlay = 1;
+					gui.trumpDeck.remove(val);
+				}else
+				{
+
+				}
 
 
 				int trumpValTotal = 0;
@@ -140,10 +149,34 @@ public class ThreadCasinoBJ extends Thread{
 
 	        	if(trumpValTotal > 21)
 	        	{
-					gui.gamePhase = 3;
-					gui.playerStatus = 3;
-	    			ThreadCasinoBJ threadBJ = new ThreadCasinoBJ(this.ep, gui, 3, 2);
-	        		threadBJ.start();
+	        		boolean flg = true;
+
+		    		if(ExtendedPlayerProperties5.get(ep).getJobSPSkillSet(EnumDqmJob.Asobinin.getId(), 12) != 0 && gui.gamePhase != 20)
+		    		{
+		    			gui.gamePhase = 20;
+		    			flg = false;
+		    			/*
+		    			int mp = ExtendedPlayerProperties.get(ep).getMP();
+	        			if(mp >= EnumDqmSkillJ.JSKILL_0_12.getNeedpt_Val())
+	        			{
+	        				//flg = false;
+	        				//this.ep.playSound("dqr:player.ikasama", 1.0F, 1.0F);
+		    				//PacketHandler.INSTANCE.sendToServer(new MessageServerFunction(EnumDqmFuncPacketCode.MPchange, EnumDqmSkillJ.JSKILL_0_12.getNeedpt_Val() * -1));
+		    				//gui.soundPlay = 15;
+		    				gui.gamePhase = 20;
+	        			}
+	        			*/
+		    		}
+
+
+		    		if(flg)
+		    		{
+						gui.gamePhase = 4;
+						gui.playerStatus = 3;
+		    			ThreadCasinoBJ threadBJ = new ThreadCasinoBJ(this.ep, gui, 4, 2);
+		        		threadBJ.start();
+		    		}
+
 	        	}else if(this.buttonId == 3)
 				{
 					gui.gamePhase = 3;

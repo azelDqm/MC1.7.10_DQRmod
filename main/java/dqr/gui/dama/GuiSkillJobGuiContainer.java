@@ -15,11 +15,12 @@ import org.lwjgl.opengl.GL11;
 
 import dqr.DQR;
 import dqr.PacketHandler;
+import dqr.api.enums.EnumDqmJob;
 import dqr.api.enums.EnumDqmSkillJ;
 import dqr.dataTable.FuncJobSkillData;
 import dqr.packetMessage.MessageServerDataSend;
 import dqr.playerData.ExtendedPlayerProperties;
-import dqr.playerData.ExtendedPlayerProperties3;
+import dqr.playerData.ExtendedPlayerProperties5;
 
 public class GuiSkillJobGuiContainer extends GuiContainer
 {
@@ -35,9 +36,10 @@ public class GuiSkillJobGuiContainer extends GuiContainer
 	public int page = 0;
 	public int selectJob = -1;
 	public EntityPlayer player;
-	public boolean systemEnable = false;
+	public boolean systemEnable = true;
 
 	public GuiSkillJobContainer mainContainer;
+	private int playerJob = -1;
 
     public GuiSkillJobGuiContainer(EntityPlayer ep)
     {
@@ -47,6 +49,7 @@ public class GuiSkillJobGuiContainer extends GuiContainer
 
         this.player = ep;
         int[] jobLv = ExtendedPlayerProperties.get(ep).getJobLvA();
+        playerJob = ExtendedPlayerProperties.get(ep).getJob();
         int jobCounter = 0;
 
 
@@ -196,7 +199,7 @@ public class GuiSkillJobGuiContainer extends GuiContainer
         if(this.selectJob != -1)
         {
         	int jobLv = ExtendedPlayerProperties.get(player).getJobLv(selectJob);
-        	int jobSP = ExtendedPlayerProperties3.get(player).getJobSp(selectJob);
+        	int jobSP = ExtendedPlayerProperties5.get(player).getJobSp(selectJob);
 
         	this.fontRendererObj.drawStringWithShadow(I18n.format("main.job." + this.selectJob, new Object[]{}) + I18n.format("gui.container.dama.SP", new Object[]{FuncJobSkillData.getMaxSP(jobLv) - jobSP, FuncJobSkillData.getMaxSP(jobLv)}), mainX + pageLeftSize + 12, mainY + 13, 0xffffffff);
             this.fontRendererObj.drawString(I18n.format("gui.container.dama.SkillOnlyJob", new Object[]{I18n.format("main.job." + this.selectJob, new Object[]{})}), mainX + pageLeftSize + 7, mainY + 41 - 11, 4210752);
@@ -204,7 +207,8 @@ public class GuiSkillJobGuiContainer extends GuiContainer
 
 
 
-            if(systemEnable)
+            //if(systemEnable)
+            if(selectJob == EnumDqmJob.Asobinin.getId())
             {
 	            this.fontRendererObj.drawString(I18n.format("gui.container.dama.SkillSpOnlyJob", new Object[]{I18n.format("main.job." + this.selectJob, new Object[]{})}), mainX + pageLeftSize + 7, mainY + 107 - 11, 4210752);
 	            for(int cnt = 0; cnt < DQR.enumGetter.getJobSPSkillCounterJ2(selectJob); cnt++)
@@ -235,7 +239,7 @@ public class GuiSkillJobGuiContainer extends GuiContainer
 
         if(selectJob > -1)
         {
-        	int[] skillSet = ExtendedPlayerProperties3.get(player).getJobSkillSetA2(selectJob);
+        	int[] skillSet = ExtendedPlayerProperties5.get(player).getJobSkillSetA2(selectJob);
         	for(int cnt = 0;cnt < skillSet.length; cnt++)
         	{
         		if(skillSet[cnt] == 1)
@@ -249,7 +253,7 @@ public class GuiSkillJobGuiContainer extends GuiContainer
         		}
         	}
 
-        	int[] skillSet2 = ExtendedPlayerProperties3.get(player).getJobSkillSet2A2(selectJob);
+        	int[] skillSet2 = ExtendedPlayerProperties5.get(player).getJobSkillSet2A2(selectJob);
         	for(int cnt = 0;cnt < skillSet2.length; cnt++)
         	{
         		if(skillSet2[cnt] == 1)
@@ -263,9 +267,10 @@ public class GuiSkillJobGuiContainer extends GuiContainer
         		}
         	}
 
-        	if(systemEnable)
+        	//if(systemEnable)
+        	if(selectJob == EnumDqmJob.Asobinin.getId())
             {
-	        	int[] skillSetSP = ExtendedPlayerProperties3.get(player).getJobSPSkillSetA2(selectJob);
+	        	int[] skillSetSP = ExtendedPlayerProperties5.get(player).getJobSPSkillSetA2(selectJob);
 	        	for(int cnt = 0;cnt < skillSetSP.length; cnt++)
 	        	{
 	        		if(skillSetSP[cnt] == 1)
@@ -286,7 +291,7 @@ public class GuiSkillJobGuiContainer extends GuiContainer
 	            for(int cnt = 0; cnt < skills.length; cnt++)
 	            {
 	            	//DQR.func.debugString("TESTTEST : " + ExtendedPlayerProperties3.get(player).getJobSPSkillSet(selectJob, skills[cnt].getIdx()) + " / " + cnt + " / " + skills[cnt].getIdx());
-	            	if(ExtendedPlayerProperties3.get(player).getJobSPSkillSet(selectJob, skills[cnt].getIdx()) == 2)
+	            	if(ExtendedPlayerProperties5.get(player).getJobSPSkillSet(selectJob, skills[cnt].getIdx()) == 2)
 	            	{
 	            		//DQR.func.debugString("TEST _ " + cnt);
 		    			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -310,8 +315,10 @@ public class GuiSkillJobGuiContainer extends GuiContainer
 			if(player.worldObj.isRemote)
 	    	{
 				NBTTagCompound data = new NBTTagCompound();
-				ExtendedPlayerProperties3.get(player).saveNBTData(data);
-	    		PacketHandler.INSTANCE.sendToServer(new MessageServerDataSend(data, 3));
+				ExtendedPlayerProperties5.get(player).setPlayerName(player.getCommandSenderName());
+				ExtendedPlayerProperties5.get(player).setPlayerUUID(player.getUniqueID().toString());
+				ExtendedPlayerProperties5.get(player).saveNBTData(data);
+	    		PacketHandler.INSTANCE.sendToServer(new MessageServerDataSend(data, 5));
 	    	}
 
 			//FuncJobSkillData.calcPlayerStatus(player);

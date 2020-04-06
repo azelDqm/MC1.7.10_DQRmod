@@ -19,7 +19,7 @@ import dqr.api.Items.DQBuilders;
 import dqr.api.enums.EnumDqmNpcTalk;
 import dqr.entity.npcEntity.DqmNPCBase;
 import dqr.playerData.ExtendedPlayerProperties;
-import dqr.playerData.MessagePlayerProperties3;
+import dqr.playerData.MessagePlayerProperties5;
 
 public class DqmEntityNPCSinkan2 extends DqmNPCBase
 {
@@ -164,7 +164,7 @@ public class DqmEntityNPCSinkan2 extends DqmNPCBase
     		{
     			if(!ep.worldObj.isRemote)
     			{
-    				PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties3((EntityPlayer)ep), (EntityPlayerMP)ep);
+    				PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties5((EntityPlayer)ep), (EntityPlayerMP)ep);
     			}
         		ep.openGui(DQR.instance, DQR.conf.GuiID_SkillJob, ep.worldObj, (int)ep.posX, (int)ep.posY, (int)ep.posZ);
     			ep.worldObj.playSoundAtEntity(ep, "dqr:player.pi", 1.0F, 1.0F);

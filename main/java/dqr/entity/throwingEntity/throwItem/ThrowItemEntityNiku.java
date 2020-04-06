@@ -4,6 +4,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
+import dqr.DQR;
 import dqr.api.Items.DQMiscs;
 import dqr.api.potion.DQPotionEtc;
 import dqr.entity.mobEntity.DqmMobBase;
@@ -49,7 +50,7 @@ public class ThrowItemEntityNiku extends ThrowItemEntity
         	{
         		DqmMobBase mob = (DqmMobBase)p_70184_1_.entityHit;
 
-    			mob.addPotionEffect(new PotionEffect(DQPotionEtc.buffMonsterNiku.id, 20 * 30, this.level - 1));
+    			DQR.func.addPotionEffect2(mob, new PotionEffect(DQPotionEtc.buffMonsterNiku.id, 20 * 30, this.level - 1));
     			flg = false;
 
         	}else if(p_70184_1_.entityHit instanceof DqmPetBase)

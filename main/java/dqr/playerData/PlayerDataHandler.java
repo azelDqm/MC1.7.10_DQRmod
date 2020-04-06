@@ -22,6 +22,8 @@ public class PlayerDataHandler {
 	private static final Map<String, NBTTagCompound> extendedEntityData2 = new HashMap<>();
 	private static final Map<String, NBTTagCompound> extendedEntityData3 = new HashMap<>();
 	private static final Map<String, NBTTagCompound> extendedEntityData4 = new HashMap<>();
+	private static final Map<String, NBTTagCompound> extendedEntityData5 = new HashMap<>();
+	private static final Map<String, NBTTagCompound> extendedEntityData6 = new HashMap<>();
 
 	@SubscribeEvent
     /*IExtendedEntityPropertiesを登録する処理を呼び出す*/
@@ -31,6 +33,8 @@ public class PlayerDataHandler {
             ExtendedPlayerProperties2.register((EntityPlayer)event.entity);
             ExtendedPlayerProperties3.register((EntityPlayer)event.entity);
             ExtendedPlayerProperties4.register((EntityPlayer)event.entity);
+            ExtendedPlayerProperties5.register((EntityPlayer)event.entity);
+            ExtendedPlayerProperties6.register((EntityPlayer)event.entity);
         }
     }
 
@@ -43,13 +47,17 @@ public class PlayerDataHandler {
             NBTTagCompound playerData2 = new NBTTagCompound();
             NBTTagCompound playerData3 = new NBTTagCompound();
             NBTTagCompound playerData4 = new NBTTagCompound();
+            NBTTagCompound playerData5 = new NBTTagCompound();
+            NBTTagCompound playerData6 = new NBTTagCompound();
 
 	            (event.entity.getExtendedProperties(ExtendedPlayerProperties.EXT_PROP_NAME)).saveNBTData(playerData);
 	            (event.entity.getExtendedProperties(ExtendedPlayerProperties2.EXT_PROP_NAME)).saveNBTData(playerData2);
 	            (event.entity.getExtendedProperties(ExtendedPlayerProperties3.EXT_PROP_NAME)).saveNBTData(playerData3);
-	            (event.entity.getExtendedProperties(ExtendedPlayerProperties3.EXT_PROP_NAME)).saveNBTData(playerData4);
+	            (event.entity.getExtendedProperties(ExtendedPlayerProperties4.EXT_PROP_NAME)).saveNBTData(playerData4);
+	            (event.entity.getExtendedProperties(ExtendedPlayerProperties5.EXT_PROP_NAME)).saveNBTData(playerData5);
+	            (event.entity.getExtendedProperties(ExtendedPlayerProperties6.EXT_PROP_NAME)).saveNBTData(playerData6);
 
-            storeEntityData(event.entity.getCommandSenderName(), playerData, playerData2, playerData3, playerData4);
+            storeEntityData(event.entity.getCommandSenderName(), playerData, playerData2, playerData3, playerData4, playerData5, playerData6);
         }
     }
 
@@ -69,6 +77,12 @@ public class PlayerDataHandler {
            	ExtendedPlayerProperties4.get(ep).setPlayerName(ep.getCommandSenderName());
         	ExtendedPlayerProperties4.get(ep).setPlayerUUID(ep.getUniqueID().toString());
         	ExtendedPlayerProperties4.get(ep).setPartyMemberData(null);
+           	ExtendedPlayerProperties5.get(ep).setPlayerName(ep.getCommandSenderName());
+        	ExtendedPlayerProperties5.get(ep).setPlayerUUID(ep.getUniqueID().toString());
+           	ExtendedPlayerProperties6.get(ep).setPlayerName(ep.getCommandSenderName());
+        	ExtendedPlayerProperties6.get(ep).setPlayerUUID(ep.getUniqueID().toString());
+
+
             if(DQR.conf.dqrHardcore != 1)
             {
 	        	 if(!ep.isDead && ep.getHealth() > 0)
@@ -87,12 +101,22 @@ public class PlayerDataHandler {
 	                    }
 	                    NBTTagCompound playerData4 = getEntityData4(event.entity.getCommandSenderName());
 	                    if (playerData != null) {
-	                        (event.entity.getExtendedProperties(ExtendedPlayerProperties4.EXT_PROP_NAME)).loadNBTData(playerData3);
+	                        (event.entity.getExtendedProperties(ExtendedPlayerProperties4.EXT_PROP_NAME)).loadNBTData(playerData4);
+	                    }
+	                    NBTTagCompound playerData5 = getEntityData5(event.entity.getCommandSenderName());
+	                    if (playerData != null) {
+	                        (event.entity.getExtendedProperties(ExtendedPlayerProperties5.EXT_PROP_NAME)).loadNBTData(playerData5);
+	                    }
+	                    NBTTagCompound playerData6 = getEntityData6(event.entity.getCommandSenderName());
+	                    if (playerData != null) {
+	                        (event.entity.getExtendedProperties(ExtendedPlayerProperties6.EXT_PROP_NAME)).loadNBTData(playerData6);
 	                    }
 	                    ((ExtendedPlayerProperties)(event.entity.getExtendedProperties(ExtendedPlayerProperties.EXT_PROP_NAME))).loadProxyData((EntityPlayer)event.entity);
 	                    ((ExtendedPlayerProperties2)(event.entity.getExtendedProperties(ExtendedPlayerProperties2.EXT_PROP_NAME))).loadProxyData((EntityPlayer)event.entity);
 	                    ((ExtendedPlayerProperties3)(event.entity.getExtendedProperties(ExtendedPlayerProperties3.EXT_PROP_NAME))).loadProxyData((EntityPlayer)event.entity);
 	                    ((ExtendedPlayerProperties4)(event.entity.getExtendedProperties(ExtendedPlayerProperties4.EXT_PROP_NAME))).loadProxyData((EntityPlayer)event.entity);
+	                    ((ExtendedPlayerProperties5)(event.entity.getExtendedProperties(ExtendedPlayerProperties5.EXT_PROP_NAME))).loadProxyData((EntityPlayer)event.entity);
+	                    ((ExtendedPlayerProperties6)(event.entity.getExtendedProperties(ExtendedPlayerProperties6.EXT_PROP_NAME))).loadProxyData((EntityPlayer)event.entity);
 
 	        	}else
 	        	{
@@ -101,11 +125,15 @@ public class PlayerDataHandler {
 	                NBTTagCompound playerData2 = new NBTTagCompound();
 	                NBTTagCompound playerData3 = new NBTTagCompound();
 	                NBTTagCompound playerData4 = new NBTTagCompound();
+	                NBTTagCompound playerData5 = new NBTTagCompound();
+	                NBTTagCompound playerData6 = new NBTTagCompound();
 	                (event.entity.getExtendedProperties(ExtendedPlayerProperties.EXT_PROP_NAME)).saveNBTData(playerData);
 	                (event.entity.getExtendedProperties(ExtendedPlayerProperties2.EXT_PROP_NAME)).saveNBTData(playerData2);
 	                (event.entity.getExtendedProperties(ExtendedPlayerProperties3.EXT_PROP_NAME)).saveNBTData(playerData3);
 	                (event.entity.getExtendedProperties(ExtendedPlayerProperties4.EXT_PROP_NAME)).saveNBTData(playerData4);
-	                storeEntityData(event.entity.getCommandSenderName(), playerData, playerData2, playerData3, playerData4);                //(event.entity.getExtendedProperties(ExtendedPlayerProperties.EXT_PROP_NAME)).loadNBTData(playerData);
+	                (event.entity.getExtendedProperties(ExtendedPlayerProperties5.EXT_PROP_NAME)).saveNBTData(playerData5);
+	                (event.entity.getExtendedProperties(ExtendedPlayerProperties6.EXT_PROP_NAME)).saveNBTData(playerData6);
+	                storeEntityData(event.entity.getCommandSenderName(), playerData, playerData2, playerData3, playerData4, playerData5, playerData6);                //(event.entity.getExtendedProperties(ExtendedPlayerProperties.EXT_PROP_NAME)).loadNBTData(playerData);
 	                //((ExtendedPlayerProperties)(event.entity.getExtendedProperties(ExtendedPlayerProperties.EXT_PROP_NAME))).loadProxyData((EntityPlayer)event.entity);
 	        	}
             }else
@@ -167,6 +195,8 @@ public class PlayerDataHandler {
             PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties2(event.player), (EntityPlayerMP)event.player);
             PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties3(event.player), (EntityPlayerMP)event.player);
             PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties4(event.player), (EntityPlayerMP)event.player);
+            PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties5(event.player), (EntityPlayerMP)event.player);
+            PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties6(event.player), (EntityPlayerMP)event.player);
         }
     }
 
@@ -178,16 +208,20 @@ public class PlayerDataHandler {
             PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties2(event.player), (EntityPlayerMP)event.player);
             PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties3(event.player), (EntityPlayerMP)event.player);
             PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties4(event.player), (EntityPlayerMP)event.player);
+            PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties5(event.player), (EntityPlayerMP)event.player);
+            PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties6(event.player), (EntityPlayerMP)event.player);
         }
     }
 
     /*PlayerのIExtendedEntityPropertiesをMapに保存*/
-    public static void storeEntityData(String name, NBTTagCompound compound, NBTTagCompound compound2, NBTTagCompound compound3, NBTTagCompound compound4) {
+    public static void storeEntityData(String name, NBTTagCompound compound, NBTTagCompound compound2, NBTTagCompound compound3, NBTTagCompound compound4, NBTTagCompound compound5, NBTTagCompound compound6) {
     	//System.out.println("TEST1:" + extendedEntityData.size());
         extendedEntityData.put(name, compound);
         extendedEntityData2.put(name, compound2);
         extendedEntityData3.put(name, compound3);
         extendedEntityData4.put(name, compound4);
+        extendedEntityData5.put(name, compound5);
+        extendedEntityData6.put(name, compound6);
     }
 
     /*PlayerのIExtendedEntityPropertiesをMapから読み込み*/
@@ -210,6 +244,18 @@ public class PlayerDataHandler {
     public static NBTTagCompound getEntityData4(String name) {
     	//System.out.println("TEST3:" + extendedEntityData.size());
         return extendedEntityData4.remove(name);
+    	//return extendedEntityData.get(name);
+    }
+
+    public static NBTTagCompound getEntityData5(String name) {
+    	//System.out.println("TEST3:" + extendedEntityData.size());
+        return extendedEntityData5.remove(name);
+    	//return extendedEntityData.get(name);
+    }
+
+    public static NBTTagCompound getEntityData6(String name) {
+    	//System.out.println("TEST3:" + extendedEntityData.size());
+        return extendedEntityData6.remove(name);
     	//return extendedEntityData.get(name);
     }
 }

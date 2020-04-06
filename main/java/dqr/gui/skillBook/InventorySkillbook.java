@@ -7,7 +7,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import dqr.DQR;
 import dqr.api.enums.EnumDqmSkillJ;
-import dqr.playerData.ExtendedPlayerProperties3;
+import dqr.playerData.ExtendedPlayerProperties5;
 
 public class InventorySkillbook implements IInventory
 {
@@ -89,7 +89,7 @@ public class InventorySkillbook implements IInventory
 
     		if(skill.getActiveskill() == 1)
     		{
-    			int skillPerm = ExtendedPlayerProperties3.get(ep).getJobSPSkillSet(skill.getJob(), skill.getIdx());
+    			int skillPerm = ExtendedPlayerProperties5.get(ep).getJobSPSkillSet(skill.getJob(), skill.getIdx());
     			if(skillPerm != 0)
     			{
 
@@ -282,12 +282,15 @@ public class InventorySkillbook implements IInventory
     @Override
     public void setInventorySlotContents(int p_70299_1_, ItemStack p_70299_2_)
     {
-        this.items[p_70299_1_] = p_70299_2_;
+    	if(p_70299_1_ >= 0 && p_70299_1_ < this.items.length )
+    	{
+	        this.items[p_70299_1_] = p_70299_2_;
 
-        if (p_70299_2_ != null && p_70299_2_.stackSize > this.getInventoryStackLimit())
-        {
-            p_70299_2_.stackSize = this.getInventoryStackLimit();
-        }
+	        if (p_70299_2_ != null && p_70299_2_.stackSize > this.getInventoryStackLimit())
+	        {
+	            p_70299_2_.stackSize = this.getInventoryStackLimit();
+	        }
+    	}
 
         this.markDirty();
     }

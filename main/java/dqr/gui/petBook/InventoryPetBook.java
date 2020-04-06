@@ -10,7 +10,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import dqr.PacketHandler;
 import dqr.api.Items.DQMonsters;
 import dqr.packetMessage.MessageServerDataSend;
-import dqr.playerData.ExtendedPlayerProperties3;
+import dqr.playerData.ExtendedPlayerProperties6;
 
 public class InventoryPetBook implements IInventory
 {
@@ -41,7 +41,7 @@ public class InventoryPetBook implements IInventory
         //InventorySize
 
 
-    	NBTTagCompound playerPet = ExtendedPlayerProperties3.get(ep).getNBTPlayerPetList();
+    	NBTTagCompound playerPet = ExtendedPlayerProperties6.get(ep).getNBTPlayerPetList();
 
     	Set tags = playerPet.func_150296_c();
     	Object[] tagArray = tags.toArray();
@@ -215,7 +215,7 @@ public class InventoryPetBook implements IInventory
     @Override
     public void closeInventory()
     {
-    	NBTTagCompound playerPet = ExtendedPlayerProperties3.get(this.epx).getNBTPlayerPetList();
+    	NBTTagCompound playerPet = ExtendedPlayerProperties6.get(this.epx).getNBTPlayerPetList();
 
     	if(this.epx.worldObj.isRemote)
     	{

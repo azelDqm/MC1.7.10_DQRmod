@@ -5,6 +5,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 import cpw.mods.fml.common.registry.GameRegistry;
+import dqr.DQR;
 import dqr.api.Blocks.DQBlocks;
 import dqr.api.Blocks.DQChests;
 import dqr.api.Blocks.DQDecorates;
@@ -4111,6 +4112,25 @@ ver1.20ADD-<*/
             "AAA",
             'A', Blocks.glass, 'B', DQMiscs.itemNiku1
         });
+
+        if(DQR.easyMode != 0 || DQR.conf.DqmDifficulty < 3)
+        {
+	        GameRegistry.addRecipe(new ItemStack(DQMagicTools.itemPetSuisyou2, 1), new Object[]
+	        {
+	            " D ",
+	            "AAA",
+	            'A', DQMiscs.itemGenmaseki, 'D', DQMagicTools.itemPetSuisyou
+	        });
+        }else
+        {
+	        GameRegistry.addRecipe(new ItemStack(DQMagicTools.itemPetSuisyou2, 1), new Object[]
+	        {
+	            " D ",
+	            "ABC",
+	            'A', DQMiscs.itemGenmaseki, 'B', DQMiscs.itemGenmasekiG, 'C', DQMiscs.itemGenmasekiB, 'D', DQMagicTools.itemPetSuisyou
+	        });
+        }
+
 
         GameRegistry.addRecipe(new ItemStack(DQMiscs.itemPetbook, 1), new Object[]
         {

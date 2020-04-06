@@ -4,7 +4,10 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
+import dqr.DQR;
+import dqr.entity.throwingEntity.throwItem.ThrowJSkillEntityIshinage;
 
 public class DqmItemDebugBase extends Item{
 
@@ -95,6 +98,39 @@ public class DqmItemDebugBase extends Item{
 
     	if(!world.isRemote)
     	{
+    		ThrowJSkillEntityIshinage magic;
+			magic = new ThrowJSkillEntityIshinage(ep.worldObj, ep, 1.5F, 1.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
+			magic.setMaxTicksRange(2);
+
+			int attackDam = 1;
+			magic.setDamage(attackDam);
+			DamageSource source = DQR.damageSource.getJSkillAbsoluteDamage(ep, 1, 1);
+			//source.setDamageBypassesArmor();
+			//source.setDamageIsAbsolute();
+			magic.setDamSource(source);
+			magic.setShootingEntity(player);
+			ep.worldObj.spawnEntityInWorld(magic);
+    		/*
+    		NBTTagCompound nbt = new NBTTagCompound();
+    		NBTTagCompound nbt2 = new NBTTagCompound();
+
+    		nbt2.setInteger("TEST", 1);
+    		nbt2.setInteger("TEST2", 5);
+    		nbt2.setInteger("TEST3", 6);
+    		nbt2.setInteger("TEST4", 100);
+
+    		//nbt.set
+    		nbt.setTag("BASE", nbt2);
+
+    		NBTTagCompound nbt3 = (NBTTagCompound)nbt.getTag("BASE");
+    		Object[] nbtSet = nbt3.func_150296_c().toArray();
+
+    		for(int cnt = 0; cnt < nbtSet.length; cnt++)
+    		{
+    			System.out.println("TEST " + cnt + " : " + nbt3.getInteger((String)nbtSet[cnt]));
+    		}
+    		*/
+
     		//player.openGui(DQR.instance, DQR.conf.GuiID_Skillbook, world, (int)player.posX, (int)player.posY, (int)player.posZ);
     		/*
     		Hashtable<Integer, Object> test = new Hashtable();

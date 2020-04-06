@@ -15,6 +15,7 @@ import net.minecraft.server.management.PreYggdrasilConverter;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.world.World;
 import dqr.DQR;
+import dqr.DqrWorldData;
 import dqr.api.Items.DQMagics;
 import dqr.api.enums.EnumDqmJob;
 import dqr.api.enums.EnumDqmMagic;
@@ -152,6 +153,18 @@ public class FuncPetHaigou {
                         	EntityPlayer owner = (EntityPlayer)entityPet1.getOwner();
                         	ExtendedPlayerProperties3.get(owner).minusPetCount(1);
                         	DQR.petFunc.removePetdata(owner, entityPet1.getUniqueID().toString());
+                        	if(entityPet1.getPetUniqueNumber() == 0)
+                			{
+                				DqrWorldData wd = (DqrWorldData)owner.worldObj.loadItemData(DqrWorldData.class, DQR.modID);
+                				if(wd == null)
+                				{
+                					wd = new DqrWorldData(DQR.modID);
+                				}
+                				entityPet1.setPetUniqueNumber(wd.getNextPetNum());
+                				wd.markDirty();
+                				owner.worldObj.setItemData(DQR.modID, wd);
+                			}
+                        	DQR.petFunc.removePetdata(ep, String.valueOf(entityPet1.getPetUniqueNumber()));
                         }
 
                         if(entityPet2.getOwner() != null && entityPet2.getOwner() instanceof EntityPlayer)
@@ -159,6 +172,19 @@ public class FuncPetHaigou {
                         	EntityPlayer owner = (EntityPlayer)entityPet2.getOwner();
                         	ExtendedPlayerProperties3.get(owner).minusPetCount(1);
                         	DQR.petFunc.removePetdata(owner, entityPet2.getUniqueID().toString());
+
+                        	if(entityPet2.getPetUniqueNumber() == 0)
+                			{
+                				DqrWorldData wd = (DqrWorldData)owner.worldObj.loadItemData(DqrWorldData.class, DQR.modID);
+                				if(wd == null)
+                				{
+                					wd = new DqrWorldData(DQR.modID);
+                				}
+                				entityPet2.setPetUniqueNumber(wd.getNextPetNum());
+                				wd.markDirty();
+                				owner.worldObj.setItemData(DQR.modID, wd);
+                			}
+                        	DQR.petFunc.removePetdata(ep, String.valueOf(entityPet2.getPetUniqueNumber()));
                         }
 
                         //removePetdata

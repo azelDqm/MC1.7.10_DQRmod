@@ -164,7 +164,7 @@ public class DqrComParty extends CommandBase {
 
     	if(p_71516_2_.length == 1)
     	{
-    		 return getListOfStringsMatchingLastWord(p_71516_2_, new String[] {"create", "add", "kick", "leave", "change"});
+    		 return getListOfStringsMatchingLastWord(p_71516_2_, new String[] {"create", "add", "kick", "leave", "change","sharerate"});
     	}else if(p_71516_2_.length == 2)
     	{
     		if(p_71516_2_[0].equalsIgnoreCase("kick"))

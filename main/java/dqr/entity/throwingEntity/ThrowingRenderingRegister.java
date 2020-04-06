@@ -8,6 +8,7 @@ import dqr.entity.throwingEntity.throwItem.ThrowItemEntityIshitubute;
 import dqr.entity.throwingEntity.throwItem.ThrowItemEntityNiku;
 import dqr.entity.throwingEntity.throwItem.ThrowItemEntitySeisui;
 import dqr.entity.throwingEntity.throwItem.ThrowItemEntitySinkanohiseki;
+import dqr.entity.throwingEntity.throwItem.ThrowJSkillEntityIshinage;
 import dqr.entity.throwingEntity.throwing.ThrowingEntityBumeran;
 import dqr.entity.throwingEntity.throwing.ThrowingEntityDqrArrow;
 import dqr.entity.throwingEntity.throwing.ThrowingEntityHaipanova;
@@ -47,5 +48,6 @@ public class ThrowingRenderingRegister {
 		RenderingRegistry.registerEntityRenderingHandler(ThrowItemEntityIshitubute.class, new ThrowingRenderBumeran(136));
 
 		RenderingRegistry.registerEntityRenderingHandler(ThrowingEntityDqrArrow.class, new RenderArrow());
+		RenderingRegistry.registerEntityRenderingHandler(ThrowJSkillEntityIshinage.class, new ThrowingRenderBumeran(136));
 	}
 }

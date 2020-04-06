@@ -74,7 +74,7 @@ public class GuiItemBagGuiContainer extends GuiContainer
     @Override
     protected void keyTyped(char p_73869_1_, int p_73869_2_)
     {
-    	System.out.println("BagTest : " + p_73869_1_ + " / " + p_73869_2_);
+    	//System.out.println("BagTest : " + p_73869_1_ + " / " + p_73869_2_);
 
     	if(!checkHotbarItems(p_73869_2_))
     	{

@@ -4,6 +4,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
+import dqr.DQR;
 import dqr.api.Items.DQMiscs;
 import dqr.api.potion.DQPotionEtc;
 import dqr.entity.mobEntity.DqmMobBase;
@@ -43,7 +44,7 @@ public class ThrowItemEntitySinkanohiseki extends ThrowItemEntity
 
         		if(mob.TenseiMob != null && !mob.TenseiMob.equalsIgnoreCase(""))
         		{
-        			mob.addPotionEffect(new PotionEffect(DQPotionEtc.buffShinkanoHiseki.id, 20 * 15, 0));
+        			DQR.func.addPotionEffect2(mob, new PotionEffect(DQPotionEtc.buffShinkanoHiseki.id, 20 * 15, 0));
 
         			flg = false;
         		}

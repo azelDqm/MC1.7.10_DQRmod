@@ -9,17 +9,19 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import dqr.DQR;
 import dqr.PacketHandler;
+import dqr.api.enums.EnumDqmJob;
 import dqr.api.enums.EnumDqmSkillJ;
 import dqr.dataTable.FuncJobSkillData;
 import dqr.packetMessage.MessageServerDataSend;
 import dqr.playerData.ExtendedPlayerProperties;
-import dqr.playerData.ExtendedPlayerProperties3;
+import dqr.playerData.ExtendedPlayerProperties5;
 
 public class GuiSkillJobContainer extends Container
 {
     private InventorySkillJob inventory;
     private EntityPlayer player;
-    public boolean systemEnable = false;
+    public boolean systemEnable = true;
+    private int playerJob = -1;
 
     public GuiSkillJobContainer(EntityPlayer ep)
     {
@@ -27,6 +29,7 @@ public class GuiSkillJobContainer extends Container
     	this.player = ep;
     	inventory = new InventorySkillJob(ep , -1);
         inventory.openInventory();
+        playerJob = ExtendedPlayerProperties.get(ep).getJob();
 
         int i = 2 * 18 + 1;
 
@@ -85,7 +88,8 @@ public class GuiSkillJobContainer extends Container
 
         //DQR.func.debugString("TEST4 : " + DQR.enumGetter.getJobSPSkillCounterJ(inventory.getJobId()));
 
-        if(systemEnable)
+        //if(systemEnable)
+        if(inventory.getJobId() == EnumDqmJob.Asobinin.getId())
         {
 	        int lastY = 0;
 	        for (int k = 18; k < DQR.enumGetter.getJobSPSkillCounterJ2(inventory.getJobId()) + 18; ++k)
@@ -170,13 +174,18 @@ public class GuiSkillJobContainer extends Container
     public void onContainerClosed(EntityPlayer p_75134_1_)
     {
         super.onContainerClosed(p_75134_1_);
+        DQR.func.debugString("JobSkillDebug : 1");
 		if(p_75134_1_.worldObj.isRemote)
     	{
+			DQR.func.debugString("JobSkillDebug : 2");
 			NBTTagCompound data = new NBTTagCompound();
-			ExtendedPlayerProperties3.get(p_75134_1_).saveNBTData(data);
-    		PacketHandler.INSTANCE.sendToServer(new MessageServerDataSend(data, 3));
+			ExtendedPlayerProperties5.get(p_75134_1_).setPlayerName(p_75134_1_.getCommandSenderName());
+			ExtendedPlayerProperties5.get(p_75134_1_).setPlayerUUID(p_75134_1_.getUniqueID().toString());
+			ExtendedPlayerProperties5.get(p_75134_1_).saveNBTData(data);
+    		PacketHandler.INSTANCE.sendToServer(new MessageServerDataSend(data, 5));
     	}
 
+		DQR.func.debugString("JobSkillDebug : 3");
 		ExtendedPlayerProperties.get(p_75134_1_).setJobSkillCalcFlg(true);
 		//FuncJobSkillData.calcPlayerStatus(p_75134_1_);
 		//FuncJobSkillData.calcPlayerStatus2(p_75134_1_);
@@ -202,14 +211,14 @@ public class GuiSkillJobContainer extends Container
 	    			int needSP = nbt.getInteger("needSP");
 	    			int jobLv = ExtendedPlayerProperties.get(ep).getJobLv(jobId);
 	    			int maxSP = FuncJobSkillData.getMaxSP(jobLv);
-	    			int jobSP = ExtendedPlayerProperties3.get(ep).getJobSp(jobId);
+	    			int jobSP = ExtendedPlayerProperties5.get(ep).getJobSp(jobId);
 
 	    			if(categNum >= 18)
 	    			{
 	    				int jobIdx = nbt.getInteger("skillIdx");
 	    				int isJobFlg = nbt.getInteger("isJobSkill");
 	    				EnumDqmSkillJ skill = DQR.enumGetter.getSkillJ(jobId, jobIdx);
-	    				int skillPerms = ExtendedPlayerProperties3.get(ep).getJobSPSkillSet(jobId, jobIdx);
+	    				int skillPerms = ExtendedPlayerProperties5.get(ep).getJobSPSkillSet(jobId, jobIdx);
 
 	    				//DQR.func.debugString("TEST4 : " + jobId + " / "
 
@@ -223,19 +232,19 @@ public class GuiSkillJobContainer extends Container
 	    						//既に「その職のみ」が指定されている場合
 	    						if(maxSP >= jobSP - skill.getNeedsp() + skill.getNeedsp_All())
 	    						{
-		    						ExtendedPlayerProperties3.get(ep).setJobSPSkillSet(jobId, jobIdx, 2);
-		    						ExtendedPlayerProperties3.get(ep).setJobSp(jobId, jobSP - skill.getNeedsp() + skill.getNeedsp_All());
+		    						ExtendedPlayerProperties5.get(ep).setJobSPSkillSet(jobId, jobIdx, 2);
+		    						ExtendedPlayerProperties5.get(ep).setJobSp(jobId, jobSP - skill.getNeedsp() + skill.getNeedsp_All());
 	    						}
 	    					}else if(skillPerms == 2)
 	    					{
-	    						ExtendedPlayerProperties3.get(ep).setJobSPSkillSet(jobId, jobIdx, 0);
-	    						ExtendedPlayerProperties3.get(ep).decJobSp(jobId, skill.getNeedsp_All());
+	    						ExtendedPlayerProperties5.get(ep).setJobSPSkillSet(jobId, jobIdx, 0);
+	    						ExtendedPlayerProperties5.get(ep).decJobSp(jobId, skill.getNeedsp_All());
 	    					}else
 	    					{
 	    						if(maxSP >= jobSP + skill.getNeedsp_All())
 	    						{
-	    							ExtendedPlayerProperties3.get(ep).setJobSPSkillSet(jobId, jobIdx, 2);
-	    							ExtendedPlayerProperties3.get(ep).incJobSp(jobId, skill.getNeedsp_All());
+	    							ExtendedPlayerProperties5.get(ep).setJobSPSkillSet(jobId, jobIdx, 2);
+	    							ExtendedPlayerProperties5.get(ep).incJobSp(jobId, skill.getNeedsp_All());
 	    						}
 	    					}
 	    				}else if(isJobFlg == 1 && skill != null)
@@ -245,21 +254,21 @@ public class GuiSkillJobContainer extends Container
 	    					//その職のみを指定した場合
 	    					if(skillPerms == 1)
 	    					{
-	    						ExtendedPlayerProperties3.get(ep).setJobSPSkillSet(jobId, jobIdx, 0);
-	    						ExtendedPlayerProperties3.get(ep).decJobSp(jobId, skill.getNeedsp());
+	    						ExtendedPlayerProperties5.get(ep).setJobSPSkillSet(jobId, jobIdx, 0);
+	    						ExtendedPlayerProperties5.get(ep).decJobSp(jobId, skill.getNeedsp());
 	    					}else if(skillPerms == 2)
 	    					{
 	    						if(maxSP >= jobSP - skill.getNeedsp_All() + skill.getNeedsp())
 	    						{
-		    						ExtendedPlayerProperties3.get(ep).setJobSPSkillSet(jobId, jobIdx, 1);
-		    						ExtendedPlayerProperties3.get(ep).setJobSp(jobId, jobSP - skill.getNeedsp_All() + skill.getNeedsp());
+		    						ExtendedPlayerProperties5.get(ep).setJobSPSkillSet(jobId, jobIdx, 1);
+		    						ExtendedPlayerProperties5.get(ep).setJobSp(jobId, jobSP - skill.getNeedsp_All() + skill.getNeedsp());
 	    						}
 	    					}else
 	    					{
 	    						if(maxSP >= jobSP + skill.getNeedsp())
 	    						{
-	    							ExtendedPlayerProperties3.get(ep).setJobSPSkillSet(jobId, jobIdx, 1);
-	    							ExtendedPlayerProperties3.get(ep).incJobSp(jobId, skill.getNeedsp());
+	    							ExtendedPlayerProperties5.get(ep).setJobSPSkillSet(jobId, jobIdx, 1);
+	    							ExtendedPlayerProperties5.get(ep).incJobSp(jobId, skill.getNeedsp());
 	    						}
 	    					}
 	    				}
@@ -267,31 +276,31 @@ public class GuiSkillJobContainer extends Container
 	    			{
 		    			if(categNum > 8)
 		    			{
-		    				if(ExtendedPlayerProperties3.get(ep).getJobSkillSet2(jobId, categNum - 9) == 0)
+		    				if(ExtendedPlayerProperties5.get(ep).getJobSkillSet2(jobId, categNum - 9) == 0)
 		    				{
 		    					if(maxSP >= jobSP + needSP)
 		    					{
-		    						ExtendedPlayerProperties3.get(ep).setJobSkillSet2(jobId, categNum - 9, 1);
-		    						ExtendedPlayerProperties3.get(ep).incJobSp(jobId, needSP);
+		    						ExtendedPlayerProperties5.get(ep).setJobSkillSet2(jobId, categNum - 9, 1);
+		    						ExtendedPlayerProperties5.get(ep).incJobSp(jobId, needSP);
 		    					}
 		    				}else
 		    				{
-		    					ExtendedPlayerProperties3.get(ep).setJobSkillSet2(jobId, categNum - 9, 0);
-		    					ExtendedPlayerProperties3.get(ep).decJobSp(jobId, needSP);
+		    					ExtendedPlayerProperties5.get(ep).setJobSkillSet2(jobId, categNum - 9, 0);
+		    					ExtendedPlayerProperties5.get(ep).decJobSp(jobId, needSP);
 		    				}
 		    			}else
 		    			{
-		    				if(ExtendedPlayerProperties3.get(ep).getJobSkillSet(jobId, categNum) == 0)
+		    				if(ExtendedPlayerProperties5.get(ep).getJobSkillSet(jobId, categNum) == 0)
 		    				{
 		    					if(maxSP >= jobSP + needSP)
 		    					{
-		    						ExtendedPlayerProperties3.get(ep).setJobSkillSet(jobId, categNum, 1);
-		    						ExtendedPlayerProperties3.get(ep).incJobSp(jobId, needSP);
+		    						ExtendedPlayerProperties5.get(ep).setJobSkillSet(jobId, categNum, 1);
+		    						ExtendedPlayerProperties5.get(ep).incJobSp(jobId, needSP);
 		    					}
 		    				}else
 		    				{
-		    					ExtendedPlayerProperties3.get(ep).setJobSkillSet(jobId, categNum, 0);
-		    					ExtendedPlayerProperties3.get(ep).decJobSp(jobId, needSP);
+		    					ExtendedPlayerProperties5.get(ep).setJobSkillSet(jobId, categNum, 0);
+		    					ExtendedPlayerProperties5.get(ep).decJobSp(jobId, needSP);
 		    				}
 		    			}
 	    			}

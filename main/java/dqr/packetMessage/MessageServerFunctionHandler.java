@@ -9,7 +9,9 @@ import dqr.DQR;
 import dqr.DqrWorldData;
 import dqr.PacketHandler;
 import dqr.api.enums.EnumDqmFuncPacketCode;
+import dqr.playerData.ExtendedPlayerProperties;
 import dqr.playerData.ExtendedPlayerProperties3;
+import dqr.playerData.MessagePlayerProperties;
 import dqr.playerData.MessagePlayerProperties3;
 
 public class MessageServerFunctionHandler implements IMessageHandler<MessageServerFunction, IMessage> {
@@ -138,6 +140,13 @@ public class MessageServerFunctionHandler implements IMessageHandler<MessageServ
 
         	ExtendedPlayerProperties3.get(ep).setCoin(COIN + value);
         	PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties3((EntityPlayer)ep), (EntityPlayerMP)ep);
+        }else if(pat == EnumDqmFuncPacketCode.MPchange.getId())
+        {
+        	int mp = ExtendedPlayerProperties.get(ep).getMP();
+        	//System.out.println("TEST_Plus : " + value + " / " + COIN);
+
+        	ExtendedPlayerProperties.get(ep).setMP(mp + value);
+        	PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties((EntityPlayer)ep), (EntityPlayerMP)ep);
         }
 
 

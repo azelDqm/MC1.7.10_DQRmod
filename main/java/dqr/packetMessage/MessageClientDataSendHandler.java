@@ -6,7 +6,7 @@ import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import dqr.DQR;
-import dqr.playerData.ExtendedPlayerProperties3;
+import dqr.playerData.ExtendedPlayerProperties6;
 
 public class MessageClientDataSendHandler implements IMessageHandler<MessageClientDataSend, IMessage>{
 
@@ -22,7 +22,7 @@ public class MessageClientDataSendHandler implements IMessageHandler<MessageClie
 		if(flg == 2)
 		{
 			//ExtendedPlayerProperties3.get(player).setPetStatudData(message.getData());
-			ExtendedPlayerProperties3.get(player).setNBTPlayerPetList(nbt);
+			ExtendedPlayerProperties6.get(player).setNBTPlayerPetList(nbt);
 		}
 
 

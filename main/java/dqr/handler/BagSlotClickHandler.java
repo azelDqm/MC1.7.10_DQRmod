@@ -22,12 +22,10 @@ public class BagSlotClickHandler {
     	{
 
     		ItemStack sl2 = null;
-    		if(event.action == 2  && event.bag.epInventory.getStackInSlot(event.actionSubNo) != null
+    		if(event.action == 2  && event.bag != null && event.bag.epInventory != null && event.bag.epInventory.getStackInSlot(event.actionSubNo) != null
     				&& event.slotNo <= 153 && event.slotNo >= 0)
     		{
     			sl2 = event.bag.epInventory.getStackInSlot(event.actionSubNo);
-
-
     		}else if(153 < event.slotNo && event.slotNo >= 0)
     		{
     			sl2 = (ItemStack)(event.bag.getInventory().get(event.slotNo));

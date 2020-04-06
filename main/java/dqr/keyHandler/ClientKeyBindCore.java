@@ -21,6 +21,8 @@ public class ClientKeyBindCore {
 	public static final KeyBinding keyGuiArmorStatus = new KeyBinding("key.setting.GuiArmorStatusVis", Keyboard.KEY_J, "DQMIIImod");
 	public static final KeyBinding keyGuiSubpoints = new KeyBinding("key.setting.GuiSubpointsVis", Keyboard.KEY_I, "DQMIIImod");
 	public static final KeyBinding keyGuiBuffBar = new KeyBinding("key.setting.GuiBuffBar", Keyboard.KEY_K, "DQMIIImod");
+	public static final KeyBinding keyGuiBuffBar2 = new KeyBinding("key.setting.GuiSkillCoolTime", Keyboard.KEY_NUMPAD1, "DQMIIImod");
+	//public static final KeyBinding keyGuiBuffBar3 = new KeyBinding("key.setting.GuiBuffBar3", Keyboard.KEY_NUMPAD2, "DQMIIImod");
 
 	public static final KeyBinding keyMagicToolMode = new KeyBinding("key.setting.magictoolMode", Keyboard.KEY_R, "DQMIIImod");
 	public static final KeyBinding keyOokinaFukuro = new KeyBinding("key.setting.ookinaFukuroOpen", Keyboard.KEY_L, "DQMIIImod");
@@ -34,6 +36,7 @@ public class ClientKeyBindCore {
 	public static final KeyBinding keyScrollUp = new KeyBinding("PGUP", Keyboard.KEY_PRIOR, "DQMIIImod");
 	public static final KeyBinding keyScrollDown = new KeyBinding("PGDN", Keyboard.KEY_NEXT, "DQMIIImod");
 	public static final KeyBinding keyLogDel = new KeyBinding("DEL", Keyboard.KEY_DELETE, "DQMIIImod");
+	public static final KeyBinding keyBuffVisMode = new KeyBinding("HOME", Keyboard.KEY_HOME, "DQMIIImod");
 	public ClientKeyBindCore()
 	{
 		FMLCommonHandler.instance().bus().register(new KeyInputHandler());
@@ -53,6 +56,8 @@ public class ClientKeyBindCore {
 		ClientRegistry.registerKeyBinding(keyGuiArmorStatus);
 		ClientRegistry.registerKeyBinding(keyGuiSubpoints);
 		ClientRegistry.registerKeyBinding(keyGuiBuffBar);
+		ClientRegistry.registerKeyBinding(keyGuiBuffBar2);
+		//ClientRegistry.registerKeyBinding(keyGuiBuffBar3);
 
 		ClientRegistry.registerKeyBinding(keyMagicToolMode);
 		ClientRegistry.registerKeyBinding(keyOokinaFukuro);

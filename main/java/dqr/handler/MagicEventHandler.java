@@ -101,14 +101,14 @@ public class MagicEventHandler {
 		                        {
 				            		if(target.getActivePotionEffect(DQPotionMinus.debuffSuffocation) == null)
 				            		{
-				            			target.addPotionEffect(new PotionEffect(DQPotionMinus.debuffSuffocation.getId(), 60, 0));
+				            			DQR.func.addPotionEffect2(target, new PotionEffect(DQPotionMinus.debuffSuffocation.getId(), 60, 0));
 				            		}
 		                        }
 		            		}else
 		            		{
 			            		if(target.getActivePotionEffect(DQPotionMinus.debuffSuffocation) == null)
 			            		{
-			            			target.addPotionEffect(new PotionEffect(DQPotionMinus.debuffSuffocation.getId(), 60, 0));
+			            			DQR.func.addPotionEffect2(target, new PotionEffect(DQPotionMinus.debuffSuffocation.getId(), 60, 0));
 			            		}
 		            		}
 	            		}
@@ -185,7 +185,7 @@ public class MagicEventHandler {
 		                        {
 				            		if(target.getActivePotionEffect(DQPotionMinus.debuffHeavyFire) == null)
 				            		{
-				            			target.addPotionEffect(new PotionEffect(DQPotionMinus.debuffHeavyFire.getId(), 60, 0));
+				            			DQR.func.addPotionEffect2(target, new PotionEffect(DQPotionMinus.debuffHeavyFire.getId(), 60, 0));
 				            		}
 		                        }
 		            		}else
@@ -194,7 +194,7 @@ public class MagicEventHandler {
 		            			{
 				            		if(target.getActivePotionEffect(DQPotionMinus.debuffHeavyFire) == null)
 				            		{
-				            			target.addPotionEffect(new PotionEffect(DQPotionMinus.debuffHeavyFire.getId(), 60, 0));
+				            			DQR.func.addPotionEffect2(target, new PotionEffect(DQPotionMinus.debuffHeavyFire.getId(), 60, 0));
 				            		}
 		            			}
 		            		}

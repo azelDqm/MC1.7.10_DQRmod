@@ -35,7 +35,6 @@ import dqr.api.enums.EnumDqmMessageConv;
 import dqr.api.enums.EnumDqmMonster;
 import dqr.api.enums.EnumDqmSkillW;
 import dqr.api.enums.EnumDqmWeapon;
-import dqr.api.enums.EnumStat;
 import dqr.api.event.DqrMobPrizeEvent;
 import dqr.api.potion.DQPotionEtc;
 import dqr.api.potion.DQPotionMinus;
@@ -51,6 +50,9 @@ import dqr.items.base.DqmItemWeaponBase;
 import dqr.playerData.ExtendedPlayerProperties;
 import dqr.playerData.ExtendedPlayerProperties2;
 import dqr.playerData.ExtendedPlayerProperties3;
+import dqr.playerData.ExtendedPlayerProperties4;
+import dqr.playerData.ExtendedPlayerProperties5;
+import dqr.playerData.ExtendedPlayerProperties6;
 import dqr.playerData.MessagePlayerProperties;
 import dqr.thread.NoThreadProcess;
 import dqr.thread.ThreadJukurenUp;
@@ -85,7 +87,7 @@ public class LivingEventHandler {
 			{
 				if(event.target instanceof EntityPlayer)
 				{
-					event.target.addPotionEffect(new PotionEffect(DQPotionMinus.debuffHeavyFire.id, 60, mob.mobAI.getHeavyFire()));
+					DQR.func.addPotionEffect2(event.target, new PotionEffect(DQPotionMinus.debuffHeavyFire.id, 60, mob.mobAI.getHeavyFire()));
 				}
 			}
 
@@ -633,7 +635,7 @@ public class LivingEventHandler {
     		}
 			//if(!ep.isPotionActive(Potion.confusion.id))
 			//{
-			//	ep.addPotionEffect(new PotionEffect(Potion.confusion.id, 101, 4));
+			//	DQR.func.addPotionEffect2(ep, new PotionEffect(Potion.confusion.id, 101, 4));
 			//}
     		//if(ep.isPotionActive(DQPotionMinus.debuffManusa))
     		//{
@@ -644,7 +646,7 @@ public class LivingEventHandler {
     				{
     					if(!ep.isPotionActive(Potion.confusion.id))
     					{
-    						ep.addPotionEffect(new PotionEffect(Potion.confusion.id, 61, 4));
+    						DQR.func.addPotionEffect2(ep, new PotionEffect(Potion.confusion.id, 61, 4));
     					}
 
     					EntityPlayerSP epm = (EntityPlayerSP) DQR.proxy.getMinecraft().renderViewEntity;
@@ -702,12 +704,12 @@ public class LivingEventHandler {
         			PotionEffect pe = event.entityLiving.getActivePotionEffect(DQPotionPlus.potionHonoonomi);
         			if(pe != null)
         			{
-        				event.entityLiving.addPotionEffect(new PotionEffect(Potion.fireResistance.id, 80, 0));
+        				DQR.func.addPotionEffect2(event.entityLiving, new PotionEffect(Potion.fireResistance.id, 80, 0));
         			}
 
 	        		if(ExtendedPlayerProperties.get(ep).getJob() == 15)
 	        		{
-	        			ep.addPotionEffect(new PotionEffect(DQPotionPlus.skillTouzokuSpeed.id, 80, 0));
+	        			DQR.func.addPotionEffect2(ep, new PotionEffect(DQPotionPlus.skillTouzokuSpeed.id, 80, 0));
 	        		}
 
         		}
@@ -721,6 +723,12 @@ public class LivingEventHandler {
         			ExtendedPlayerProperties2.get(ep).setPlayerUUID(ep.getUniqueID().toString());
         			ExtendedPlayerProperties3.get(ep).setPlayerName(ep.getCommandSenderName());
         			ExtendedPlayerProperties3.get(ep).setPlayerUUID(ep.getUniqueID().toString());
+        			ExtendedPlayerProperties4.get(ep).setPlayerName(ep.getCommandSenderName());
+        			ExtendedPlayerProperties4.get(ep).setPlayerUUID(ep.getUniqueID().toString());
+        			ExtendedPlayerProperties5.get(ep).setPlayerName(ep.getCommandSenderName());
+        			ExtendedPlayerProperties5.get(ep).setPlayerUUID(ep.getUniqueID().toString());
+        			ExtendedPlayerProperties6.get(ep).setPlayerName(ep.getCommandSenderName());
+        			ExtendedPlayerProperties6.get(ep).setPlayerUUID(ep.getUniqueID().toString());
         		}
 
 
@@ -797,6 +805,8 @@ public class LivingEventHandler {
     		//DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("test"));
     		if(!pet.worldObj.isRemote)
     		{
+
+    			/*
         		if(event.entityLiving.ticksExisted % 20 == 0 && pet.getHealth() > 0.01f)
         		{
         			PotionEffect pe = pet.getActivePotionEffect(DQPotionPlus.potionMahounomi);
@@ -828,21 +838,23 @@ public class LivingEventHandler {
     	    			//ep.setHealth(1.0F + (pe.getAmplifier() * 2));
     	    		}
         		}
+        		*/
 
 
+    			/*
         		if(event.entityLiving.ticksExisted % 10 == 0 && pet.getHealth() > 0.01f)
         		{
         			PotionEffect pe = pet.getActivePotionEffect(DQPotionMinus.potionPoisonX);
     	    		if(pe != null)
     	    		{
     	    			//if(ep.worldObj.getWorldTime() % 10 == 0)
-    	    			/*
-        				if((ep.getHealth() - ((pe.getAmplifier() + 1) * 2)) > 1)
-        				{
-        					ep.attackEntityFrom(DQR.damageSource.DqmPoisonX, ((pe.getAmplifier() + 1) * 2));
-        					//ep.setHealth(ep.getHealth() - ((pe.getAmplifier() + 1) * 2));
-        				}
-        				*/
+
+        				//if((ep.getHealth() - ((pe.getAmplifier() + 1) * 2)) > 1)
+        				//{
+        				//	ep.attackEntityFrom(DQR.damageSource.DqmPoisonX, ((pe.getAmplifier() + 1) * 2));
+        				//	//ep.setHealth(ep.getHealth() - ((pe.getAmplifier() + 1) * 2));
+        				//}
+
 
         				if(pet.getHealth() > 0)
         				{
@@ -878,19 +890,20 @@ public class LivingEventHandler {
         				}
     	    		}
         		}
+        		*/
     			//1秒処理
         		if(event.entityLiving.ticksExisted % 21 == 0)
         		{
         			PotionEffect pe = event.entityLiving.getActivePotionEffect(DQPotionPlus.potionHonoonomi);
 	    			if(pe != null)
 	    			{
-	    				event.entityLiving.addPotionEffect(new PotionEffect(Potion.fireResistance.id, 80, 0));
+	    				DQR.func.addPotionEffect2(event.entityLiving, new PotionEffect(Potion.fireResistance.id, 80, 0));
 	    			}
 
 
 	        		if(pet.getJob() == 15)
 	        		{
-	        			pet.addPotionEffect(new PotionEffect(DQPotionPlus.skillTouzokuSpeed.id, 80, 0));
+	        			DQR.func.addPotionEffect2(pet, new PotionEffect(DQPotionPlus.skillTouzokuSpeed.id, 80, 0));
 	        		}
         		}
 
@@ -994,671 +1007,350 @@ public class LivingEventHandler {
     public void onPotionCalc(LivingUpdateEvent event) {
     	if(event.entityLiving instanceof EntityPlayer)
     	{
-    		//炎の実と黄金4 設定まだ
-    		PotionEffect pe;
-    		EntityPlayer ep = (EntityPlayer)event.entityLiving;
-    		Random rand = new Random();
-
-			if(event.entityLiving instanceof EntityPlayer && !event.entityLiving.worldObj.isRemote)
-			{
-				EntityPlayer pl = (EntityPlayer)event.entityLiving;
-
-	        	InventorySubEquip subEquip = new InventorySubEquip(pl);
-	        	subEquip.openInventory();
-
-    			if(event.entityLiving.ticksExisted % 17 == 0)
-    			{
-			    	if(subEquip != null && subEquip.getStackInSlot(11) != null)
-			    	{
-			    		if(subEquip.getStackInSlot(11).getItem() == DQAccessories.itemUrokonotate)
-			    		{
-
-			    			pe = ep.getActivePotionEffect(DQPotionMinus.potionPoison);
-			    			if(pe != null && rand.nextInt(4) == 0 && pe.getDuration() > 40)
-			    			{
-			    				ep.removePotionEffect(pe.getPotionID());
-			    				ep.addPotionEffect(new PotionEffect(pe.getPotionID(), (pe.getDuration() / 2), pe.getAmplifier(), false));
-			    			}
-
-			    			pe = ep.getActivePotionEffect(DQPotionMinus.potionPoisonX);
-			    			if(pe != null && rand.nextInt(4) == 0 && pe.getDuration() > 40)
-			    			{
-			    				ep.removePotionEffect(pe.getPotionID());
-			    				ep.addPotionEffect(new PotionEffect(pe.getPotionID(), (pe.getDuration() / 2), pe.getAmplifier(), false));
-			    			}
-
-			    			pe = ep.getActivePotionEffect(Potion.poison);
-			    			if(pe != null && rand.nextInt(4) == 0 && pe.getDuration() > 40)
-			    			{
-			    				ep.removePotionEffect(pe.getPotionID());
-			    				ep.addPotionEffect(new PotionEffect(pe.getPotionID(), (pe.getDuration() / 2), pe.getAmplifier(), false));
-			    			}
-
-			    			pe = ep.getActivePotionEffect(Potion.wither);
-			    			if(pe != null && rand.nextInt(4) == 0 && pe.getDuration() > 40)
-			    			{
-			    				ep.removePotionEffect(pe.getPotionID());
-			    				ep.addPotionEffect(new PotionEffect(pe.getPotionID(), (pe.getDuration() / 2), pe.getAmplifier(), false));
-			    			}
-			    		}else if(subEquip.getStackInSlot(11).getItem() == DQAccessories.itemMetarukingnotate)
-			    		{
-			    			Collection potions = ep.getActivePotionEffects();
-			    			ArrayList<PotionEffect> newPot = new ArrayList();
-
-			    			if(rand.nextInt(2) == 0){
-					    		for (Iterator it = potions.iterator(); it.hasNext();)
-					    		{
-					    			//System.out.println("TEST???????????????");
-					    			PotionEffect eff = (PotionEffect)(it.next());
-					    			Potion pot = Potion.potionTypes[eff.getPotionID()];
-					    			try{
-						    			if(DQR.potionFunc.isPotionMinus(pot))
-				    					{
-						    				newPot.add(eff);
-				    					}else if(DQR.potionFunc.isDQPotionMinus(pot))
-				    					{
-				    						newPot.add(eff);
-				    					}else if(ep.worldObj.isRemote)
-				    					{
-				    						if(pot.isBadEffect())
-				    						{
-				    							newPot.add(eff);
-				    						}
-				    					}
-					    			}
-						    		catch(Exception e)
-					    			{
-
-					    			}
-					    		}
-
-					    		for(int cnt = 0; cnt < newPot.size(); cnt++)
-					    		{
-					    			if(newPot.get(cnt).getDuration() > 40)
-					    			{
-					    				ep.removePotionEffect(newPot.get(cnt).getPotionID());
-					    				ep.addPotionEffect(new PotionEffect(newPot.get(cnt).getPotionID(), (newPot.get(cnt).getDuration() / 2), newPot.get(cnt).getAmplifier(), false));
-					    			}
-					    		}
-			    			}
-			    		}
-
-			    	}
-
-			    	//命の指輪回復処理
-			    	if(subEquip.hasYubiwa2(DQAccessories.itemInotinoyubiwa) != -1)
-			    	{
-	    				if(ep.getHealth() < ep.getMaxHealth())
-	    				{
-	    					ep.heal(1);
-
-			        		ItemStack stack = subEquip.getStackInSlot(subEquip.hasYubiwa(DQAccessories.itemInotinoyubiwa));
-			        		stack.damageItem(2, ep);
-	    					subEquip.setInventorySlotContents(subEquip.hasYubiwa(DQAccessories.itemInotinoyubiwa), stack);
-	    				}
-			    	}
-
-			    	//祈りの指輪回復処理
-			    	if(subEquip.hasYubiwa2(DQAccessories.itemInorinoyubiwa) != -1)
-			    	{
-		    			int mp = ExtendedPlayerProperties.get(ep).getMP();
-		    			if(ExtendedPlayerProperties.get(ep).getMaxMP() > mp)
-		    			{
-			    			ExtendedPlayerProperties.get(ep).setMP(mp + 1);
-			        		ItemStack stack = subEquip.getStackInSlot(subEquip.hasYubiwa(DQAccessories.itemInorinoyubiwa));
-			        		stack.damageItem(2, ep);
-	    					subEquip.setInventorySlotContents(subEquip.hasYubiwa(DQAccessories.itemInorinoyubiwa), stack);
-
-		    			}
-			    	}
-
-			    	//癒しの腕輪
-			    	if(subEquip.hasUdewa2(DQAccessories.itemIyasinoudewa) != -1)
-			    	{
-	    				if(ep.getHealth() < ep.getMaxHealth())
-	    				{
-	    					ep.heal(1);
-
-			        		ItemStack stack = subEquip.getStackInSlot(subEquip.hasUdewa(DQAccessories.itemIyasinoudewa));
-			        		stack.damageItem(2, ep);
-	    					subEquip.setInventorySlotContents(subEquip.hasUdewa(DQAccessories.itemIyasinoudewa), stack);
-	    				}
-			    	}
-    			}
-    			subEquip.markDirty();
-		    	subEquip.closeInventory();
-			}
-
-    		pe = ep.getActivePotionEffect(DQPotionMinus.debuffRariho);
-    		if(pe != null && pe.getDuration() > DQR.conf.rarihoFreeDuration)
-    		{
-    			double[] loc = new double[4];
-
-    			loc[0] = ep.posX;
-    			loc[1] = ep.posY;
-    			loc[2] = ep.posZ;
-    			loc[3] = 1;
-    			ExtendedPlayerProperties.get(ep).setRarihoLoc(loc);
-    		}else
-    		{
-    			double[] loc = new double[4];
-
-    			loc[0] = -1;
-    			loc[1] = -1;
-    			loc[2] = -1;
-    			loc[3] = 0;
-    			ExtendedPlayerProperties.get(ep).setRarihoLoc(loc);
-    		}
-
-    		pe = ep.getActivePotionEffect(DQPotionPlus.potionDokukesisou);
-    		if(pe != null)
-    		{
-    			switch(pe.getAmplifier())
-    			{
-    				case 0: ep.removePotionEffect(DQPotionMinus.potionPoison.id); ep.removePotionEffect(Potion.poison.id); break;
-    				case 1: ep.removePotionEffect(DQPotionMinus.potionPoison.id); ep.removePotionEffect(Potion.wither.id); ep.removePotionEffect(Potion.poison.id); break;
-    				case 2: ep.removePotionEffect(DQPotionMinus.potionPoison.id);ep.removePotionEffect(DQPotionMinus.potionPoisonX.id); break;
-    				default: ep.removePotionEffect(DQPotionMinus.potionPoison.id);ep.removePotionEffect(DQPotionMinus.potionPoisonX.id);
-    			}
-    		}
-
-    		if(event.entityLiving.ticksExisted % 20 == 0)
-    		{
-	    		pe = ep.getActivePotionEffect(DQPotionPlus.potionMahounomi);
-	    		if(pe != null && ep.getHealth() > 0 && !ep.isDead)
-	    		{
-		    			int mp = ExtendedPlayerProperties.get(ep).getMP();
-		    			if(ExtendedPlayerProperties.get(ep).getMaxMP() < mp + (1 + (pe.getAmplifier() * 2)))
-		    			{
-		    				ExtendedPlayerProperties.get(ep).setMP(ExtendedPlayerProperties.get(ep).getMaxMP());
-		    			}else
-		    			{
-
-		    				ExtendedPlayerProperties.get(ep).setMP(mp + (1 + (pe.getAmplifier() * 2)));
-		    			}
-	    			//ep.setHealth(1.0F + (pe.getAmplifier() * 2));
-	    		}
-
-	    		pe = ep.getActivePotionEffect(DQPotionPlus.buffMPRegeneration);
-	    		if(pe != null && ep.getHealth() > 0 && !ep.isDead)
-	    		{
-		    			int mp = ExtendedPlayerProperties.get(ep).getMP();
-		    			if(ExtendedPlayerProperties.get(ep).getMaxMP() < mp + (1 + (pe.getAmplifier() * 2)))
-		    			{
-		    				ExtendedPlayerProperties.get(ep).setMP(ExtendedPlayerProperties.get(ep).getMaxMP());
-		    			}else
-		    			{
-
-		    				ExtendedPlayerProperties.get(ep).setMP(mp + (1 + (pe.getAmplifier() * 2)));
-		    			}
-	    			//ep.setHealth(1.0F + (pe.getAmplifier() * 2));
-	    		}
-
-	    		pe = ep.getActivePotionEffect(DQPotionMinus.potionPoison);
-	    		if(pe != null)
-	    		{
-	    				if((ep.getHealth() - ((pe.getAmplifier() + 1) * 2)) > 1)
-	    				{
-	    					ep.attackEntityFrom(DQR.damageSource.DqmPoison, ((pe.getAmplifier() + 1) * 2));
-	    					//ep.setHealth(ep.getHealth() - ((pe.getAmplifier() + 1) * 2));
-	    				}else if(ep.getHealth() != 1)
-	    				{
-	    					ep.attackEntityFrom(DQR.damageSource.DqmPoison, (ep.getHealth() - 1));
-	    				}
-	    		}
-    		}
-
-    		//0.5秒ごと
-    		if(event.entityLiving.ticksExisted % 10 == 0)
-    		{
-	    		pe = ep.getActivePotionEffect(DQPotionMinus.potionPoisonX);
-	    		if(pe != null)
-	    		{
-	    			//if(ep.worldObj.getWorldTime() % 10 == 0)
-	    			/*
-    				if((ep.getHealth() - ((pe.getAmplifier() + 1) * 2)) > 1)
-    				{
-    					ep.attackEntityFrom(DQR.damageSource.DqmPoisonX, ((pe.getAmplifier() + 1) * 2));
-    					//ep.setHealth(ep.getHealth() - ((pe.getAmplifier() + 1) * 2));
-    				}
-    				*/
-
-    				if(ep.getHealth() > 0)
-    				{
-    					ep.attackEntityFrom(DQR.damageSource.DqmPoisonX, ((pe.getAmplifier() + 1) * 2));
-    					//ep.setHealth(ep.getHealth() - ((pe.getAmplifier() + 1) * 2));
-    				}
-	    		}
-
-	    		pe = ep.getActivePotionEffect(DQPotionPlus.potionIyasinomi);
-	    		if(pe != null && ep.getHealth() > 0 && !ep.isDead)
-	    		{
-    				if(ep.getMaxHealth() < ep.getHealth() + 1.0F + (pe.getAmplifier() * 2))
-    				{
-    					ep.setHealth(ep.getMaxHealth());
-    				}else
-    				{
-    					//ep.setHealth(ep.getHealth() + 1.0F + (pe.getAmplifier() * 2));
-    					ep.heal(1.0F + (pe.getAmplifier() * 2));
-    				}
-	    		}
-
-
-	    		pe = ep.getActivePotionEffect(DQPotionPlus.buffHPRegeneration);
-	    		if(pe != null && ep.getHealth() > 0 && !ep.isDead)
-	    		{
-    				if(ep.getMaxHealth() < ep.getHealth() + 1.0F + (pe.getAmplifier() * 2))
-    				{
-    					ep.setHealth(ep.getMaxHealth());
-    				}else
-    				{
-    					//ep.setHealth(ep.getHealth() + 1.0F + (pe.getAmplifier() * 2));
-    					ep.heal(1.0F + (pe.getAmplifier() * 2));
-    				}
-	    		}
-    		}
-
-    		//8tickごと
-    		if(event.entityLiving.ticksExisted % 13 == 0)
-    		{
-	    		pe = ep.getActivePotionEffect(DQPotionPlus.potionMamorinotane);
-	    		if(pe != null)
-				{
-	    			ExtendedPlayerProperties.get(ep).setArrayMamori(EnumStat.seed.getId(), (pe.getAmplifier() + 1) * 5);
-				}else
-				{
-					ExtendedPlayerProperties.get(ep).setArrayMamori(EnumStat.seed.getId(), 0);
-				}
-
-	    		pe = ep.getActivePotionEffect(DQPotionPlus.potionTikaranotane);
-	    		if(pe != null){
-	    			ExtendedPlayerProperties.get(ep).setArrayTikara(EnumStat.seed.getId(), (pe.getAmplifier() + 1) * 5);
-	    		}else
-	    		{
-	    			ExtendedPlayerProperties.get(ep).setArrayTikara(EnumStat.seed.getId(), 0);
-	    		}
-
-
-	    		pe = ep.getActivePotionEffect(DQPotionPlus.potionSubayasanotane);
-	    		if(pe != null){
-	    			ExtendedPlayerProperties.get(ep).setArraySubayasa(EnumStat.seed.getId(), pe.getAmplifier() + 1);
-	    		}else
-	    		{
-	    			ExtendedPlayerProperties.get(ep).setArraySubayasa(EnumStat.seed.getId(),0);
-	    		}
-
-	    		pe = ep.getActivePotionEffect(DQPotionPlus.buffPiora);
-	    		if(pe != null){
-	    			ExtendedPlayerProperties.get(ep).setArraySubayasa(EnumStat.buffPiora.getId(), pe.getAmplifier() + 1);
-	    		}else
-	    		{
-	    			ExtendedPlayerProperties.get(ep).setArraySubayasa(EnumStat.buffPiora.getId(),0);
-	    		}
-
-	    		pe = ep.getActivePotionEffect(DQPotionMinus.debuffBomie);
-	    		if(pe != null){
-	    			ExtendedPlayerProperties.get(ep).setArraySubayasa(EnumStat.debuffBomie.getId(), (pe.getAmplifier() + 1) * - 1);
-	    		}else
-	    		{
-	    			ExtendedPlayerProperties.get(ep).setArraySubayasa(EnumStat.debuffBomie.getId(),0);
-	    		}
-
-	    		pe = ep.getActivePotionEffect(DQPotionPlus.potionMaryokunotane);
-	    		if(pe != null){
-	    			ExtendedPlayerProperties.get(ep).setArrayKasikosa(EnumStat.seed.getId(), (pe.getAmplifier() + 1) * 5);
-	    		}else
-	    		{
-	    			ExtendedPlayerProperties.get(ep).setArrayKasikosa(EnumStat.seed.getId(), 0);
-	    		}
-
-	    		pe = ep.getActivePotionEffect(DQPotionPlus.potionOugonnomi);
-	    		if(pe != null)
-				{
-	    			if(pe.getAmplifier() < 3)
-	    			{
-	    				ExtendedPlayerProperties.get(ep).setArrayMamori(EnumStat.ougon.getId(), (pe.getAmplifier() + 1) * 3);
-	    				ExtendedPlayerProperties.get(ep).setArrayTikara(EnumStat.ougon.getId(), (pe.getAmplifier() + 1) * 3);
-	    				ExtendedPlayerProperties.get(ep).setArrayKasikosa(EnumStat.ougon.getId(), (pe.getAmplifier() + 1) * 3);
-	    				//ExtendedPlayerProperties.get(ep).setArrayTikara(EnumStatTikara.ougon.getId(), pe.getAmplifier());
-	    			}else
-	    			{
-	    				ExtendedPlayerProperties.get(ep).setArrayMamori(EnumStat.ougon.getId(), (pe.getAmplifier() + 1) * 3);
-	    				ExtendedPlayerProperties.get(ep).setArrayTikara(EnumStat.ougon.getId(), (pe.getAmplifier() + 1) * 3);
-	    				ExtendedPlayerProperties.get(ep).setArrayKasikosa(EnumStat.ougon.getId(), (pe.getAmplifier() + 1) * 3);
-	    				//ExtendedPlayerProperties.get(ep).setArrayTikara(EnumStatTikara.ougon.getId(), pe.getAmplifier());
-
-	    	    		if(ep.getHealth() > 0 && !ep.isDead)
-	    	    		{
-	    	    			if(ep.getHealth() > 0 && !ep.isDead)
-	    	    			{
-	    	    				if(ep.getMaxHealth() < ep.getHealth() + (pe.getAmplifier() * 10))
-	    	    				{
-	    	    					ep.setHealth(ep.getMaxHealth());
-	    	    				}else
-	    	    				{
-	    	    					//ep.setHealth(ep.getHealth() + (pe.getAmplifier() * 10));
-	    	    					ep.heal(pe.getAmplifier() * 10);
-	    	    				}
-	    	    			}
-	    	    		}
-
-	        			int mp = ExtendedPlayerProperties.get(ep).getMP();
-	        			if(ep.getHealth() > 0 && !ep.isDead)
-	        			{
-		        			if(ExtendedPlayerProperties.get(ep).getMaxMP() < mp + (1 + (pe.getAmplifier() * 5)))
-		        			{
-		        				ExtendedPlayerProperties.get(ep).setMP(ExtendedPlayerProperties.get(ep).getMaxMP());
-		        			}else
-		        			{
-
-		        				ExtendedPlayerProperties.get(ep).setMP(mp + (1 + (pe.getAmplifier() * 5)));
-		        			}
-	        			}
-	    			}
-				}else
-				{
-					ExtendedPlayerProperties.get(ep).setArrayMamori(EnumStat.ougon.getId(), 0);
-					ExtendedPlayerProperties.get(ep).setArrayTikara(EnumStat.ougon.getId(), 0);
-					ExtendedPlayerProperties.get(ep).setArrayKasikosa(EnumStat.ougon.getId(), 0);
-					ExtendedPlayerProperties.get(ep).setArrayTikara(EnumStat.ougon.getId(), 0);
-				}
-    		}
+    		doPotionEffectPlayer((EntityPlayer)event.entityLiving, event);
+    		doDqrEffectPlayer((EntityPlayer)event.entityLiving, event);
     	}else if(event.entityLiving instanceof DqmPetBase)
     	{
-    		DqmPetBase ep = (DqmPetBase)event.entityLiving;
+    		doPotionEffectPet((DqmPetBase)event.entityLiving, event);
 
-
-    		PotionEffect pe = ep.getActivePotionEffect(DQPotionPlus.potionDokukesisou);
-    		if(pe != null)
-    		{
-    			switch(pe.getAmplifier())
-    			{
-    				case 0: ep.removePotionEffect(DQPotionMinus.potionPoison.id); ep.removePotionEffect(Potion.poison.id); break;
-    				case 1: ep.removePotionEffect(DQPotionMinus.potionPoison.id); ep.removePotionEffect(Potion.wither.id); ep.removePotionEffect(Potion.poison.id); break;
-    				case 2: ep.removePotionEffect(DQPotionMinus.potionPoison.id);ep.removePotionEffect(DQPotionMinus.potionPoisonX.id); break;
-    				default: ep.removePotionEffect(DQPotionMinus.potionPoison.id);ep.removePotionEffect(DQPotionMinus.potionPoisonX.id);
-    			}
-    		}
-
-    		if(event.entityLiving.ticksExisted % 20 == 0)
-    		{
-	    		pe = ep.getActivePotionEffect(DQPotionPlus.potionMahounomi);
-	    		if(pe != null && ep.getHealth() > 0 && !ep.isDead)
-	    		{
-	    			int mp = ep.getMP();
-	    			if(ep.getMaxMP() < mp + (1 + (pe.getAmplifier() * 2)))
-	    			{
-	    				ep.setMP(ep.getMaxMP());
-	    			}else
-	    			{
-
-	    				ep.setMP(mp + (1 + (pe.getAmplifier() * 2)));
-	    			}
-	    			//ep.setHealth(1.0F + (pe.getAmplifier() * 2));
-	    		}
-
-	    		pe = ep.getActivePotionEffect(DQPotionMinus.potionPoison);
-	    		if(pe != null)
-	    		{
-    				if((ep.getHealth() - ((pe.getAmplifier() + 1) * 2)) > 1)
-    				{
-    					ep.attackEntityFrom(DQR.damageSource.DqmPoison, ((pe.getAmplifier() + 1) * 2));
-    					//ep.setHealth(ep.getHealth() - ((pe.getAmplifier() + 1) * 2));
-    				}else if(ep.getHealth() !=  1)
-    				{
-    					ep.attackEntityFrom(DQR.damageSource.DqmPoison, ep.getHealth() - 1);
-    					//ep.setHealth(ep.getHealth() - ((pe.getAmplifier() + 1) * 2));
-    				}
-	    		}
-    		}
-
-    		if(event.entityLiving.ticksExisted % 10 == 0)
-    		{
-	    		pe = ep.getActivePotionEffect(DQPotionMinus.potionPoisonX);
-	    		if(pe != null)
-	    		{
-	    				//if((ep.getHealth() - ((pe.getAmplifier() + 1) * 2)) > 0)
-	    				if(ep.getHealth()  > 0)
-	    				{
-	    					ep.attackEntityFrom(DQR.damageSource.DqmPoisonX, ((pe.getAmplifier() + 1) * 2));
-	    					//ep.setHealth(ep.getHealth() - ((pe.getAmplifier() + 1) * 2));
-	    				}
-	    		}
-
-	    		pe = ep.getActivePotionEffect(DQPotionPlus.potionIyasinomi);
-	    		if(pe != null && ep.getHealth() > 0 && !ep.isDead)
-	    		{
-    				if(ep.getMaxHealth() < ep.getHealth() + 1.0F + (pe.getAmplifier() * 2))
-    				{
-    					ep.setHealth(ep.getMaxHealth());
-    				}else
-    				{
-    					ep.setHealth(ep.getHealth() + 1.0F + (pe.getAmplifier() * 2));
-    				}
-	    		}
-    		}
-
-    		if(event.entityLiving.ticksExisted % 11 == 0)
-    		{
-	    		pe = ep.getActivePotionEffect(DQPotionPlus.potionMamorinotane);
-	    		if(pe != null)
-				{
-	    			ep.setArrayMamori(EnumStat.seed.getId(), (pe.getAmplifier() + 1) * 5);
-				}else
-				{
-					ep.setArrayMamori(EnumStat.seed.getId(), 0);
-				}
-
-	    		pe = ep.getActivePotionEffect(DQPotionPlus.potionTikaranotane);
-	    		if(pe != null){
-	    			ep.setArrayTikara(EnumStat.seed.getId(), (pe.getAmplifier() + 1) * 5);
-	    		}else
-	    		{
-	    			ep.setArrayTikara(EnumStat.seed.getId(), 0);
-	    		}
-
-
-	    		pe = ep.getActivePotionEffect(DQPotionPlus.potionSubayasanotane);
-	    		if(pe != null){
-	    			ep.setArraySubayasa(EnumStat.seed.getId(), pe.getAmplifier() + 1);
-	    		}else
-	    		{
-	    			ep.setArraySubayasa(EnumStat.seed.getId(),0);
-	    		}
-
-	    		pe = ep.getActivePotionEffect(DQPotionPlus.buffPiora);
-	    		if(pe != null){
-	    			ep.setArraySubayasa(EnumStat.buffPiora.getId(), pe.getAmplifier() + 1);
-	    		}else
-	    		{
-	    			ep.setArraySubayasa(EnumStat.buffPiora.getId(),0);
-	    		}
-
-
-
-	    		pe = ep.getActivePotionEffect(DQPotionMinus.debuffBomie);
-	    		if(pe != null){
-	    			ep.setArraySubayasa(EnumStat.debuffBomie.getId(), (pe.getAmplifier() + 1) * - 1);
-	    		}else
-	    		{
-	    			ep.setArraySubayasa(EnumStat.debuffBomie.getId(),0);
-	    		}
-
-	    		pe = ep.getActivePotionEffect(DQPotionPlus.potionMaryokunotane);
-	    		if(pe != null){
-	    			ep.setArrayKasikosa(EnumStat.seed.getId(), (pe.getAmplifier() + 1) * 5);
-	    		}else
-	    		{
-	    			ep.setArrayKasikosa(EnumStat.seed.getId(), 0);
-	    		}
-
-	    		pe = ep.getActivePotionEffect(DQPotionPlus.potionOugonnomi);
-	    		if(pe != null)
-				{
-	    			if(pe.getAmplifier() < 3)
-	    			{
-	    				ep.setArrayMamori(EnumStat.ougon.getId(), (pe.getAmplifier() + 1) * 3);
-	    				ep.setArrayTikara(EnumStat.ougon.getId(), (pe.getAmplifier() + 1) * 3);
-	    				ep.setArrayKasikosa(EnumStat.ougon.getId(), (pe.getAmplifier() + 1) * 3);
-	    				//ExtendedPlayerProperties.get(ep).setArrayTikara(EnumStatTikara.ougon.getId(), pe.getAmplifier());
-	    			}else
-	    			{
-	    				ep.setArrayMamori(EnumStat.ougon.getId(), (pe.getAmplifier() + 1) * 3);
-	    				ep.setArrayTikara(EnumStat.ougon.getId(), (pe.getAmplifier() + 1) * 3);
-	    				ep.setArrayKasikosa(EnumStat.ougon.getId(), (pe.getAmplifier() + 1) * 3);
-	    				//ExtendedPlayerProperties.get(ep).setArrayTikara(EnumStatTikara.ougon.getId(), pe.getAmplifier());
-
-	    	    		if(ep.getHealth() > 0 && !ep.isDead)
-	    	    		{
-	    	    			if(ep.getHealth() > 0 && !ep.isDead)
-	    	    			{
-	    	    				if(ep.getMaxHealth() < ep.getHealth() + (pe.getAmplifier() * 10))
-	    	    				{
-	    	    					ep.setHealth(ep.getMaxHealth());
-	    	    				}else
-	    	    				{
-	    	    					ep.setHealth(ep.getHealth() + (pe.getAmplifier() * 10));
-	    	    				}
-	    	    			}
-	    	    		}
-
-	        			int mp = ep.getMP();
-	        			if(ep.getHealth() > 0 && !ep.isDead)
-	        			{
-		        			if(ep.getMaxMP() < mp + (1 + (pe.getAmplifier() * 5)))
-		        			{
-		        				ep.setMP(ep.getMaxMP());
-		        			}else
-		        			{
-
-		        				ep.setMP(mp + (1 + (pe.getAmplifier() * 5)));
-		        			}
-	        			}
-	    			}
-				}else
-				{
-					ep.setArrayMamori(EnumStat.ougon.getId(), 0);
-					ep.setArrayTikara(EnumStat.ougon.getId(), 0);
-					ep.setArrayKasikosa(EnumStat.ougon.getId(), 0);
-					ep.setArrayTikara(EnumStat.ougon.getId(), 0);
-				}
-    		}
     	}else if(event.entityLiving instanceof DqmMobBase)
     	{
-    		DqmMobBase ep = (DqmMobBase)event.entityLiving;
+    		doPotionEffectMob((DqmMobBase)event.entityLiving, event);
 
+    	}
 
-    		PotionEffect pe = ep.getActivePotionEffect(DQPotionPlus.potionDokukesisou);
-    		if(pe != null)
-    		{
-    			switch(pe.getAmplifier())
-    			{
-    				case 0: ep.removePotionEffect(DQPotionMinus.potionPoison.id); ep.removePotionEffect(Potion.poison.id); break;
-    				case 1: ep.removePotionEffect(DQPotionMinus.potionPoison.id); ep.removePotionEffect(Potion.wither.id); ep.removePotionEffect(Potion.poison.id); break;
-    				case 2: ep.removePotionEffect(DQPotionMinus.potionPoison.id);ep.removePotionEffect(DQPotionMinus.potionPoisonX.id); break;
-    				default: ep.removePotionEffect(DQPotionMinus.potionPoison.id);ep.removePotionEffect(DQPotionMinus.potionPoisonX.id);
-    			}
-    		}
+	}
 
+	public void doPotionEffectPlayer(EntityPlayer ep, LivingUpdateEvent event)
+	{
+		//炎の実と黄金4 設定まだ
+		PotionEffect pe;
+		//EntityPlayer ep = (EntityPlayer)event.entityLiving;
+		Random rand = new Random();
+
+		if(event.entityLiving instanceof EntityPlayer && !event.entityLiving.worldObj.isRemote)
+		{
+			EntityPlayer pl = (EntityPlayer)event.entityLiving;
+
+        	InventorySubEquip subEquip = new InventorySubEquip(pl);
+        	subEquip.openInventory();
+
+			if(event.entityLiving.ticksExisted % 17 == 0)
+			{
+		    	if(subEquip != null && subEquip.getStackInSlot(11) != null)
+		    	{
+		    		if(subEquip.getStackInSlot(11).getItem() == DQAccessories.itemUrokonotate)
+		    		{
+
+		    			pe = ep.getActivePotionEffect(DQPotionMinus.potionPoison);
+		    			if(pe != null && pe.getDuration() > 40)
+		    			{
+		    				ep.removePotionEffect(pe.getPotionID());
+		    				DQR.func.addPotionEffect2(ep, new PotionEffect(pe.getPotionID(), (pe.getDuration() - 30), pe.getAmplifier(), false));
+		    			}
+
+		    			pe = ep.getActivePotionEffect(DQPotionMinus.potionPoisonX);
+		    			if(pe != null && pe.getDuration() > 40)
+		    			{
+		    				ep.removePotionEffect(pe.getPotionID());
+		    				DQR.func.addPotionEffect2(ep, new PotionEffect(pe.getPotionID(), (pe.getDuration() - 30), pe.getAmplifier(), false));
+		    			}
+
+		    			pe = ep.getActivePotionEffect(Potion.poison);
+		    			if(pe != null && pe.getDuration() > 40)
+		    			{
+		    				ep.removePotionEffect(pe.getPotionID());
+		    				DQR.func.addPotionEffect2(ep, new PotionEffect(pe.getPotionID(), (pe.getDuration() - 30), pe.getAmplifier(), false));
+		    			}
+
+		    			pe = ep.getActivePotionEffect(Potion.wither);
+		    			if(pe != null && pe.getDuration() > 40)
+		    			{
+		    				ep.removePotionEffect(pe.getPotionID());
+		    				DQR.func.addPotionEffect2(ep, new PotionEffect(pe.getPotionID(), (pe.getDuration() - 30), pe.getAmplifier(), false));
+		    			}
+		    		}else if(subEquip.getStackInSlot(11).getItem() == DQAccessories.itemMetarukingnotate)
+		    		{
+		    			Collection potions = ep.getActivePotionEffects();
+		    			ArrayList<PotionEffect> newPot = new ArrayList();
+
+		    			if(rand.nextInt(2) == 0){
+				    		for (Iterator it = potions.iterator(); it.hasNext();)
+				    		{
+				    			//System.out.println("TEST???????????????");
+				    			PotionEffect eff = (PotionEffect)(it.next());
+				    			Potion pot = Potion.potionTypes[eff.getPotionID()];
+				    			try{
+					    			if(DQR.potionFunc.isPotionMinus(pot))
+			    					{
+					    				newPot.add(eff);
+			    					}else if(DQR.potionFunc.isDQPotionMinus(pot))
+			    					{
+			    						newPot.add(eff);
+			    					}else if(ep.worldObj.isRemote)
+			    					{
+			    						if(pot.isBadEffect())
+			    						{
+			    							newPot.add(eff);
+			    						}
+			    					}
+				    			}
+					    		catch(Exception e)
+				    			{
+
+				    			}
+				    		}
+
+				    		for(int cnt = 0; cnt < newPot.size(); cnt++)
+				    		{
+				    			if(newPot.get(cnt).getDuration() > 40)
+				    			{
+				    				ep.removePotionEffect(newPot.get(cnt).getPotionID());
+				    				DQR.func.addPotionEffect2(ep, new PotionEffect(newPot.get(cnt).getPotionID(), (newPot.get(cnt).getDuration() - 30), newPot.get(cnt).getAmplifier(), false));
+				    			}
+				    		}
+
+				    		/**********************************************************
+				    		 *
+				    		 * ここに、DQR独自実装バフ/デバフへの処理を入れるべきでは？
+				    		 *
+				    		 ***********************************************************/
+		    			}
+		    		}
+
+		    	}
+
+		    	//職業特技 デバフ無効処理
+		    	if(ExtendedPlayerProperties5.get(ep).getJobSPSkillSet(EnumDqmJob.Asobinin.getId(), 5) != 0)
+		    	{
+		    		DQR.func.removeBadEffectAll(ep);
+		    	}
+
+		    	//命の指輪回復処理
+		    	if(subEquip.hasYubiwa2(DQAccessories.itemInotinoyubiwa) != -1)
+		    	{
+    				if(ep.getHealth() < ep.getMaxHealth())
+    				{
+    					ep.heal(1);
+
+		        		ItemStack stack = subEquip.getStackInSlot(subEquip.hasYubiwa(DQAccessories.itemInotinoyubiwa));
+		        		stack.damageItem(2, ep);
+    					subEquip.setInventorySlotContents(subEquip.hasYubiwa(DQAccessories.itemInotinoyubiwa), stack);
+    				}
+		    	}
+
+		    	//祈りの指輪回復処理
+		    	if(subEquip.hasYubiwa2(DQAccessories.itemInorinoyubiwa) != -1)
+		    	{
+	    			int mp = ExtendedPlayerProperties.get(ep).getMP();
+	    			if(ExtendedPlayerProperties.get(ep).getMaxMP() > mp)
+	    			{
+		    			ExtendedPlayerProperties.get(ep).setMP(mp + 1);
+		        		ItemStack stack = subEquip.getStackInSlot(subEquip.hasYubiwa(DQAccessories.itemInorinoyubiwa));
+		        		stack.damageItem(2, ep);
+    					subEquip.setInventorySlotContents(subEquip.hasYubiwa(DQAccessories.itemInorinoyubiwa), stack);
+
+	    			}
+		    	}
+
+		    	//癒しの腕輪
+		    	if(subEquip.hasUdewa2(DQAccessories.itemIyasinoudewa) != -1)
+		    	{
+    				if(ep.getHealth() < ep.getMaxHealth())
+    				{
+    					ep.heal(1);
+
+		        		ItemStack stack = subEquip.getStackInSlot(subEquip.hasUdewa(DQAccessories.itemIyasinoudewa));
+		        		stack.damageItem(2, ep);
+    					subEquip.setInventorySlotContents(subEquip.hasUdewa(DQAccessories.itemIyasinoudewa), stack);
+    				}
+		    	}
+			}
+			subEquip.markDirty();
+	    	subEquip.closeInventory();
+		}
+
+		/*
+		pe = ep.getActivePotionEffect(DQPotionMinus.debuffRariho);
+		if(pe != null && pe.getDuration() > DQR.conf.rarihoFreeDuration)
+		{
+			double[] loc = new double[4];
+
+			loc[0] = ep.posX;
+			loc[1] = ep.posY;
+			loc[2] = ep.posZ;
+			loc[3] = 1;
+			ExtendedPlayerProperties.get(ep).setRarihoLoc(loc);
+		}else
+		{
+			double[] loc = new double[4];
+
+			loc[0] = -1;
+			loc[1] = -1;
+			loc[2] = -1;
+			loc[3] = 0;
+			ExtendedPlayerProperties.get(ep).setRarihoLoc(loc);
+		}
+		*/
+
+		/*
+		pe = ep.getActivePotionEffect(DQPotionPlus.potionDokukesisou);
+		if(pe != null)
+		{
+			switch(pe.getAmplifier())
+			{
+				case 0: ep.removePotionEffect(DQPotionMinus.potionPoison.id); ep.removePotionEffect(Potion.poison.id); break;
+				case 1: ep.removePotionEffect(DQPotionMinus.potionPoison.id); ep.removePotionEffect(Potion.wither.id); ep.removePotionEffect(Potion.poison.id); break;
+				case 2: ep.removePotionEffect(DQPotionMinus.potionPoison.id);ep.removePotionEffect(DQPotionMinus.potionPoisonX.id); break;
+				default: ep.removePotionEffect(DQPotionMinus.potionPoison.id);ep.removePotionEffect(DQPotionMinus.potionPoisonX.id);
+			}
+		}
+		*/
+
+		/*
+		if(event.entityLiving.ticksExisted % 20 == 0)
+		{
     		pe = ep.getActivePotionEffect(DQPotionPlus.potionMahounomi);
     		if(pe != null && ep.getHealth() > 0 && !ep.isDead)
     		{
-    			int mp = ep.DqmMobMP;
-    			ep.DqmMobMP = (mp + (1 + (pe.getAmplifier() * 2)));
+	    			int mp = ExtendedPlayerProperties.get(ep).getMP();
+	    			if(ExtendedPlayerProperties.get(ep).getMaxMP() < mp + (1 + (pe.getAmplifier() * 2)))
+	    			{
+	    				ExtendedPlayerProperties.get(ep).setMP(ExtendedPlayerProperties.get(ep).getMaxMP());
+	    			}else
+	    			{
 
+	    				ExtendedPlayerProperties.get(ep).setMP(mp + (1 + (pe.getAmplifier() * 2)));
+	    			}
     			//ep.setHealth(1.0F + (pe.getAmplifier() * 2));
     		}
 
-    		if(event.entityLiving.ticksExisted % 20 == 0)
+    		pe = ep.getActivePotionEffect(DQPotionPlus.buffMPRegeneration);
+    		if(pe != null && ep.getHealth() > 0 && !ep.isDead)
     		{
-	    		pe = ep.getActivePotionEffect(DQPotionMinus.potionPoison);
-	    		if(pe != null)
-	    		{
-    				if((ep.getHealth() - ((pe.getAmplifier() + 1) * 2)) > 0)
+	    			int mp = ExtendedPlayerProperties.get(ep).getMP();
+	    			if(ExtendedPlayerProperties.get(ep).getMaxMP() < mp + (1 + (pe.getAmplifier() * 2)))
+	    			{
+	    				ExtendedPlayerProperties.get(ep).setMP(ExtendedPlayerProperties.get(ep).getMaxMP());
+	    			}else
+	    			{
+
+	    				ExtendedPlayerProperties.get(ep).setMP(mp + (1 + (pe.getAmplifier() * 2)));
+	    			}
+    			//ep.setHealth(1.0F + (pe.getAmplifier() * 2));
+    		}
+
+    		pe = ep.getActivePotionEffect(DQPotionMinus.potionPoison);
+    		if(pe != null)
+    		{
+    				if((ep.getHealth() - ((pe.getAmplifier() + 1) * 2)) > 1)
     				{
     					ep.attackEntityFrom(DQR.damageSource.DqmPoison, ((pe.getAmplifier() + 1) * 2));
     					//ep.setHealth(ep.getHealth() - ((pe.getAmplifier() + 1) * 2));
+    				}else if(ep.getHealth() != 1)
+    				{
+    					ep.attackEntityFrom(DQR.damageSource.DqmPoison, (ep.getHealth() - 1));
     				}
-	    		}
     		}
+		}
+		*/
 
-    		if(event.entityLiving.ticksExisted % 10 == 0)
+		/*
+		//0.5秒ごと
+		if(event.entityLiving.ticksExisted % 10 == 0)
+		{
+    		pe = ep.getActivePotionEffect(DQPotionMinus.potionPoisonX);
+    		if(pe != null)
     		{
-	    		pe = ep.getActivePotionEffect(DQPotionMinus.potionPoisonX);
-	    		if(pe != null)
-	    		{
-    				if((ep.getHealth() - ((pe.getAmplifier() + 1) * 2)) > 0)
-    				{
-    					ep.attackEntityFrom(DQR.damageSource.DqmPoisonX, ((pe.getAmplifier() + 1) * 2));
-    					//ep.setHealth(ep.getHealth() - ((pe.getAmplifier() + 1) * 2));
-    				}
-	    		}
 
-	    		pe = ep.getActivePotionEffect(DQPotionPlus.potionIyasinomi);
-	    		if(pe != null && ep.getHealth() > 0 && !ep.isDead)
-	    		{
-    				if(ep.getMaxHealth() < ep.getHealth() + 1.0F + (pe.getAmplifier() * 2))
-    				{
-    					ep.setHealth(ep.getMaxHealth());
-    				}else
-    				{
-    					ep.setHealth(ep.getHealth() + 1.0F + (pe.getAmplifier() * 2));
-    				}
-	    		}
+				if(ep.getHealth() > 0)
+				{
+					ep.attackEntityFrom(DQR.damageSource.DqmPoisonX, ((pe.getAmplifier() + 1) * 2));
+					//ep.setHealth(ep.getHealth() - ((pe.getAmplifier() + 1) * 2));
+				}
     		}
 
-    		/*
+    		pe = ep.getActivePotionEffect(DQPotionPlus.potionIyasinomi);
+    		if(pe != null && ep.getHealth() > 0 && !ep.isDead)
+    		{
+				if(ep.getMaxHealth() < ep.getHealth() + 1.0F + (pe.getAmplifier() * 2))
+				{
+					ep.setHealth(ep.getMaxHealth());
+				}else
+				{
+					//ep.setHealth(ep.getHealth() + 1.0F + (pe.getAmplifier() * 2));
+					ep.heal(1.0F + (pe.getAmplifier() * 2));
+				}
+    		}
+
+
+    		pe = ep.getActivePotionEffect(DQPotionPlus.buffHPRegeneration);
+    		if(pe != null && ep.getHealth() > 0 && !ep.isDead)
+    		{
+				if(ep.getMaxHealth() < ep.getHealth() + 1.0F + (pe.getAmplifier() * 2))
+				{
+					ep.setHealth(ep.getMaxHealth());
+				}else
+				{
+					//ep.setHealth(ep.getHealth() + 1.0F + (pe.getAmplifier() * 2));
+					ep.heal(1.0F + (pe.getAmplifier() * 2));
+				}
+    		}
+		}
+		*/
+
+		//8tickごと
+		/*
+		if(event.entityLiving.ticksExisted % 13 == 0)
+		{
     		pe = ep.getActivePotionEffect(DQPotionPlus.potionMamorinotane);
     		if(pe != null)
 			{
-    			ep.setArrayMamori(EnumStatDEF.seed.getId(), (pe.getAmplifier() + 1) * 5);
+    			ExtendedPlayerProperties.get(ep).setArrayMamori(EnumStat.seed.getId(), (pe.getAmplifier() + 1) * 5);
 			}else
 			{
-				ep.setArrayMamori(EnumStatDEF.seed.getId(), 0);
+				ExtendedPlayerProperties.get(ep).setArrayMamori(EnumStat.seed.getId(), 0);
 			}
 
     		pe = ep.getActivePotionEffect(DQPotionPlus.potionTikaranotane);
     		if(pe != null){
-    			ep.setArrayTikara(EnumStatTikara.seed.getId(), (pe.getAmplifier() + 1) * 5);
+    			ExtendedPlayerProperties.get(ep).setArrayTikara(EnumStat.seed.getId(), (pe.getAmplifier() + 1) * 5);
     		}else
     		{
-    			ep.setArrayTikara(EnumStatTikara.seed.getId(), 0);
+    			ExtendedPlayerProperties.get(ep).setArrayTikara(EnumStat.seed.getId(), 0);
     		}
 
 
     		pe = ep.getActivePotionEffect(DQPotionPlus.potionSubayasanotane);
     		if(pe != null){
-    			ep.setArraySubayasa(EnumStatSubayasa.seed.getId(), pe.getAmplifier() + 1);
+    			ExtendedPlayerProperties.get(ep).setArraySubayasa(EnumStat.seed.getId(), pe.getAmplifier() + 1);
     		}else
     		{
-    			ep.setArraySubayasa(EnumStatSubayasa.seed.getId(),0);
+    			ExtendedPlayerProperties.get(ep).setArraySubayasa(EnumStat.seed.getId(),0);
     		}
-
 
     		pe = ep.getActivePotionEffect(DQPotionPlus.buffPiora);
     		if(pe != null){
-    			ep.setArraySubayasa(EnumStatSubayasa.buffPiora.getId(), pe.getAmplifier() + 1);
+    			ExtendedPlayerProperties.get(ep).setArraySubayasa(EnumStat.buffPiora.getId(), pe.getAmplifier() + 1);
     		}else
     		{
-    			ep.setArraySubayasa(EnumStatSubayasa.buffPiora.getId(),0);
+    			ExtendedPlayerProperties.get(ep).setArraySubayasa(EnumStat.buffPiora.getId(),0);
     		}
-
 
     		pe = ep.getActivePotionEffect(DQPotionMinus.debuffBomie);
     		if(pe != null){
-    			ep.setArraySubayasa(EnumStatSubayasa.debuffBomie.getId(), (pe.getAmplifier() + 1) * - 1);
+    			ExtendedPlayerProperties.get(ep).setArraySubayasa(EnumStat.debuffBomie.getId(), (pe.getAmplifier() + 1) * - 1);
     		}else
     		{
-    			ep.setArraySubayasa(EnumStatSubayasa.debuffBomie.getId(),0);
+    			ExtendedPlayerProperties.get(ep).setArraySubayasa(EnumStat.debuffBomie.getId(),0);
     		}
-
 
     		pe = ep.getActivePotionEffect(DQPotionPlus.potionMaryokunotane);
     		if(pe != null){
-    			ep.setArrayKasikosa(EnumStatKasikosa.seed.getId(), (pe.getAmplifier() + 1) * 5);
+    			ExtendedPlayerProperties.get(ep).setArrayKasikosa(EnumStat.seed.getId(), (pe.getAmplifier() + 1) * 5);
     		}else
     		{
-    			ep.setArrayKasikosa(EnumStatKasikosa.seed.getId(), 0);
+    			ExtendedPlayerProperties.get(ep).setArrayKasikosa(EnumStat.seed.getId(), 0);
     		}
 
     		pe = ep.getActivePotionEffect(DQPotionPlus.potionOugonnomi);
@@ -1666,20 +1358,206 @@ public class LivingEventHandler {
 			{
     			if(pe.getAmplifier() < 3)
     			{
-    				ep.setArrayMamori(EnumStatMamori.ougon.getId(), (pe.getAmplifier() + 1) * 3);
-    				ep.setArrayTikara(EnumStatTikara.ougon.getId(), (pe.getAmplifier() + 1) * 3);
-    				ep.setArrayKasikosa(EnumStatKasikosa.ougon.getId(), (pe.getAmplifier() + 1) * 3);
+    				ExtendedPlayerProperties.get(ep).setArrayMamori(EnumStat.ougon.getId(), (pe.getAmplifier() + 1) * 3);
+    				ExtendedPlayerProperties.get(ep).setArrayTikara(EnumStat.ougon.getId(), (pe.getAmplifier() + 1) * 3);
+    				ExtendedPlayerProperties.get(ep).setArrayKasikosa(EnumStat.ougon.getId(), (pe.getAmplifier() + 1) * 3);
     				//ExtendedPlayerProperties.get(ep).setArrayTikara(EnumStatTikara.ougon.getId(), pe.getAmplifier());
     			}else
     			{
-    				ep.setArrayMamori(EnumStatMamori.ougon.getId(), (pe.getAmplifier() + 1) * 3);
-    				ep.setArrayTikara(EnumStatTikara.ougon.getId(), (pe.getAmplifier() + 1) * 3);
-    				ep.setArrayKasikosa(EnumStatKasikosa.ougon.getId(), (pe.getAmplifier() + 1) * 3);
+    				ExtendedPlayerProperties.get(ep).setArrayMamori(EnumStat.ougon.getId(), (pe.getAmplifier() + 1) * 3);
+    				ExtendedPlayerProperties.get(ep).setArrayTikara(EnumStat.ougon.getId(), (pe.getAmplifier() + 1) * 3);
+    				ExtendedPlayerProperties.get(ep).setArrayKasikosa(EnumStat.ougon.getId(), (pe.getAmplifier() + 1) * 3);
     				//ExtendedPlayerProperties.get(ep).setArrayTikara(EnumStatTikara.ougon.getId(), pe.getAmplifier());
 
     	    		if(ep.getHealth() > 0 && !ep.isDead)
     	    		{
-    	    			if(ep.worldObj.getWorldTime() % 10 == 0 && ep.getHealth() > 0 && !ep.isDead)
+    	    			if(ep.getHealth() > 0 && !ep.isDead)
+    	    			{
+    	    				if(ep.getMaxHealth() < ep.getHealth() + (pe.getAmplifier() * 10))
+    	    				{
+    	    					ep.setHealth(ep.getMaxHealth());
+    	    				}else
+    	    				{
+    	    					//ep.setHealth(ep.getHealth() + (pe.getAmplifier() * 10));
+    	    					ep.heal(pe.getAmplifier() * 10);
+    	    				}
+    	    			}
+    	    		}
+
+        			int mp = ExtendedPlayerProperties.get(ep).getMP();
+        			if(ep.getHealth() > 0 && !ep.isDead)
+        			{
+	        			if(ExtendedPlayerProperties.get(ep).getMaxMP() < mp + (1 + (pe.getAmplifier() * 5)))
+	        			{
+	        				ExtendedPlayerProperties.get(ep).setMP(ExtendedPlayerProperties.get(ep).getMaxMP());
+	        			}else
+	        			{
+
+	        				ExtendedPlayerProperties.get(ep).setMP(mp + (1 + (pe.getAmplifier() * 5)));
+	        			}
+        			}
+    			}
+			}else
+			{
+				ExtendedPlayerProperties.get(ep).setArrayMamori(EnumStat.ougon.getId(), 0);
+				ExtendedPlayerProperties.get(ep).setArrayTikara(EnumStat.ougon.getId(), 0);
+				ExtendedPlayerProperties.get(ep).setArrayKasikosa(EnumStat.ougon.getId(), 0);
+				ExtendedPlayerProperties.get(ep).setArrayTikara(EnumStat.ougon.getId(), 0);
+			}
+		}
+		*/
+	}
+
+	public void doPotionEffectPet(DqmPetBase ep, LivingUpdateEvent event)
+	{
+
+
+		//PotionEffect pe = ep.getActivePotionEffect(DQPotionPlus.potionDokukesisou);
+		/*
+		if(pe != null)
+		{
+			switch(pe.getAmplifier())
+			{
+				case 0: ep.removePotionEffect(DQPotionMinus.potionPoison.id); ep.removePotionEffect(Potion.poison.id); break;
+				case 1: ep.removePotionEffect(DQPotionMinus.potionPoison.id); ep.removePotionEffect(Potion.wither.id); ep.removePotionEffect(Potion.poison.id); break;
+				case 2: ep.removePotionEffect(DQPotionMinus.potionPoison.id);ep.removePotionEffect(DQPotionMinus.potionPoisonX.id); break;
+				default: ep.removePotionEffect(DQPotionMinus.potionPoison.id);ep.removePotionEffect(DQPotionMinus.potionPoisonX.id);
+			}
+		}
+
+		if(event.entityLiving.ticksExisted % 20 == 0)
+		{
+    		pe = ep.getActivePotionEffect(DQPotionPlus.potionMahounomi);
+    		if(pe != null && ep.getHealth() > 0 && !ep.isDead)
+    		{
+    			int mp = ep.getMP();
+    			if(ep.getMaxMP() < mp + (1 + (pe.getAmplifier() * 2)))
+    			{
+    				ep.setMP(ep.getMaxMP());
+    			}else
+    			{
+
+    				ep.setMP(mp + (1 + (pe.getAmplifier() * 2)));
+    			}
+    			//ep.setHealth(1.0F + (pe.getAmplifier() * 2));
+    		}
+
+    		pe = ep.getActivePotionEffect(DQPotionMinus.potionPoison);
+    		if(pe != null)
+    		{
+				if((ep.getHealth() - ((pe.getAmplifier() + 1) * 2)) > 1)
+				{
+					ep.attackEntityFrom(DQR.damageSource.DqmPoison, ((pe.getAmplifier() + 1) * 2));
+					//ep.setHealth(ep.getHealth() - ((pe.getAmplifier() + 1) * 2));
+				}else if(ep.getHealth() !=  1)
+				{
+					ep.attackEntityFrom(DQR.damageSource.DqmPoison, ep.getHealth() - 1);
+					//ep.setHealth(ep.getHealth() - ((pe.getAmplifier() + 1) * 2));
+				}
+    		}
+		}
+		*/
+		/*
+		if(event.entityLiving.ticksExisted % 10 == 0)
+		{
+    		pe = ep.getActivePotionEffect(DQPotionMinus.potionPoisonX);
+    		if(pe != null)
+    		{
+    				//if((ep.getHealth() - ((pe.getAmplifier() + 1) * 2)) > 0)
+    				if(ep.getHealth()  > 0)
+    				{
+    					ep.attackEntityFrom(DQR.damageSource.DqmPoisonX, ((pe.getAmplifier() + 1) * 2));
+    					//ep.setHealth(ep.getHealth() - ((pe.getAmplifier() + 1) * 2));
+    				}
+    		}
+
+    		pe = ep.getActivePotionEffect(DQPotionPlus.potionIyasinomi);
+    		if(pe != null && ep.getHealth() > 0 && !ep.isDead)
+    		{
+				if(ep.getMaxHealth() < ep.getHealth() + 1.0F + (pe.getAmplifier() * 2))
+				{
+					ep.setHealth(ep.getMaxHealth());
+				}else
+				{
+					ep.setHealth(ep.getHealth() + 1.0F + (pe.getAmplifier() * 2));
+				}
+    		}
+		}
+		*/
+		/*
+		if(event.entityLiving.ticksExisted % 11 == 0)
+		{
+    		pe = ep.getActivePotionEffect(DQPotionPlus.potionMamorinotane);
+    		if(pe != null)
+			{
+    			ep.setArrayMamori(EnumStat.seed.getId(), (pe.getAmplifier() + 1) * 5);
+			}else
+			{
+				ep.setArrayMamori(EnumStat.seed.getId(), 0);
+			}
+
+    		pe = ep.getActivePotionEffect(DQPotionPlus.potionTikaranotane);
+    		if(pe != null){
+    			ep.setArrayTikara(EnumStat.seed.getId(), (pe.getAmplifier() + 1) * 5);
+    		}else
+    		{
+    			ep.setArrayTikara(EnumStat.seed.getId(), 0);
+    		}
+
+
+    		pe = ep.getActivePotionEffect(DQPotionPlus.potionSubayasanotane);
+    		if(pe != null){
+    			ep.setArraySubayasa(EnumStat.seed.getId(), pe.getAmplifier() + 1);
+    		}else
+    		{
+    			ep.setArraySubayasa(EnumStat.seed.getId(),0);
+    		}
+
+    		pe = ep.getActivePotionEffect(DQPotionPlus.buffPiora);
+    		if(pe != null){
+    			ep.setArraySubayasa(EnumStat.buffPiora.getId(), pe.getAmplifier() + 1);
+    		}else
+    		{
+    			ep.setArraySubayasa(EnumStat.buffPiora.getId(),0);
+    		}
+
+
+
+    		pe = ep.getActivePotionEffect(DQPotionMinus.debuffBomie);
+    		if(pe != null){
+    			ep.setArraySubayasa(EnumStat.debuffBomie.getId(), (pe.getAmplifier() + 1) * - 1);
+    		}else
+    		{
+    			ep.setArraySubayasa(EnumStat.debuffBomie.getId(),0);
+    		}
+
+    		pe = ep.getActivePotionEffect(DQPotionPlus.potionMaryokunotane);
+    		if(pe != null){
+    			ep.setArrayKasikosa(EnumStat.seed.getId(), (pe.getAmplifier() + 1) * 5);
+    		}else
+    		{
+    			ep.setArrayKasikosa(EnumStat.seed.getId(), 0);
+    		}
+
+    		pe = ep.getActivePotionEffect(DQPotionPlus.potionOugonnomi);
+    		if(pe != null)
+			{
+    			if(pe.getAmplifier() < 3)
+    			{
+    				ep.setArrayMamori(EnumStat.ougon.getId(), (pe.getAmplifier() + 1) * 3);
+    				ep.setArrayTikara(EnumStat.ougon.getId(), (pe.getAmplifier() + 1) * 3);
+    				ep.setArrayKasikosa(EnumStat.ougon.getId(), (pe.getAmplifier() + 1) * 3);
+    				//ExtendedPlayerProperties.get(ep).setArrayTikara(EnumStatTikara.ougon.getId(), pe.getAmplifier());
+    			}else
+    			{
+    				ep.setArrayMamori(EnumStat.ougon.getId(), (pe.getAmplifier() + 1) * 3);
+    				ep.setArrayTikara(EnumStat.ougon.getId(), (pe.getAmplifier() + 1) * 3);
+    				ep.setArrayKasikosa(EnumStat.ougon.getId(), (pe.getAmplifier() + 1) * 3);
+    				//ExtendedPlayerProperties.get(ep).setArrayTikara(EnumStatTikara.ougon.getId(), pe.getAmplifier());
+
+    	    		if(ep.getHealth() > 0 && !ep.isDead)
+    	    		{
+    	    			if(ep.getHealth() > 0 && !ep.isDead)
     	    			{
     	    				if(ep.getMaxHealth() < ep.getHealth() + (pe.getAmplifier() * 10))
     	    				{
@@ -1706,14 +1584,83 @@ public class LivingEventHandler {
     			}
 			}else
 			{
-				ep.setArrayMamori(EnumStatMamori.ougon.getId(), 0);
-				ep.setArrayTikara(EnumStatTikara.ougon.getId(), 0);
-				ep.setArrayKasikosa(EnumStatKasikosa.ougon.getId(), 0);
-				ep.setArrayTikara(EnumStatTikara.ougon.getId(), 0);
+				ep.setArrayMamori(EnumStat.ougon.getId(), 0);
+				ep.setArrayTikara(EnumStat.ougon.getId(), 0);
+				ep.setArrayKasikosa(EnumStat.ougon.getId(), 0);
+				ep.setArrayTikara(EnumStat.ougon.getId(), 0);
 			}
-			*/
-    	}
-
+		}
+		*/
 	}
 
+	public void doPotionEffectMob(DqmMobBase ep, LivingUpdateEvent event)
+	{
+		/*
+		PotionEffect pe = ep.getActivePotionEffect(DQPotionPlus.potionDokukesisou);
+		if(pe != null)
+		{
+			switch(pe.getAmplifier())
+			{
+				case 0: ep.removePotionEffect(DQPotionMinus.potionPoison.id); ep.removePotionEffect(Potion.poison.id); break;
+				case 1: ep.removePotionEffect(DQPotionMinus.potionPoison.id); ep.removePotionEffect(Potion.wither.id); ep.removePotionEffect(Potion.poison.id); break;
+				case 2: ep.removePotionEffect(DQPotionMinus.potionPoison.id);ep.removePotionEffect(DQPotionMinus.potionPoisonX.id); break;
+				default: ep.removePotionEffect(DQPotionMinus.potionPoison.id);ep.removePotionEffect(DQPotionMinus.potionPoisonX.id);
+			}
+		}
+
+		pe = ep.getActivePotionEffect(DQPotionPlus.potionMahounomi);
+		if(pe != null && ep.getHealth() > 0 && !ep.isDead)
+		{
+			int mp = ep.DqmMobMP;
+			ep.DqmMobMP = (mp + (1 + (pe.getAmplifier() * 2)));
+
+			//ep.setHealth(1.0F + (pe.getAmplifier() * 2));
+		}
+
+		if(event.entityLiving.ticksExisted % 20 == 0)
+		{
+    		pe = ep.getActivePotionEffect(DQPotionMinus.potionPoison);
+    		if(pe != null)
+    		{
+				if((ep.getHealth() - ((pe.getAmplifier() + 1) * 2)) > 0)
+				{
+					ep.attackEntityFrom(DQR.damageSource.DqmPoison, ((pe.getAmplifier() + 1) * 2));
+					//ep.setHealth(ep.getHealth() - ((pe.getAmplifier() + 1) * 2));
+				}
+    		}
+		}
+
+		if(event.entityLiving.ticksExisted % 10 == 0)
+		{
+    		pe = ep.getActivePotionEffect(DQPotionMinus.potionPoisonX);
+    		if(pe != null)
+    		{
+				if((ep.getHealth() - ((pe.getAmplifier() + 1) * 2)) > 0)
+				{
+					ep.attackEntityFrom(DQR.damageSource.DqmPoisonX, ((pe.getAmplifier() + 1) * 2));
+					//ep.setHealth(ep.getHealth() - ((pe.getAmplifier() + 1) * 2));
+				}
+    		}
+
+    		pe = ep.getActivePotionEffect(DQPotionPlus.potionIyasinomi);
+    		if(pe != null && ep.getHealth() > 0 && !ep.isDead)
+    		{
+				if(ep.getMaxHealth() < ep.getHealth() + 1.0F + (pe.getAmplifier() * 2))
+				{
+					ep.setHealth(ep.getMaxHealth());
+				}else
+				{
+					ep.setHealth(ep.getHealth() + 1.0F + (pe.getAmplifier() * 2));
+				}
+    		}
+		}
+		*/
+	}
+
+	public void doDqrEffectPlayer(EntityPlayer ep, LivingUpdateEvent event)
+	{
+		if(ep.isDead) return;
+
+
+	}
 }

@@ -2,7 +2,6 @@ package dqr.gui.debug;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.Set;
 import java.util.regex.Pattern;
 
 import net.minecraft.client.gui.GuiButton;
@@ -14,7 +13,6 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
@@ -74,8 +72,8 @@ public class GuiDebugGuiContainer extends GuiContainer
 
         super(new GuiDebugContainer(player));
         this.epa = player;
-    	NBTTagCompound playerPet = ExtendedPlayerProperties3.get(player).getNBTPlayerPetList();
-    	Set tags = playerPet.func_150296_c();
+    	//NBTTagCompound playerPet = ExtendedPlayerProperties3.get(player).getNBTPlayerPetList();
+    	//Set tags = playerPet.func_150296_c();
 
     	myCoin = ExtendedPlayerProperties3.get(player).getCoin();
 

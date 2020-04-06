@@ -296,6 +296,7 @@ public class DqmItemMahounoTutu extends DqmItemMiscBase{
 	        pet.setMaxMP(p_70037_1_.getInteger("MaxMP"));
 	        pet.setWeapon(p_70037_1_.getInteger("weapon"));
 
+	        pet.setPetUniqueNumber(p_70037_1_.getInteger("PetUniqueNumber"));
 	        for(int cnt = 0; cnt < 4; cnt++)
 	        {
 	        	//pet.setRarihoLoc(cnt, p_70037_1_.getDouble("rarihoLoc_" + cnt));

@@ -1,9 +1,12 @@
 package dqr.entity.mobEntity;
 
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
@@ -160,6 +163,8 @@ public class DqmMobBase extends EntityMob
 
 	public boolean flgSpawnFromSpawner = false;
 	public boolean flgGetKaisinDam = false;
+
+	private NBTTagCompound dqrPotionEffects =  new NBTTagCompound();
 
 	public int petRefuseFlg = 0;
 
@@ -1507,21 +1512,21 @@ public class DqmMobBase extends EntityMob
 
 			if(this.mobAI.getHeavyFire() > 0 && !ep.capabilities.isCreativeMode)
 			{
-				ep.addPotionEffect(new PotionEffect(DQPotionMinus.debuffHeavyFire.id, 60, this.mobAI.getHeavyFire()));
+				DQR.func.addPotionEffect2(ep, new PotionEffect(DQPotionMinus.debuffHeavyFire.id, 60, this.mobAI.getHeavyFire()));
 			}
 
 	        if(this.mobAI.getPoison() > 0 && !ep.capabilities.isCreativeMode)
 	        {
         		if(rand.nextInt(this.mobAIrate.getPoison()) == 0)
         		{
-        			ep.addPotionEffect(new PotionEffect(DQPotionMinus.potionPoison.id, rand.nextInt(this.mobAIrate.getPoisonTimeMax()) + this.mobAIrate.getPoisonTimeMin(), mobAI.getPoison() - 1));
+        			DQR.func.addPotionEffect2(ep, new PotionEffect(DQPotionMinus.potionPoison.id, rand.nextInt(this.mobAIrate.getPoisonTimeMax()) + this.mobAIrate.getPoisonTimeMin(), mobAI.getPoison() - 1));
         		}
 	        }
 	        if(this.mobAI.getPoisonX() > 0 && !ep.capabilities.isCreativeMode)
 	        {
         		if(rand.nextInt(this.mobAIrate.getPoisonX()) == 0)
         		{
-        			ep.addPotionEffect(new PotionEffect(DQPotionMinus.potionPoisonX.id, rand.nextInt(this.mobAIrate.getPoisonXTimeMax()) + this.mobAIrate.getPoisonXTimeMin(), mobAI.getPoisonX()));
+        			DQR.func.addPotionEffect2(ep, new PotionEffect(DQPotionMinus.potionPoisonX.id, rand.nextInt(this.mobAIrate.getPoisonXTimeMax()) + this.mobAIrate.getPoisonXTimeMin(), mobAI.getPoisonX()));
         		}
 	        }
 		}
@@ -1573,7 +1578,7 @@ public class DqmMobBase extends EntityMob
 				EntityPlayer ep = (EntityPlayer)par1Entity;
 				if(!ep.capabilities.isCreativeMode)
 				{
-					ep.addPotionEffect(new PotionEffect(DQPotionMinus.debuffHeavyFire.id, 60, this.mobAI.getHeavyFire()));
+					DQR.func.addPotionEffect2(ep, new PotionEffect(DQPotionMinus.debuffHeavyFire.id, 60, this.mobAI.getHeavyFire()));
 				}
 			}
 		}
@@ -1890,7 +1895,7 @@ public class DqmMobBase extends EntityMob
 				if(!this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.mahokanta", 1.0F, 1.0F);
 			}else
 			{
-				this.addPotionEffect(new PotionEffect(pot.id, grade.getAttack(), 0));
+				DQR.func.addPotionEffect2(this, new PotionEffect(pot.id, grade.getAttack(), 0));
 				if(!this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.up", 1.0F, 1.0F);
 			}
 
@@ -1908,12 +1913,12 @@ public class DqmMobBase extends EntityMob
             			EntityLivingBase elb = (EntityLivingBase)target;
             			if(elb.isPotionActive(DQPotionPlus.buffMahokanta))
             			{
-            				this.addPotionEffect(new PotionEffect(pot.id, grade.getAttack(), 0));
+            				DQR.func.addPotionEffect2(this, new PotionEffect(pot.id, grade.getAttack(), 0));
             				if(!elb.worldObj.isRemote) elb.worldObj.playSoundAtEntity(elb, "dqr:player.mahokanta", 1.0F, 1.0F);
             				this.worldObj.playSoundAtEntity(this, "dqr:player.up", 1.0F, 1.0F);
             			}else
             			{
-            				elb.addPotionEffect(new PotionEffect(pot.id, grade.getAttack(), 0));
+            				DQR.func.addPotionEffect2(elb, new PotionEffect(pot.id, grade.getAttack(), 0));
             				if(!elb.worldObj.isRemote) elb.worldObj.playSoundAtEntity(elb, "dqr:player.up", 1.0F, 1.0F);
             			}
             		}
@@ -1947,10 +1952,10 @@ public class DqmMobBase extends EntityMob
 	        		if(tagMob.isPotionActive(DQPotionPlus.buffMahokanta))
 	        		{
 	        			if(!tagMob.worldObj.isRemote) tagMob.worldObj.playSoundAtEntity(this, "dqr:player.mahokanta", 1.0F, 1.0F);
-	        			this.addPotionEffect(new PotionEffect(pot.id, grade.getAttack(), 1));
+	        			DQR.func.addPotionEffect2(this, new PotionEffect(pot.id, grade.getAttack(), 1));
 	        			this.playSound("dqr:player.up", 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
 	        		}else{
-	        			tagMob.addPotionEffect(new PotionEffect(pot.id, grade.getAttack(), 1));
+	        			DQR.func.addPotionEffect2(tagMob, new PotionEffect(pot.id, grade.getAttack(), 1));
 	        			if(!tagMob.worldObj.isRemote) tagMob.playSound("dqr:player.up", 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
 	        		}
 	        	}
@@ -1963,7 +1968,7 @@ public class DqmMobBase extends EntityMob
     			if(!this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.mahokanta", 1.0F, 1.0F);
     		}else
     		{
-    			this.addPotionEffect(new PotionEffect(pot.id, grade.getAttack(), 1));
+    			DQR.func.addPotionEffect2(this, new PotionEffect(pot.id, grade.getAttack(), 1));
     			if(!this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.up", 1.0F, 1.0F);
     		}
     	}
@@ -2028,12 +2033,12 @@ public class DqmMobBase extends EntityMob
 	            			{
 		            			if(elb.isPotionActive(DQPotionPlus.buffMahokanta))
 		            			{
-		            				this.addPotionEffect(new PotionEffect(pot.id, grade.getAttack(), 0));
+		            				DQR.func.addPotionEffect2(this, new PotionEffect(pot.id, grade.getAttack(), 0));
 		            				if(!elb.worldObj.isRemote) elb.worldObj.playSoundAtEntity(elb, "dqr:player.mahokanta", 1.0F, 1.0F);
 		            				if(!this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.down", 1.0F, 1.0F);
 		            			}else
 		            			{
-		            				elb.addPotionEffect(new PotionEffect(pot.id, grade.getAttack(), 0));
+		            				DQR.func.addPotionEffect2(elb, new PotionEffect(pot.id, grade.getAttack(), 0));
 		            				if(!elb.worldObj.isRemote) elb.worldObj.playSoundAtEntity(elb, "dqr:player.down", 1.0F, 1.0F);
 		            			}
 	            			}
@@ -3671,7 +3676,7 @@ public class DqmMobBase extends EntityMob
         p_70014_1_.setBoolean("NoAI", this.noAI);
         p_70014_1_.setBoolean("IsFirstAttack", this.isFirstAttack);
         p_70014_1_.setBoolean("FlgSpawnFromSpawner", this.flgSpawnFromSpawner);
-
+        p_70014_1_.setTag("dqrPotionEffects", dqrPotionEffects);
     }
 
     public void readEntityFromNBT(NBTTagCompound p_70037_1_)
@@ -3687,6 +3692,7 @@ public class DqmMobBase extends EntityMob
         this.noAI = p_70037_1_.getBoolean("NoAI");
         this.isFirstAttack = p_70037_1_.getBoolean("IsFirstAttack");
         this.flgSpawnFromSpawner = p_70037_1_.getBoolean("FlgSpawnFromSpawner");
+        dqrPotionEffects = p_70037_1_.getCompoundTag("dqrPotionEffects");
     }
 
     public boolean isValidLightLevel2(int par1)
@@ -4002,6 +4008,120 @@ public class DqmMobBase extends EntityMob
     		Block.SoundType soundtype = p_145780_4_.stepSound;
     		this.playSound(soundtype.getStepResourcePath(), soundtype.getVolume() * 0.3F, soundtype.getPitch() * 0.75F);
     	}
+    }
+
+
+    public NBTTagCompound getDqrPotionEffectsSet() {
+    	if(dqrPotionEffects == null){dqrPotionEffects = new NBTTagCompound();}
+        return dqrPotionEffects;
+    }
+    public void setDqrPotionEffectsSet(NBTTagCompound par1) {
+    	if(par1 != null)
+    	{
+    		this.dqrPotionEffects = par1;
+    	}else
+    	{
+    		this.dqrPotionEffects = new NBTTagCompound();
+    	}
+    }
+    public void removeDqrPotionEffects(String key) {
+    	this.dqrPotionEffects.removeTag(key);
+    }
+
+
+    public long getJobSPSkillDuration(int job, int idx) {
+        //return fixJobSPSkillDuration.getLong("jobSPSkillDuration" + "_" + job  + "_" + idx);
+    	NBTTagCompound nbt = this.dqrPotionEffects.getCompoundTag("JSkill" + "_" + job  + "_" + idx);
+    	if(nbt != null && nbt.hasKey("duration"))
+    	{
+    		long duration = nbt.getLong("duration") - this.worldObj.getWorldTime();
+
+    		if(duration > 0)
+    		{
+    			return duration;
+    		}else
+    		{
+    			return 0L;
+    		}
+
+    	}else
+    	{
+    		return 0L;
+    	}
+    }
+    public void setJobSPSkillDuration(int job, int idx, long par1) {
+    	NBTTagCompound nbt = new NBTTagCompound();
+    	nbt.setInteger("id", 0);
+    	nbt.setInteger("idx", 0);
+    	nbt.setInteger("type", 0);
+    	nbt.setLong("duration", par1);
+    	nbt.setInteger("isDebuff", 0);
+    	nbt.setInteger("amplifier", 0);
+
+    	this.dqrPotionEffects.setTag("JSkill" + "_" + job  + "_" + idx, nbt);
+        //this.fixJobSPSkillDuration.setLong("jobSPSkillDuration" + "_" + job  + "_" + idx, par1);
+    }
+    public void setDebuffDuration(int job, int idx, long par1) {
+    	NBTTagCompound nbt = new NBTTagCompound();
+    	nbt.setInteger("id", 0);
+    	nbt.setInteger("idx", 0);
+    	nbt.setInteger("type", 0);
+    	nbt.setLong("duration", par1);
+    	nbt.setInteger("isDebuff", 1);
+    	nbt.setInteger("amplifier", 0);
+
+    	this.dqrPotionEffects.setTag("JSkill" + "_" + job  + "_" + idx, nbt);
+        //this.fixJobSPSkillDuration.setLong("jobSPSkillDuration" + "_" + job  + "_" + idx, par1);
+    }
+
+
+    public void refreshDqrPotionEffects(long wt)
+    {
+    	Set nbtSet = this.dqrPotionEffects.func_150296_c();
+
+    	Iterator ite = nbtSet.iterator();
+    	List<String> lst = new ArrayList<String>();
+    	while(ite.hasNext())
+    	{
+    		Object obj = ite.next();
+    		if(obj instanceof String)
+    		{
+    			NBTTagCompound nbt = this.dqrPotionEffects.getCompoundTag((String)obj);
+    			if(nbt != null)
+    			{
+    				if(nbt.hasKey("duration"))
+    				{
+	        			long fixTime = nbt.getLong("duration");
+	        			if(fixTime < wt)
+	        			{
+	        				lst.add((String)obj);
+	        				//this.jobSPSkillDuration.removeTag((String)obj);
+	        			}
+    				}else
+    				{
+    					lst.add((String)obj);
+    				}
+    			}
+
+    			//String name = (String)obj;
+    			//System.out.println("TEST : " + name);
+    		}
+    	}
+
+    	for(int cnt = 0; cnt < lst.size(); cnt++)
+    	{
+    		this.dqrPotionEffects.removeTag(lst.get(cnt));
+    	}
+    }
+
+    public void setDqrPotionEffects(String key, NBTTagCompound nbt)
+    {
+    	this.dqrPotionEffects.setTag(key, nbt);
+    }
+
+    public NBTTagCompound getDqrPotionEffects(String key)
+    {
+    	return (NBTTagCompound)this.dqrPotionEffects.getTag(key);
     }
 }
 

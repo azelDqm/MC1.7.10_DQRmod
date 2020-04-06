@@ -14,12 +14,13 @@ import org.lwjgl.opengl.GL11;
 import dqr.api.enums.EnumDqmMGToolMode;
 import dqr.api.enums.EnumDqmWeaponMode;
 import dqr.playerData.ExtendedPlayerProperties;
-import dqr.playerData.ExtendedPlayerProperties3;
+import dqr.playerData.ExtendedPlayerProperties6;
 
 public class GuiPetBookGuiContainer extends GuiContainer
 {
     private static final ResourceLocation texture = new ResourceLocation("dqr","textures/gui/petBook.png");
     private static final ResourceLocation texture2 = new ResourceLocation("dqr","textures/gui/petBookD.png");
+    private static final ResourceLocation texture3 = new ResourceLocation("dqr","textures/gui/petBookC.png");
     private EntityPlayer ep;
     private int page = 0;
 
@@ -28,7 +29,7 @@ public class GuiPetBookGuiContainer extends GuiContainer
 
         super(new GuiPetBookContainer(player));
         this.ep = player;
-    	NBTTagCompound playerPet = ExtendedPlayerProperties3.get(player).getNBTPlayerPetList();
+    	NBTTagCompound playerPet = ExtendedPlayerProperties6.get(player).getNBTPlayerPetList();
     	Set tags = playerPet.func_150296_c();
     	//System.out.println("TEST_LOAD : " + tags.size() + " / " + player.worldObj.isRemote);
 
@@ -57,6 +58,13 @@ public class GuiPetBookGuiContainer extends GuiContainer
 			color = 0xffffffff;
 
 			String message2 = I18n.format("gui.container.TamingPets3.title", new Object[]{});
+			this.fontRendererObj.drawString(message2, (this.xSize / 2) - (mc.fontRenderer.getStringWidth(message2) / 2) , 134, color);
+		}else if(itemMode == EnumDqmMGToolMode.PETSUISYOU_CALL.getId())
+		{
+			message = I18n.format("gui.container.TamingPets4.title", new Object[]{});
+			color = 0xffffffff;
+
+			String message2 = I18n.format("gui.container.TamingPets5.title", new Object[]{});
 			this.fontRendererObj.drawString(message2, (this.xSize / 2) - (mc.fontRenderer.getStringWidth(message2) / 2) , 134, color);
 		}
 		//System.out.println("SIZE : " +  mc.fontRenderer.getStringWidth(message) + " / " + this.width + " / " + this.xSize);
@@ -91,6 +99,9 @@ public class GuiPetBookGuiContainer extends GuiContainer
         if(itemMode == EnumDqmMGToolMode.PETSUISYOU_VIEWDEL.getId())
         {
         	this.mc.getTextureManager().bindTexture(texture2);
+        }else if(itemMode == EnumDqmMGToolMode.PETSUISYOU_CALL.getId())
+        {
+        	this.mc.getTextureManager().bindTexture(texture3);
         }else
         {
         	this.mc.getTextureManager().bindTexture(texture);

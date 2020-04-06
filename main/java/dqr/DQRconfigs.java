@@ -21,7 +21,7 @@ public class DQRconfigs {
 	public static int DqmMobSpawn = 120;
 
     public static int guiPositionMode = 0;
-    public static int guiPositionTarget = 0; //(0:無し 1:HP/MP 2:STATUS 3:Armor 4:Log)
+    public static int guiPositionTarget = 0; //(0:無し 1:HP/MP 2:STATUS 3:Armor 4:Log 5:??? 6:BuffBar)
     public static int guiPositionSpeed = 1;
 
     public static int GuiVanillaHUDVis_Health = 0;
@@ -60,6 +60,22 @@ public class DQRconfigs {
 	public static int CLGuiBuffBarPos = 6;
 	public static int CLGuiBuffBarPosX = 0;
 	public static int CLGuiBuffBarPosY = 0;
+	public static int CLGuiBuffBarMode = 0;
+	public static int CLGuiBuffBarDispAreaHeight = 150;
+
+	public static int CLGuiBuffBar3Vis = 1;
+	public static int CLGuiBuffBar3Pos = 6;
+	public static int CLGuiBuffBar3PosX = 0;
+	public static int CLGuiBuffBar3PosY = 0;
+	public static int CLGuiBuffBar3Mode = 0;
+	public static int CLGuiBuffBar3DispAreaHeight = 150;
+
+	public static int CLGuiBuffBar2Vis = 1;
+	public static int CLGuiBuffBar2Pos = 3;
+	public static int CLGuiBuffBar2PosX = 0;
+	public static int CLGuiBuffBar2PosY = 0;
+	//public static int CLGuiBuffBar2Mode = 0;
+	//public static int CLGuiBuffBar2DispAreaHeight = 150;
 
 	public static int GuiID_FarmBook = 0;
 	public static int GuiID_JobChange = 1;
@@ -1316,6 +1332,26 @@ public class DQRconfigs {
 		CLGuiBuffBarPos = config.get("GamePlayPotionEffectTimeGUI","GUI BasePosition", CLGuiBuffBarPos ,"1=LeftTop, 2, 3=LeftMiddle, 4, 5=LeftBottom, 6=RightTop, 7, 8=RightMiddle, 9, 10=RightBottom, 11,CenterTop, 12, 13=CenterMiddle, 14, 15=CenterBottom").getInt();
 		CLGuiBuffBarPosX = config.get("GamePlayPotionEffectTimeGUI","GUI Position fix X", CLGuiBuffBarPosX, "GUI position fix pixels from GUI BasePosition").getInt();
 		CLGuiBuffBarPosY = config.get("GamePlayPotionEffectTimeGUI","GUI Position fix Y", CLGuiBuffBarPosY, "GUI position fix pixels from GUI BasePosition").getInt();
+		CLGuiBuffBarMode = config.get("GamePlayPotionEffectTimeGUI","GUI Disp Mode", CLGuiBuffBarMode ,"0=UP to DOWN 1=DOWN to UP").getInt();
+		CLGuiBuffBarDispAreaHeight = config.get("GamePlayPotionEffectTimeGUI","GUI Disp area height", CLGuiBuffBarDispAreaHeight ,"max disp height").getInt();
+
+		config.setCategoryComment("GamePlayJobSkillTimeGUI", "JobSkillTimeGUI settings");
+		CLGuiBuffBar3Vis = config.get("GamePlayJobSkillTimeGUI","GUI Visible", CLGuiBuffBar3Vis ,"0=false 1=true").getInt();
+		CLGuiBuffBar3Pos = config.get("GamePlayJobSkillTimeGUI","GUI BasePosition", CLGuiBuffBar3Pos ,"1=LeftTop, 2, 3=LeftMiddle, 4, 5=LeftBottom, 6=RightTop, 7, 8=RightMiddle, 9, 10=RightBottom, 11,CenterTop, 12, 13=CenterMiddle, 14, 15=CenterBottom").getInt();
+		CLGuiBuffBar3PosX = config.get("GamePlayJobSkillTimeGUI","GUI Position fix X", CLGuiBuffBar3PosX, "GUI position fix pixels from GUI BasePosition").getInt();
+		CLGuiBuffBar3PosY = config.get("GamePlayJobSkillTimeGUI","GUI Position fix Y", CLGuiBuffBar3PosY, "GUI position fix pixels from GUI BasePosition").getInt();
+		CLGuiBuffBar3Mode = config.get("GamePlayJobSkillTimeGUI","GUI Disp Mode", CLGuiBuffBar3Mode ,"0=UP to DOWN 1=DOWN to UP").getInt();
+		CLGuiBuffBar3DispAreaHeight = config.get("GamePlayJobSkillTimeGUI","GUI Disp area height", CLGuiBuffBar3DispAreaHeight ,"max disp height").getInt();
+
+
+		config.setCategoryComment("GamePlayJobSkillCoolTimeGUI", "JobSkillCoolTimeGUI settings");
+		CLGuiBuffBar2Vis = config.get("GamePlayJobSkillCoolTimeGUI","GUI Visible", CLGuiBuffBar2Vis ,"0=false 1=true").getInt();
+		CLGuiBuffBar2Pos = config.get("GamePlayJobSkillCoolTimeGUI","GUI BasePosition", CLGuiBuffBar2Pos ,"1=LeftTop, 2, 3=LeftMiddle, 4, 5=LeftBottom, 6=RightTop, 7, 8=RightMiddle, 9, 10=RightBottom, 11,CenterTop, 12, 13=CenterMiddle, 14, 15=CenterBottom").getInt();
+		CLGuiBuffBar2PosX = config.get("GamePlayJobSkillCoolTimeGUI","GUI Position fix X", CLGuiBuffBar2PosX, "GUI position fix pixels from GUI BasePosition").getInt();
+		CLGuiBuffBar2PosY = config.get("GamePlayJobSkillCoolTimeGUI","GUI Position fix Y", CLGuiBuffBar2PosY, "GUI position fix pixels from GUI BasePosition").getInt();
+		//CLGuiBuffBar2Mode = config.get("GamePlayJobSkillCoolTimeGUI","GUI Disp Mode", CLGuiBuffBar2Mode ,"0=UP to DOWN 1=DOWN to UP").getInt();
+		//CLGuiBuffBar2DispAreaHeight = config.get("GamePlayPotionEffectTimeGUI","GUI Disp area height", CLGuiBuffBarDispAreaHeight ,"max disp height").getInt();
+
 
 		config.setCategoryComment("GamePlayPartyPlayGUI", "Party play status GUI settings");
 		CLGuiPartyVis = config.get("GamePlayPartyPlayGUI","GUI Visible", CLGuiPartyVis ,"0=false 1=true").getInt();
@@ -1610,6 +1646,24 @@ public class DQRconfigs {
 		cfg_gui.save();
 	}
 
+	public void setCLGuiBuffBar3Pos(int par1, int par2, int par3)
+	{
+		cfg_gui.load();
+		cfg_gui.get("GamePlayJobSkillTimeGUI","GUI BasePosition", CLGuiBuffBar3Pos ,"1=LeftTop, 2, 3=LeftMiddle, 4, 5=LeftBottom, 6=RightTop, 7, 8=RightMiddle, 9, 10=RightBottom, 11,CenterTop, 12, 13=CenterMiddle, 14, 15=CenterBottom").set(par1);
+		cfg_gui.get("GamePlayJobSkillTimeGUI","GUI Position fix X", CLGuiBuffBar3PosX, "GUI position fix pixels from GUI BasePosition").set(par2);
+		cfg_gui.get("GamePlayJobSkillTimeGUI","GUI Position fix Y", CLGuiBuffBar3PosY, "GUI position fix pixels from GUI BasePosition").set(par3);
+		cfg_gui.save();
+	}
+
+	public void setCLGuiBuffBar2Pos(int par1, int par2, int par3)
+	{
+		cfg_gui.load();
+		cfg_gui.get("GamePlayJobSkillCoolTimeGUI","GUI BasePosition", CLGuiBuffBar2Pos ,"1=LeftTop, 2, 3=LeftMiddle, 4, 5=LeftBottom, 6=RightTop, 7, 8=RightMiddle, 9, 10=RightBottom, 11,CenterTop, 12, 13=CenterMiddle, 14, 15=CenterBottom").set(par1);
+		cfg_gui.get("GamePlayJobSkillCoolTimeGUI","GUI Position fix X", CLGuiBuffBar2PosX, "GUI position fix pixels from GUI BasePosition").set(par2);
+		cfg_gui.get("GamePlayJobSkillCoolTimeGUI","GUI Position fix Y", CLGuiBuffBar2PosY, "GUI position fix pixels from GUI BasePosition").set(par3);
+		cfg_gui.save();
+	}
+
 	public void setCLGuiPartyPos(int par1, int par2, int par3, int par4)
 	{
 		cfg_gui.load();
@@ -1617,6 +1671,22 @@ public class DQRconfigs {
 		cfg_gui.get("GamePlayPartyPlayGUI","GUI Position fix X", CLGuiPartyPosX, "GUI position fix pixels from GUI BasePosition").set(par2);
 		cfg_gui.get("GamePlayPartyPlayGUI","GUI Position fix Y", CLGuiPartyPosY, "GUI position fix pixels from GUI BasePosition").set(par3);
 		cfg_gui.get("GamePlayPartyPlayGUI","GUI Return line", CLGuiPartyReturnLine, "GUI return line ").set(par4);
+		cfg_gui.save();
+	}
+
+	public void setCLGuiBuffBar3(int par1, int par2)
+	{
+		cfg_gui.load();
+		cfg_gui.get("GamePlayJobSkillTimeGUI","GUI Disp Mode", CLGuiBuffBar3Mode ,"0=UP to DOWN 1=DOWN to UP").set(par1);
+		cfg_gui.get("GamePlayJobSkillTimeGUI","GUI Disp area height", CLGuiBuffBar3DispAreaHeight ,"max disp height").set(par2);
+		cfg_gui.save();
+	}
+
+	public void setCLGuiBuffBar(int par1, int par2)
+	{
+		cfg_gui.load();
+		cfg_gui.get("GamePlayPotionEffectTimeGUI","GUI Disp Mode", CLGuiBuffBarMode ,"0=UP to DOWN 1=DOWN to UP").set(par1);
+		cfg_gui.get("GamePlayPotionEffectTimeGUI","GUI Disp area height", CLGuiBuffBarDispAreaHeight ,"max disp height").set(par2);
 		cfg_gui.save();
 	}
 

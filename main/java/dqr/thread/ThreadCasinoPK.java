@@ -10,9 +10,12 @@ import dqr.DQR;
 import dqr.PacketHandler;
 import dqr.api.enums.EnumDqmCasinoPKOdds;
 import dqr.api.enums.EnumDqmFuncPacketCode;
+import dqr.api.enums.EnumDqmJob;
+import dqr.api.enums.EnumDqmSkillJ;
 import dqr.api.enums.EnumDqmTrump;
 import dqr.gui.casino.GuiCasinoPKGuiContainer;
 import dqr.packetMessage.MessageServerFunction;
+import dqr.playerData.ExtendedPlayerProperties5;
 
 public class ThreadCasinoPK extends Thread{
 
@@ -20,6 +23,7 @@ public class ThreadCasinoPK extends Thread{
 	private GuiCasinoPKGuiContainer gui;
 	private int phaseNum;
 	private int buttonId;
+	private int skillFlg = 0;
 
 	public ThreadCasinoPK(EntityPlayer player, GuiCasinoPKGuiContainer gui, int phase, int button)
 	{
@@ -27,6 +31,7 @@ public class ThreadCasinoPK extends Thread{
 		this.gui = gui;
 		this.phaseNum = phase;
 		this.buttonId = button;
+		this.skillFlg = 0;
 	}
 
 	public void run()
@@ -162,7 +167,115 @@ public class ThreadCasinoPK extends Thread{
 				// TODO 自動生成された catch ブロック
 				e.printStackTrace();
 			}
-		}else if(this.phaseNum == 3)
+		}else if(this.phaseNum == 3 || this.phaseNum == 30)
+		{
+			ArrayList<EnumDqmTrump> trumpDeckCopy = new ArrayList<EnumDqmTrump>();
+			trumpDeckCopy.addAll(gui.trumpDeck);
+
+			if(this.phaseNum  == 30)
+			{
+				this.skillFlg = 1;
+			}
+
+			if(gui.trumpDeckRev[0] == 0)
+			{
+				try {
+					this.sleep(DQR.conf.PK_change);
+				} catch (InterruptedException e) {
+					// TODO 自動生成された catch ブロック
+					e.printStackTrace();
+				}
+				//gui.trumpSet.put(cnt, value);
+				int val = rand.nextInt(trumpDeckCopy.size());
+				gui.trumpDeckRev[0] = 1;
+				gui.trumpSet.put(0, trumpDeckCopy.get(val));
+				//this.ep.playSound("gui.button.press", 0.9F, 1.0F);
+				gui.soundPlay = 1;
+				trumpDeckCopy.remove(val);
+
+			}
+
+			if(gui.trumpDeckRev[1] == 0)
+			{
+				try {
+					this.sleep(DQR.conf.PK_change);
+				} catch (InterruptedException e) {
+					// TODO 自動生成された catch ブロック
+					e.printStackTrace();
+				}
+				//gui.trumpSet.put(cnt, value);
+				int val = rand.nextInt(trumpDeckCopy.size());
+				gui.trumpDeckRev[1] = 1;
+				gui.trumpSet.put(1, trumpDeckCopy.get(val));
+				//this.ep.playSound("gui.button.press", 0.9F, 1.0F);
+				gui.soundPlay = 1;
+				trumpDeckCopy.remove(val);
+
+			}
+			if(gui.trumpDeckRev[2] == 0)
+			{
+				try {
+					this.sleep(DQR.conf.PK_change);
+				} catch (InterruptedException e) {
+					// TODO 自動生成された catch ブロック
+					e.printStackTrace();
+				}
+				//gui.trumpSet.put(cnt, value);
+				int val = rand.nextInt(trumpDeckCopy.size());
+				gui.trumpDeckRev[2] = 1;
+				gui.trumpSet.put(2, trumpDeckCopy.get(val));
+				//this.ep.playSound("gui.button.press", 0.9F, 1.0F);
+				gui.soundPlay = 1;
+				trumpDeckCopy.remove(val);
+
+			}
+			if(gui.trumpDeckRev[3] == 0)
+			{
+				try {
+					this.sleep(DQR.conf.PK_change);
+				} catch (InterruptedException e) {
+					// TODO 自動生成された catch ブロック
+					e.printStackTrace();
+				}
+				//gui.trumpSet.put(cnt, value);
+				int val = rand.nextInt(trumpDeckCopy.size());
+				gui.trumpDeckRev[3] = 1;
+				gui.trumpSet.put(3, trumpDeckCopy.get(val));
+				//this.ep.playSound("gui.button.press", 0.9F, 1.0F);
+				gui.soundPlay = 1;
+				trumpDeckCopy.remove(val);
+
+			}
+			if(gui.trumpDeckRev[4] == 0)
+			{
+				try {
+					this.sleep(DQR.conf.PK_change);
+				} catch (InterruptedException e) {
+					// TODO 自動生成された catch ブロック
+					e.printStackTrace();
+				}
+				//gui.trumpSet.put(cnt, value);
+				int val = rand.nextInt(trumpDeckCopy.size());
+				gui.trumpDeckRev[4] = 1;
+				gui.trumpSet.put(4, trumpDeckCopy.get(val));
+				//this.ep.playSound("gui.button.press", 0.9F, 1.0F);
+				gui.soundPlay = 1;
+				trumpDeckCopy.remove(val);
+			}
+
+			for(int cnt = 0; cnt < 5; cnt++)
+			{
+				if(gui.trumpDeckRev[cnt] == -1)
+				{
+					gui.trumpSet.put(cnt, EnumDqmTrump.JK2);
+					PacketHandler.INSTANCE.sendToServer(new MessageServerFunction(EnumDqmFuncPacketCode.MPchange, EnumDqmSkillJ.JSKILL_0_12.getNeedpt_Val() * -1));
+
+					this.ep.playSound("dqr:player.ikasama", 0.9F, 1.0F);
+				}
+			}
+
+			gui.gamePhase = 4;
+		}else if(this.phaseNum == 11)
 		{
 			ArrayList<EnumDqmTrump> trumpDeckCopy = new ArrayList<EnumDqmTrump>();
 			trumpDeckCopy.addAll(gui.trumpDeck);
@@ -254,7 +367,7 @@ public class ThreadCasinoPK extends Thread{
 				trumpDeckCopy.remove(val);
 			}
 
-			gui.gamePhase = 4;
+			//gui.gamePhase = 4;
 		}
 
 		if(this.gui.gamePhase == 4)
@@ -570,15 +683,22 @@ public class ThreadCasinoPK extends Thread{
 				//this.ep.playSound("dqr:player.casinolose", 1.0F, 1.0F);
 			}
 
-			try {
-				this.sleep(DQR.conf.PK_end_wait);
-			} catch (InterruptedException e) {
-				// TODO 自動生成された catch ブロック
-				e.printStackTrace();
-			}
+			if(gui.gameResult == EnumDqmCasinoPKOdds.OddsLose && ExtendedPlayerProperties5.get(ep).getJobSPSkillSet(EnumDqmJob.Asobinin.getId(), 12) != 0 && this.skillFlg ==0)
+			{
+				this.gui.gamePhase = 21;
+				gui.gameResult = null;
+			}else
+			{
+				try {
+					this.sleep(DQR.conf.PK_end_wait);
+				} catch (InterruptedException e) {
+					// TODO 自動生成された catch ブロック
+					e.printStackTrace();
+				}
 
-			gui.gameResult = null;
-			gui.gamePhase = 0;
+				gui.gameResult = null;
+				gui.gamePhase = 0;
+			}
 		}
 
 		/*

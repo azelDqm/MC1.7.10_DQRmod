@@ -12,6 +12,7 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 import scala.util.Random;
+import dqr.DQR;
 import dqr.api.Items.DQIngots;
 import dqr.api.Items.DQMiscs;
 import dqr.playerData.ExtendedPlayerProperties;
@@ -67,7 +68,7 @@ public class DqmItemFoodMiscBase extends ItemFood{
 			}else if(this.getUnlocalizedName().equalsIgnoreCase(DQMiscs.itemKenjanoseisui.getUnlocalizedName()))
 			{
 				//healMP = 40 + rand.nextInt(20);
-				ep.addPotionEffect(new PotionEffect(Potion.waterBreathing.id, 200, 2));
+				DQR.func.addPotionEffect2(ep, new PotionEffect(Potion.waterBreathing.id, 200, 2));
 			}else if(this.getUnlocalizedName().equalsIgnoreCase(DQMiscs.itemAyasiikobin.getUnlocalizedName()))
 			{
 				//healMP = 70 + rand.nextInt(20);
@@ -91,40 +92,42 @@ public class DqmItemFoodMiscBase extends ItemFood{
 				//healMP = 1 + rand.nextInt(5);
 			}else if(this.getUnlocalizedName().equalsIgnoreCase(DQMiscs.itemAmatuyunoito.getUnlocalizedName()))
 			{
-				ep.addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 100, 5));
+				DQR.func.addPotionEffect2(ep, new PotionEffect(Potion.moveSlowdown.id, 100, 5));
 			}else if(this.getUnlocalizedName().equalsIgnoreCase(DQMiscs.itemHonehone.getUnlocalizedName()))
 			{
-				ep.addPotionEffect(new PotionEffect(Potion.hunger.id, 60, 5));
+				DQR.func.addPotionEffect2(ep, new PotionEffect(Potion.hunger.id, 60, 5));
 			}else if(this.getUnlocalizedName().equalsIgnoreCase(DQMiscs.itemKazekirinohane.getUnlocalizedName()))
 			{
-				ep.addPotionEffect(new PotionEffect(Potion.jump.id, 100, 2));
+				DQR.func.addPotionEffect2(ep, new PotionEffect(Potion.jump.id, 100, 2));
 			}else if(this.getUnlocalizedName().equalsIgnoreCase(DQMiscs.itemTyounohane.getUnlocalizedName()))
 			{
-				ep.addPotionEffect(new PotionEffect(Potion.jump.id, 200, 0));
+				DQR.func.addPotionEffect2(ep, new PotionEffect(Potion.jump.id, 200, 0));
 			}else if(this.getUnlocalizedName().equalsIgnoreCase(DQMiscs.itemUruwasikinoko.getUnlocalizedName()))
 			{
-				ep.addPotionEffect(new PotionEffect(Potion.confusion.id, 60, 5));
+				DQR.func.addPotionEffect2(ep, new PotionEffect(Potion.confusion.id, 60, 5));
 			}else if(this.getUnlocalizedName().equalsIgnoreCase(DQMiscs.itemRyuunohizake.getUnlocalizedName()))
 			{
-				ep.addPotionEffect(new PotionEffect(Potion.damageBoost.id, 300, 3));
+				//DQR.func.addPotionEffect2(ep, new PotionEffect(Potion.damageBoost.id, 300, 3));
+				DQR.dqEffect.setDQPotionEffect(ep, "item.dqm.itemRyuunohizake.name", -1, -1, 0, 15 * 20, 0, 0, 18, 0, "textures/gui/potionEffect2.png");
+
 			}else if(this.getUnlocalizedName().equalsIgnoreCase(DQMiscs.itemYogoretahoutai.getUnlocalizedName()))
 			{
-				ep.addPotionEffect(new PotionEffect(Potion.hunger.id, 100, 5));
+				DQR.func.addPotionEffect2(ep, new PotionEffect(Potion.hunger.id, 100, 5));
 			}else if(this.getUnlocalizedName().equalsIgnoreCase(DQMiscs.itemMadarakumonoito.getUnlocalizedName()))
 			{
-				ep.addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 60, 2));
+				DQR.func.addPotionEffect2(ep, new PotionEffect(Potion.moveSlowdown.id, 60, 2));
 			}else if(this.getUnlocalizedName().equalsIgnoreCase(DQMiscs.itemSeijanohai.getUnlocalizedName()))
 			{
-				ep.addPotionEffect(new PotionEffect(Potion.blindness.id, 60, 0));
+				DQR.func.addPotionEffect2(ep, new PotionEffect(Potion.blindness.id, 60, 0));
 			}else if(this.getUnlocalizedName().equalsIgnoreCase(DQMiscs.itemTogetogenokiba.getUnlocalizedName()))
 			{
-				ep.addPotionEffect(new PotionEffect(Potion.harm.id, 60, 0));
+				DQR.func.addPotionEffect2(ep, new PotionEffect(Potion.harm.id, 60, 0));
 			}else if(this.getUnlocalizedName().equalsIgnoreCase(DQIngots.itemHosinokakera.getUnlocalizedName()))
 			{
 				//healMP = 20 + rand.nextInt(10);
 			}else if(this.getUnlocalizedName().equalsIgnoreCase(DQIngots.itemMigakizuna.getUnlocalizedName()))
 			{
-				ep.addPotionEffect(new PotionEffect(Potion.digSpeed.id, 100, 2));
+				DQR.func.addPotionEffect2(ep, new PotionEffect(Potion.digSpeed.id, 100, 2));
 			}
 
 

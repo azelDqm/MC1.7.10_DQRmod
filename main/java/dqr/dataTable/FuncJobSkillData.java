@@ -4,7 +4,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import dqr.api.enums.EnumDqmStatus;
 import dqr.api.enums.EnumStat;
 import dqr.playerData.ExtendedPlayerProperties;
-import dqr.playerData.ExtendedPlayerProperties3;
+import dqr.playerData.ExtendedPlayerProperties5;
 
 public class FuncJobSkillData {
 
@@ -190,7 +190,7 @@ public class FuncJobSkillData {
 		//System.out.println("JobGUItest : calcPlayerStatus");
 		//その職のみステータス計算
 		int jobId = ExtendedPlayerProperties.get(ep).getJob();
-		int[] skillSet = ExtendedPlayerProperties3.get(ep).getJobSkillSetA2(jobId);
+		int[] skillSet = ExtendedPlayerProperties5.get(ep).getJobSkillSetA2(jobId);
 		EnumDqmStatus[] skillCateg = getJobSkillCateg(jobId);
 		int[] skillParam = getJobSkillParam(jobId);
 
@@ -221,7 +221,7 @@ public class FuncJobSkillData {
 	public static void calcPlayerStatus2(EntityPlayer ep)
 	{
 		//System.out.println("JobGUItest : calcPlayerStatus2");
-		int[][] skillSet = ExtendedPlayerProperties3.get(ep).getJobSkillSet2A();
+		int[][] skillSet = ExtendedPlayerProperties5.get(ep).getJobSkillSet2A();
 		int[] upParam1 = new int[10];
 
 		for(int job = 0; job < skillSet.length; job++)

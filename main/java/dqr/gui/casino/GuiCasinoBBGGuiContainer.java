@@ -3,7 +3,6 @@ package dqr.gui.casino;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Set;
 import java.util.regex.Pattern;
 
 import net.minecraft.client.gui.GuiButton;
@@ -11,7 +10,6 @@ import net.minecraft.client.gui.GuiOptionButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
@@ -20,8 +18,12 @@ import dqr.DQR;
 import dqr.PacketHandler;
 import dqr.api.enums.EnumDqmCasinoBJOdds;
 import dqr.api.enums.EnumDqmFuncPacketCode;
+import dqr.api.enums.EnumDqmJob;
+import dqr.api.enums.EnumDqmSkillJ;
 import dqr.packetMessage.MessageServerFunction;
+import dqr.playerData.ExtendedPlayerProperties;
 import dqr.playerData.ExtendedPlayerProperties3;
+import dqr.playerData.ExtendedPlayerProperties5;
 import dqr.thread.ThreadCasinoBBG;
 
 public class GuiCasinoBBGGuiContainer extends GuiContainer
@@ -123,14 +125,15 @@ public class GuiCasinoBBGGuiContainer extends GuiContainer
     public int soundPlay = -1;
 
     public boolean closeFlg = false;
+    public int flgIkasama = -1;
 
     public GuiCasinoBBGGuiContainer(EntityPlayer player)
     {
 
         super(new GuiCasinoBJContainer(player));
         this.epa = player;
-    	NBTTagCompound playerPet = ExtendedPlayerProperties3.get(player).getNBTPlayerPetList();
-    	Set tags = playerPet.func_150296_c();
+    	//NBTTagCompound playerPet = ExtendedPlayerProperties6.get(player).getNBTPlayerPetList();
+    	//Set tags = playerPet.func_150296_c();
 
     	myCoin = ExtendedPlayerProperties3.get(player).getCoin();
 
@@ -185,6 +188,7 @@ public class GuiCasinoBBGGuiContainer extends GuiContainer
 
     	if(DQR.debug != 0)
     	{
+
 	    	if(p_73869_2_ == 79)
 	    	{
 	    		mode = 1;
@@ -206,6 +210,21 @@ public class GuiCasinoBBGGuiContainer extends GuiContainer
 	    	{
 	    		//bonusFlg = 3;
 	    		//patternFlg = 2;
+	    	}else if(p_73869_2_ == 75)
+	    	{
+	    		mode = 2;
+	    		bonusFlg = 2;
+	    		patternFlg = 0;
+	    	}else if(p_73869_2_ == 76)
+	    	{
+	    		mode = 0;
+	    		bonusFlg = 2;
+	    		patternFlg = 1;
+	    	}else if(p_73869_2_ == 77)
+	    	{
+	    		mode = 2;
+	    		bonusFlg = 2;
+	    		patternFlg = 2;
 	    	}
 
     	}
@@ -516,6 +535,47 @@ public class GuiCasinoBBGGuiContainer extends GuiContainer
         }else if(buttonPattern == 3)
         {
         	//ゾーマ自力継続
+        	if(flgIkasama == -1 && mode != 1)
+        	{
+        		flgIkasama = getIkasamaFlg(patternFlg);
+        	}
+
+
+        	if(mode == 1 && patternFlg == 0)
+        	{
+
+        		this.buttonList.add(new GuiButtonBBG(30, mainX + 13, endY - 62, 64, 18, I18n.format("msg.casino.bbg.button.d_guard.txt", new Object[]{}), 2));
+        	}else if(flgIkasama == 0)
+    		{
+        		this.buttonList.add(new GuiButtonBBG(30, mainX + 13, endY - 62, 64, 18, I18n.format("msg.casino.bbg.button.d_guard.txt", new Object[]{}), 4));
+    		}
+    		else
+        	{
+        		this.buttonList.add(new GuiButtonBBG(30, mainX + 13, endY - 62, 64, 18, I18n.format("msg.casino.bbg.button.d_guard.txt", new Object[]{})));
+        	}
+
+        	if(mode == 1 && patternFlg == 1)
+        	{
+        		this.buttonList.add(new GuiButtonBBG(31, mainX + 13, endY - 46, 64, 18, I18n.format("msg.casino.bbg.button.d_breath.txt", new Object[]{}), 2));
+        	}else if(flgIkasama == 1)
+    		{
+        		this.buttonList.add(new GuiButtonBBG(31, mainX + 13, endY - 46, 64, 18, I18n.format("msg.casino.bbg.button.d_breath.txt", new Object[]{}), 4));
+    		}else
+        	{
+        		this.buttonList.add(new GuiButtonBBG(31, mainX + 13, endY - 46, 64, 18, I18n.format("msg.casino.bbg.button.d_breath.txt", new Object[]{})));
+        	}
+
+        	if(mode == 1 && patternFlg == 2)
+        	{
+        		this.buttonList.add(new GuiButtonBBG(32, mainX + 13, endY - 30, 64, 18, I18n.format("msg.casino.bbg.button.d_magic.txt", new Object[]{}), 2));
+        	}else if(flgIkasama == 2)
+    		{
+        		this.buttonList.add(new GuiButtonBBG(32, mainX + 13, endY - 30, 64, 18, I18n.format("msg.casino.bbg.button.d_magic.txt", new Object[]{}), 4));
+    		}else
+        	{
+        		this.buttonList.add(new GuiButtonBBG(32, mainX + 13, endY - 30, 64, 18, I18n.format("msg.casino.bbg.button.d_magic.txt", new Object[]{})));
+        	}
+        	/*
         	if(mode == 1 && patternFlg == 0)
         	{
         		this.buttonList.add(new GuiButtonBBG(30, mainX + 13, endY - 62, 64, 18, I18n.format("msg.casino.bbg.button.d_guard.txt", new Object[]{}), 2));
@@ -532,13 +592,14 @@ public class GuiCasinoBBGGuiContainer extends GuiContainer
         		this.buttonList.add(new GuiButtonBBG(31, mainX + 13, endY - 46, 64, 18, I18n.format("msg.casino.bbg.button.d_breath.txt", new Object[]{})));
         	}
 
-        	if(mode == 1 && patternFlg == 2)
+        	if(mode == 1&& patternFlg == 2)
         	{
         		this.buttonList.add(new GuiButtonBBG(32, mainX + 13, endY - 30, 64, 18, I18n.format("msg.casino.bbg.button.d_magic.txt", new Object[]{}), 2));
         	}else
         	{
         		this.buttonList.add(new GuiButtonBBG(32, mainX + 13, endY - 30, 64, 18, I18n.format("msg.casino.bbg.button.d_magic.txt", new Object[]{})));
         	}
+        	*/
 
 
         }else if(buttonPattern == 4)
@@ -910,12 +971,15 @@ public class GuiCasinoBBGGuiContainer extends GuiContainer
     	if(p_146284_1_.id == 30)
     	{
     		playerAct = 0;
+    		flgIkasama = -1;
     	}else if(p_146284_1_.id == 31)
     	{
     		playerAct = 1;
+    		flgIkasama = -1;
     	}else if(p_146284_1_.id == 32)
     	{
     		playerAct = 2;
+    		flgIkasama = -1;
     	}
 
     	if(p_146284_1_.id == 1000)
@@ -1514,8 +1578,41 @@ public class GuiCasinoBBGGuiContainer extends GuiContainer
     	}else if (soundPlay == 14)
     	{
     		epa.playSound("dqr:player.miss", 0.9F, 1.0F);
+    	}else if (soundPlay == 15)
+    	{
+    		epa.playSound("dqr:player.ikasama", 1.0F, 1.0F);
     	}
 
     	soundPlay = -1;
+    }
+
+    public int getIkasamaFlg(int pattern)
+    {
+    	int flg = -1;
+
+
+    	if(ExtendedPlayerProperties5.get(epa).getJobSPSkillSet(EnumDqmJob.Asobinin.getId(), 12) != 0)
+    	{
+			int mp = ExtendedPlayerProperties.get(epa).getMP();
+			if(mp >= EnumDqmSkillJ.JSKILL_0_12.getNeedpt_Val())
+			{
+				this.epa.playSound("dqr:player.ikasama", 1.0F, 1.0F);
+				PacketHandler.INSTANCE.sendToServer(new MessageServerFunction(EnumDqmFuncPacketCode.MPchange, EnumDqmSkillJ.JSKILL_0_12.getNeedpt_Val() * -1));
+				Random rand = new Random();
+				if(pattern == 0)
+				{
+					flg = rand.nextInt(2) == 0 ? 1 : 2;
+				}else if(pattern == 1)
+				{
+					flg = rand.nextInt(2) == 0 ? 0 : 2;
+				}else if(pattern == 2)
+				{
+					flg = rand.nextInt(2) == 0 ? 0 : 1;
+				}
+			}
+    	}
+
+    	DQR.func.debugString("isIkasama : " + flg);
+    	return flg;
     }
 }

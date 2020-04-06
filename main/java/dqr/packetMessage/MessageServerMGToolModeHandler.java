@@ -32,6 +32,7 @@ import dqr.items.magic.DqmItemMagicRuraC;
 import dqr.items.magic.DqmItemMagicRuraSin;
 import dqr.items.magic.DqmItemMagicRuraSin2;
 import dqr.items.magic.DqmItemMagicRuraSinC;
+import dqr.items.magicTool.DqmItemPetSuisyou;
 import dqr.items.miscs.DqmItemKimera;
 import dqr.items.miscs.DqmItemKimera2;
 import dqr.items.miscs.DqmItemKimeraC;
@@ -217,6 +218,9 @@ public class MessageServerMGToolModeHandler implements IMessageHandler<MessageSe
 	        		if(itemMode == EnumDqmMGToolMode.ACCCANCELER_BOTH.getId())
 	        		{
 	        			itemMode = EnumDqmMGToolMode.ACCCANCELER_ACCONLY.getId();
+	        		}else if(itemMode > 3)
+	        		{
+	        			itemMode = EnumDqmMGToolMode.ACCCANCELER_ACCONLY.getId();
 	        		}else
 	        		{
 	        			itemMode++;
@@ -229,13 +233,25 @@ public class MessageServerMGToolModeHandler implements IMessageHandler<MessageSe
         				DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("msg.acccancel.modeInfo." + itemMode + ".txt", new Object[] {}));
         			}
         			ExtendedPlayerProperties.get(ep).setWeaponMode(EnumDqmWeaponMode.WEAPONMODE_ACCCanceler.getId(), itemMode);
-		        }else if(its.getItem() == DQMagicTools.itemPetSuisyou)
+		        //}else if(its.getItem() == DQMagicTools.itemPetSuisyou)
+		        }else if(its.getItem() instanceof DqmItemPetSuisyou)
 		        {
 	        		int itemMode = ExtendedPlayerProperties.get(ep).getWeaponMode(EnumDqmWeaponMode.WEAPONMODE_PetSuisyou.getId());
-
+		        	DqmItemPetSuisyou itm = (DqmItemPetSuisyou)its.getItem();
 	        		//itemMode = itemMode + 1;
 
+		        	DQR.func.debugString("debug :" + itemMode + " / " + itm.getItemGrade(), this.getClass());
+
 	        		if(itemMode == EnumDqmMGToolMode.PETSUISYOU_CLEAR.getId())
+	        		{
+	        			if(itm.getItemGrade() > 0)
+	        			{
+	        				itemMode = EnumDqmMGToolMode.PETSUISYOU_CALL.getId();
+	        			}else
+	        			{
+	        				itemMode = EnumDqmMGToolMode.PETSUISYOU_VIEW.getId();
+	        			}
+	        		}else if(itemMode >= 4)
 	        		{
 	        			itemMode = EnumDqmMGToolMode.PETSUISYOU_VIEW.getId();
 	        		}else

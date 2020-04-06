@@ -152,7 +152,18 @@
       }
     ]
   },
-  "player.kaisin": {
+  "player.whistle01": {
+    "category":"player",
+    "sounds": [
+      {
+        "name": "player/Whistle01",
+        "stream": false,
+        "weight": 1,
+        "volume": 1,
+        "pitch": 1
+      }
+    ]
+  },  "player.kaisin": {
     "category":"player",
     "sounds": [
       {
@@ -289,6 +300,18 @@
     "sounds": [
       {
         "name": "player/Okane",
+        "stream": false,
+        "weight": 1,
+        "volume": 1,
+        "pitch": 1
+      }
+    ]
+  },
+  "player.ikasama": {
+    "category":"player",
+    "sounds": [
+      {
+        "name": "player/Jumon",
         "stream": false,
         "weight": 1,
         "volume": 1,
@@ -440,6 +463,18 @@
       }
     ]
   },
+  "player.bubu2": {
+    "category":"player",
+    "sounds": [
+      {
+        "name": "player/Bubu2",
+        "stream": false,
+        "weight": 1,
+        "volume": 1,
+        "pitch": 1
+      }
+    ]
+  },
   "player.casinolose": {
     "category":"player",
     "sounds": [
@@ -553,6 +588,18 @@
     "sounds": [
       {
         "name": "player/Kiseki",
+        "stream": false,
+        "weight": 1,
+        "volume": 1,
+        "pitch": 1
+      }
+    ]
+  },
+  "player.suisyou": {
+    "category":"player",
+    "sounds": [
+      {
+        "name": "player/Maoudamashii_mg25_suisyou",
         "stream": false,
         "weight": 1,
         "volume": 1,

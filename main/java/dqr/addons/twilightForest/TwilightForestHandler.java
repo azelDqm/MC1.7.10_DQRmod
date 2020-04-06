@@ -425,7 +425,7 @@ public class TwilightForestHandler {
 			EntityPlayer ep = (EntityPlayer)event.entityLiving;
 	    	if(event.source.getEntity() instanceof EntityTFNaga)
 	    	{
-		    	ep.addPotionEffect(new PotionEffect(DQPotionMinus.potionPoison.id, 10 * 20, 4));
+		    	DQR.func.addPotionEffect2(ep, new PotionEffect(DQPotionMinus.potionPoison.id, 10 * 20, 4));
 	    	}
 
 

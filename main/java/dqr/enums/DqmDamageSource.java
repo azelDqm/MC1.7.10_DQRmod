@@ -32,8 +32,20 @@ public class DqmDamageSource{
 	public static DamageSource DqmPlayerSpecialCri = new EntityDamageSource("PlayerSpecialCri", null);
 	public static DamageSource DqmPlayerSpecialDeath = new EntityDamageSource("PlayerSpecialDeath", null);
 	public static DamageSource DqmMonsterSkillDeath = new EntityDamageSource("MonsterSkillDeath", null);
+
+	public static DamageSource DqmJSkillDamage_1_1 = new EntityDamageSource("DqmJSkillDamage_1_1", null);
+
 	public DqmDamageSource() {
 	}
+
+	public DamageSource getJSkillAbsoluteDamage(Entity ent, int job, int idx)
+	{
+		DamageSource source = new EntityDamageSource("DqmJSkillDamage_" +job + "_" + idx, ent);
+		source.setDamageBypassesArmor();
+		source.setDamageIsAbsolute();
+		return source;
+	}
+
 
 	public DamageSource getPlayerSkillDamage(Entity ent)
 	{

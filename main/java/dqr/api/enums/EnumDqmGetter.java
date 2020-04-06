@@ -725,7 +725,7 @@ public class EnumDqmGetter {
 
     	if(data2 != null && data2.length > 0)
     	{
-    		return data2[rand.nextInt(counter - 1)];
+    		return data2[rand.nextInt(counter)];
     	}
 		return null;
 	}

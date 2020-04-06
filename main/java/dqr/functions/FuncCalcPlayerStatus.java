@@ -30,6 +30,7 @@ import dqr.api.Items.DQAccessories;
 import dqr.api.Items.DQWeapons;
 import dqr.api.enums.EnumDqmAccessory;
 import dqr.api.enums.EnumDqmJob;
+import dqr.api.enums.EnumDqmSkillJ;
 import dqr.api.enums.EnumDqmSkillW;
 import dqr.api.enums.EnumDqmStatus;
 import dqr.api.enums.EnumStat;
@@ -43,6 +44,7 @@ import dqr.items.base.DqmItemMagicBase;
 import dqr.items.base.DqmItemWeaponBase;
 import dqr.playerData.ExtendedPlayerProperties;
 import dqr.playerData.ExtendedPlayerProperties3;
+import dqr.playerData.ExtendedPlayerProperties5;
 
 public class FuncCalcPlayerStatus {
 
@@ -62,7 +64,6 @@ public class FuncCalcPlayerStatus {
 
 		if(ep.getCurrentEquippedItem() != null)
 		{
-
 			//武器スキル
 			int apti = DQR.aptitudeTable.getWAptitude(ExtendedPlayerProperties.get(ep).getJob(),
 													  ExtendedPlayerProperties.get(ep).getWeapon(),
@@ -97,9 +98,9 @@ public class FuncCalcPlayerStatus {
 		}
 
 		int[] SubayasaArray = ExtendedPlayerProperties.get(ep).getArraySubayasaA();
-		for(int cnt = 0; cnt < MikawasiArray.length; cnt++)
+		for(int cnt = 0; cnt < SubayasaArray.length; cnt++)
 		{
-			Mikawasi = Mikawasi + MikawasiArray[cnt];
+			Mikawasi = Mikawasi + SubayasaArray[cnt];
 		}
 
 		if(ep.getCurrentEquippedItem() != null)
@@ -117,6 +118,22 @@ public class FuncCalcPlayerStatus {
 			}
 		}
 
+
+		//職業特技
+		//DQR.func.debugString("Line1 : " + ExtendedPlayerProperties5.get(ep).getJobSPSkillSet(EnumDqmJob.Asobinin.getId(), 4));
+		if(ExtendedPlayerProperties5.get(ep).getJobSPSkillSet(EnumDqmJob.Asobinin.getId(), 4) != 0)
+		{
+			//自分を励ます(瀕死時身かわし率 30％)
+			int HP = (int)ExtendedPlayerProperties.get(ep).getHP();
+			int MaxHP = (int)ExtendedPlayerProperties.get(ep).getMaxHP();
+			//DQR.func.debugString("Line2 : " + MaxHP + " : " + HP + " : " + ((HP * 100) / MaxHP));
+			if(MaxHP != 0 && (HP * 100) / MaxHP < 15)
+			{
+				EnumDqmSkillJ skill2 = DQR.enumGetter.getSkillJ(EnumDqmJob.Asobinin.getId(), 4);
+				Mikawasi = Mikawasi + skill2.getSValue();
+			}
+		}
+		//DQR.func.debugString("Line3 : " + Mikawasi);
 		return Mikawasi;
 	}
 
@@ -165,6 +182,11 @@ public class FuncCalcPlayerStatus {
 
 	public int calcAttack(EntityPlayer ep)
 	{
+		return this.calcAttack(ep, ep.getCurrentEquippedItem());
+	}
+
+	public int calcAttack(EntityPlayer ep, ItemStack tagItem)
+	{
 		//ep.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.movementSpeed).setBaseValue(0.16D);
 		//System.out.println("DEBUGLINE:" + ep.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.movementSpeed).getAttributeValue());
 
@@ -176,22 +198,22 @@ public class FuncCalcPlayerStatus {
 		int atk = 1 + (int)ep.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.attackDamage).getAttributeValue();
 
 
-		if(ep.getCurrentEquippedItem() != null)
+		if(tagItem != null)
 		{
 
-			if(ep.getCurrentEquippedItem().getItem() instanceof DqmItemWeaponBase)
+			if(tagItem.getItem() instanceof DqmItemWeaponBase)
 			{
 
 				if(ExtendedPlayerProperties3.get(ep).getWeaponSkillPermission(3, 7) != 0)
 				{
-					DqmItemWeaponBase weapon = (DqmItemWeaponBase)ep.getCurrentEquippedItem().getItem();
+					DqmItemWeaponBase weapon = (DqmItemWeaponBase)tagItem.getItem();
 					if(weapon != null && weapon.getMaterial() != null && weapon.getMaterial() != DQR.dqmMaterial.DqmBraveSword)
 					{
 						atk = atk + 15;
 					}
 				}
 
-				NBTTagList tag = ep.getCurrentEquippedItem().getEnchantmentTagList();
+				NBTTagList tag = tagItem.getEnchantmentTagList();
 				if(tag != null)
 				{
 					//DQR.func.debugString("DEBUG3:" + cnt);
@@ -207,10 +229,10 @@ public class FuncCalcPlayerStatus {
 			    	}
 				}
 
-				DqmItemWeaponBase dqmSword = (DqmItemWeaponBase)ep.getCurrentEquippedItem().getItem();
+				DqmItemWeaponBase dqmSword = (DqmItemWeaponBase)tagItem.getItem();
 
 		    	int maxDam = dqmSword.getMaxDamage();
-		    	int calDam = maxDam - ep.getCurrentEquippedItem().getItemDamage();
+		    	int calDam = maxDam - tagItem.getItemDamage();
 		    	int perDam = calDam * 1000 / maxDam;
 		    	float fixAptitude = 1.0F;
 
@@ -266,11 +288,11 @@ public class FuncCalcPlayerStatus {
 				//atk = (int)dqmSword.func_150931_i();
 
 				//とりあえず力を攻撃力にそのまま加算
-				atk = atk + this.getLegendWeaponDamage(ep.getCurrentEquippedItem(), ep);
+				atk = atk + this.getLegendWeaponDamage(tagItem, ep);
 				//atk = atk + ExtendedPlayerProperties.get(ep).getTikara();
-			}else if(ep.getCurrentEquippedItem().getItem() instanceof DqmItemBowBase)
+			}else if(tagItem.getItem() instanceof DqmItemBowBase)
 			{
-				DqmItemBowBase dqmSword = (DqmItemBowBase)ep.getCurrentEquippedItem().getItem();
+				DqmItemBowBase dqmSword = (DqmItemBowBase)tagItem.getItem();
 
 				if(ExtendedPlayerProperties3.get(ep).getWeaponSkillPermission(3, 7) != 0)
 				{
@@ -278,7 +300,7 @@ public class FuncCalcPlayerStatus {
 				}
 
 		    	int maxDam = dqmSword.getMaxDamage();
-		    	int calDam = maxDam - ep.getCurrentEquippedItem().getItemDamage();
+		    	int calDam = maxDam - tagItem.getItemDamage();
 		    	int perDam = calDam * 1000 / maxDam;
 		    	int aptitude = DQR.aptitudeTable.getWAptitude(playerJob, playerWeapon, ep);
 		    	float fixAptitude = 1.0F;
@@ -303,7 +325,7 @@ public class FuncCalcPlayerStatus {
 		    		fixAptitude = 0.5F;
 		    	}
 
-				NBTTagList tag = ep.getCurrentEquippedItem().getEnchantmentTagList();
+				NBTTagList tag = tagItem.getEnchantmentTagList();
 				if(tag != null)
 				{
 					//DQR.func.debugString("DEBUG3:" + cnt);
@@ -344,11 +366,11 @@ public class FuncCalcPlayerStatus {
 		        //ep.getAttributeMap().applyAttributeModifiers(multimap);
 		    	//ep.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.attackDamage).setBaseValue(emptyHandDam + atk);
 				//とりあえず力を攻撃力にそのまま加算
-				atk = atk + this.getLegendWeaponDamage(ep.getCurrentEquippedItem(), ep);
+				atk = atk + this.getLegendWeaponDamage(tagItem, ep);
 				//atk = atk + ExtendedPlayerProperties.get(ep).getTikara();
-			}else if(ep.getCurrentEquippedItem().getItem() instanceof ItemSword)
+			}else if(tagItem.getItem() instanceof ItemSword)
 			{
-				ItemSword sword = (ItemSword)ep.getCurrentEquippedItem().getItem();
+				ItemSword sword = (ItemSword)tagItem.getItem();
 				if(sword.getToolMaterialName().equalsIgnoreCase(ToolMaterial.IRON.toString()))
 				{
 					//atk = atk + 6;
@@ -387,7 +409,7 @@ public class FuncCalcPlayerStatus {
 				//atk = atk + ExtendedPlayerProperties.get(ep).getTikara();
 			}
 			/*
-			else if(ep.getCurrentEquippedItem().getClass().equals(Block.class))
+			else if(tagItem.getClass().equals(Block.class))
 			{
 
 			}
@@ -409,18 +431,28 @@ public class FuncCalcPlayerStatus {
 		pe = ep.getActivePotionEffect(DQPotionPlus.buffBaikiruto);
 		if(pe != null)
 		{
-			atk = atk * (pe.getAmplifier() + 1);
+			//atk = atk * (pe.getAmplifier() + 1);
+			//atk = atk +  (atk * (pe.getAmplifier() + 1) / 2);
+			float tmpPar = ((float)atk * (float)(pe.getAmplifier() + 1)) / 2;
+			atk = atk + (int)tmpPar;
 		}
 
 		//ヘナトス
 		pe = ep.getActivePotionEffect(DQPotionMinus.debuffHenatosu);
 		if(pe != null)
 		{
-			atk = atk / (pe.getAmplifier() + 2);
+			//atk = atk / (pe.getAmplifier() + 2);
+			//atk = atk -  (atk * (pe.getAmplifier() + 1) / 4);
+			float tmpPar = ((float)atk * (float)(pe.getAmplifier() + 1)) / 4;
+			atk = atk - (int)tmpPar;
 		}
 
-		ep.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.attackDamage).setBaseValue(emptyHandDam + atk);
-
+		/*
+		if(DQR.dqEffect.isEnableEffect(ep, "JSkill" + "_" + EnumDqmJob.Asobinin.getId()  + "_" + 9))
+		{
+			DQR.func.debugString("############################");
+		}
+		*/
 
 		//ストポ
 		if(DQR.conf.bug_damageBoostPotionFix == 0)
@@ -428,11 +460,26 @@ public class FuncCalcPlayerStatus {
 			pe = ep.getActivePotionEffect(Potion.damageBoost);
 			if(pe != null)
 			{
-				atk = atk + ((atk * ((pe.getAmplifier() + 1) * 130)) / 100);
+				//atk = atk + ((atk * ((pe.getAmplifier() + 1) * 130)) / 100);
+				float tmpPar = ((float)atk * (float)(pe.getAmplifier() + 1)* 130) / 100;
+				DQR.func.debugString("PARA : " + tmpPar + " / " + atk);
+				atk = atk + (int)tmpPar;
 			}
 		}
 
-		return atk;
+		//竜の火酒
+		if(DQR.dqEffect.isEnableEffect(ep, "item.dqm.itemRyuunohizake.name"))
+		{
+			atk = atk * 5;
+		}
+
+		if(atk < 0)
+		{
+			atk = 0;
+		}
+		ep.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.attackDamage).setBaseValue(emptyHandDam + atk);
+
+		return atk + (int)emptyHandDam;
 	}
 
 	public float calcHP(EntityPlayer ep)
@@ -556,6 +603,26 @@ public class FuncCalcPlayerStatus {
 		}else if(apti > 0)
 		{
 			subayasa = subayasa + getSwkillWPoint(ep, EnumDqmStatus.AGI.getId());
+		}
+
+		//ピオリム計算
+		PotionEffect pe;
+		pe = ep.getActivePotionEffect(DQPotionPlus.buffPiora);
+		if(pe != null)
+		{
+			subayasa = subayasa +  (subayasa * (pe.getAmplifier() + 1) / 2);
+		}
+		//ボミオス計算
+		pe = ep.getActivePotionEffect(DQPotionMinus.debuffBomie);
+		if(pe != null)
+		{
+			float tmpPar = ((float)subayasa * (float)(pe.getAmplifier() + 1)) / 4;
+			subayasa = subayasa - (int)tmpPar;
+		}
+
+		if(subayasa < 0)
+		{
+			subayasa = 0;
 		}
 
 		return subayasa;
@@ -722,19 +789,6 @@ public class FuncCalcPlayerStatus {
 			def = def + mamoriArray[cnt];
 		}
 
-		//スカラ計算
-		PotionEffect pe;
-		pe = ep.getActivePotionEffect(DQPotionPlus.buffSukara);
-		if(pe != null)
-		{
-			def = def +  (def * (pe.getAmplifier() + 1) / 2);
-		}
-		//ルカニ計算
-		pe = ep.getActivePotionEffect(DQPotionMinus.debuffRukani);
-		if(pe != null)
-		{
-			def = def +  (def * ((pe.getAmplifier() + 1) / 2));
-		}
 
 		//武器スキル
 		int apti = DQR.aptitudeTable.getWAptitude(ExtendedPlayerProperties.get(ep).getJob(),
@@ -748,9 +802,32 @@ public class FuncCalcPlayerStatus {
 			def = def + getSwkillWPoint(ep, EnumDqmStatus.DEF.getId());
 		}
 
+		//スカラ計算
+		PotionEffect pe;
+		pe = ep.getActivePotionEffect(DQPotionPlus.buffSukara);
+		if(pe != null)
+		{
+			//def = def +  (def * (pe.getAmplifier() + 1) / 2);
+			float tmpPar = ((float)def * (float)(pe.getAmplifier() + 1)) / 2;
+			def = def + (int)tmpPar;
+		}
+		//ルカニ計算
+		pe = ep.getActivePotionEffect(DQPotionMinus.debuffRukani);
+		if(pe != null)
+		{
+			float tmpPar = ((float)def * (float)(pe.getAmplifier() + 1)) / 4;
+			def = def - (int)tmpPar;
+		}
+
+		if(def < 0)
+		{
+			def = 0;
+		}
+
 		return def;
 	}
 
+	//防具セット効果チェック
 	public int getArmorSetEffect(EntityPlayer ep, ArmorMaterial[] armors)
 	{
 		/*
@@ -1279,7 +1356,7 @@ public class FuncCalcPlayerStatus {
 
 		if(hpRegeneration >= 0 && buffFlg == 0)
 		{
-			ep.addPotionEffect(new PotionEffect(DQPotionPlus.buffHPRegeneration.id, 200, hpRegeneration));
+			DQR.func.addPotionEffect2(ep, new PotionEffect(DQPotionPlus.buffHPRegeneration.id, 200, hpRegeneration));
 		}else
 		{
 			ep.removePotionEffect(DQPotionPlus.buffHPRegeneration.id);
@@ -1287,7 +1364,7 @@ public class FuncCalcPlayerStatus {
 
 		if(mpRegeneration >= 0 && buffFlg == 0)
 		{
-			ep.addPotionEffect(new PotionEffect(DQPotionPlus.buffMPRegeneration.id, 200, mpRegeneration));
+			DQR.func.addPotionEffect2(ep, new PotionEffect(DQPotionPlus.buffMPRegeneration.id, 200, mpRegeneration));
 		}else
 		{
 			ep.removePotionEffect(DQPotionPlus.buffMPRegeneration.id);
@@ -1295,7 +1372,7 @@ public class FuncCalcPlayerStatus {
 
 		if(hoshihuri >= 0 && buffFlg == 0)
 		{
-			ep.addPotionEffect(new PotionEffect(DQPotionPlus.buffHoshihuru.id, 200, hoshihuri));
+			DQR.func.addPotionEffect2(ep, new PotionEffect(DQPotionPlus.buffHoshihuru.id, 200, hoshihuri));
 		}else
 		{
 			ep.removePotionEffect(DQPotionPlus.buffHoshihuru.id);

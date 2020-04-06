@@ -92,7 +92,7 @@ public class DqmItemBuffShield extends DqmItemAccessoryBase{
 
 			if(pot != null)
 			{
-				par3EntityPlayer.addPotionEffect(new PotionEffect(pot.id, 300, 1));
+				DQR.func.addPotionEffect2(par3EntityPlayer, new PotionEffect(pot.id, 300, 1));
 				par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.up", 1.0F, 1.0F);
 			}
 

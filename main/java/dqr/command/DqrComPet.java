@@ -12,6 +12,7 @@ import dqr.DQR;
 import dqr.api.enums.EnumColor;
 import dqr.playerData.ExtendedPlayerProperties;
 import dqr.playerData.ExtendedPlayerProperties3;
+import dqr.playerData.ExtendedPlayerProperties6;
 
 
 public class DqrComPet extends CommandBase {
@@ -48,7 +49,7 @@ public class DqrComPet extends CommandBase {
 			{
 				if(var2[0].equalsIgnoreCase("refresh"))
 				{
-					NBTTagCompound nbt = ExtendedPlayerProperties3.get(ep).getNBTPlayerPetList();
+					NBTTagCompound nbt = ExtendedPlayerProperties6.get(ep).getNBTPlayerPetList();
 					if(nbt != null)
 					{
 				    	Set tags = nbt.func_150296_c();
@@ -79,6 +80,7 @@ public class DqrComPet extends CommandBase {
 			        				{
 			        					ExtendedPlayerProperties3.get(ep).minusPetCount(1);
 			        		        	DQR.petFunc.removePetdata(ep, uid);
+			        		        	//DQR.petFunc.removePetdata2(ep, uid);
 			        		        	DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("dqm.iteminfo.petCommand.s0",new Object[] {petData.getString("PetName")}));
 			        		        	setCount++;
 			        		        	//flg = true;

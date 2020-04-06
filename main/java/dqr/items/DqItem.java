@@ -1189,6 +1189,7 @@ public class DqItem {
 		DQMiscs.itemNiku4 = new DqmItemThrowBase().setCreativeTab(DQR.tabs.DqmTabMisc).setUnlocalizedName("dqm.itemNiku4").setTextureName("dqr:Niku4");
 
 		DQMagicTools.itemPetSuisyou = new DqmItemPetSuisyou().setCreativeTab(DQR.tabs.DqmTabMagic).setMaxStackSize(1).setUnlocalizedName("dqm.itemPetSuisyou").setTextureName("dqr:PetSuisyou");
+		DQMagicTools.itemPetSuisyou2 = new DqmItemPetSuisyou(1).setCreativeTab(DQR.tabs.DqmTabMagic).setMaxStackSize(1).setUnlocalizedName("dqm.itemPetSuisyou2").setTextureName("dqr:PetSuisyou2");
 
 		//スキルエンブレム
 		//DQSkillWs.itemPetSuisyou = new DqmItemPetSuisyou().setCreativeTab(DQR.tabs.DqmTabMagic).setMaxStackSize(1).setUnlocalizedName("dqm.itemPetSuisyou").setTextureName("dqr:PetSuisyou");

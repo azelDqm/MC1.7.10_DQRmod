@@ -10,6 +10,7 @@ import net.minecraft.pathfinding.PathPoint;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import dqr.DQR;
 import dqr.api.enums.EnumDqmMobAI;
 import dqr.api.potion.DQPotionMinus;
 import dqr.entity.petEntity.DqmPetBase;
@@ -149,13 +150,13 @@ public class EntityPetAIAttackOnCollide2 extends EntityAIBase
 				EntityPlayer ep = (EntityPlayer)entitylivingbase;
 				if(!ep.isPotionActive(DQPotionMinus.debuffHeavyFire.id));
 				{
-					ep.addPotionEffect(new PotionEffect(DQPotionMinus.debuffHeavyFire.id, 60, this.attacker.getArrayAISets(EnumDqmMobAI.HEAVYFIRE.getId())));
+					DQR.func.addPotionEffect2(ep, new PotionEffect(DQPotionMinus.debuffHeavyFire.id, 60, this.attacker.getArrayAISets(EnumDqmMobAI.HEAVYFIRE.getId())));
 				}
 			}else
 			{
 				if(!entitylivingbase.isPotionActive(DQPotionMinus.debuffHeavyFire.id));
 				{
-					entitylivingbase.addPotionEffect(new PotionEffect(DQPotionMinus.debuffHeavyFire.id, 60, this.attacker.getArrayAISets(EnumDqmMobAI.HEAVYFIRE.getId())));
+					DQR.func.addPotionEffect2(entitylivingbase, new PotionEffect(DQPotionMinus.debuffHeavyFire.id, 60, this.attacker.getArrayAISets(EnumDqmMobAI.HEAVYFIRE.getId())));
 				}
 			}
 		}

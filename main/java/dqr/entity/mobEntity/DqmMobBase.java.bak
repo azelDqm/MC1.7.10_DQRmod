@@ -1361,21 +1361,21 @@ public class DqmMobBase extends EntityMob
 
 			if(this.mobAI.getHeavyFire() > 0 && !ep.capabilities.isCreativeMode)
 			{
-				ep.addPotionEffect(new PotionEffect(DQPotionMinus.debuffHeavyFire.id, 60, this.mobAI.getHeavyFire()));
+				DQR.func.addPotionEffect2(ep, new PotionEffect(DQPotionMinus.debuffHeavyFire.id, 60, this.mobAI.getHeavyFire()));
 			}
 
 	        if(this.mobAI.getPoison() > 0 && !ep.capabilities.isCreativeMode)
 	        {
         		if(rand.nextInt(this.mobAIrate.getPoison()) == 0)
         		{
-        			ep.addPotionEffect(new PotionEffect(DQPotionMinus.potionPoison.id, rand.nextInt(this.mobAIrate.getPoisonTimeMax()) + this.mobAIrate.getPoisonTimeMin(), mobAI.getPoison() - 1));
+        			DQR.func.addPotionEffect2(ep, new PotionEffect(DQPotionMinus.potionPoison.id, rand.nextInt(this.mobAIrate.getPoisonTimeMax()) + this.mobAIrate.getPoisonTimeMin(), mobAI.getPoison() - 1));
         		}
 	        }
 	        if(this.mobAI.getPoisonX() > 0 && !ep.capabilities.isCreativeMode)
 	        {
         		if(rand.nextInt(this.mobAIrate.getPoisonX()) == 0)
         		{
-        			ep.addPotionEffect(new PotionEffect(DQPotionMinus.potionPoisonX.id, rand.nextInt(this.mobAIrate.getPoisonXTimeMax()) + this.mobAIrate.getPoisonXTimeMin(), mobAI.getPoisonX()));
+        			DQR.func.addPotionEffect2(ep, new PotionEffect(DQPotionMinus.potionPoisonX.id, rand.nextInt(this.mobAIrate.getPoisonXTimeMax()) + this.mobAIrate.getPoisonXTimeMin(), mobAI.getPoisonX()));
         		}
 	        }
 		}
@@ -1427,7 +1427,7 @@ public class DqmMobBase extends EntityMob
 				EntityPlayer ep = (EntityPlayer)par1Entity;
 				if(!ep.capabilities.isCreativeMode)
 				{
-					ep.addPotionEffect(new PotionEffect(DQPotionMinus.debuffHeavyFire.id, 60, this.mobAI.getHeavyFire()));
+					DQR.func.addPotionEffect2(ep, new PotionEffect(DQPotionMinus.debuffHeavyFire.id, 60, this.mobAI.getHeavyFire()));
 				}
 			}
 		}

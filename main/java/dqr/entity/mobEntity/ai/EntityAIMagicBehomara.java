@@ -40,7 +40,7 @@ public class EntityAIMagicBehomara extends EntityAIBase
     public boolean shouldExecute()
     {
 
-    	DQR.func.debugString("TEST_A", this.getClass());
+    	//DQR.func.debugString("TEST_A", this.getClass());
         if(!this.field_151500_b.worldObj.isRemote)
         {
         	//DQR.func.debugString("TEST_B", this.getClass());

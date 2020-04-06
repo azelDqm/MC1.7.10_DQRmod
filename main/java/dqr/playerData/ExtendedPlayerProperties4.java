@@ -66,6 +66,11 @@ public class ExtendedPlayerProperties4 implements IExtendedEntityProperties{
 		}
 		NBTTagCompound nbt = (NBTTagCompound)compound.getTag(EXT_PROP_NAME);
 
+		if(nbt == null)
+		{
+			//System.out.println("packet lost");
+			return;
+		}
 
         if(nbt.getCompoundTag("partyMemberData") != null)
         {

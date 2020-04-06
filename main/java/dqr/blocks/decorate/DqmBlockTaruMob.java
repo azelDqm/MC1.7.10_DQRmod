@@ -2,6 +2,7 @@ package dqr.blocks.decorate;
 
 import java.util.Random;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -36,8 +37,212 @@ public class DqmBlockTaruMob extends BlockContainer
         return ret;
     }
 
+    public void breakBlock(World par1World, int par2, int par3, int par4, Block p_149749_5_, int par5)
+    {
+
+        int x = 0;
+        int x3 = x + getRandom(100, 0);
+        int x4 = x + getRandom(2, 0);
+        int x5 = x + getRandom(4, 0);
+
+        Random rand = new Random();
+        DqmMobBase spawnMob = null;
+        ItemStack doropiItems = null;
+        int rateMob = 0;
+        int rateItem = 0;
+        int dim = par1World.provider.dimensionId;
+
+        rateItem = rand.nextInt(10);
+
+
+        if(DQR.conf.cfg_gen_Taru_Map.get(dim) != null && DQR.conf.cfg_gen_Taru_Map.get(dim).equalsIgnoreCase(EnumDqmWorldType.OVERWORLD.getName()))
+        {
+    		if(rand.nextInt(5) != 0)
+    		{
+    			spawnMob = DQR.randomMob.getRandomNight(par1World);
+
+    			rateItem = rand.nextInt(20);
+    			if(rateItem < 10)
+    			{
+    				doropiItems = DQR.randomItem.getMiscsRank3(1, 1);
+    			}else if(rateItem < 16)
+    			{
+    				doropiItems = DQR.randomItem.getMiscsRank2(1, 1);
+    			}else if(rateItem < 19)
+    			{
+    				doropiItems = DQR.randomItem.getMiscsRank3(1, 1);
+    			}else
+    			{
+    				doropiItems = DQR.randomItem.getEmblemRank1(1, 1);
+    			}
+    		}else
+    		{
+    			spawnMob = DQR.randomMob.getRandomNether(par1World);
+
+    			rateItem = rand.nextInt(25);
+    			if(rateItem < 10)
+    			{
+    				doropiItems = DQR.randomItem.getMiscsRank4(1, 1);
+    			}else if(rateItem < 20)
+    			{
+    				doropiItems = DQR.randomItem.getMiscsRank3(1, 1);
+    			}else if(rateItem < 24)
+    			{
+    				doropiItems = DQR.randomItem.getEmblemRank1(1, 1);
+    			}else
+    			{
+    				doropiItems = DQR.randomItem.getEmblemRank2(1, 1);
+    			}
+    		}
+        }else if(DQR.conf.cfg_gen_Taru_Map.get(dim) != null && DQR.conf.cfg_gen_Taru_Map.get(dim).equalsIgnoreCase(EnumDqmWorldType.NETHER.getName()))
+        {
+        	if(rand.nextInt(4) == 0)
+        	{
+        		if(!par1World.isRemote)
+        		{
+        			par1World.createExplosion(null, par2, par3, par4, 5.0F, true);
+        		}
+        	}else
+        	{
+        		if(rand.nextInt(5) == 0)
+        		{
+        			spawnMob = DQR.randomMob.getRandomEnd(par1World);
+
+        			rateItem = rand.nextInt(20);
+        			if(rateItem < 10)
+        			{
+        				doropiItems = DQR.randomItem.getMiscsRank4(1, 1);
+        			}else if(rateItem < 15)
+        			{
+        				doropiItems = DQR.randomItem.getMiscsRank3(1, 1);
+        			}else if(rateItem < 18)
+        			{
+        				doropiItems = DQR.randomItem.getEmblemRank1(1, 1);
+        			}else
+        			{
+        				doropiItems = DQR.randomItem.getEmblemRank2(1, 1);
+        			}
+        		}else
+        		{
+        			spawnMob = DQR.randomMob.getRandomNether(par1World);
+
+        			rateItem = rand.nextInt(25);
+        			if(rateItem < 10)
+        			{
+        				doropiItems = DQR.randomItem.getMiscsRank4(1, 1);
+        			}else if(rateItem < 20)
+        			{
+        				doropiItems = DQR.randomItem.getMiscsRank3(1, 1);
+        			}else if(rateItem < 24)
+        			{
+        				doropiItems = DQR.randomItem.getEmblemRank1(1, 1);
+        			}else
+        			{
+        				doropiItems = DQR.randomItem.getEmblemRank2(1, 1);
+        			}
+        		}
+
+        	}
+
+            if(rand.nextInt(5) == 0)
+            {
+            	spawnMob = null;
+            }
+
+            if(spawnMob == null && rand.nextInt(2) == 0)
+            {
+            	doropiItems = new ItemStack(DQDecorates.DqmBlockTaruK, 1);
+            }
+        }else if(DQR.conf.cfg_gen_Taru_Map.get(dim) != null && DQR.conf.cfg_gen_Taru_Map.get(dim).equalsIgnoreCase(EnumDqmWorldType.THEEND.getName()))
+        {
+        	if(rand.nextInt(4) == 0)
+        	{
+        		if(!par1World.isRemote)
+        		{
+        			par1World.createExplosion(null, par2, par3, par4, 5.0F, true);
+        		}
+        	}else
+        	{
+        		if(rand.nextInt(5) == 0)
+        		{
+        			spawnMob = DQR.randomMob.getRandomEnd(par1World);
+
+        			rateItem = rand.nextInt(20);
+        			if(rateItem < 10)
+        			{
+        				doropiItems = DQR.randomItem.getMiscsRank4(1, 1);
+        			}else if(rateItem < 15)
+        			{
+        				doropiItems = DQR.randomItem.getMiscsRank3(1, 1);
+        			}else if(rateItem < 18)
+        			{
+        				doropiItems = DQR.randomItem.getEmblemRank1(1, 1);
+        			}else
+        			{
+        				doropiItems = DQR.randomItem.getEmblemRank2(1, 1);
+        			}
+        		}else
+        		{
+        			spawnMob = DQR.randomMob.getRandomNether(par1World);
+
+        			rateItem = rand.nextInt(25);
+        			if(rateItem < 10)
+        			{
+        				doropiItems = DQR.randomItem.getMiscsRank4(1, 1);
+        			}else if(rateItem < 20)
+        			{
+        				doropiItems = DQR.randomItem.getMiscsRank3(1, 1);
+        			}else if(rateItem < 24)
+        			{
+        				doropiItems = DQR.randomItem.getEmblemRank1(1, 1);
+        			}else
+        			{
+        				doropiItems = DQR.randomItem.getEmblemRank2(1, 1);
+        			}
+        		}
+
+        	}
+
+            if(rand.nextInt(5) == 0)
+            {
+            	spawnMob = null;
+            }
+
+            if(spawnMob == null && rand.nextInt(2) == 0)
+            {
+            	doropiItems = new ItemStack(DQDecorates.DqmBlockTaruK, 1);
+            }
+        }
+
+
+
+        if (!par1World.isRemote)
+        {
+        	DqmTileEntityTaruMob tile = (DqmTileEntityTaruMob)par1World.getTileEntity(par2, par3, par4);
+        	DQR.func.debugString("TEST : " + tile.getFlgInpasu());
+        	if(spawnMob != null && tile.getFlgInpasu() == 0)
+        	{
+        		int[] locate = DQR.func.getSpaceLocationRandom(par1World, par2, par3, par4, 4, 4);
+        		spawnMob.setLocationAndAngles((double)locate[0], (double)locate[1], (double)locate[2], 0.0F, 0.0F);
+        		par1World.spawnEntityInWorld(spawnMob);
+        		spawnMob.spawnExplosionParticle();
+        	}
+
+        	if(doropiItems != null)
+        	{
+        		this.dropBlockAsItem(par1World, par2, par3, par4, doropiItems);
+        	}
+        }
+
+        super.breakBlock(par1World, par2, par3, par4, p_149749_5_, par5);
+    }
+
     public void onBlockDestroyedByPlayer(World par1World, int par2, int par3, int par4, int par5)
     {
+    	//Block block = par1World.getBlock(par2, par3, par4);
+
+    	//DQR.func.debugString("SYSTEM : " + par2 + " / " + par3  + " / " + par4 + " : " + this.);
+    	/*
         int x = 0;
         int x3 = x + getRandom(100, 0);
         int x4 = x + getRandom(2, 0);
@@ -224,139 +429,12 @@ public class DqmBlockTaruMob extends BlockContainer
         		spawnMob.setLocationAndAngles((double)locate[0], (double)locate[1], (double)locate[2], 0.0F, 0.0F);
         		par1World.spawnEntityInWorld(spawnMob);
         		spawnMob.spawnExplosionParticle();
-        		/*
-        		spawnMob.setLocationAndAngles((double)par2 + 0.5D + x4, (double)par3 + x5, (double)par4 + 0.5D + x4, 0.0F, 0.0F);
-        		par1World.spawnEntityInWorld(spawnMob);
-        		spawnMob.spawnExplosionParticle();
-        		*/
         	}
 
         	if(doropiItems != null)
         	{
         		this.dropBlockAsItem(par1World, par2, par3, par4, doropiItems);
         	}
-        }
-
-        /*
-        if (x3 >= 91)
-        {
-            if (!par1World.isRemote)
-            {
-                DqmEntityTutiwarasi entitysilverfish = new DqmEntityTutiwarasi(par1World);
-                entitysilverfish.setLocationAndAngles((double)par2 + 0.5D + x4, (double)par3 + x5, (double)par4 + 0.5D + x4, 0.0F, 0.0F);
-                par1World.spawnEntityInWorld(entitysilverfish);
-                entitysilverfish.spawnExplosionParticle();
-            }
-        }
-
-        if (x3 >= 81 && x3 <= 90)
-        {
-            if (!par1World.isRemote)
-            {
-                DqmEntityOnikozou entitysilverfish = new DqmEntityOnikozou(par1World);
-                entitysilverfish.setLocationAndAngles((double)par2 + 0.5D + x4, (double)par3 + x5, (double)par4 + 0.5D + x4, 0.0F, 0.0F);
-                par1World.spawnEntityInWorld(entitysilverfish);
-                entitysilverfish.spawnExplosionParticle();
-            }
-        }
-
-        if (x3 >= 71 && x3 <= 80)
-        {
-            if (!par1World.isRemote)
-            {
-                DqmEntityBigguhatto entitysilverfish = new DqmEntityBigguhatto(par1World);
-                entitysilverfish.setLocationAndAngles((double)par2 + 0.5D + x4, (double)par3 + x5, (double)par4 + 0.5D + x4, 0.0F, 0.0F);
-                par1World.spawnEntityInWorld(entitysilverfish);
-                entitysilverfish.spawnExplosionParticle();
-            }
-        }
-
-        if (x3 >= 61 && x3 <= 70)
-        {
-            if (!par1World.isRemote)
-            {
-                DqmEntityOomedama entitysilverfish = new DqmEntityOomedama(par1World);
-                entitysilverfish.setLocationAndAngles((double)par2 + 0.5D + x4, (double)par3 + x5, (double)par4 + 0.5D + x4, 0.0F, 0.0F);
-                par1World.spawnEntityInWorld(entitysilverfish);
-                entitysilverfish.spawnExplosionParticle();
-            }
-        }
-
-        if (x3 >= 51 && x3 <= 60)
-        {
-            if (!par1World.isRemote)
-            {
-                DqmEntityTogebouzu entitysilverfish = new DqmEntityTogebouzu(par1World);
-                entitysilverfish.setLocationAndAngles((double)par2 + 0.5D + x4, (double)par3 + x5, (double)par4 + 0.5D + x4, 0.0F, 0.0F);
-                par1World.spawnEntityInWorld(entitysilverfish);
-                entitysilverfish.spawnExplosionParticle();
-            }
-        }
-
-        if (x3 >= 41 && x3 <= 50)
-        {
-            if (!par1World.isRemote)
-            {
-                DqmEntityBakudanbebi entitysilverfish = new DqmEntityBakudanbebi(par1World);
-                entitysilverfish.setLocationAndAngles((double)par2 + 0.5D + x4, (double)par3 + x5, (double)par4 + 0.5D + x4, 0.0F, 0.0F);
-                par1World.spawnEntityInWorld(entitysilverfish);
-                entitysilverfish.spawnExplosionParticle();
-            }
-        }
-
-        if (x3 >= 31 && x3 <= 40)
-        {
-            if (!par1World.isRemote)
-            {
-                DqmEntityBerobero entitysilverfish = new DqmEntityBerobero(par1World);
-                entitysilverfish.setLocationAndAngles((double)par2 + 0.5D + x4, (double)par3 + x5, (double)par4 + 0.5D + x4, 0.0F, 0.0F);
-                par1World.spawnEntityInWorld(entitysilverfish);
-                entitysilverfish.spawnExplosionParticle();
-            }
-        }
-
-        if (x3 >= 21 && x3 <= 30)
-        {
-            if (!par1World.isRemote)
-            {
-                DqmEntityHotatewarabi entitysilverfish = new DqmEntityHotatewarabi(par1World);
-                entitysilverfish.setLocationAndAngles((double)par2 + 0.5D + x4, (double)par3 + x5, (double)par4 + 0.5D + x4, 0.0F, 0.0F);
-                par1World.spawnEntityInWorld(entitysilverfish);
-                entitysilverfish.spawnExplosionParticle();
-            }
-        }
-
-        if (x3 >= 11 && x3 <= 20)
-        {
-            if (!par1World.isRemote)
-            {
-                DqmEntityJeriman entitysilverfish = new DqmEntityJeriman(par1World);
-                entitysilverfish.setLocationAndAngles((double)par2 + 0.5D + x4, (double)par3 + x5, (double)par4 + 0.5D + x4, 0.0F, 0.0F);
-                par1World.spawnEntityInWorld(entitysilverfish);
-                entitysilverfish.spawnExplosionParticle();
-            }
-        }
-
-        if (x3 >= 1 && x3 <= 10)
-        {
-            if (!par1World.isRemote)
-            {
-                DqmEntityMajikaruhatto entitysilverfish = new DqmEntityMajikaruhatto(par1World);
-                entitysilverfish.setLocationAndAngles((double)par2 + 0.5D + x4, (double)par3 + x5, (double)par4 + 0.5D + x4, 0.0F, 0.0F);
-                par1World.spawnEntityInWorld(entitysilverfish);
-                entitysilverfish.spawnExplosionParticle();
-            }
-        }
-
-        if (x3 == 0)
-        {
-            if (!par1World.isRemote)
-            {
-                DqmEntityDaiyamondosuraimu entitysilverfish = new DqmEntityDaiyamondosuraimu(par1World);
-                entitysilverfish.setLocationAndAngles((double)par2 + 0.5D + x4, (double)par3 + x5, (double)par4 + 0.5D + x4, 0.0F, 0.0F);
-                par1World.spawnEntityInWorld(entitysilverfish);
-                entitysilverfish.spawnExplosionParticle();
-            }
         }
         */
 

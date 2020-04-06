@@ -1,21 +1,18 @@
 package dqr.gui.farmBook;
 
 import java.util.ArrayList;
-import java.util.Set;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiOptionButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
 import dqr.DQR;
 import dqr.playerData.ExtendedPlayerProperties2;
-import dqr.playerData.ExtendedPlayerProperties3;
 
 public class GuiFarmBookGuiContainer extends GuiContainer
 {
@@ -29,8 +26,8 @@ public class GuiFarmBookGuiContainer extends GuiContainer
 
         super(new GuiFarmBookContainer(player));
 
-    	NBTTagCompound playerPet = ExtendedPlayerProperties3.get(player).getNBTPlayerPetList();
-    	Set tags = playerPet.func_150296_c();
+    	//NBTTagCompound playerPet = ExtendedPlayerProperties3.get(player).getNBTPlayerPetList();
+    	//Set tags = playerPet.func_150296_c();
 
 		this.xSize = 154;
 		this.ySize = 134;

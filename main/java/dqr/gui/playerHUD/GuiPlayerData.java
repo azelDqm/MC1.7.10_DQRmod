@@ -16,7 +16,7 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import dqr.DQR;
 import dqr.dataTable.FuncJobSkillData;
 import dqr.playerData.ExtendedPlayerProperties;
-import dqr.playerData.ExtendedPlayerProperties3;
+import dqr.playerData.ExtendedPlayerProperties5;
 
 public class GuiPlayerData extends Gui
 {
@@ -204,11 +204,11 @@ public class GuiPlayerData extends Gui
                   			strAry = strEdit.split(":");
                   			strAry2 = strAry[0].split("：");
                   			hinsiFlg = checkHinsi(strAry2[2]);
-          */
+          */ 
           //String ExpString = this.getExpString(strAry2[1]);
           //strAry_2
 
-          //System.out.println("HP" + ExtendedPlayerProperties.get(ep).getHP());
+          //System.out.println("HP" + ExtendedPlayerProperties.get(ep).getHP());0 
           //System.out.println("MaxHP" + ExtendedPlayerProperties.get(ep).getMaxHP());
 
           int JOB = ExtendedPlayerProperties.get(ep).getJob();
@@ -217,7 +217,7 @@ public class GuiPlayerData extends Gui
           int Lv =  ExtendedPlayerProperties.get(ep).getJobLv(JOB);
           int MP = ExtendedPlayerProperties.get(ep).getMP();
           int MaxMP = ExtendedPlayerProperties.get(ep).getMaxMP();
-          int SP = ExtendedPlayerProperties3.get(ep).getJobSp(JOB);
+          int SP = ExtendedPlayerProperties5.get(ep).getJobSp(JOB);
           int EXP = ExtendedPlayerProperties.get(ep).getJobExp(JOB);
 
           String sJob = I18n.format("gui.job." + JOB) + " " + I18n.format("gui.status.LV") + Lv + " (" + I18n.format("gui.status.SP", new Object[]{FuncJobSkillData.getMaxSP(Lv) - SP, FuncJobSkillData.getMaxSP(Lv)}) + ")";

@@ -133,6 +133,13 @@ msg.magic.rariho.txt=!player.You are sleeping!!
 msg.magic.weaponNoAppti.txt=!player.can't use this power
 msg.magic.weaponNoEnergy.txt=!player.this weapon no energy
 
+msg.jskill.notselected.txt=not get this skill.
+msg.jskill.notmatchjob.txt=Can't use your job.
+msg.jskill.coolingtime.txt=CoolTime now!!
+msg.jskill.nomp.txt=no MP!!
+msg.jskill.nohp.txt=no HP!!
+msg.jskill.nogold.txt=no gold!!
+
 msg.defeatMob.txt=Defeat the %s
 msg.lvUp.txt=Lv up to Lv.%d
 
@@ -258,6 +265,8 @@ gui.position.guiname.4=PlayerLog
 gui.position.guiname.5=medal/coin
 gui.position.guiname.6=PotionEffect
 gui.position.guiname.7=PartyStatus
+gui.position.guiname.8=SkillBook
+gui.position.guiname.9=JobSkillEffect
 gui.position.line.1=TargetGUI : %s
 gui.position.line.2=MoveSpeed : %dpixels
 gui.position.line.3=Party disp/line : %d
@@ -270,6 +279,10 @@ gui.position.line.7=log view : [PageUp][PageDown]
 gui.position.line.8=log clear : [%s]
 
 gui.position.line.9=disp/line change : [%s][%s]
+
+gui.position.line.10.0=add line : UPtoDOWN[HOME]
+gui.position.line.10.1=add line : DOWNtoUP[HOME]
+gui.position.line.11=VisAreaHeight : %spixel [PageUp][PageDown]
 
 gui.party.hp=HP
 gui.party.mp=MP
@@ -1722,8 +1735,8 @@ dqm.skill.info.magup.txt=MAG%sUP
 dqm.skill.info.strup.txt=STR%sUP
 dqm.skill.info.agiup.txt=SPEED%sUP
 dqm.skill.info.intup.txt=INT%sUP
-dqm.skill.info.critup.txt=Critical%s％UP
-dqm.skill.info.missup.txt=Agility%s％UP
+dqm.skill.info.critup.txt=Critical%sperUP
+dqm.skill.info.missup.txt=Agility%sperUP
 
 dqm.skill.info.func.1=[ACTIVE]
 dqm.skill.info.func.2=[PASSIVE]
@@ -1774,6 +1787,7 @@ dqm.iteminfo.petHaigou02=combine pet2 : none
 dqm.iteminfo.petHaigou3=§cSpecial pattern!?
 dqm.iteminfo.petHaigou4=Cancel : sneak + item use
 
+dqm.iteminfo.skillbook.6.txt=§b[%s]+[%s] open book GUI.
 dqm.iteminfo.skillbook.0.txt=§b[%s] skill use.
 dqm.iteminfo.skillbook.1.txt=§b[%s] change set skill.
 dqm.iteminfo.skillbook.2.txt=§b[%s]+[%s] change skill option.
@@ -1785,6 +1799,9 @@ dqm.iteminfo.skillbook.R.txt=!player.change to [%s]%s
 
 dqm.iteminfo.skillbookHid.txt=[%s] visible skill infomation.
 dqm.iteminfo.skillbookVis.txt=[%s] hide skill infomation.
+
+dqm.iteminfo.skillbookCT.1=Ready!
+dqm.iteminfo.skillbookCT.2= (CoolTime)
 
 dqm.iteminfo.caneat=§6can eating
 dqm.iteminfo.canpet=§eeat pet
@@ -2378,11 +2395,11 @@ msg.shinziru.modeInfo.4.0.txt=!player.Change to [Party close mode]
 msg.shinziru.modeInfo.4.1.txt=!player.Close party
 msg.shinziru.modeInfo.5.0.txt=!player.Change to [EXP share rate change mode]
 msg.shinziru.modeInfo.5.1.txt=!player.Change Exp share rate.
-msg.shinziru.modeInfo.5.2.txt=!player.EXP * VAlue% => Share in party
+msg.shinziru.modeInfo.5.2.txt=!player.EXP * VAlue per => Share in party
 msg.shinziru.modeInfo.txt=!player.Only Reader use
 
 msg.shinziru.shareRate.0.txt=Party EXP share disable
-msg.shinziru.shareRate.1.txt=Party EXP share rate set %s%
+msg.shinziru.shareRate.1.txt=Party EXP share rate set %sper
 
 
 msg.weapon.modeInfo.1.-1.txt=!player.Axe mode : false
@@ -3874,16 +3891,16 @@ dqm.skill.JSkill_0_0.info=敵に石をなげつけて1ﾀﾞﾒ＆タゲ取り
 dqm.skill.JSkill_0_1.info=一定確率で状態異常を１個治療
 dqm.skill.JSkill_0_2.info=範囲内の敵を一定確率で行動不能
 dqm.skill.JSkill_0_3.info=仲間一人の状態異常を回復
-dqm.skill.JSkill_0_4.info=瀕死時身かわし率 30%
+dqm.skill.JSkill_0_4.info=瀕死時身かわし率 30per
 dqm.skill.JSkill_0_5.info=状態異常無効
 dqm.skill.JSkill_0_6.info=即死無効
 dqm.skill.JSkill_0_7.info=火炎系攻撃
-dqm.skill.JSkill_0_8.info=範囲内の敵に通常攻撃の25～50％の威力を６回与える
+dqm.skill.JSkill_0_8.info=範囲内の敵に通常攻撃の25～50perの威力を６回与える
 dqm.skill.JSkill_0_9.info=範囲攻撃力UP(バイキルトの1/2で2回かけ可)
 dqm.skill.JSkill_0_10.info=HP以上のダメージを受けた場合に、一定確率でHP1で耐える
 dqm.skill.JSkill_0_11.info=ランダムに敵を呼び寄せる
 dqm.skill.JSkill_0_12.info=カジノ当選率UP
-dqm.skill.JSkill_0_13.info=全職で勇者鎧適正(25%)
+dqm.skill.JSkill_0_13.info=全職で勇者鎧適正(25per)
 dqm.skill.JSkill_1_0.info=ノックバック効果アップ+ 敵を一瞬行動不能にする
 dqm.skill.JSkill_1_1.info=ヘナトスの効果を与える
 dqm.skill.JSkill_1_2.info=PTメンバのダメージをかたがわり
@@ -3893,7 +3910,7 @@ dqm.skill.JSkill_1_5.info=かばう発動時のダメージを軽減
 dqm.skill.JSkill_1_6.info=攻撃を受けた時に一定確率で周囲のEntityが代わりにダメージを受ける
 dqm.skill.JSkill_1_7.info=効果中 一定確率で反撃ダメージを与える
 dqm.skill.JSkill_1_8.info=効果中 斧で木を切った時に耐久が減らなくなる
-dqm.skill.JSkill_1_9.info=全職で重鎧適正(25%)
+dqm.skill.JSkill_1_9.info=全職で重鎧適正(25per)
 dqm.skill.JSkill_2_0.info=自分にかかったデバフを解除
 dqm.skill.JSkill_2_1.info=ブレス耐性UP
 dqm.skill.JSkill_2_2.info=素手の場合に火力アップ
@@ -3904,28 +3921,28 @@ dqm.skill.JSkill_2_6.info=HPが徐々に回復。時々状態異常も回復
 dqm.skill.JSkill_2_7.info=効果中 爪で土を掘った時に耐久が減らなくなる
 dqm.skill.JSkill_2_8.info=一定時間機動力がかなり上昇する
 dqm.skill.JSkill_2_9.info=防御力上昇+自動反撃
-dqm.skill.JSkill_2_10.info=全職で武道着適正(25%)
+dqm.skill.JSkill_2_10.info=全職で武道着適正(25per)
 dqm.skill.JSkill_4_0.info=一定時間魔力上昇
 dqm.skill.JSkill_4_1.info=悪魔系に大ダメージ
 dqm.skill.JSkill_4_2.info=魔法耐性UP
 dqm.skill.JSkill_4_3.info=即死耐性UP
-dqm.skill.JSkill_4_4.info=消費MP減少(魔法使い30%/15%)
+dqm.skill.JSkill_4_4.info=消費MP減少(魔法使い30per/15per)
 dqm.skill.JSkill_4_5.info=MP吸収
 dqm.skill.JSkill_4_6.info=PTメンバーにMPを分け与える
 dqm.skill.JSkill_4_7.info=魔法詠唱時 一定確率でCTが発生しない
 dqm.skill.JSkill_4_8.info=魔法詠唱時CTが発生しない
 dqm.skill.JSkill_4_9.info=1回の詠唱で2回効果が発動する
-dqm.skill.JSkill_4_10.info=全職で魔法衣適正(25%)
+dqm.skill.JSkill_4_10.info=全職で魔法衣適正(25per)
 dqm.skill.JSkill_5_0.info=魔法耐性UP
 dqm.skill.JSkill_5_1.info=一定時間回復魔法の回復力アップ
-dqm.skill.JSkill_5_2.info=消費MP減少(僧侶30% / 全職15%)
+dqm.skill.JSkill_5_2.info=消費MP減少(僧侶30per / 全職15per)
 dqm.skill.JSkill_5_3.info=MPをコストに自分の攻撃力をあげる
 dqm.skill.JSkill_5_4.info=MPが徐々に回復する
 dqm.skill.JSkill_5_5.info=魔法被弾時 MP吸収
 dqm.skill.JSkill_5_6.info=HP2以上の時に致死ﾀﾞﾒｰｼﾞを受けてもHP1で生き残る
 dqm.skill.JSkill_5_7.info=範囲＆パーティメンバのデバフ解除
 dqm.skill.JSkill_5_8.info=範囲＆パーティメンバのHP回復
-dqm.skill.JSkill_5_9.info=全職で軽鎧適正(25%)
+dqm.skill.JSkill_5_9.info=全職で軽鎧適正(25per)
 dqm.skill.JSkill_14_0.info=敵を倒した時に獲得GOLDアップ
 dqm.skill.JSkill_14_1.info=1分間だけ現れる修理屋NPCを召喚する
 dqm.skill.JSkill_14_2.info=武器屋の仕入れ強制実行

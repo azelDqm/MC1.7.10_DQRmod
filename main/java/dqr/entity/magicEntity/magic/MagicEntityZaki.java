@@ -446,7 +446,7 @@ public class MagicEntityZaki extends MagicEntity implements IProjectile{
 
             //当たったあとの処理
             //まずはリストから
-            DQR.func.debugString("Hit2!!!!!!!!!!!!", this.getClass());
+            //DQR.func.debugString("Hit2!!!!!!!!!!!!", this.getClass());
             //System.out.println();
             if (entityList != null && !entityList.isEmpty())
             {

@@ -4,9 +4,7 @@ import java.util.Random;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.MathHelper;
 import net.minecraftforge.event.entity.living.LivingEvent;
-import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
@@ -16,7 +14,6 @@ import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import dqr.DQR;
 import dqr.api.potion.DQPotionMinus;
-import dqr.playerData.ExtendedPlayerProperties;
 
 public class RarihoEventHandler {
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
@@ -36,6 +33,7 @@ public class RarihoEventHandler {
 		*/
 	}
 
+	/*
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onRarihoLivingUpdate(LivingUpdateEvent event) {
     	if(event.entityLiving instanceof EntityPlayer)
@@ -104,7 +102,7 @@ public class RarihoEventHandler {
 
     	}
     	*/
-	}
+//	}
 
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
     public void checkRarihoCancel(LivingHurtEvent event)

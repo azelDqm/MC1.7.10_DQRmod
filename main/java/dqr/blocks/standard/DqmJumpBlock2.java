@@ -9,6 +9,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
+import dqr.DQR;
 import dqr.api.potion.DQPotionPlus;
 
 public class DqmJumpBlock2 extends Block
@@ -31,7 +32,7 @@ public class DqmJumpBlock2 extends Block
             EntityPlayer ep = (EntityPlayer)par5Entity;
             ep.fallDistance = 0;
             ep.motionY = 1.3;
-            ep.addPotionEffect(new PotionEffect(DQPotionPlus.potionSubayasanotane.id, 20 * 5, 0));
+            DQR.func.addPotionEffect2(ep, new PotionEffect(DQPotionPlus.potionSubayasanotane.id, 20 * 5, 0));
         }
     }
     public AxisAlignedBB getCollisionBoundingBoxFromPool(World p_149668_1_, int p_149668_2_, int p_149668_3_, int p_149668_4_)

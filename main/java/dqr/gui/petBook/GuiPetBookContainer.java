@@ -1,7 +1,9 @@
 package dqr.gui.petBook;
 
+import java.util.List;
 import java.util.Set;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
@@ -12,8 +14,11 @@ import dqr.DQR;
 import dqr.api.Items.DQMonsters;
 import dqr.api.enums.EnumDqmMGToolMode;
 import dqr.api.enums.EnumDqmWeaponMode;
+import dqr.entity.magicEntity.EntityDummy;
+import dqr.entity.petEntity.DqmPetBase;
+import dqr.modules.DqrChunkLoader;
 import dqr.playerData.ExtendedPlayerProperties;
-import dqr.playerData.ExtendedPlayerProperties3;
+import dqr.playerData.ExtendedPlayerProperties6;
 
 public class GuiPetBookContainer extends Container
 {
@@ -151,9 +156,63 @@ public class GuiPetBookContainer extends Container
 					//ExtendedPlayerProperties3.get(ep).minusPetCount(1);
 					//System.out.println("TESTTEST : " + ep.worldObj.isRemote);
 		        	DQR.petFunc.removePetdata(ep, nbt.getString("uuid"));
-
+		        	DQR.petFunc.removePetdata(ep, nbt.getString("PetUniqueNumber"));
 
 		        	flg = true;
+				}else if(itemMode == EnumDqmMGToolMode.PETSUISYOU_CALL.getId())
+				{
+					DqrChunkLoader.setBlockTicket(ep.worldObj, locX, locY - 2, locZ);
+					ep.worldObj.getChunkProvider().loadChunk(locX >> 4, locZ >> 4);
+					String petNum = nbt.getString("PetUniqueNumber");
+					EntityDummy dummyEntity = new EntityDummy(ep.worldObj);
+					dummyEntity.setPositionAndUpdate(locX, locY + 0.5D, locZ);
+
+					List list2 = dummyEntity.worldObj.getEntitiesWithinAABBExcludingEntity(dummyEntity,
+							dummyEntity.boundingBox.addCoord(dummyEntity.motionX, dummyEntity.motionY, dummyEntity.motionZ).expand((double)5, (double)3, (double)5));
+
+     	            if (list2 != null && !list2.isEmpty())
+     	            {
+     	            	for (int n = 0 ; n < list2.size() ; n++)
+     	            	{
+     	            		Entity target2 = (Entity)list2.get(n);
+
+                     		if(target2 instanceof DqmPetBase)
+                     		{
+                     			DqmPetBase targetPet = (DqmPetBase)target2;
+                     			//if(petNum != null && Long.parseLong(petNum) == targetPet.getPetUniqueNumber())
+                     			//DQR.func.debugString("TEsT!!  : " + String.valueOf(targetPet.getPetUniqueNumber()) + " : " + petNum);
+                     			if(petNum != null && String.valueOf(targetPet.getPetUniqueNumber()).equalsIgnoreCase(petNum) || String.valueOf(targetPet.getPetUniqueNumber() + "L").equalsIgnoreCase(petNum))
+                     			{
+                     				//DQR.func.debugString("いたよ!!  : " + targetPet.getCommandSenderName());
+                     				//ep.playSound("dqr:player.suisyou", 0.8F, 1.5F);
+                     				int[] spawnPos = DQR.func.getSpaceLocationRandom(ep.worldObj, (int)ep.posX, (int)ep.posY, (int)ep.posZ, 3, 2);
+                     				targetPet.setLocationAndAngles((double)spawnPos[0], (double)spawnPos[1], (double)spawnPos[2], 0.0F, 0.0F);
+                     				targetPet.setPositionAndUpdate((double)spawnPos[0], (double)spawnPos[1], (double)spawnPos[2]);
+                     				targetPet.onUpdate();
+                     				//targetPet.onUpdate();
+                     				ep.worldObj.playSoundAtEntity(ep, "dqr:player.suisyou", 1.0F, 1.3F);
+                     			}
+                     			{
+                     			//if(petNum != null && Long.parseLong(petNum) && targetPet.getPetUniqueNumber() == Long.parseLong(petNum))
+                     			//{
+//                     				DQR.func.debugString("TEsT!!  : " + targetPet.getPetUniqueNumber() + " : ");
+                     			//}
+                     			}
+                     			//DQR.func.debugString("pet ID TEST : " + targetPet.getPetUniqueNumber());
+                     		}
+     	            	}
+     	            }
+
+     	           dummyEntity.setDead();
+     	         // dummyEntity.deathTime
+					/*
+    				ep.setPositionAndUpdate(locX, locY + 0.5D, locZ);
+    				if(ep instanceof DqmPetBase)
+    				{
+    					DQR.petFunc.setUnloadPet((DqmPetBase)elv2);
+    				}
+    				elv2.worldObj.getChunkProvider().loadChunk(this.location[0] >> 4, this.location[2] >> 4);
+    				*/
 				}
 	    		//System.out.println("TEST" + nbt.getString("uuid"));
 
@@ -194,7 +253,7 @@ public class GuiPetBookContainer extends Container
 
     	//this.inventory.setInventorySlotContents(0, null);
 
-    	NBTTagCompound playerPet = ExtendedPlayerProperties3.get(this.ep).getNBTPlayerPetList();
+    	NBTTagCompound playerPet = ExtendedPlayerProperties6.get(this.ep).getNBTPlayerPetList();
     	Set tags = playerPet.func_150296_c();
 
 

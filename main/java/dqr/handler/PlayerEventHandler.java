@@ -42,6 +42,7 @@ import dqr.playerData.ExtendedPlayerProperties3;
 
 public class PlayerEventHandler {
 
+
 	@SubscribeEvent
 	public void onSokusiDamageEvent(LivingHurtEvent event) {
 
@@ -77,6 +78,16 @@ public class PlayerEventHandler {
 					}
 				}
 			}
+
+
+			/*
+			if(event.ammount >= ep.getHealth())
+			{
+				//DQR.func.debugString("TESTTEST", this.getClass());
+				event.ammount = ep.getHealth() - 1.0f;
+			}
+			*/
+
 		}
 
 	}

@@ -8,7 +8,7 @@ import dqr.api.potion.DQPotionPlus;
 public class DqmPotion {
 
 	//現在使用している最大ポーションIDメモ用
-	private int tempNum = 4;
+	public int tempNum = 47;
 
 	public DqmPotion(int idx)
 	{
@@ -19,7 +19,7 @@ public class DqmPotion {
 		DQPotionPlus.potionIyasinomi = new DqmPotionNoEffect(idx + 4, false, 0xFFFF99).setIconIndex2(3, 0).setIconIndex(7, 0).setPotionName("dqm.potion.iyasinomi");
 		DQPotionPlus.potionHonoonomi = new DqmPotionNoEffect(idx + 5, false, 0xFF0000).setIconIndex2(4, 0).setIconIndex(6, 1).setPotionName("dqm.potion.honoonomi");
 		DQPotionPlus.potionMahounomi = new DqmPotionNoEffect(idx + 6, false, 0x6633CC).setIconIndex2(6, 3).setIconIndex(7, 0).setPotionName("dqm.potion.mahounomi");
-		DQPotionPlus.potionMaryokunotane = new DqmPotionNoEffect(idx + 7, false, 0x6600CC).setIconIndex2(7, 3).setIconIndex(4, 0).setPotionName("dqm.potion.maryokunotane");
+		DQPotionPlus.potionMaryokunotane = new DqmPotionNoEffect(idx + 7, false, 0x6600CC).setEffectiveness(0.25D).setIconIndex2(7, 3).setIconIndex(4, 0).setPotionName("dqm.potion.maryokunotane");
 		DQPotionPlus.potionOugonnomi = new DqmPotionNoEffect(idx + 8, false, 0xFFD805).setIconIndex2(5, 0).setIconIndex(2, 2).setPotionName("dqm.potion.ougonnomi").func_111184_a(SharedMonsterAttributes.movementSpeed, "91AEAA56-376B-4498-935B-2F7F68070637", 0.20000000298023224D, 2);
 
 		DQPotionMinus.potionPoison = new DqmPotionNoEffect(idx + 9, true, 0x66FF33).setIconIndex2(3, 2).setIconIndex(6, 0).setPotionName("dqm.potion.poison");

@@ -2,6 +2,7 @@ package dqr.blocks.decorate;
 
 import java.util.Random;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -37,8 +38,114 @@ public class DqmBlockBlockTue extends BlockContainer
         return this;
     }
 
+    public void breakBlock(World par1World, int par2, int par3, int par4, Block p_149749_5_, int par5)
+    {
+    	Random rand = new Random();
+        DqmMobBase spawnMob = null;
+        ItemStack doropiItems = null;
+        int rateMob = 0;
+        int rateItem = 0;
+        int dim = par1World.provider.dimensionId;
+
+
+        if(DQR.conf.cfg_gen_Tue_Map.get(dim) != null && DQR.conf.cfg_gen_Tue_Map.get(dim).equalsIgnoreCase(EnumDqmWorldType.OVERWORLD.getName()))
+        {
+        	if(rand.nextInt(3) == 0)
+        	{
+        		spawnMob = DQR.randomMob.getRandomNether(par1World);
+        	}else
+        	{
+        		spawnMob = DQR.randomMob.getRandomNight(par1World);
+        	}
+
+        	doropiItems = DQR.randomItem.getMagicRank1(1, 1);
+
+        }if(DQR.conf.cfg_gen_Tue_Map.get(dim) != null && DQR.conf.cfg_gen_Tue_Map.get(dim).equalsIgnoreCase(EnumDqmWorldType.NETHER.getName()))
+        {
+        	if(rand.nextInt(3) == 0)
+        	{
+        		spawnMob = DQR.randomMob.getRandomEnd(par1World);
+        		if(rand.nextInt(10) == 0)
+        		{
+        			doropiItems = DQR.randomItem.getMagicRank3(1, 1);
+        		}else
+        		{
+        			doropiItems = DQR.randomItem.getMagicRank2(1, 1);
+        		}
+        	}else
+        	{
+        		spawnMob = DQR.randomMob.getRandomNether(par1World);
+        		if(rand.nextInt(5) == 0)
+        		{
+        			doropiItems = DQR.randomItem.getMagicRank2(1, 1);
+        		}else
+        		{
+        			doropiItems = DQR.randomItem.getMagicRank1(1, 1);
+        		}
+        	}
+        }if(DQR.conf.cfg_gen_Tue_Map.get(dim) != null && DQR.conf.cfg_gen_Tue_Map.get(dim).equalsIgnoreCase(EnumDqmWorldType.THEEND.getName()))
+        {
+        	if(rand.nextInt(3) == 0)
+        	{
+        		spawnMob = DQR.randomMob.getRandomTENSEI(par1World);
+        		if(rand.nextInt(10) == 0)
+        		{
+        			doropiItems = DQR.randomItem.getMagicRank5(1, 1);
+        		}else
+        		{
+        			doropiItems = DQR.randomItem.getMagicRank4(1, 1);
+        		}
+        	}else
+        	{
+        		spawnMob = DQR.randomMob.getRandomEnd(par1World);
+        		if(rand.nextInt(10) == 0)
+        		{
+        			doropiItems = DQR.randomItem.getMagicRank4(1, 1);
+        		}else
+        		{
+        			doropiItems = DQR.randomItem.getMagicRank3(1, 1);
+        		}
+        	}
+        }
+
+
+
+        if(rand.nextInt(8) == 0)
+        {
+        	spawnMob = null;
+        }
+
+        if(spawnMob == null && rand.nextInt(2) == 0)
+        {
+        	doropiItems = new ItemStack(DQDecorates.DqmBlockTueK, 1);
+        }
+
+
+        if (!par1World.isRemote)
+        {
+        	DqmTileEntityTue tile = (DqmTileEntityTue)par1World.getTileEntity(par2, par3, par4);
+
+        	if(spawnMob != null && tile.getFlgInpasu() == 0)
+        	{
+        		int[] locate = DQR.func.getSpaceLocationRandom(par1World, par2, par3, par4, 4, 4);
+        		spawnMob.setLocationAndAngles((double)locate[0], (double)locate[1], (double)locate[2], 0.0F, 0.0F);
+        		par1World.spawnEntityInWorld(spawnMob);
+        		spawnMob.spawnExplosionParticle();
+
+        	}
+
+        	if(doropiItems != null)
+        	{
+        		this.dropBlockAsItem(par1World, par2, par3, par4, doropiItems);
+        	}
+        }
+
+        super.breakBlock(par1World, par2, par3, par4, p_149749_5_, par5);
+    }
+
     public void onBlockDestroyedByPlayer(World par1World, int par2, int par3, int par4, int par5)
     {
+    	/*
         int x = 0;
         int x3 = x + getRandom(100, 0);
         int x4 = x + getRandom(2, 0);
@@ -128,18 +235,14 @@ public class DqmBlockBlockTue extends BlockContainer
         if (!par1World.isRemote)
         {
         	DqmTileEntityTue tile = (DqmTileEntityTue)par1World.getTileEntity(par2, par3, par4);
-        	
+
         	if(spawnMob != null && tile.getFlgInpasu() == 0)
         	{
         		int[] locate = DQR.func.getSpaceLocationRandom(par1World, par2, par3, par4, 4, 4);
         		spawnMob.setLocationAndAngles((double)locate[0], (double)locate[1], (double)locate[2], 0.0F, 0.0F);
         		par1World.spawnEntityInWorld(spawnMob);
         		spawnMob.spawnExplosionParticle();
-        		/*
-        		spawnMob.setLocationAndAngles((double)par2 + 0.5D + x4, (double)par3 + x5, (double)par4 + 0.5D + x4, 0.0F, 0.0F);
-        		par1World.spawnEntityInWorld(spawnMob);
-        		spawnMob.spawnExplosionParticle();
-        		*/
+
         	}
 
         	if(doropiItems != null)
@@ -147,6 +250,7 @@ public class DqmBlockBlockTue extends BlockContainer
         		this.dropBlockAsItem(par1World, par2, par3, par4, doropiItems);
         	}
         }
+        */
         super.onBlockDestroyedByPlayer(par1World, par2, par3, par4, par5);
     }
 

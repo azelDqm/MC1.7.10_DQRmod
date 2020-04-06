@@ -104,7 +104,7 @@ public class DqmItemMagicMahouken extends DqmItemMagicBase{
 			par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.jumon", 1.0F, 1.0F);
 
 			par3EntityPlayer.removePotionEffect(this.pot.id);
-			par3EntityPlayer.addPotionEffect(new PotionEffect(this.pot.id, this.getEnumMagic().getAttack(), 20 + this.mahoukenIdx));
+			DQR.func.addPotionEffect2(par3EntityPlayer, new PotionEffect(this.pot.id, this.getEnumMagic().getAttack(), 20 + this.mahoukenIdx));
 			par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.up", 1.0F, 1.0F);
 
 			Random rand_jukuren = new Random();

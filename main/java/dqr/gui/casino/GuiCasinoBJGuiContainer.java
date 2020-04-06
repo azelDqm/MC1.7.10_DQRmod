@@ -3,7 +3,6 @@ package dqr.gui.casino;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.Set;
 import java.util.regex.Pattern;
 
 import net.minecraft.client.gui.GuiButton;
@@ -12,7 +11,6 @@ import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
@@ -21,8 +19,10 @@ import dqr.DQR;
 import dqr.PacketHandler;
 import dqr.api.enums.EnumDqmCasinoBJOdds;
 import dqr.api.enums.EnumDqmFuncPacketCode;
+import dqr.api.enums.EnumDqmSkillJ;
 import dqr.api.enums.EnumDqmTrump;
 import dqr.packetMessage.MessageServerFunction;
+import dqr.playerData.ExtendedPlayerProperties;
 import dqr.playerData.ExtendedPlayerProperties3;
 import dqr.thread.ThreadCasinoBJ;
 
@@ -63,8 +63,8 @@ public class GuiCasinoBJGuiContainer extends GuiContainer
 
         super(new GuiCasinoBJContainer(player));
         this.epa = player;
-    	NBTTagCompound playerPet = ExtendedPlayerProperties3.get(player).getNBTPlayerPetList();
-    	Set tags = playerPet.func_150296_c();
+    	//NBTTagCompound playerPet = ExtendedPlayerProperties3.get(player).getNBTPlayerPetList();
+    	//Set tags = playerPet.func_150296_c();
 
     	myCoin = ExtendedPlayerProperties3.get(player).getCoin();
 
@@ -297,6 +297,12 @@ public class GuiCasinoBJGuiContainer extends GuiContainer
 	    	{
 	    		this.buttonList.add(new GuiOptionButton(5, mainX + 292, endY - 28, 70, 20, I18n.format("msg.casino.blackjack.button.salender.txt", new Object[]{})));
 	    	}
+
+    	}else if(this.gamePhase == 20)
+    	{
+    		this.buttonList.add(new GuiOptionButton(21, mainX + 150, endY - 28, 70, 20, I18n.format("BURST", new Object[]{})));
+    		this.buttonList.add(new GuiOptionButton(22, mainX + 292, endY - 28, 70, 20, I18n.format("!?", new Object[]{})));
+    		//this.gamePhase = 21;
     	}
     	/*
     	if(mode == 0)
@@ -698,6 +704,37 @@ public class GuiCasinoBJGuiContainer extends GuiContainer
 	    			this.gamePhase = 2;
 	    			ThreadCasinoBJ threadBJ = new ThreadCasinoBJ(epa, this, 2, p_146284_1_.id);
 	        		threadBJ.start();
+    			}
+    		}
+    	}else
+    	{
+    		if(p_146284_1_.id == 21)
+    		{
+    			this.gamePhase = 4;
+				this.playerStatus = 3;
+				this.gameResult = EnumDqmCasinoBJOdds.OddsLose;
+    			ThreadCasinoBJ threadBJ = new ThreadCasinoBJ(this.epa, this, 4, 2);
+        		threadBJ.start();
+    		}else if(p_146284_1_.id == 22)
+    		{
+    			int mp = ExtendedPlayerProperties.get(epa).getMP();
+    			if(mp >= EnumDqmSkillJ.JSKILL_0_12.getNeedpt_Val())
+    			{
+    				this.epa.playSound("dqr:player.ikasama", 1.0F, 1.0F);
+    				PacketHandler.INSTANCE.sendToServer(new MessageServerFunction(EnumDqmFuncPacketCode.MPchange, EnumDqmSkillJ.JSKILL_0_12.getNeedpt_Val() * -1));
+    				//this.soundPlay = 15;
+    				trumpSet.remove(trumpSet.size() - 1);
+
+    				this.gameResult = null;
+    				playerStatus = 1;
+    				this.gamePhase = 2;
+    				/*
+	    			this.gamePhase = 4;
+					this.playerStatus = 3;
+					this.gameResult = EnumDqmCasinoBJOdds.OddsLose;
+	    			ThreadCasinoBJ threadBJ = new ThreadCasinoBJ(this.epa, this, 4, 2);
+	        		threadBJ.start();
+	        		*/
     			}
     		}
     	}

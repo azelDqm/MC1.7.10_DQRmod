@@ -27,6 +27,8 @@ import dqr.items.miscs.DqmItemLittlemedal;
 import dqr.packetMessage.MessageClientSound;
 import dqr.playerData.ExtendedPlayerProperties;
 import dqr.playerData.ExtendedPlayerProperties2;
+import dqr.playerData.ExtendedPlayerProperties3;
+import dqr.playerData.ExtendedPlayerProperties6;
 
 public class EntityEventHandler {
 
@@ -63,6 +65,29 @@ public class EntityEventHandler {
         		DQR.bugFix.doSkillWPRecalc(ep);
         		ExtendedPlayerProperties2.get(ep).setBugFixFlg(EnumDqmBugFix.Fix087SKILLW.getId(), 1);
         	}
+        }
+
+        if(DQR.bugFixFlg0947_8 == 1)
+        {
+	        if (!event.player.worldObj.isRemote && event.player instanceof EntityPlayer)
+	        {
+	        	EntityPlayer ep = (EntityPlayer)event.player;
+	        	if(ExtendedPlayerProperties2.get(ep).getBugFixFlg(EnumDqmBugFix.Fix09478PetDataCopy.getId()) < 1)
+	        	{
+	        		//t4vqu38tvuqputvutvouu
+	        		/*ここで、ペットデータをEPP6にコピー＆旧データを削除*/
+	        		/*初回起動時に、ペットデータを取得できてるかの検証後処理追加*/
+	        		NBTTagCompound petData = ExtendedPlayerProperties3.get(ep).getFixNBTPlayerPetList();
+	        		if(petData == null)
+	        		{
+	        			petData = new NBTTagCompound();
+	        		}
+	        		ExtendedPlayerProperties6.get(ep).setNBTPlayerPetList(petData);
+	        		ExtendedPlayerProperties3.get(ep).setFixNBTPlayerPetList();
+
+	        		ExtendedPlayerProperties2.get(ep).setBugFixFlg(EnumDqmBugFix.Fix09478PetDataCopy.getId(), 1);
+	        	}
+	        }
         }
     }
 

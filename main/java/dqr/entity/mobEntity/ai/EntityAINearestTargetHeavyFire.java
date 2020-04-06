@@ -10,6 +10,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAITarget;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.PotionEffect;
+import dqr.DQR;
 import dqr.api.potion.DQPotionMinus;
 import dqr.entity.mobEntity.DqmMobBase;
 
@@ -89,7 +90,7 @@ public class EntityAINearestTargetHeavyFire extends EntityAITarget
         					EntityPlayer ep = (EntityPlayer)list.get(cnt);
         					if(!ep.isPotionActive(DQPotionMinus.debuffHeavyFire.id));
         					{
-        						ep.addPotionEffect(new PotionEffect(DQPotionMinus.debuffHeavyFire.id, 100, this.attacker.mobAI.getHeavyFire()));
+        						DQR.func.addPotionEffect2(ep, new PotionEffect(DQPotionMinus.debuffHeavyFire.id, 100, this.attacker.mobAI.getHeavyFire()));
         					}
         				}
         			}

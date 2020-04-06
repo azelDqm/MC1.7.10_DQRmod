@@ -25,6 +25,7 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import dqr.DQR;
 import dqr.api.potion.DQPotionPlus;
 
 /*
@@ -377,7 +378,7 @@ public class MagicEntityBuff extends MagicEntity implements IProjectile{
 
                             	if(this.potEff != null)
                             	{
-                            		eb.addPotionEffect(this.potEff);
+                            		DQR.func.addPotionEffect2(eb, this.potEff);
                             	}
 
                                 //マルチプレイ時に、両者がプレイヤーだった時のパケット送信処理
@@ -406,7 +407,7 @@ public class MagicEntityBuff extends MagicEntity implements IProjectile{
 
 	                        	if(this.potEff != null)
 	                        	{
-	                        		eb.addPotionEffect(this.potEff);
+	                        		DQR.func.addPotionEffect2(eb, this.potEff);
 	                        	}
 
 	                            //マルチプレイ時に、両者がプレイヤーだった時のパケット送信処理

@@ -33,10 +33,14 @@ import dqr.playerData.MessagePlayerProperties;
 import dqr.playerData.MessagePlayerProperties2;
 import dqr.playerData.MessagePlayerProperties3;
 import dqr.playerData.MessagePlayerProperties4;
+import dqr.playerData.MessagePlayerProperties5;
+import dqr.playerData.MessagePlayerProperties6;
 import dqr.playerData.MessagePlayerPropertiesHandler;
 import dqr.playerData.MessagePlayerPropertiesHandler2;
 import dqr.playerData.MessagePlayerPropertiesHandler3;
 import dqr.playerData.MessagePlayerPropertiesHandler4;
+import dqr.playerData.MessagePlayerPropertiesHandler5;
+import dqr.playerData.MessagePlayerPropertiesHandler6;
 
 public class PacketHandler {
     /*MOD固有のSimpleNetworkWrapperを取得。
@@ -71,6 +75,8 @@ public class PacketHandler {
         INSTANCE.registerMessage(MessageClientDataSendHandler.class, MessageClientDataSend.class, 15, Side.CLIENT);
 
         INSTANCE.registerMessage(MessagePlayerPropertiesHandler4.class, MessagePlayerProperties4.class, 16, Side.CLIENT);
+        INSTANCE.registerMessage(MessagePlayerPropertiesHandler5.class, MessagePlayerProperties5.class, 17, Side.CLIENT);
+        INSTANCE.registerMessage(MessagePlayerPropertiesHandler6.class, MessagePlayerProperties6.class, 18, Side.CLIENT);
         //INSTANCE.registerMessage(MessagePlayerPropertiesHandler3.class, MessagePlayerProperties3.class, 14, Side.SERVER);
     }
 }

@@ -1,6 +1,8 @@
 package dqr.functions;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.Random;
 import java.util.UUID;
 
@@ -10,10 +12,14 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChatComponentTranslation;
@@ -55,6 +61,8 @@ import dqr.items.base.DqmItemFoodSeedBase;
 import dqr.packetMessage.MessageClientSound;
 import dqr.playerData.ExtendedPlayerProperties;
 import dqr.playerData.ExtendedPlayerProperties3;
+import dqr.playerData.ExtendedPlayerProperties5;
+import dqr.potion.DqmPotionEffect;
 
 public class FuncCommon {
 
@@ -103,11 +111,13 @@ public class FuncCommon {
 	{
 
     	PotionEffect pe = null;
+    	boolean flg = false;
+
 		pe = par1.getActivePotionEffect(DQPotionMinus.debuffStop);
 		if(pe != null && pe.getDuration() > 0)
 		{
 			//System.out.println("Rariho:" + pe.getDuration());
-			return true;
+			flg = true;
 		}
 
 		pe = par1.getActivePotionEffect(DQPotionMinus.debuffRariho);
@@ -115,9 +125,60 @@ public class FuncCommon {
 		if(pe != null && pe.getDuration() > DQR.conf.rarihoFreeDuration)
 		{
 			//System.out.println("Rariho:" + pe.getDuration());
-			return true;
+			flg =  true;
 		}
-		return false;
+
+
+		if(par1 instanceof EntityPlayer)
+		{
+			EntityPlayer ent = (EntityPlayer)par1;
+
+			//遊び人スキル
+			if(ExtendedPlayerProperties5.get(ent).getJobSPSkillDuration(EnumDqmJob.Asobinin.getId(), 2, ent.worldObj.getWorldTime()) > 0)
+			{
+				flg =  true;
+			}
+		}else if(par1 instanceof DqmPetBase)
+		{
+			DqmPetBase ent = (DqmPetBase)par1;
+
+			//遊び人スキル
+			if(ent.getJobSPSkillDuration(EnumDqmJob.Asobinin.getId(), 2) > 0)
+			{
+				flg =  true;
+			}
+		}else if(par1 instanceof DqmMobBase)
+		{
+			DqmMobBase ent = (DqmMobBase)par1;
+
+			//遊び人スキル
+			if(ent.getJobSPSkillDuration(EnumDqmJob.Asobinin.getId(), 2) > 0)
+			{
+				flg =  true;
+			}
+		}
+
+		//.func_111184_a(SharedMonsterAttributes.movementSpeed, "91AEAA56-376B-4498-935B-2F7F68070636", 0.20000000298023224D, 2);
+		// func_111184_a(IAttribute p_111184_1_, String p_111184_2_, double p_111184_3_, int p_111184_5_)
+
+		AttributeModifier attributemodifier = new AttributeModifier(UUID.fromString("A1AEAA56-376B-4498-935B-2F7F68070636"), "DQR-BIND-SPEED-SET", -10D, 0);
+		if(flg)
+		{
+			//SharedMonsterAttributes.movementSpeed, "91AEAA56-376B-4498-935B-2F7F68070635", 0.20000000298023224D, 2
+			//AttributeModifier attributemodifier = new AttributeModifier(UUID.fromString(p_111184_2_), this.getName(), p_111184_3_, p_111184_5_);
+			if(par1.getEntityAttribute(SharedMonsterAttributes.movementSpeed).getModifier(UUID.fromString("A1AEAA56-376B-4498-935B-2F7F68070636")) == null)
+			{
+				par1.getEntityAttribute(SharedMonsterAttributes.movementSpeed).applyModifier(attributemodifier);
+			}
+		}else
+		{
+			if(par1.getEntityAttribute(SharedMonsterAttributes.movementSpeed).getModifier(UUID.fromString("A1AEAA56-376B-4498-935B-2F7F68070636")) != null)
+			{
+				par1.getEntityAttribute(SharedMonsterAttributes.movementSpeed).removeModifier(attributemodifier);
+			}
+		}
+
+		return flg;
 	}
 
 	public boolean isPlayer(Entity par1)
@@ -180,7 +241,7 @@ public class FuncCommon {
 
 	public void debugString(String par1, Class par2)
 	{
-		this.debugString(par1, par2, 1);
+		this.debugString(par1, par2, -1);
 		/*
 		if(DQR.debug != 0)
 		{
@@ -193,7 +254,7 @@ public class FuncCommon {
 	{
 		try
 		{
-			if(DQR.debug == debugNo || debugNo == -1)
+			if(DQR.debug == debugNo || (debugNo == -1 && DQR.debug != 0))
 			{
 				if(par2 != null)
 				{
@@ -860,94 +921,94 @@ public class FuncCommon {
 		{
 			//healHP = (float)rand.nextInt(5);
 			ep.removePotionEffect(DQPotionMinus.potionPoison.id);
-			ep.addPotionEffect(new PotionEffect(DQPotionPlus.potionDokukesisou.id, 200, 0));
+			DQR.func.addPotionEffect2(ep, new PotionEffect(DQPotionPlus.potionDokukesisou.id, 200, 0));
 		}else if(item.getUnlocalizedName().equalsIgnoreCase(DQSeeds.itemDokukesisou2.getUnlocalizedName()))
 		{
 			//healHP = 10.0F + (float)rand.nextInt(10);
 			ep.removePotionEffect(DQPotionMinus.potionPoison.id);
-			ep.addPotionEffect(new PotionEffect(DQPotionPlus.potionDokukesisou.id, 300, 1));
+			DQR.func.addPotionEffect2(ep, new PotionEffect(DQPotionPlus.potionDokukesisou.id, 300, 1));
 		}else if(item.getUnlocalizedName().equalsIgnoreCase(DQSeeds.itemDokukesisou3.getUnlocalizedName()))
 		{
 			ep.removePotionEffect(DQPotionMinus.potionPoison.id);
 			ep.removePotionEffect(DQPotionMinus.potionPoisonX.id);
-			ep.addPotionEffect(new PotionEffect(DQPotionPlus.potionDokukesisou.id, 400, 1));
+			DQR.func.addPotionEffect2(ep, new PotionEffect(DQPotionPlus.potionDokukesisou.id, 400, 1));
 			//healHP = 20.0F + (float)rand.nextInt(10);
 		}else if(item.getUnlocalizedName().equalsIgnoreCase(DQSeeds.itemTikaranotane.getUnlocalizedName()))
 		{
 			//System.out.println("DEBUGLINE:" + item.getUnlocalizedName());
-			ep.addPotionEffect(new PotionEffect(DQPotionPlus.potionTikaranotane.id, 600, 0));
+			DQR.func.addPotionEffect2(ep, new PotionEffect(DQPotionPlus.potionTikaranotane.id, 600, 0));
 		}else if(item.getUnlocalizedName().equalsIgnoreCase(DQSeeds.itemTikaranotane2.getUnlocalizedName()))
 		{
-			ep.addPotionEffect(new PotionEffect(DQPotionPlus.potionTikaranotane.id, 1200, 1));
+			DQR.func.addPotionEffect2(ep, new PotionEffect(DQPotionPlus.potionTikaranotane.id, 1200, 1));
 		}else if(item.getUnlocalizedName().equalsIgnoreCase(DQSeeds.itemTikaranotane3.getUnlocalizedName()))
 		{
-			ep.addPotionEffect(new PotionEffect(DQPotionPlus.potionTikaranotane.id, 1800, 2));
+			DQR.func.addPotionEffect2(ep, new PotionEffect(DQPotionPlus.potionTikaranotane.id, 1800, 2));
 		}else if(item.getUnlocalizedName().equalsIgnoreCase(DQSeeds.itemMamorinotane.getUnlocalizedName()))
 		{
-			ep.addPotionEffect(new PotionEffect(DQPotionPlus.potionMamorinotane.id, 600, 0));
+			DQR.func.addPotionEffect2(ep, new PotionEffect(DQPotionPlus.potionMamorinotane.id, 600, 0));
 		}else if(item.getUnlocalizedName().equalsIgnoreCase(DQSeeds.itemMamorinotane2.getUnlocalizedName()))
 		{
-			ep.addPotionEffect(new PotionEffect(DQPotionPlus.potionMamorinotane.id, 1200, 1));
+			DQR.func.addPotionEffect2(ep, new PotionEffect(DQPotionPlus.potionMamorinotane.id, 1200, 1));
 		}else if(item.getUnlocalizedName().equalsIgnoreCase(DQSeeds.itemMamorinotane3.getUnlocalizedName()))
 		{
-			ep.addPotionEffect(new PotionEffect(DQPotionPlus.potionMamorinotane.id, 1800, 2));
+			DQR.func.addPotionEffect2(ep, new PotionEffect(DQPotionPlus.potionMamorinotane.id, 1800, 2));
 		}else if(item.getUnlocalizedName().equalsIgnoreCase(DQSeeds.itemSubayasanotane.getUnlocalizedName()))
 		{
-			ep.addPotionEffect(new PotionEffect(DQPotionPlus.potionSubayasanotane.id, 600, 0));
+			DQR.func.addPotionEffect2(ep, new PotionEffect(DQPotionPlus.potionSubayasanotane.id, 600, 0));
 		}else if(item.getUnlocalizedName().equalsIgnoreCase(DQSeeds.itemSubayasanotane2.getUnlocalizedName()))
 		{
-			ep.addPotionEffect(new PotionEffect(DQPotionPlus.potionSubayasanotane.id, 1200, 1));
+			DQR.func.addPotionEffect2(ep, new PotionEffect(DQPotionPlus.potionSubayasanotane.id, 1200, 1));
 		}else if(item.getUnlocalizedName().equalsIgnoreCase(DQSeeds.itemSubayasanotane3.getUnlocalizedName()))
 		{
-			ep.addPotionEffect(new PotionEffect(DQPotionPlus.potionSubayasanotane.id, 1800, 2));
+			DQR.func.addPotionEffect2(ep, new PotionEffect(DQPotionPlus.potionSubayasanotane.id, 1800, 2));
 		}else if(item.getUnlocalizedName().equalsIgnoreCase(DQSeeds.itemHonoonomi.getUnlocalizedName()))
 		{
-			ep.addPotionEffect(new PotionEffect(DQPotionPlus.potionHonoonomi.id, 600, 0));
+			DQR.func.addPotionEffect2(ep, new PotionEffect(DQPotionPlus.potionHonoonomi.id, 600, 0));
 		}else if(item.getUnlocalizedName().equalsIgnoreCase(DQSeeds.itemHonoonomi2.getUnlocalizedName()))
 		{
-			ep.addPotionEffect(new PotionEffect(DQPotionPlus.potionHonoonomi.id, 1200, 1));
+			DQR.func.addPotionEffect2(ep, new PotionEffect(DQPotionPlus.potionHonoonomi.id, 1200, 1));
 		}else if(item.getUnlocalizedName().equalsIgnoreCase(DQSeeds.itemHonoonomi3.getUnlocalizedName()))
 		{
-			ep.addPotionEffect(new PotionEffect(DQPotionPlus.potionHonoonomi.id, 1800, 2));
+			DQR.func.addPotionEffect2(ep, new PotionEffect(DQPotionPlus.potionHonoonomi.id, 1800, 2));
 		}else if(item.getUnlocalizedName().equalsIgnoreCase(DQSeeds.itemIyasinomi.getUnlocalizedName()))
 		{
-			ep.addPotionEffect(new PotionEffect(DQPotionPlus.potionIyasinomi.id, 600, 0));
+			DQR.func.addPotionEffect2(ep, new PotionEffect(DQPotionPlus.potionIyasinomi.id, 600, 0));
 		}else if(item.getUnlocalizedName().equalsIgnoreCase(DQSeeds.itemIyasinomi2.getUnlocalizedName()))
 		{
-			ep.addPotionEffect(new PotionEffect(DQPotionPlus.potionIyasinomi.id, 1200, 1));
+			DQR.func.addPotionEffect2(ep, new PotionEffect(DQPotionPlus.potionIyasinomi.id, 1200, 1));
 		}else if(item.getUnlocalizedName().equalsIgnoreCase(DQSeeds.itemIyasinomi3.getUnlocalizedName()))
 		{
-			ep.addPotionEffect(new PotionEffect(DQPotionPlus.potionIyasinomi.id, 1800, 2));
+			DQR.func.addPotionEffect2(ep, new PotionEffect(DQPotionPlus.potionIyasinomi.id, 1800, 2));
 		}else if(item.getUnlocalizedName().equalsIgnoreCase(DQSeeds.itemMahounomiI.getUnlocalizedName()))
 		{
-			ep.addPotionEffect(new PotionEffect(DQPotionPlus.potionMahounomi.id, 600, 0));
+			DQR.func.addPotionEffect2(ep, new PotionEffect(DQPotionPlus.potionMahounomi.id, 600, 0));
 		}else if(item.getUnlocalizedName().equalsIgnoreCase(DQSeeds.itemMahounomiI2.getUnlocalizedName()))
 		{
-			ep.addPotionEffect(new PotionEffect(DQPotionPlus.potionMahounomi.id, 1200, 1));
+			DQR.func.addPotionEffect2(ep, new PotionEffect(DQPotionPlus.potionMahounomi.id, 1200, 1));
 		}else if(item.getUnlocalizedName().equalsIgnoreCase(DQSeeds.itemMahounomiI3.getUnlocalizedName()))
 		{
-			ep.addPotionEffect(new PotionEffect(DQPotionPlus.potionMahounomi.id, 1800, 2));
+			DQR.func.addPotionEffect2(ep, new PotionEffect(DQPotionPlus.potionMahounomi.id, 1800, 2));
 		}else if(item.getUnlocalizedName().equalsIgnoreCase(DQSeeds.itemMaryokunotaneI.getUnlocalizedName()))
 		{
-			ep.addPotionEffect(new PotionEffect(DQPotionPlus.potionMaryokunotane.id, 600, 0));
+			DQR.func.addPotionEffect2(ep, new PotionEffect(DQPotionPlus.potionMaryokunotane.id, 600, 0));
 		}else if(item.getUnlocalizedName().equalsIgnoreCase(DQSeeds.itemMaryokunotaneI2.getUnlocalizedName()))
 		{
-			ep.addPotionEffect(new PotionEffect(DQPotionPlus.potionMaryokunotane.id, 1200, 1));
+			DQR.func.addPotionEffect2(ep, new PotionEffect(DQPotionPlus.potionMaryokunotane.id, 1200, 1));
 		}else if(item.getUnlocalizedName().equalsIgnoreCase(DQSeeds.itemMaryokunotaneI3.getUnlocalizedName()))
 		{
-			ep.addPotionEffect(new PotionEffect(DQPotionPlus.potionMaryokunotane.id, 1800, 2));
+			DQR.func.addPotionEffect2(ep, new PotionEffect(DQPotionPlus.potionMaryokunotane.id, 1800, 2));
 		}else if(item.getUnlocalizedName().equalsIgnoreCase(DQSeeds.itemOugon.getUnlocalizedName()))
 		{
-			ep.addPotionEffect(new PotionEffect(DQPotionPlus.potionOugonnomi.id, 600, 0));
+			DQR.func.addPotionEffect2(ep, new PotionEffect(DQPotionPlus.potionOugonnomi.id, 600, 0));
 		}else if(item.getUnlocalizedName().equalsIgnoreCase(DQSeeds.itemOugon2.getUnlocalizedName()))
 		{
-			ep.addPotionEffect(new PotionEffect(DQPotionPlus.potionOugonnomi.id, 1200, 1));
+			DQR.func.addPotionEffect2(ep, new PotionEffect(DQPotionPlus.potionOugonnomi.id, 1200, 1));
 		}else if(item.getUnlocalizedName().equalsIgnoreCase(DQSeeds.itemOugon3.getUnlocalizedName()))
 		{
-			ep.addPotionEffect(new PotionEffect(DQPotionPlus.potionOugonnomi.id, 1800, 2));
+			DQR.func.addPotionEffect2(ep, new PotionEffect(DQPotionPlus.potionOugonnomi.id, 1800, 2));
 		}else if(item.getUnlocalizedName().equalsIgnoreCase(DQSeeds.itemOugon4.getUnlocalizedName()))
 		{
-			ep.addPotionEffect(new PotionEffect(DQPotionPlus.potionOugonnomi.id, 600, 3));
+			DQR.func.addPotionEffect2(ep, new PotionEffect(DQPotionPlus.potionOugonnomi.id, 600, 3));
 		}
 
 
@@ -1105,4 +1166,144 @@ public class FuncCommon {
     	}
     	return ret;
     }
+
+    public PotionEffect addPotionEffect2(EntityLivingBase elb, PotionEffect potion)
+    {
+    	PotionEffect retPotion = potion;
+    	int potionIdx = DQR.conf.PotionIDidx;
+    	if(potion.getPotionID() >= potionIdx && potion.getPotionID() <= potionIdx + DQR.potion.tempNum)
+    	{
+    		elb.removePotionEffectClient(retPotion.getPotionID());
+    		elb.addPotionEffect(new DqmPotionEffect(retPotion));
+    	}else
+    	{
+    		elb.addPotionEffect(retPotion);
+    	}
+
+    	return retPotion;
+    }
+
+    public boolean removeBadEffectAll(EntityPlayer ep)
+    {
+    	boolean ret = false;
+
+    	Collection potions = ep.getActivePotionEffects();
+		ArrayList<PotionEffect> newPot = new ArrayList();
+
+		for (Iterator it = potions.iterator(); it.hasNext();)
+		{
+			//System.out.println("TEST???????????????");
+			PotionEffect eff = (PotionEffect)(it.next());
+			Potion pot = Potion.potionTypes[eff.getPotionID()];
+			try{
+    			if(DQR.potionFunc.isPotionMinus(pot))
+				{
+    				newPot.add(eff);
+				}else if(DQR.potionFunc.isDQPotionMinus(pot))
+				{
+					newPot.add(eff);
+				}else if(ep.worldObj.isRemote)
+				{
+					if(pot.isBadEffect())
+					{
+						newPot.add(eff);
+					}
+				}
+			}
+    		catch(Exception e)
+			{
+
+			}
+		}
+
+		for(int cnt = 0; cnt < newPot.size(); cnt++)
+		{
+			if(newPot.get(cnt).getDuration() > 40)
+			{
+				ep.removePotionEffect(newPot.get(cnt).getPotionID());
+			}
+		}
+
+
+		ExtendedPlayerProperties5.get(ep).refreshDqrPotionEffects(ep.worldObj.getWorldTime());
+
+		NBTTagCompound dqrPotionSet = ExtendedPlayerProperties5.get(ep).getDqrPotionEffectsSet();
+		Object[] keys = dqrPotionSet.func_150296_c().toArray();
+
+		ArrayList<String> delPot = new ArrayList();
+
+		for(int cnt3 = 0; cnt3 < keys.length; cnt3++)
+		{
+			try{
+				String key = (String)keys[cnt3];
+				NBTTagCompound nbt = dqrPotionSet.getCompoundTag(key);
+
+
+				if(nbt.hasKey("isDebuff"))
+				{
+					if(nbt.getInteger("isDebuff") == 1)
+					{
+						delPot.add(key);
+					}
+				}
+			}
+			catch(Exception e)
+			{
+
+			}
+		}
+
+		for(int delCnt = 0; delCnt < delPot.size(); delCnt++)
+		{
+			ExtendedPlayerProperties5.get(ep).removeDqrPotionEffects(delPot.get(delCnt));
+		}
+
+		ExtendedPlayerProperties5.get(ep).refreshDqrPotionEffects(ep.worldObj.getWorldTime());
+
+    	return ret;
+    }
+
+    /**
+     * プレイヤーのホットバーのアイテムの中から最大の火力が出る物を取得し、その攻撃力を返す
+     *
+     * @param ep プレイヤー
+     * @return idx0:アイテムスロット番号 idx1:最大攻撃力
+     */
+    public int[] getMaxAttackFromInventory(EntityPlayer ep)
+    {
+    	int[] ret = new int[2];
+    	int maxCnt = DQR.conf.DqmDifficulty < 3 ? ep.inventory.mainInventory.length : ep.inventory.getHotbarSize();
+
+    	int tmpDamage = -1;
+    	int tmpIdx = -1;
+    	int getDam = 0;
+    	//ep.inventory.getHotbarSize()
+    	for(int cnt = 0; cnt < maxCnt; cnt++)
+    	{
+    		ItemStack item =ep.inventory.mainInventory[cnt];
+    		/*
+    		if(item != null)
+    		{
+    			System.out.println("test : " + item.getDisplayName() + "[" + cnt + "]");
+    		}
+    		*/
+    		getDam = DQR.calcPlayerStatus.calcAttack(ep, item);
+    		if(tmpDamage < getDam)
+    		{
+    			tmpDamage = getDam;
+    			tmpIdx = cnt;
+    		}
+    	}
+
+    	//System.out.println("test : " + tmpDamage + " / " + tmpIdx);
+    	ret[1] = tmpDamage;
+    	ret[0] = tmpIdx;
+    	return ret;
+    }
+
+    public ChatComponentTranslation getTransform(String key)
+    {
+    	return new ChatComponentTranslation(key,new Object[] {});
+    }
+
 }

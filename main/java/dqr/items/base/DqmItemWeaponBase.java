@@ -368,7 +368,7 @@ public class DqmItemWeaponBase extends Item{
 			            			if(rand.nextInt(100) < enumMagic.getRate())
 			            			{
 				            			EntityLivingBase elb = (EntityLivingBase)target;
-			            				elb.addPotionEffect(new PotionEffect(pot.id, enumMagic.getAttack(), 0));
+			            				DQR.func.addPotionEffect2(elb, new PotionEffect(pot.id, enumMagic.getAttack(), 0));
 			            				elb.worldObj.playSoundAtEntity(elb, "dqr:player.down", 1.0F, 1.0F);
 			            			}
 		            			}

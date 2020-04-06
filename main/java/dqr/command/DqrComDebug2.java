@@ -6,10 +6,12 @@ import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.MathHelper;
 import dqr.DQR;
+import dqr.playerData.ExtendedPlayerProperties6;
 
 
 public class DqrComDebug2 extends CommandBase {
@@ -71,6 +73,18 @@ public class DqrComDebug2 extends CommandBase {
         		if("kbset".equalsIgnoreCase(var2[1]))
         		{
         			ep.getEntityAttribute(SharedMonsterAttributes.knockbackResistance).setBaseValue((double)Integer.parseInt(var2[2]));
+        		}
+
+        		if("petlist".equalsIgnoreCase(var2[1]))
+        		{
+        			NBTTagCompound playerPet = ExtendedPlayerProperties6.get(ep).getNBTPlayerPetList();
+        			Object[] keys = playerPet.func_150296_c().toArray();
+        			for(int cnt = 0; cnt < keys.length; cnt++)
+        			{
+        				DQR.func.debugString("TEST_Pet 1 : " + (String)keys[cnt]);
+        			}
+
+        			//ep.getEntityAttribute(SharedMonsterAttributes.knockbackResistance).setBaseValue((double)Integer.parseInt(var2[2]));
         		}
 
         		if("kbdo".equalsIgnoreCase(var2[1]))

@@ -29,6 +29,8 @@ public class DqrWorldData extends WorldSavedData
 	public int[] KimeraDim = new int[5];
 	public int[] KimeraEnable = new int[5];
 
+	private long PetUniqueNum = 0;
+
     private static final String __OBFID = "CL_00000577";
 
     public DqrWorldData(String p_i2140_1_)
@@ -76,6 +78,8 @@ public class DqrWorldData extends WorldSavedData
     		this.KimeraDim[cnt] = nbt.getInteger("KimeraDim_" + cnt);
     		this.KimeraEnable[cnt] = nbt.getInteger("KimeraEnable_" + cnt);
     	}
+
+    	this.PetUniqueNum = nbt.getLong("PetUniqueNum");
     }
 
     /**
@@ -118,6 +122,8 @@ public class DqrWorldData extends WorldSavedData
     		nbt.setInteger("KimeraDim_" + cnt, this.KimeraDim[cnt]);
     		nbt.setInteger("KimeraEnable_" + cnt, this.KimeraEnable[cnt]);
     	}
+
+    	nbt.setLong("PetUniqueNum", this.PetUniqueNum);
     }
 
     public void setRura(int par1, double par2, double par3, double par4, int par5, int par6)
@@ -444,5 +450,21 @@ public class DqrWorldData extends WorldSavedData
     public int[] getRuraSinEnableA()
     {
     	return this.RuraSinEnable;
+    }
+
+    public long getNextPetNum()
+    {
+    	this.PetUniqueNum = this.PetUniqueNum + 1;
+    	return this.PetUniqueNum;
+    }
+
+    public long getCurrentPetNum()
+    {
+    	return this.PetUniqueNum;
+    }
+
+    public void setCurrentPetNum(long par1)
+    {
+    	this.PetUniqueNum = par1;
     }
 }

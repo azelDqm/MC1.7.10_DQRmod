@@ -33,6 +33,7 @@ import dqr.gui.casinoExchange.tab.CasinoExchangeTabs;
 import dqr.gui.medalKing.tab.MedalKingTabs;
 import dqr.gui.petStatus.tab.PetStatusTabs;
 import dqr.gui.playerHUD.GuiBuffBar;
+import dqr.gui.playerHUD.GuiBuffBar2;
 import dqr.gui.playerHUD.GuiLogger;
 import dqr.gui.playerHUD.GuiNewLogger;
 import dqr.gui.playerHUD.GuiParty;
@@ -113,6 +114,8 @@ public class ClientProxy extends CommonProxy
 
     	MinecraftForge.EVENT_BUS.register(new GuiPositionMode(Minecraft.getMinecraft()));
     	MinecraftForge.EVENT_BUS.register(new GuiBuffBar(Minecraft.getMinecraft()));
+    	MinecraftForge.EVENT_BUS.register(new GuiBuffBar2(Minecraft.getMinecraft()));
+    	//MinecraftForge.EVENT_BUS.register(new GuiBuffBar3(Minecraft.getMinecraft()));
     	MinecraftForge.EVENT_BUS.register(new GuiLogger(Minecraft.getMinecraft()));
     	DQR.loglog = new GuiNewLogger(Minecraft.getMinecraft());
     	MinecraftForge.EVENT_BUS.register(DQR.loglog);

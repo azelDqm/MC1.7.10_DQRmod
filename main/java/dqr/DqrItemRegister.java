@@ -2263,6 +2263,8 @@ public class DqrItemRegister {
 		GameRegistry.registerItem(DQMagics.itemJSkillBookB, "ItemJSkillBookB");
 		GameRegistry.registerItem(DQMagics.itemJSkillBookG, "ItemJSkillBookG");
 		GameRegistry.registerItem(DQMagics.itemJSkillBookY, "ItemJSkillBookY");
+
+		GameRegistry.registerItem(DQMagicTools.itemPetSuisyou2, "ItemPetSuisyou2");
 	}
 }
 

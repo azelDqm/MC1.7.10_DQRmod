@@ -10,7 +10,8 @@ public enum EnumDqmFuncPacketCode {
 	SyncWRuraSin(7, "SyncWRuraSin"),
 	SyncCRuraSin(8, "SyncCRuraSin"),
 	CasinoCoinPlus(9, "CasinoCoinPlus"),
-	CasinoCoinMinus(10, "CasinoCoinMinus");
+	CasinoCoinMinus(10, "CasinoCoinMinus"),
+	MPchange(11, "MPchange");
 
     private final int id;      //威力(攻撃力・回復量)
     private final String name;   //飛距離tick

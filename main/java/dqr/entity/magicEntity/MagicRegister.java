@@ -78,5 +78,7 @@ public class MagicRegister {
 		EntityRegistry.registerModEntity(MagicEntityBasiRura.class, "dqm.MagicEntityBasiRura", idxID + 27, DQR.instance, 128, 5, true);
 		EntityRegistry.registerModEntity(MagicEntityArrow.class, "dqm.MagicEntityArrow", idxID + 28, DQR.instance, 128, 5, true);
 
+		EntityRegistry.registerModEntity(EntityDummy.class, "dqm.EntityDummy", idxID + 29, DQR.instance, 128, 5, true);
+
 	}
 }

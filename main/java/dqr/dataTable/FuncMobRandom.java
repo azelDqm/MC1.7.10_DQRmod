@@ -96,6 +96,16 @@ import dqr.entity.mobEntity.monsterEnd.DqmEntityPandorabox;
 import dqr.entity.mobEntity.monsterEnd.DqmEntityRyuiso;
 import dqr.entity.mobEntity.monsterEnd.DqmEntityShadopan2;
 import dqr.entity.mobEntity.monsterEnd.DqmEntityTororubonba;
+import dqr.entity.mobEntity.monsterEtc.DqmEntityFurosutogizumo;
+import dqr.entity.mobEntity.monsterEtc.DqmEntityGizumo;
+import dqr.entity.mobEntity.monsterEtc.DqmEntityHiitogizumo;
+import dqr.entity.mobEntity.monsterEtc.DqmEntityHitokuibako;
+import dqr.entity.mobEntity.monsterEtc.DqmEntityKingbesu;
+import dqr.entity.mobEntity.monsterEtc.DqmEntityMimikkukibako;
+import dqr.entity.mobEntity.monsterEtc.DqmEntityNorowaretaturugi;
+import dqr.entity.mobEntity.monsterEtc.DqmEntityPandorakibako;
+import dqr.entity.mobEntity.monsterEtc.DqmEntitySuraimuking;
+import dqr.entity.mobEntity.monsterEtc.DqmEntityTubo;
 import dqr.entity.mobEntity.monsterHell.DqmEntityAnkokumajin;
 import dqr.entity.mobEntity.monsterHell.DqmEntityAroinpu;
 import dqr.entity.mobEntity.monsterHell.DqmEntityBaburuking;
@@ -302,6 +312,26 @@ public class FuncMobRandom {
 	Random rand = new Random();
 
 	public FuncMobRandom(){}
+
+	public DqmMobBase getRandomETC(World par1)
+	{
+		int val = rand.nextInt(10);
+
+		switch(val)
+		{
+			case 0: return new DqmEntityFurosutogizumo(par1);
+			case 1: return new DqmEntityGizumo(par1);
+			case 2: return new DqmEntityHiitogizumo(par1);
+			case 3: return new DqmEntityHitokuibako(par1);
+			case 4: return new DqmEntityKingbesu(par1);
+			case 5: return new DqmEntityMimikkukibako(par1);
+			case 6: return new DqmEntityNorowaretaturugi(par1);
+			case 7: return new DqmEntityPandorakibako(par1);
+			case 8: return new DqmEntitySuraimuking(par1);
+			case 9: return new DqmEntityTubo(par1);
+			default :return new DqmEntitySura(par1);
+		}
+	}
 
 	public DqmMobBase getRandomBoss(World par1)
 	{

@@ -6,6 +6,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IExtendedEntityProperties;
+import dqr.DQR;
 import dqr.PacketHandler;
 import dqr.entity.npcEntity.npc.DqmEntityNPCBukiya;
 import dqr.entity.petEntity.DqmPetBase;
@@ -14,11 +15,13 @@ public class ExtendedPlayerProperties3 implements IExtendedEntityProperties {
 
 	public final static String EXT_PROP_NAME = "DqmPlayerData3";
 	public final static int SKILL_MAX_COUNTER = 20;
-
+	//public static EntityPlayer thePlayer = null;
 	private int[] jobPermission = new int[32];
 	private NBTTagCompound NBTPlayerPetList = new NBTTagCompound();
 	private int petCount;
 
+	private int dataVersion3 = 0; //職業特技データ移行フラグ
+	private int dataVersion4 = 0; //ペットデータ移行フラグ
     private String playerName = null;
     private String playerUUID = null;
 
@@ -32,10 +35,16 @@ public class ExtendedPlayerProperties3 implements IExtendedEntityProperties {
 	private int[][] weaponSkillPermission = new int[64][SKILL_MAX_COUNTER];
 	private int[] weaponSkillSet = new int[64];
 
+
 	private int[][] jobSkillSet = new int[32][9];
 	private int[][] jobSkillSet2 = new int[32][9];
 	private int[][] jobSPSkillSet = new int[32][36];
 	private int[] JobSp = new int[32];
+
+
+	//private long[][] jobSPSkillCT = new long[32][36];
+	private NBTTagCompound jobSPSkillCT = new NBTTagCompound();
+	private NBTTagCompound jobSPSkillDuration = new NBTTagCompound();
 
 	private NBTTagCompound petStatudData = null;
 	private DqmPetBase statusPet;
@@ -130,18 +139,161 @@ public class ExtendedPlayerProperties3 implements IExtendedEntityProperties {
 	@Override
 	public void saveNBTData(NBTTagCompound compound) {
         NBTTagCompound nbt = new NBTTagCompound();
+        DQR.func.debugString("PlayerDataTest1_saveNBTData");
 
-        for(int cnt = 0; cnt < 32; cnt++)
+        if(DQR.bugFixFlg0947_8 == 1)
         {
-        	nbt.setInteger("JobSp_" + cnt, JobSp[cnt]);
+        	if(dataVersion3 == 0)
+        	{
+		        for(int cnt = 0; cnt < 32; cnt++)
+		        {
+		        	if(nbt.hasKey("JobSp_" + cnt)){
+		        		nbt.removeTag("JobSp_" + cnt);
+		        	}
+		        	//nbt.setInteger("JobSp_" + cnt, JobSp[cnt]);
+		        }
+
+
+		        for(int job = 0; job < 32; job++)
+		        {
+		        	for(int idx = 0; idx < 9; idx++)
+		        	{
+		        		if(nbt.hasKey("jobSkillSet_" + job + "_" + idx))
+		        		{
+		        			nbt.removeTag("jobSkillSet_" + job + "_" + idx);
+		        		}
+		        	}
+		        }
+
+		        for(int job = 0; job < 32; job++)
+		        {
+		        	for(int idx = 0; idx < 9; idx++)
+		        	{
+		        		if(nbt.hasKey("jobSkillSet2_" + job + "_" + idx))
+		        		{
+		        			nbt.removeTag("jobSkillSet2_" + job + "_" + idx);
+		        		}
+		        	}
+		        }
+
+		        for(int job = 0; job < 32; job++)
+		        {
+		        	for(int idx = 0; idx < 36; idx++)
+		        	{
+		        		if(nbt.hasKey("jobSPSkillSet_" + job + "_" + idx))
+		        		{
+		        			nbt.removeTag("jobSPSkillSet_" + job + "_" + idx);
+		        		}
+		        	}
+		        }
+
+	        	if(nbt.hasKey("jobSPSkillCT"))
+	        	{
+	        		nbt.removeTag("jobSPSkillCT");
+	        	}
+	        	if(nbt.hasKey("jobSPSkillDuration"))
+	        	{
+	        		nbt.removeTag("jobSPSkillDuration");
+	        	}
+
+	            for(int job = 0; job < 32; job++)
+	            {
+	            	for(int idx = 0; idx < 36; idx++)
+	            	{
+	            		if(nbt.hasKey("jobSPSkillCT_" + job + "_" + idx))
+	            		{
+	            			nbt.removeTag("jobSPSkillCT_" + job + "_" + idx);
+	            		}
+	            	}
+	            }
+        	}
+            dataVersion3 = 1;
+        }else
+        {
+	        for(int cnt = 0; cnt < 32; cnt++)
+	        {
+	        	nbt.setInteger("JobSp_" + cnt, JobSp[cnt]);
+	        }
+
+
+	        for(int job = 0; job < jobSkillSet.length; job++)
+	        {
+	        	for(int idx = 0; idx < jobSkillSet[job].length; idx++)
+	        	{
+	        		nbt.setInteger("jobSkillSet_" + job + "_" + idx, jobSkillSet[job][idx]);
+	        	}
+	        }
+
+	        for(int job = 0; job < jobSkillSet2.length; job++)
+	        {
+	        	for(int idx = 0; idx < jobSkillSet2[job].length; idx++)
+	        	{
+	        		nbt.setInteger("jobSkillSet2_" + job + "_" + idx, jobSkillSet2[job][idx]);
+	        	}
+	        }
+
+	        for(int job = 0; job < jobSPSkillSet.length; job++)
+	        {
+	        	for(int idx = 0; idx < jobSPSkillSet[job].length; idx++)
+	        	{
+	        		nbt.setInteger("jobSPSkillSet_" + job + "_" + idx, jobSPSkillSet[job][idx]);
+	        	}
+	        }
+
+            nbt.setTag("jobSPSkillCT", jobSPSkillCT);
+            nbt.setTag("jobSPSkillDuration", jobSPSkillDuration);
+
+            /*
+            for(int job = 0; job < jobSPSkillCT.length; job++)
+            {
+            	for(int idx = 0; idx < jobSPSkillCT[job].length; idx++)
+            	{
+            		nbt.setLong("jobSPSkillCT_" + job + "_" + idx, jobSPSkillCT[job][idx]);
+            	}
+            }
+            */
         }
+
+
+        /*
+        if(DQR.bugFixFlg0947_8 == 1 && dataVersion3 == 0 && thePlayer != null)
+        {
+        	ExtendedPlayerProperties5.get(thePlayer).
+        }else if(DQR.bugFixFlg0947_8 == 1 && dataVersion3 == 1)
+        {
+        	//dataversionフラグ成立後はここでは何もしない
+        }else
+        {
+
+        }
+        */
 
         for(int cnt = 0; cnt < 32; cnt++)
         {
         	nbt.setInteger("jobPermission_" + cnt, jobPermission[cnt]);
         }
 
-        nbt.setTag("NBTPlayerPetList", NBTPlayerPetList);
+        if(dataVersion4 == 0)
+        {
+        	if(nbt.hasKey("NBTPlayerPetList"))
+        	{
+        		nbt.removeTag("NBTPlayerPetList");
+        	}
+        	dataVersion4 = 1;
+        }
+        /*
+        if(dataVersion4 == 0)
+        {
+        	nbt.setTag("NBTPlayerPetList", NBTPlayerPetList);
+        }else if(dataVersion4 == 1)
+        {
+        	if(nbt.hasKey("NBTPlayerPetList"))
+        	{
+        		nbt.removeTag("NBTPlayerPetList");
+        	}
+        }
+        */
+
         nbt.setInteger("petCount", petCount);
 
         //nbt.setTag("NBTWeaponSkillPermission", NBTWeaponSkillPermission);
@@ -159,29 +311,6 @@ public class ExtendedPlayerProperties3 implements IExtendedEntityProperties {
         	nbt.setInteger("weaponSkillSet" + cnt, weaponSkillSet[cnt]);
         }
 
-        for(int job = 0; job < jobSkillSet.length; job++)
-        {
-        	for(int idx = 0; idx < jobSkillSet[job].length; idx++)
-        	{
-        		nbt.setInteger("jobSkillSet_" + job + "_" + idx, jobSkillSet[job][idx]);
-        	}
-        }
-
-        for(int job = 0; job < jobSkillSet2.length; job++)
-        {
-        	for(int idx = 0; idx < jobSkillSet2[job].length; idx++)
-        	{
-        		nbt.setInteger("jobSkillSet2_" + job + "_" + idx, jobSkillSet2[job][idx]);
-        	}
-        }
-
-        for(int job = 0; job < jobSPSkillSet.length; job++)
-        {
-        	for(int idx = 0; idx < jobSPSkillSet[job].length; idx++)
-        	{
-        		nbt.setInteger("jobSPSkillSet_" + job + "_" + idx, jobSPSkillSet[job][idx]);
-        	}
-        }
 
 
         nbt.setInteger("deadCheckFlg", deadCheckFlg);
@@ -289,12 +418,16 @@ public class ExtendedPlayerProperties3 implements IExtendedEntityProperties {
         	nbt.setString("playerUUID", this.playerUUID);
         }
 
+        nbt.setInteger("dataVersion3", this.dataVersion3);
+        nbt.setInteger("dataVersion4", this.dataVersion4);
+
         compound.setTag(EXT_PROP_NAME, nbt);
 	}
 
 	@Override
 	public void loadNBTData(NBTTagCompound compound) {
 		// TODO 自動生成されたメソッド・スタブ
+		DQR.func.debugString("PlayerDataTest1_loadNBTData");
 		if(compound == null)
 		{
 			//System.out.println("packet lost");
@@ -302,9 +435,136 @@ public class ExtendedPlayerProperties3 implements IExtendedEntityProperties {
 		}
 		NBTTagCompound nbt = (NBTTagCompound)compound.getTag(EXT_PROP_NAME);
 
-        for(int cnt = 0; cnt < 32; cnt++)
+		dataVersion3 = nbt.getInteger("dataVersion3");
+		dataVersion4 = nbt.getInteger("dataVersion4");
+
+        if(DQR.bugFixFlg0947_8 == 1)
         {
-        	JobSp[cnt] = nbt.getInteger("JobSp_" + cnt);
+        	if(dataVersion3 == 0)
+        	{
+		        for(int cnt = 0; cnt < 32; cnt++)
+		        {
+		        	if(nbt.hasKey("JobSp_" + cnt))
+		        	{
+		        		nbt.removeTag("JobSp_" + cnt);
+		        	}
+
+		        	//JobSp[cnt] = nbt.getInteger("JobSp_" + cnt);
+		        }
+
+
+
+		        for(int job = 0; job < 32; job++)
+		        {
+		        	for(int idx = 0; idx < 9; idx++)
+		        	{
+		        		if(nbt.hasKey("jobSkillSet_" + job + "_" + idx)){
+		        			nbt.removeTag("jobSkillSet_" + job + "_" + idx);
+		        		}
+		        	}
+		        }
+
+		        for(int job = 0; job < 32; job++)
+		        {
+		        	for(int idx = 0; idx < 9; idx++)
+		        	{
+		        		if(nbt.hasKey("jobSkillSet2_" + job + "_" + idx)){
+		        			nbt.removeTag("jobSkillSet2_" + job + "_" + idx);
+		        		}
+		        	}
+		        }
+
+		        for(int job = 0; job < 32; job++)
+		        {
+		        	for(int idx = 0; idx < 36; idx++)
+		        	{
+		        		if(nbt.hasKey("jobSPSkillSet_" + job + "_" + idx)){
+		        			nbt.removeTag("jobSPSkillSet_" + job + "_" + idx);
+		        		}
+		        	}
+		        }
+
+	        	if(nbt.hasKey("jobSPSkillCT"))
+	        	{
+	        		nbt.removeTag("jobSPSkillCT");
+	        	}
+
+	        	if(nbt.hasKey("jobSPSkillDuration"))
+	        	{
+	        		nbt.removeTag("jobSPSkillDuration");
+	        	}
+
+
+		        for(int job = 0; job < 32; job++)
+		        {
+		        	for(int idx = 0; idx < 36; idx++)
+		        	{
+		            	if(nbt.hasKey("jobSPSkillCT_" + job + "_" + idx))
+		            	{
+		            		nbt.removeTag("jobSPSkillCT_" + job + "_" + idx);
+		            	}
+		        	}
+		        }
+
+		        dataVersion3 = 1;
+        	}
+        }else
+        {
+	        for(int cnt = 0; cnt < 32; cnt++)
+	        {
+	        	JobSp[cnt] = nbt.getInteger("JobSp_" + cnt);
+	        }
+
+
+	        for(int job = 0; job < jobSkillSet.length; job++)
+	        {
+	        	for(int idx = 0; idx < jobSkillSet[job].length; idx++)
+	        	{
+	        		jobSkillSet[job][idx] = nbt.getInteger("jobSkillSet_" + job + "_" + idx);
+	        	}
+	        }
+
+	        for(int job = 0; job < jobSkillSet2.length; job++)
+	        {
+	        	for(int idx = 0; idx < jobSkillSet2[job].length; idx++)
+	        	{
+	        		jobSkillSet2[job][idx] = nbt.getInteger("jobSkillSet2_" + job + "_" + idx);
+	        	}
+	        }
+
+	        for(int job = 0; job < jobSPSkillSet.length; job++)
+	        {
+	        	for(int idx = 0; idx < jobSPSkillSet[job].length; idx++)
+	        	{
+	        		jobSPSkillSet[job][idx] = nbt.getInteger("jobSPSkillSet_" + job + "_" + idx);
+	        	}
+	        }
+
+
+
+	        if(nbt.getTag("jobSPSkillCT") != null && nbt.getTag("jobSPSkillCT") instanceof NBTTagCompound)
+	        {
+	        	jobSPSkillCT = (NBTTagCompound)nbt.getTag("jobSPSkillCT");
+	        }else
+	        {
+	        	jobSPSkillCT = new NBTTagCompound();
+	        }
+
+	        if(nbt.getTag("jobSPSkillDuration") != null && nbt.getTag("jobSPSkillDuration") instanceof NBTTagCompound)
+	        {
+	        	jobSPSkillDuration = (NBTTagCompound)nbt.getTag("jobSPSkillDuration");
+	        }else
+	        {
+	        	jobSPSkillDuration = new NBTTagCompound();
+	        }
+
+	        /*
+	        for(int job = 0; job < jobSPSkillCT.length; job++)
+	        {
+	        	for(int idx = 0; idx < jobSPSkillCT[job].length; idx++)
+	        	jobSPSkillCT[job][idx] = nbt.getLong("jobSPSkillCT_" + job + "_" + idx);
+	        }
+	        */
         }
 
         for(int cnt = 0; cnt < 32; cnt++)
@@ -312,7 +572,10 @@ public class ExtendedPlayerProperties3 implements IExtendedEntityProperties {
         	jobPermission[cnt] = nbt.getInteger("jobPermission_" + cnt);
         }
 
-        NBTPlayerPetList = nbt.getCompoundTag("NBTPlayerPetList");
+        if(dataVersion4 == 0)
+        {
+        	NBTPlayerPetList = nbt.getCompoundTag("NBTPlayerPetList");
+        }
         petCount = nbt.getInteger("petCount");
 
         this.playerName = nbt.getString("playerName");
@@ -333,25 +596,6 @@ public class ExtendedPlayerProperties3 implements IExtendedEntityProperties {
         {
         	weaponSkillSet[cnt] = nbt.getInteger("weaponSkillSet" + cnt);
         }
-
-        for(int job = 0; job < jobSkillSet.length; job++)
-        {
-        	for(int idx = 0; idx < jobSkillSet[job].length; idx++)
-        	jobSkillSet[job][idx] = nbt.getInteger("jobSkillSet_" + job + "_" + idx);
-        }
-
-        for(int job = 0; job < jobSkillSet2.length; job++)
-        {
-        	for(int idx = 0; idx < jobSkillSet2[job].length; idx++)
-        	jobSkillSet2[job][idx] = nbt.getInteger("jobSkillSet2_" + job + "_" + idx);
-        }
-
-        for(int job = 0; job < jobSPSkillSet.length; job++)
-        {
-        	for(int idx = 0; idx < jobSPSkillSet[job].length; idx++)
-        	jobSPSkillSet[job][idx] = nbt.getInteger("jobSPSkillSet_" + job + "_" + idx);
-        }
-
 
 
         deadCheckFlg = nbt.getInteger("deadCheckFlg");
@@ -443,6 +687,8 @@ public class ExtendedPlayerProperties3 implements IExtendedEntityProperties {
     	}
 
     	this.Coin = nbt.getInteger("Coin");
+
+    	//nbt.setInteger("dataVersion3", this.dataVersion3);
         //partyTagList.func_150296_c()
 	}
 
@@ -527,6 +773,15 @@ public class ExtendedPlayerProperties3 implements IExtendedEntityProperties {
         this.haigouPet2 = nbt;
     }
 
+    public NBTTagCompound getFixNBTPlayerPetList() {
+        return NBTPlayerPetList;
+    }
+
+    public void setFixNBTPlayerPetList()
+    {
+    	dataVersion4 = 1;
+    }
+    /*
     public NBTTagCompound getNBTPlayerPetList() {
         return NBTPlayerPetList;
     }
@@ -535,7 +790,7 @@ public class ExtendedPlayerProperties3 implements IExtendedEntityProperties {
     	//System.out.println("TEST_EPP : ");
         this.NBTPlayerPetList = nbt;
     }
-
+	*/
 
     public void setPetCount(int par1) {
         this.petCount = par1;
@@ -573,7 +828,7 @@ public class ExtendedPlayerProperties3 implements IExtendedEntityProperties {
         this.weaponSkillSet[par1] = par2;
     }
 
-
+    /*
     public int[][] getJobSkillSetA() {
     	if(jobSkillSet == null) jobSkillSet = new int[32][9];
         return jobSkillSet;
@@ -652,6 +907,107 @@ public class ExtendedPlayerProperties3 implements IExtendedEntityProperties {
     public void setJobSPSkillSet(int job, int idx, int par1) {
     	if(jobSPSkillSet == null) jobSPSkillSet = new int[32][9];
         this.jobSPSkillSet[job][idx] = par1;
+    }
+    */
+
+    /*
+
+    public NBTTagCompound getJobSPSkillCTSet() {
+    	if(jobSPSkillCT == null){jobSPSkillCT = new NBTTagCompound();}
+        return jobSPSkillCT;
+    }
+    public void setJobSPSkillCTSet(NBTTagCompound par1) {
+    	if(par1 != null)
+    	{
+    		this.jobSPSkillCT = par1;
+    	}else
+    	{
+    		this.jobSPSkillCT = new NBTTagCompound();
+    	}
+    }
+
+    public long getJobSPSkillCT(int job, int idx) {
+        return jobSPSkillCT.getLong("jobSPSkillCT" + "_" + job  + "_" + idx);
+    }
+    public void setJobSPSkillCT(int job, int idx, long par1) {
+        this.jobSPSkillCT.setLong("jobSPSkillCT" + "_" + job  + "_" + idx, par1);
+    }
+
+    public NBTTagCompound getJobSPSkillDurationSet() {
+    	if(jobSPSkillDuration == null){jobSPSkillDuration = new NBTTagCompound();}
+        return jobSPSkillDuration;
+    }
+    public void setJobSPSkillDurationSet(NBTTagCompound par1) {
+    	if(par1 != null)
+    	{
+    		this.jobSPSkillDuration = par1;
+    	}else
+    	{
+    		this.jobSPSkillDuration = new NBTTagCompound();
+    	}
+    }
+
+    public long getJobSPSkillDuration(int job, int idx) {
+        return jobSPSkillDuration.getLong("jobSPSkillDuration" + "_" + job  + "_" + idx);
+    }
+    public void setJobSPSkillDuration(int job, int idx, long par1) {
+        this.jobSPSkillDuration.setLong("jobSPSkillDuration" + "_" + job  + "_" + idx, par1);
+    }
+
+    public void refreshJobSPSkillDuration(long wt)
+    {
+    	Set nbtSet = this.jobSPSkillDuration.func_150296_c();
+
+    	Iterator ite = nbtSet.iterator();
+    	List<String> lst = new ArrayList<String>();
+    	while(ite.hasNext())
+    	{
+    		Object obj = ite.next();
+    		if(obj instanceof String)
+    		{
+    			long fixTime = this.jobSPSkillDuration.getLong((String)obj);
+    			if(fixTime < wt)
+    			{
+    				lst.add((String)obj);
+    				//this.jobSPSkillDuration.removeTag((String)obj);
+    			}
+    			//String name = (String)obj;
+    			//System.out.println("TEST : " + name);
+    		}
+    	}
+
+    	for(int cnt = 0; cnt < lst.size(); cnt++)
+    	{
+    		this.jobSPSkillDuration.removeTag(lst.get(cnt));
+    	}
+    }
+    */
+
+    /*
+    public long[][] getJobSPSkillCTA() {
+    	if(jobSPSkillCT == null) jobSPSkillCT = new long[32][9];
+        return jobSPSkillCT;
+    }
+    public void setJobSPSkillCTA(long[][] par1) {
+    	if(jobSPSkillCT == null) jobSPSkillCT = new long[32][9];
+        this.jobSPSkillCT = par1;
+    }
+    public long[] getJobSPSkillCTA2(int job) {
+    	if(jobSPSkillCT == null) jobSPSkillCT = new long[32][9];
+        return jobSPSkillCT[job];
+    }
+    public void setJobSPSkillCTA2(long[] par1, int job) {
+    	if(jobSPSkillCT == null) jobSPSkillCT = new long[32][9];
+        this.jobSPSkillCT[job] = par1;
+    }
+
+    public long getJobSPSkillCT(int job, int idx) {
+    	if(jobSPSkillCT == null) jobSPSkillCT = new long[32][9];
+        return jobSPSkillCT[job][idx];
+    }
+    public void setJobSPSkillCT(int job, int idx, long par1) {
+    	if(jobSPSkillCT == null) jobSPSkillCT = new long[32][9];
+        this.jobSPSkillCT[job][idx] = par1;
     }
     /*
     public NBTTagCompound getNBTWeaponSkillPermission() {
@@ -1580,7 +1936,7 @@ public class ExtendedPlayerProperties3 implements IExtendedEntityProperties {
     }
 
 
-
+    /*
     public int[] getJobSpA() {
     	if(JobSp == null) JobSp = new int[32];
         return JobSp;
@@ -1605,4 +1961,5 @@ public class ExtendedPlayerProperties3 implements IExtendedEntityProperties {
     	if(JobSp == null) JobSp = new int[32];
     	this.JobSp[job] = this.JobSp[job] - param;
     }
+    */
 }

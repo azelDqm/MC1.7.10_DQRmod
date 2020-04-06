@@ -43,7 +43,7 @@ public class DqmKyouseiMoveBlock extends Block
             /*
 
             ep.motionY = 3;
-            ep.addPotionEffect(new PotionEffect(Potion.Subayasa.id, 20*3, 0));*/
+            DQR.func.addPotionEffect2(ep, new PotionEffect(Potion.Subayasa.id, 20*3, 0));*/
         }
     }
 

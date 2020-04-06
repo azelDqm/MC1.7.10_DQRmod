@@ -10,6 +10,7 @@ import net.minecraft.pathfinding.PathPoint;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import dqr.DQR;
 import dqr.api.potion.DQPotionMinus;
 import dqr.entity.mobEntity.DqmMobBase;
 import dqr.entity.petEntity.DqmPetBase;
@@ -149,7 +150,7 @@ public class EntityAIAttackOnCollide2 extends EntityAIBase
 				EntityPlayer ep = (EntityPlayer)entitylivingbase;
 				if(!ep.isPotionActive(DQPotionMinus.debuffHeavyFire.id));
 				{
-					ep.addPotionEffect(new PotionEffect(DQPotionMinus.debuffHeavyFire.id, 60, this.attacker.mobAI.getHeavyFire()));
+					DQR.func.addPotionEffect2(ep, new PotionEffect(DQPotionMinus.debuffHeavyFire.id, 60, this.attacker.mobAI.getHeavyFire()));
 				}
 			}
 		}

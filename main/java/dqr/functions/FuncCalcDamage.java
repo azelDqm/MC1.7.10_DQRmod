@@ -283,13 +283,13 @@ public class FuncCalcDamage {
 				{
 					if(rand.nextInt(8) == 0)
 					{
-						evb.addPotionEffect(new PotionEffect(DQPotionMinus.debuffHenatosu.id, 40, 1));
+						DQR.func.addPotionEffect2(evb, new PotionEffect(DQPotionMinus.debuffHenatosu.id, 40, 1));
 					}
 				}else  if(handItem == DQWeapons.itemDokuganonaifu)
 				{
 					if(rand.nextInt(8) == 0)
 					{
-						evb.addPotionEffect(new PotionEffect(DQPotionMinus.debuffStop.id, 40, 1));
+						DQR.func.addPotionEffect2(evb, new PotionEffect(DQPotionMinus.debuffStop.id, 40, 1));
 					}
 				}else if(handItem == DQWeapons.itemKirapiasu)
 				{
@@ -305,7 +305,7 @@ public class FuncCalcDamage {
 				{
 					if(rand.nextInt(8) == 0)
 					{
-						evb.addPotionEffect(new PotionEffect(DQPotionMinus.potionPoison.id, 40, 1));
+						DQR.func.addPotionEffect2(evb, new PotionEffect(DQPotionMinus.potionPoison.id, 40, 1));
 					}
 				}else if(handItem == DQWeapons.itemHakainotekkyuu || handItem == DQWeapons.itemHakainotekkyuu2)
 				{
@@ -805,7 +805,7 @@ public class FuncCalcDamage {
 						if(weaponSkill == 0)
 						{
 							//ハートブレイク
-							evb.addPotionEffect(new PotionEffect(DQPotionMinus.debuffStop.id, 40, 1));
+							DQR.func.addPotionEffect2(evb, new PotionEffect(DQPotionMinus.debuffStop.id, 40, 1));
 							hitFlg = true;
 						}else if(weaponSkill == 2)
 						{
@@ -826,7 +826,7 @@ public class FuncCalcDamage {
 						{
 							//ラストバッター
 							ret = ret * 1.2F;
-							ep.addPotionEffect(new PotionEffect(DQPotionMinus.debuffStop.id, 20, 1));
+							DQR.func.addPotionEffect2(ep, new PotionEffect(DQPotionMinus.debuffStop.id, 20, 1));
 							DQR.func.setKnockBack(evb, 4, ep, true);
 
 							hitFlg = true;
@@ -890,14 +890,14 @@ public class FuncCalcDamage {
 							//蒼天魔斬
 							if(rand.nextInt(2) == 0)
 							{
-								evb.addPotionEffect(new PotionEffect(DQPotionMinus.debuffStop.id, 200, 1));
+								DQR.func.addPotionEffect2(evb, new PotionEffect(DQPotionMinus.debuffStop.id, 200, 1));
 							}
 							ret = ret * 1.3F;
 							hitFlg = true;
 						}else if(weaponSkill == 4)
 						{
 							//かぶと割り
-							evb.addPotionEffect(new PotionEffect(DQPotionMinus.debuffRukani.id, 300, 1));
+							DQR.func.addPotionEffect2(evb, new PotionEffect(DQPotionMinus.debuffRukani.id, 300, 1));
 							hitFlg = true;
 						}else if(weaponSkill == 8)
 						{
@@ -938,7 +938,7 @@ public class FuncCalcDamage {
 						if(weaponSkill == 0)
 						{
 							//らせん打ち
-							evb.addPotionEffect(new PotionEffect(DQPotionMinus.debuffMedapani.id, 300, 1));
+							DQR.func.addPotionEffect2(evb, new PotionEffect(DQPotionMinus.debuffMedapani.id, 300, 1));
 							hitFlg = true;
 						}else if(weaponSkill == 1)
 						{
@@ -973,12 +973,12 @@ public class FuncCalcDamage {
 						}else if(weaponSkill == 3)
 						{
 							//しばり打ち
-							evb.addPotionEffect(new PotionEffect(DQPotionMinus.debuffStop.id, 200, 1));
+							DQR.func.addPotionEffect2(evb, new PotionEffect(DQPotionMinus.debuffStop.id, 200, 1));
 							hitFlg = true;
 						}else if(weaponSkill == 5)
 						{
 							//ねむり打ち
-							evb.addPotionEffect(new PotionEffect(DQPotionMinus.debuffRariho.id, 300, 1));
+							DQR.func.addPotionEffect2(evb, new PotionEffect(DQPotionMinus.debuffRariho.id, 300, 1));
 							hitFlg = true;
 						}else if(weaponSkill == 7)
 						{
@@ -1153,7 +1153,7 @@ public class FuncCalcDamage {
 							//ポイズンダガー
 							if(rand.nextInt(5)==0)
 							{
-								evb.addPotionEffect(new PotionEffect(DQPotionMinus.potionPoisonX.id, 300, 1));
+								DQR.func.addPotionEffect2(evb, new PotionEffect(DQPotionMinus.potionPoisonX.id, 300, 1));
 							}
 							hitFlg = true;
 						}else if(weaponSkill == 2)
@@ -1241,7 +1241,7 @@ public class FuncCalcDamage {
 			            		{
 			            			EntityLivingBase tagMob = (EntityLivingBase)target;
 			            			//System.out.println("TEST2:" + tagMob.MobName);
-			            			tagMob.addPotionEffect(new PotionEffect(DQPotionMinus.debuffStop.id, 100, 1));
+			            			DQR.func.addPotionEffect2(tagMob, new PotionEffect(DQPotionMinus.debuffStop.id, 100, 1));
 			            		}
 			            	}
 
@@ -1446,7 +1446,7 @@ public class FuncCalcDamage {
 						if(weaponSkill == 0)
 						{
 							//花ふぶき
-							evb.addPotionEffect(new PotionEffect(DQPotionMinus.debuffManusa.id, 200, 1));
+							DQR.func.addPotionEffect2(evb, new PotionEffect(DQPotionMinus.debuffManusa.id, 200, 1));
 
 							ret = ret * 1.0F;
 							hitFlg = true;
@@ -1456,7 +1456,7 @@ public class FuncCalcDamage {
 							/*ブレス反射バフを追加*/
 							/*モンスターのスキル攻撃に射出主を指定するように*/
 							/*モンスターのブレス攻撃を魔法とは切り分ける*/
-							ep.addPotionEffect(new PotionEffect(DQPotionPlus.buffBreathReflect.id, 300, 1));
+							DQR.func.addPotionEffect2(ep, new PotionEffect(DQPotionPlus.buffBreathReflect.id, 300, 1));
 							hitFlg = true;
 
 						}else if(weaponSkill == 4)
@@ -1485,7 +1485,7 @@ public class FuncCalcDamage {
 								dur = dur + pe.getDuration();
 							}
 
-							ep.addPotionEffect(new PotionEffect(DQPotionPlus.buffKaihiUp.id, dur, ampli));
+							DQR.func.addPotionEffect2(ep, new PotionEffect(DQPotionPlus.buffKaihiUp.id, dur, ampli));
 
 							hitFlg = true;
 						}else if(weaponSkill == 8)
@@ -1551,7 +1551,7 @@ public class FuncCalcDamage {
 						if(weaponSkill == 1)
 						{
 							//まふうじのつえ
-							evb.addPotionEffect(new PotionEffect(DQPotionMinus.debuffMahoton.id, 200, 1));
+							DQR.func.addPotionEffect2(evb, new PotionEffect(DQPotionMinus.debuffMahoton.id, 200, 1));
 
 							ret = ret * 1.0F;
 							hitFlg = true;
@@ -1560,7 +1560,7 @@ public class FuncCalcDamage {
 							//悪魔ばらい
 							if(rand.nextInt(2) == 0)
 							{
-								evb.addPotionEffect(new PotionEffect(DQPotionMinus.debuffStop.id, 200, 1));
+								DQR.func.addPotionEffect2(evb, new PotionEffect(DQPotionMinus.debuffStop.id, 200, 1));
 							}
 
 							ret = ret * 1.0F;

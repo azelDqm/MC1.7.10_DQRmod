@@ -185,7 +185,7 @@ public class GuiItemBagContainer extends Container
 		}
 
 
-    	if(p_75144_3_ == 2 && this.epInventory.getStackInSlot(p_75144_2_) != null)
+    	if(p_75144_3_ == 2 && this.epInventory != null && this.epInventory.getStackInSlot(p_75144_2_) != null)
     	{
     		if(p_75144_1_ <= 153 && p_75144_1_ >= 0)
     		{

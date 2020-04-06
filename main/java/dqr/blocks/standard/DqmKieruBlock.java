@@ -10,6 +10,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
+import dqr.DQR;
 import dqr.api.potion.DQPotionPlus;
 
 public class DqmKieruBlock extends Block
@@ -379,7 +380,7 @@ public class DqmKieruBlock extends Block
             EntityPlayer ep = (EntityPlayer)par5Entity;
             //par5Entity.attackEntityFrom(DamageSource.cactus, 1);
             //ep.jumpMovementFactor = ep.jumpMovementFactor+10*10;
-            ep.addPotionEffect(new PotionEffect(DQPotionPlus.potionSubayasanotane.id, 20 * 60, 0));
+            DQR.func.addPotionEffect2(ep, new PotionEffect(DQPotionPlus.potionSubayasanotane.id, 20 * 60, 0));
 
             /*
             if (!ep.worldObj.isRemote)

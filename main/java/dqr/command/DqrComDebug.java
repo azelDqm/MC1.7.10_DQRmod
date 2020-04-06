@@ -5,14 +5,20 @@ import java.util.Random;
 
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
+import net.minecraft.command.PlayerNotFoundException;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.util.DamageSource;
 import dqr.DQR;
 import dqr.PacketHandler;
 import dqr.playerData.ExtendedPlayerProperties;
 import dqr.playerData.ExtendedPlayerProperties3;
+import dqr.playerData.ExtendedPlayerProperties5;
 import dqr.playerData.MessagePlayerProperties3;
+import dqr.playerData.MessagePlayerProperties5;
+import dqr.potion.DqmPotionEffect;
 import dqr.thread.ThreadExplosion;
 import dqr.thread.ThreadJukurenUp;
 import dqr.thread.ThreadLvUp;
@@ -52,6 +58,15 @@ public class DqrComDebug extends CommandBase {
         		{
         			ExtendedPlayerProperties.get(ep).setGold(Integer.parseInt(var2[2]));
         			//PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties3((EntityPlayer)ep), (EntityPlayerMP)ep);
+        		}else if("nowtime".equalsIgnoreCase(var2[1]))
+        		{
+        			DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("Now Time is " + ep.worldObj.getWorldTime(),new Object[] {}));
+        			DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("Time : " + (ep.worldObj.getWorldTime() / 24000) + "day : " + (ep.worldObj.getWorldTime() % 24000) + "time",new Object[] {}));
+        			long nextDayTick = (24000 - (ep.worldObj.getWorldTime() % 24000));
+        			long nextDayMinute = nextDayTick / 20;
+        			DQR.func.doAddChatMessageFix(ep, new ChatComponentTranslation("Next day : " + nextDayTick + "(" + nextDayMinute / 60 + "m" + nextDayMinute % 60 + "s)",new Object[] {}));
+        			//ExtendedPlayerProperties.get(ep).setGold(Integer.parseInt(var2[2]));
+        			//PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties3((EntityPlayer)ep), (EntityPlayerMP)ep);
         		}else if("job".equalsIgnoreCase(var2[1]))
         		{
         			ExtendedPlayerProperties.get(ep).setJob(Integer.parseInt(var2[2]));
@@ -78,6 +93,8 @@ public class DqrComDebug extends CommandBase {
         			//PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties3((EntityPlayer)ep), (EntityPlayerMP)ep);
         		}else if("damage".equalsIgnoreCase(var2[1]))
         		{
+        			DamageSource ss = DQR.damageSource.getPlayerSkillDamage(ep);
+        			ss.setDamageIsAbsolute();
         			ep.attackEntityFrom(DQR.damageSource.getPlayerSkillDamage(ep), Float.parseFloat(var2[2]));
         		}else if("bomb".equalsIgnoreCase(var2[1]))
         		{
@@ -97,6 +114,50 @@ public class DqrComDebug extends CommandBase {
         	        explosion.doExplosionB(false);
         	        */
 
+        		}else if("jobEffect".equalsIgnoreCase(var2[1]))
+        		{
+                    EntityPlayerMP entityplayermp = getPlayer(var1, var2[2]);
+                    if (entityplayermp == null)
+                    {
+                        throw new PlayerNotFoundException();
+                    }
+
+                    int pal1 = Integer.parseInt(var2[3]);
+                    int pal2 = Integer.parseInt(var2[4]);
+                    long pal3 = Long.parseLong(var2[5]);
+
+                    ExtendedPlayerProperties5.get(entityplayermp).setJobSPSkillDuration(pal1, pal2, pal3 + ep.worldObj.getWorldTime());
+                    ExtendedPlayerProperties5.get(entityplayermp).refreshDqrPotionEffects(ep.worldObj.getWorldTime());
+                    PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties5((EntityPlayer)entityplayermp), (EntityPlayerMP)entityplayermp);
+        		}else if("effect".equalsIgnoreCase(var2[1]))
+        		{
+        			if(var2[2].equalsIgnoreCase("clear"))
+        			{
+        				DQR.dqEffect.clearAllEffect(ep);
+        				ExtendedPlayerProperties5.get(ep).refreshDqrPotionEffects(ep.worldObj.getWorldTime());
+        				PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties5((EntityPlayer)ep), (EntityPlayerMP)ep);
+        			}else
+        			{
+	        			int pal1 = Integer.parseInt(var2[2]);
+	        			int pal2 = Integer.parseInt(var2[3]);
+	        			int pal3 = Integer.parseInt(var2[4]);
+	        			DQR.func.addPotionEffect2(ep, new DqmPotionEffect(pal1, pal2, pal3));
+        			}
+        		}else if("jobEffect2".equalsIgnoreCase(var2[1]))
+        		{
+                    EntityPlayerMP entityplayermp = getPlayer(var1, var2[2]);
+                    if (entityplayermp == null)
+                    {
+                        throw new PlayerNotFoundException();
+                    }
+
+                    int pal1 = Integer.parseInt(var2[3]);
+                    int pal2 = Integer.parseInt(var2[4]);
+                    long pal3 = Long.parseLong(var2[5]);
+
+                    ExtendedPlayerProperties5.get(entityplayermp).setDebuffDuration(pal1, pal2, pal3 + ep.worldObj.getWorldTime());
+                    ExtendedPlayerProperties5.get(entityplayermp).refreshDqrPotionEffects(ep.worldObj.getWorldTime());
+                    PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties5((EntityPlayer)entityplayermp), (EntityPlayerMP)entityplayermp);
         		}
         	}
         	/*

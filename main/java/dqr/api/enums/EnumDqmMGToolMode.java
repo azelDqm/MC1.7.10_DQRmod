@@ -43,6 +43,7 @@ public enum EnumDqmMGToolMode {
 	PETSUISYOU_VIEWDEL(1, "Petsuisyou_ViewDel"),
 	PETSUISYOU_REFRESH(2, "Petsuisyou_Refresh"),
 	PETSUISYOU_CLEAR(3, "Petsuisyou_Clear"),
+	PETSUISYOU_CALL(4, "Petsuisyou_Call")
 	;
 
 

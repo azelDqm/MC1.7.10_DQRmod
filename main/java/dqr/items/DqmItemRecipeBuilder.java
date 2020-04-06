@@ -216,6 +216,9 @@ public class DqmItemRecipeBuilder {
         GameRegistry.addShapelessRecipe(new ItemStack(DQBuilders.itemBuilderShopSyuuriyaW, 1), new Object[] {new ItemStack(DQBuilders.itemBuilderShopSyuuriya, 1), new ItemStack(DQMiscs.itemIerooubu, 1)});
         GameRegistry.addShapelessRecipe(new ItemStack(DQBuilders.itemBuilderShopKaitoriyaW, 1), new Object[] {new ItemStack(DQBuilders.itemBuilderShopKaitoriya, 1), new ItemStack(DQMiscs.itemIerooubu, 1)});
 
+        GameRegistry.addShapelessRecipe(new ItemStack(DQBuilders.itemBuilderDamaTW, 1), new Object[] {new ItemStack(DQBuilders.itemBuilderDama, 1), new ItemStack(DQMiscs.itemPaapuruoubu, 1)});
+        GameRegistry.addShapelessRecipe(new ItemStack(DQBuilders.itemBuilderDamaSW, 1), new Object[] {new ItemStack(DQBuilders.itemBuilderDamaS, 1), new ItemStack(DQMiscs.itemPaapuruoubu, 1)});
+        GameRegistry.addShapelessRecipe(new ItemStack(DQBuilders.itemBuilderDamaWW, 1), new Object[] {new ItemStack(DQBuilders.itemBuilderDamaW, 1), new ItemStack(DQMiscs.itemPaapuruoubu, 1)});
         //GameRegistry.addShapelessRecipe(new ItemStack(DQBuilders.itemBuilderKaikosyo, 1), new Object[] {new ItemStack(Items.paper, 1), new ItemStack(DQMiscs.itemIerooubu, 1)});
         GameRegistry.addRecipe(new ItemStack(DQBuilders.itemBuilderKaikosyo, 1), new Object[]
         {

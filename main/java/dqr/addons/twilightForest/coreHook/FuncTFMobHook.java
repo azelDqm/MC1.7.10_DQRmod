@@ -94,7 +94,7 @@ public class FuncTFMobHook {
 					} else {
 						entity.attackEntityFrom(DamageSource.magic, 75);
 						int chillLevel = 2;
-						((EntityLivingBase)entity).addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 20 * 5, chillLevel, true));
+						DQR.func.addPotionEffect2(((EntityLivingBase)entity), new PotionEffect(Potion.moveSlowdown.id, 20 * 5, chillLevel, true));
 					}
 
 				}

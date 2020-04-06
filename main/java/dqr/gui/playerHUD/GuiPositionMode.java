@@ -130,6 +130,7 @@ public class GuiPositionMode extends Gui
           		case 5: modeKeyCode = DQR.CLKeyBind.keyGuiSubpoints.getKeyCode(); break;
           		case 6: modeKeyCode = DQR.CLKeyBind.keyGuiBuffBar.getKeyCode(); break;
           		case 7: modeKeyCode = DQR.CLKeyBind.keyGuiParty.getKeyCode(); break;
+          		case 8: modeKeyCode = DQR.CLKeyBind.keyGuiBuffBar2.getKeyCode(); break;
           		default :
 	      }
           //操作方法
@@ -157,6 +158,21 @@ public class GuiPositionMode extends Gui
         	  mc.fontRenderer.drawStringWithShadow(I18n.format("gui.position.line.7", new Object[]{}),
             		  x + 5, nextY + 48, 0xffffffff);
         	  mc.fontRenderer.drawStringWithShadow(I18n.format("gui.position.line.8", new Object[]{DQR.func.getKeyDisplayString(DQR.CLKeyBind.keyLogDel.getKeyCode())}),
+            		  x + 5, nextY + 59, 0xffffffff);
+          }
+
+          if(DQR.conf.guiPositionTarget == 6)
+          {
+        	  if(DQR.conf.CLGuiBuffBarMode == 1)
+        	  {
+        		  mc.fontRenderer.drawStringWithShadow(I18n.format("gui.position.line.10.1", new Object[]{}),
+        				  x + 5, nextY + 48, 0xffffffff);
+        	  }else
+        	  {
+        		  mc.fontRenderer.drawStringWithShadow(I18n.format("gui.position.line.10.0", new Object[]{}),
+        				  x + 5, nextY + 48, 0xffffffff);
+        	  }
+        	  mc.fontRenderer.drawStringWithShadow(I18n.format("gui.position.line.11", new Object[]{DQR.conf.CLGuiBuffBarDispAreaHeight}),
             		  x + 5, nextY + 59, 0xffffffff);
           }
           //String addLine = DQR.func.getKeyDisplayString(DQR.CLKeyBind.keyGuiPositionDOWN.getKeyCode());

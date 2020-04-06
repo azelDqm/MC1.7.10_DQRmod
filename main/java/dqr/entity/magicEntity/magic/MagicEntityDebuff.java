@@ -25,6 +25,7 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import dqr.DQR;
 import dqr.api.potion.DQPotionPlus;
 import dqr.entity.mobEntity.DqmMobBase;
 
@@ -389,7 +390,7 @@ public class MagicEntityDebuff extends MagicEntity implements IProjectile{
                             			;
                             		}else
                             		{
-                            			eb.addPotionEffect(this.potEff);
+                            			DQR.func.addPotionEffect2(eb, this.potEff);
                             		}
                             	}
 
@@ -424,7 +425,7 @@ public class MagicEntityDebuff extends MagicEntity implements IProjectile{
                             			;
                             		}else
                             		{
-                            			eb.addPotionEffect(this.potEff);
+                            			DQR.func.addPotionEffect2(eb, this.potEff);
                             		}
 	                        	}
 

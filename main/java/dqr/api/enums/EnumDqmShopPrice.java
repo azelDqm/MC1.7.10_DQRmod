@@ -309,7 +309,21 @@ public enum EnumDqmShopPrice {
 	Sinpannokabuto(2, 283, DQArmors.itemSinpannokabuto, 500000, 0, -1, 5, "armorSinwa", DQR.dqmMaterial.armorSinwa),
 	Sinwanoyoroi(2, 284, DQArmors.itemSinwanoyoroi, 500000, 0, -1, 5, "armorSinwa", DQR.dqmMaterial.armorSinwa),
 	Amaterasunokote(2, 285, DQArmors.itemAmaterasunokote, 500000, 0, -1, 5, "armorSinwa", DQR.dqmMaterial.armorSinwa),
-	Tenteinobutu(2, 286, DQArmors.itemTenteinobutu, 500000, 0, -1, 5, "armorSinwa", DQR.dqmMaterial.armorSinwa);
+	Tenteinobutu(2, 286, DQArmors.itemTenteinobutu, 500000, 0, -1, 5, "armorSinwa", DQR.dqmMaterial.armorSinwa),
+	Ginganoturugi2(1, 305, DQWeapons.itemGinganoturugi2, 2500000, 0, 0, 5, null, null),
+	Metarukingnoyari2(1, 306, DQWeapons.itemMetarukingnoyari2, 2500000, 0, 0, 5, null, null),
+	Toririondaga2(1, 307, DQWeapons.itemToririondaga2, 2500000, 0, 0, 5, null, null),
+	Nyoraikon2(1, 308, DQWeapons.itemNyoraikon2, 2500000, 0, 0, 5, null, null),
+	Sinryuunotume2(1, 309, DQWeapons.itemSinryuunotume2, 2500000, 0, 0, 5, null, null),
+	Kobusi32(1, 310, DQWeapons.itemKobusi32, 2500000, 0, 0, 5, null, null),
+	Hakainotekkyuu2(1, 311, DQWeapons.itemHakainotekkyuu2, 2500000, 0, 0, 5, null, null),
+	Godakkusu2(1, 312, DQWeapons.itemGodakkusu2, 2500000, 0, 0, 5, null, null),
+	Tyouguringamunomuti2(1, 313, DQWeapons.itemTyouguringamunomuti2, 2500000, 0, 0, 5, null, null),
+	Sefiramunoyumi2(1, 314, DQWeapons.itemSefiramunoyumi2, 2500000, 0, 0, 5, null, null),
+	Haipanova2(1, 315, DQWeapons.itemHaipanova2, 2500000, 0, 0, 5, null, null),
+	Saisyuuougi2(1, 316, DQWeapons.itemSaisyuuougi2, 2500000, 0, 0, 5, null, null),
+	Seiginosoroban2(1, 317, DQWeapons.itemSeiginosoroban2, 2500000, 0, 0, 5, null, null),
+	Sinken2(1, 318, DQWeapons.itemSinken2, 3000000, 0, 0, 5, null, null);
 
 
 	public int categId;

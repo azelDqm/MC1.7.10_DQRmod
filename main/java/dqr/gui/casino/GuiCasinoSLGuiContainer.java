@@ -4,7 +4,6 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Random;
-import java.util.Set;
 import java.util.regex.Pattern;
 
 import net.minecraft.client.gui.GuiButton;
@@ -13,7 +12,6 @@ import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
@@ -23,9 +21,13 @@ import dqr.PacketHandler;
 import dqr.api.enums.EnumDqmCasinoPKOdds;
 import dqr.api.enums.EnumDqmCasinoSLOdds;
 import dqr.api.enums.EnumDqmFuncPacketCode;
+import dqr.api.enums.EnumDqmJob;
+import dqr.api.enums.EnumDqmSkillJ;
 import dqr.api.enums.EnumDqmTrump;
 import dqr.packetMessage.MessageServerFunction;
+import dqr.playerData.ExtendedPlayerProperties;
 import dqr.playerData.ExtendedPlayerProperties3;
+import dqr.playerData.ExtendedPlayerProperties5;
 
 public class GuiCasinoSLGuiContainer extends GuiContainer
 {
@@ -146,8 +148,8 @@ public class GuiCasinoSLGuiContainer extends GuiContainer
 
         super(new GuiCasinoSLContainer(player));
         this.epa = player;
-    	NBTTagCompound playerPet = ExtendedPlayerProperties3.get(player).getNBTPlayerPetList();
-    	Set tags = playerPet.func_150296_c();
+    	//NBTTagCompound playerPet = ExtendedPlayerProperties3.get(player).getNBTPlayerPetList();
+    	//Set tags = playerPet.func_150296_c();
 
     	myCoin = ExtendedPlayerProperties3.get(player).getCoin();
 
@@ -1294,6 +1296,29 @@ public class GuiCasinoSLGuiContainer extends GuiContainer
 
 	    		hitKoyaku = -1;
 	    		gamePhase = 1;
+
+	    		if(ExtendedPlayerProperties5.get(epa).getJobSPSkillSet(EnumDqmJob.Asobinin.getId(), 12) != 0)
+	    		{
+	    			if(this.bonusFlg == 2)
+	    			{
+	    				int mp = ExtendedPlayerProperties.get(epa).getMP();
+	        			if(mp >= EnumDqmSkillJ.JSKILL_0_12.getNeedpt_Val())
+	        			{
+		    				this.epa.playSound("dqr:player.ikasama", 1.0F, 1.0F);
+		    				PacketHandler.INSTANCE.sendToServer(new MessageServerFunction(EnumDqmFuncPacketCode.MPchange, EnumDqmSkillJ.JSKILL_0_12.getNeedpt_Val() * -1));
+		    				this.bonusFlg = 1;
+
+		    				Random rand = new Random();
+
+		    	    		if(kokutiFlg == 3 || rand.nextInt(8) == 0)
+		    	    		{
+		    	    			//System.out.println("CASE1 : " + bonusFlg);
+		    	    			kokutiFlg = 1;
+		    	    		}
+	        			}
+	    			}
+	    		}
+
 	    		this.koyakuChusen();
 
 	    		if(this.kokutiFlg != -1)
@@ -1758,7 +1783,7 @@ public class GuiCasinoSLGuiContainer extends GuiContainer
     	}else if(randVal >= 70000 && randVal < 70000 + rateReg && bonusFlg == -1)
     	{
     		bonusFlg = 2;
-    		if(rand.nextInt(10) == 0 && bonusFlg == -1)
+    		if(rand.nextInt(10) == 0)
     		{
     			kokutiFlg = 3;
     		}

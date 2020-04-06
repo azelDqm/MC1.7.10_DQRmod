@@ -122,7 +122,7 @@ public class EntityPetAINearestTargetHeavyFire extends EntityAITarget
 		                        {
 		        					if(!entityplayer.isPotionActive(DQPotionMinus.debuffHeavyFire.id));
 		        					{
-		        						entityplayer.addPotionEffect(new PotionEffect(DQPotionMinus.debuffHeavyFire.id, 100, this.attacker.getArrayAISets(EnumDqmMobAI.HEAVYFIRE.getId())));
+		        						DQR.func.addPotionEffect2(entityplayer, new PotionEffect(DQPotionMinus.debuffHeavyFire.id, 100, this.attacker.getArrayAISets(EnumDqmMobAI.HEAVYFIRE.getId())));
 		        					}
 		                        	//this.tagetMob = (EntityLivingBase)target;
 		                        }
@@ -137,7 +137,7 @@ public class EntityPetAINearestTargetHeavyFire extends EntityAITarget
 		                    		//this.tagetMob = (EntityLivingBase)target;
 		        					if(!pet.isPotionActive(DQPotionMinus.debuffHeavyFire.id));
 		        					{
-		        						pet.addPotionEffect(new PotionEffect(DQPotionMinus.debuffHeavyFire.id, 100, this.attacker.getArrayAISets(EnumDqmMobAI.HEAVYFIRE.getId())));
+		        						DQR.func.addPotionEffect2(pet, new PotionEffect(DQPotionMinus.debuffHeavyFire.id, 100, this.attacker.getArrayAISets(EnumDqmMobAI.HEAVYFIRE.getId())));
 		        					}
 		                    	}
 		                    }
@@ -152,7 +152,7 @@ public class EntityPetAINearestTargetHeavyFire extends EntityAITarget
 	                    		//this.tagetMob = (EntityLivingBase)target;
 	        					if(!pet.isPotionActive(DQPotionMinus.debuffHeavyFire.id));
 	        					{
-	        						pet.addPotionEffect(new PotionEffect(DQPotionMinus.debuffHeavyFire.id, 100, this.attacker.getArrayAISets(EnumDqmMobAI.HEAVYFIRE.getId())));
+	        						DQR.func.addPotionEffect2(pet, new PotionEffect(DQPotionMinus.debuffHeavyFire.id, 100, this.attacker.getArrayAISets(EnumDqmMobAI.HEAVYFIRE.getId())));
 	        					}
 		                    }
 		        		}
@@ -162,7 +162,7 @@ public class EntityPetAINearestTargetHeavyFire extends EntityAITarget
         					EntityPlayer ep = (EntityPlayer)list.get(cnt);
         					if(!ep.isPotionActive(DQPotionMinus.debuffHeavyFire.id));
         					{
-        						ep.addPotionEffect(new PotionEffect(DQPotionMinus.debuffHeavyFire.id, 100, this.attacker.getArrayAISets(EnumDqmMobAI.HEAVYFIRE.getId())));
+        						DQR.func.addPotionEffect2(ep, new PotionEffect(DQPotionMinus.debuffHeavyFire.id, 100, this.attacker.getArrayAISets(EnumDqmMobAI.HEAVYFIRE.getId())));
         					}
         				}
         				*/

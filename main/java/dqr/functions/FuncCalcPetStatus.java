@@ -1144,7 +1144,7 @@ public class FuncCalcPetStatus {
 
 		if(hpRegeneration >= 0)
 		{
-			ep.addPotionEffect(new PotionEffect(DQPotionPlus.buffHPRegeneration.id, 200, hpRegeneration));
+			DQR.func.addPotionEffect2(ep, new PotionEffect(DQPotionPlus.buffHPRegeneration.id, 200, hpRegeneration));
 		}else
 		{
 			ep.removePotionEffect(DQPotionPlus.buffHPRegeneration.id);
@@ -1152,7 +1152,7 @@ public class FuncCalcPetStatus {
 
 		if(mpRegeneration >= 0)
 		{
-			ep.addPotionEffect(new PotionEffect(DQPotionPlus.buffMPRegeneration.id, 200, mpRegeneration));
+			DQR.func.addPotionEffect2(ep, new PotionEffect(DQPotionPlus.buffMPRegeneration.id, 200, mpRegeneration));
 		}else
 		{
 			ep.removePotionEffect(DQPotionPlus.buffMPRegeneration.id);
@@ -1160,7 +1160,7 @@ public class FuncCalcPetStatus {
 
 		if(hoshihuri >= 0)
 		{
-			ep.addPotionEffect(new PotionEffect(DQPotionPlus.buffHoshihuru.id, 200, hoshihuri));
+			DQR.func.addPotionEffect2(ep, new PotionEffect(DQPotionPlus.buffHoshihuru.id, 200, hoshihuri));
 		}else
 		{
 			ep.removePotionEffect(DQPotionPlus.buffHoshihuru.id);

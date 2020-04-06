@@ -124,7 +124,7 @@ public class DqmItemMagicBuff extends DqmItemMagicBase{
 					par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.mahokanta", 1.0F, 1.0F);
 				}else
 				{
-					par3EntityPlayer.addPotionEffect(new PotionEffect(this.pot.id, this.getEnumMagic().getAttack(), 0));
+					DQR.func.addPotionEffect2(par3EntityPlayer, new PotionEffect(this.pot.id, this.getEnumMagic().getAttack(), 0));
 					par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.up", 1.0F, 1.0F);
 				}
 
@@ -150,13 +150,13 @@ public class DqmItemMagicBuff extends DqmItemMagicBase{
 	            			EntityLivingBase elb = (EntityLivingBase)target;
 	            			if(elb.isPotionActive(DQPotionPlus.buffMahokanta))
 	            			{
-	            				par3EntityPlayer.addPotionEffect(new PotionEffect(this.pot.id, this.getEnumMagic().getAttack(), 0));
+	            				DQR.func.addPotionEffect2(par3EntityPlayer, new PotionEffect(this.pot.id, this.getEnumMagic().getAttack(), 0));
 
 	            				elb.worldObj.playSoundAtEntity(elb, "dqr:player.mahokanta", 1.0F, 1.0F);
 	            				par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.up", 1.0F, 1.0F);
 	            			}else
 	            			{
-	            				elb.addPotionEffect(new PotionEffect(this.pot.id, this.getEnumMagic().getAttack(), 0));
+	            				DQR.func.addPotionEffect2(elb, new PotionEffect(this.pot.id, this.getEnumMagic().getAttack(), 0));
 	            				elb.worldObj.playSoundAtEntity(elb, "dqr:player.up", 1.0F, 1.0F);
 	            			}
 	            		}
@@ -243,7 +243,7 @@ public class DqmItemMagicBuff extends DqmItemMagicBase{
 	    					fixTime = pe.getDuration();
 	    				}
 	    			}
-	    			par3EntityPlayer.addPotionEffect(new PotionEffect(this.pot.id, fixTime + this.getEnumMagic().getAttack(), 1));
+	    			DQR.func.addPotionEffect2(par3EntityPlayer, new PotionEffect(this.pot.id, fixTime + this.getEnumMagic().getAttack(), 1));
 	    			par3EntityPlayer.worldObj.playSoundAtEntity(par3EntityPlayer, "dqr:player.up", 1.0F, 1.0F);
 	    		}
 	    	}

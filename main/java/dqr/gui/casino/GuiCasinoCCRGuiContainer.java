@@ -3,7 +3,6 @@ package dqr.gui.casino;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Set;
 import java.util.regex.Pattern;
 
 import net.minecraft.client.gui.GuiButton;
@@ -12,7 +11,6 @@ import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
@@ -22,7 +20,9 @@ import dqr.PacketHandler;
 import dqr.api.enums.EnumDqmCasinoBJOdds;
 import dqr.api.enums.EnumDqmCasinoCCROdds;
 import dqr.api.enums.EnumDqmFuncPacketCode;
+import dqr.api.enums.EnumDqmSkillJ;
 import dqr.packetMessage.MessageServerFunction;
+import dqr.playerData.ExtendedPlayerProperties;
 import dqr.playerData.ExtendedPlayerProperties3;
 import dqr.thread.ThreadCasinoCCR;
 
@@ -107,13 +107,15 @@ public class GuiCasinoCCRGuiContainer extends GuiContainer
     public boolean alartFlg = false;
 
     public int soundPlay = -1;
+
+    public int ikasamaFlg = 0;
     public GuiCasinoCCRGuiContainer(EntityPlayer player)
     {
 
         super(new GuiCasinoBJContainer(player));
         this.epa = player;
-    	NBTTagCompound playerPet = ExtendedPlayerProperties3.get(player).getNBTPlayerPetList();
-    	Set tags = playerPet.func_150296_c();
+    	//NBTTagCompound playerPet = ExtendedPlayerProperties3.get(player).getNBTPlayerPetList();
+    	//Set tags = playerPet.func_150296_c();
 
     	myCoin = ExtendedPlayerProperties3.get(player).getCoin();
 
@@ -377,6 +379,13 @@ public class GuiCasinoCCRGuiContainer extends GuiContainer
     		this.buttonList.add(new GuiOptionButton(11, mainX + 49, mainY + 117, 40, 20, I18n.format("msg.casino.chinchiro.button.stop.txt", new Object[]{})));
     	}
 
+    	if((gamePhase == 40) && !closeFlg)
+    	{
+    		//this.buttonList.add(new GuiOptionButton(41, mainX + 49, mainY + 117, 40, 20, I18n.format("!?", new Object[]{})));
+    		this.buttonList.add(new GuiOptionButton(41, mainX + 14, mainY + 117, 50, 20, I18n.format("dqm.JSkill_0_12.btn", new Object[]{})));
+    		this.buttonList.add(new GuiOptionButton(42, mainX + 74, mainY + 117, 50, 20, I18n.format("dqm.JSkill_0_12.btn2", new Object[]{})));
+    	}
+
     	mc.fontRenderer.drawStringWithShadow(I18n.format("msg.casino.chinchiro.info.rateChil.txt", new Object[]{}), mainX + 145, mainY + 128, 0xffffffff);
 
     	if(winner == 1)
@@ -564,6 +573,7 @@ public class GuiCasinoCCRGuiContainer extends GuiContainer
     	    			winner = 0;
     	    			result123 = false;
     	    			resultBox = null;
+    	    			ikasamaFlg = 0;
 
     	    			if(dealer != 2)
     	    			{
@@ -613,11 +623,11 @@ public class GuiCasinoCCRGuiContainer extends GuiContainer
     					dice1 = 5;
     					dice2 = 4;
     					dice3 = 6;
-    				}else if(debugKey == 60)
+    				}else if(debugKey == 54)
     				{
     					dice1 = 1;
-    					dice2 = 1;
-    					dice3 = 1;
+    					dice2 = 3;
+    					dice3 = 6;
     				}else if(debugKey == 60)
     				{
     					dice1 = 3;
@@ -646,7 +656,69 @@ public class GuiCasinoCCRGuiContainer extends GuiContainer
 
         	//ThreadCasinoBBG threadBBG = new ThreadCasinoBBG(epa, this, this.gamePhase, p_146284_1_.id);
     		//threadBBG.start();
-    	}
+    	}else if(p_146284_1_.id == 41)
+    	{
+    		int mp = ExtendedPlayerProperties.get(epa).getMP();
+			if(mp >= EnumDqmSkillJ.JSKILL_0_12.getNeedpt_Val())
+			{
+				this.epa.playSound("dqr:player.ikasama", 1.0F, 1.0F);
+				PacketHandler.INSTANCE.sendToServer(new MessageServerFunction(EnumDqmFuncPacketCode.MPchange, EnumDqmSkillJ.JSKILL_0_12.getNeedpt_Val() * -1));
+				gamePhase = 50;
+				dice1 = rand.nextInt(3) + 4;
+				dice2 = rand.nextInt(3) + 4;
+				dice3 = rand.nextInt(3) + 4;
+
+				/*
+				if(DQR.debug == 1)
+				{
+					if(debugKey == 59)
+					{
+						dice1 = 5;
+						dice2 = 4;
+						dice3 = 6;
+					}else if(debugKey == 60)
+					{
+						dice1 = 1;
+						dice2 = 1;
+						dice3 = 1;
+					}else if(debugKey == 60)
+					{
+						dice1 = 3;
+						dice2 = 4;
+						dice3 = 5;
+					}else if(debugKey == 60)
+					{
+						dice1 = 1;
+						dice2 = 1;
+						dice3 = 1;
+					}else if(debugKey == 61)
+					{
+						dice1 = 1;
+						dice2 = 2;
+						dice3 = 3;
+					}else if(debugKey == 62)
+					{
+						dice1 = 4;
+						dice2 = 2;
+						dice3 = 4;
+					}
+
+				}
+				*/
+	    		ThreadCasinoCCR threadCCR = new ThreadCasinoCCR(epa, this, this.gamePhase, p_146284_1_.id);
+	    		threadCCR.start();
+			}
+        	//ThreadCasinoBBG threadBBG = new ThreadCasinoBBG(epa, this, this.gamePhase, p_146284_1_.id);
+    		//threadBBG.start();
+    	}else if(p_146284_1_.id == 42)
+		{
+			gamePhase = 50;
+    		ThreadCasinoCCR threadCCR = new ThreadCasinoCCR(epa, this, this.gamePhase, p_146284_1_.id);
+    		threadCCR.start();
+		}else
+		{
+
+		}
 
 
     }

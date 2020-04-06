@@ -9,8 +9,10 @@ import dqr.DQR;
 import dqr.PacketHandler;
 import dqr.api.enums.EnumDqmCasinoCCROdds;
 import dqr.api.enums.EnumDqmFuncPacketCode;
+import dqr.api.enums.EnumDqmJob;
 import dqr.gui.casino.GuiCasinoCCRGuiContainer;
 import dqr.packetMessage.MessageServerFunction;
+import dqr.playerData.ExtendedPlayerProperties5;
 
 public class ThreadCasinoCCR extends Thread{
 
@@ -34,6 +36,9 @@ public class ThreadCasinoCCR extends Thread{
 		{
 			return;
 		}
+
+
+		//DQR.func.debugString("TEST-1 " + gui.gamePhase, this.getClass());
 
 		if(gui.gamePhase == 1)
 		{
@@ -143,6 +148,7 @@ public class ThreadCasinoCCR extends Thread{
 
 			if(gui.playerResult == null)
 			{
+				//CPUが親で決着パターン
 				if(gui.cpuResult == EnumDqmCasinoCCROdds.R111)
 				{
 					inCoin = 0;
@@ -165,6 +171,7 @@ public class ThreadCasinoCCR extends Thread{
 				gui.resultBox = gui.cpuResult;
 			}else if(gui.cpuResult == null)
 			{
+				//プレイヤが親で決着パターン
 				if(gui.playerResult == EnumDqmCasinoCCROdds.R111)
 				{
 					inCoin = inCoin + (betCoin * 5);
@@ -175,8 +182,17 @@ public class ThreadCasinoCCR extends Thread{
 					gui.winner = 1;
 				}else if(gui.playerResult == EnumDqmCasinoCCROdds.RABC)
 				{
-					inCoin = inCoin - betCoin;
-					gui.winner = 2;
+					if(ExtendedPlayerProperties5.get(ep).getJobSPSkillSet(EnumDqmJob.Asobinin.getId(), 12) != 0  && gui.gamePhase == 30)
+					{
+						gui.resultBox = gui.playerResult;
+						gui.ikasamaFlg = 1;
+						gui.gamePhase = 40;
+					}else
+					{
+						//ikasama
+						inCoin = inCoin - betCoin;
+						gui.winner = 2;
+					}
 				}else if(gui.playerResult == EnumDqmCasinoCCROdds.R123)
 				{
 					inCoin = inCoin - (betCoin * 2);
@@ -184,7 +200,10 @@ public class ThreadCasinoCCR extends Thread{
 					gui.winner = 2;
 				}
 
-				gui.resultBox = gui.playerResult;
+				if(gui.ikasamaFlg == 0 || gui.gamePhase == 31)
+				{
+					gui.resultBox = gui.playerResult;
+				}
 			}else if(gui.playerResult.getVal() == gui.cpuResult.getVal())
 			{
 				//DRAW
@@ -194,6 +213,194 @@ public class ThreadCasinoCCR extends Thread{
 			}else if(gui.playerResult.getVal() > gui.cpuResult.getVal())
 			{
 				//CPU勝ち
+				if(ExtendedPlayerProperties5.get(ep).getJobSPSkillSet(EnumDqmJob.Asobinin.getId(), 12) != 0 && gui.gamePhase == 30 && gui.dealer == 2)
+				{
+					//CPUが親で nの目で負けた場合
+					gui.ikasamaFlg = 1;
+					gui.gamePhase = 40;
+					gui.resultBox = gui.cpuResult;
+				}else
+				{
+					gui.winner = 2;
+					gui.resultBox = gui.cpuResult;
+					if(gui.cpuResult.getCateg() == 2)
+					{
+						//ゾロ目
+						inCoin = inCoin - (betCoin * 3);
+					}else if(gui.cpuResult.getCateg() == 1)
+					{
+						//ピンゾロ
+						inCoin = inCoin - (betCoin * 5);
+					}else if(gui.cpuResult.getCateg() == 3)
+					{
+						//456
+						inCoin = inCoin - (betCoin * 2);
+					}else if(gui.cpuResult.getCateg() == 4)
+					{
+						//XX?
+						inCoin = inCoin - (betCoin * 1);
+					}
+				}
+
+				if(gui.playerResult.getCateg() == 5)
+				{
+					//123
+					gui.winner = 2;
+					gui.resultBox = gui.cpuResult;
+					gui.ikasamaFlg = 0;
+					gui.gamePhase = 30;
+
+					inCoin = inCoin - (betCoin * 2);
+					gui.result123 = true;
+				}
+			}else
+			{
+				//プレイヤー勝ち
+				gui.winner = 1;
+				gui.resultBox = gui.playerResult;
+				if(gui.playerResult.getCateg() == 2)
+				{
+					//ゾロ目
+					inCoin = inCoin + (betCoin * 3);
+				}else if(gui.playerResult.getCateg() == 1)
+				{
+					//ピンゾロ
+					inCoin = inCoin + (betCoin * 5);
+				}else if(gui.playerResult.getCateg() == 3)
+				{
+					//456
+					inCoin = inCoin + (betCoin * 2);
+				}else if(gui.playerResult.getCateg() == 4)
+				{
+					//XXA
+					inCoin = inCoin + (betCoin * 1);
+				}
+
+				if(gui.cpuResult.getCateg() == 5)
+				{
+					//123
+					inCoin = inCoin + (betCoin * 2);
+					gui.result123 = true;
+				}
+			}
+
+			if(gui.ikasamaFlg == 0)
+			{
+				PacketHandler.INSTANCE.sendToServer(new MessageServerFunction(EnumDqmFuncPacketCode.CasinoCoinPlus, inCoin));
+				gui.myCoin = gui.myCoin + inCoin;
+
+				gui.gamePhase = 98;
+				if(gui.winner == 1)
+				{
+					gui.soundPlay = 2;
+				}
+				try {
+					this.sleep(DQR.conf.CCR_end_wait);
+				} catch (InterruptedException e) {
+					// TODO 自動生成された catch ブロック
+					e.printStackTrace();
+				}
+
+				//System.out.println(inCoin);
+				gui.gamePhase = 99;
+			}
+		}
+
+
+
+
+
+		//DQR.func.debugString("TEST0 ", this.getClass());
+		if(gui.gamePhase == 50)
+		{
+			gui.playerDiceSet[0] = gui.dice1 - 1;
+			gui.playerDiceSet[1] = gui.dice2 - 1;
+			gui.playerDiceSet[2] = gui.dice3 - 1;
+
+
+			//DQR.func.debugString("TEST " + gui.playerResult.getName() + " / " + gui.cpuResult.getName() , this.getClass());
+			//gui.gamePhase = 4;
+			gui.playerResult = checkYaku();
+
+
+			try {
+				this.sleep(DQR.conf.CCR_result_wait);
+			} catch (InterruptedException e) {
+				// TODO 自動生成された catch ブロック
+				e.printStackTrace();
+			}
+
+			if(gui.cpuResult == null && gui.playerResult != EnumDqmCasinoCCROdds.RABC && gui.playerResult.getCateg() > 3)
+			{
+				this.doCPU();
+			}
+
+			gui.playerDiceSet[0] = gui.dice1 - 1;
+			gui.playerDiceSet[1] = gui.dice2 - 1;
+			gui.playerDiceSet[2] = gui.dice3 - 1;
+
+
+			int betCoin = Integer.parseInt(gui.commandTextField.getText());
+			int inCoin = betCoin * 5;
+
+			if(gui.playerResult == null)
+			{
+				//CPUが親で決着パターン
+				if(gui.cpuResult == EnumDqmCasinoCCROdds.R111)
+				{
+					inCoin = 0;
+					gui.winner = 2;
+				}else if(gui.cpuResult == EnumDqmCasinoCCROdds.R456)
+				{
+					inCoin = inCoin - (betCoin * 3);
+					gui.winner = 2;
+				}else if(gui.cpuResult == EnumDqmCasinoCCROdds.RABC)
+				{
+					inCoin = inCoin + betCoin;
+					gui.winner = 1;
+				}else if(gui.cpuResult == EnumDqmCasinoCCROdds.R123)
+				{
+					inCoin = inCoin + (betCoin * 2);
+					gui.result123 = true;
+					gui.winner = 1;
+				}
+
+				gui.resultBox = gui.cpuResult;
+			}else if(gui.cpuResult == null)
+			{
+				//プレイヤが親で決着パターン
+				if(gui.playerResult == EnumDqmCasinoCCROdds.R111)
+				{
+					inCoin = inCoin + (betCoin * 5);
+					gui.winner = 1;
+				}else if(gui.playerResult == EnumDqmCasinoCCROdds.R456)
+				{
+					inCoin = inCoin + betCoin * 3;
+					gui.winner = 1;
+				}else if(gui.playerResult == EnumDqmCasinoCCROdds.RABC)
+				{
+					//ikasama
+					inCoin = inCoin - betCoin;
+					gui.winner = 2;
+				}else if(gui.playerResult == EnumDqmCasinoCCROdds.R123)
+				{
+					inCoin = inCoin - (betCoin * 2);
+					gui.result123 = true;
+					gui.winner = 2;
+				}
+
+				if(gui.ikasamaFlg == 0 || gui.gamePhase == 31)
+				{
+					gui.resultBox = gui.playerResult;
+				}
+			}else if(gui.playerResult.getVal() == gui.cpuResult.getVal())
+			{
+				//DRAW
+				gui.winner = 3;
+    			//PacketHandler.INSTANCE.sendToServer(new MessageServerFunction(EnumDqmFuncPacketCode.CasinoCoinPlus, gui.betCoin * 5));
+    			//gui.myCoin = myCoin - (betCoin * 5);
+			}else if(gui.playerResult.getVal() > gui.cpuResult.getVal())
+			{
 				gui.winner = 2;
 				gui.resultBox = gui.cpuResult;
 				if(gui.cpuResult.getCateg() == 2)
@@ -217,6 +424,11 @@ public class ThreadCasinoCCR extends Thread{
 				if(gui.playerResult.getCateg() == 5)
 				{
 					//123
+					gui.winner = 2;
+					gui.resultBox = gui.cpuResult;
+					gui.ikasamaFlg = 0;
+					gui.gamePhase = 30;
+
 					inCoin = inCoin - (betCoin * 2);
 					gui.result123 = true;
 				}
@@ -253,7 +465,7 @@ public class ThreadCasinoCCR extends Thread{
 
 			PacketHandler.INSTANCE.sendToServer(new MessageServerFunction(EnumDqmFuncPacketCode.CasinoCoinPlus, inCoin));
 			gui.myCoin = gui.myCoin + inCoin;
-
+			gui.ikasamaFlg = 0;
 			gui.gamePhase = 98;
 			if(gui.winner == 1)
 			{

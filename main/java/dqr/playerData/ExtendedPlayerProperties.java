@@ -141,6 +141,7 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
     private int shopPaymentGold6 = 0;
 
     private int petRefuse = 0;
+    private int opedit = 0;
 /*
     private int sampleInt = 0;
     private double sampleDouble = 0.0D;
@@ -423,6 +424,7 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
         nbt.setInteger("shopPaymentGold6", this.shopPaymentGold6);
 
         nbt.setInteger("petRefuse", this.petRefuse);
+        nbt.setInteger("opedit", this.opedit);
         compound.setTag(EXT_PROP_NAME, nbt);
     }
 
@@ -652,6 +654,7 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
         this.shopPaymentGold6 = nbt.getInteger("shopPaymentGold6");
 
         this.petRefuse = nbt.getInteger("petRefuse");
+        this.opedit = nbt.getInteger("opedit");
         /*
         this.sampleInt = nbt.getInteger("sampleInt");
         this.sampleDouble = nbt.getDouble("sampleDouble");
@@ -1727,6 +1730,13 @@ public class ExtendedPlayerProperties implements IExtendedEntityProperties {
     }
     public void setPetRefuse(int par1) {
         this.petRefuse = par1;
+    }
+
+    public int getOpedit() {
+        return opedit;
+    }
+    public void setOpedit(int par1) {
+        this.opedit = par1;
     }
     /*
     public int getSampleInt() {

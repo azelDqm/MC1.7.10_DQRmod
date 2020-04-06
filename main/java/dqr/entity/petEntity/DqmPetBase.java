@@ -1,7 +1,10 @@
 package dqr.entity.petEntity;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 import java.util.UUID;
 
 import net.minecraft.block.Block;
@@ -54,6 +57,7 @@ import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import dqr.DQR;
+import dqr.DqrWorldData;
 import dqr.PacketHandler;
 import dqr.api.Items.DQMagics;
 import dqr.api.Items.DQMiscs;
@@ -116,12 +120,14 @@ import dqr.items.miscs.DqmItemPetbook;
 import dqr.packetMessage.MessageClientPetEntityData;
 import dqr.playerData.ExtendedPlayerProperties;
 import dqr.playerData.ExtendedPlayerProperties3;
+import dqr.playerData.ExtendedPlayerProperties6;
 import dqr.thread.NoThreadProcess;
 import dqr.thread.ThreadLvUpPet;
 
 public class DqmPetBase  extends EntityTameable implements IInvBasic
 {
 	public boolean chestOn = true;
+	private boolean enableAI = true;
     private int Job;
     private int[] JobLv = new int[32];
     private int[] JobExp = new int[32];
@@ -222,6 +228,10 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
     private int MeganteCnt = 0;
     protected EntityPetAIMagicMegante aiMegante = new EntityPetAIMagicMegante(this);
 
+    private long petUniqueNumber = 0;
+
+    private NBTTagCompound dqrPotionEffects =  new NBTTagCompound();
+
 	public DqmPetBase(World par1, EnumDqmPet type) {
         super(par1);
         this.type = type;
@@ -264,7 +274,12 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 
     public boolean isAIEnabled()
     {
-        return true;
+        return enableAI;
+    }
+
+    public void setAIEnabled(boolean par1)
+    {
+    	enableAI = par1;
     }
 
     public void clearTasks()
@@ -711,6 +726,18 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
             	{
             		ExtendedPlayerProperties3.get(ep).minusPetCount(1);
                 	DQR.petFunc.removePetdata(ep, this.getUniqueID().toString());
+                	if(this.getPetUniqueNumber() == 0)
+        			{
+        				DqrWorldData wd = (DqrWorldData)ep.worldObj.loadItemData(DqrWorldData.class, DQR.modID);
+        				if(wd == null)
+        				{
+        					wd = new DqrWorldData(DQR.modID);
+        				}
+        				this.petUniqueNumber = wd.getNextPetNum();
+        				wd.markDirty();
+        				ep.worldObj.setItemData(DQR.modID, wd);
+        			}
+                	DQR.petFunc.removePetdata(ep, String.valueOf(this.petUniqueNumber));
             	}
         		this.setDead(true);
         	}
@@ -1092,7 +1119,7 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 			param = DQR.magicTablePet.magicCastGrade(this, EnumDqmMobAI.HEAVYFIRE);
 			if(param > 0 && !ep.capabilities.isCreativeMode)
 			{
-				ep.addPotionEffect(new PotionEffect(DQPotionMinus.debuffHeavyFire.id, 60, this.arrayAISets[EnumDqmMobAI.HEAVYFIRE.getId()]));
+				DQR.func.addPotionEffect2(ep, new PotionEffect(DQPotionMinus.debuffHeavyFire.id, 60, this.arrayAISets[EnumDqmMobAI.HEAVYFIRE.getId()]));
 			}
 
 			param = DQR.magicTablePet.magicCastGrade(this, EnumDqmMobAI.POISON);
@@ -1100,7 +1127,7 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 	        {
         		if(rand.nextInt(this.arrayAIRate[EnumDqmMobAI.POISON.getId()]) == 0)
         		{
-        			ep.addPotionEffect(new PotionEffect(DQPotionMinus.potionPoison.id, rand.nextInt(10) + 10, this.arrayAISets[EnumDqmMobAI.POISON.getId()] - 1));
+        			DQR.func.addPotionEffect2(ep, new PotionEffect(DQPotionMinus.potionPoison.id, rand.nextInt(10) + 10, this.arrayAISets[EnumDqmMobAI.POISON.getId()] - 1));
         		}
 	        }
 
@@ -1109,7 +1136,7 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 	        {
         		if(rand.nextInt(this.arrayAIRate[EnumDqmMobAI.POISONX.getId()]) == 0)
         		{
-        			ep.addPotionEffect(new PotionEffect(DQPotionMinus.potionPoisonX.id, rand.nextInt(10) + 10, this.arrayAISets[EnumDqmMobAI.POISONX.getId()]));
+        			DQR.func.addPotionEffect2(ep, new PotionEffect(DQPotionMinus.potionPoisonX.id, rand.nextInt(10) + 10, this.arrayAISets[EnumDqmMobAI.POISONX.getId()]));
         		}
 	        }
 		}
@@ -1246,7 +1273,7 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 
         	if(this.getOwner() != null && this.getOwner() instanceof EntityPlayer)
         	{
-        		NBTTagCompound ownerNBT = ExtendedPlayerProperties3.get((EntityPlayer)this.getOwner()).getNBTPlayerPetList();
+        		NBTTagCompound ownerNBT = ExtendedPlayerProperties6.get((EntityPlayer)this.getOwner()).getNBTPlayerPetList();
 
         		if(ownerNBT != null && !ownerNBT.hasKey(this.getUniqueID().toString()))
         		{
@@ -1442,6 +1469,18 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 	                    	{
 	                    		ExtendedPlayerProperties3.get(ep2).minusPetCount(1);
 	                        	DQR.petFunc.removePetdata(ep2, this.getUniqueID().toString());
+	                        	if(this.getPetUniqueNumber() == 0)
+	                			{
+	                				DqrWorldData wd = (DqrWorldData)ep2.worldObj.loadItemData(DqrWorldData.class, DQR.modID);
+	                				if(wd == null)
+	                				{
+	                					wd = new DqrWorldData(DQR.modID);
+	                				}
+	                				this.petUniqueNumber = wd.getNextPetNum();
+	                				wd.markDirty();
+	                				ep2.worldObj.setItemData(DQR.modID, wd);
+	                			}
+	                        	DQR.petFunc.removePetdata(ep2, String.valueOf(this.petUniqueNumber));
 	                    	}
 	                    	this.setDead(false);
 	        			}
@@ -1524,6 +1563,19 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 		                    	{
 		                    		ExtendedPlayerProperties3.get(ep2).minusPetCount(1);
 		                        	DQR.petFunc.removePetdata(ep2, this.getUniqueID().toString());
+
+		                        	if(this.getPetUniqueNumber() == 0)
+		                			{
+		                				DqrWorldData wd = (DqrWorldData)ep2.worldObj.loadItemData(DqrWorldData.class, DQR.modID);
+		                				if(wd == null)
+		                				{
+		                					wd = new DqrWorldData(DQR.modID);
+		                				}
+		                				this.petUniqueNumber = wd.getNextPetNum();
+		                				wd.markDirty();
+		                				ep2.worldObj.setItemData(DQR.modID, wd);
+		                			}
+		                        	DQR.petFunc.removePetdata(ep2, String.valueOf(this.petUniqueNumber));
 		                    	}
 		                    	this.setDead(true);
 		        			}
@@ -1663,6 +1715,19 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 	                    	{
 	                    		ExtendedPlayerProperties3.get(ep2).minusPetCount(1);
 	                        	DQR.petFunc.removePetdata(ep2, this.getUniqueID().toString());
+
+	                        	if(this.getPetUniqueNumber() == 0)
+	                			{
+	                				DqrWorldData wd = (DqrWorldData)ep2.worldObj.loadItemData(DqrWorldData.class, DQR.modID);
+	                				if(wd == null)
+	                				{
+	                					wd = new DqrWorldData(DQR.modID);
+	                				}
+	                				this.petUniqueNumber = wd.getNextPetNum();
+	                				wd.markDirty();
+	                				ep2.worldObj.setItemData(DQR.modID, wd);
+	                			}
+	                        	DQR.petFunc.removePetdata(ep2, String.valueOf(this.petUniqueNumber));
 	                    	}
 	                        this.setDead(true);
 	                    }else
@@ -2113,6 +2178,20 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 		                			EntityPlayer epOwner = (EntityPlayer)this.getOwner();
 		                			ExtendedPlayerProperties3.get(epOwner).minusPetCount(1);
 		                			DQR.petFunc.removePetdata(epOwner, this.getUniqueID().toString());
+
+
+		                        	if(this.getPetUniqueNumber() == 0)
+		                			{
+		                				DqrWorldData wd = (DqrWorldData)epOwner.worldObj.loadItemData(DqrWorldData.class, DQR.modID);
+		                				if(wd == null)
+		                				{
+		                					wd = new DqrWorldData(DQR.modID);
+		                				}
+		                				this.petUniqueNumber = wd.getNextPetNum();
+		                				wd.markDirty();
+		                				epOwner.worldObj.setItemData(DQR.modID, wd);
+		                			}
+		                        	DQR.petFunc.removePetdata(epOwner, String.valueOf(this.petUniqueNumber));
 		                		}
 		                		this.ownerName = ep.getCommandSenderName();
 		                		String s = PreYggdrasilConverter.func_152719_a(this.ownerName);
@@ -2606,6 +2685,8 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 
         p_70014_1_.setInteger("weapon", this.weapon);
 
+        p_70014_1_.setTag("dqrPotionEffects", dqrPotionEffects);
+
         for(int cnt = 0; cnt < 4; cnt++)
         {
         	p_70014_1_.setDouble("rarihoLoc_" + cnt, rarihoLoc[cnt]);
@@ -2665,7 +2746,7 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 
 
 
-
+        p_70014_1_.setLong("PetUniqueNumber", this.petUniqueNumber);
 
 
         if(chestOn)
@@ -2891,8 +2972,10 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
         	rarihoLoc[cnt] = p_70037_1_.getDouble("rarihoLoc_" + cnt);
         }
 
+        this.petUniqueNumber = p_70037_1_.getLong("PetUniqueNumber");
         //super.readEntityFromNBT(p_70037_1_);
         this.ownerName = p_70037_1_.getString("OwnerName");
+
 
         String s = "";
 
@@ -2929,7 +3012,7 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
         //this.setSitting(p_70037_1_.getBoolean("Sitting"));
         this.setTamed(p_70037_1_.getBoolean("isTamed"));
 
-
+        dqrPotionEffects = p_70037_1_.getCompoundTag("dqrPotionEffects");
 
         if(chestOn)
         {
@@ -3747,6 +3830,16 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
         this.arrayKaisinritu[par1] = par2;
     }
 
+    public long getPetUniqueNumber()
+    {
+    	return this.petUniqueNumber;
+    }
+
+    public void setPetUniqueNumber(long par1)
+    {
+    	this.petUniqueNumber = par1;
+    }
+
     private NBTTagCompound makeTutuNBT(NBTTagCompound tag1)
     {
     	return makeTutuNBT(tag1, true);
@@ -3908,7 +4001,7 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
         nbt.setInteger("MaxMP", this.MaxMP);
 
         nbt.setInteger("weapon", this.weapon);
-
+        nbt.setLong("PetUniqueNumber", this.petUniqueNumber);
         for(int cnt = 0; cnt < 4; cnt++)
         {
         	nbt.setDouble("rarihoLoc_" + cnt, rarihoLoc[cnt]);
@@ -5615,7 +5708,7 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 		}
 
 
-		//this.addPotionEffect(new PotionEffect(this.pot.id, grade.getAttack(), 0));
+		//DQR.func.addPotionEffect2(this, new PotionEffect(this.pot.id, grade.getAttack(), 0));
 		if(!this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.jumon", 1.0F, 1.0F);
 		//this.worldObj.playSoundAtEntity(this, "dqr:player.up", 1.0F, 1.0F);
 		int attackDam = grade.getAttack();
@@ -5804,7 +5897,7 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 				if(!this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.mahokanta", 1.0F, 1.0F);
 			}else
 			{
-				this.addPotionEffect(new PotionEffect(pot.id, grade.getAttack(), 0));
+				DQR.func.addPotionEffect2(this, new PotionEffect(pot.id, grade.getAttack(), 0));
 				if(!this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.up", 1.0F, 1.0F);
 			}
 
@@ -5860,12 +5953,12 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
                			EntityLivingBase elb = (EntityLivingBase)target;
             			if(elb.isPotionActive(DQPotionPlus.buffMahokanta))
             			{
-            				this.addPotionEffect(new PotionEffect(pot.id, grade.getAttack(), 0));
+            				DQR.func.addPotionEffect2(this, new PotionEffect(pot.id, grade.getAttack(), 0));
             				if(!elb.worldObj.isRemote) elb.worldObj.playSoundAtEntity(elb, "dqr:player.mahokanta", 1.0F, 1.0F);
             				this.worldObj.playSoundAtEntity(this, "dqr:player.up", 1.0F, 1.0F);
             			}else
             			{
-            				elb.addPotionEffect(new PotionEffect(pot.id, grade.getAttack(), 0));
+            				DQR.func.addPotionEffect2(elb, new PotionEffect(pot.id, grade.getAttack(), 0));
             				if(!elb.worldObj.isRemote) elb.worldObj.playSoundAtEntity(elb, "dqr:player.up", 1.0F, 1.0F);
             			}
             		}
@@ -5875,12 +5968,12 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
             			EntityLivingBase elb = (EntityLivingBase)target;
             			if(elb.isPotionActive(DQPotionPlus.buffMahokanta))
             			{
-            				this.addPotionEffect(new PotionEffect(pot.id, grade.getAttack(), 0));
+            				DQR.func.addPotionEffect2(this, new PotionEffect(pot.id, grade.getAttack(), 0));
             				if(!elb.worldObj.isRemote) elb.worldObj.playSoundAtEntity(elb, "dqr:player.mahokanta", 1.0F, 1.0F);
             				this.worldObj.playSoundAtEntity(this, "dqr:player.up", 1.0F, 1.0F);
             			}else
             			{
-            				elb.addPotionEffect(new PotionEffect(pot.id, grade.getAttack(), 0));
+            				DQR.func..addPotionEffect2(elb, new PotionEffect(pot.id, grade.getAttack(), 0));
             				if(!elb.worldObj.isRemote) elb.worldObj.playSoundAtEntity(elb, "dqr:player.up", 1.0F, 1.0F);
             			}
             		}
@@ -5917,10 +6010,10 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 	        		if(tagMob.isPotionActive(DQPotionPlus.buffMahokanta))
 	        		{
 	        			if(!tagMob.worldObj.isRemote) tagMob.worldObj.playSoundAtEntity(this, "dqr:player.mahokanta", 1.0F, 1.0F);
-	        			this.addPotionEffect(new PotionEffect(pot.id, grade.getAttack(), 1));
+	        			DQR.func.addPotionEffect2(this, new PotionEffect(pot.id, grade.getAttack(), 1));
 	        			this.playSound("dqr:player.up", 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
 	        		}else{
-	        			tagMob.addPotionEffect(new PotionEffect(pot.id, grade.getAttack(), 1));
+	        			DQR.func.addPotionEffect2(tagMob, new PotionEffect(pot.id, grade.getAttack(), 1));
 	        			if(!tagMob.worldObj.isRemote) tagMob.playSound("dqr:player.up", 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
 	        		}
 	        	}
@@ -5933,7 +6026,7 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
     			if(!this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.mahokanta", 1.0F, 1.0F);
     		}else
     		{
-    			this.addPotionEffect(new PotionEffect(pot.id, grade.getAttack(), 1));
+    			DQR.func.addPotionEffect2(this, new PotionEffect(pot.id, grade.getAttack(), 1));
     			if(!this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.up", 1.0F, 1.0F);
     		}
     	}
@@ -5969,7 +6062,7 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 		   grade == EnumDqmMagic.Rariho || grade == EnumDqmMagic.Manusa || grade == EnumDqmMagic.Mahoton ||
 		   grade == EnumDqmMagic.Medapani || grade == EnumDqmMagic.Divainsuperu)
 		{
-    		//this.addPotionEffect(new PotionEffect(this.pot.id, grade.getAttack(), 0));
+    		//DQR.func.addPotionEffect2(this, new PotionEffect(this.pot.id, grade.getAttack(), 0));
 			if(!this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.jumon", 1.0F, 1.0F);
 			//this.worldObj.playSoundAtEntity(this, "dqr:player.up", 1.0F, 1.0F);
 
@@ -6042,12 +6135,12 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 	            			{
 		            			if(elb.isPotionActive(DQPotionPlus.buffMahokanta))
 		            			{
-		            				this.addPotionEffect(new PotionEffect(pot.id, grade.getAttack(), 0));
+		            				DQR.func.addPotionEffect2(this, new PotionEffect(pot.id, grade.getAttack(), 0));
 		            				if(!elb.worldObj.isRemote) elb.worldObj.playSoundAtEntity(elb, "dqr:player.mahokanta", 1.0F, 1.0F);
 		            				if(!this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.down", 1.0F, 1.0F);
 		            			}else
 		            			{
-		            				elb.addPotionEffect(new PotionEffect(pot.id, grade.getAttack(), 0));
+		            				DQR.func.addPotionEffect2(elb, new PotionEffect(pot.id, grade.getAttack(), 0));
 		            				if(!elb.worldObj.isRemote) elb.worldObj.playSoundAtEntity(elb, "dqr:player.down", 1.0F, 1.0F);
 		            			}
 	            			}
@@ -6070,12 +6163,12 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
 	            			{
 		            			if(elb.isPotionActive(DQPotionPlus.buffMahokanta))
 		            			{
-		            				this.addPotionEffect(new PotionEffect(pot.id, grade.getAttack(), 0));
+		            				DQR.func.addPotionEffect2(this, new PotionEffect(pot.id, grade.getAttack(), 0));
 		            				if(!elb.worldObj.isRemote) elb.worldObj.playSoundAtEntity(elb, "dqr:player.mahokanta", 1.0F, 1.0F);
 		            				if(!this.worldObj.isRemote) this.worldObj.playSoundAtEntity(this, "dqr:player.down", 1.0F, 1.0F);
 		            			}else
 		            			{
-		            				elb.addPotionEffect(new PotionEffect(pot.id, grade.getAttack(), 0));
+		            				DQR.func..addPotionEffect2(elb, new PotionEffect(pot.id, grade.getAttack(), 0));
 		            				if(!elb.worldObj.isRemote) elb.worldObj.playSoundAtEntity(elb, "dqr:player.down", 1.0F, 1.0F);
 		            			}
 	            			}
@@ -6443,5 +6536,121 @@ public class DqmPetBase  extends EntityTameable implements IInvBasic
             if(!this.worldObj.isRemote) this.playSound("mob.endermen.portal", 1.0F, 1.0F);
             return true;
         }
+    }
+
+
+
+
+    public NBTTagCompound getDqrPotionEffectsSet() {
+    	if(dqrPotionEffects == null){dqrPotionEffects = new NBTTagCompound();}
+        return dqrPotionEffects;
+    }
+    public void setDqrPotionEffectsSet(NBTTagCompound par1) {
+    	if(par1 != null)
+    	{
+    		this.dqrPotionEffects = par1;
+    	}else
+    	{
+    		this.dqrPotionEffects = new NBTTagCompound();
+    	}
+    }
+    public void removeDqrPotionEffects(String key) {
+    	this.dqrPotionEffects.removeTag(key);
+    }
+
+
+    public long getJobSPSkillDuration(int job, int idx) {
+        //return fixJobSPSkillDuration.getLong("jobSPSkillDuration" + "_" + job  + "_" + idx);
+    	NBTTagCompound nbt = this.dqrPotionEffects.getCompoundTag("JSkill" + "_" + job  + "_" + idx);
+    	if(nbt != null && nbt.hasKey("duration"))
+    	{
+    		long duration = nbt.getLong("duration") - this.worldObj.getWorldTime();
+
+    		if(duration > 0)
+    		{
+    			return duration;
+    		}else
+    		{
+    			return 0L;
+    		}
+
+    	}else
+    	{
+    		return 0L;
+    	}
+    }
+    public void setJobSPSkillDuration(int job, int idx, long par1) {
+    	NBTTagCompound nbt = new NBTTagCompound();
+    	nbt.setInteger("id", 0);
+    	nbt.setInteger("idx", 0);
+    	nbt.setInteger("type", 0);
+    	nbt.setLong("duration", par1);
+    	nbt.setInteger("isDebuff", 0);
+    	nbt.setInteger("amplifier", 0);
+
+    	this.dqrPotionEffects.setTag("JSkill" + "_" + job  + "_" + idx, nbt);
+        //this.fixJobSPSkillDuration.setLong("jobSPSkillDuration" + "_" + job  + "_" + idx, par1);
+    }
+    public void setDebuffDuration(int job, int idx, long par1) {
+    	NBTTagCompound nbt = new NBTTagCompound();
+    	nbt.setInteger("id", 0);
+    	nbt.setInteger("idx", 0);
+    	nbt.setInteger("type", 0);
+    	nbt.setLong("duration", par1);
+    	nbt.setInteger("isDebuff", 1);
+    	nbt.setInteger("amplifier", 0);
+
+    	this.dqrPotionEffects.setTag("JSkill" + "_" + job  + "_" + idx, nbt);
+        //this.fixJobSPSkillDuration.setLong("jobSPSkillDuration" + "_" + job  + "_" + idx, par1);
+    }
+
+
+    public void refreshDqrPotionEffects(long wt)
+    {
+    	Set nbtSet = this.dqrPotionEffects.func_150296_c();
+
+    	Iterator ite = nbtSet.iterator();
+    	List<String> lst = new ArrayList<String>();
+    	while(ite.hasNext())
+    	{
+    		Object obj = ite.next();
+    		if(obj instanceof String)
+    		{
+    			NBTTagCompound nbt = this.dqrPotionEffects.getCompoundTag((String)obj);
+    			if(nbt != null)
+    			{
+    				if(nbt.hasKey("duration"))
+    				{
+	        			long fixTime = nbt.getLong("duration");
+	        			if(fixTime < wt)
+	        			{
+	        				lst.add((String)obj);
+	        				//this.jobSPSkillDuration.removeTag((String)obj);
+	        			}
+    				}else
+    				{
+    					lst.add((String)obj);
+    				}
+    			}
+
+    			//String name = (String)obj;
+    			//System.out.println("TEST : " + name);
+    		}
+    	}
+
+    	for(int cnt = 0; cnt < lst.size(); cnt++)
+    	{
+    		this.dqrPotionEffects.removeTag(lst.get(cnt));
+    	}
+    }
+
+    public void setDqrPotionEffects(String key, NBTTagCompound nbt)
+    {
+    	this.dqrPotionEffects.setTag(key, nbt);
+    }
+
+    public NBTTagCompound getDqrPotionEffects(String key)
+    {
+    	return (NBTTagCompound)this.dqrPotionEffects.getTag(key);
     }
 }

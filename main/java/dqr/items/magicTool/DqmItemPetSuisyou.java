@@ -22,20 +22,31 @@ import dqr.items.base.DqmItemMagicToolBase;
 import dqr.packetMessage.MessageClientDataSend;
 import dqr.playerData.ExtendedPlayerProperties;
 import dqr.playerData.ExtendedPlayerProperties3;
+import dqr.playerData.ExtendedPlayerProperties6;
 
 public class DqmItemPetSuisyou extends DqmItemMagicToolBase{
     private EnumDqmMagic enumMagic;
+    public int itemGrade = 0;
 
 	public DqmItemPetSuisyou()
 	{
 		super();
 	}
 
-    public DqmItemPetSuisyou(EnumDqmMagic par4)
+	public DqmItemPetSuisyou(int grade)
+	{
+		super();
+		this.itemGrade = grade;
+	}
+
+	/*
+    public DqmItemPetSuisyou(EnumDqmMagic par4, int model)
     {
     	super();
         this.enumMagic = par4;
+        this.model = model;
     }
+    */
 
     public EnumDqmMagic getEnumMagic()
     {
@@ -53,7 +64,7 @@ public class DqmItemPetSuisyou extends DqmItemMagicToolBase{
 	    	{
 	    		if(itemMode == EnumDqmMGToolMode.PETSUISYOU_REFRESH.getId())
 	    		{
-		    		NBTTagCompound nbt = ExtendedPlayerProperties3.get(player).getNBTPlayerPetList();
+		    		NBTTagCompound nbt = ExtendedPlayerProperties6.get(player).getNBTPlayerPetList();
 					if(nbt != null)
 					{
 				    	Set tags = nbt.func_150296_c();
@@ -112,15 +123,15 @@ public class DqmItemPetSuisyou extends DqmItemMagicToolBase{
 					player.worldObj.playSoundAtEntity(player, "dqr:player.pi", 1.0F, 1.0F);
 	    		}else
 	    		{
-	    			NBTTagCompound playerPet = ExtendedPlayerProperties3.get(player).getNBTPlayerPetList();
+	    			NBTTagCompound playerPet = ExtendedPlayerProperties6.get(player).getNBTPlayerPetList();
 		    		PacketHandler.INSTANCE.sendTo(new MessageClientDataSend(playerPet , 2), (EntityPlayerMP)player);
 		    		player.openGui(DQR.instance, DQR.conf.GuiID_PetBook, world, (int)player.posX, (int)player.posY, (int)player.posZ);
 	    		}
 	    	}else
 	    	{
-	    		if(itemMode == EnumDqmMGToolMode.PETSUISYOU_VIEW.getId() || itemMode == EnumDqmMGToolMode.PETSUISYOU_VIEWDEL.getId())
+	    		if(itemMode == EnumDqmMGToolMode.PETSUISYOU_VIEW.getId() || itemMode == EnumDqmMGToolMode.PETSUISYOU_VIEWDEL.getId() || itemMode == EnumDqmMGToolMode.PETSUISYOU_CALL.getId())
 	    		{
-	    			NBTTagCompound playerPet = ExtendedPlayerProperties3.get(player).getNBTPlayerPetList();
+	    			NBTTagCompound playerPet = ExtendedPlayerProperties6.get(player).getNBTPlayerPetList();
 	    			PacketHandler.INSTANCE.sendTo(new MessageClientDataSend(playerPet , 2), (EntityPlayerMP)player);
 	    			player.openGui(DQR.instance, DQR.conf.GuiID_PetBook, world, (int)player.posX, (int)player.posY, (int)player.posZ);
 	    		}
@@ -172,6 +183,10 @@ public class DqmItemPetSuisyou extends DqmItemMagicToolBase{
     		p_77624_3_.add(EnumColor.Yellow.getChatColor() + I18n.format("dqm.iteminfo.PetSuisyou.23.txt", new Object[]{}));
         	p_77624_3_.add(EnumColor.White.getChatColor() + I18n.format("dqm.iteminfo.PetSuisyou.8.txt", new Object[]{}));
         	p_77624_3_.add(EnumColor.White.getChatColor() + I18n.format("dqm.iteminfo.PetSuisyou.9.txt", new Object[]{}));
+    	}else if(itemMode == EnumDqmMGToolMode.PETSUISYOU_CALL.getId())
+    	{
+    		p_77624_3_.add(EnumColor.Yellow.getChatColor() + I18n.format("dqm.iteminfo.PetSuisyou.24.txt", new Object[]{}));
+        	p_77624_3_.add(EnumColor.White.getChatColor() + I18n.format("dqm.iteminfo.PetSuisyou.12.txt", new Object[]{}));
     	}
 
     	p_77624_3_.add("");
@@ -201,5 +216,17 @@ public class DqmItemPetSuisyou extends DqmItemMagicToolBase{
 				p_77624_3_.add(medalValue);
 			}
 		}
+	 }
+
+	 public int getItemGrade()
+	 {
+		 return this.itemGrade;
+	 }
+
+	 public DqmItemPetSuisyou setItemGrade(int grade)
+	 {
+		 this.itemGrade = grade;
+
+		 return this;
 	 }
 }

@@ -24,6 +24,7 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import dqr.DQR;
 import dqr.api.potion.DQPotionEtc;
 import dqr.api.potion.DQPotionPlus;
 import dqr.entity.mobEntity.DqmMobBase;
@@ -390,7 +391,7 @@ public class MagicEntityMahoimi extends MagicEntity implements IProjectile{
 
                             	if (this.damage > 70)
                             	{
-                            		eb.addPotionEffect(new PotionEffect(DQPotionEtc.buffMahoizun.id, 60, 3));
+                            		DQR.func.addPotionEffect2(eb, new PotionEffect(DQPotionEtc.buffMahoizun.id, 60, 3));
                             	}
                                 //マルチプレイ時に、両者がプレイヤーだった時のパケット送信処理
                                 if (this.shootingEntity != null && elv != this.shootingEntity &&
@@ -424,7 +425,7 @@ public class MagicEntityMahoimi extends MagicEntity implements IProjectile{
 
 	                        	if (this.damage > 70)
 	                        	{
-	                        		eb.addPotionEffect(new PotionEffect(DQPotionEtc.buffMahoizun.id, 60, 3));
+	                        		DQR.func.addPotionEffect2(eb, new PotionEffect(DQPotionEtc.buffMahoizun.id, 60, 3));
 	                        	}
 	                            //マルチプレイ時に、両者がプレイヤーだった時のパケット送信処理
 	                            if (this.shootingEntity != null && target.entityHit != this.shootingEntity &&

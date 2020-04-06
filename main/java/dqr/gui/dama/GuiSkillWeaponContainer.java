@@ -23,6 +23,7 @@ public class GuiSkillWeaponContainer extends Container
 
     public GuiSkillWeaponContainer(EntityPlayer ep)
     {
+    	DQR.func.debugString("TEST!!! A1 : " + ep.worldObj.isRemote ,this.getClass());
         //inventory = new InventoryItemJobChange(inventoryPlayer);
     	this.ep = ep;
     	inventory = new InventorySkillWeapon(ep);
@@ -66,7 +67,15 @@ public class GuiSkillWeaponContainer extends Container
 
     public void refreshInventory()
     {
+    	DQR.func.debugString("TEST!!! A2 : " + ep.worldObj.isRemote ,this.getClass());
+    	/*
+    	if(!ep.worldObj.isRemote)
+		{
+			PacketHandler.INSTANCE.sendTo(new MessagePlayerProperties3((EntityPlayer)ep), (EntityPlayerMP)ep);
+		}
+		*/
     	this.inventorySlots = new ArrayList();
+    	//inventory.closeInventory();
     	inventory = new InventorySkillWeapon(ep);
         inventory.openInventory();
 
@@ -169,6 +178,7 @@ public class GuiSkillWeaponContainer extends Container
 	    			//System.out.println("TEST?" + skillPoint);
 	    			if(skillPoint > 0)
 	    			{
+	    				DQR.func.debugString("TEST!!! 1" ,this.getClass());
 	    				EnumDqmSkillW skillW =  DQR.enumGetter.getSkillW(nbt.getInteger("weaponId"), nbt.getInteger("CategCode"));
 
 	    				int needWP = skillW.getPOINT();
@@ -180,6 +190,7 @@ public class GuiSkillWeaponContainer extends Container
 	    	        	int perm = ExtendedPlayerProperties3.get(ep).getWeaponSkillPermission(nbt.getInteger("weaponId"), nbt.getInteger("CategCode"));
 	    	        	if(perm == 0 || DQR.debug == 1)
 	    	        	{
+	    	        		DQR.func.debugString("TEST!!! 2" ,this.getClass());
 	    		        	if(needLv <= nowLv || DQR.debug == 1)
 	    		        	{
 	    			        	if(needWP <= nowWP || DQR.debug == 1)
@@ -216,8 +227,10 @@ public class GuiSkillWeaponContainer extends Container
 
 	    			}else
 	    			{
+	    				DQR.func.debugString("TEST!!! 3" ,this.getClass());
 	    				if(skillFunc == 1)
 	    				{
+	    					DQR.func.debugString("TEST!!! 4" ,this.getClass());
 		            		int perm = ExtendedPlayerProperties3.get(ep).getWeaponSkillPermission(nbt.getInteger("weaponId"), nbt.getInteger("CategCode"));
 		            		//if(perm == 1 && ExtendedPlayerProperties3.get(ep).getWeaponSkillSet(nbt.getInteger("weaponId")) != nbt.getInteger("CategCode"))
 		            		if(perm == 1)

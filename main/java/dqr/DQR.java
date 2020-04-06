@@ -65,6 +65,7 @@ import dqr.functions.FuncCheckBed;
 import dqr.functions.FuncCheckCanSpawn;
 import dqr.functions.FuncCheckMutation;
 import dqr.functions.FuncCommon;
+import dqr.functions.FuncDQEffect;
 import dqr.functions.FuncDamageMessage;
 import dqr.functions.FuncEnchantExtension;
 import dqr.functions.FuncEnderDragonExtension;
@@ -73,6 +74,7 @@ import dqr.functions.FuncEntityRenderExtension;
 import dqr.functions.FuncFarmlandExtension;
 import dqr.functions.FuncFishHookExtension;
 import dqr.functions.FuncPetOperation;
+import dqr.functions.FuncSkillJobSP;
 import dqr.gui.GuiHandler;
 import dqr.gui.playerHUD.GuiNewLogger;
 import dqr.handler.BagSlotClickHandler;
@@ -81,6 +83,7 @@ import dqr.handler.ChunkEventHandler;
 import dqr.handler.CraftingEventHandler;
 import dqr.handler.DamageHandler;
 import dqr.handler.DebugHandler;
+import dqr.handler.DqrDamageMobEventHandler;
 import dqr.handler.EnderDragonHandler;
 import dqr.handler.EntityEventHandler;
 import dqr.handler.FishHookHandler;
@@ -109,7 +112,7 @@ import dqr.potion.DqmPotion;
 import dqr.world.DqmStructureRegister;
 import dqr.world.DqmVillageRegister;
 
-@Mod(modid = "DQMIIINext", name = "DQRespect", version = "0.9.4.7#1", useMetadata = true, dependencies = "after:PotionExtension")
+@Mod(modid = "DQMIIINext", name = "DQRespect", version = "0.9.4.8#1", useMetadata = true, dependencies = "after:PotionExtension")
 public class DQR {
 
 	@SidedProxy(clientSide = "dqr.ClientProxy", serverSide = "dqr.CommonProxy")
@@ -118,15 +121,17 @@ public class DQR {
 	@Instance("DQMIIINext")
 	public static DQR instance;
 	public static String modID = "DQMIIINext";
-	public static int debug = 0; //12 : Lv 全calc
+	public static int debug = 0; //12 : Lv 全calc  14 : ???
 	public static int easyMode = 0;
 
 	public static int jobStatusVersion = 2;
+	public static int bugFixFlg0947_8 = 1;
 
 	public static FuncCalcMobParam funcMob;
 	public static DQRconfigs conf;
 	public static DQRconfigs2 conf2;
 
+	public static int debugSwitch = 0;
 	public static FuncCalcPlayerStatus calcPlayerStatus;
 	public static FuncCalcPetStatus calcPetStatus;
 	public static FuncAddGrowthBlock growth;
@@ -144,6 +149,7 @@ public class DQR {
 	public static FuncCommon func;
 	public static DQPotionFunc potionFunc;
 	public static DqmPartyManager partyManager;
+	public static FuncDQEffect dqEffect;
 
 	public static DqrAddon addons;
 
@@ -162,6 +168,7 @@ public class DQR {
 	public static FuncWeaponAptitude aptitudeTable;
 	public static FuncBugFix bugFix;
 	public static FuncPetOperation petFunc;
+	public static FuncSkillJobSP jobSkillSP;
 
 	public static DqmBlockRenderType blockRenderType;
 	public static DqmDamageSource damageSource;
@@ -319,14 +326,17 @@ public class DQR {
 		spUseItems = new FuncSpecialUseItemTable();
 		weaponBooster = new FuncWeaponBoosterTable();
 		func = new FuncCommon();
+		dqEffect = new FuncDQEffect();
 		potionFunc = new DQPotionFunc();
 		petFunc = new FuncPetOperation();
+		jobSkillSP = new FuncSkillJobSP();
 
 		farmlandHook = new FuncFarmlandExtension();
 		fishingHookHook = new FuncFishHookExtension();
 		enderdragonHook = new FuncEnderDragonExtension();
 		bonuschestHook = new FuncBonusChestExtension();
 		entityLivingHook = new FuncEntityLivingExtension();
+
 
 		if(this.conf.partyEnable != 0)
 		{
@@ -370,6 +380,7 @@ public class DQR {
 		MinecraftForge.EVENT_BUS.register(new EnderDragonHandler());
 		MinecraftForge.EVENT_BUS.register(new BagSlotClickHandler());
 		MinecraftForge.EVENT_BUS.register(new ChestGenHandler());
+		MinecraftForge.EVENT_BUS.register(new DqrDamageMobEventHandler());
 		if(debug != 0)
 		{
 			MinecraftForge.EVENT_BUS.register(new DebugHandler());

@@ -58,6 +58,7 @@ import dqr.items.interfaceBase.ISubEquip;
 import dqr.items.weapon.DqmItemThrowing;
 import dqr.playerData.ExtendedPlayerProperties;
 import dqr.playerData.ExtendedPlayerProperties3;
+import dqr.playerData.ExtendedPlayerProperties5;
 
 
 public class DamageHandler {
@@ -101,28 +102,28 @@ public class DamageHandler {
 					//毒
 					if(rand.nextInt(5) == 0)
 					{
-						damager.addPotionEffect(new PotionEffect(DQPotionMinus.potionPoison.id, 300, 1));
+						DQR.func.addPotionEffect2(damager, new PotionEffect(DQPotionMinus.potionPoison.id, 300, 1));
 					}
 				}else if(pe.getAmplifier() == 21)
 				{
 					//毒2
 					if(rand.nextInt(5) == 0)
 					{
-						damager.addPotionEffect(new PotionEffect(DQPotionMinus.potionPoisonX.id, 300, 1));
+						DQR.func.addPotionEffect2(damager, new PotionEffect(DQPotionMinus.potionPoisonX.id, 300, 1));
 					}
 				}else if(pe.getAmplifier() == 22)
 				{
 					//毒3
 					if(rand.nextInt(5) == 0)
 					{
-						damager.addPotionEffect(new PotionEffect(DQPotionMinus.potionPoisonX.id, 600, 2));
+						DQR.func.addPotionEffect2(damager, new PotionEffect(DQPotionMinus.potionPoisonX.id, 600, 2));
 					}
 				}else if(pe.getAmplifier() == 23)
 				{
 					//遅
 					if(rand.nextInt(5) == 0)
 					{
-						damager.addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 300, 2));
+						DQR.func.addPotionEffect2(damager, new PotionEffect(Potion.moveSlowdown.id, 300, 2));
 					}
 				}else if(pe.getAmplifier() == 24)
 				{
@@ -354,6 +355,21 @@ public class DamageHandler {
 			DqrDamageEntityEvent xev = new DqrDamageEntityEvent(1, event.entityLiving, event.source, event.ammount, baseDamage, event.ammount);
 			MinecraftForge.EVENT_BUS.post(xev);
 			event.ammount = xev.retDamage;
+		}
+
+		if(event.source != null && event.source.getDamageType().equalsIgnoreCase(DamageSource.outOfWorld.getDamageType()))
+		{
+			//DQR.func.debugString("DAMTEST_A:" + event.entityLiving.getCommandSenderName());
+			//event.entityLiving
+			if(event.entityLiving != null)
+			{
+				int reDamage = (int)event.entityLiving.getMaxHealth() / 6;
+
+				if(reDamage > event.ammount)
+				{
+					event.ammount = reDamage;
+				}
+			}
 		}
 
 		if(event.source instanceof EntityDamageSource)
@@ -709,7 +725,7 @@ public class DamageHandler {
 								if(weaponSkill == 0)
 								{
 									//マジックアロー
-									evb.addPotionEffect(new PotionEffect(DQPotionMinus.debuffDivainsuperu.id, 300, 1));
+									DQR.func.addPotionEffect2(evb, new PotionEffect(DQPotionMinus.debuffDivainsuperu.id, 300, 1));
 									hitFlg = true;
 								}else if(weaponSkill ==2)
 								{
@@ -1075,6 +1091,22 @@ public class DamageHandler {
 					event.ammount > 1.0F)
 				{
 					event.ammount = event.entityLiving.getMaxHealth() + 100.0F;
+
+					if(event.entityLiving instanceof EntityPlayer)
+					{
+						EntityPlayer targetPlayer = (EntityPlayer)event.entityLiving;
+						if(ExtendedPlayerProperties5.get(targetPlayer).getJobSPSkillSet(EnumDqmJob.Asobinin.getId(), 6) != 0)
+						{
+							//遊び人のマジック
+							if(!event.entityLiving.worldObj.isRemote)
+							{
+								event.entityLiving.worldObj.playSoundAtEntity(event.entityLiving, "dqr:player.miss", 1.0F, 1.0F);
+							}
+							event.ammount = -1;
+							event.setCanceled(true);
+							return;
+						}
+					}
 				}
 
 				//DQR.func.debugString("DAMTEST_E:" + event.ammount);
@@ -1286,5 +1318,28 @@ public class DamageHandler {
 		//DQR.func.debugString("DAMTEST_D:" + event.ammount);
 	}
 
-
+	@SubscribeEvent
+	public void onDqrDamageEvent(DqrDamageEntityEvent event)
+	{
+		if(event.damagePhase == 9 && event.damager instanceof EntityPlayer)
+		{
+			EntityPlayer ep = (EntityPlayer)event.damager;
+			if(ExtendedPlayerProperties5.get(ep).getJobSPSkillSet(EnumDqmJob.Asobinin.getId(), 10) != 0 &&
+					!DQR.dqEffect.isEnableEffect(event.damager, "JSkill_0_10"))
+			{
+				//九死に一生
+				//System.out.println("DamageTest : " + event.damage + " : " + event.preDamage);
+				if(event.retDamage >= event.damager.getHealth() || event.damage >= event.damager.getHealth())
+				{
+					//DQR.func.debugString("TESTTEST", this.getClass());
+					event.retDamage = event.damager.getHealth() - 1.0f;
+					event.damage = event.damager.getHealth() - 1.0f;
+					//System.out.println("DamageTest : " + event.retDamage + " : " + event.preDamage);
+					long nowTime = event.damager.worldObj.getWorldTime();
+					DQR.dqEffect.setDQPotionEffect(event.damager, "JSkill_0_10", 0, 10, 99, 24000 - (nowTime % 24000), 0, 0);
+					DQR.func.doAddChatMessageFix(event.damager, new ChatComponentTranslation("dqm.JSkill.use3.msg",new Object[] {DQR.func.getTransform("dqm.skill.JSkill_" + 0 + "_" + 10 + ".name")}));
+				}
+			}
+		}
+	}
 }
